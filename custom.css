@@ -1,0 +1,36 @@
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Mono:wght@400;500&display=swap');
+
+:root {
+    --pst-color-primary:        #c8873a;
+    --pst-color-secondary:      #4a90b8;
+}
+
+body {
+    font-family: 'Crimson Pro', serif !important;
+    font-size: 1.15rem !important;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'Crimson Pro', serif !important;
+    font-weight: 300 !important;
+    color: #c8873a !important;
+    letter-spacing: 0.03em;
+}
+
+p, li {
+    font-family: 'Crimson Pro', serif !important;
+    line-height: 1.8 !important;
+}
+
+code, pre {
+    font-family: 'DM Mono', monospace !important;
+    border-radius: 4px;
+}
+
+.admonition {
+    border-radius: 6px !important;
+    border-left-width: 4px !important;
+}
+
+a { color: #c8873a !important; }
+a:hover { color: #e8a84a !important; }

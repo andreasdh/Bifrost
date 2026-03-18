@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entropi — To faste stoffer</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+  --bg:    #0a0a0f;
+  --surf:  #0f1118;
+  --border:rgba(255,255,255,0.08);
+  --gold:  #f5c842;
+  --hot:   #f07050;
+  --cold:  #50b8f0;
+  --green: #72d48a;
+  --text:  #e8e0d0;
+  --dim:   rgba(232,224,208,0.36);
+  --serif: 'Spectral', serif;
+  --mono:  'Space Mono', monospace;
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;}
+
+/* ── HEADER ── */
+header{text-align:center;padding:1.4rem 1rem 0.9rem;border-bottom:1px solid var(--border);}
+header h1{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,4vw,2.4rem);color:var(--gold);letter-spacing:0.04em;}
+header p{font-size:0.62rem;color:var(--dim);letter-spacing:0.17em;text-transform:uppercase;margin-top:0.2rem;}
+
+/* ── TOP AREA: grid left, histogram right ── */
+.top-area{
+  display:grid;
+  grid-template-columns:440px 1fr;
+  gap:1.2rem;
+  max-width:1280px;margin:0 auto;
+  padding:1.2rem 1.2rem 0;
+  align-items:start;
+}
+
+/* ── GRID SECTION ── */
+.grid-section{display:flex;flex-direction:column;gap:0.65rem;}
+
+.solid-labels{display:flex;width:420px;justify-content:space-around;}
+.solid-lbl{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:3px;}
+.solid-lbl.A{color:var(--hot);border:1px solid rgba(240,112,80,0.25);background:rgba(240,112,80,0.05);}
+.solid-lbl.B{color:var(--cold);border:1px solid rgba(80,184,240,0.25);background:rgba(80,184,240,0.05);}
+
+#gridCanvas{background:#07070d;border:1px solid var(--border);border-radius:4px;display:block;cursor:pointer;}
+
+/* temp bar below grid */
+.temp-bar-row{
+  display:grid;grid-template-columns:1fr 40px 1fr;
+  width:420px;gap:0;
+}
+.temp-side{
+  display:flex;flex-direction:column;align-items:center;gap:0.2rem;
+  padding:0.5rem 0.3rem;background:var(--surf);border:1px solid var(--border);border-radius:4px;
+}
+.ts-label{font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;}
+.ts-label.A{color:var(--hot);}
+.ts-label.B{color:var(--cold);}
+.ts-temp{font-size:1.4rem;font-weight:700;line-height:1;}
+.ts-sub{font-size:0.5rem;color:var(--dim);}
+.thermo-h{width:100%;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;margin-top:0.15rem;}
+.thermo-h-fill{height:100%;border-radius:4px;transition:width 0.3s ease,background 0.3s ease;}
+
+.temp-mid{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.2rem;
+  padding:0.3rem 0;
+}
+.flow-arrow{font-size:1.4rem;transition:all 0.25s;line-height:1;}
+
+/* step row */
+.step-row{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
+.step-row span{color:var(--gold);}
+
+/* ── HISTOGRAM SECTION ── */
+.hist-section{display:flex;flex-direction:column;gap:0.7rem;}
+
+.hist-title-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  padding:0 0.2rem;
+}
+.hist-main-title{
+  font-family:var(--serif);font-size:1.05rem;color:var(--text);font-weight:400;
+}
+.hist-subtitle{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
+
+/* The big chart */
+.hist-chart-wrap{
+  background:var(--surf);
+  border:2px solid rgba(255,255,255,0.15);
+  border-radius:4px;padding:0.5rem 0.5rem 0.3rem;
+  position:relative;
+}
+#histCanvas{width:100%;display:block;}
+
+.hist-axis-label{
+  text-align:center;font-size:0.6rem;color:var(--dim);
+  letter-spacing:0.12em;margin-top:0.3rem;
+  font-family:var(--serif);font-style:italic;
+}
+
+/* annotation badge */
+.hist-annotation{
+  position:absolute;
+  background:rgba(10,10,15,0.9);
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:4px;padding:0.3rem 0.6rem;
+  font-family:var(--serif);font-size:0.82rem;
+  color:var(--hot);pointer-events:none;
+  white-space:nowrap;
+}
+
+/* ── BOTTOM CONTROLS ── */
+.bottom-area{
+  max-width:1280px;margin:0.8rem auto 0;
+  padding:0 1.2rem;
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  gap:1rem;
+  align-items:start;
+}
+
+.card{background:var(--surf);border:1px solid var(--border);border-radius:5px;padding:0.8rem 1rem;}
+.card-label{font-size:0.54rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:0.55rem;}
+
+button{
+  font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;
+  padding:0.45rem 0.85rem;border-radius:3px;
+  border:1px solid var(--border);background:rgba(255,255,255,0.03);color:var(--text);
+  cursor:pointer;transition:all 0.13s;
+}
+button:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.08);}
+button.primary{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.1);}
+button.danger{border-color:var(--hot);color:var(--hot);}
+button.active-preset{border-color:var(--green);color:var(--green);background:rgba(114,212,138,0.08);}
+.btn-row{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;}
+
+.sl-row{display:flex;align-items:center;gap:0.5rem;font-size:0.57rem;color:var(--dim);margin-bottom:0.35rem;}
+input[type=range]{-webkit-appearance:none;flex:1;height:3px;background:rgba(255,255,255,0.12);border-radius:2px;outline:none;}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--gold);cursor:pointer;}
+.sv{color:var(--gold);min-width:4rem;text-align:right;font-size:0.57rem;}
+
+/* preset buttons */
+.preset-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0.35rem;}
+.preset-btn{font-size:0.52rem;padding:0.4rem 0.3rem;text-align:center;line-height:1.4;}
+.preset-sub{font-size:0.48rem;color:var(--dim);display:block;margin-top:1px;}
+
+/* stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.4rem 0.8rem;}
+.st-item{}
+.st-lbl{font-size:0.52rem;color:var(--dim);margin-bottom:0.1rem;}
+.st-val{font-size:1rem;font-weight:700;color:var(--gold);}
+.st-val.hot{color:var(--hot);}
+.st-val.cold{color:var(--cold);}
+
+/* flow detail */
+.flow-detail{display:flex;flex-direction:column;gap:0.3rem;}
+.fd-row{display:flex;justify-content:space-between;font-size:0.62rem;}
+.fd-lbl{color:var(--dim);}
+.fd-val{font-weight:700;}
+.fd-val.with{color:var(--cold);}
+.fd-val.against{color:var(--hot);}
+.fd-val.ratio{color:var(--gold);}
+.fd-note{font-family:var(--serif);font-style:italic;font-size:0.78rem;color:var(--dim);margin-top:0.45rem;line-height:1.5;}
+.fd-note strong{font-style:normal;}
+
+/* insight */
+.insight{
+  font-family:var(--serif);font-style:italic;font-size:0.82rem;
+  line-height:1.6;color:var(--dim);
+  border-left:2px solid var(--gold);padding-left:0.8rem;
+  grid-column:1/-1;
+}
+.insight strong{color:var(--gold);font-style:normal;}
+
+/* ── EXPLAINERS ── */
+.explainers{
+  display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;
+  max-width:1280px;margin:1rem auto 2rem;
+  padding:1rem 1.2rem 0;border-top:1px solid var(--border);
+}
+.exp-title{font-size:0.53rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
+.exp-body{font-family:var(--serif);font-size:0.83rem;line-height:1.6;color:var(--dim);}
+
+/* tooltip */
+#tt{position:fixed;background:rgba(10,10,15,0.96);border:1px solid var(--gold);border-radius:4px;padding:0.4rem 0.7rem;font-size:0.57rem;pointer-events:none;opacity:0;transition:opacity 0.1s;z-index:999;line-height:1.7;}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>Hva er entropi?</h1>
+  <p>En simulering av energifordeling</p>
+</header>
+
+<!-- ═══════ TOP: GRID + HISTOGRAM ═══════ -->
+<div class="top-area">
+
+  <!-- LEFT: grid -->
+  <div class="grid-section">
+    <div class="solid-labels">
+      <span class="solid-lbl A" id="lblA">Solid A</span>
+      <span class="solid-lbl B" id="lblB">Solid B</span>
+    </div>
+    <canvas id="gridCanvas" width="420" height="420"></canvas>
+
+    <div class="temp-bar-row">
+      <div class="temp-side">
+        <div class="ts-label A">Stoff A</div>
+        <div class="ts-temp" id="tempAval">—</div>
+        <div class="ts-sub" id="tempAsub">T = q/N</div>
+        <div class="thermo-h"><div class="thermo-h-fill" id="thermoA"></div></div>
+      </div>
+      <div class="temp-mid">
+        <div class="flow-arrow" id="flowArrow">⇌</div>
+      </div>
+      <div class="temp-side">
+        <div class="ts-label B">Stoff B</div>
+        <div class="ts-temp" id="tempBval">—</div>
+        <div class="ts-sub" id="tempBsub">T = q/N</div>
+        <div class="thermo-h"><div class="thermo-h-fill" id="thermoB"></div></div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      Steg: <span id="stepCount">0</span> &nbsp;·&nbsp;
+      Samples: <span id="sampleCount">0</span>
+    </div>
+  </div>
+
+  <!-- RIGHT: histogram -->
+  <div class="hist-section">
+    <div class="hist-title-row">
+      <div class="hist-main-title">Sannsynlighetsfordeling — energipakker i stoff A</div>
+      <div class="hist-subtitle" id="histSubtitle"></div>
+    </div>
+
+    <div class="hist-chart-wrap" style="position:relative;">
+      <canvas id="histCanvas" height="300"></canvas>
+      <div class="hist-annotation" id="histAnnotation" style="display:none;right:1rem;top:1rem;"></div>
+    </div>
+    <div class="hist-axis-label">Energipakker i stoff A (q<sub>A</sub>)</div>
+  </div>
+
+</div>
+
+<!-- ═══════ BOTTOM: CONTROLS ═══════ -->
+<div class="bottom-area">
+
+  <!-- Col 1: Controls + presets -->
+  <div style="display:flex;flex-direction:column;gap:0.8rem;">
+    <div class="card">
+      <div class="card-label">Kontroller</div>
+      <div class="btn-row">
+        <button class="primary" id="btnPlay">▶ Start</button>
+        <button id="btnStep">1 steg</button>
+        <button class="danger" id="btnReset">↺ Nullstill</button>
+        <button id="btnClearHist">Tøm hist.</button>
+      </div>
+      <div class="sl-row">Hastighet<input type="range" id="speedSlider" min="0" max="100" value="22"><span class="sv" id="speedVal">—</span></div>
+      <div class="sl-row">Pakker q<input type="range" id="energySlider" min="4" max="200" value="10"><span class="sv" id="energyVal" style="color:var(--hot);">10</span></div>
+      <div class="sl-row">Celler N<input type="range" id="gridSlider" min="2" max="16" value="4"><span class="sv" id="gridVal" style="color:var(--cold);">4×4</span></div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Oppskalering — klikk for å se effekten</div>
+      <div class="preset-row">
+        <button class="preset-btn" onclick="setPreset(4,10,7,'A')" id="pre_A">4×4<br>q=10<span class="preset-sub"></span></button>
+        <button class="preset-btn" onclick="setPreset(4,20,14,'B')" id="pre_B">4×4<br>q=20</button>
+        <button class="preset-btn" onclick="setPreset(6,30,21,'C')" id="pre_C">6×6<br>q=30</button>
+        <button class="preset-btn" onclick="setPreset(8,60,42,'D')" id="pre_D">8×8<br>q=60</button>
+        <button class="preset-btn" onclick="setPreset(8,100,70,'E')" id="pre_E">8×8<br>q=100</button>
+        <button class="preset-btn" onclick="setPreset(16,100,70,'F')" id="pre_F">16×16<br>q=100<span class="preset-sub">stort</span></button>
+      </div>
+      <div style="font-family:var(--serif);font-style:italic;font-size:0.75rem;color:var(--dim);margin-top:0.5rem;line-height:1.5;">
+      </div>
+    </div>
+  </div>
+
+  <!-- Col 2: Stats + flow -->
+  <div style="display:flex;flex-direction:column;gap:0.8rem;">
+    <div class="card">
+      <div class="card-label">Statistikk</div>
+      <div class="stats-grid">
+        <div class="st-item">
+          <div class="st-lbl">⟨q<sub>A</sub>⟩ gjennomsnitt</div>
+          <div class="st-val" id="statMean">—</div>
+        </div>
+        <div class="st-item">
+          <div class="st-lbl">Std.avvik σ</div>
+          <div class="st-val" id="statStd">—</div>
+        </div>
+        <div class="st-item">
+          <div class="st-lbl">P(q<sub>A</sub> ≥ init)</div>
+          <div class="st-val hot" id="statPabove">—</div>
+        </div>
+        <div class="st-item">
+          <div class="st-lbl">P(nær topp ±10%)</div>
+          <div class="st-val cold" id="statPeak">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-label">Varmeflyt over grensen</div>
+      <div class="flow-detail">
+        <div class="fd-row"><span class="fd-lbl">Med temp.gradient</span><span class="fd-val with" id="cntWith">0</span></div>
+        <div class="fd-row"><span class="fd-lbl">Mot temp.gradient ⚡</span><span class="fd-val against" id="cntAgainst">0</span></div>
+        <div class="fd-row" style="border-top:1px solid var(--border);padding-top:0.25rem;margin-top:0.1rem;">
+          <span class="fd-lbl">Mot-gradient andel</span>
+          <span class="fd-val ratio" id="cntRatio">—</span>
+        </div>
+      </div>
+      <div class="fd-note" id="flowNote">Start simuleringen…</div>
+    </div>
+  </div>
+
+  <!-- Col 3: Omega + insight -->
+  <div style="display:flex;flex-direction:column;gap:0.8rem;">
+    <div class="card">
+      <div class="card-label">Mikrotilstander — nåværende fordeling</div>
+      <div style="display:flex;flex-direction:column;gap:0.3rem;" id="omegaDetail">
+        <div style="font-size:0.65rem;line-height:1.9;" id="omegaDetailText">—</div>
+      </div>
+    </div>
+    <div class="insight" id="insightBox">
+      Mesteparten av energien starter i stoff A (70-30-fordeling). Start simuleringen og se fordelingen bygge seg opp.
+    </div>
+  </div>
+
+</div>
+
+<!-- ═══════ EXPLAINERS ═══════ -->
+<div class="explainers">
+  <div>
+    <div class="exp-title">Hva viser histogrammet?</div>
+    <div class="exp-body">Hvert sample registrerer antall energipakker i stoff A. Over tid bygger histogrammet opp den empiriske sannsynlighetsfordelingen. <strong style="color:var(--cold)">Blå</strong> = systemet er kaldere enn start. <strong style="color:var(--hot)">Rød</strong> = stoff A er varmere enn starttilstanden</div>
+  </div>
+  <div>
+    <div class="exp-title">Oppskalering og sannsynlighet</div>
+    <div class="exp-body">Hvordan kan en oppskalering av systemet illustrere termodynamikkens 2. lov.</div>
+  </div>
+  <div>
+    <div class="exp-title">Ω<sub>A</sub> × Ω<sub>B</sub></div>
+    <div class="exp-body">Fordelingens form følger direkte av at Ω<sub>tot</sub> = Ω<sub>A</sub>(q<sub>A</sub>) × Ω<sub>B</sub>(q<sub>tot</sub>−q<sub>A</sub>). </div>
+  </div>
+</div>
+
+<div id="tt"></div>
+
+<script>
+// ══════════════════════════════════════
+// STATE
+// ══════════════════════════════════════
+let COLS=4, ROWS=4, N=16;
+let initQA_target=7; // video default: A=7, B=3 // video: A starts with 7, B with 3
+const CW=420, CH=420;
+let grid=[], totalEnergy=10, steps=0; // video: 10 pakker totalt
+let running=false, animId=null, lastTime=0, stepAccum=0, speedMult=22, lastDrawTime=0;
+let particles=[];
+
+// sampling
+const SAMPLE_EVERY=3;
+let histBins=[]; // histBins[qa] = count
+let sampleTotal=0;
+let initQA=null; // q_A at start — "hot" threshold
+
+// flow
+let cntWith=0, cntAgainst=0;
+
+// canvas
+const gc  = document.getElementById('gridCanvas');
+const ctx = gc.getContext('2d');
+const hc  = document.getElementById('histCanvas');
+const hctx= hc.getContext('2d');
+
+// ══════════════════════════════════════
+// MATH
+// ══════════════════════════════════════
+function logFact(n){let s=0;for(let k=2;k<=n;k++)s+=Math.log(k);return s;}
+function lnOmegaStarsBars(q,nCells){
+  if(q<=0||nCells<=1)return 0;
+  let v=0;for(let k=1;k<=nCells-1;k++)v+=Math.log(q+k)-Math.log(k);return Math.max(v,0);
+}
+function omegaExact(q,nCells){
+  const lnO=lnOmegaStarsBars(q,nCells);
+  const log10=lnO/Math.LN10;
+  if(log10<7)return Math.round(Math.exp(lnO)).toLocaleString('no');
+  return `~10^${log10.toFixed(1)}`;
+}
+
+function splitCol(){return Math.floor(COLS/2);}
+function nA(){return ROWS*splitCol();}
+function nB(){return ROWS*(COLS-splitCol());}
+function inA(i){return(i%COLS)<splitCol();}
+function getQA(){let s=0;for(let i=0;i<N;i++)if(inA(i))s+=grid[i];return s;}
+function getQB(){return totalEnergy-getQA();}
+function tempA(){const a=nA();return a>0?getQA()/a:0;}
+function tempB(){const b=nB();return b>0?getQB()/b:0;}
+
+function tempColor(tRel){
+  const r=Math.round(80+(240-80)*tRel),g=Math.round(192+(112-192)*tRel),b=Math.round(240+(80-240)*tRel);
+  return `rgb(${r},${g},${b})`;
+}
+
+// ══════════════════════════════════════
+// INIT
+// ══════════════════════════════════════
+function initSim(){
+  N=COLS*ROWS;
+  grid=new Array(N).fill(0);
+  const aCells=[],bCells=[];
+  for(let i=0;i<N;i++){if(inA(i))aCells.push(i);else bCells.push(i);}
+  // Fordel pakker: initQA_target i A, resten i B
+  let qa=Math.min(initQA_target,totalEnergy);
+  let qb=totalEnergy-qa;
+  let qa2=qa,qb2=qb;
+  while(qa2-->0) grid[aCells[Math.floor(Math.random()*aCells.length)]]++;
+  while(qb2-->0) grid[bCells[Math.floor(Math.random()*bCells.length)]]++;
+  initQA=getQA();
+  steps=0; particles=[];
+  cntWith=0; cntAgainst=0;
+  clearHist();
+}
+
+function clearHist(){
+  histBins=new Array(totalEnergy+1).fill(0);
+  sampleTotal=0;
+}
+
+let activePreset=null;
+function setPreset(size,q,qInit,id){
+  running=false;
+  if(animId){cancelAnimationFrame(animId);animId=null;}
+  document.getElementById('btnPlay').textContent='▶ Start';
+  document.getElementById('btnPlay').className='';
+  COLS=size;ROWS=size;N=size*size;totalEnergy=q;initQA_target=qInit;
+  document.getElementById('gridSlider').value=size;
+  document.getElementById('energySlider').value=q;
+  document.getElementById('gridVal').textContent=`${size}×${size}`;
+  document.getElementById('energyVal').textContent=q;
+  ['A','B','C','D','E','F'].forEach(k=>{
+    const el=document.getElementById('pre_'+k);if(el)el.className='preset-btn'+(k===id?' active-preset':'');
+  });
+  activePreset=id;
+  initSim();draw();
+}
+
+// ══════════════════════════════════════
+// SIMULATION
+// ══════════════════════════════════════
+function simStep(){
+  const donors=grid.map((v,i)=>v>0?i:-1).filter(i=>i>=0);
+  if(!donors.length)return;
+  const from=donors[Math.floor(Math.random()*donors.length)];
+  const fc=from%COLS,fr=Math.floor(from/COLS);
+  const nbrs=[];
+  if(fc>0)      nbrs.push(fr*COLS+fc-1);
+  if(fc<COLS-1) nbrs.push(fr*COLS+fc+1);
+  if(fr>0)      nbrs.push((fr-1)*COLS+fc);
+  if(fr<ROWS-1) nbrs.push((fr+1)*COLS+fc);
+  if(!nbrs.length)return;
+  const to=nbrs[Math.floor(Math.random()*nbrs.length)];
+
+  const fromA=inA(from),toA=inA(to);
+  const tA=tempA(),tB=tempB();
+
+  grid[from]--;grid[to]++;steps++;
+
+  if(fromA!==toA){
+    const movedFromHotter=(fromA&&tA>=tB)||(!fromA&&tB>=tA);
+    if(movedFromHotter)cntWith++;else cntAgainst++;
+  }
+
+  if(steps%SAMPLE_EVERY===0){
+    const qa=getQA();
+    if(histBins.length<=totalEnergy)histBins=new Array(totalEnergy+1).fill(0);
+    histBins[qa]++;
+    sampleTotal++;
+  }
+
+  spawnParticle(from,to,fromA!==toA);
+}
+
+// ══════════════════════════════════════
+// PARTICLES
+// ══════════════════════════════════════
+function cellCenter(i){const CX=CW/COLS,CY=CH/ROWS;return{x:(i%COLS)*CX+CX/2,y:Math.floor(i/COLS)*CY+CY/2};}
+function spawnParticle(from,to,cross){
+  const f=cellCenter(from),t=cellCenter(to);
+  particles.push({x:f.x,y:f.y,tx:t.x,ty:t.y,pt:0,life:cross?0.55:0.35,hue:cross?52:28+Math.random()*25,r:cross?5.5:3.5});
+}
+function updateParticles(dt){
+  for(let i=particles.length-1;i>=0;i--){
+    const p=particles[i];p.pt+=dt/p.life;
+    if(p.pt>=1){particles.splice(i,1);continue;}
+    p.x+=(p.tx-p.x)*0.2;p.y+=(p.ty-p.y)*0.2;
+  }
+}
+
+// ══════════════════════════════════════
+// DRAW GRID
+// ══════════════════════════════════════
+function draw(){
+  const CX=CW/COLS,CY=CH/ROWS;
+  ctx.clearRect(0,0,CW,CH);
+  const sc=splitCol();
+  ctx.fillStyle='rgba(240,112,80,0.025)';ctx.fillRect(0,0,sc*CX,CH);
+  ctx.fillStyle='rgba(80,184,240,0.025)';ctx.fillRect(sc*CX,0,CW-sc*CX,CH);
+
+  ctx.strokeStyle='rgba(255,255,255,0.045)';ctx.lineWidth=1;
+  for(let c=0;c<=COLS;c++){ctx.beginPath();ctx.moveTo(c*CX,0);ctx.lineTo(c*CX,CH);ctx.stroke();}
+  for(let r=0;r<=ROWS;r++){ctx.beginPath();ctx.moveTo(0,r*CY);ctx.lineTo(CW,r*CY);ctx.stroke();}
+
+  ctx.save();ctx.setLineDash([6,5]);
+  ctx.strokeStyle='rgba(255,255,255,0.32)';ctx.lineWidth=1.5;
+  ctx.beginPath();ctx.moveTo(sc*CX,0);ctx.lineTo(sc*CX,CH);ctx.stroke();
+  ctx.setLineDash([]);ctx.restore();
+
+  const maxE=Math.max(...grid,1);
+  const tA=tempA(),tB=tempB(),tMax=Math.max(tA,tB,0.01);
+  for(let i=0;i<N;i++){const p=cellCenter(i);const tRel=inA(i)?Math.min(tA/tMax,1):Math.min(tB/tMax,1);drawCell(p.x,p.y,grid[i],maxE,tRel,CX,CY);}
+
+  for(const p of particles){
+    const a=(1-p.pt)*0.9;
+    const g=ctx.createRadialGradient(p.x,p.y,0,p.x,p.y,p.r*2.2);
+    g.addColorStop(0,`hsla(${p.hue},100%,82%,${a})`);g.addColorStop(1,`hsla(${p.hue},100%,60%,0)`);
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(p.x,p.y,p.r*2.2,0,Math.PI*2);ctx.fill();
+  }
+}
+
+function drawCell(x,y,energy,maxE,tRel,CX,CY){
+  const t=maxE>0?energy/maxE:0;
+  const ex=CX*0.37,ey=CY*0.24;
+  const col=tempColor(tRel);
+
+  if(energy>0){
+    const g=ctx.createRadialGradient(x,y,0,x,y,CX*0.58);
+    const rgba=col.replace('rgb','rgba').replace(')',`,${0.1*t})`);
+    g.addColorStop(0,rgba);g.addColorStop(1,'transparent');
+    ctx.fillStyle=g;ctx.beginPath();ctx.arc(x,y,CX*0.58,0,Math.PI*2);ctx.fill();
+  }
+  const alpha=0.14+t*0.86;
+  ctx.save();ctx.globalAlpha=alpha;
+  const hue=tRel>0.5?28:200,sat=tRel>0.5?76:60,lght=20+t*28;
+  const bg=ctx.createLinearGradient(x-ex,y-ey,x+ex,y+ey);
+  bg.addColorStop(0,`hsl(${hue},${sat}%,${lght+10}%)`);bg.addColorStop(1,`hsl(${hue+8},${sat}%,${lght}%)`);
+  ctx.fillStyle=bg;
+  ctx.strokeStyle=col.replace('rgb','rgba').replace(')',`,${0.2+t*0.5})`);
+  ctx.lineWidth=0.8;ctx.beginPath();ctx.ellipse(x,y,ex,ey,0,0,Math.PI*2);ctx.fill();ctx.stroke();
+  if(energy>0){
+    ctx.strokeStyle=col.replace('rgb','rgba').replace(')',`,${0.25*t})`);ctx.lineWidth=0.6;
+    for(let k=-1;k<=1;k++){const kx=x+k*ex*0.3;ctx.beginPath();ctx.moveTo(kx,y-ey*0.8);ctx.bezierCurveTo(kx-3,y-ey*0.2,kx+3,y+ey*0.2,kx,y+ey*0.8);ctx.stroke();}
+  }
+  ctx.restore();
+  const dn=Math.min(energy,7);
+  for(let d=0;d<dn;d++){const angle=(d/dn)*Math.PI*2-Math.PI/2;const r=ex*1.1+2;const dx=x+Math.cos(angle)*r,dy=y+Math.sin(angle)*r;const dg=ctx.createRadialGradient(dx,dy,0,dx,dy,3);dg.addColorStop(0,'#ffe580');dg.addColorStop(0.6,'#f5a020');dg.addColorStop(1,'transparent');ctx.fillStyle=dg;ctx.beginPath();ctx.arc(dx,dy,3,0,Math.PI*2);ctx.fill();}
+  if(energy>0){ctx.fillStyle=`rgba(255,235,150,${0.42+t*0.58})`;ctx.font=`${Math.min(10,CX*0.21)}px Space Mono`;ctx.textAlign='center';ctx.textBaseline='middle';ctx.fillText(energy,x,y);}
+}
+
+// ══════════════════════════════════════
+// HISTOGRAM — main visual, à la video
+// ══════════════════════════════════════
+function drawHistogram(){
+  const dpr=devicePixelRatio||1;
+  const W=hc.offsetWidth*dpr||600;
+  const H=300*dpr;
+  hc.width=W;hc.height=H;
+  hctx.clearRect(0,0,W,H);
+
+  // empty state
+  if(sampleTotal<5){
+    hctx.fillStyle='rgba(232,224,208,0.18)';
+    hctx.font=`${12*dpr}px Spectral,serif`;hctx.textAlign='center';hctx.fillStyle='rgba(232,224,208,0.2)';
+    hctx.fillText('Kjør simuleringen — fordelingen bygges opp ved sampling',W/2,H/2);
+    return;
+  }
+
+  const q=totalEnergy;
+  const maxBin=Math.max(...histBins,1);
+  const padL=52*dpr,padR=16*dpr,padT=16*dpr,padB=32*dpr;
+  const pW=W-padL-padR,pH=H-padT-padB;
+  const bw=pW/(q+1);
+
+  // threshold: initQA is where Solid A started — above = "hotter than start"
+  const threshold=initQA!==null?initQA:Math.ceil(q*nA()/(nA()+nB()));
+
+  // compute total prob in red zone
+  let redProb=0;
+  for(let qa=threshold+1;qa<=q;qa++) redProb+=histBins[qa]||0;
+  redProb/=sampleTotal;
+
+  // draw bars
+  for(let qa=0;qa<=q;qa++){
+    const frac=(histBins[qa]||0)/sampleTotal;
+    const bh=frac/((histBins.reduce((a,b)=>a+b,0)/sampleTotal)||1)*pH;
+    const barH=(histBins[qa]||0)/maxBin*pH;
+    const x=padL+qa*bw;
+
+    // colour: red if qa > threshold (A hotter than start), else blue
+    const isHot=qa>threshold;
+    if(isHot){
+      hctx.fillStyle='rgba(240,112,80,0.82)';
+    } else {
+      hctx.fillStyle='rgba(80,180,240,0.78)';
+    }
+    hctx.fillRect(x+0.5,padT+pH-barH,bw-1,barH);
+  }
+
+  // axes — white border style like video
+  hctx.strokeStyle='rgba(255,255,255,0.55)';hctx.lineWidth=1.5*dpr;
+  hctx.beginPath();hctx.moveTo(padL,padT);hctx.lineTo(padL,padT+pH);hctx.lineTo(padL+pW,padT+pH);hctx.stroke();
+
+  // y-axis ticks & labels
+  const maxProb=maxBin/sampleTotal*100;
+  const yTicks=5;
+  hctx.fillStyle='rgba(232,224,208,0.5)';
+  hctx.font=`${7.5*dpr}px Space Mono,monospace`;hctx.textAlign='right';
+  for(let i=0;i<=yTicks;i++){
+    const pct=maxProb/yTicks*i;
+    const y=padT+pH*(1-i/yTicks);
+    hctx.fillText(pct.toFixed(1),padL-5*dpr,y+3*dpr);
+    hctx.strokeStyle='rgba(255,255,255,0.06)';hctx.lineWidth=dpr;
+    hctx.beginPath();hctx.moveTo(padL,y);hctx.lineTo(padL+pW,y);hctx.stroke();
+  }
+  // y label
+  hctx.save();hctx.translate(11*dpr,padT+pH/2);hctx.rotate(-Math.PI/2);
+  hctx.fillStyle='rgba(232,224,208,0.45)';hctx.font=`${8*dpr}px Spectral,serif`;hctx.textAlign='center';
+  hctx.fillText('Sannsynlighet (%)',0,0);hctx.restore();
+
+  // x-axis ticks
+  hctx.fillStyle='rgba(232,224,208,0.45)';
+  hctx.font=`${7.5*dpr}px Space Mono,monospace`;hctx.textAlign='center';
+  const xStep=Math.max(1,Math.floor(q/10));
+  for(let qa=0;qa<=q;qa+=xStep){
+    const x=padL+qa*bw+bw/2;
+    hctx.fillText(qa,x,padT+pH+20*dpr);
+  }
+
+  // threshold line
+  if(initQA!==null){
+    const tx=padL+threshold*bw;
+    hctx.setLineDash([4*dpr,4*dpr]);
+    hctx.strokeStyle='rgba(255,255,255,0.3)';hctx.lineWidth=dpr;
+    hctx.beginPath();hctx.moveTo(tx,padT);hctx.lineTo(tx,padT+pH);hctx.stroke();
+    hctx.setLineDash([]);
+    hctx.fillStyle='rgba(255,255,255,0.3)';
+    hctx.font=`${6.5*dpr}px Space Mono`;hctx.textAlign='left';
+    hctx.fillText(`start q_A=${threshold}`,tx+4*dpr,padT+10*dpr);
+  }
+
+  // annotation: red % bracket à la video
+  const ann=document.getElementById('histAnnotation');
+  if(redProb>0.0001&&redProb<0.5){
+    ann.style.display='block';
+    ann.textContent=`${(redProb*100).toFixed(2)}%  →  "varmere enn start"`;
+    ann.style.color=redProb>0.05?'var(--hot)':'var(--gold)';
+  } else if(redProb<0.0001&&sampleTotal>100){
+    ann.style.display='block';
+    ann.textContent='< 0.01%  →  nær umulig!';
+    ann.style.color='var(--cold)';
+  } else {
+    ann.style.display='none';
+  }
+
+  // subtitle
+  document.getElementById('histSubtitle').textContent=`n = ${sampleTotal.toLocaleString('no')} samples`;
+}
+
+// ══════════════════════════════════════
+// UI UPDATE
+// ══════════════════════════════════════
+function updateAll(){
+  const qa=getQA(),qb=getQB(),q=totalEnergy;
+  const tA=tempA(),tB=tempB(),tMax=Math.max(tA,tB,0.01);
+  const pA=Math.min(tA/tMax,1),pB=Math.min(tB/tMax,1);
+
+  // thermometers
+  document.getElementById('thermoA').style.width=(pA*100)+'%';
+  document.getElementById('thermoB').style.width=(pB*100)+'%';
+  document.getElementById('thermoA').style.background=tempColor(pA);
+  document.getElementById('thermoB').style.background=tempColor(pB);
+  document.getElementById('tempAval').textContent=tA.toFixed(2);
+  document.getElementById('tempBval').textContent=tB.toFixed(2);
+  document.getElementById('tempAval').style.color=tempColor(pA);
+  document.getElementById('tempBval').style.color=tempColor(pB);
+  document.getElementById('tempAsub').textContent=`q=${qa}, N=${nA()}`;
+  document.getElementById('tempBsub').textContent=`q=${qb}, N=${nB()}`;
+
+  // flow arrow
+  const diff=tA-tB;
+  const arrow=document.getElementById('flowArrow');
+  if(Math.abs(diff)<0.04){arrow.textContent='⇌';arrow.style.color='var(--gold)';}
+  else if(diff>0){arrow.textContent='→';arrow.style.color=tempColor(1);}
+  else{arrow.textContent='←';arrow.style.color=tempColor(1);}
+
+  // labels
+  document.getElementById('lblA').textContent=`Stoff A  q=${qa}  T=${tA.toFixed(2)}`;
+  document.getElementById('lblB').textContent=`Stoff B  q=${qb}  T=${tB.toFixed(2)}`;
+  document.getElementById('stepCount').textContent=steps;
+  document.getElementById('sampleCount').textContent=sampleTotal.toLocaleString('no');
+
+  // omega detail
+  const lnOA=lnOmegaStarsBars(qa,nA()),lnOB=lnOmegaStarsBars(qb,nB());
+  const lnOtot=lnOA+lnOB;
+  document.getElementById('omegaDetailText').innerHTML=
+    `Ω<sub>A</sub>(${qa}) = <span style="color:var(--hot)">${omegaExact(qa,nA())}</span><br>`+
+    `Ω<sub>B</sub>(${qb}) = <span style="color:var(--cold)">${omegaExact(qb,nB())}</span><br>`+
+    `Ω<sub>tot</sub> = <span style="color:var(--gold)">${lnOtot<40?Math.round(Math.exp(lnOtot)).toLocaleString('no'):'~10^'+(lnOtot/Math.LN10).toFixed(1)}</span><br>`+
+    `ln Ω<sub>tot</sub> = <span style="color:var(--gold)">${lnOtot.toFixed(2)}</span>`;
+
+  // flow counters
+  const bt=cntWith+cntAgainst;
+  document.getElementById('cntWith').textContent=cntWith.toLocaleString('no');
+  document.getElementById('cntAgainst').textContent=cntAgainst.toLocaleString('no');
+  if(bt>0){
+    const pAg=cntAgainst/bt;
+    document.getElementById('cntRatio').textContent=(pAg*100).toFixed(1)+'%';
+    const note=document.getElementById('flowNote');
+    if(pAg>0.35) note.innerHTML=`<strong style="color:var(--hot)">${(pAg*100).toFixed(0)}%</strong> mot gradienten — <em>lite system</em>, tilfeldigheten dominerer.`;
+    else if(pAg>0.08) note.innerHTML=`<strong style="color:var(--gold)">${(pAg*100).toFixed(0)}%</strong> mot gradienten. Sett opp et større system for å se dette synke.`;
+    else note.innerHTML=`Bare <strong style="color:var(--cold)">${(pAg*100).toFixed(1)}%</strong> mot gradienten — <em>2. lov ser deterministisk ut</em> fordi systemet er stort.`;
+  }
+
+  // stats
+  if(sampleTotal>2){
+    let mean=0;histBins.forEach((c,qa)=>{mean+=qa*c;});mean/=sampleTotal;
+    let v2=0;histBins.forEach((c,qa)=>{v2+=(qa-mean)**2*c;});v2/=sampleTotal;
+    const std=Math.sqrt(v2);
+    document.getElementById('statMean').textContent=mean.toFixed(1);
+    document.getElementById('statStd').textContent=std.toFixed(2);
+    const threshold=initQA!==null?initQA:q;
+    let pAbove=0;for(let i=threshold+1;i<=q;i++)pAbove+=(histBins[i]||0)/sampleTotal;
+    document.getElementById('statPabove').textContent=pAbove<0.0001?'< 0.01%':(pAbove*100).toFixed(2)+'%';
+    const lo=Math.round(mean*0.9),hi=Math.round(mean*1.1);
+    let pk=0;for(let i=lo;i<=hi;i++)pk+=(histBins[i]||0)/sampleTotal;
+    document.getElementById('statPeak').textContent=(pk*100).toFixed(1)+'%';
+  }
+
+  // insight
+  updateInsight(qa,qb,lnOtot);
+
+  drawHistogram();
+}
+
+function updateInsight(qa,qb,lnOtot){
+  const box=document.getElementById('insightBox');
+  const tA_=tempA(),tB_=tempB();
+  if(initQA!==null&&qa>initQA){
+    box.innerHTML=`Solid A har nå <strong>${qa}</strong> pakker — <strong style="color:var(--hot)">varmere enn start (${initQA})</strong>. Varme gikk mot gradienten! Dette forekommer, men blir sjeldnere jo større systemet er.`;
+  } else if(Math.abs(tA_-tB_)<0.05){
+    box.innerHTML=`Nær likevekt: T<sub>A</sub> ≈ T<sub>B</sub> ≈ ${tA_.toFixed(2)}. Ω<sub>tot</sub> er nær maksimum. Histogrammet topper seg her — dette er den <strong>mest sannsynlige</strong> makrotilstanden.`;
+  } else {
+    const ratio=initQA!==null&&qa<initQA?`q_A=${qa} < start (${initQA}) — energi har strømmet fra A til B som forventet.`:`Ω<sub>tot</sub> = ${lnOtot.toFixed(1)} (ln). Systemet søker mot maksimum.`;
+    box.innerHTML=ratio;
+  }
+}
+
+// ══════════════════════════════════════
+// ANIMATION
+// ══════════════════════════════════════
+function sliderToRate(v){return 0.5*Math.pow(100000,v/100);}
+function rateLabel(r){if(r<1)return r.toFixed(2)+'/s';if(r<1000)return Math.round(r)+'/s';if(r<1e6)return (r/1000).toFixed(1)+'k/s';return (r/1e6).toFixed(2)+'M/s';}
+
+function loop(ts){
+  if(!running)return;
+  const dt=Math.min((ts-lastTime)/1000,0.1);lastTime=ts;
+  stepAccum+=sliderToRate(speedMult)*dt;
+  const n=Math.floor(stepAccum);stepAccum-=n;
+  const turbo=n>200; // skip particles+draw at high speed
+  for(let i=0;i<n;i++)simStep();
+  if(!turbo)updateParticles(dt);
+  if(!turbo)draw();
+  else if(ts-lastDrawTime>150){draw();lastDrawTime=ts;} // still refresh ~7fps in turbo
+  updateAll();
+  animId=requestAnimationFrame(loop);
+}
+function toggleRun(){
+  running=!running;
+  const b=document.getElementById('btnPlay');
+  b.textContent=running?'⏸ Pause':'▶ Start';b.className=running?'primary':'';
+  if(running){stepAccum=0;lastTime=performance.now();animId=requestAnimationFrame(loop);}
+}
+
+// ══════════════════════════════════════
+// EVENTS
+// ══════════════════════════════════════
+document.getElementById('btnPlay').addEventListener('click',toggleRun);
+document.getElementById('btnStep').addEventListener('click',()=>{if(running)return;simStep();draw();updateAll();});
+document.getElementById('btnReset').addEventListener('click',()=>{
+  running=false;if(animId)cancelAnimationFrame(animId);
+  document.getElementById('btnPlay').textContent='▶ Start';document.getElementById('btnPlay').className='';
+  initSim(); draw(); updateAll();
+});
+document.getElementById('btnClearHist').addEventListener('click',()=>{
+  clearHist();cntWith=0;cntAgainst=0;drawHistogram();
+  document.getElementById('sampleCount').textContent='0';
+});
+document.getElementById('speedSlider').addEventListener('input',e=>{speedMult=+e.target.value;document.getElementById('speedVal').textContent=rateLabel(sliderToRate(speedMult));});
+document.getElementById('energySlider').addEventListener('input',e=>{
+  const nQ=+e.target.value;document.getElementById('energyVal').textContent=nQ;
+  totalEnergy=nQ;
+  // keep A's share ~70%
+  initQA_target=Math.round(nQ*0.7);
+  initSim();if(!running){draw();updateAll();}
+});
+document.getElementById('gridSlider').addEventListener('input',e=>{
+  COLS=+e.target.value;ROWS=+e.target.value;
+  document.getElementById('gridVal').textContent=`${COLS}×${COLS}`;
+  initSim();draw();updateAll();
+});
+gc.addEventListener('click',e=>{
+  const rect=gc.getBoundingClientRect();const CX=CW/COLS,CY=CH/ROWS;
+  const c=Math.floor((e.clientX-rect.left)/CX),r=Math.floor((e.clientY-rect.top)/CY);
+  if(c<0||c>=COLS||r<0||r>=ROWS)return;
+  const i=r*COLS+c;grid[i]++;totalEnergy++;
+  document.getElementById('energySlider').value=Math.min(totalEnergy,200);
+  document.getElementById('energyVal').textContent=totalEnergy;
+  clearHist();cntWith=0;cntAgainst=0;initQA=getQA();
+  spawnParticle(i,i,false);if(!running){draw();updateAll();}
+});
+const tt=document.getElementById('tt');
+gc.addEventListener('mousemove',e=>{
+  const rect=gc.getBoundingClientRect();const CX=CW/COLS,CY=CH/ROWS;
+  const c=Math.floor((e.clientX-rect.left)/CX),r=Math.floor((e.clientY-rect.top)/CY);
+  if(c<0||c>=COLS||r<0||r>=ROWS){tt.style.opacity=0;return;}
+  const i=r*COLS+c;
+  tt.innerHTML=`${inA(i)?'Solid A':'Solid B'} · (${c},${r})<br>q = <strong>${grid[i]}</strong>`;
+  tt.style.left=(e.clientX+12)+'px';tt.style.top=(e.clientY-8)+'px';tt.style.opacity=1;
+});
+gc.addEventListener('mouseleave',()=>{tt.style.opacity=0;});
+document.addEventListener('keydown',e=>{
+  if(e.code==='Space'){e.preventDefault();toggleRun();}
+  if(e.code==='ArrowRight'&&!running){simStep();draw();updateAll();}
+});
+window.addEventListener('resize',()=>{drawHistogram();});
+
+// ══════════════════════════════════════
+// BOOT
+// ══════════════════════════════════════
+initSim(); draw(); updateAll();
+document.getElementById('speedVal').textContent=rateLabel(sliderToRate(speedMult));
+document.getElementById('pre_A').className='preset-btn active-preset';
+</script>
+</body>
+</html>
