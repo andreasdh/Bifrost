@@ -1,11 +1,9 @@
-# Welcome to your Jupyter Book
+# Bifrost
+## En mikroskopisk tilnærming til fysikalsk kjemi
+---
 
-This is a small sample book to give you a feel for how book content is
-structured.
-It shows off a few of the major file types, as well as some sample content.
-It does not go in-depth into any particular topic - check out [the Jupyter Book documentation](https://jupyterbook.org) for more information.
+I norrøn mytologi står guden Heimdall og vokter Bifrost, broa mellom gudenes rike, Åsgård, og menneskenes rike, Midgard. Her skal vi gjøre en annen reise - nemlig mellom den observerbare verden og den submikroskopiske verden, der atomene bor. Vi skal utforske de fysiske og kjemiske prinsippene som styrer retningen på hver minste endring i universet. Det er kanskje et ambisiøst og litt utfordrende mål, men du trenger ikke reise alene.
 
-Check out the content pages bundled with this sample book to see more.
+Vi skal bruke fysikkens lover, matematikkens presisjon og kjemiens nysgjerrighet som kart og kompass. Vi spør ikke bare hva som skjer, men hvorfor — med hvilken kraft, i hvilken retning, og hvor raskt. Underveis vil du oppdage at de største spørsmålene ofte gjemmer seg i de minste detaljene. Velkommen til fysikalsk kjemi.
 
-```{tableofcontents}
-```
+![Hemidall](docs/bilder/heimdall.png)

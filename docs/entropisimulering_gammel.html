@@ -189,9 +189,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;heigh
 #tt{position:fixed;background:rgba(10,10,15,0.96);border:1px solid var(--gold);border-radius:4px;padding:0.4rem 0.7rem;font-size:0.57rem;pointer-events:none;opacity:0;transition:opacity 0.1s;z-index:999;line-height:1.7;}
 </style>
 </head>
-<body>
+<body style="background:#0a0a0f;">
+<div class="sim-wrapper" style="all:initial;display:block;background:#0a0a0f !important;color:#e8e0d0;font-family:'Space Mono',monospace;">
 
-<header>
+  <header>
   <h1>Hva er entropi?</h1>
   <p>En simulering av energifordeling</p>
 </header>
@@ -260,9 +261,9 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;heigh
         <button class="danger" id="btnReset">↺ Nullstill</button>
         <button id="btnClearHist">Tøm hist.</button>
       </div>
-      <div class="sl-row">Hastighet<input type="range" id="speedSlider" min="0" max="40" value="22"><span class="sv" id="speedVal">—</span></div>
-      <div class="sl-row">Pakker q<input type="range" id="energySlider" min="4" max="100" value="10"><span class="sv" id="energyVal" style="color:var(--hot);">10</span></div>
-      <div class="sl-row">Celler N<input type="range" id="gridSlider" min="2" max="8" value="4"><span class="sv" id="gridVal" style="color:var(--cold);">4×4</span></div>
+      <div class="sl-row">Hastighet<input type="range" id="speedSlider" min="0" max="100" value="22"><span class="sv" id="speedVal">—</span></div>
+      <div class="sl-row">Pakker q<input type="range" id="energySlider" min="4" max="200" value="10"><span class="sv" id="energyVal" style="color:var(--hot);">10</span></div>
+      <div class="sl-row">Celler N<input type="range" id="gridSlider" min="2" max="16" value="4"><span class="sv" id="gridVal" style="color:var(--cold);">4×4</span></div>
     </div>
 
     <div class="card">
@@ -272,7 +273,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;heigh
         <button class="preset-btn" id="pre_B">4×4<br>q=20</button>
         <button class="preset-btn" id="pre_C">6×6<br>q=30</button>
         <button class="preset-btn" id="pre_D">8×8<br>q=60</button>
-        <button class="preset-btn" id="pre_E">8×8<br>q=100<span class="preset-sub"></span></button>
+        <button class="preset-btn" id="pre_E">8×8<br>q=100</button>
+        <button class="preset-btn" id="pre_F">16×16<br>q=100<span class="preset-sub">stort</span></button>
       </div>
       <div style="font-family:var(--serif);font-style:italic;font-size:0.75rem;color:var(--dim);margin-top:0.5rem;line-height:1.5;">
       </div>
@@ -358,7 +360,7 @@ let COLS=4, ROWS=4, N=16;
 let initQA_target=7; // video default: A=7, B=3 // video: A starts with 7, B with 3
 const CW=420, CH=420;
 let grid=[], totalEnergy=10, steps=0; // video: 10 pakker totalt
-let running=false, animId=null, lastTime=0, stepAccum=0, speedMult=22;
+let running=false, animId=null, lastTime=0, stepAccum=0, speedMult=22, lastDrawTime=0;
 let particles=[];
 
 // sampling
@@ -437,15 +439,20 @@ function setPreset(size,q,qInit,id){
   document.getElementById('btnPlay').textContent='▶ Start';
   document.getElementById('btnPlay').className='';
   COLS=size;ROWS=size;N=size*size;totalEnergy=q;initQA_target=qInit;
-  grid=new Array(N).fill(0);
   document.getElementById('gridSlider').value=size;
   document.getElementById('energySlider').value=q;
   document.getElementById('gridVal').textContent=`${size}×${size}`;
   document.getElementById('energyVal').textContent=q;
-  ['A','B','C','D','E'].forEach(k=>{
-    document.getElementById('pre_'+k).className='preset-btn'+(k===id?' active-preset':'');
+  ['A','B','C','D','E','F'].forEach(k=>{
+    const el=document.getElementById('pre_'+k);if(el)el.className='preset-btn'+(k===id?' active-preset':'');
   });
   activePreset=id;
+  document.getElementById('pre_A').addEventListener('click', () => setPreset(4,10,7,'A'));
+  document.getElementById('pre_B').addEventListener('click', () => setPreset(4,20,14,'B'));
+  document.getElementById('pre_C').addEventListener('click', () => setPreset(6,30,21,'C'));
+  document.getElementById('pre_D').addEventListener('click', () => setPreset(8,60,42,'D'));
+  document.getElementById('pre_E').addEventListener('click', () => setPreset(8,100,70,'E'));
+  document.getElementById('pre_F').addEventListener('click', () => setPreset(16,100,70,'F'));
   initSim();draw();
 }
 
@@ -698,8 +705,8 @@ function updateAll(){
   else{arrow.textContent='←';arrow.style.color=tempColor(1);}
 
   // labels
-  document.getElementById('lblA').textContent=`Solid A  q=${qa}  T=${tA.toFixed(2)}`;
-  document.getElementById('lblB').textContent=`Solid B  q=${qb}  T=${tB.toFixed(2)}`;
+  document.getElementById('lblA').textContent=`Stoff A  q=${qa}  T=${tA.toFixed(2)}`;
+  document.getElementById('lblB').textContent=`Stoff B  q=${qb}  T=${tB.toFixed(2)}`;
   document.getElementById('stepCount').textContent=steps;
   document.getElementById('sampleCount').textContent=sampleTotal.toLocaleString('no');
 
@@ -762,16 +769,20 @@ function updateInsight(qa,qb,lnOtot){
 // ══════════════════════════════════════
 // ANIMATION
 // ══════════════════════════════════════
-function sliderToRate(v){return 0.15*Math.pow(700,v/40);}
-function rateLabel(r){if(r<1)return r.toFixed(2)+'/s';if(r<20)return r.toFixed(1)+'/s';return Math.round(r)+'/s';}
+function sliderToRate(v){return 0.5*Math.pow(100000,v/100);}
+function rateLabel(r){if(r<1)return r.toFixed(2)+'/s';if(r<1000)return Math.round(r)+'/s';if(r<1e6)return (r/1000).toFixed(1)+'k/s';return (r/1e6).toFixed(2)+'M/s';}
 
 function loop(ts){
   if(!running)return;
   const dt=Math.min((ts-lastTime)/1000,0.1);lastTime=ts;
   stepAccum+=sliderToRate(speedMult)*dt;
   const n=Math.floor(stepAccum);stepAccum-=n;
+  const turbo=n>200; // skip particles+draw at high speed
   for(let i=0;i<n;i++)simStep();
-  updateParticles(dt);draw();updateAll();
+  if(!turbo)updateParticles(dt);
+  if(!turbo)draw();
+  else if(ts-lastDrawTime>150){draw();lastDrawTime=ts;} // still refresh ~7fps in turbo
+  updateAll();
   animId=requestAnimationFrame(loop);
 }
 function toggleRun(){
@@ -806,14 +817,14 @@ document.getElementById('energySlider').addEventListener('input',e=>{
 document.getElementById('gridSlider').addEventListener('input',e=>{
   COLS=+e.target.value;ROWS=+e.target.value;
   document.getElementById('gridVal').textContent=`${COLS}×${COLS}`;
-  initSim();draw();
+  initSim();draw();updateAll();
 });
 gc.addEventListener('click',e=>{
   const rect=gc.getBoundingClientRect();const CX=CW/COLS,CY=CH/ROWS;
   const c=Math.floor((e.clientX-rect.left)/CX),r=Math.floor((e.clientY-rect.top)/CY);
   if(c<0||c>=COLS||r<0||r>=ROWS)return;
   const i=r*COLS+c;grid[i]++;totalEnergy++;
-  document.getElementById('energySlider').value=Math.min(totalEnergy,60);
+  document.getElementById('energySlider').value=Math.min(totalEnergy,200);
   document.getElementById('energyVal').textContent=totalEnergy;
   clearHist();cntWith=0;cntAgainst=0;initQA=getQA();
   spawnParticle(i,i,false);if(!running){draw();updateAll();}
@@ -837,14 +848,10 @@ window.addEventListener('resize',()=>{drawHistogram();});
 // ══════════════════════════════════════
 // BOOT
 // ══════════════════════════════════════
-document.getElementById('pre_A').addEventListener('click', () => setPreset(4,10,7,'A'));
-document.getElementById('pre_B').addEventListener('click', () => setPreset(4,20,14,'B'));
-document.getElementById('pre_C').addEventListener('click', () => setPreset(6,30,21,'C'));
-document.getElementById('pre_D').addEventListener('click', () => setPreset(8,60,42,'D'));
-document.getElementById('pre_E').addEventListener('click', () => setPreset(8,100,70,'E'));
 initSim(); draw(); updateAll();
 document.getElementById('speedVal').textContent=rateLabel(sliderToRate(speedMult));
 document.getElementById('pre_A').className='preset-btn active-preset';
 </script>
+</div>
 </body>
 </html>
