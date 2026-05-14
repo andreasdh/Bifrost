@@ -1,0 +1,576 @@
+<style>
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); border: 0; }
+  .canvas-wrap { position: relative; width: 100%; height: 460px; background: #efece5; border-radius: var(--border-radius-lg); overflow: hidden; cursor: grab; touch-action: none; }
+  .canvas-wrap:active { cursor: grabbing; }
+  @media (prefers-color-scheme: dark) { .canvas-wrap { background: #2b2a26; } }
+  .mol-name { position: absolute; top: 10px; background: rgba(255,255,255,0.92); padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500; color: #222; pointer-events: none; border: 0.5px solid rgba(0,0,0,0.12); z-index: 5; }
+  #leftName { left: 12px; }
+  #rightName { right: 12px; }
+  .progress-row { display: flex; align-items: center; gap: 12px; margin-top: 16px; }
+  .progress-row > label { font-size: 14px; color: var(--color-text-secondary); min-width: 70px; }
+  .progress-row > input { flex: 1; }
+  .progress-row > span { font-size: 14px; font-weight: 500; min-width: 40px; text-align: right; font-variant-numeric: tabular-nums; }
+  .controls { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-top: 12px; }
+  .badge { font-size: 12px; padding: 4px 10px; border-radius: var(--border-radius-md); background: var(--color-background-info); color: var(--color-text-info); font-weight: 500; margin-left: auto; }
+  .checkbox-label { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; padding: 0 6px; }
+  .checkbox-label input { margin: 0; width: 15px; height: 15px; cursor: pointer; }
+  button:disabled { opacity: 0.45; cursor: not-allowed; }
+  .pair-row { display: flex; gap: 8px; align-items: center; margin-top: 12px; flex-wrap: wrap; }
+  .pair-row > label { font-size: 13px; color: var(--color-text-secondary); }
+  select { padding: 6px 10px; border: 0.5px solid var(--color-border-secondary); border-radius: var(--border-radius-md); background: var(--color-background-primary); color: var(--color-text-primary); font-size: 13px; font-family: inherit; cursor: pointer; }
+  .legend { display: flex; gap: 14px 18px; flex-wrap: wrap; margin-top: 14px; font-size: 13px; color: var(--color-text-secondary); }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .swatch { width: 13px; height: 13px; border-radius: 50%; display: inline-block; border: 0.5px solid rgba(0,0,0,0.15); }
+  .reaction-eq { font-size: 13px; color: var(--color-text-secondary); margin-top: 14px; padding-top: 12px; border-top: 0.5px solid var(--color-border-tertiary); }
+</style>
+<h2 class="sr-only">Tredimensjonal simulering av kondensasjon og hydrolyse mellom monosakkarider med valg av disakkarid, modelltype, ringkonformasjon, nummerering og stereonotasjon.</h2>
+<div class="canvas-wrap" id="cw">
+  <div class="mol-name" id="leftName">glukose</div>
+  <div class="mol-name" id="rightName">fruktose</div>
+</div>
+<div class="progress-row">
+  <label>Reaksjon</label>
+  <input type="range" id="t" min="0" max="100" value="0" step="1" />
+  <span id="tv">0 %</span>
+</div>
+<div class="controls">
+  <button id="cond"><i class="ti ti-arrow-narrow-right" aria-hidden="true"></i> Kondensasjon</button>
+  <button id="hyd"><i class="ti ti-arrow-narrow-left" aria-hidden="true"></i> Hydrolyse</button>
+  <button id="reset"><i class="ti ti-refresh" aria-hidden="true"></i> Tilbakestill</button>
+  <span class="badge" id="state">glukose + fruktose</span>
+</div>
+<div class="controls">
+  <button id="modeBtn"><i class="ti ti-3d-cube-sphere" aria-hidden="true"></i> <span id="modeLbl">Bytt til: strekformel</span></button>
+  <button id="confBtn"><i class="ti ti-rotate-3d" aria-hidden="true"></i> <span id="confLbl">Bytt til: båt</span></button>
+  <button id="numBtn"><i class="ti ti-numbers" aria-hidden="true"></i> <span id="numLbl">Vis C-nummerering</span></button>
+  <button id="stereoBtn"><i class="ti ti-letter-case" aria-hidden="true"></i> <span id="stereoLbl">Vis stereonotasjon</span></button>
+  <label class="checkbox-label"><input type="checkbox" id="autoRot" /> Autorotér</label>
+</div>
+<div class="pair-row">
+  <label>Disakkarid:</label>
+  <select id="pairSel">
+    <option value="sucrose">Sukrose — glukose + fruktose [1→2]</option>
+    <option value="maltose">Maltose — glukose + glukose [1→4]</option>
+    <option value="lactose">Laktose — galaktose + glukose [1→4]</option>
+  </select>
+</div>
+<div class="legend">
+  <div class="legend-item"><span class="swatch" style="background:#666;"></span>Karbon (C)</div>
+  <div class="legend-item"><span class="swatch" style="background:#e84141;"></span>Oksygen (O)</div>
+  <div class="legend-item"><span class="swatch" style="background:#e8e8e8;"></span>Hydrogen (H)</div>
+  <div class="legend-item"><span class="swatch" style="background:#ffd400;"></span>H som spaltes av</div>
+  <div class="legend-item"><span class="swatch" style="background:#ff7f1f;"></span>OH som spaltes av</div>
+  <div class="legend-item"><i class="ti ti-rotate-360" aria-hidden="true" style="font-size:14px;"></i> Dra for å rotere</div>
+</div>
+<div class="reaction-eq" id="reactionEq">glukose + fruktose ⇌ sukrose + H₂O · (1→2) glykosidbinding</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script>
+(function(){
+  const wrap = document.getElementById('cw');
+  let W = wrap.clientWidth, H = wrap.clientHeight;
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(42, W/H, 0.1, 100);
+  camera.position.set(0, 0.6, 15);
+  camera.lookAt(0, 0.5, 0);
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setSize(W, H);
+  renderer.setPixelRatio(Math.min(2, window.devicePixelRatio || 1));
+  wrap.appendChild(renderer.domElement);
+  renderer.domElement.style.position = 'absolute';
+  renderer.domElement.style.top = '0';
+  renderer.domElement.style.left = '0';
+  renderer.domElement.style.zIndex = '1';
+
+  scene.add(new THREE.AmbientLight(0xffffff, 0.55));
+  const lk = new THREE.DirectionalLight(0xffffff, 0.75); lk.position.set(5, 8, 6); scene.add(lk);
+  const fl = new THREE.DirectionalLight(0xffffff, 0.30); fl.position.set(-6, -3, 4); scene.add(fl);
+
+  const root = new THREE.Group();
+  scene.add(root);
+
+  const COLOR = { C:0x666666, O:0xe84141, H:0xe8e8e8, H_LEAVE:0xffd400, OH_LEAVE_O:0xff7f1f, OH_LEAVE_H:0xffae3a, BRIDGE:0xb84a8a };
+  const RAD = { C: 0.34, O: 0.38, H: 0.22 };
+  const sphereCache = {};
+  function getSphere(t){ if(!sphereCache[t]) sphereCache[t]=new THREE.SphereGeometry(RAD[t]||0.3,18,14); return sphereCache[t]; }
+  function atom(type, color, pos, parent) {
+    const m = new THREE.Mesh(getSphere(type), new THREE.MeshStandardMaterial({ color, roughness:0.38, metalness:0.05, transparent:true, opacity:1 }));
+    m.position.set(pos[0], pos[1], pos[2]);
+    m.userData = { type };
+    if (parent) parent.add(m);
+    return m;
+  }
+  const bondGeom = new THREE.CylinderGeometry(0.085, 0.085, 1, 12);
+  const upY = new THREE.Vector3(0,1,0);
+  function bond(p1, p2, parent, color) {
+    const m = new THREE.Mesh(bondGeom, new THREE.MeshStandardMaterial({ color:color||0x9b9b9b, roughness:0.6, metalness:0.05, transparent:true, opacity:1 }));
+    if (parent) parent.add(m);
+    updateBond(m, p1, p2, 1);
+    return m;
+  }
+  function updateBond(mesh, p1, p2, rs) {
+    const v1 = new THREE.Vector3().fromArray(p1);
+    const v2 = new THREE.Vector3().fromArray(p2);
+    const dir = new THREE.Vector3().subVectors(v2, v1);
+    const len = dir.length();
+    mesh.position.copy(v1).addScaledVector(dir, 0.5);
+    mesh.scale.set(rs, len, rs);
+    if (len > 0.001) mesh.quaternion.setFromUnitVectors(upY, dir.clone().normalize());
+  }
+
+  const GLU_C = {
+    C1:[1.25,0.25,0.30], C2:[0.625,1.082,-0.25], C3:[-0.625,1.082,0.30],
+    C4:[-1.25,0,-0.25], C5:[-0.625,-1.082,0.30], O5:[0.625,-1.082,-0.25],
+    O1:[2.20,0.50,0.65], H1:[2.95,0.35,1.05],
+    O2:[1.20,2.05,-0.90], H2OH:[0.65,2.75,-0.55],
+    O3:[-1.10,2.05,0.90], H3OH:[-0.55,2.75,1.25],
+    O4:[-2.25,-0.20,-0.70], H4OH:[-2.85,0.30,-1.15],
+    C6:[-1.30,-1.90,1.20], O6:[-0.55,-2.60,2.00], H6OH:[-1.00,-3.25,2.25],
+  };
+  const GLU_H = {
+    C1:[1.30,0,0.00], C2:[0.65,0,-1.13], C3:[-0.65,0,-1.13],
+    C4:[-1.30,0,0.00], C5:[-0.65,0,1.13], O5:[0.65,0,1.13],
+    O1:[1.30,-0.85,0.00], H1:[1.30,-1.55,0.00],
+    O2:[0.65,-0.85,-1.13], H2OH:[0.65,-1.55,-1.13],
+    O3:[-0.65,0.85,-1.13], H3OH:[-0.65,1.55,-1.13],
+    O4:[-1.30,-0.85,0.00], H4OH:[-1.30,-1.55,0.00],
+    C6:[-0.65,0.95,1.45], O6:[-1.20,1.55,1.85], H6OH:[-0.95,2.20,2.20],
+  };
+  const GLU_BONDS = [['C1','C2'],['C2','C3'],['C3','C4'],['C4','C5'],['C5','O5'],['O5','C1'],
+    ['C1','O1'],['O1','H1'],['C2','O2'],['O2','H2OH'],['C3','O3'],['O3','H3OH'],
+    ['C4','O4'],['O4','H4OH'],['C5','C6'],['C6','O6'],['O6','H6OH']];
+  const GLU_CARBONS = ['C1','C2','C3','C4','C5','C6'];
+
+  const GAL_C = Object.assign({}, GLU_C, { O4:[-2.25,0.80,-0.70], H4OH:[-2.85,1.45,-1.15] });
+  const GAL_H = Object.assign({}, GLU_H, { O4:[-1.30,0.85,0.00], H4OH:[-1.30,1.55,0.00] });
+
+  const PYRANOSE_ATTACH = {
+    O1:'C1', H1:'C1', O2:'C2', H2OH:'C2', O3:'C3', H3OH:'C3',
+    O4:'C4', H4OH:'C4', C6:'C5', O6:'C5', H6OH:'C5',
+  };
+  const BOAT_SHIFTS = { C1:0.30, C2:0.25, C3:-0.30, C4:0.85, C5:-0.30, O5:0.25 };
+  function chairToBoat(chair) {
+    const boat = {};
+    for (const name in chair) {
+      const ring = (name in BOAT_SHIFTS) ? name : (PYRANOSE_ATTACH[name] || 'C1');
+      const dz = BOAT_SHIFTS[ring] || 0;
+      boat[name] = [chair[name][0], chair[name][1], chair[name][2] + dz];
+    }
+    return boat;
+  }
+  const GLU_B = chairToBoat(GLU_C);
+  const GAL_B = chairToBoat(GAL_C);
+
+  const FRU_C = {
+    C2:[-1.0,0,0.10], C3:[-0.30,1.10,-0.20], C4:[1.05,0.65,0.05],
+    C5:[1.05,-0.85,0.20], O5:[-0.30,-1.05,-0.10],
+    O2:[-1.90,0.10,1.05], H2:[-1.55,0.65,1.85],
+    C1:[-1.55,-1.20,-0.45], O1F:[-2.65,-1.10,-1.20], HO1F:[-2.85,-1.85,-1.65],
+    O3:[-0.85,2.30,0.30], HO3:[-1.50,2.85,-0.05],
+    O4:[2.05,1.15,0.95], HO4:[2.85,1.65,0.55],
+    C6:[1.85,-1.45,1.40], O6:[2.95,-1.85,1.05], HO6:[3.55,-1.20,1.45],
+  };
+  const FRU_H = {
+    C2:[-0.95,0,0.31], C3:[-0.59,0,-0.81], C4:[0.59,0,-0.81],
+    C5:[0.95,0,0.31], O5:[0,0,1.00],
+    O2:[-0.95,-0.85,0.31], H2:[-0.95,-1.55,0.31],
+    C1:[-0.95,0.95,0.31], O1F:[-1.55,1.55,0.45], HO1F:[-1.95,2.10,0.65],
+    O3:[-0.59,0.85,-0.81], HO3:[-0.59,1.55,-0.81],
+    O4:[0.59,-0.85,-0.81], HO4:[0.59,-1.55,-0.81],
+    C6:[0.95,-0.95,0.31], O6:[1.55,-1.55,0.45], HO6:[1.95,-2.10,0.65],
+  };
+  const FRU_BONDS = [['C2','C3'],['C3','C4'],['C4','C5'],['C5','O5'],['O5','C2'],
+    ['C2','O2'],['O2','H2'],['C2','C1'],['C1','O1F'],['O1F','HO1F'],
+    ['C3','O3'],['O3','HO3'],['C4','O4'],['O4','HO4'],
+    ['C5','C6'],['C6','O6'],['O6','HO6']];
+  const FRU_CARBONS = ['C1','C2','C3','C4','C5','C6'];
+
+  const MOL = {
+    glucose:   { chair: GLU_C, boat: GLU_B, haworth: GLU_H, bonds: GLU_BONDS, carbons: GLU_CARBONS },
+    galactose: { chair: GAL_C, boat: GAL_B, haworth: GAL_H, bonds: GLU_BONDS, carbons: GLU_CARBONS },
+    fructose:  { chair: FRU_C, boat: FRU_C, haworth: FRU_H, bonds: FRU_BONDS, carbons: FRU_CARBONS },
+  };
+
+  const PAIRS = {
+    sucrose: {
+      short:'sukrose', leftShort:'glukose', leftFull:'α-D-glukose',
+      rightShort:'fruktose', rightFull:'β-D-fruktose',
+      leftType:'glucose', rightType:'fructose',
+      leftBridgeO:'O1', leftLeaveH:'H1',
+      rightBondC:'C2', rightLeaveO:'O2', rightLeaveH:'H2',
+      linkageShort:'(1→2)', linkageFull:'α(1→2)',
+      layouts:{ ball_stick:{gx:-3.3,fxStart:3.6,fxEnd:1.8}, haworth:{gx:-2.7,fxStart:3.2,fxEnd:1.4} },
+    },
+    maltose: {
+      short:'maltose', leftShort:'glukose', leftFull:'α-D-glukose',
+      rightShort:'glukose', rightFull:'α-D-glukose',
+      leftType:'glucose', rightType:'glucose',
+      leftBridgeO:'O1', leftLeaveH:'H1',
+      rightBondC:'C4', rightLeaveO:'O4', rightLeaveH:'H4OH',
+      linkageShort:'(1→4)', linkageFull:'α(1→4)',
+      layouts:{ ball_stick:{gx:-3.3,fxStart:3.8,fxEnd:1.5}, haworth:{gx:-2.7,fxStart:3.2,fxEnd:1.4} },
+    },
+    lactose: {
+      short:'laktose', leftShort:'galaktose', leftFull:'β-D-galaktose',
+      rightShort:'glukose', rightFull:'α-D-glukose',
+      leftType:'galactose', rightType:'glucose',
+      leftBridgeO:'O1', leftLeaveH:'H1',
+      rightBondC:'C4', rightLeaveO:'O4', rightLeaveH:'H4OH',
+      linkageShort:'(1→4)', linkageFull:'β(1→4)',
+      layouts:{ ball_stick:{gx:-3.3,fxStart:3.8,fxEnd:1.5}, haworth:{gx:-2.7,fxStart:3.2,fxEnd:1.4} },
+    },
+  };
+
+  function makeLabelSprite(text) {
+    const cv = document.createElement('canvas');
+    cv.width = 128; cv.height = 64;
+    const ctx = cv.getContext('2d');
+    ctx.font = 'bold 38px sans-serif';
+    const tw = ctx.measureText(text).width;
+    const padX = 12, bx = (128-tw)/2-padX, by = 10, bw = tw+padX*2, bh = 44;
+    ctx.fillStyle = 'rgba(255,255,255,0.92)';
+    const r = 8;
+    ctx.beginPath();
+    ctx.moveTo(bx+r,by); ctx.lineTo(bx+bw-r,by); ctx.quadraticCurveTo(bx+bw,by,bx+bw,by+r);
+    ctx.lineTo(bx+bw,by+bh-r); ctx.quadraticCurveTo(bx+bw,by+bh,bx+bw-r,by+bh);
+    ctx.lineTo(bx+r,by+bh); ctx.quadraticCurveTo(bx,by+bh,bx,by+bh-r);
+    ctx.lineTo(bx,by+r); ctx.quadraticCurveTo(bx,by,bx+r,by); ctx.closePath();
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(40,40,40,0.45)'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.fillStyle = '#222'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText(text, 64, 32);
+    const tex = new THREE.CanvasTexture(cv); tex.minFilter = THREE.LinearFilter;
+    const mat = new THREE.SpriteMaterial({ map:tex, transparent:true, depthTest:false });
+    const sp = new THREE.Sprite(mat);
+    sp.scale.set(0.85, 0.42, 1);
+    sp.visible = false; sp.renderOrder = 999;
+    return sp;
+  }
+  function labelOffset(p, mode) {
+    if (mode === 'haworth') {
+      const x=p[0], z=p[2], r=Math.hypot(x,z);
+      if (r < 0.05) return [0, 0.7, 0];
+      return [x/r*0.9, 0.0, z/r*0.9];
+    }
+    return [0, 0.85, 0];
+  }
+  function getCoords(def, mode, conf) {
+    if (mode === 'haworth') return def.haworth;
+    return conf === 'boat' ? def.boat : def.chair;
+  }
+
+  let leftMol = null, rightMol = null;
+  let currentPair = 'sucrose';
+  let currentMode = 'ball_stick';
+  let currentConf = 'chair';
+  let numbered = false;
+  let stereoOn = false;
+  let autoRotate = false;
+  let animTarget = 0, animCurrent = 0, animating = false;
+
+  function colorFor(name, side, pair) {
+    if (side === 'left' && name === pair.leftLeaveH) return COLOR.H_LEAVE;
+    if (side === 'right' && name === pair.rightLeaveO) return COLOR.OH_LEAVE_O;
+    if (side === 'right' && name === pair.rightLeaveH) return COLOR.OH_LEAVE_H;
+    if (name[0] === 'C') return COLOR.C;
+    if (name[0] === 'O') return COLOR.O;
+    return COLOR.H;
+  }
+  function typeOf(n){ if(n[0]==='C')return 'C'; if(n[0]==='O')return 'O'; return 'H'; }
+  function capitalize(s){ return s.charAt(0).toUpperCase()+s.slice(1); }
+  function nameLeft(p){ return stereoOn ? p.leftFull : p.leftShort; }
+  function nameRight(p){ return stereoOn ? p.rightFull : p.rightShort; }
+  function nameLink(p){ return stereoOn ? p.linkageFull : p.linkageShort; }
+
+  function buildSide(side, pair) {
+    const type = side === 'left' ? pair.leftType : pair.rightType;
+    const def = MOL[type];
+    const coords = getCoords(def, currentMode, currentConf);
+    const group = new THREE.Group();
+    const atoms = {}, bonds = {}, labels = {};
+    for (const n in coords) atoms[n] = atom(typeOf(n), colorFor(n, side, pair), coords[n], group);
+    for (const [a,b] of def.bonds) bonds[a+'_'+b] = bond(coords[a], coords[b], group);
+    for (const c of def.carbons) {
+      if (coords[c]) {
+        const sp = makeLabelSprite(c);
+        const o = labelOffset(coords[c], currentMode);
+        sp.position.set(coords[c][0]+o[0], coords[c][1]+o[1], coords[c][2]+o[2]);
+        sp.visible = numbered;
+        group.add(sp);
+        labels[c] = sp;
+      }
+    }
+    return { group, atoms, bonds, labels, type };
+  }
+
+  const water = new THREE.Group();
+  atom('O', COLOR.OH_LEAVE_O, [0,0,0], water);
+  atom('H', COLOR.OH_LEAVE_H, [-0.78, 0.55, 0], water);
+  atom('H', COLOR.H_LEAVE,    [ 0.78, 0.55, 0], water);
+  bond([0,0,0], [-0.78, 0.55, 0], water);
+  bond([0,0,0], [ 0.78, 0.55, 0], water);
+  water.scale.setScalar(0.001);
+  root.add(water);
+
+  const bridgeBond = bond([0,0,0], [0,1,0], null, COLOR.BRIDGE);
+  bridgeBond.scale.set(1, 0.001, 1);
+  root.add(bridgeBond);
+
+  function disposeMol(mol) {
+    if (!mol) return;
+    root.remove(mol.group);
+    mol.group.traverse(o => {
+      if (o.material) {
+        if (o.material.map) o.material.map.dispose();
+        o.material.dispose();
+      }
+    });
+  }
+  function applyAtomScales() {
+    const skel = currentMode === 'haworth';
+    const sC = skel ? 0.001 : 1.0, sO = skel ? 0.62 : 1.0, sH = skel ? 0.50 : 1.0;
+    function scaleObj(obj) {
+      obj.traverse(o => {
+        if (o.userData && o.userData.type) {
+          const t = o.userData.type;
+          o.scale.setScalar(t==='C'?sC:t==='O'?sO:sH);
+        }
+      });
+    }
+    if (leftMol) scaleObj(leftMol.group);
+    if (rightMol) scaleObj(rightMol.group);
+    scaleObj(water);
+  }
+  function updateNames() {
+    const pair = PAIRS[currentPair];
+    document.getElementById('leftName').textContent = nameLeft(pair);
+    document.getElementById('rightName').textContent = nameRight(pair);
+    document.getElementById('reactionEq').textContent = `${nameLeft(pair)} + ${nameRight(pair)} ⇌ ${pair.short} + H₂O · ${nameLink(pair)} glykosidbinding`;
+    const sel = document.getElementById('pairSel');
+    for (const opt of sel.options) {
+      const p = PAIRS[opt.value];
+      opt.textContent = `${capitalize(p.short)} — ${nameLeft(p)} + ${nameRight(p)} [${nameLink(p)}]`;
+    }
+  }
+
+  function rebuild() {
+    disposeMol(leftMol); disposeMol(rightMol);
+    const pair = PAIRS[currentPair];
+    leftMol = buildSide('left', pair);
+    rightMol = buildSide('right', pair);
+    const lay = pair.layouts[currentMode];
+    leftMol.group.position.x = lay.gx;
+    rightMol.group.position.x = lay.fxStart;
+    root.add(leftMol.group);
+    root.add(rightMol.group);
+    applyAtomScales();
+    updateNames();
+    setReaction(animCurrent);
+  }
+
+  function updateGeometry() {
+    if (!leftMol || !rightMol) return;
+    const pair = PAIRS[currentPair];
+    const lc = getCoords(MOL[pair.leftType], currentMode, currentConf);
+    const rc = getCoords(MOL[pair.rightType], currentMode, currentConf);
+    const lay = pair.layouts[currentMode];
+    const bs = currentMode === 'haworth' ? 0.55 : 1.0;
+    for (const n in lc) if (leftMol.atoms[n]) leftMol.atoms[n].position.fromArray(lc[n]);
+    for (const n in rc) if (rightMol.atoms[n]) rightMol.atoms[n].position.fromArray(rc[n]);
+    for (const k in leftMol.bonds) {
+      const [a,b] = k.split('_');
+      if (lc[a] && lc[b]) updateBond(leftMol.bonds[k], lc[a], lc[b], bs);
+    }
+    for (const k in rightMol.bonds) {
+      const [a,b] = k.split('_');
+      if (rc[a] && rc[b]) updateBond(rightMol.bonds[k], rc[a], rc[b], bs);
+    }
+    for (const c in leftMol.labels) if (lc[c]) {
+      const o = labelOffset(lc[c], currentMode);
+      leftMol.labels[c].position.set(lc[c][0]+o[0], lc[c][1]+o[1], lc[c][2]+o[2]);
+    }
+    for (const c in rightMol.labels) if (rc[c]) {
+      const o = labelOffset(rc[c], currentMode);
+      rightMol.labels[c].position.set(rc[c][0]+o[0], rc[c][1]+o[1], rc[c][2]+o[2]);
+    }
+    leftMol.group.position.x = lay.gx;
+    applyAtomScales();
+    setReaction(animCurrent);
+  }
+
+  function setOpacity(obj, op) {
+    if (!obj) return;
+    if (obj.material) { obj.material.opacity = op; obj.visible = op > 0.01; }
+    if (obj.children) for (const c of obj.children) setOpacity(c, op);
+  }
+  function clamp(x){ return Math.max(0, Math.min(1, x)); }
+  function lerp(a,b,t){ return a + (b-a)*t; }
+
+  const stateEl = document.getElementById('state');
+  function setReaction(t) {
+    if (!leftMol || !rightMol) return;
+    const pair = PAIRS[currentPair];
+    const lay = pair.layouts[currentMode];
+    const skel = currentMode === 'haworth';
+    const bondScale = skel ? 0.55 : 1.0;
+
+    const fxT = clamp(t / 0.5);
+    rightMol.group.position.x = lerp(lay.fxStart, lay.fxEnd, fxT);
+
+    const breakStart = 0.40, breakEnd = 0.55;
+    const breakT = clamp((t - breakStart) / (breakEnd - breakStart));
+    const fade = 1 - breakT;
+    setOpacity(leftMol.atoms[pair.leftLeaveH], fade);
+    setOpacity(rightMol.atoms[pair.rightLeaveO], fade);
+    setOpacity(rightMol.atoms[pair.rightLeaveH], fade);
+    setOpacity(leftMol.bonds[pair.leftBridgeO + '_' + pair.leftLeaveH], fade);
+    setOpacity(rightMol.bonds[pair.rightBondC + '_' + pair.rightLeaveO], fade);
+    setOpacity(rightMol.bonds[pair.rightLeaveO + '_' + pair.rightLeaveH], fade);
+
+    const waterFade = clamp((t - 0.45) / 0.10);
+    if (waterFade > 0.01) {
+      const dirY = skel ? -1 : 1;
+      const fp = new THREE.Vector3(-0.3, 1.5*dirY, 0.7);
+      const ap = new THREE.Vector3(2.6, 4.4*dirY, -0.6);
+      const fT = clamp((t - breakEnd) / (1 - breakEnd));
+      water.position.lerpVectors(fp, ap, fT);
+      water.scale.setScalar(lerp(0.4, 1, waterFade) * (skel ? 0.7 : 1));
+      water.rotation.z = fT * 0.7 * dirY;
+      water.rotation.y = fT * 1.1;
+      setOpacity(water, waterFade);
+      applyAtomScales();
+    } else {
+      setOpacity(water, 0);
+      water.scale.setScalar(0.001);
+    }
+
+    const bridgeT = clamp((t - 0.45) / 0.15);
+    if (bridgeT > 0.01) {
+      const oW = new THREE.Vector3().copy(leftMol.atoms[pair.leftBridgeO].position).add(leftMol.group.position);
+      const cW = new THREE.Vector3().copy(rightMol.atoms[pair.rightBondC].position).add(rightMol.group.position);
+      const dir = new THREE.Vector3().subVectors(cW, oW);
+      const len = dir.length();
+      bridgeBond.position.copy(oW).addScaledVector(dir, 0.5);
+      bridgeBond.scale.set(bondScale, len, bondScale);
+      if (len > 0.001) bridgeBond.quaternion.setFromUnitVectors(upY, dir.clone().normalize());
+      setOpacity(bridgeBond, bridgeT);
+    } else {
+      setOpacity(bridgeBond, 0);
+    }
+
+    if (t < 0.04) stateEl.textContent = `${nameLeft(pair)} + ${nameRight(pair)}`;
+    else if (t > 0.96) stateEl.textContent = `${pair.short} + H₂O`;
+    else if (t < breakStart) stateEl.textContent = 'Molekyler nærmer seg';
+    else if (t < breakEnd) stateEl.textContent = 'Bindinger brytes/dannes';
+    else stateEl.textContent = 'Vannmolekyl frigjøres';
+  }
+
+  let rotX = -0.18, rotY = 0;
+  function applyRot(){ root.rotation.x = rotX; root.rotation.y = rotY; }
+  applyRot();
+
+  let dragging = false, prev = {x:0, y:0};
+  const canvas = renderer.domElement;
+  canvas.addEventListener('pointerdown', e => { dragging = true; prev = {x:e.clientX, y:e.clientY}; canvas.setPointerCapture(e.pointerId); });
+  canvas.addEventListener('pointermove', e => {
+    if (!dragging) return;
+    rotY += (e.clientX-prev.x)*0.008;
+    rotX += (e.clientY-prev.y)*0.008;
+    rotX = Math.max(-1.4, Math.min(1.4, rotX));
+    prev = {x:e.clientX, y:e.clientY};
+    applyRot();
+  });
+  canvas.addEventListener('pointerup', () => { dragging = false; });
+  canvas.addEventListener('pointercancel', () => { dragging = false; });
+
+  const slider = document.getElementById('t');
+  const tv = document.getElementById('tv');
+  slider.addEventListener('input', () => {
+    animating = false;
+    const t = parseInt(slider.value, 10) / 100;
+    animCurrent = t;
+    setReaction(t);
+    tv.textContent = slider.value + ' %';
+  });
+  document.getElementById('cond').onclick = () => { animTarget = 1; animating = true; };
+  document.getElementById('hyd').onclick = () => { animTarget = 0; animating = true; };
+  document.getElementById('reset').onclick = () => {
+    animating = false; animCurrent = 0; animTarget = 0;
+    slider.value = 0; tv.textContent = '0 %'; setReaction(0);
+    rotX = currentMode === 'haworth' ? -0.45 : -0.18; rotY = 0; applyRot();
+  };
+
+  function setNumbered(on) {
+    numbered = on;
+    if (leftMol) for (const c in leftMol.labels) leftMol.labels[c].visible = on;
+    if (rightMol) for (const c in rightMol.labels) rightMol.labels[c].visible = on;
+    document.getElementById('numLbl').textContent = on ? 'Skjul C-nummerering' : 'Vis C-nummerering';
+  }
+  document.getElementById('numBtn').onclick = () => setNumbered(!numbered);
+
+  function updateConfBtnState() {
+    const btn = document.getElementById('confBtn');
+    btn.disabled = currentMode === 'haworth';
+  }
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('modeLbl').textContent = mode === 'haworth' ? 'Bytt til: kulepinne' : 'Bytt til: strekformel';
+    updateConfBtnState();
+    updateGeometry();
+    if (mode === 'haworth' && rotX > -0.30) { rotX = -0.45; applyRot(); }
+    if (mode === 'ball_stick' && rotX < -0.35) { rotX = -0.18; applyRot(); }
+  }
+  document.getElementById('modeBtn').onclick = () => setMode(currentMode === 'haworth' ? 'ball_stick' : 'haworth');
+
+  function setConf(conf) {
+    currentConf = conf;
+    document.getElementById('confLbl').textContent = conf === 'boat' ? 'Bytt til: stol' : 'Bytt til: båt';
+    updateGeometry();
+  }
+  document.getElementById('confBtn').onclick = () => setConf(currentConf === 'boat' ? 'chair' : 'boat');
+
+  function setStereo(on) {
+    stereoOn = on;
+    document.getElementById('stereoLbl').textContent = on ? 'Skjul stereonotasjon' : 'Vis stereonotasjon';
+    updateNames();
+    setReaction(animCurrent);
+  }
+  document.getElementById('stereoBtn').onclick = () => setStereo(!stereoOn);
+
+  document.getElementById('autoRot').addEventListener('change', e => { autoRotate = e.target.checked; });
+  document.getElementById('pairSel').addEventListener('change', e => {
+    currentPair = e.target.value;
+    animating = false; animCurrent = 0; animTarget = 0;
+    slider.value = 0; tv.textContent = '0 %';
+    rebuild();
+  });
+
+  window.addEventListener('resize', () => {
+    W = wrap.clientWidth; H = wrap.clientHeight;
+    camera.aspect = W / H; camera.updateProjectionMatrix();
+    renderer.setSize(W, H);
+  });
+
+  rebuild();
+  setReaction(0);
+
+  let last = performance.now();
+  function loop(now) {
+    const dt = Math.min(0.05, (now - last) / 1000); last = now;
+    if (animating) {
+      const speed = 0.55;
+      const dir = Math.sign(animTarget - animCurrent);
+      animCurrent += dir * speed * dt;
+      if ((dir > 0 && animCurrent >= animTarget) || (dir < 0 && animCurrent <= animTarget) || dir === 0) {
+        animCurrent = animTarget; animating = false;
+      }
+      slider.value = Math.round(animCurrent * 100);
+      tv.textContent = slider.value + ' %';
+      setReaction(animCurrent);
+    }
+    if (!dragging && autoRotate) { rotY += dt * 0.35; applyRot(); }
+    renderer.render(scene, camera);
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+})();
+</script>
