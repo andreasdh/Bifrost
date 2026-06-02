@@ -1,0 +1,226 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.container{padding:1rem 0;max-width:680px}
+.tabs{display:flex;gap:8px;margin-bottom:1.5rem}
+.tab{padding:6px 16px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:14px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.tab.active{background:var(--color-background-secondary);color:var(--color-text-primary);border-color:var(--color-border-primary)}
+.section{display:none}
+.section.active{display:block}
+.qblock{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.qnum{font-size:12px;color:var(--color-text-tertiary);margin-bottom:6px}
+.qtext{font-size:15px;color:var(--color-text-primary);margin-bottom:12px;line-height:1.6}
+.opts{display:flex;flex-direction:column;gap:6px}
+.opt{display:flex;align-items:flex-start;gap:10px;padding:8px 12px;border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);cursor:pointer;font-size:14px;color:var(--color-text-primary);background:var(--color-background-primary);text-align:left}
+.opt:hover{background:var(--color-background-secondary)}
+.opt.correct{background:#EAF3DE;border-color:#639922;color:#3B6D11}
+.opt.wrong{background:#FCEBEB;border-color:#E24B4A;color:#A32D2D}
+.olbl{font-weight:500;min-width:18px}
+.fb{margin-top:10px;font-size:13px;padding:8px 12px;border-radius:var(--border-radius-md);display:none;line-height:1.6}
+.fb.show{display:block}
+.fb.correct{background:#EAF3DE;color:#3B6D11}
+.fb.wrong{background:#FCEBEB;color:#A32D2D}
+.scorebar{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:10px 16px;margin-bottom:1.5rem;font-size:14px;color:var(--color-text-secondary);display:flex;justify-content:space-between;align-items:center}
+.scoreval{font-size:18px;font-weight:500;color:var(--color-text-primary)}
+.ksblock{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem 1.25rem;margin-bottom:1rem}
+.ksq{font-size:15px;color:var(--color-text-primary);margin-bottom:10px;line-height:1.6}
+.tbtn{font-size:13px;padding:5px 12px;border:0.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}
+.ksans{margin-top:10px;font-size:14px;background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;padding:10px 14px;color:var(--color-text-primary);line-height:1.6;display:none;border-left:3px solid #1D9E75}
+.ksans.show{display:block}
+.hint{font-size:12px;color:var(--color-text-tertiary);margin-top:6px}
+</style>
+
+<div class="container">
+<div class="tabs">
+  <button class="tab active" onclick="showTab('flervalg')">Flervalgsspørsmål (20)</button>
+  <button class="tab" onclick="showTab('kortsvars')">Kortsvarsoppgaver (20)</button>
+</div>
+<div id="sf" class="section active">
+  <div class="scorebar"><span>Poeng</span><span class="scoreval" id="score">0 / 20</span></div>
+</div>
+<div id="sk" class="section"></div>
+</div>
+
+<script>
+const Q=[
+  {q:"Hvilken forbindelse har høyest kokepunkt?",
+   opts:["Pentan (C₅H₁₂)","Butan-1-ol (C₄H₉OH)","Dietyleter (C₂H₅OC₂H₅)","Butan (C₄H₁₀)"],
+   ans:1,
+   exp:"Butan-1-ol har høyest kokepunkt fordi alkoholer danner hydrogenbindinger (O–H···O), som krever mer energi å bryte enn London-dispersjonskrefter (alkaner) eller dipolkrefter (etere)."},
+  {q:"Et karbonatom i en ester er hybridisert som:",
+   opts:["sp³","sp²","sp","dsp²"],
+   ans:1,
+   exp:"Karbonylkarbonet i en ester (–COO–) er sp²-hybridisert og har trigonal plangeometri rundt seg. π-bindingen dannes av de gjenstående p-orbitalene på karbon og oksygen."},
+  {q:"Hvilken funksjonell gruppe gjør en forbindelse mest løselig i vann?",
+   opts:["Alkylgruppe (–CH₃)","Etergruppe (–O–)","Karboksylsyre (–COOH)","Halogengruppe (–Cl)"],
+   ans:2,
+   exp:"Karboksylsyrer kan både gi og ta imot hydrogenbindinger, og kan ioniseres i vann. Begge deler bidrar til svært god løselighet."},
+  {q:"En SN2-reaksjon kjennetegnes ved at nukleofilen:",
+   opts:["Venter på at substratet danner et karbokation før det angriper","Angriper det samme karbonet som avgangsgruppen sitter på, i ett enkelt trinn","Reagerer med frie radikaler i to trinn","Angriper et naborkarbon og skyver ut avgangsgruppen"],
+   ans:1,
+   exp:"I SN2 angriper nukleofilen det karbonbærende substratet fra motsatt side av avgangsgruppen i ett trinn — mens avgangsgruppen forlater. Reaksjonen er andrenordens (avhenger av konsentrasjonen til begge reaktanter)."},
+  {q:"Hvilken av følgende er en nukleofil?",
+   opts:["H⁺","AlCl₃","BF₃","CN⁻"],
+   ans:3,
+   exp:"CN⁻ har et enslig elektronpar det kan donere og er negativt ladet — klassisk nukleofil. H⁺, AlCl₃ og BF₃ er alle elektrofiler (elektronparsøkende)."},
+  {q:"Cis-but-2-en og trans-but-2-en er eksempler på:",
+   opts:["Konformasjonsisomere","Enantiomere","Geometriske (cis/trans) isomere","Strukturisomere"],
+   ans:2,
+   exp:"Cis- og trans-isomere rundt en C=C-dobbeltbinding er geometriske isomere. De har samme rekkefølge av bindinger mellom atomer, men ulik romlig plassering av substituenter, og kan ikke omvendes uten å bryte bindinger."},
+  {q:"Hva skjer med redokstallet til karbonylkarbonet når propan-1-ol oksideres til propanal?",
+   opts:["Det øker (mer positivt)","Det minker (mer negativt)","Det forblir uendret","Det avhenger av pH"],
+   ans:0,
+   exp:"Ved oksidasjon mister karbonet elektroner — redokstallet øker. I en primær alkohol (–CH₂OH) er det aktuelle karbonet typisk –1; i aldehyd (–CHO) er det +1."},
+  {q:"Konjugerte π-systemer absorberer lys ved lengre bølgelengder enn ikke-konjugerte systemer. Hva er den beste forklaringen?",
+   opts:["Konjugerte systemer har høyere molarmasse","Delokalisering av π-elektronene senker energigapet som må overvinnes ved lysabsorpsjon","Konjugerte systemer er mer polare","Ikke-konjugerte systemer har sterkere σ-bindinger"],
+   ans:1,
+   exp:"I konjugerte systemer overlapper p-orbitalene langs kjeden og π-elektronene er delokalisert. Dette senker energigapet som må til for å eksitere et elektron, noe som svarer til lavere fotonenergi og lengre bølgelengde."},
+  {q:"Hvilken forbindelse kan IKKE donere hydrogenbindinger?",
+   opts:["Etansyre (CH₃COOH)","Etanol (C₂H₅OH)","Dietyleter (C₂H₅OC₂H₅)","Metylamin (CH₃NH₂)"],
+   ans:2,
+   exp:"Dietyleter mangler O–H eller N–H bindinger og kan ikke donere hydrogenbindinger. Det kan ta imot hydrogenbindinger via oksigens enslige elektronpar, men danner dem ikke med seg selv."},
+  {q:"Hvilken reaksjonstype skjer når en ester reagerer med NaOH-løsning og gir karboksylat og alkohol?",
+   opts:["Elektrofil addisjon","SN2","Nukleofil acyl-substitusjon (basehydrolyse)","Eliminasjon"],
+   ans:2,
+   exp:"OH⁻ angriper det elektrofile karbonylkarbonet i en nukleofil acyl-substitusjonsreaksjon. Esterbindingen brytes og man får karboksylat + alkohol som produkter."},
+  {q:"Hvilket utsagn om enantiomere er korrekt?",
+   opts:["De har ulike smeltepunkter","De er speilbilder av hverandre som ikke kan legges oppå hverandre","De har ulike kokepunkter i rent form","De har ulikt antall karboner"],
+   ans:1,
+   exp:"Enantiomere er ikke-superimponerbare speilbilder av hverandre. De har identiske fysikalske egenskaper (smeltepunkt, kokepunkt) unntatt evnen til å rotere polarisert lys i motsatte retninger."},
+  {q:"Hva er produktet når en sekundær alkohol oksideres?",
+   opts:["Karboksylsyre","Aldehyd","Keton","Alken"],
+   ans:2,
+   exp:"Sekundære alkoholer (R₂CHOH) oksideres til ketoner (R₂C=O). Primære alkoholer gir aldehyder (og videre karboksylsyrer ved sterkere oksidasjon), mens tertiære alkoholer ikke lar seg oksidere under milde betingelser."},
+  {q:"I en SN1-reaksjon er det hastighetsbestemmende trinnet:",
+   opts:["Angrep av nukleofilen på substratet","Dannelse av et karbokation","Deprotonering av substratet","Eliminasjon av halogenid"],
+   ans:1,
+   exp:"SN1 er en to-trinns reaksjon. Første trinn — ionisering til karbokation — er det langsomme, hastighetsbestemmende trinnet. Nukleofilen angriper det allerede dannede karbokationet i trinn to."},
+  {q:"Hvilken hybridisering har et karbon i en trippelbinding (alkyn)?",
+   opts:["sp³","sp²","sp","d²sp³"],
+   ans:2,
+   exp:"Alkyners karboner er sp-hybridisert: to sp-orbitaler danner σ-bindinger (180° bindingsvinkel, lineær geometri), mens de to gjenstående uberørte p-orbitalene på hvert karbon danner to π-bindinger."},
+  {q:"Hvilken forbindelse er et strukturisomer av propan-1-ol?",
+   opts:["Propan-2-ol","Butan-1-ol","Etanol","Propen"],
+   ans:0,
+   exp:"Propan-1-ol (CH₃CH₂CH₂OH) og propan-2-ol (CH₃CHOHCH₃) har begge molekylformelen C₃H₈O men ulik rekkefølge av bindinger mellom atomene — de er strukturisomere. De andre alternativene har ulik molekylformel."},
+  {q:"Hva kjennetegner en kondensasjonsreaksjon?",
+   opts:["Tilsetning av H₂O over en dobbeltbinding","To molekyler reagerer og avgir et lite molekyl, f.eks. H₂O","Splitting av en binding med frie radikaler","Eliminasjon av HX fra et alkylhalid"],
+   ans:1,
+   exp:"I en kondensasjonsreaksjon kobles to molekyler og avgir et lite molekyl som H₂O. Eksempler er esterdannelse (syre + alkohol → ester + H₂O) og dannelse av peptidbindinger mellom aminosyrer."},
+  {q:"Hvilken av følgende forbindelser er aromatisk?",
+   opts:["Sykloheksen","Sykloheksadien","Benzen","Sykloheksan"],
+   ans:2,
+   exp:"Benzen oppfyller kravene til aromatisitet: plangeometri, lukket konjugert ring og 6 π-elektroner (passer formelen 4n+2 med n=1). De andre alternativene er ikke fullt konjugerte rundt ringen."},
+  {q:"Hva er hovedproduktet når HBr adderes til propen (CH₃CH=CH₂)?",
+   opts:["1-brompropan","2-brompropan","1,2-dibrompropan","Propan"],
+   ans:1,
+   exp:"Proton adderes til den enden av dobbeltbindingen som har flest hydrogen (CH₂-enden), slik at det dannes et sekundært karbokation ved C2 — dette er mer stabilt enn et primært. Br⁻ angriper deretter karbokation-karbonet → 2-brompropan."},
+  {q:"Hvilken av følgende er en eliminasjonsreaksjon?",
+   opts:["CH₃Br + OH⁻ → CH₃OH + Br⁻","CH₂=CH₂ + HBr → CH₃CH₂Br","CH₃CH₂Br + KOH i etanol → CH₂=CH₂ + KBr + H₂O","CH₃COOH + CH₃OH → CH₃COOCH₃ + H₂O"],
+   ans:2,
+   exp:"Eliminasjon fjerner atomer fra to nabokarboner og danner en dobbeltbinding. Her fjernes HBr fra etylbromid ved hjelp av sterk base i alkoholisk løsning → eten dannes."},
+  {q:"Hvilket utsagn om homolytisk kløyving av en kovalent binding er korrekt?",
+   opts:["Begge elektroner i bindingen går til ett atom","Hvert atom beholder ett elektron fra bindingen","Det dannes et karbokation og et karboanion","Det krever alltid metallkatalysator"],
+   ans:1,
+   exp:"Ved homolytisk kløyving deles elektronparet likt — hvert atom beholder ett elektron og det dannes to frie radikaler. Dette er i motsetning til heterolytisk kløyving, der begge elektroner går til ett atom og det dannes ioner."}
+];
+
+const KS=[
+  {q:"Forklar med utgangspunkt i hybridisering og VSEPR hvorfor benzen er et plant molekyl, mens sykloheksan er det ikke.",
+   ans:"Hvert karbon i benzen er sp²-hybridisert (tre hybridorbitaler, bindingsvinkel 120°, trigonal plan geometri). De gjenværende uberørte p-orbitalene peker vinkelrett på planet og overlapper rundt hele ringen til et delokalisert π-system — alle atomer må ligge i samme plan for at overlappet skal være optimalt. Sykloheksan har sp³-karboner (fire hybridorbitaler, bindingsvinkel ~109,5°), og ringen bøyer seg til en stolkonformasjon for å minimere vinkel- og torsjonsspenning.",
+   hint:"Hybridisering → geometri → konsekvens for ringen."},
+  {q:"Sett redokstall på karbonet i følgende forbindelser og ranger dem fra mest til minst oksidert: CH₄, CO₂, CH₃OH, HCHO (metanal).",
+   ans:"Bruk H = +1 og O = –2, løs for C i hvert tilfelle: CH₄ → C = –4 | CH₃OH → C = –2 | HCHO → C = 0 | CO₂ → C = +4. Rekkefølge fra mest til minst oksidert: CO₂ > HCHO > CH₃OH > CH₄.",
+   hint:"H = +1, O = –2. Løs for C."},
+  {q:"Forklar hva som skiller et intermediat fra en overgangstilstand i et energidiagram for en kjemisk reaksjon.",
+   ans:"Et intermediat er en lokal energiminimum — en reell kjemisk forbindelse med endelig levetid som i prinsippet kan isoleres. En overgangstilstand er et energimaksimum — et øyeblikksbilde av molekylene akkurat i det bindinger brytes og/eller dannes. Levetiden til en overgangstilstand er uendelig kort, og den kan ikke isoleres. I et energidiagram for en totrinnreaksjon er intermediatet i 'dalen' mellom de to energitoppene.",
+   hint:"Se for deg et energidiagram med to 'topper' — hva er i dalen?"},
+  {q:"Forklar hvorfor etansyre (pKa ~ 4,7) er en sterkere syre enn etanol (pKa ~ 16). Bruk resonansstabilisering i forklaringen.",
+   ans:"Når etansyre avgir H⁺, dannes acetat-ionet (CH₃COO⁻). Den negative ladningen er delokalisert over begge oksygenene via resonans: de to C–O-bindingene er identiske, med bindingsorden ~1,5. Denne delokaliserte ladningen stabiliserer den konjugerte basen kraftig. Etoksid-ionet (C₂H₅O⁻), konjugert base til etanol, har ingen slik resonansstabilisering — ladningen sitter lokalisert på ett oksygen. Jo mer stabil den konjugerte basen er, desto lavere pKa og desto sterkere syre.",
+   hint:"Hva skjer med ladningen i konjugert base for hvert tilfelle?"},
+  {q:"Hvilke intermolekylære krefter fins mellom to molekyler av (a) heksan og (b) etansyre? Forklar hvorfor etansyre har mye høyere kokepunkt enn heksan til tross for lavere molarmasse.",
+   ans:"(a) Heksan: kun London-dispersjonskrefter (van der Waals). (b) Etansyre: London-dispersjonskrefter + permanente dipolkrefter + hydrogenbindinger (O–H···O=C). Etansyre danner i tillegg dimerer via to samtidige hydrogenbindinger. Hydrogenbindinger er langt sterkere enn dispersjonskrefter alene, og det kreves betydelig mer energi å separere etansyre-molekylene → høyere kokepunkt, selv om molarmassen er lavere.",
+   hint:"Hvilke funksjonelle grupper gir hvilke krefter?"},
+  {q:"Forklar mekanismen for en nukleofil addisjonsreaksjon til butanal med HCN. Angi hva som er nukleofil og hva som er intermediat.",
+   ans:"CN⁻ er nukleofilen. Det angriper karbonylkarbonet i butanal (CH₃CH₂CH₂CHO) fra siden (karbonylkarbonet er sp²-hybridisert og har ledig π*-orbital). Det dannes et negativt ladd intermediat (et alkoksid, CH₃CH₂CH₂CH(CN)O⁻). Deretter protoneres oksidanionet av HCN (eller vann) og produktet er CH₃CH₂CH₂CH(OH)CN.",
+   hint:"Nukleofil → karbonylkarbonets elektrofile karakter → intermediat → protonering."},
+  {q:"Forklar kondensasjonsreaksjonen mellom etansyre og etanol. Skriv reaksjonslikning, angi funksjonell gruppe i produktet og forklar hva som er nukleofil og elektrofil i reaksjonen.",
+   ans:"CH₃COOH + C₂H₅OH ⇌ CH₃COOC₂H₅ + H₂O (syre­katalysert esterifisering). Produktet er etylacetat (etylacetat) — en ester (funksjonell gruppe: –COO–). I reaksjonen fungerer oksygenatom­et i etanol som nukleofil og angriper det elektrofile karbonylkarbonet i etansyren. Vann avgis som biprodukt.",
+   hint:"Nukleofil angriper elektrofil: hvilke atomer?"},
+  {q:"Forklar hva som menes med aromatisitet, og begrunn hvorfor benzen er mye mer stabilt enn man ville forvente ut fra en struktur med vekslende enkelt- og dobbeltbindinger.",
+   ans:"Aromatisitet kjennetegnes ved en plan geometri og en lukket konjugert (annenhver enkelt- og dobbeltbinding) ring der p-orbitalene overlapper hele veien rundt. De seks p-orbitalene til karbonatomene i benzen overlapper rundt ringen og danner et fullstendig delokalisert π-system — bindingene er ikke vekslende enkelt/dobbelt, men identiske med bindingsorden ~1,5. Denne delokalisering stabiliserer molekylet med ~150 kJ/mol sammenliknet med hva man ville forvente av tre isolerte dobbeltbindinger. (Ekstrainfo: Det er grunnen til at benzen foretrekker substitusjon (som bevarer aromatisiteten) framfor addisjon.)",
+   hint:"Tre krav til aromatisitet — hva gir den ekstra stabiliteten?"},
+   {q:"På laben syntetiserte dere acetylsalisylsyre fra salisylsyre og eddiksyreanhydrid. Hvordan foregår reaksjonen og hva dannes som produkt?",
+ ans:"Reaksjonen er en kondensasjonsreaksjon. Hydroksylgruppen (–OH) i salisylsyre fungerer som nukleofil og angriper det elektrofile karbonylkarbonet i eddiksyreanhydridet. Én acylgruppe overføres til oksygenatomet og danner en esterbinding (–COO–). Som biprodukt avgis etansyre (CH₃COOH). Produktet er acetylsalisylsyre (aspirin), der salisylsyrens –OH er erstattet av en acetylestergruppe (–OCOCH₃).",
+ hint:"To molekyler slås sammen og spalter av et lite molekyl."},
+  {q:"Forklar med utgangspunkt i karbokationstabilitet hvorfor HBr adderes til but-1-en (CH₃CH₂CH=CH₂) og gir 2-bromobutan som hovedprodukt.",
+   ans:"HBr adderes i to trinn: (1) H⁺ adderes til én av karbonatomerene i dobbeltbindingen. Hvis H⁺ går til C1 (den enden med færrest substituenter), dannes et sekundært karbokation ved C2 (CH₃CH₂⁺CHCH₃). Hvis H⁺ hadde gått til C2, ville det dannes et primært karbokation ved C1 — mye mindre stabilt. Sekundære karbokationer er mer stabile fordi de nærliggende alkylgruppene kan skyve elektroner mot det positivt ladede karbonet. (2) Br⁻ angriper det sekundære karbokationet ved C2 → 2-bromobutan.",
+   hint:"Mest substituert karbokation = mest stabilt. Hva gir stabiliseringen?"},
+  {q:"Gjør rede for hva som menes med nukleofil substitusjon, og forklar hvordan substratets struktur (primært vs. tertiært alkylhalid) avgjør om reaksjonen går via SN1 eller SN2.",
+   ans:"Nukleofil substitusjon: et nukleofil erstatter en avgangsgruppe (f.eks. halogenid) på et mettet karbon. SN2 favoriseres av primære substrater fordi det er lite sterisk hinder for nukleofilen som skal angripe karbonylkarbonet bakfra. Reaksjonen forgår i ett trinn og er andreordens. Tertiære substrater er for sterisk hindrede for SN2-angrep; de ioniserer lettere til et stabilt tertiært karbokation og går via SN1 (to trinn, førstenordens). Sekundære substrater kan gå begge veier avhengig av nukleofil, løsemiddel og temperatur.",
+   hint:"Steriske forhold (plassforhold) hindrer SN2. Karbokationstabilitet fremmer SN1."},
+  {q:"Forklar hva redokstall er, og bruk det til å avgjøre om følgende reaksjon er en redoksreaksjon: CH₃CHO + [O] → CH₃COOH.",
+   ans:"Redokstall er et formelt tall som angir hvor mange elektroner et atom 'har mistet' relativt til grunnstoffe­tilstand, beregnet ved å tildele elektroner til det mer elektronegative atomet i bindingen. I etanal (CH₃CHO): karbonylkarbonet (C1) har redokstall +1. I etansyre (CH₃COOH): det samme karbonet har redokstall +3. Redokstallet øker → karbonet oksideres. Reaksjonen er altså en redoksreaksjon.",
+   hint:"Sett redokstall på karbonylkarbonet i begge forbindelser."},
+  {q:"Beskriv mekanismen for E2-eliminasjon når 2-bromopropan reagerer med KOH løst i etanol. Hva er produktet og hvilke geometriske krav stilles til reaksjonen?",
+   ans:"E2 er en ett-trinnsreaksjon: basen (OH⁻) fjerner et hydrogen (på karbonet ved siden av det som bærer avgangsgruppen) samtidig som bromid forlater. Geometrikravet er at H, β-karbonet, α-karbonet og Br alle er i samme plan, med H og Br på motsatt side av hverandre (anti-periplanar stilling). Produkt: propen (CH₃CH=CH₂). Reaksjonen er andrenordens (avhenger av konsentrasjonen til både substrat og base).",
+   hint:"Hva betyr anti-periplanar geometrisk?"},
+  {q:"Forklar hva som menes med kiral (asymmetrisk) karbon og hvordan du identifiserer det i et molekyl. Gi ett eksempel fra biologisk relevante molekyler.",
+   ans:"Et kiral karbon (også kalt asymmetrisk karbon, ofte merket C*) er et karbonatom som har fire forskjellige substituenter. Det gir opphav til enantiomere — to speilbildeformer som ikke kan legges oppå hverandre. For å identifisere det: se om karbonet har nøyaktig fire ulike grupper festet til seg. Eksempel: aminosyrer som alanin (CH₃CH(NH₂)COOH) har et kiral senter ved α-karbonet. L-alanin er den biologisk aktive formen; D-alanin opptrer i bakterie-cellevegger.",
+   hint:"Fire ulike substituenter → kiral karbon."},
+];
+
+let score=0,answered=new Array(20).fill(false);
+
+function buildFlervalg(){
+  const sec=document.getElementById('sf');
+  Q.forEach((q,i)=>{
+    const b=document.createElement('div');
+    b.className='qblock';
+    b.innerHTML=`<div class="qnum">Spørsmål ${i+1} av 20</div><div class="qtext">${q.q}</div><div class="opts" id="opts-${i}">${q.opts.map((o,j)=>`<button class="opt" onclick="answer(${i},${j})" id="opt-${i}-${j}"><span class="olbl">${String.fromCharCode(65+j)}.</span><span>${o}</span></button>`).join('')}</div><div class="fb" id="fb-${i}"></div>`;
+    sec.appendChild(b);
+  });
+}
+
+function answer(qi,oi){
+  if(answered[qi])return;
+  answered[qi]=true;
+  const c=Q[qi].ans;
+  const fb=document.getElementById('fb-'+qi);
+  for(let j=0;j<Q[qi].opts.length;j++){
+    const btn=document.getElementById('opt-'+qi+'-'+j);
+    btn.disabled=true;
+    if(j===c)btn.classList.add('correct');
+    else if(j===oi)btn.classList.add('wrong');
+  }
+  if(oi===c){score++;fb.textContent='Riktig! '+Q[qi].exp;fb.className='fb show correct';}
+  else{fb.textContent='Feil. '+Q[qi].exp;fb.className='fb show wrong';}
+  document.getElementById('score').textContent=score+' / '+answered.filter(Boolean).length;
+}
+
+function buildKortsvars(){
+  const sec=document.getElementById('sk');
+  KS.forEach((q,i)=>{
+    const b=document.createElement('div');
+    b.className='ksblock';
+    b.innerHTML=`<div class="qnum">Oppgave ${i+1} av 20</div><div class="ksq">${q.q}</div><div class="hint">Hint: ${q.hint}</div><button class="tbtn" onclick="toggleAns(${i})" id="tbtn-${i}" style="margin-top:12px">Vis fasit</button><div class="ksans" id="ksans-${i}">${q.ans}</div>`;
+    sec.appendChild(b);
+  });
+}
+
+function toggleAns(i){
+  const el=document.getElementById('ksans-'+i);
+  const btn=document.getElementById('tbtn-'+i);
+  if(el.classList.contains('show')){el.classList.remove('show');btn.textContent='Vis fasit';}
+  else{el.classList.add('show');btn.textContent='Skjul fasit';}
+}
+
+function showTab(tab){
+  document.querySelectorAll('.tab').forEach((t,i)=>t.classList.toggle('active',(i===0&&tab==='flervalg')||(i===1&&tab==='kortsvars')));
+  document.getElementById('sf').classList.toggle('active',tab==='flervalg');
+  document.getElementById('sk').classList.toggle('active',tab==='kortsvars');
+}
+
+buildFlervalg();
+buildKortsvars();
+</script>
