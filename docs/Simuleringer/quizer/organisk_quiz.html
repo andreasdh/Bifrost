@@ -52,7 +52,7 @@ html,body{background:var(--bg-page);color:var(--text-primary);font-family:-apple
 <div class="container">
 <div class="tabs">
   <button class="tab active" onclick="showTab('flervalg')">Flervalgsspørsmål (20)</button>
-  <button class="tab" onclick="showTab('kortsvars')">Kortsvarsoppgaver (20)</button>
+  <button class="tab" onclick="showTab('kortsvars')">Kortsvarsoppgaver (14)</button>
 </div>
 <div id="sf" class="section active">
   <div class="scorebar"><span>Poeng</span><span class="scoreval" id="score">0 / 20</span></div>
@@ -232,7 +232,7 @@ function buildKortsvars(){
   KS.forEach((q,i)=>{
     const b=document.createElement('div');
     b.className='ksblock';
-    b.innerHTML=`<div class="qnum">Oppgave ${i+1} av 20</div><div class="ksq">${q.q}</div><div class="hint">Hint: ${q.hint}</div><button class="tbtn" onclick="toggleAns(${i})" id="tbtn-${i}" style="margin-top:12px">Vis fasit</button><div class="ksans" id="ksans-${i}">${q.ans}</div>`;
+    b.innerHTML=`<div class="qnum">Oppgave ${i+1} av 14</div><div class="ksq">${q.q}</div><div class="hint">Hint: ${q.hint}</div><button class="tbtn" onclick="toggleAns(${i})" id="tbtn-${i}" style="margin-top:12px">Vis fasit</button><div class="ksans" id="ksans-${i}">${q.ans}</div>`;
     sec.appendChild(b);
   });
 }
