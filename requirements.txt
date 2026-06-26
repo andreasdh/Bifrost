@@ -1,3 +1,5 @@
 jupyter-book
+mystmd
 matplotlib
 numpy
+ipykernel
