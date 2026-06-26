@@ -24,11 +24,12 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-       - name: Build
-         run: |
-           rm -rf _build
-           myst build --html
-           find _build -maxdepth 3 -type f | head -50
+      - name: Build
+        run: |
+          rm -rf _build
+          myst build --html
+          find . -name "index.html"
+          find . -maxdepth 4 -type d | sort
 
       - name: Deploy
         uses: peaceiris/actions-gh-pages@v4
