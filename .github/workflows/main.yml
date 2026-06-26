@@ -1,3 +1,5 @@
+# Uses Jupyter Book v1.x.
+# Do not upgrade to Jupyter Book 2/MyST without updating the build workflow.
 name: CI
 
 on:
