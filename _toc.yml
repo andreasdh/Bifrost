@@ -1,9 +1,12 @@
 format: jb-book
 root: intro
 chapters:
+- file: docs/intro
+- file: docs/mattehjelp
 - file: docs/entropi
 - file: docs/statmek
-- file: docs/Modul4
-- file: docs/howto
+- file: docs/gasses
 - file: docs/Makroskopisk_termodynamikk_1
+- file: docs/Modul4
 - file: docs/intermolecular_interactions_exercises
+- file: docs/howto
