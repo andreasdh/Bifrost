@@ -3,10 +3,7 @@ root: intro
 chapters:
 - file: docs/entropi
 - file: docs/statmek
-- file: docs/kap2
-- file: docs/kap3
 - file: docs/Modul4
 - file: docs/howto
 - file: docs/Makroskopisk_termodynamikk
 - file: docs/intermolecular_interactions_exercises
-
