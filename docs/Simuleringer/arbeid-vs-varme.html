@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Arbeid vs. varme — to veier til samme produkt</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+  :root{
+    --bg: #12161d;
+    --panel: #1a212b;
+    --panel-border: #2b3644;
+    --ink: #e7ecf2;
+    --ink-dim: #8f9bab;
+    --steel: #9db2c9;
+    --steel-dark: #5c6b7d;
+    --flame: #ff8a3d;
+    --flame-hot: #ff4d4d;
+    --reagent-a: #4fd1c5;
+    --reagent-b: #b980f0;
+    --product: #ffd166;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    background: radial-gradient(ellipse at 50% -10%, #1c2430 0%, var(--bg) 60%);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    padding: 32px 20px 48px;
+    min-height:100vh;
+  }
+
+  .wrap{ max-width: 980px; margin: 0 auto; }
+
+  header{ text-align:center; margin-bottom: 22px; }
+
+  .eyebrow-top{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-dim);
+    margin-bottom: 10px;
+  }
+
+  h1{
+    font-size: clamp(22px, 3.4vw, 32px);
+    line-height:1.25;
+    margin: 0 0 10px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+  }
+
+  .sub{
+    color: var(--ink-dim);
+    font-size: 14.5px;
+    max-width: 620px;
+    margin: 0 auto 26px;
+    line-height:1.5;
+  }
+
+  /* equation banner */
+  .eq-banner{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap: 10px;
+    font-family:'JetBrains Mono', monospace;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 6px;
+    flex-wrap: wrap;
+  }
+  .eq-banner .term{ padding: 2px 8px; border-radius: 6px; }
+  .eq-banner .w{ color: var(--steel); background: rgba(157,178,201,0.12); }
+  .eq-banner .q{ color: var(--flame); background: rgba(255,138,61,0.12); }
+  .eq-banner .plain{ color: var(--ink-dim); }
+
+  .eq-links{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 700px;
+    margin: 0 auto 28px;
+    gap: 18px;
+  }
+  .eq-links svg{ width:100%; height: 28px; display:block; }
+
+  .panels{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  @media (max-width: 700px){
+    .panels{ grid-template-columns: 1fr; }
+    .eq-links{ grid-template-columns: 1fr; }
+  }
+
+  .panel{
+    background: var(--panel);
+    border: 1px solid var(--panel-border);
+    border-radius: 14px;
+    padding: 16px 16px 14px;
+    display:flex;
+    flex-direction:column;
+  }
+  .panel.mech{ box-shadow: inset 0 0 0 1px rgba(157,178,201,0.06); }
+  .panel.heat{ box-shadow: inset 0 0 0 1px rgba(255,138,61,0.06); }
+
+  .panel-eyebrow{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 10.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+  }
+  .panel.mech .panel-eyebrow{ color: var(--steel); }
+  .panel.heat .panel-eyebrow{ color: var(--flame); }
+
+  .panel-title{
+    font-size: 17px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  canvas{
+    width: 100%;
+    display:block;
+    border-radius: 10px;
+    background: #0d1117;
+  }
+
+  .panel-caption{
+    font-size: 12.5px;
+    color: var(--ink-dim);
+    margin-top: 10px;
+    line-height:1.45;
+    min-height: 34px;
+  }
+
+  .counter{
+    font-family:'JetBrains Mono', monospace;
+    font-size: 12px;
+    margin-top: 8px;
+    display:flex;
+    justify-content: space-between;
+    color: var(--ink-dim);
+  }
+  .counter b{ color: var(--ink); font-weight:600; }
+
+  .legend{
+    display:flex;
+    justify-content:center;
+    gap: 22px;
+    flex-wrap: wrap;
+    margin: 26px 0 6px;
+    font-size: 12.5px;
+    color: var(--ink-dim);
+  }
+  .legend span{ display:flex; align-items:center; gap:7px; }
+  .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  footer{
+    text-align:center;
+    color: var(--ink-dim);
+    font-size: 11.5px;
+    margin-top: 22px;
+    line-height:1.5;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .panel-caption::after{ content: " (redusert bevegelse aktivert)"; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow-top">Fysikalsk Kjemi I · UiO</div>
+    <h1>Arbeid vs. varme: to veier til samme produkt</h1>
+    <p class="sub">Begge metodene tilfører systemet energi og øker molekylenes indre energi (U) — men veien dit er helt ulik. Se hvordan mekanisk arbeid og varme fører reagensene til kollisjon på hver sin måte.</p>
+
+    <div class="eq-banner">
+      <span class="plain">ΔU&nbsp;=</span>
+      <span class="term q">q</span>
+      <span class="plain">+</span>
+      <span class="term w">w</span>
+    </div>
+    <div class="eq-links">
+      <svg viewBox="0 0 300 28" preserveAspectRatio="none">
+        <path d="M150 0 L150 14 L40 14 L40 26" stroke="#5c6b7d" stroke-width="1.5" fill="none"/>
+        <polygon points="36,22 40,28 44,22" fill="#5c6b7d"/>
+      </svg>
+      <svg viewBox="0 0 300 28" preserveAspectRatio="none">
+        <path d="M150 0 L150 14 L260 14 L260 26" stroke="#a15a2d" stroke-width="1.5" fill="none"/>
+        <polygon points="256,22 260,28 264,22" fill="#a15a2d"/>
+      </svg>
+    </div>
+  </header>
+
+  <div class="panels">
+    <div class="panel mech">
+      <div class="panel-eyebrow">Metode 1 · Arbeid (w)</div>
+      <div class="panel-title">Ball-milling</div>
+      <canvas id="canvasMech" width="440" height="320"></canvas>
+      <div class="counter"><span>Kollisjoner med nok energi</span><b id="countMech">0</b></div>
+      <p class="panel-caption">Tunge stålkuler slynges rundt i beholderen og dytter reagensmolekylene sammen med mekanisk kraft.</p>
+    </div>
+
+    <div class="panel heat">
+      <div class="panel-eyebrow">Metode 2 · Varme (q)</div>
+      <div class="panel-title">Oppvarming</div>
+      <canvas id="canvasHeat" width="440" height="320"></canvas>
+      <div class="counter"><span>Kollisjoner med nok energi</span><b id="countHeat">0</b></div>
+      <p class="panel-caption">Varmetilførsel øker molekylenes fart jevnt over — flere og kraftigere kollisjoner over tid.</p>
+    </div>
+  </div>
+
+  <div class="legend">
+    <span><i class="dot" style="background:#4fd1c5"></i> Reagens A</span>
+    <span><i class="dot" style="background:#b980f0"></i> Reagens B</span>
+    <span><i class="dot" style="background:#ffd166"></i> Produkt</span>
+    <span><i class="dot" style="background:#9db2c9"></i> Stålkule (arbeid)</span>
+  </div>
+
+  <footer>
+    Forenklet illustrasjonsmodell laget for undervisning — ikke en kvantitativ simulering av reaksjonskinetikk eller termodynamikk.
+  </footer>
+</div>
+
+<script>
+(function(){
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  function setupCanvas(canvas){
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    const w = canvas.width, h = canvas.height;
+    canvas.style.height = (h) + 'px';
+    canvas.width = w * dpr;
+    canvas.height = h * dpr;
+    const ctx = canvas.getContext('2d');
+    ctx.scale(dpr, dpr);
+    return { ctx, w, h };
+  }
+
+  function rand(min, max){ return Math.random() * (max - min) + min; }
+
+  function makeReagentPair(w, h){
+    const r = 7;
+    const a = { x: rand(r, w-r), y: rand(r, h-r), vx: rand(-0.6,0.6), vy: rand(-0.6,0.6), r, type:'A', mass:1, color:'#4fd1c5', life:1 };
+    const b = { x: rand(r, w-r), y: rand(r, h-r), vx: rand(-0.6,0.6), vy: rand(-0.6,0.6), r, type:'B', mass:1, color:'#b980f0', life:1 };
+    return [a,b];
+  }
+
+  function wallBounce(p, w, h){
+    if(p.x - p.r < 0){ p.x = p.r; p.vx *= -1; }
+    if(p.x + p.r > w){ p.x = w - p.r; p.vx *= -1; }
+    if(p.y - p.r < 0){ p.y = p.r; p.vy *= -1; }
+    if(p.y + p.r > h){ p.y = h - p.r; p.vy *= -1; }
+  }
+
+  function elasticBounce(p1, p2){
+    const dx = p2.x - p1.x, dy = p2.y - p1.y;
+    let dist = Math.sqrt(dx*dx + dy*dy) || 0.01;
+    const nx = dx/dist, ny = dy/dist;
+    const overlap = (p1.r + p2.r) - dist;
+    if(overlap > 0){
+      p1.x -= nx * overlap/2; p1.y -= ny * overlap/2;
+      p2.x += nx * overlap/2; p2.y += ny * overlap/2;
+    }
+    const m1 = p1.mass, m2 = p2.mass;
+    const v1n = p1.vx*nx + p1.vy*ny;
+    const v2n = p2.vx*nx + p2.vy*ny;
+    const v1nAfter = (v1n*(m1-m2) + 2*m2*v2n)/(m1+m2);
+    const v2nAfter = (v2n*(m2-m1) + 2*m1*v1n)/(m1+m2);
+    p1.vx += (v1nAfter - v1n) * nx; p1.vy += (v1nAfter - v1n) * ny;
+    p2.vx += (v2nAfter - v2n) * nx; p2.vy += (v2nAfter - v2n) * ny;
+  }
+
+  function drawMolecule(ctx, p){
+    ctx.save();
+    ctx.globalAlpha = p.life !== undefined ? p.life : 1;
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, p.r, 0, Math.PI*2);
+    ctx.fillStyle = p.color;
+    ctx.shadowColor = p.color;
+    ctx.shadowBlur = p.type === 'P' ? 10 : 4;
+    ctx.fill();
+    ctx.restore();
+  }
+
+  function drawFlash(ctx, f){
+    const t = f.age / f.maxAge;
+    ctx.save();
+    ctx.globalAlpha = 1 - t;
+    ctx.beginPath();
+    ctx.arc(f.x, f.y, 4 + t*22, 0, Math.PI*2);
+    ctx.strokeStyle = '#ffd166';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // ---------- Mechanical panel (ball milling) ----------
+  function initMech(canvasEl, counterEl){
+    const { ctx, w, h } = setupCanvas(canvasEl);
+    let particles = [];
+    for(let i=0;i<5;i++) particles.push(...makeReagentPair(w,h));
+
+    const balls = [];
+    for(let i=0;i<3;i++){
+      balls.push({ x: rand(30,w-30), y: rand(30,h-30), vx: rand(-1.4,1.4), vy: rand(-1.4,1.4), r: 16, mass: 30, color:'#c7ced6' });
+    }
+
+    let flashes = [];
+    let productCount = 0;
+    let shakeT = 0;
+
+    function spawnReplacement(){
+      const [a,b] = makeReagentPair(w,h);
+      particles.push(a,b);
+    }
+
+    function step(){
+      shakeT += 1;
+      const jitter = reduced ? 0 : Math.sin(shakeT*0.35)*0.6 + Math.sin(shakeT*0.11)*0.4;
+
+      // move balls, occasional random jolt (the "milling" agitation)
+      balls.forEach(b=>{
+        if(!reduced && Math.random() < 0.02){
+          b.vx += rand(-1.5,1.5); b.vy += rand(-1.5,1.5);
+        }
+        const maxV = 3.2;
+        const sp = Math.hypot(b.vx,b.vy);
+        if(sp > maxV){ b.vx = b.vx/sp*maxV; b.vy = b.vy/sp*maxV; }
+        b.x += b.vx; b.y += b.vy;
+        wallBounce(b, w, h);
+      });
+      for(let i=0;i<balls.length;i++){
+        for(let j=i+1;j<balls.length;j++){
+          const dx = balls[j].x-balls[i].x, dy = balls[j].y-balls[i].y;
+          const dist = Math.hypot(dx,dy);
+          if(dist < balls[i].r+balls[j].r) elasticBounce(balls[i], balls[j]);
+        }
+      }
+
+      // move reagent/product particles
+      particles.forEach(p=>{
+        p.x += p.vx; p.y += p.vy;
+        wallBounce(p, w, h);
+        // mild damping so ball impacts remain the main energy source
+        p.vx *= 0.999; p.vy *= 0.999;
+      });
+
+      // balls hitting particles: transfer energy (this IS the "work")
+      particles.forEach(p=>{
+        balls.forEach(b=>{
+          const dx = b.x-p.x, dy = b.y-p.y;
+          const dist = Math.hypot(dx,dy);
+          if(dist < b.r + p.r){
+            elasticBounce(p, b);
+            // extra kick to make the mechanical impact visually obvious
+            const nx=(p.x-b.x)/dist, ny=(p.y-b.y)/dist;
+            p.vx += nx*0.8; p.vy += ny*0.8;
+          }
+        });
+      });
+
+      // particle-particle collisions
+      const toRemove = new Set();
+      const toAdd = [];
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const p1=particles[i], p2=particles[j];
+          if(toRemove.has(i)||toRemove.has(j)) continue;
+          const dx=p2.x-p1.x, dy=p2.y-p1.y;
+          const dist=Math.hypot(dx,dy);
+          if(dist < p1.r+p2.r){
+            const relSpeed = Math.hypot(p1.vx-p2.vx, p1.vy-p2.vy);
+            if(p1.type!==p2.type && p1.type!=='P' && p2.type!=='P' && relSpeed > 1.1){
+              toRemove.add(i); toRemove.add(j);
+              toAdd.push({ x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2, vx:(p1.vx+p2.vx)/2*0.5, vy:(p1.vy+p2.vy)/2*0.5, r:9, type:'P', mass:1.6, color:'#ffd166', life:1 });
+              flashes.push({ x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2, age:0, maxAge:22 });
+              productCount++;
+            } else {
+              elasticBounce(p1,p2);
+            }
+          }
+        }
+      }
+      if(toRemove.size){
+        particles = particles.filter((_,idx)=>!toRemove.has(idx));
+        particles.push(...toAdd);
+        spawnReplacement();
+      }
+
+      // fade out product molecules slowly and recycle
+      particles.forEach(p=>{
+        if(p.type==='P'){
+          p.age = (p.age||0)+1;
+          if(p.age > 160){ p.life -= 0.03; }
+        }
+      });
+      particles = particles.filter(p=> p.life === undefined || p.life > 0);
+
+      flashes.forEach(f=>f.age++);
+      flashes = flashes.filter(f=>f.age < f.maxAge);
+
+      // draw
+      ctx.clearRect(0,0,w,h);
+      ctx.save();
+      ctx.translate(jitter, -jitter*0.6);
+      // container background: brushed steel gradient
+      const g = ctx.createLinearGradient(0,0,0,h);
+      g.addColorStop(0,'#161c24'); g.addColorStop(1,'#0d1117');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+      balls.forEach(b=>{
+        const rg = ctx.createRadialGradient(b.x-5,b.y-5,2,b.x,b.y,b.r);
+        rg.addColorStop(0,'#eef2f6'); rg.addColorStop(1,'#7c8ba0');
+        ctx.beginPath(); ctx.arc(b.x,b.y,b.r,0,Math.PI*2);
+        ctx.fillStyle = rg; ctx.fill();
+      });
+      particles.forEach(p=>drawMolecule(ctx,p));
+      flashes.forEach(f=>drawFlash(ctx,f));
+      ctx.restore();
+
+      counterEl.textContent = productCount;
+      requestAnimationFrame(step);
+    }
+    step();
+  }
+
+  // ---------- Heating panel ----------
+  function initHeat(canvasEl, counterEl){
+    const { ctx, w, h } = setupCanvas(canvasEl);
+    let particles = [];
+    for(let i=0;i<5;i++) particles.push(...makeReagentPair(w,h));
+    let flashes = [];
+    let productCount = 0;
+    let t = 0;
+
+    function spawnReplacement(){
+      const [a,b] = makeReagentPair(w,h);
+      particles.push(a,b);
+    }
+
+    function step(){
+      t += reduced ? 0.15 : 0.5;
+      // temperature cycles slowly between "cool" and "hot"
+      const temp = 0.5 + 0.5*Math.sin(t*0.02 - Math.PI/2); // 0..1
+      const maxSpeed = 0.9 + temp*3.2;
+
+      particles.forEach(p=>{
+        // thermal kicks: random energy injection scaled with temperature
+        p.vx += rand(-1,1) * 0.05 * (0.4+temp);
+        p.vy += rand(-1,1) * 0.05 * (0.4+temp);
+        const sp = Math.hypot(p.vx,p.vy);
+        if(sp > maxSpeed){ p.vx = p.vx/sp*maxSpeed; p.vy = p.vy/sp*maxSpeed; }
+        p.x += p.vx; p.y += p.vy;
+        wallBounce(p, w, h);
+      });
+
+      const toRemove = new Set();
+      const toAdd = [];
+      for(let i=0;i<particles.length;i++){
+        for(let j=i+1;j<particles.length;j++){
+          const p1=particles[i], p2=particles[j];
+          if(toRemove.has(i)||toRemove.has(j)) continue;
+          const dx=p2.x-p1.x, dy=p2.y-p1.y;
+          const dist=Math.hypot(dx,dy);
+          if(dist < p1.r+p2.r){
+            const relSpeed = Math.hypot(p1.vx-p2.vx, p1.vy-p2.vy);
+            if(p1.type!==p2.type && p1.type!=='P' && p2.type!=='P' && relSpeed > 1.1){
+              toRemove.add(i); toRemove.add(j);
+              toAdd.push({ x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2, vx:(p1.vx+p2.vx)/2*0.5, vy:(p1.vy+p2.vy)/2*0.5, r:9, type:'P', mass:1.6, color:'#ffd166', life:1 });
+              flashes.push({ x:(p1.x+p2.x)/2, y:(p1.y+p2.y)/2, age:0, maxAge:22 });
+              productCount++;
+            } else {
+              elasticBounce(p1,p2);
+            }
+          }
+        }
+      }
+      if(toRemove.size){
+        particles = particles.filter((_,idx)=>!toRemove.has(idx));
+        particles.push(...toAdd);
+        spawnReplacement();
+      }
+
+      particles.forEach(p=>{
+        if(p.type==='P'){
+          p.age = (p.age||0)+1;
+          if(p.age > 160){ p.life -= 0.03; }
+        }
+      });
+      particles = particles.filter(p=> p.life === undefined || p.life > 0);
+
+      flashes.forEach(f=>f.age++);
+      flashes = flashes.filter(f=>f.age < f.maxAge);
+
+      // draw
+      ctx.clearRect(0,0,w,h);
+      const g = ctx.createLinearGradient(0,0,0,h);
+      const cool = [13,17,23], hot = [77,20,10];
+      const mix = cool.map((c,i)=> Math.round(c + (hot[i]-c)*temp));
+      g.addColorStop(0, `rgb(${mix[0]+8},${mix[1]+8},${mix[2]+8})`);
+      g.addColorStop(1, `rgb(${mix[0]},${mix[1]},${mix[2]})`);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,w,h);
+
+      // heat glow bar at bottom (the "hot plate")
+      const glowH = 14 + temp*10;
+      const hg = ctx.createLinearGradient(0,h-glowH,0,h);
+      hg.addColorStop(0, `rgba(255,138,61,${0.15+temp*0.5})`);
+      hg.addColorStop(1, `rgba(255,77,77,${0.35+temp*0.5})`);
+      ctx.fillStyle = hg;
+      ctx.fillRect(0,h-glowH,w,glowH);
+
+      particles.forEach(p=>drawMolecule(ctx,p));
+      flashes.forEach(f=>drawFlash(ctx,f));
+
+      counterEl.textContent = productCount;
+      requestAnimationFrame(step);
+    }
+    step();
+  }
+
+  initMech(document.getElementById('canvasMech'), document.getElementById('countMech'));
+  initHeat(document.getElementById('canvasHeat'), document.getElementById('countHeat'));
+})();
+</script>
+</body>
+</html>
