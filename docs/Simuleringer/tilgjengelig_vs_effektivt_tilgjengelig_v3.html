@@ -1,0 +1,90 @@
+<h2 class="sr-only">Interaktiv energistige med histogrammer over hvert nivå som viser hvordan sannsynligheten flytter seg mot lavere energier når nivåavstanden øker</h2>
+
+<div style="display:flex;align-items:center;gap:12px;margin:0 0 4px;">
+<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">&Delta;&epsilon; / k<sub>B</sub>T</label>
+<input type="range" id="ratio" min="0.1" max="5" step="0.1" value="1" style="flex:1;" oninput="render()">
+<span id="ratio-out" style="font-size:14px;font-weight:500;min-width:30px;text-align:right;">1.0</span>
+</div>
+<div style="display:flex;justify-content:space-between;font-size:11px;color:var(--text-muted);margin:0 0 1.5rem;">
+<span>Lite gap / h&oslash;y temperatur</span>
+<span>Stort gap / lav temperatur</span>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 200px;gap:20px;align-items:start;">
+
+<div id="ladder" style="position:relative;height:280px;"></div>
+
+<div>
+<div style="background:var(--surface-1);border-radius:var(--radius);padding:1rem;margin-bottom:12px;">
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 4px;">Tilgjengelige tilstander (t)</p>
+<p style="font-size:24px;font-weight:500;margin:0;">5</p>
+</div>
+<div style="background:var(--surface-1);border-radius:var(--radius);padding:1rem;">
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 4px;">Effektivt tilgjengelige (Q)</p>
+<p id="qval" style="font-size:24px;font-weight:500;margin:0;color:var(--text-accent);">-</p>
+<p id="qnote" style="font-size:12px;color:var(--text-muted);margin:6px 0 0;min-height:16px;"></p>
+</div>
+</div>
+
+</div>
+
+<script>
+const t = 5;
+const box = document.getElementById('ladder');
+const baseY = 260;
+const leftPx = 40;
+const widthPct = 0.58;
+
+for (let n = 0; n < t; n++) {
+  const bar = document.createElement('div');
+  bar.id = 'bar-' + n;
+  bar.style.cssText = 'position:absolute;left:'+leftPx+'px;background:#378ADD;opacity:0.55;border-radius:3px 3px 0 0;';
+  box.appendChild(bar);
+
+  const line = document.createElement('div');
+  line.id = 'lvl-' + n;
+  line.style.cssText = 'position:absolute;left:'+leftPx+'px;height:2.5px;background:var(--text-primary);border-radius:1px;';
+  box.appendChild(line);
+
+  const lab = document.createElement('div');
+  lab.id = 'lab-' + n;
+  lab.style.cssText = 'position:absolute;font-size:12px;color:var(--text-secondary);';
+  lab.textContent = n + '\u0394\u03b5';
+  box.appendChild(lab);
+}
+
+function render(){
+  const x = parseFloat(document.getElementById('ratio').value);
+  document.getElementById('ratio-out').textContent = x.toFixed(1);
+
+  const gapPx = 14 + x * 9;
+  const widthPx = box.clientWidth * widthPct;
+  const weights = [];
+  for (let n = 0; n < t; n++) weights.push(Math.exp(-n * x));
+  const Q = weights.reduce((a,b)=>a+b,0);
+
+  for (let n = 0; n < t; n++) {
+    const y = baseY - n * gapPx;
+    const line = document.getElementById('lvl-'+n);
+    line.style.top = y + 'px';
+    line.style.width = widthPx + 'px';
+
+    const h = Math.max(2, (gapPx - 6) * weights[n]);
+    const bar = document.getElementById('bar-'+n);
+    bar.style.width = widthPx + 'px';
+    bar.style.height = h + 'px';
+    bar.style.top = (y - h) + 'px';
+
+    const lab = document.getElementById('lab-'+n);
+    lab.style.left = (leftPx + widthPx + 12) + 'px';
+    lab.style.top = (y - 8) + 'px';
+  }
+
+  document.getElementById('qval').textContent = Q.toFixed(2);
+  const note = document.getElementById('qnote');
+  if (x <= 0.4) note.textContent = 'Q nærmer seg t';
+  else if (x >= 4.5) note.textContent = 'Q nærmer seg 1';
+  else note.textContent = '';
+}
+render();
+</script>
