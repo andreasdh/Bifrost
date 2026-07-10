@@ -1,0 +1,134 @@
+<div id="fdof-root" style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;">
+<style>
+#fdof-root .fdof-card{border:1px solid #ddd;border-radius:12px;padding:1.25rem;margin-bottom:16px;background:#fafafa;}
+#fdof-root .fdof-btn{font-size:12px;padding:6px 10px;width:100%;text-align:left;margin-bottom:6px;border:1px solid #ccc;background:#fff;border-radius:8px;cursor:pointer;color:#222;}
+#fdof-root .fdof-btn.fdof-on{background:#eef4fb;border-color:#378ADD;font-weight:600;}
+#fdof-root .fdof-btn:disabled{opacity:0.35;cursor:not-allowed;}
+#fdof-root .fdof-eq{font-size:16px;margin:0 0 16px;color:#222;}
+#fdof-root .fdof-label{font-size:13px;color:#666;margin:0 0 4px;}
+@keyframes fdof-trans{0%,100%{transform:translate(-24px,0)}50%{transform:translate(24px,0)}}
+@keyframes fdof-rot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes fdof-o2v1{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,0)}}
+@keyframes fdof-o2v2{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,0)}}
+@keyframes fdof-hsym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes fdof-hsym2{0%,100%{transform:translate(0,0)}50%{transform:translate(4px,5px)}}
+@keyframes fdof-hasym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes fdof-hasym2{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,-5px)}}
+</style>
+
+<div class="fdof-card">
+<p class="fdof-label">H&#8322;O</p>
+<p id="fdof-h2o-eq" class="fdof-eq">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<div style="display:grid;grid-template-columns:1fr 150px 130px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+<g id="fdof-h2o-trans" style="animation:fdof-trans 1.6s ease-in-out infinite;">
+<g id="fdof-h2o-rot" style="transform-origin:110px 90px;">
+<line x1="110" y1="60" x2="75" y2="110" stroke="#3d3d3a" stroke-width="3"/>
+<line x1="110" y1="60" x2="145" y2="110" stroke="#3d3d3a" stroke-width="3"/>
+<g id="fdof-h2o-o" style="transform-origin:110px 60px;"><circle cx="110" cy="60" r="15" fill="#D85A30"/></g>
+<g id="fdof-h2o-h1" style="transform-origin:75px 110px;"><circle cx="75" cy="110" r="11" fill="#B4B2A9"/></g>
+<g id="fdof-h2o-h2" style="transform-origin:145px 110px;"><circle cx="145" cy="110" r="11" fill="#B4B2A9"/></g>
+</g>
+</g>
+</svg>
+<div>
+<button class="fdof-btn" id="fdof-h2o-btn-rot">Rotasjon</button>
+<button class="fdof-btn" id="fdof-h2o-btn-sym">Sym. strekk</button>
+<button class="fdof-btn" id="fdof-h2o-btn-asym">Asym. strekk</button>
+</div>
+<svg width="100%" viewBox="0 0 130 140">
+<line x1="20" y1="110" x2="110" y2="110" stroke="#3d3d3a" stroke-width="2"/>
+<line x1="20" y1="70" x2="110" y2="70" stroke="#3d3d3a" stroke-width="1.5" opacity="0.4"/>
+<line x1="20" y1="35" x2="110" y2="35" stroke="#3d3d3a" stroke-width="1.5" opacity="0.4"/>
+<circle cx="65" cy="110" r="5" fill="#D85A30"/>
+<text x="20" y="128" font-size="12" fill="#666">Elektronisk</text>
+</svg>
+</div>
+</div>
+
+<div class="fdof-card">
+<p class="fdof-label">O&#8322;</p>
+<p id="fdof-o2-eq" class="fdof-eq">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<div style="display:grid;grid-template-columns:1fr 150px 130px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+<g id="fdof-o2-trans" style="animation:fdof-trans 1.6s ease-in-out infinite;">
+<g id="fdof-o2-rot" style="transform-origin:110px 85px;">
+<line x1="80" y1="85" x2="140" y2="85" stroke="#3d3d3a" stroke-width="3"/>
+<g id="fdof-o2-a1" style="transform-origin:80px 85px;"><circle cx="80" cy="85" r="16" fill="#378ADD"/></g>
+<g id="fdof-o2-a2" style="transform-origin:140px 85px;"><circle cx="140" cy="85" r="16" fill="#378ADD"/></g>
+</g>
+</g>
+</svg>
+<div>
+<button class="fdof-btn" id="fdof-o2-btn-rot">Rotasjon</button>
+<button class="fdof-btn" id="fdof-o2-btn-vib">Vibrasjon</button>
+</div>
+<svg width="100%" viewBox="0 0 130 140">
+<line x1="20" y1="110" x2="110" y2="110" stroke="#3d3d3a" stroke-width="2"/>
+<line x1="20" y1="70" x2="110" y2="70" stroke="#3d3d3a" stroke-width="1.5" opacity="0.4"/>
+<line x1="20" y1="35" x2="110" y2="35" stroke="#3d3d3a" stroke-width="1.5" opacity="0.4"/>
+<circle cx="65" cy="110" r="5" fill="#378ADD"/>
+<text x="20" y="128" font-size="12" fill="#666">Elektronisk</text>
+</svg>
+</div>
+</div>
+</div>
+
+<script>
+(function () {
+  const state = {h2o:{rot:false,sym:false,asym:false}, o2:{rot:false,vib:false}};
+
+  function byId(id){ return document.getElementById(id); }
+
+  function toggle(mol,key){
+    if(mol==='h2o' && key==='sym' && !state.h2o.sym){ state.h2o.asym=false; }
+    if(mol==='h2o' && key==='asym' && !state.h2o.asym){ state.h2o.sym=false; }
+    state[mol][key] = !state[mol][key];
+    if(!state[mol].rot){
+      if(mol==='h2o'){ state.h2o.sym=false; state.h2o.asym=false; }
+      if(mol==='o2'){ state.o2.vib=false; }
+    }
+    render(mol);
+  }
+
+  function render(mol){
+    const s = state[mol];
+    for(const k in s){
+      const btn = byId('fdof-'+mol+'-btn-'+k);
+      if(btn) btn.classList.toggle('fdof-on', s[k]);
+    }
+
+    if(mol==='h2o'){
+      byId('fdof-h2o-btn-sym').disabled = !s.rot;
+      byId('fdof-h2o-btn-asym').disabled = !s.rot;
+      byId('fdof-h2o-rot').style.animation = s.rot ? 'fdof-rot 2.2s linear infinite' : 'none';
+      byId('fdof-h2o-h1').style.animation = s.sym ? 'fdof-hsym1 .5s ease-in-out infinite' : (s.asym ? 'fdof-hasym1 .5s ease-in-out infinite' : 'none');
+      byId('fdof-h2o-h2').style.animation = s.sym ? 'fdof-hsym2 .5s ease-in-out infinite' : (s.asym ? 'fdof-hasym2 .5s ease-in-out infinite' : 'none');
+      let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+      if(s.rot) terms.push('&epsilon;<sub>rot</sub>');
+      if(s.sym || s.asym) terms.push('&epsilon;<sub>vib</sub>');
+      byId('fdof-h2o-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+    }
+
+    if(mol==='o2'){
+      byId('fdof-o2-btn-vib').disabled = !s.rot;
+      byId('fdof-o2-rot').style.animation = s.rot ? 'fdof-rot 2.2s linear infinite' : 'none';
+      byId('fdof-o2-a1').style.animation = s.vib ? 'fdof-o2v1 .5s ease-in-out infinite' : 'none';
+      byId('fdof-o2-a2').style.animation = s.vib ? 'fdof-o2v2 .5s ease-in-out infinite' : 'none';
+      let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+      if(s.rot) terms.push('&epsilon;<sub>rot</sub>');
+      if(s.vib) terms.push('&epsilon;<sub>vib</sub>');
+      byId('fdof-o2-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+    }
+  }
+
+  byId('fdof-h2o-btn-rot').addEventListener('click', () => toggle('h2o','rot'));
+  byId('fdof-h2o-btn-sym').addEventListener('click', () => toggle('h2o','sym'));
+  byId('fdof-h2o-btn-asym').addEventListener('click', () => toggle('h2o','asym'));
+  byId('fdof-o2-btn-rot').addEventListener('click', () => toggle('o2','rot'));
+  byId('fdof-o2-btn-vib').addEventListener('click', () => toggle('o2','vib'));
+
+  render('h2o');
+  render('o2');
+})();
+</script>
