@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekspansjonsarbeid — gass i sylinder med stempel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12171b;
+    --panel:#1b2229;
+    --panel-2:#212a32;
+    --panel-3:#171e24;
+    --line:#2c3640;
+    --brass:#b98f56;
+    --brass-light:#e0bd85;
+    --copper:#c1613f;
+    --copper-light:#e08d6c;
+    --teal:#6fa88f;
+    --teal-light:#9fd8c1;
+    --ink:#e9e4d8;
+    --ink-dim:#9aa0a3;
+    --ink-faint:#5f676c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(185,143,86,0.08), transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(111,168,143,0.06), transparent 50%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    min-height:100vh;
+    padding:28px 20px 60px;
+  }
+  .wrap{max-width:1240px;margin:0 auto;}
+
+  header{margin-bottom:28px;border-bottom:1px solid var(--line);padding-bottom:20px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--brass);
+    display:inline-block;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(26px,4vw,38px);
+    margin:10px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  header p{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    max-width:680px;
+    line-height:1.55;
+    margin:0;
+  }
+
+  .layout{
+    display:grid;
+    grid-template-columns: 400px 1fr;
+    gap:22px;
+    align-items:start;
+  }
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr;}
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px;
+  }
+  .card + .card{margin-top:22px;}
+  .card-title{
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:500;
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--ink);
+  }
+  .card-title .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:var(--panel);
+    background:var(--brass-light);
+    padding:2px 7px;
+    border-radius:20px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Apparatus ---------- */
+  .apparatus-row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  #cylinderSvg{width:62%;height:auto;}
+  .gauge-col{width:38%;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  #gaugeSvg{width:100%;max-width:150px;height:auto;}
+  .gauge-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);text-align:center;}
+
+  .readout-strip{
+    margin-top:16px;
+    background:var(--panel-3);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 14px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .readout{display:flex;flex-direction:column;gap:2px;}
+  .readout .k{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);}
+  .readout .v{font-size:16px;color:var(--teal-light);font-weight:500;}
+  .readout .v.copper{color:var(--copper-light);}
+  .readout .v.brass{color:var(--brass-light);}
+
+  .caption{font-size:11.5px;color:var(--ink-faint);margin-top:10px;line-height:1.5;}
+
+  /* ---------- Controls ---------- */
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-bottom:7px;
+  }
+  .field label .val{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--ink);
+    font-weight:500;
+  }
+  input[type=range]{
+    -webkit-appearance:none;
+    width:100%;
+    height:4px;
+    border-radius:3px;
+    background:var(--line);
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--brass-light);
+    border:2px solid var(--panel);
+    box-shadow:0 0 0 1px var(--brass);
+    cursor:pointer;
+    margin-top:-6px;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--brass-light);border:2px solid var(--panel);
+    box-shadow:0 0 0 1px var(--brass);cursor:pointer;
+  }
+  input[type=range]::-moz-range-track{height:4px;border-radius:3px;background:var(--line);}
+
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  button{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:9px 13px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  button:hover{border-color:var(--brass);color:var(--brass-light);}
+  button.primary{
+    background:linear-gradient(180deg, var(--copper), #a54f34);
+    border-color:#8f4529;
+    color:#fff3ea;
+  }
+  button.primary:hover{border-color:var(--copper-light);color:#fff;}
+  button.secondary{
+    background:linear-gradient(180deg, #3a4652, #2c3640);
+    border-color:#465060;
+  }
+  button:disabled{opacity:0.4;cursor:not-allowed;}
+  button.ghost{background:transparent;}
+
+  hr.sep{border:none;border-top:1px solid var(--line);margin:18px 0;}
+
+  .status-banner{
+    margin-top:14px;
+    padding:10px 12px;
+    border-radius:7px;
+    background:var(--panel-3);
+    border:1px solid var(--line);
+    font-size:12.5px;
+    color:var(--ink-dim);
+    font-family:'IBM Plex Mono',monospace;
+    line-height:1.5;
+  }
+  .status-banner.done{border-color:var(--teal);color:var(--teal-light);}
+
+  /* ---------- Diagram ---------- */
+  #pvCanvas{width:100%;height:auto;display:block;border-radius:6px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--ink-dim);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* ---------- Results ---------- */
+  .result-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:14px;
+  }
+  @media (max-width:520px){ .result-grid{grid-template-columns:1fr;} }
+  .result-box{
+    background:var(--panel-3);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:14px 16px;
+  }
+  .result-box .rlabel{
+    font-size:11px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .result-box .rvalue{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:22px;
+    color:var(--copper-light);
+  }
+  .result-box.rev .rvalue{color:var(--teal-light);}
+  .result-box .rsub{font-size:11.5px;color:var(--ink-faint);margin-top:4px;}
+
+  .pct-bar-wrap{margin-top:16px;}
+  .pct-bar-track{
+    height:10px;background:var(--panel-2);border-radius:6px;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .pct-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--copper),var(--teal));
+    width:0%;
+    transition:width .25s ease;
+  }
+  .pct-label{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--ink-dim);margin-top:8px;text-align:center;}
+
+  sub{font-size:0.72em;}
+  em.var{font-style:italic;color:var(--ink);}
+
+  footer{
+    margin-top:34px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:11.5px;
+    color:var(--ink-faint);
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Fysikalsk Kjemi I · UiO</div>
+    <h1>Ekspansjonsarbeid — gass i sylinder med stempel</h1>
+    <p>Stempelet holdes nede av kuler (tenk sandkorn). Fjern dem én og én, i store jafs, eller alle på én gang,
+       og se hvordan gassen ekspanderer og arbeidet mot omgivelsene bygger seg opp i P–V-diagrammet.
+       Flere, mindre kuler ⇒ prosessen nærmer seg den reversible grensen.</p>
+  </header>
+
+  <div class="layout">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <div class="card">
+        <div class="card-title">Apparatur <span class="tag">Live</span></div>
+        <div class="apparatus-row">
+          <svg id="cylinderSvg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gasGradient" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#3f5a56"/>
+                <stop offset="100%" stop-color="#7fb8ab"/>
+              </linearGradient>
+              <linearGradient id="brassGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e0bd85"/>
+                <stop offset="50%" stop-color="#b98f56"/>
+                <stop offset="100%" stop-color="#8c6a3e"/>
+              </linearGradient>
+              <radialGradient id="ballGrad" cx="35%" cy="30%" r="75%">
+                <stop offset="0%" stop-color="#f0d9ae"/>
+                <stop offset="55%" stop-color="#c99a5c"/>
+                <stop offset="100%" stop-color="#8c6a3e"/>
+              </radialGradient>
+              <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0000"/>
+                <stop offset="12%" stop-color="#ffffff22"/>
+                <stop offset="20%" stop-color="#0000"/>
+              </linearGradient>
+            </defs>
+
+            <!-- base plate -->
+            <rect x="50" y="378" width="200" height="14" rx="3" fill="url(#brassGrad)"/>
+            <!-- cylinder glass walls -->
+            <rect x="70" y="40" width="160" height="340" fill="#1a2126" stroke="#3a4652" stroke-width="2"/>
+            <rect x="70" y="40" width="160" height="340" fill="url(#glassGrad)"/>
+
+            <!-- gas region -->
+            <clipPath id="gasClip"><rect x="72" y="42" width="156" height="336"/></clipPath>
+            <g clip-path="url(#gasClip)">
+              <rect id="gasRect" x="72" y="300" width="156" height="78" fill="url(#gasGradient)" opacity="0.55"/>
+              <g id="gasDotsGroup"></g>
+            </g>
+
+            <!-- cylinder rim -->
+            <rect x="66" y="36" width="168" height="8" rx="2" fill="#3a4652"/>
+
+            <!-- ball stack -->
+            <g id="ballsGroup"></g>
+
+            <!-- piston -->
+            <g id="pistonGroup">
+              <rect x="72" y="0" width="156" height="18" rx="2" fill="url(#brassGrad)" stroke="#6e5230" stroke-width="1.5"/>
+              <rect x="130" y="-10" width="40" height="12" rx="2" fill="#8c6a3e"/>
+            </g>
+          </svg>
+
+          <div class="gauge-col">
+            <svg id="gaugeSvg" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="75" cy="80" r="58" fill="#171e24" stroke="#3a4652" stroke-width="3"/>
+              <circle cx="75" cy="80" r="58" fill="none" stroke="url(#brassGrad)" stroke-width="2" opacity="0.6"/>
+              <g id="gaugeTicks" stroke="#5f676c" stroke-width="2"></g>
+              <text x="75" y="102" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#9aa0a3">bar</text>
+              <line id="gaugeNeedle" x1="75" y1="80" x2="75" y2="34" stroke="#c1613f" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="75" cy="80" r="6" fill="url(#brassGrad)"/>
+            </svg>
+            <div class="gauge-label">Trykk p&nbsp;=&nbsp;<span id="gaugeReadout">—</span> bar</div>
+          </div>
+        </div>
+
+        <div class="readout-strip">
+          <div class="readout"><span class="k">Volum V</span><span class="v" id="roV">—</span></div>
+          <div class="readout"><span class="k">Trykk P</span><span class="v" id="roP">—</span></div>
+          <div class="readout"><span class="k">Kuler igjen</span><span class="v brass" id="roK">—</span></div>
+          <div class="readout"><span class="k">Arbeid til nå</span><span class="v copper" id="roW">—</span></div>
+        </div>
+        <p class="caption">Hver kule representerer en liten vektenhet som bidrar til det ytre trykket p<sub>ext</sub>.
+        Fjerner du én kule om gangen, får gassen «lov» til å innstille seg på en ny likevekt for hver fjerning —
+        akkurat som å ta bort ett og ett sandkorn.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Kontroller</div>
+
+        <div class="field">
+          <label>Antall kuler i stabelen, <em class="var">G</em> <span class="val" id="GVal">8 kuler</span></label>
+          <input type="range" id="G" min="1" max="40" step="1" value="8">
+        </div>
+        <p class="caption" style="margin-top:-6px;">Få, store kuler ⇒ hakkete, irreversibel prosess. Mange, små kuler ⇒ jevn, tilnærmet reversibel prosess.</p>
+
+        <hr class="sep">
+
+        <div class="btn-row">
+          <button id="removeOneBtn" class="secondary">Fjern én kule</button>
+          <button id="animateBtn" class="primary">▶ Fjern alle, én og én</button>
+        </div>
+        <div class="btn-row">
+          <button id="removeAllBtn">Fjern alle på én gang</button>
+          <button id="resetBtn" class="ghost">Nullstill</button>
+        </div>
+
+        <div class="status-banner" id="statusBanner">Klar. ${G} kuler ligger på stempelet — trykk «Fjern én kule» eller la animasjonen kjøre.</div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <div class="card">
+        <div class="card-title">P–V-diagram <span class="tag">Isoterm</span></div>
+        <canvas id="pvCanvas" width="820" height="440"></canvas>
+        <div class="legend">
+          <span><span class="swatch" style="background:#6fa88f;"></span> Reversibel grense (areal under kurven)</span>
+          <span><span class="swatch" style="background:#c1613f;"></span> Arbeid utført med valgt antall kuler</span>
+          <span><span class="swatch" style="background:#e0bd85;border-radius:50%;"></span> V<sub>i</sub> → V (nåværende)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Resultat</div>
+        <div class="result-grid">
+          <div class="result-box">
+            <div class="rlabel">Arbeid utført på omgivelsene</div>
+            <div class="rvalue" id="rWnow">0 J</div>
+            <div class="rsub" id="rWnowSub">0 av 8 kuler fjernet</div>
+          </div>
+          <div class="result-box rev">
+            <div class="rlabel">Reversibel grense (uendelig mange kuler)</div>
+            <div class="rvalue" id="rWrev">— J</div>
+            <div class="rsub">Maksimalt mulig arbeid mellom V<sub>i</sub> og V<sub>f</sub></div>
+          </div>
+        </div>
+        <div class="pct-bar-wrap">
+          <div class="pct-bar-track"><div class="pct-bar-fill" id="pctFill"></div></div>
+          <div class="pct-label" id="pctLabel">Fjern alle kulene for å se hvor nært du kom den reversible grensen.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Konvensjon: w (arbeid utført <em>på</em> systemet) = −∫p<sub>ext</sub>dV (IUPAC/Atkins). Simuleringen viser
+    w<sub>omg</sub> = −w, arbeidet gassen utfører <em>på omgivelsene</em> idet den ekspanderer fra V<sub>i</sub> til V<sub>f</sub>.
+    Gassmengde og temperatur er faste (n = 1,0 mol, T = 298 K) — det er kun antall kuler / trinn i fjerningen som styrer
+    hvor nær den reversible grensen prosessen kommer.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const R = 0.08314; // L·bar / (mol·K)
+
+  // ---------- fixed physical constants ----------
+  const n = 1.0, T = 298;
+  const Vi = 3.0;   // L, fully loaded (compressed) start volume
+  const Vf = 12.0;  // L, fully unloaded (expanded) end volume
+  const Pi = n*R*T/Vi;  // bar, pressure with full ball stack
+  const Pf = n*R*T/Vf;  // bar, pressure with zero balls (background pressure)
+
+  function pressureAtV(V){ return n*R*T/V; }
+  function volAtBalls(k, G){
+    const pext = Pf + (k/G)*(Pi-Pf);
+    return n*R*T/pext;
+  }
+  function pressureAtBalls(k, G){
+    return Pf + (k/G)*(Pi-Pf);
+  }
+  function reversibleWork(){ return n*R*T*Math.log(Vf/Vi); } // bar·L
+
+  const state = {
+    G: 8,
+    k: 8,
+    steps: [],     // {vStart, vEnd, p}
+    wSum: 0,
+    animating: false
+  };
+
+  const el = {
+    G: document.getElementById('G'),
+    GVal: document.getElementById('GVal'),
+    removeOneBtn: document.getElementById('removeOneBtn'),
+    animateBtn: document.getElementById('animateBtn'),
+    removeAllBtn: document.getElementById('removeAllBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+    statusBanner: document.getElementById('statusBanner'),
+    roV: document.getElementById('roV'),
+    roP: document.getElementById('roP'),
+    roK: document.getElementById('roK'),
+    roW: document.getElementById('roW'),
+    gaugeReadout: document.getElementById('gaugeReadout'),
+    gaugeNeedle: document.getElementById('gaugeNeedle'),
+    pistonGroup: document.getElementById('pistonGroup'),
+    ballsGroup: document.getElementById('ballsGroup'),
+    gasRect: document.getElementById('gasRect'),
+    gasDotsGroup: document.getElementById('gasDotsGroup'),
+    rWnow: document.getElementById('rWnow'),
+    rWnowSub: document.getElementById('rWnowSub'),
+    rWrev: document.getElementById('rWrev'),
+    pctFill: document.getElementById('pctFill'),
+    pctLabel: document.getElementById('pctLabel'),
+    canvas: document.getElementById('pvCanvas')
+  };
+  const ctx = el.canvas.getContext('2d');
+
+  // ---------- geometry constants ----------
+  const Y_BOTTOM = 378;
+  const H_MIN = 30, H_MAX = 300;
+
+  function volToPistonY(V){
+    const frac = (V - Vi) / (Vf - Vi);
+    const h = H_MIN + frac * (H_MAX - H_MIN);
+    return Y_BOTTOM - h;
+  }
+
+  // ---------- gas dots ----------
+  const N_DOTS = 34;
+  const dotSeeds = [];
+  for(let i=0;i<N_DOTS;i++){
+    dotSeeds.push({
+      fx: 0.08 + Math.random()*0.84,
+      fy: Math.random(),
+      r: 1.6 + Math.random()*1.6,
+      phase: Math.random()*Math.PI*2,
+      amp: 2 + Math.random()*3
+    });
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('r', dotSeeds[i].r);
+    c.setAttribute('fill', '#d7ece4');
+    c.setAttribute('opacity', '0.85');
+    el.gasDotsGroup.appendChild(c);
+  }
+  let tGlobal = 0;
+  let currentPistonY = volToPistonY(Vi);
+
+  function layoutGasDots(pistonY){
+    const gasTop = pistonY + 14;
+    const gasBottom = Y_BOTTOM - 4;
+    const dots = el.gasDotsGroup.children;
+    for(let i=0;i<N_DOTS;i++){
+      const s = dotSeeds[i];
+      const x = 72 + s.fx*156 + Math.sin(tGlobal*0.001 + s.phase)*s.amp;
+      const y = gasTop + s.fy*(gasBottom - gasTop) + Math.cos(tGlobal*0.0013 + s.phase)*s.amp;
+      dots[i].setAttribute('cx', x.toFixed(1));
+      dots[i].setAttribute('cy', Math.max(gasTop+2, Math.min(gasBottom-2,y)).toFixed(1));
+    }
+  }
+  function animateDots(){
+    tGlobal += 16;
+    layoutGasDots(currentPistonY);
+    requestAnimationFrame(animateDots);
+  }
+
+  // ---------- ball stack (sand grain metaphor) ----------
+  function drawBalls(k, G, pistonY){
+    el.ballsGroup.innerHTML = '';
+    if(k<=0) return;
+    const usableW = 132, xLeft = 82;
+    const r = Math.max(3.4, Math.min(10, 11 - G*0.16));
+    const gap = 1.6;
+    const cols = Math.max(1, Math.floor(usableW/(2*r+gap)));
+    const rows = Math.ceil(k/cols);
+    let placed = 0;
+    for(let row=0; row<rows; row++){
+      const inRow = Math.min(cols, k-placed);
+      const rowW = inRow*(2*r+gap) - gap;
+      const startX = xLeft + (usableW-rowW)/2 + r;
+      const y = pistonY - 4 - r - row*(2*r+gap-0.5);
+      for(let c=0;c<inRow;c++){
+        const cx = startX + c*(2*r+gap);
+        const circle = document.createElementNS('http://www.w3.org/2000/svg','circle');
+        circle.setAttribute('cx', cx.toFixed(1));
+        circle.setAttribute('cy', y.toFixed(1));
+        circle.setAttribute('r', r.toFixed(1));
+        circle.setAttribute('fill', 'url(#ballGrad)');
+        circle.setAttribute('stroke', '#6e5230');
+        circle.setAttribute('stroke-width', '0.6');
+        el.ballsGroup.appendChild(circle);
+      }
+      placed += inRow;
+    }
+  }
+
+  // ---------- gauge ----------
+  const GAUGE_PMAX = Math.ceil(Pi*1.1);
+  function initGaugeTicks(){
+    const ticks = document.getElementById('gaugeTicks');
+    const cx=75, cy=80, rOuter=54, rInner=46;
+    const startAngle = -210, endAngle = 30;
+    const steps = 7;
+    for(let i=0;i<=steps;i++){
+      const a = (startAngle + (endAngle-startAngle)*i/steps) * Math.PI/180;
+      const x1 = cx + rInner*Math.cos(a), y1 = cy + rInner*Math.sin(a);
+      const x2 = cx + rOuter*Math.cos(a), y2 = cy + rOuter*Math.sin(a);
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+      ticks.appendChild(line);
+    }
+  }
+  initGaugeTicks();
+  function setGauge(P){
+    const clamped = Math.max(0, Math.min(GAUGE_PMAX, P));
+    const startAngle = -210, endAngle = 30;
+    const a = (startAngle + (endAngle-startAngle)*(clamped/GAUGE_PMAX)) * Math.PI/180;
+    const cx=75, cy=80, len=44;
+    el.gaugeNeedle.setAttribute('x2', (cx+len*Math.cos(a)).toFixed(1));
+    el.gaugeNeedle.setAttribute('y2', (cy+len*Math.sin(a)).toFixed(1));
+    el.gaugeReadout.textContent = P.toFixed(2);
+  }
+
+  // ---------- canvas P-V diagram ----------
+  function drawPV(stepsData){
+    const W = el.canvas.width, H = el.canvas.height;
+    ctx.clearRect(0,0,W,H);
+    const padL=64,padR=24,padT=24,padB=48;
+    const plotW = W-padL-padR, plotH = H-padT-padB;
+
+    const vAxisMin = Vi-0.6, vAxisMax = Vf+0.8;
+    const pAxisMax = Pi*1.08;
+
+    function xOf(v){ return padL + (v-vAxisMin)/(vAxisMax-vAxisMin)*plotW; }
+    function yOf(p){ return padT + plotH - (p/pAxisMax)*plotH; }
+
+    ctx.strokeStyle = '#2c3640'; ctx.lineWidth=1; ctx.font='11px IBM Plex Mono';
+    ctx.fillStyle = '#7d848a';
+    const vTicks=6, pTicks=6;
+    for(let i=0;i<=vTicks;i++){
+      const v = vAxisMin + (vAxisMax-vAxisMin)*i/vTicks;
+      const x = xOf(v);
+      ctx.beginPath();ctx.moveTo(x,padT);ctx.lineTo(x,padT+plotH);ctx.stroke();
+      ctx.fillText(v.toFixed(1), x-10, padT+plotH+18);
+    }
+    for(let i=0;i<=pTicks;i++){
+      const p = pAxisMax*i/pTicks;
+      const y = yOf(p);
+      ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+plotW,y);ctx.stroke();
+      ctx.fillText(p.toFixed(1), 12, y+4);
+    }
+    ctx.fillStyle = '#9aa0a3';
+    ctx.fillText('V (L)', padL+plotW/2-14, H-10);
+    ctx.save();
+    ctx.translate(16, padT+plotH/2+20);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('P (bar)', 0,0);
+    ctx.restore();
+
+    // reversible reference area (Vi -> Vf, full range)
+    ctx.beginPath();
+    ctx.moveTo(xOf(Vi), yOf(0));
+    const N_curve=60;
+    for(let i=0;i<=N_curve;i++){
+      const v = Vi + (Vf-Vi)*i/N_curve;
+      ctx.lineTo(xOf(v), yOf(pressureAtV(v)));
+    }
+    ctx.lineTo(xOf(Vf), yOf(0));
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(111,168,143,0.25)';
+    ctx.fill();
+
+    // staircase rectangles built so far
+    if(stepsData && stepsData.length){
+      ctx.fillStyle = 'rgba(193,97,63,0.55)';
+      ctx.strokeStyle = 'rgba(193,97,63,0.9)';
+      stepsData.forEach(s=>{
+        const x1 = xOf(Math.min(s.vStart,s.vEnd));
+        const x2 = xOf(Math.max(s.vStart,s.vEnd));
+        const y0 = yOf(0);
+        const y1 = yOf(s.p);
+        ctx.fillRect(x1, y1, x2-x1, y0-y1);
+        ctx.strokeRect(x1, y1, x2-x1, y0-y1);
+      });
+    }
+
+    // isotherm curve
+    ctx.beginPath();
+    for(let i=0;i<=200;i++){
+      const v = vAxisMin + (vAxisMax-vAxisMin)*i/200;
+      const x = xOf(v), y = yOf(pressureAtV(v));
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = '#e0bd85';
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    function marker(v,color){
+      const x=xOf(v), y=yOf(pressureAtV(v));
+      ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fillStyle=color; ctx.fill();
+      ctx.strokeStyle='#12171b'; ctx.lineWidth=1.5; ctx.stroke();
+    }
+    marker(Vi, '#e0bd85');
+    const currentV = stepsData.length ? stepsData[stepsData.length-1].vEnd : Vi;
+    marker(currentV, '#9fd8c1');
+  }
+
+  function fmt(x,d=2){ return Number(x).toFixed(d); }
+
+  // ---------- render current physical state ----------
+  function renderPhysical(){
+    const V = volAtBalls(state.k, state.G);
+    const P = pressureAtBalls(state.k, state.G);
+    currentPistonY = volToPistonY(V);
+
+    el.pistonGroup.setAttribute('transform', `translate(0, ${currentPistonY})`);
+    const gasTop = currentPistonY+18;
+    el.gasRect.setAttribute('y', gasTop);
+    el.gasRect.setAttribute('height', Math.max(4, Y_BOTTOM-gasTop));
+    layoutGasDots(currentPistonY);
+    drawBalls(state.k, state.G, currentPistonY);
+    setGauge(P);
+
+    el.roV.textContent = fmt(V,2)+' L';
+    el.roP.textContent = fmt(P,2)+' bar';
+    el.roK.textContent = state.k + ' / ' + state.G;
+    el.roW.textContent = fmt(state.wSum*100,1)+' J';
+
+    el.rWnow.textContent = fmt(state.wSum*100,1)+' J';
+    el.rWnowSub.textContent = (state.G-state.k)+' av '+state.G+' kuler fjernet';
+
+    drawPV(state.steps);
+  }
+
+  function updateStatus(){
+    if(state.k === state.G){
+      el.statusBanner.className = 'status-banner';
+      el.statusBanner.textContent = `Klar. ${state.G} kuler ligger på stempelet — trykk «Fjern én kule» eller la animasjonen kjøre.`;
+    } else if(state.k === 0){
+      el.statusBanner.className = 'status-banner done';
+      el.statusBanner.textContent = `Ferdig! Alle ${state.G} kulene er fjernet — gassen har ekspandert fra Vi til Vf.`;
+    } else {
+      el.statusBanner.className = 'status-banner';
+      el.statusBanner.textContent = `${state.G-state.k} av ${state.G} kuler fjernet. ${state.k} igjen på stempelet.`;
+    }
+  }
+
+  function updateComparison(){
+    const wRevBarL = reversibleWork();
+    const wRevJ = wRevBarL*100;
+    el.rWrev.textContent = fmt(wRevJ,1)+' J';
+    if(state.k===0){
+      const pct = Math.max(0, Math.min(100, (state.wSum/wRevBarL)*100));
+      el.pctFill.style.width = pct.toFixed(0)+'%';
+      el.pctLabel.textContent = `Med G = ${state.G} kuler oppnådde du ${pct.toFixed(1)} % av det reversible (maksimale) arbeidet.`;
+    } else {
+      el.pctFill.style.width = '0%';
+      el.pctLabel.textContent = 'Fjern alle kulene for å se hvor nært du kom den reversible grensen.';
+    }
+  }
+
+  function setButtonsDisabled(disabled){
+    el.removeOneBtn.disabled = disabled || state.k<=0;
+    el.animateBtn.disabled = disabled || state.k<=0;
+    el.removeAllBtn.disabled = disabled || state.k<=0;
+    el.G.disabled = disabled;
+  }
+
+  // ---------- actions ----------
+  function removeOneBall(){
+    if(state.animating || state.k<=0) return;
+    const V0 = volAtBalls(state.k, state.G);
+    state.k -= 1;
+    const V1 = volAtBalls(state.k, state.G);
+    const p = pressureAtBalls(state.k, state.G);
+    state.steps.push({vStart:V0, vEnd:V1, p});
+    state.wSum += p*(V1-V0);
+    renderPhysical();
+    updateStatus();
+    updateComparison();
+    setButtonsDisabled(false);
+  }
+
+  function removeAllAtOnce(){
+    if(state.animating || state.k<=0) return;
+    const V0 = volAtBalls(state.k, state.G);
+    state.k = 0;
+    const V1 = volAtBalls(0, state.G);
+    const p = pressureAtBalls(0, state.G);
+    state.steps = [{vStart:V0, vEnd:V1, p}];
+    state.wSum = p*(V1-V0);
+    renderPhysical();
+    updateStatus();
+    updateComparison();
+    setButtonsDisabled(false);
+  }
+
+  function animateAll(){
+    if(state.animating || state.k<=0) return;
+    state.animating = true;
+    setButtonsDisabled(true);
+    const totalSteps = state.k;
+    const perStep = Math.min(500, Math.max(45, 900/totalSteps));
+    function tick(){
+      if(state.k>0){
+        const V0 = volAtBalls(state.k, state.G);
+        state.k -= 1;
+        const V1 = volAtBalls(state.k, state.G);
+        const p = pressureAtBalls(state.k, state.G);
+        state.steps.push({vStart:V0, vEnd:V1, p});
+        state.wSum += p*(V1-V0);
+        renderPhysical();
+        updateStatus();
+        setTimeout(tick, perStep);
+      } else {
+        state.animating = false;
+        setButtonsDisabled(false);
+        updateComparison();
+      }
+    }
+    tick();
+  }
+
+  function resetAll(){
+    state.G = parseInt(el.G.value,10);
+    state.k = state.G;
+    state.steps = [];
+    state.wSum = 0;
+    state.animating = false;
+    setButtonsDisabled(false);
+    renderPhysical();
+    updateStatus();
+    updateComparison();
+  }
+
+  // ---------- wire up ----------
+  el.G.addEventListener('input', ()=>{
+    el.GVal.textContent = el.G.value + ' kuler';
+    resetAll();
+  });
+  el.removeOneBtn.addEventListener('click', removeOneBall);
+  el.animateBtn.addEventListener('click', animateAll);
+  el.removeAllBtn.addEventListener('click', removeAllAtOnce);
+  el.resetBtn.addEventListener('click', resetAll);
+
+  el.GVal.textContent = el.G.value + ' kuler';
+  resetAll();
+  requestAnimationFrame(animateDots);
+})();
+</script>
+</body>
+</html>
