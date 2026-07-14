@@ -3,12 +3,12 @@ root: intro
 chapters:
 - file: docs/intro
 - file: docs/mattehjelp
-- file: docs/entropi
 - file: docs/statmek
+- file: docs/entropi
 - file: docs/gasses
 - file: docs/Makroskopisk_termodynamikk_1
 - file: docs/Makroskopisk_termodynamikk_II
 - file: docs/Modul4
 - file: docs/intermolecular_interactions_exercises
-- file: docs/howto
 - file: docs/ukesoppgaver
+- file: docs/howto
