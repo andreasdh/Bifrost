@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ideell vs. reell gass</title>
+<style>
+  :root{
+    --paper:#EAEEF2; --panel:#FBFCFD; --ink:#16212B; --muted:#5C6B78;
+    --hair:#D3DBE2; --grid:#E1E7ec; --ideal:#26408B; --real:#D1502E; --focus:#26408B;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:980px;margin:0 auto;padding:22px 18px 30px;}
+  .eyebrow{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--real);margin:0 0 6px;}
+  h1{font-weight:800;letter-spacing:-.02em;font-size:clamp(20px,3.4vw,28px);margin:0 0 4px;}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 20px;max-width:64ch;line-height:1.5;}
+  .stage{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:16px;
+         background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px;
+         box-shadow:0 1px 0 rgba(22,33,43,.04),0 10px 30px -22px rgba(22,33,43,.4);}
+  .col{display:flex;flex-direction:column;gap:10px;min-width:0;}
+  .cylholder{position:relative;width:100%;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#0f1620;border:1px solid #223041;}
+  .chartholder{position:relative;width:100%;aspect-ratio:16/10;}
+  canvas{display:block;width:100%;height:100%;}
+  .caption{font-size:12px;color:var(--muted);line-height:1.45;} .caption b{color:var(--ink);font-weight:600;}
+  .modelrow{display:flex;gap:6px;}
+  .seg{flex:1;font:600 13px var(--sans);padding:8px 6px;border-radius:9px;cursor:pointer;text-align:center;border:1px solid var(--hair);background:#fff;color:var(--ink);}
+  .seg[aria-pressed=true][data-m=ideal]{background:var(--ideal);border-color:var(--ideal);color:#fff;}
+  .seg[aria-pressed=true][data-m=real]{background:var(--real);border-color:var(--real);color:#fff;}
+  .seg:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  .controls{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .ctrl{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:14px 15px;}
+  .ctrl h3{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);}
+  .val{font:700 15px/1 var(--mono);color:var(--ink);}
+  input[type=range]{width:100%;accent-color:var(--ideal);margin:8px 0 2px;}
+  .rangelbl{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);color:var(--muted);}
+  .gasrow{display:flex;gap:6px;}
+  .chip{flex:1;font:600 13px var(--sans);padding:8px 6px;border-radius:9px;cursor:pointer;text-align:center;border:1px solid var(--hair);background:#fff;color:var(--ink);}
+  .chip[aria-pressed=true]{background:#2b3a47;border-color:#2b3a47;color:#fff;}
+  .readout{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .stat{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:12px 14px;}
+  .stat .k{font-size:11px;color:var(--muted);} .stat .v{font:700 20px/1.1 var(--mono);margin-top:5px;} .stat .u{font:500 11px var(--mono);color:var(--muted);}
+  .stat.pi .v{color:var(--ideal)} .stat.pr .v{color:var(--real)}
+  .note{margin-top:12px;background:#fff;border:1px solid var(--hair);border-left:3px solid var(--real);border-radius:8px;padding:10px 13px;font-size:13px;line-height:1.5;color:var(--ink);}
+  .note b{font-weight:700}
+  .foot{margin-top:14px;font-size:11px;color:var(--muted);line-height:1.5;}
+  .foot code{font-family:var(--mono);background:#fff;border:1px solid var(--hair);padding:1px 5px;border-radius:5px;}
+  @media (max-width:680px){ .stage{grid-template-columns:1fr} .readout{grid-template-columns:1fr}
+    .cylholder{max-width:260px;margin:0 auto;width:100%} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Reelle gasser · interaktiv</p>
+  <h1>Ideell vs. reell gass – hva skjer når du komprimerer?</h1>
+  <p class="sub">Trykk stempelet ned med volumbryteren. En <b>ideell</b> gass er punktmolekyler uten
+     størrelse eller tiltrekning – den kan presses i det uendelige. En <b>reell</b> gass har molekyler
+     med eget volum (kan ikke overlappe) og tiltrekning (klumper seg ved lav temperatur). Grafen viser
+     kompressibilitetsfaktoren <b>Z = PV/nRT</b>, som er 1 for en ideell gass.</p>
+
+  <div class="stage">
+    <div class="col">
+      <div class="modelrow">
+        <div class="seg" data-m="ideal" aria-pressed="false" tabindex="0" role="button">Ideell</div>
+        <div class="seg" data-m="real"  aria-pressed="true"  tabindex="0" role="button">Reell</div>
+      </div>
+      <div class="cylholder"><canvas id="cyl"></canvas></div>
+      <p class="caption"><b>Stempelet.</b> Den lyse ringen viser hvert molekyls <b>utstrekning</b> –
+         det ekskluderte volumet det stenger andre molekyler ute fra (van der Waals-<i>b</i>).
+         Selve molekylkjernen tegnes likt for alle gasser; det er <i>ringen</i> som varierer og som
+         kjører seg fast ved kompresjon. Ideelle punkter har ingen utstrekning.</p>
+    </div>
+    <div class="col">
+      <div class="chartholder"><canvas id="chart"></canvas></div>
+      <p class="caption">Kompressibilitetsfaktor <b>Z</b> mot volum. Den stiplede linjen (Z = 1) er
+         den ideelle gassen. Kurven dyppet <span style="color:var(--real)">under 1</span> = tiltrekning
+         vinner; <span style="color:var(--ideal)">over 1</span> = molekylenes eget volum vinner.</p>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="ctrl"><h3>Volum</h3>
+      <div class="val"><span id="vout">0.60</span> L</div>
+      <input id="vol" type="range" min="0.06" max="1.20" step="0.01" value="0.60">
+      <div class="rangelbl"><span>0,06 L (presset)</span><span>1,20 L</span></div>
+    </div>
+    <div class="ctrl"><h3>Temperatur</h3>
+      <div class="val"><span id="tout">300</span> K</div>
+      <input id="temp" type="range" min="120" max="700" step="5" value="300">
+      <div class="rangelbl"><span>120 K</span><span>700 K</span></div>
+    </div>
+    <div class="ctrl"><h3>Gass</h3>
+      <div class="gasrow" id="gasrow"></div>
+      <div style="font-size:11px;color:var(--muted);margin-top:9px" id="gasinfo"></div>
+    </div>
+  </div>
+
+  <div class="readout">
+    <div class="stat pi"><div class="k">Trykk om ideell · P = nRT/V</div><div class="v"><span id="pideal">–</span></div><div class="u">bar</div></div>
+    <div class="stat pr"><div class="k">Trykk reell · van der Waals</div><div class="v"><span id="preal">–</span></div><div class="u">bar</div></div>
+    <div class="stat"><div class="k">Kompressibilitet · Z</div><div class="v"><span id="zval">–</span></div><div class="u">Z = 1 om ideell</div></div>
+  </div>
+
+  <div class="note" id="note"></div>
+
+  <p class="foot">Van der Waals: <code>P = nRT/(V−nb) − a n²/V²</code>, som gir
+     <code>Z = V/(V−nb) − a/(V R T)</code> (n = 1 mol). Første ledd (&gt;1) = eget volum; andre ledd (&lt;0) = tiltrekning.</p>
+</div>
+
+<script>
+const R=8.314;
+// van der Waals-konstanter (n=1): a i Pa·m⁶/mol², b i m³/mol
+const GASES={
+  "He":{a:0.00346,b:2.38e-5}, "N₂":{a:0.137,b:3.87e-5}, "CO₂":{a:0.364,b:4.27e-5}
+};
+let state={ model:"real", V:0.60, T:300, gas:"CO₂" };
+
+/* controls */
+document.querySelectorAll(".seg").forEach(s=>{
+  const set=()=>{ state.model=s.dataset.m;
+    document.querySelectorAll(".seg").forEach(x=>x.setAttribute("aria-pressed",x.dataset.m===state.model));
+    initMol(); };
+  s.onclick=set; s.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();set();} };
+});
+const gasrow=document.getElementById("gasrow");
+Object.keys(GASES).forEach(name=>{ const b=document.createElement("button"); b.className="chip"; b.textContent=name;
+  b.setAttribute("aria-pressed",name===state.gas);
+  b.onclick=()=>{ state.gas=name; [...gasrow.children].forEach(c=>c.setAttribute("aria-pressed",c.textContent===state.gas));
+    initMol(); update(); }; gasrow.appendChild(b); });
+const volI=document.getElementById("vol"),vout=document.getElementById("vout");
+volI.oninput=()=>{ state.V=+volI.value; vout.textContent=state.V.toFixed(2); update(); };
+const tempI=document.getElementById("temp"),tout=document.getElementById("tout");
+tempI.oninput=()=>{ state.T=+tempI.value; tout.textContent=state.T; update(); };
+
+/* physics */
+const L2M3=1e-3;
+function pIdeal(V,T){ return R*T/(V*L2M3); }                     // Pa
+function pReal(V,T,a,b){ const v=V*L2M3; return R*T/(v-b)-a/(v*v); }
+function Zfac(V,T,a,b){ const v=V*L2M3; return v/(v-b)-a/(v*R*T); }
+function Tc(a,b){ return 8*a/(27*R*b); }
+
+/* ---- molecular cylinder ---- */
+const cyl=document.getElementById("cyl"), mctx=cyl.getContext("2d");
+let mol=[]; const NMOL=34;
+// extent radius = the excluded-volume "halo" (scales with van der Waals b); NOT the drawn molecule core
+function diskR(w){ const b=GASES[state.gas].b, ref=3.5e-5; return Math.max(5, w*0.050*Math.cbrt(b/ref)); }
+function region(w,h){ const rx0=w*0.16, rx1=w*0.84, floor=h*0.9, top0=h*0.12;
+  const f=(state.V-0.06)/(1.20-0.06); const pistonY=floor-(floor-top0)*(0.18+0.82*f);
+  return {rx0,rx1,floor,pistonY}; }
+function initMol(){ const r=cyl.getBoundingClientRect(); const w=r.width||300,h=r.height||400;
+  const g=region(w,h); mol=[]; for(let i=0;i<NMOL;i++){ mol.push({
+    x:g.rx0+Math.random()*(g.rx1-g.rx0), y:g.pistonY+Math.random()*(g.floor-g.pistonY) }); } }
+function sizeCanvas(cv,ctx){ const dpr=Math.min(window.devicePixelRatio||1,2); const r=cv.getBoundingClientRect();
+  cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); return {w:r.width,h:r.height}; }
+function drawCyl(){
+  const {w,h}=sizeCanvas(cyl,mctx); mctx.clearRect(0,0,w,h);
+  const g=region(w,h), real=state.model==="real", r=real?diskR(w):Math.max(2.4,w/85);
+  const jig=(0.6+0.9*Math.sqrt(state.T/300))* (real?1:1.3);
+  // update positions
+  for(const m of mol){ m.x+=(Math.random()-.5)*jig*2; m.y+=(Math.random()-.5)*jig*2;
+    m.x=Math.max(g.rx0+r,Math.min(g.rx1-r,m.x)); m.y=Math.max(g.pistonY+r,Math.min(g.floor-r,m.y)); }
+  if(real){
+    // hard-core non-overlap (a few relaxation passes)
+    for(let it=0;it<3;it++){ for(let i=0;i<mol.length;i++){ for(let j=i+1;j<mol.length;j++){
+      let dx=mol[j].x-mol[i].x, dy=mol[j].y-mol[i].y, d=Math.hypot(dx,dy)||.01, min=2*r;
+      if(d<min){ const push=(min-d)/2/d; dx*=push; dy*=push; mol[i].x-=dx; mol[i].y-=dy; mol[j].x+=dx; mol[j].y+=dy; } } } }
+    // condensation pull toward centroid when cold (relative to Tc)
+    const tc=Tc(GASES[state.gas].a,GASES[state.gas].b);
+    if(state.T < 0.95*tc){ let cx=0,cy=0; mol.forEach(m=>{cx+=m.x;cy+=m.y;}); cx/=mol.length; cy/=mol.length;
+      const s=0.045*(1-state.T/tc); mol.forEach(m=>{ m.x+=(cx-m.x)*s; m.y+=(cy-m.y)*s; }); }
+    // clamp back inside
+    for(const m of mol){ m.x=Math.max(g.rx0+r,Math.min(g.rx1-r,m.x)); m.y=Math.max(g.pistonY+r,Math.min(g.floor-r,m.y)); }
+  }
+  // cylinder walls
+  mctx.strokeStyle="#33475b"; mctx.lineWidth=2;
+  mctx.beginPath(); mctx.moveTo(g.rx0-2,h*0.08); mctx.lineTo(g.rx0-2,g.floor+2); mctx.lineTo(g.rx1+2,g.floor+2); mctx.lineTo(g.rx1+2,h*0.08); mctx.stroke();
+  // piston
+  mctx.fillStyle="#4a6076"; mctx.fillRect(g.rx0-6,g.pistonY-12,(g.rx1-g.rx0)+12,12);
+  mctx.fillRect((g.rx0+g.rx1)/2-4,h*0.03,8,g.pistonY-h*0.03);
+  // molecules: constant core for every gas; the extent (excluded volume) is marked as a halo
+  const coreR=Math.max(2.8,w/72);
+  for(const m of mol){
+    if(real){
+      // extent / excluded volume — this halo is what varies with the gas (van der Waals b)
+      mctx.beginPath(); mctx.arc(m.x,m.y,r,0,7);
+      mctx.fillStyle="rgba(209,80,46,0.12)"; mctx.fill();
+      mctx.lineWidth=1.2; mctx.strokeStyle="rgba(209,80,46,0.55)"; mctx.setLineDash([3,3]);
+      mctx.stroke(); mctx.setLineDash([]);
+      // molecule core (same size regardless of gas)
+      mctx.beginPath(); mctx.arc(m.x,m.y,coreR,0,7); mctx.fillStyle="#C33D1E"; mctx.fill();
+    } else {
+      mctx.beginPath(); mctx.arc(m.x,m.y,coreR,0,7); mctx.fillStyle="rgba(92,119,196,0.92)"; mctx.fill();
+    }
+  }
+}
+
+/* ---- Z–V chart ---- */
+const chC=document.getElementById("chart"), cctx=chC.getContext("2d");
+function getCss(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+function drawChart(){
+  const {w,h}=sizeCanvas(chC,cctx); cctx.clearRect(0,0,w,h);
+  const x0=34,x1=w-12,y0=h-24,y1=12;
+  const Vmin=0.06,Vmax=1.20, Zmin=0.4,Zmax=1.7;
+  const {a,b}=GASES[state.gas];
+  const X=V=>x0+((V-Vmin)/(Vmax-Vmin))*(x1-x0);
+  const Y=z=>y0-((z-Zmin)/(Zmax-Zmin))*(y0-y1);
+  // shaded bands
+  cctx.fillStyle="rgba(38,64,139,0.06)"; cctx.fillRect(x0,y1,x1-x0,Y(1)-y1);
+  cctx.fillStyle="rgba(209,80,46,0.06)"; cctx.fillRect(x0,Y(1),x1-x0,y0-Y(1));
+  // grid + axes
+  cctx.strokeStyle=getCss('--grid'); cctx.lineWidth=1; cctx.fillStyle=getCss('--muted');
+  cctx.font="11px "+getCss('--mono'); cctx.textAlign="right"; cctx.textBaseline="middle";
+  [0.5,0.75,1.0,1.25,1.5].forEach(z=>{ const py=Y(z); cctx.beginPath();cctx.moveTo(x0,py);cctx.lineTo(x1,py);cctx.stroke();
+    cctx.fillText(z.toFixed(2),x0-5,py); });
+  cctx.textAlign="center"; cctx.textBaseline="top";
+  [0.2,0.4,0.6,0.8,1.0,1.2].forEach(V=>{ cctx.fillText(V.toFixed(1),X(V),y0+5); });
+  cctx.fillText("volum (L) →",X(1.05),y0+5);
+  cctx.save(); cctx.translate(11,(y0+y1)/2); cctx.rotate(-Math.PI/2); cctx.textAlign="center"; cctx.fillText("Z = PV/nRT",0,0); cctx.restore();
+  // ideal line Z=1
+  cctx.strokeStyle=getCss('--ideal'); cctx.lineWidth=1.6; cctx.setLineDash([6,4]);
+  cctx.beginPath(); cctx.moveTo(x0,Y(1)); cctx.lineTo(x1,Y(1)); cctx.stroke(); cctx.setLineDash([]);
+  // vdW Z curve
+  cctx.strokeStyle=getCss('--real'); cctx.lineWidth=2.6; cctx.beginPath(); let started=false;
+  for(let px=x0;px<=x1;px++){ const V=Vmin+((px-x0)/(x1-x0))*(Vmax-Vmin); let z=Zfac(V,state.T,a,b);
+    z=Math.max(Zmin-.5,Math.min(Zmax+.5,z)); const py=Y(z); started?cctx.lineTo(px,py):(cctx.moveTo(px,py),started=true); }
+  cctx.stroke();
+  // marker at current V
+  const zc=Zfac(state.V,state.T,a,b), mx=X(state.V), my=Y(Math.max(Zmin,Math.min(Zmax,zc)));
+  cctx.strokeStyle=getCss('--muted'); cctx.setLineDash([2,3]); cctx.lineWidth=1;
+  cctx.beginPath(); cctx.moveTo(mx,y0); cctx.lineTo(mx,y1); cctx.stroke(); cctx.setLineDash([]);
+  cctx.beginPath(); cctx.arc(mx,my,5,0,7); cctx.fillStyle=getCss('--real'); cctx.fill(); cctx.lineWidth=2; cctx.strokeStyle="#fff"; cctx.stroke();
+  // ideal/real legend
+  cctx.textAlign="left"; cctx.textBaseline="middle"; cctx.font="600 12px "+getCss('--sans');
+  cctx.strokeStyle=getCss('--ideal'); cctx.setLineDash([6,4]); cctx.lineWidth=1.6;
+  cctx.beginPath();cctx.moveTo(x1-150,y1+8);cctx.lineTo(x1-130,y1+8);cctx.stroke();cctx.setLineDash([]);
+  cctx.fillStyle=getCss('--ink'); cctx.fillText("ideell",x1-126,y1+8);
+  cctx.strokeStyle=getCss('--real'); cctx.lineWidth=2.6; cctx.beginPath();cctx.moveTo(x1-72,y1+8);cctx.lineTo(x1-52,y1+8);cctx.stroke();
+  cctx.fillText(state.gas,x1-48,y1+8);
+}
+
+/* ---- readouts + note ---- */
+function update(){
+  const {a,b}=GASES[state.gas];
+  const pi=pIdeal(state.V,state.T)/1e5, pr=pReal(state.V,state.T,a,b)/1e5, z=Zfac(state.V,state.T,a,b);
+  document.getElementById("pideal").textContent=pi.toFixed(pi<100?1:0);
+  document.getElementById("preal").textContent=pr.toFixed(Math.abs(pr)<100?1:0);
+  document.getElementById("zval").textContent=z.toFixed(3);
+  const tc=Tc(a,b);
+  document.getElementById("gasinfo").innerHTML="Kritisk temp. T<sub>c</sub> ≈ "+Math.round(tc)+" K";
+  let msg;
+  if(z>1.03) msg="<b>Z > 1:</b> molekylenes eget volum dominerer. Den reelle gassen er <b>vanskeligere å komprimere</b> enn en ideell – trykket er høyere enn nRT/V.";
+  else if(z<0.97) msg="<b>Z < 1:</b> tiltrekningen mellom molekylene dominerer. Den trekker molekylene sammen, så trykket er <b>lavere</b> enn en ideell gass ville gitt.";
+  else msg="<b>Z ≈ 1:</b> her oppfører den reelle gassen seg nesten ideelt – de to effektene (eget volum og tiltrekning) omtrent oppveier hverandre.";
+  if(state.T<tc) msg+=" Temperaturen er under T<sub>c</sub>, så gassen kan <b>kondensere</b> – i modellen ser du molekylene klumpe seg sammen.";
+  document.getElementById("note").innerHTML=msg;
+}
+
+/* loop */
+function loop(){ drawCyl(); requestAnimationFrame(loop); }
+window.addEventListener("resize",()=>{ initMol(); drawChart(); });
+document.querySelectorAll(".seg").forEach(x=>x.setAttribute("aria-pressed",x.dataset.m===state.model));
+initMol(); update(); drawChart(); requestAnimationFrame(loop);
+setInterval(drawChart,120);   // keep Z-chart in sync with controls
+</script>
+</body>
+</html>
