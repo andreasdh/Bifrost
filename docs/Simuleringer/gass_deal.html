@@ -265,9 +265,31 @@ function update(){
 /* loop */
 function loop(){ drawCyl(); requestAnimationFrame(loop); }
 window.addEventListener("resize",()=>{ initMol(); drawChart(); });
-document.querySelectorAll(".seg").forEach(x=>x.setAttribute("aria-pressed",x.dataset.m===state.model));
-initMol(); update(); drawChart(); requestAnimationFrame(loop);
-setInterval(drawChart,120);   // keep Z-chart in sync with controls
+
+/* ---- boot: fail loudly, never silently ---- */
+function showError(msg){
+  const d=document.createElement("div");
+  d.style.cssText="margin:16px 0;padding:14px 16px;border:1px solid #D1502E;border-left:4px solid #D1502E;"+
+    "border-radius:8px;background:#fff;color:#16212B;font:14px/1.5 system-ui,sans-serif";
+  d.innerHTML="<b>Simuleringen kunne ikke starte.</b><br>"+msg+
+    "<br><br>Vanligste årsak: HTML-en er limt inn i en Markdown-/Jekyll-side, som ødelegger "+
+    "&lt;script&gt;-blokken. Last opp fila som en egen <code>.html</code>-fil og bygg den inn med "+
+    "en <code>&lt;iframe&gt;</code> i stedet.";
+  document.querySelector(".wrap").prepend(d);
+}
+function boot(tries){
+  try{
+    // If the layout hasn't settled (width 0), wait and retry rather than drawing into nothing.
+    if(cyl.getBoundingClientRect().width < 5){
+      if(tries>0) return setTimeout(()=>boot(tries-1),120);
+      return showError("Fant ikke gyldig størrelse på tegneflaten.");
+    }
+    document.querySelectorAll(".seg").forEach(x=>x.setAttribute("aria-pressed",x.dataset.m===state.model));
+    initMol(); update(); drawChart(); requestAnimationFrame(loop);
+    setInterval(drawChart,120);   // keep Z-chart in sync with controls
+  }catch(e){ showError("Teknisk feil: "+e.message); console.error(e); }
+}
+boot(12);
 </script>
 </body>
 </html>
