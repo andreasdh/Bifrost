@@ -143,9 +143,10 @@ function Tc(a,b){ return 8*a/(27*R*b); }
 
 /* ---- molecular cylinder ---- */
 const cyl=document.getElementById("cyl"), mctx=cyl.getContext("2d");
-let mol=[]; const NMOL=34;
-// extent radius = the excluded-volume "halo" (scales with van der Waals b); NOT the drawn molecule core
-function diskR(w){ const b=GASES[state.gas].b, ref=3.5e-5; return Math.max(5, w*0.050*Math.cbrt(b/ref)); }
+let mol=[]; const NMOL=24;
+// extent radius = the excluded-volume "halo" (scales with van der Waals b); NOT the drawn molecule core.
+// K=0.0344 is tuned so CO₂ reaches ~80% packing at minimum volume: jammed but still resolvable.
+function diskR(w){ const b=GASES[state.gas].b, ref=3.5e-5; return Math.max(4, w*0.0344*Math.cbrt(b/ref)); }
 function region(w,h){ const rx0=w*0.16, rx1=w*0.84, floor=h*0.9, top0=h*0.12;
   const f=(state.V-0.06)/(1.20-0.06); const pistonY=floor-(floor-top0)*(0.18+0.82*f);
   return {rx0,rx1,floor,pistonY}; }
@@ -162,16 +163,20 @@ function drawCyl(){
   for(const m of mol){ m.x+=(Math.random()-.5)*jig*2; m.y+=(Math.random()-.5)*jig*2;
     m.x=Math.max(g.rx0+r,Math.min(g.rx1-r,m.x)); m.y=Math.max(g.pistonY+r,Math.min(g.floor-r,m.y)); }
   if(real){
-    // hard-core non-overlap (a few relaxation passes)
-    for(let it=0;it<3;it++){ for(let i=0;i<mol.length;i++){ for(let j=i+1;j<mol.length;j++){
-      let dx=mol[j].x-mol[i].x, dy=mol[j].y-mol[i].y, d=Math.hypot(dx,dy)||.01, min=2*r;
-      if(d<min){ const push=(min-d)/2/d; dx*=push; dy*=push; mol[i].x-=dx; mol[i].y-=dy; mol[j].x+=dx; mol[j].y+=dy; } } } }
-    // condensation pull toward centroid when cold (relative to Tc)
+    // 1) condensation: pull toward centroid when cold (relative to Tc) — BEFORE non-overlap,
+    //    so the hard-core pass gets the last word and the pull can't force overlaps.
     const tc=Tc(GASES[state.gas].a,GASES[state.gas].b);
     if(state.T < 0.95*tc){ let cx=0,cy=0; mol.forEach(m=>{cx+=m.x;cy+=m.y;}); cx/=mol.length; cy/=mol.length;
       const s=0.045*(1-state.T/tc); mol.forEach(m=>{ m.x+=(cx-m.x)*s; m.y+=(cy-m.y)*s; }); }
-    // clamp back inside
-    for(const m of mol){ m.x=Math.max(g.rx0+r,Math.min(g.rx1-r,m.x)); m.y=Math.max(g.pistonY+r,Math.min(g.floor-r,m.y)); }
+    // 2) hard-core non-overlap: extents may touch but not interpenetrate.
+    //    Relax + re-clamp each pass so walls and neighbours are satisfied together.
+    for(let it=0;it<6;it++){
+      for(let i=0;i<mol.length;i++){ for(let j=i+1;j<mol.length;j++){
+        let dx=mol[j].x-mol[i].x, dy=mol[j].y-mol[i].y, d=Math.hypot(dx,dy)||.01, min=2*r;
+        if(d<min){ const push=(min-d)/2/d*0.6; dx*=push; dy*=push;
+          mol[i].x-=dx; mol[i].y-=dy; mol[j].x+=dx; mol[j].y+=dy; } } }
+      for(const m of mol){ m.x=Math.max(g.rx0+r,Math.min(g.rx1-r,m.x)); m.y=Math.max(g.pistonY+r,Math.min(g.floor-r,m.y)); }
+    }
   }
   // cylinder walls
   mctx.strokeStyle="#33475b"; mctx.lineWidth=2;
