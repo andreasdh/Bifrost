@@ -1,0 +1,136 @@
+<svg viewBox="0 0 720 440" xmlns="http://www.w3.org/2000/svg"
+     font-family="system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif"
+     role="img" aria-labelledby="tittel beskr">
+  <title id="tittel">Ett molekyl som spretter mot en vegg</title>
+  <desc id="beskr">Panel a viser at hastighetskomponenten vx skifter fortegn i støtet mens vy er uendret.
+    Panel b viser at molekylet må reise strekningen 2a langs x-aksen før det treffer samme vegg igjen.
+    Sammen gir de kraften fra ett molekyl: F1 = m vx^2 / a.</desc>
+
+  <defs>
+    <marker id="ahBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L10,5 L0,9 z" fill="#26408B"/>
+    </marker>
+    <marker id="ahWarm" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+      <path d="M0,1 L10,5 L0,9 z" fill="#D1502E"/>
+    </marker>
+    <marker id="ahMuted" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5.5" markerHeight="5.5" orient="auto-start-reverse">
+      <path d="M0,1 L10,5 L0,9 z" fill="#5C6B78"/>
+    </marker>
+    <marker id="ahDim" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,1.5 L10,5 L0,8.5 z" fill="#16212B"/>
+    </marker>
+    <pattern id="hatch" width="7" height="7" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="7" height="7" fill="#DDE3EA"/>
+      <line x1="0" y1="0" x2="0" y2="7" stroke="#93A3B1" stroke-width="2.4"/>
+    </pattern>
+  </defs>
+
+  <!-- ========== PANEL A ========== -->
+  <rect x="24" y="34" width="316" height="262" rx="10" fill="#FBFCFD" stroke="#D3DBE2"/>
+  <text x="24" y="24" font-size="13.5" font-weight="700" fill="#16212B">(a) Støtet: v<tspan font-size="10" dy="3">x</tspan><tspan dy="-3"> skifter fortegn</tspan></text>
+
+  <!-- wall 1 -->
+  <rect x="292" y="46" width="16" height="238" fill="url(#hatch)" stroke="#5C6B78" stroke-width="1.2"/>
+  <text x="300" y="304" font-size="11.5" font-weight="600" fill="#16212B" text-anchor="middle">Vegg 1</text>
+  <text x="300" y="318" font-size="10.5" fill="#5C6B78" text-anchor="middle">areal A</text>
+
+  <!-- normal (dashed) through impact point -->
+  <line x1="196" y1="165" x2="330" y2="165" stroke="#5C6B78" stroke-width="1" stroke-dasharray="4 4" opacity=".6"/>
+  <text x="205" y="159" font-size="9.5" fill="#5C6B78">normal</text>
+
+  <!-- incoming trajectory -->
+  <line x1="118" y1="109" x2="286" y2="165" stroke="#26408B" stroke-width="2.6" marker-end="url(#ahBlue)"/>
+  <circle cx="118" cy="109" r="7.5" fill="#26408B"/>
+  <text x="104" y="98" font-size="11" font-weight="600" fill="#26408B" text-anchor="end">før støtet</text>
+
+  <!-- outgoing trajectory -->
+  <line x1="286" y1="169" x2="120" y2="225" stroke="#D1502E" stroke-width="2.6" marker-end="url(#ahWarm)"/>
+  <circle cx="120" cy="225" r="7.5" fill="#D1502E"/>
+  <text x="104" y="244" font-size="11" font-weight="600" fill="#D1502E" text-anchor="end">etter støtet</text>
+
+  <!-- component triangle: incoming (slope 56/168 = 0.333) -->
+  <line x1="170" y1="126" x2="232" y2="126" stroke="#26408B" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ahBlue)"/>
+  <text x="201" y="119" font-size="12" font-weight="700" fill="#26408B" text-anchor="middle">+v<tspan font-size="9" dy="2">x</tspan></text>
+  <line x1="232" y1="126" x2="232" y2="147" stroke="#5C6B78" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#ahMuted)"/>
+  <text x="240" y="142" font-size="11" fill="#5C6B78">v<tspan font-size="8.5" dy="2">y</tspan></text>
+
+  <!-- component triangle: outgoing -->
+  <line x1="232" y1="187" x2="170" y2="187" stroke="#D1502E" stroke-width="2" stroke-dasharray="5 3" marker-end="url(#ahWarm)"/>
+  <text x="201" y="180" font-size="12" font-weight="700" fill="#D1502E" text-anchor="middle">−v<tspan font-size="9" dy="2">x</tspan></text>
+  <line x1="170" y1="187" x2="170" y2="208" stroke="#5C6B78" stroke-width="1.8" stroke-dasharray="5 3" marker-end="url(#ahMuted)"/>
+  <text x="152" y="203" font-size="11" fill="#5C6B78">v<tspan font-size="8.5" dy="2">y</tspan></text>
+
+  <!-- impact burst -->
+  <circle cx="288" cy="167" r="5" fill="#D1502E"/>
+  <g stroke="#D1502E" stroke-width="1.6" opacity=".85">
+    <line x1="277" y1="151" x2="282" y2="158"/>
+    <line x1="273" y1="167" x2="281" y2="167"/>
+    <line x1="277" y1="183" x2="282" y2="176"/>
+  </g>
+
+  <!-- momentum transferred to wall -->
+  <line x1="252" y1="255" x2="290" y2="255" stroke="#D1502E" stroke-width="2.4" marker-end="url(#ahWarm)"/>
+  <text x="246" y="252" font-size="12" font-weight="700" fill="#D1502E" text-anchor="end">Δp = 2mv<tspan font-size="9" dy="2">x</tspan></text>
+  <text x="246" y="267" font-size="9.5" fill="#5C6B78" text-anchor="end">dyttet veggen får</text>
+
+  <!-- key point A -->
+  <text x="40" y="285" font-size="10.5" fill="#5C6B78">v<tspan font-size="8" dy="2">y</tspan><tspan dy="-2"> er uendret — molekylet reflekteres som lys fra et speil</tspan></text>
+
+  <!-- ========== PANEL B ========== -->
+  <rect x="364" y="34" width="332" height="262" rx="10" fill="#FBFCFD" stroke="#D3DBE2"/>
+  <text x="364" y="24" font-size="13.5" font-weight="700" fill="#16212B">(b) Rundturen: hvor ofte skjer støtene?</text>
+
+  <!-- box walls -->
+  <rect x="404" y="62" width="14" height="176" fill="url(#hatch)" stroke="#5C6B78" stroke-width="1.2"/>
+  <rect x="646" y="62" width="14" height="176" fill="url(#hatch)" stroke="#5C6B78" stroke-width="1.2"/>
+  <line x1="418" y1="62" x2="646" y2="62" stroke="#D3DBE2" stroke-width="1.5"/>
+  <line x1="418" y1="238" x2="646" y2="238" stroke="#D3DBE2" stroke-width="1.5"/>
+  <text x="411" y="252" font-size="10.5" font-weight="600" fill="#5C6B78" text-anchor="middle">Vegg 2</text>
+  <text x="653" y="252" font-size="10.5" font-weight="600" fill="#16212B" text-anchor="middle">Vegg 1</text>
+
+  <!-- trajectory: wall1 -> wall2 -->
+  <line x1="646" y1="90" x2="418" y2="146" stroke="#26408B" stroke-width="2.4" marker-end="url(#ahBlue)"/>
+  <!-- trajectory: wall2 -> wall1 -->
+  <line x1="418" y1="150" x2="646" y2="206" stroke="#26408B" stroke-width="2.4" marker-end="url(#ahBlue)"/>
+
+  <!-- impact dots -->
+  <circle cx="646" cy="90"  r="6" fill="#D1502E"/>
+  <circle cx="418" cy="148" r="6" fill="#5C6B78"/>
+  <circle cx="646" cy="206" r="6" fill="#D1502E"/>
+  <text x="637" y="83" font-size="10" font-weight="700" fill="#D1502E" text-anchor="end">støt</text>
+  <text x="637" y="222" font-size="10" font-weight="700" fill="#D1502E" text-anchor="end">samme vegg igjen</text>
+
+  <!-- leg labels -->
+  <text x="532" y="110" font-size="10.5" fill="#5C6B78" text-anchor="middle">1</text>
+  <text x="532" y="192" font-size="10.5" fill="#5C6B78" text-anchor="middle">2</text>
+
+  <!-- dimension a -->
+  <line x1="418" y1="268" x2="646" y2="268" stroke="#16212B" stroke-width="1.3"
+        marker-start="url(#ahDim)" marker-end="url(#ahDim)"/>
+  <line x1="418" y1="240" x2="418" y2="272" stroke="#16212B" stroke-width=".8" opacity=".5"/>
+  <line x1="646" y1="240" x2="646" y2="272" stroke="#16212B" stroke-width=".8" opacity=".5"/>
+  <rect x="518" y="259" width="28" height="17" fill="#FBFCFD"/>
+  <text x="532" y="272" font-size="13" font-weight="700" fill="#16212B" text-anchor="middle" font-style="italic">a</text>
+
+  <!-- round trip note -->
+  <text x="530" y="290" font-size="10.5" fill="#5C6B78" text-anchor="middle">rundtur langs x-aksen: a + a = 2a</text>
+
+  <!-- Δt formula -->
+  <rect x="480" y="164" width="104" height="26" rx="6" fill="#fff" stroke="#26408B" stroke-width="1.2" opacity=".95"/>
+  <text x="532" y="182" font-size="13" font-weight="700" fill="#26408B" text-anchor="middle">Δt = 2a / v<tspan font-size="9.5" dy="2">x</tspan></text>
+
+  <!-- ========== RESULT STRIP ========== -->
+  <rect x="24" y="322" width="672" height="98" rx="10" fill="#F2F5F9" stroke="#26408B" stroke-width="1.2"/>
+  <text x="48" y="352" font-size="12" font-weight="700" fill="#26408B" letter-spacing="1.2">KRAFTEN FRA ETT MOLEKYL PÅ VEGG 1</text>
+
+  <text x="48" y="386" font-size="17" fill="#16212B">
+    F<tspan font-size="11" dy="3">1</tspan><tspan dy="-3"> = </tspan>
+    <tspan font-style="italic">|Δp|</tspan><tspan> / </tspan><tspan font-style="italic">Δt</tspan>
+    <tspan>  =  2mv</tspan><tspan font-size="11" dy="3">x</tspan><tspan dy="-3"> ÷ (2a / v</tspan><tspan font-size="11" dy="3">x</tspan><tspan dy="-3">)</tspan>
+    <tspan font-weight="700">  =  m v</tspan><tspan font-size="11" dy="3">x</tspan><tspan dy="-3" font-weight="700">² / a</tspan>
+  </text>
+
+  <text x="48" y="408" font-size="11" fill="#5C6B78">
+    Raske molekyler treffer både <tspan font-weight="700" fill="#16212B">hardere</tspan> (Δp ∝ v<tspan font-size="8" dy="2">x</tspan><tspan dy="-2">) og </tspan><tspan font-weight="700" fill="#16212B">oftere</tspan> (Δt ∝ 1/v<tspan font-size="8" dy="2">x</tspan><tspan dy="-2">). Derfor står farten i andre potens.</tspan>
+  </text>
+</svg>
