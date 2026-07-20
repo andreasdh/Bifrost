@@ -8,28 +8,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --bg:#12171b;
-    --panel:#1b2229;
-    --panel-2:#212a32;
-    --panel-3:#171e24;
-    --line:#2c3640;
+    --bg:transparent;
+    --panel:#ffffff;
+    --panel-2:#f0ede6;
+    --panel-3:#f7f5f0;
+    --line:#ddd7c9;
     --brass:#b98f56;
-    --brass-light:#e0bd85;
+    --brass-light:#8f6a38;
     --copper:#c1613f;
-    --copper-light:#e08d6c;
-    --teal:#6fa88f;
-    --teal-light:#9fd8c1;
-    --ink:#e9e4d8;
-    --ink-dim:#9aa0a3;
-    --ink-faint:#5f676c;
+    --copper-light:#a34f31;
+    --teal:#4f8a72;
+    --teal-light:#2f6b54;
+    --ink:#232823;
+    --ink-dim:#5b6067;
+    --ink-faint:#8a9096;
   }
   *{box-sizing:border-box;}
   html,body{margin:0;padding:0;}
   body{
-    background:
-      radial-gradient(ellipse at 20% -10%, rgba(185,143,86,0.08), transparent 55%),
-      radial-gradient(ellipse at 90% 10%, rgba(111,168,143,0.06), transparent 50%),
-      var(--bg);
+    background:var(--bg);
     color:var(--ink);
     font-family:'IBM Plex Sans', sans-serif;
     min-height:100vh;
@@ -59,6 +56,7 @@
     font-size:clamp(26px,4vw,38px);
     margin:10px 0 6px;
     letter-spacing:-0.01em;
+    color:var(--ink);
   }
   header p{
     color:var(--ink-dim);
@@ -83,6 +81,7 @@
     border:1px solid var(--line);
     border-radius:10px;
     padding:20px;
+    box-shadow:0 1px 3px rgba(0,0,0,0.04);
   }
   .card + .card{margin-top:22px;}
   .card-title{
@@ -99,7 +98,7 @@
     font-family:'IBM Plex Mono',monospace;
     font-size:10px;
     letter-spacing:0.08em;
-    color:var(--panel);
+    color:#ffffff;
     background:var(--brass-light);
     padding:2px 7px;
     border-radius:20px;
@@ -163,15 +162,15 @@
     -webkit-appearance:none;
     width:16px;height:16px;
     border-radius:50%;
-    background:var(--brass-light);
-    border:2px solid var(--panel);
+    background:var(--brass);
+    border:2px solid #ffffff;
     box-shadow:0 0 0 1px var(--brass);
     cursor:pointer;
     margin-top:-6px;
   }
   input[type=range]::-moz-range-thumb{
     width:16px;height:16px;border-radius:50%;
-    background:var(--brass-light);border:2px solid var(--panel);
+    background:var(--brass);border:2px solid #ffffff;
     box-shadow:0 0 0 1px var(--brass);cursor:pointer;
   }
   input[type=range]::-moz-range-track{height:4px;border-radius:3px;background:var(--line);}
@@ -191,14 +190,14 @@
   }
   button:hover{border-color:var(--brass);color:var(--brass-light);}
   button.primary{
-    background:linear-gradient(180deg, var(--copper), #a54f34);
+    background:linear-gradient(180deg, var(--copper), #a34f31);
     border-color:#8f4529;
-    color:#fff3ea;
+    color:#fffaf6;
   }
-  button.primary:hover{border-color:var(--copper-light);color:#fff;}
+  button.primary:hover{border-color:#e08d6c;color:#fff;}
   button.secondary{
-    background:linear-gradient(180deg, #3a4652, #2c3640);
-    border-color:#465060;
+    background:linear-gradient(180deg, #e7e2d6, #ddd7c9);
+    border-color:#c9c2b2;
   }
   button:disabled{opacity:0.4;cursor:not-allowed;}
   button.ghost{background:transparent;}
@@ -216,7 +215,7 @@
     font-family:'IBM Plex Mono',monospace;
     line-height:1.5;
   }
-  .status-banner.done{border-color:var(--teal);color:var(--teal-light);}
+  .status-banner.done{border-color:var(--teal);color:var(--teal-light);background:#eef6f1;}
 
   /* ---------- Diagram ---------- */
   #pvCanvas{width:100%;height:auto;display:block;border-radius:6px;}
@@ -347,7 +346,7 @@
             <svg id="gaugeSvg" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
               <circle cx="75" cy="80" r="58" fill="#171e24" stroke="#3a4652" stroke-width="3"/>
               <circle cx="75" cy="80" r="58" fill="none" stroke="url(#brassGrad)" stroke-width="2" opacity="0.6"/>
-              <g id="gaugeTicks" stroke="#5f676c" stroke-width="2"></g>
+              <g id="gaugeTicks" stroke="#8a9096" stroke-width="2"></g>
               <text x="75" y="102" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#9aa0a3">bar</text>
               <line id="gaugeNeedle" x1="75" y1="80" x2="75" y2="34" stroke="#c1613f" stroke-width="3" stroke-linecap="round"/>
               <circle cx="75" cy="80" r="6" fill="url(#brassGrad)"/>
@@ -387,7 +386,7 @@
           <button id="resetBtn" class="ghost">Nullstill</button>
         </div>
 
-        <div class="status-banner" id="statusBanner">Klar. ${G} kuler ligger på stempelet — trykk «Fjern én kule» eller la animasjonen kjøre.</div>
+        <div class="status-banner" id="statusBanner">Klar.</div>
       </div>
 
     </div>
@@ -399,9 +398,9 @@
         <div class="card-title">P–V-diagram <span class="tag">Isoterm</span></div>
         <canvas id="pvCanvas" width="820" height="440"></canvas>
         <div class="legend">
-          <span><span class="swatch" style="background:#6fa88f;"></span> Reversibel grense (areal under kurven)</span>
+          <span><span class="swatch" style="background:#4f8a72;"></span> Reversibel grense (areal under kurven)</span>
           <span><span class="swatch" style="background:#c1613f;"></span> Arbeid utført med valgt antall kuler</span>
-          <span><span class="swatch" style="background:#e0bd85;border-radius:50%;"></span> V<sub>i</sub> → V (nåværende)</span>
+          <span><span class="swatch" style="background:#b98f56;border-radius:50%;"></span> V<sub>i</sub> → V (nåværende)</span>
         </div>
       </div>
 
@@ -612,8 +611,8 @@
     function xOf(v){ return padL + (v-vAxisMin)/(vAxisMax-vAxisMin)*plotW; }
     function yOf(p){ return padT + plotH - (p/pAxisMax)*plotH; }
 
-    ctx.strokeStyle = '#2c3640'; ctx.lineWidth=1; ctx.font='11px IBM Plex Mono';
-    ctx.fillStyle = '#7d848a';
+    ctx.strokeStyle = '#e2ddd0'; ctx.lineWidth=1; ctx.font='11px IBM Plex Mono';
+    ctx.fillStyle = '#8a9096';
     const vTicks=6, pTicks=6;
     for(let i=0;i<=vTicks;i++){
       const v = vAxisMin + (vAxisMax-vAxisMin)*i/vTicks;
@@ -627,7 +626,7 @@
       ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+plotW,y);ctx.stroke();
       ctx.fillText(p.toFixed(1), 12, y+4);
     }
-    ctx.fillStyle = '#9aa0a3';
+    ctx.fillStyle = '#5b6067';
     ctx.fillText('V (L)', padL+plotW/2-14, H-10);
     ctx.save();
     ctx.translate(16, padT+plotH/2+20);
@@ -645,13 +644,13 @@
     }
     ctx.lineTo(xOf(Vf), yOf(0));
     ctx.closePath();
-    ctx.fillStyle = 'rgba(111,168,143,0.25)';
+    ctx.fillStyle = 'rgba(79,138,114,0.22)';
     ctx.fill();
 
     // staircase rectangles built so far
     if(stepsData && stepsData.length){
-      ctx.fillStyle = 'rgba(193,97,63,0.55)';
-      ctx.strokeStyle = 'rgba(193,97,63,0.9)';
+      ctx.fillStyle = 'rgba(193,97,63,0.5)';
+      ctx.strokeStyle = 'rgba(193,97,63,0.85)';
       stepsData.forEach(s=>{
         const x1 = xOf(Math.min(s.vStart,s.vEnd));
         const x2 = xOf(Math.max(s.vStart,s.vEnd));
@@ -669,7 +668,7 @@
       const x = xOf(v), y = yOf(pressureAtV(v));
       if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
     }
-    ctx.strokeStyle = '#e0bd85';
+    ctx.strokeStyle = '#9c6f3a';
     ctx.lineWidth = 2.2;
     ctx.stroke();
 
@@ -677,11 +676,11 @@
       const x=xOf(v), y=yOf(pressureAtV(v));
       ctx.beginPath();ctx.arc(x,y,5,0,Math.PI*2);
       ctx.fillStyle=color; ctx.fill();
-      ctx.strokeStyle='#12171b'; ctx.lineWidth=1.5; ctx.stroke();
+      ctx.strokeStyle='#ffffff'; ctx.lineWidth=1.5; ctx.stroke();
     }
-    marker(Vi, '#e0bd85');
+    marker(Vi, '#b98f56');
     const currentV = stepsData.length ? stepsData[stepsData.length-1].vEnd : Vi;
-    marker(currentV, '#9fd8c1');
+    marker(currentV, '#2f6b54');
   }
 
   function fmt(x,d=2){ return Number(x).toFixed(d); }
