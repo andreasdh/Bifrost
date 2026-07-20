@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entalpi og entropi i samspill</title>
+<style>
+  :root{
+    --ink:#2b2a27;
+    --paper:#faf8f4;
+    --card:#ffffff;
+    --line:#ddd8cd;
+    --system:#c0562f;
+    --system-dark:#8a3d20;
+    --ligand:#e0862f;
+    --surroundings:#3a6ea5;
+    --surroundings-dark:#274a72;
+    --heat:#d94f30;
+    --good:#4d7a3a;
+    --font: "Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --font-ui: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-ui);
+    padding:32px 16px 48px;
+    display:flex;
+    justify-content:center;
+  }
+  .card{
+    max-width:760px;
+    width:100%;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px 32px 32px;
+  }
+  h1{
+    font-family:var(--font);
+    font-size:22px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .formula{
+    font-family:var(--font);
+    font-size:17px;
+    color:var(--ink);
+    margin:0 0 22px;
+  }
+  .formula sub, .formula sup{ font-size:0.68em; }
+
+  .stage{ position:relative; width:100%; }
+  svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+  .gas-mol{ opacity:0.85; }
+
+  .label{
+    font-family:var(--font-ui);
+    font-size:12.5px;
+    fill:var(--ink);
+    opacity:0.75;
+  }
+  .label-strong{
+    font-family:var(--font-ui);
+    font-size:12.5px;
+    font-weight:600;
+    fill:var(--ink);
+  }
+
+  .heat-arc{
+    stroke:var(--heat);
+    stroke-width:2;
+    fill:none;
+    stroke-linecap:round;
+    opacity:0;
+  }
+  .reacted .heat-arc{
+    animation: heatpulse 1.6s ease-out infinite;
+  }
+  @keyframes heatpulse{
+    0%   { opacity:0;   transform:scale(0.85); }
+    25%  { opacity:0.9; }
+    100% { opacity:0;   transform:scale(1.35); }
+  }
+
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:var(--font-ui);
+    font-size:14.5px;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:8px;
+    border:1px solid var(--system-dark);
+    background:var(--system);
+    color:#fff;
+    cursor:pointer;
+  }
+  button:hover{ background:var(--system-dark); }
+  button:focus-visible{ outline:3px solid #274a7255; outline-offset:2px; }
+  .state-text{
+    font-size:13.5px;
+    color:var(--ink);
+    opacity:0.75;
+  }
+
+  .scales{
+    margin-top:26px;
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+  }
+  .scale-row{ display:flex; align-items:center; gap:14px; }
+  .scale-name{
+    width:150px;
+    flex-shrink:0;
+    font-size:13.5px;
+    text-align:right;
+  }
+  .scale-name sub{ font-size:0.7em; }
+  .scale-track{
+    position:relative;
+    flex:1;
+    height:14px;
+    background:#f0ede4;
+    border-radius:7px;
+    overflow:hidden;
+  }
+  .scale-track.split::before{
+    content:"";
+    position:absolute;
+    left:50%; top:0; bottom:0;
+    width:1px;
+    background:var(--line);
+  }
+  .bar{
+    position:absolute;
+    top:0; bottom:0;
+    width:0%;
+    transition:width 1.1s ease, left 1.1s ease;
+    border-radius:7px;
+  }
+  .bar-sys{ background:var(--system); right:50%; left:50%; }
+  .bar-omg{ background:var(--surroundings); left:50%; width:0%; }
+  .bar-univ{ background:var(--good); left:50%; width:0%; }
+  .scale-value{ width:34px; font-size:13px; opacity:0.7; text-align:left; }
+
+  .caption{
+    margin-top:20px;
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--ink);
+    opacity:0.85;
+  }
+  .caption sub{ font-size:0.7em; }
+
+  @media (prefers-reduced-motion: reduce){
+    .bar, .heat-arc{ transition:none; animation:none !important; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Entalpi og entropi i samspill</h1>
+  <p class="formula">M<sup>2+</sup>(aq) + 6 L(aq) &rarr; [ML<sub>6</sub>]<sup>2+</sup>(aq)</p>
+
+  <div class="stage">
+    <svg id="scene" viewBox="0 0 700 430" role="img" aria-label="Animasjon av en kompleksdannelsesreaksjon i et begerglass, med gassmolekyler rundt begerglasset som representerer omgivelsene">
+      <desc>Et begerglass (systemet) inneholder en metallion og seks ligander. Når reaksjonen starter, ordner ligandene seg rundt metallionet slik at entropien i systemet synker, samtidig som varme frigjøres til omgivelsene rundt begerglasset, der gassmolekylene begynner å bevege seg raskere.</desc>
+
+      <text x="20" y="26" class="label-strong">Omgivelser</text>
+      <text x="20" y="405" class="label">Gassmolekylene beveger seg raskere n&#229;r varme frigj&#248;res</text>
+
+      <g id="gasLayer"></g>
+
+      <g id="heatLayer">
+        <path class="heat-arc" d="M 350 145 Q 380 100 420 90" />
+        <path class="heat-arc" d="M 350 145 Q 320 95 280 88" />
+        <path class="heat-arc" d="M 350 130 Q 350 80 350 55" />
+      </g>
+
+      <path d="M 265 140 L 265 340 Q 265 365 290 365 L 410 365 Q 435 365 435 340 L 435 140"
+            fill="#eaf3fb" stroke="var(--surroundings-dark)" stroke-width="2.5" />
+      <line x1="255" y1="140" x2="445" y2="140" stroke="var(--surroundings-dark)" stroke-width="2.5" stroke-linecap="round"/>
+      <text x="350" y="120" text-anchor="middle" class="label-strong">Systemet (begerglass)</text>
+
+      <g id="ligandLayer"></g>
+      <circle id="metalIon" cx="350" cy="255" r="12" fill="var(--surroundings)" stroke="var(--surroundings-dark)" stroke-width="1.5"/>
+      <text id="metalLabel" x="350" y="259" text-anchor="middle" font-size="11" font-weight="700" fill="#fff" font-family="var(--font-ui)">M</text>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <button id="toggleBtn">Start kompleksdannelse</button>
+    <span class="state-text" id="stateText">Fritt metallion og seks frie ligander i l&#248;sning &mdash; h&#248;y entropi i systemet.</span>
+  </div>
+
+  <div class="scales">
+    <div class="scale-row">
+      <div class="scale-name">&Delta;S<sub>system</sub></div>
+      <div class="scale-track split">
+        <div class="bar bar-sys" id="barSys"></div>
+      </div>
+      <div class="scale-value" id="valSys">0</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-name">&Delta;S<sub>omgivelser</sub></div>
+      <div class="scale-track split">
+        <div class="bar bar-omg" id="barOmg"></div>
+      </div>
+      <div class="scale-value" id="valOmg">0</div>
+    </div>
+    <div class="scale-row">
+      <div class="scale-name">&Delta;S<sub>univers</sub></div>
+      <div class="scale-track split">
+        <div class="bar bar-univ" id="barUniv"></div>
+      </div>
+      <div class="scale-value" id="valUniv">0</div>
+    </div>
+  </div>
+
+  <p class="caption">
+    Kompleksdannelsen er entropisk ugunstig i systemet &mdash; seks frie ligander mister bevegelsesfrihet n&#229;r de bindes til metallionet, s&#229; &Delta;S<sub>system</sub> &lt; 0. Reaksjonen er likevel eksoterm: varmen som frigj&#248;res &#248;ker bevegelsen til molekylene i omgivelsene, s&#229; &Delta;S<sub>omgivelser</sub> &gt; 0 &mdash; og mer enn kompenserer for tapet i systemet. Summen &Delta;S<sub>univers</sub> forblir positiv, i tr&#229;d med termodynamikkens andre lov.
+  </p>
+</div>
+
+<script>
+(function(){
+  const svgNS = "http://www.w3.org/2000/svg";
+  const gasLayer = document.getElementById('gasLayer');
+  const ligandLayer = document.getElementById('ligandLayer');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Gas molecules scattered around the beaker (the surroundings)
+  const gasSpots = [
+    [60,60],[110,90],[160,55],[600,60],[560,95],[620,140],
+    [60,150],[40,230],[70,320],[630,220],[620,310],[600,370],
+    [130,370],[180,320],[520,60],[480,330],[100,200],[560,200]
+  ];
+  const gasAnims = [];
+  gasSpots.forEach(([x,y]) => {
+    const c = document.createElementNS(svgNS,'circle');
+    c.setAttribute('cx', x);
+    c.setAttribute('cy', y);
+    c.setAttribute('r', 4.2);
+    c.setAttribute('fill', '#8a97a8');
+    c.classList.add('gas-mol');
+    gasLayer.appendChild(c);
+    gasAnims.push({ el:c, amp:3, dur:2600+Math.random()*900 });
+  });
+
+  function driftAll(list, amplitude, duration){
+    list.forEach(item => {
+      if (item.anim) item.anim.cancel();
+      if (reducedMotion){ item.el.style.transform = ''; return; }
+      const dx = (Math.random()-0.5)*2*amplitude;
+      const dy = (Math.random()-0.5)*2*amplitude;
+      item.anim = item.el.animate([
+        { transform: 'translate(0px,0px)' },
+        { transform: `translate(${dx}px, ${dy}px)` },
+        { transform: 'translate(0px,0px)' }
+      ], { duration: duration, iterations: Infinity, easing: 'ease-in-out' });
+    });
+  }
+  driftAll(gasAnims, 3, 2800);
+
+  // Ligands: start scattered freely inside the beaker, move to an
+  // ordered ring around the metal ion when the reaction runs.
+  const freeSpots = [[300,190],[400,200],[290,300],[410,310],[320,340],[380,180]];
+  const ringSpots = (() => {
+    const pts = [];
+    for(let i=0;i<6;i++){
+      const a = (Math.PI*2/6)*i - Math.PI/2;
+      pts.push([350 + 34*Math.cos(a), 255 + 34*Math.sin(a)]);
+    }
+    return pts;
+  })();
+
+  const ligands = [];
+  freeSpots.forEach(([x,y]) => {
+    const c = document.createElementNS(svgNS,'circle');
+    c.setAttribute('cx', x);
+    c.setAttribute('cy', y);
+    c.setAttribute('r', 7);
+    c.setAttribute('fill', 'var(--ligand)');
+    c.setAttribute('stroke', 'var(--system-dark)');
+    c.setAttribute('stroke-width', '1');
+    c.style.transition = 'cx 1.3s ease, cy 1.3s ease';
+    ligandLayer.appendChild(c);
+    ligands.push({ el:c, free:[x,y] });
+  });
+  const ligandAnims = ligands.map(l => ({ el:l.el, amp:0, dur:0 }));
+  driftAll(ligandAnims, 10, 1900);
+
+  const btn = document.getElementById('toggleBtn');
+  const stateText = document.getElementById('stateText');
+  const stage = document.getElementById('scene');
+  const barSys = document.getElementById('barSys');
+  const barOmg = document.getElementById('barOmg');
+  const barUniv = document.getElementById('barUniv');
+  const valSys = document.getElementById('valSys');
+  const valOmg = document.getElementById('valOmg');
+  const valUniv = document.getElementById('valUniv');
+
+  let reacted = false;
+
+  function setBar(el, valueEl, deltaS){
+    const px = Math.max(-46, Math.min(46, deltaS * 9)) + '%';
+    if (deltaS >= 0){
+      el.style.left = '50%';
+      el.style.width = Math.abs(deltaS*9) + '%';
+    } else {
+      el.style.width = Math.abs(deltaS*9) + '%';
+      el.style.left = (50 - Math.abs(deltaS*9)) + '%';
+    }
+    valueEl.textContent = (deltaS>0 ? '+' : '') + deltaS.toFixed(0);
+  }
+
+  function react(){
+    reacted = true;
+    stage.parentElement.classList.add('reacted');
+    document.getElementById('scene').classList.add('reacted');
+    document.querySelector('.stage').classList.add('reacted');
+
+    driftAll(gasAnims, 11, 900);
+    ligands.forEach((l, i) => {
+      if (l.anim) l.anim.cancel();
+      const [tx,ty] = ringSpots[i];
+      l.el.setAttribute('cx', tx);
+      l.el.setAttribute('cy', ty);
+    });
+
+    setBar(barSys, valSys, -3);
+    setBar(barOmg, valOmg, 5);
+    setBar(barUniv, valUniv, 2);
+
+    btn.textContent = 'Tilbakestill';
+    stateText.textContent = 'Liganden er bundet i en ordnet ring rundt metallionet \u2014 varme er frigjort til omgivelsene.';
+  }
+
+  function reset(){
+    reacted = false;
+    document.querySelector('.stage').classList.remove('reacted');
+
+    driftAll(gasAnims, 3, 2800);
+    ligands.forEach((l) => {
+      const [fx,fy] = l.free;
+      l.el.setAttribute('cx', fx);
+      l.el.setAttribute('cy', fy);
+    });
+    ligandAnims.forEach(item => item.el.style.transform = '');
+    driftAll(ligandAnims, 10, 1900);
+
+    setBar(barSys, valSys, 0);
+    setBar(barOmg, valOmg, 0);
+    setBar(barUniv, valUniv, 0);
+
+    btn.textContent = 'Start kompleksdannelse';
+    stateText.textContent = 'Fritt metallion og seks frie ligander i l\u00f8sning \u2014 h\u00f8y entropi i systemet.';
+  }
+
+  btn.addEventListener('click', () => { reacted ? reset() : react(); });
+})();
+</script>
+</body>
+</html>
