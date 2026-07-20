@@ -70,20 +70,19 @@
     fill:var(--ink);
   }
 
-  .heat-arc{
+  .heat-tick{
     stroke:var(--heat);
     stroke-width:2;
-    fill:none;
     stroke-linecap:round;
     opacity:0;
   }
-  .reacted .heat-arc{
-    animation: heatpulse 1.6s ease-out infinite;
+  .reacted .heat-tick{
+    animation: heattick 1.2s ease-out infinite;
   }
-  @keyframes heatpulse{
-    0%   { opacity:0;   transform:scale(0.85); }
-    25%  { opacity:0.9; }
-    100% { opacity:0;   transform:scale(1.35); }
+  @keyframes heattick{
+    0%   { opacity:0; transform:translate(0,0); }
+    30%  { opacity:1; }
+    100% { opacity:0; transform:translate(calc(var(--hx) * 1px), calc(var(--hy) * 1px)); }
   }
 
   .controls{
@@ -163,7 +162,7 @@
   .caption sub{ font-size:0.7em; }
 
   @media (prefers-reduced-motion: reduce){
-    .bar, .heat-arc{ transition:none; animation:none !important; }
+    .bar, .heat-tick{ transition:none; animation:none !important; }
   }
 </style>
 </head>
@@ -181,11 +180,7 @@
 
       <g id="gasLayer"></g>
 
-      <g id="heatLayer">
-        <path class="heat-arc" d="M 350 145 Q 380 100 420 90" />
-        <path class="heat-arc" d="M 350 145 Q 320 95 280 88" />
-        <path class="heat-arc" d="M 350 130 Q 350 80 350 55" />
-      </g>
+      <g id="heatLayer"></g>
 
       <path d="M 265 140 L 265 340 Q 265 365 290 365 L 410 365 Q 435 365 435 340 L 435 140"
             fill="#eaf3fb" stroke="var(--surroundings-dark)" stroke-width="2.5" />
@@ -237,7 +232,29 @@
   const svgNS = "http://www.w3.org/2000/svg";
   const gasLayer = document.getElementById('gasLayer');
   const ligandLayer = document.getElementById('ligandLayer');
+  const heatLayer = document.getElementById('heatLayer');
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // Small ticks radiating outward from the beaker walls, representing
+  // heat conducted out into the surroundings.
+  const heatSpots = [
+    [280,140, 0,-1], [312,140, 0,-1], [350,136, 0,-1], [388,140, 0,-1], [420,140, 0,-1],
+    [265,175,-1, 0], [265,225,-1, 0], [265,280,-1, 0], [265,330,-1, 0],
+    [435,175, 1, 0], [435,225, 1, 0], [435,280, 1, 0], [435,330, 1, 0]
+  ];
+  heatSpots.forEach(([x,y,dx,dy], i) => {
+    const len = 7, gap = 4, travel = 11;
+    const line = document.createElementNS(svgNS,'line');
+    line.setAttribute('x1', x + dx*gap);
+    line.setAttribute('y1', y + dy*gap);
+    line.setAttribute('x2', x + dx*(gap+len));
+    line.setAttribute('y2', y + dy*(gap+len));
+    line.classList.add('heat-tick');
+    line.style.setProperty('--hx', dx*travel);
+    line.style.setProperty('--hy', dy*travel);
+    line.style.animationDelay = (i * 0.09) + 's';
+    heatLayer.appendChild(line);
+  });
 
   // Gas molecules scattered around the beaker (the surroundings)
   const gasSpots = [
@@ -326,8 +343,6 @@
 
   function react(){
     reacted = true;
-    stage.parentElement.classList.add('reacted');
-    document.getElementById('scene').classList.add('reacted');
     document.querySelector('.stage').classList.add('reacted');
 
     driftAll(gasAnims, 11, 900);
