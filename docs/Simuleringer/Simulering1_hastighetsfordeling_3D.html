@@ -4,24 +4,24 @@
 <meta charset="utf-8">
 <title>Simulering: Hastighetsfordeling som funksjon av tid</title>
 <style>
-  #s1-root { font-family: 'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:16px; border-radius:12px; max-width:760px; margin:0 auto; }
-  #s1-root h2 { text-align:center; font-size:1.4em; margin:0 0 4px 0; font-weight:600; }
-  #s1-root .s1-sub { text-align:center; font-size:0.95em; color:#9aa5c0; margin-bottom:14px; }
-  #s1-root .s1-main { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+  #s1-root { font-family: 'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:10px; border-radius:12px; max-width:520px; margin:0 auto; }
+  #s1-root h2 { text-align:center; font-size:1.1em; margin:0 0 3px 0; font-weight:600; }
+  #s1-root .s1-sub { text-align:center; font-size:0.78em; color:#9aa5c0; margin-bottom:10px; }
+  #s1-root .s1-main { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
   #s1-root .s1-col { display:flex; flex-direction:column; align-items:center; }
   #s1-root canvas { background:#0a0e18; border-radius:8px; display:block; }
-  #s1-root .s1-caption { font-size:0.85em; color:#9aa5c0; margin-top:6px; text-align:center; }
-  #s1-root .s1-stats { display:flex; gap:18px; justify-content:center; margin-top:12px; font-size:1em; }
+  #s1-root .s1-caption { font-size:0.7em; color:#9aa5c0; margin-top:4px; text-align:center; max-width:220px; }
+  #s1-root .s1-stats { display:flex; gap:12px; justify-content:center; margin-top:8px; font-size:0.78em; flex-wrap:wrap; }
   #s1-root .s1-stats b { color:#ffb15a; }
-  #s1-root .s1-controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; margin-top:16px; }
+  #s1-root .s1-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:10px; }
   #s1-root select, #s1-root button {
     font-family: 'Times New Roman', Times, serif;
-    background:#2a3652; color:#e8ecf5; border:none; padding:8px 14px;
-    border-radius:6px; cursor:pointer; font-size:0.95em;
+    background:#2a3652; color:#e8ecf5; border:none; padding:5px 10px;
+    border-radius:6px; cursor:pointer; font-size:0.78em;
   }
   #s1-root select { background:#1b2438; }
   #s1-root button:hover, #s1-root select:hover { background:#3a4a70; }
-  #s1-root .s1-legend { font-size:0.85em; color:#9aa5c0; text-align:center; margin-top:12px; line-height:1.5; }
+  #s1-root .s1-legend { font-size:0.72em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.4; }
   #s1-root .s1-swatch { display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:5px; vertical-align:middle; }
 </style>
 </head>
@@ -32,11 +32,11 @@
 
   <div class="s1-main">
     <div class="s1-col">
-      <canvas id="s1-box" width="320" height="320"></canvas>
+      <canvas id="s1-box" width="200" height="200"></canvas>
       <div class="s1-caption">Molekylene i boksen (dybde vist ved lysstyrke)</div>
     </div>
     <div class="s1-col">
-      <canvas id="s1-hist" width="320" height="320"></canvas>
+      <canvas id="s1-hist" width="200" height="200"></canvas>
       <div class="s1-caption">Fartsfordeling f(v) &mdash; simulert (bl&aring;) vs. Maxwell&ndash;Boltzmann (oransje)</div>
     </div>
   </div>
@@ -255,18 +255,20 @@
   }
 
   function drawBox(){
-    bctx.clearRect(0,0,L,L);
+    const DISPLAY = boxCv.width; // fast, liten visningsstørrelse - uavhengig av fysisk L
+    const scale = DISPLAY/L;
+    bctx.clearRect(0,0,DISPLAY,DISPLAY);
     for(const p of parts){
       const depth = p.z/L;
       const alpha = 0.3+0.7*(1-depth);
-      const rad = p.r*(0.7+0.6*(1-depth));
+      const rad = p.r*(0.7+0.6*(1-depth))*scale;
       bctx.beginPath();
-      bctx.arc(p.x,p.y,rad,0,2*Math.PI);
+      bctx.arc(p.x*scale,p.y*scale,rad,0,2*Math.PI);
       bctx.fillStyle = `rgba(90,169,255,${alpha})`;
       bctx.fill();
     }
     bctx.strokeStyle = '#2a3652';
-    bctx.strokeRect(0.5,0.5,L-1,L-1);
+    bctx.strokeRect(0.5,0.5,DISPLAY-1,DISPLAY-1);
   }
 
   function drawHist(){
