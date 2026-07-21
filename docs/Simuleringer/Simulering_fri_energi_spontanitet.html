@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Fri energi og spontanitet</title>
+<style>
+  #s6-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:14px; border-radius:12px; max-width:380px; margin:0 auto; text-align:center; }
+  #s6-root h2 { font-size:1.05em; margin:0 0 6px 0; font-weight:600; }
+  #s6-root .s6-sub { font-size:0.76em; color:#9aa5c0; margin-bottom:12px; line-height:1.45; }
+  #s6-root .s6-icon { font-size:2.6em; margin-bottom:6px; transition:transform 0.3s ease; }
+  #s6-root .s6-slider-row { display:flex; align-items:center; gap:8px; justify-content:center; font-size:0.85em; margin-bottom:12px; }
+  #s6-root input[type=range] { width:200px; }
+  #s6-root .s6-stats { font-size:0.85em; line-height:1.8; background:#161d2e; border-radius:8px; padding:10px 14px; margin-bottom:10px; }
+  #s6-root .s6-stats b { color:#ffb15a; }
+  #s6-root .s6-status { font-size:0.95em; font-weight:600; padding:8px; border-radius:8px; margin-bottom:8px; }
+  #s6-root .s6-status.spontan { background:rgba(90,220,140,0.18); color:#7fe0a8; }
+  #s6-root .s6-status.ikke { background:rgba(255,90,90,0.15); color:#ff8a8a; }
+  #s6-root .s6-status.likevekt { background:rgba(255,177,90,0.18); color:#ffb15a; }
+  #s6-root .s6-legend { font-size:0.68em; color:#9aa5c0; line-height:1.5; }
+</style>
+</head>
+<body>
+<div id="s6-root">
+  <h2>Hva avgjør om en prosess er spontan?</h2>
+  <div class="s6-sub">Eksempel: is smelter til vann. &Delta;H og &Delta;S er faste, typiske verdier for is &ndash; bare temperaturen endres.</div>
+
+  <div class="s6-icon" id="s6-icon">&#10052;&#65039;</div>
+
+  <div class="s6-slider-row">
+    <label for="s6-T">T:</label>
+    <input type="range" id="s6-T" min="-50" max="50" step="1" value="-10">
+    <span id="s6-Tlabel">-10 &deg;C</span>
+  </div>
+
+  <div class="s6-stats">
+    &Delta;H = <b>+6.01 kJ/mol</b> (fast)<br>
+    &Delta;S = <b>+22.0 J/(mol&middot;K)</b> (fast)<br>
+    T&Delta;S = <b id="s6-TS">0.00</b> kJ/mol<br>
+    &Delta;G = &Delta;H &minus; T&Delta;S = <b id="s6-G">0.00</b> kJ/mol
+  </div>
+
+  <div class="s6-status likevekt" id="s6-status">...</div>
+
+  <div class="s6-legend">Med disse verdiene ligger smeltepunktet (&Delta;G=0) akkurat ved 0&deg;C (273.15 K) &ndash; akkurat slik det skal for is.</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const dH = 6.01;      // kJ/mol
+  const dS = 22.0;      // J/(mol K)
+
+  const slider = document.getElementById('s6-T');
+  const Tlabel = document.getElementById('s6-Tlabel');
+  const TSEl = document.getElementById('s6-TS');
+  const GEl = document.getElementById('s6-G');
+  const statusEl = document.getElementById('s6-status');
+  const iconEl = document.getElementById('s6-icon');
+
+  function update(){
+    const Tc = parseFloat(slider.value);
+    const TK = Tc + 273.15;
+    const TS = dS*TK/1000; // kJ/mol
+    const G = dH - TS;
+
+    Tlabel.textContent = Tc.toFixed(0) + ' \u00b0C';
+    TSEl.textContent = TS.toFixed(2);
+    GEl.textContent = (G>=0?'+':'') + G.toFixed(2);
+
+    if(G < -0.05){
+      statusEl.textContent = 'Spontant: is smelter (\u0394G < 0)';
+      statusEl.className = 's6-status spontan';
+      iconEl.textContent = '\u{1F4A7}'; // vanndråpe
+    } else if(G > 0.05){
+      statusEl.textContent = 'Ikke spontant: is smelter ikke - vann fryser i stedet (\u0394G > 0)';
+      statusEl.className = 's6-status ikke';
+      iconEl.textContent = '\u2744\uFE0F'; // snøkrystall
+    } else {
+      statusEl.textContent = 'Likevekt: is og vann side om side (\u0394G \u2248 0)';
+      statusEl.className = 's6-status likevekt';
+      iconEl.textContent = '\u2696\uFE0F';
+    }
+  }
+
+  slider.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>
