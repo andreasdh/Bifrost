@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Hastighetsfordeling som funksjon av tid</title>
+<style>
+  #s1-root { font-family: 'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:16px; border-radius:12px; max-width:760px; margin:0 auto; }
+  #s1-root h2 { text-align:center; font-size:1.4em; margin:0 0 4px 0; font-weight:600; }
+  #s1-root .s1-sub { text-align:center; font-size:0.95em; color:#9aa5c0; margin-bottom:14px; }
+  #s1-root .s1-main { display:flex; gap:18px; flex-wrap:wrap; justify-content:center; }
+  #s1-root .s1-col { display:flex; flex-direction:column; align-items:center; }
+  #s1-root canvas { background:#0a0e18; border-radius:8px; display:block; }
+  #s1-root .s1-caption { font-size:0.85em; color:#9aa5c0; margin-top:6px; text-align:center; }
+  #s1-root .s1-stats { display:flex; gap:18px; justify-content:center; margin-top:12px; font-size:1em; }
+  #s1-root .s1-stats b { color:#ffb15a; }
+  #s1-root .s1-controls { display:flex; flex-wrap:wrap; gap:10px; justify-content:center; align-items:center; margin-top:16px; }
+  #s1-root select, #s1-root button {
+    font-family: 'Times New Roman', Times, serif;
+    background:#2a3652; color:#e8ecf5; border:none; padding:8px 14px;
+    border-radius:6px; cursor:pointer; font-size:0.95em;
+  }
+  #s1-root select { background:#1b2438; }
+  #s1-root button:hover, #s1-root select:hover { background:#3a4a70; }
+  #s1-root .s1-legend { font-size:0.85em; color:#9aa5c0; text-align:center; margin-top:12px; line-height:1.5; }
+  #s1-root .s1-swatch { display:inline-block; width:11px; height:11px; border-radius:2px; margin-right:5px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div id="s1-root">
+  <h2>Hva er den mest sannsynlige hastighetsfordelingen?</h2>
+  <div class="s1-sub">3D-gass med ekte elastiske kollisjoner. Velg starttilstand og se hvordan fordelingen utvikler seg mot likevekt &mdash; uansett hvor du starter.</div>
+
+  <div class="s1-main">
+    <div class="s1-col">
+      <canvas id="s1-box" width="320" height="320"></canvas>
+      <div class="s1-caption">Molekylene i boksen (dybde vist ved lysstyrke)</div>
+    </div>
+    <div class="s1-col">
+      <canvas id="s1-hist" width="320" height="320"></canvas>
+      <div class="s1-caption">Fartsfordeling f(v) &mdash; simulert (bl&aring;) vs. Maxwell&ndash;Boltzmann (oransje)</div>
+    </div>
+  </div>
+
+  <div class="s1-stats">
+    <span>t = <b id="s1-t">0</b></span>
+    <span>T = <b id="s1-T">0</b> (konstant, fra energibevaring)</span>
+    <span>&#8730;&#10216;v&sup2;&#10217; = <b id="s1-vrms">0</b></span>
+  </div>
+
+  <div class="s1-legend">
+    <span class="s1-swatch" style="background:#5aa9ff;"></span>simulert histogram&nbsp;&nbsp;
+    <span class="s1-swatch" style="background:#ffb15a;"></span>teoretisk Maxwell&ndash;Boltzmann (fast kurve, satt av total energi ved t=0)
+  </div>
+
+  <div class="s1-controls">
+    <label for="s1-preset">Starttilstand:&nbsp;</label>
+    <select id="s1-preset">
+      <option value="half">Halvparten i ro, halvparten med samme fart</option>
+      <option value="mono">Alle med samme fart, tilfeldig retning</option>
+      <option value="onefast">Alle i ro unntatt &eacute;n rask partikkel</option>
+      <option value="mb">Allerede Maxwell&ndash;Boltzmann (likevekt fra start)</option>
+    </select>
+    <button id="s1-play">Pause</button>
+    <button id="s1-reset">Reset</button>
+    <button id="s1-speed">Fart: 1x</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const N = 400;
+  const L = 300;
+  const R = 3.2;
+  const V0 = 110; // referansefart for "mono"/"half"
+
+  const boxCv = document.getElementById('s1-box');
+  const histCv = document.getElementById('s1-hist');
+  const bctx = boxCv.getContext('2d');
+  const hctx = histCv.getContext('2d');
+  const tEl = document.getElementById('s1-t');
+  const TEl = document.getElementById('s1-T');
+  const vrmsEl = document.getElementById('s1-vrms');
+  const presetSel = document.getElementById('s1-preset');
+  const playBtn = document.getElementById('s1-play');
+  const resetBtn = document.getElementById('s1-reset');
+  const speedBtn = document.getElementById('s1-speed');
+
+  function randDirSphere(){
+    let x1,x2,s;
+    do{
+      x1 = Math.random()*2-1; x2 = Math.random()*2-1;
+      s = x1*x1+x2*x2;
+    } while(s>=1);
+    const f = 2*Math.sqrt(1-s);
+    return [x1*f, x2*f, 1-2*s];
+  }
+
+  // Box-Muller for normalfordelt (brukes til Maxwell-Boltzmann-komponenter)
+  function gauss(sigma){
+    const u1 = Math.random(), u2 = Math.random();
+    return sigma*Math.sqrt(-2*Math.log(u1))*Math.cos(2*Math.PI*u2);
+  }
+
+  function randomPos(existing){
+    let x,y,z, ok, tries=0;
+    do {
+      x = R + Math.random()*(L-2*R);
+      y = R + Math.random()*(L-2*R);
+      z = R + Math.random()*(L-2*R);
+      ok = true;
+      for(let j=0;j<existing.length && tries<40;j++){
+        const p=existing[j];
+        const dx=p.x-x, dy=p.y-y, dz=p.z-z;
+        if(dx*dx+dy*dy+dz*dz < (2*R)*(2*R)){ ok=false; break; }
+      }
+      tries++;
+    } while(!ok && tries<40);
+    return [x,y,z];
+  }
+
+  function makeParticles(preset){
+    const parts = [];
+    for(let i=0;i<N;i++){
+      const [x,y,z] = randomPos(parts);
+      let vx=0, vy=0, vz=0;
+      if(preset==='half'){
+        if(i>=N/2){
+          const d = randDirSphere();
+          vx=d[0]*V0; vy=d[1]*V0; vz=d[2]*V0;
+        }
+      } else if(preset==='mono'){
+        const d = randDirSphere();
+        vx=d[0]*V0; vy=d[1]*V0; vz=d[2]*V0;
+      } else if(preset==='onefast'){
+        if(i===0){
+          const d = randDirSphere();
+          const vfast = V0*Math.sqrt(N)*0.55; // gir samme total energi som "half"/"mono" ca.
+          vx=d[0]*vfast; vy=d[1]*vfast; vz=d[2]*vfast;
+        }
+      } else if(preset==='mb'){
+        // tildel Maxwell-Boltzmann-komponenter direkte (sigma valgt slik at T blir lik de andre presetene)
+        const sigma = V0/Math.SQRT2; // gir samme <v^2> ~ 3*sigma^2 = 1.5*V0^2, matcher "mono" sin <v^2>=V0^2 grovt -- justert under
+        vx = gauss(sigma); vy = gauss(sigma); vz = gauss(sigma);
+      }
+      parts.push({x,y,z,vx,vy,vz,r:R});
+    }
+    return parts;
+  }
+
+  function totalKE(parts){
+    let ke=0;
+    for(const p of parts) ke += 0.5*(p.vx*p.vx+p.vy*p.vy+p.vz*p.vz);
+    return ke;
+  }
+  function temperature(parts){
+    return 2*totalKE(parts)/(3*parts.length); // T = 2*KE/(3N), m=kB=1
+  }
+
+  // enkel romlig gitter for kollisjonssøk (viktig for N=400+ ytelse)
+  const cellSize = 4*R;
+  const nCells = Math.ceil(L/cellSize);
+  function cellIndex(x,y,z){
+    const cx = Math.min(nCells-1, Math.max(0, Math.floor(x/cellSize)));
+    const cy = Math.min(nCells-1, Math.max(0, Math.floor(y/cellSize)));
+    const cz = Math.min(nCells-1, Math.max(0, Math.floor(z/cellSize)));
+    return cx + cy*nCells + cz*nCells*nCells;
+  }
+
+  function step(parts, dt){
+    for(const p of parts){
+      p.x += p.vx*dt; p.y += p.vy*dt; p.z += p.vz*dt;
+    }
+    for(const p of parts){
+      if(p.x-p.r<0){p.x=p.r; p.vx=-p.vx;}
+      if(p.x+p.r>L){p.x=L-p.r; p.vx=-p.vx;}
+      if(p.y-p.r<0){p.y=p.r; p.vy=-p.vy;}
+      if(p.y+p.r>L){p.y=L-p.r; p.vy=-p.vy;}
+      if(p.z-p.r<0){p.z=p.r; p.vz=-p.vz;}
+      if(p.z+p.r>L){p.z=L-p.r; p.vz=-p.vz;}
+    }
+
+    // bygg gitter
+    const grid = new Map();
+    for(let i=0;i<parts.length;i++){
+      const ci = cellIndex(parts[i].x, parts[i].y, parts[i].z);
+      if(!grid.has(ci)) grid.set(ci, []);
+      grid.get(ci).push(i);
+    }
+
+    function neighbors(cx,cy,cz){
+      const out = [];
+      for(let dx=-1;dx<=1;dx++)
+      for(let dy=-1;dy<=1;dy++)
+      for(let dz=-1;dz<=1;dz++){
+        const nx=cx+dx, ny=cy+dy, nz=cz+dz;
+        if(nx<0||ny<0||nz<0||nx>=nCells||ny>=nCells||nz>=nCells) continue;
+        const idx = nx+ny*nCells+nz*nCells*nCells;
+        if(grid.has(idx)) out.push(...grid.get(idx));
+      }
+      return out;
+    }
+
+    const checked = new Set();
+    for(let i=0;i<parts.length;i++){
+      const a = parts[i];
+      const cx = Math.floor(a.x/cellSize), cy = Math.floor(a.y/cellSize), cz = Math.floor(a.z/cellSize);
+      const cand = neighbors(cx,cy,cz);
+      for(const j of cand){
+        if(j<=i) continue;
+        const key = i*parts.length+j;
+        if(checked.has(key)) continue;
+        checked.add(key);
+        const b = parts[j];
+        const dx=b.x-a.x, dy=b.y-a.y, dz=b.z-a.z;
+        const dist2 = dx*dx+dy*dy+dz*dz;
+        const minD = a.r+b.r;
+        if(dist2 < minD*minD && dist2>1e-9){
+          const dist = Math.sqrt(dist2);
+          const nx=dx/dist, ny=dy/dist, nz=dz/dist;
+          const overlap = (minD-dist)/2;
+          a.x -= nx*overlap; a.y -= ny*overlap; a.z -= nz*overlap;
+          b.x += nx*overlap; b.y += ny*overlap; b.z += nz*overlap;
+          const rvx=b.vx-a.vx, rvy=b.vy-a.vy, rvz=b.vz-a.vz;
+          const relN = rvx*nx+rvy*ny+rvz*nz;
+          if(relN<0){
+            a.vx += relN*nx; a.vy += relN*ny; a.vz += relN*nz;
+            b.vx -= relN*nx; b.vy -= relN*ny; b.vz -= relN*nz;
+          }
+        }
+      }
+    }
+  }
+
+  function speeds(parts){
+    return parts.map(p=>Math.sqrt(p.vx*p.vx+p.vy*p.vy+p.vz*p.vz));
+  }
+
+  function maxwell3D(v,T){
+    return 4*Math.PI*Math.pow(1/(2*Math.PI*T),1.5)*v*v*Math.exp(-v*v/(2*T));
+  }
+
+  let parts = makeParticles(presetSel.value);
+  let T0 = temperature(parts);
+  let t = 0;
+  let playing = true;
+  let speedMult = 1;
+  const dtBase = 0.35;
+
+  function reset(){
+    parts = makeParticles(presetSel.value);
+    T0 = temperature(parts);
+    t = 0;
+  }
+
+  function drawBox(){
+    bctx.clearRect(0,0,L,L);
+    for(const p of parts){
+      const depth = p.z/L;
+      const alpha = 0.3+0.7*(1-depth);
+      const rad = p.r*(0.7+0.6*(1-depth));
+      bctx.beginPath();
+      bctx.arc(p.x,p.y,rad,0,2*Math.PI);
+      bctx.fillStyle = `rgba(90,169,255,${alpha})`;
+      bctx.fill();
+    }
+    bctx.strokeStyle = '#2a3652';
+    bctx.strokeRect(0.5,0.5,L-1,L-1);
+  }
+
+  function drawHist(){
+    const w = histCv.width, h = histCv.height;
+    hctx.clearRect(0,0,w,h);
+    const sp = speeds(parts);
+    const vmax = Math.max(V0*2.8, Math.sqrt(2*T0*3)*2.5);
+    const nbins = 26;
+    const bw = vmax/nbins;
+    const counts = new Array(nbins).fill(0);
+    for(const v of sp){
+      let b = Math.floor(v/bw);
+      if(b>=nbins) b=nbins-1; if(b<0) b=0;
+      counts[b]++;
+    }
+    const density = counts.map(c=>c/(parts.length*bw));
+    const curve = [];
+    let theoMax = 0;
+    for(let i=0;i<=100;i++){
+      const v = i*vmax/100;
+      const f = maxwell3D(v,T0);
+      curve.push(f);
+      if(f>theoMax) theoMax=f;
+    }
+    const yMax = Math.max(Math.max(...density), theoMax)*1.15;
+
+    const binW = w/nbins;
+    hctx.fillStyle = '#5aa9ff';
+    for(let i=0;i<nbins;i++){
+      const bh = (density[i]/yMax)*h;
+      hctx.fillRect(i*binW+1, h-bh, binW-2, bh);
+    }
+    hctx.strokeStyle = '#ffb15a';
+    hctx.lineWidth = 2.2;
+    hctx.beginPath();
+    for(let i=0;i<=100;i++){
+      const x=(i/100)*w, y=h-(curve[i]/yMax)*h;
+      if(i===0) hctx.moveTo(x,y); else hctx.lineTo(x,y);
+    }
+    hctx.stroke();
+  }
+
+  function updateStats(){
+    const sp = speeds(parts);
+    const v2 = sp.reduce((s,v)=>s+v*v,0)/sp.length;
+    tEl.textContent = t.toFixed(1);
+    TEl.textContent = T0.toFixed(1);
+    vrmsEl.textContent = Math.sqrt(v2).toFixed(1);
+  }
+
+  function loop(){
+    if(playing){
+      const dt = dtBase*speedMult;
+      const substeps = speedMult>2 ? 2 : 1;
+      for(let s=0;s<substeps;s++) step(parts, dt/substeps);
+      t += dt;
+    }
+    drawBox(); drawHist(); updateStats();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  presetSel.addEventListener('change', reset);
+  resetBtn.addEventListener('click', reset);
+  playBtn.addEventListener('click', function(e){
+    playing = !playing;
+    e.target.textContent = playing ? 'Pause' : 'Spill av';
+  });
+  speedBtn.addEventListener('click', function(e){
+    speedMult = speedMult===1?2:(speedMult===2?4:1);
+    e.target.textContent = 'Fart: '+speedMult+'x';
+  });
+
+})();
+</script>
+</body>
+</html>
