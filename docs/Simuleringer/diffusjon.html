@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Diffusjon – tilfeldig bevegelse gir blanding</title>
+<style>
+  :root{
+    --paper:#EAEEF2; --panel:#FBFCFD; --ink:#16212B; --muted:#5C6B78;
+    --hair:#D3DBE2; --grid:#E1E7ec; --a:#2E6FE4; --b:#D1502E; --focus:#26408B;
+    --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:960px;margin:0 auto;padding:22px 18px 30px;}
+  .eyebrow{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--b);margin:0 0 6px;}
+  h1{font-weight:800;letter-spacing:-.02em;font-size:clamp(20px,3.4vw,28px);margin:0 0 4px;}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 18px;max-width:64ch;line-height:1.5;}
+  .stage{background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px;
+         box-shadow:0 1px 0 rgba(22,33,43,.04),0 10px 30px -22px rgba(22,33,43,.4);}
+  .canvholder{position:relative;width:100%;aspect-ratio:16/11;border-radius:10px;overflow:hidden;background:#0F1620;border:1px solid #223041;}
+  canvas{display:block;width:100%;height:100%;}
+  .caption{font-size:12px;color:var(--muted);line-height:1.45;margin-top:10px;} .caption b{color:var(--ink);font-weight:600;}
+  .btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;align-items:center;}
+  .btn{font:600 13px var(--sans);border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:9px;padding:8px 14px;cursor:pointer;}
+  .btn.primary{background:var(--focus);border-color:var(--focus);color:#fff;}
+  .btn:disabled{opacity:.45;cursor:default;}
+  .btn:focus-visible,input:focus-visible,.seg button:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  .controls{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .ctrl{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:14px 15px;}
+  .ctrl h3{margin:0 0 8px;font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);}
+  input[type=range]{width:100%;accent-color:var(--focus);margin:8px 0 2px;}
+  .rangelbl{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);color:var(--muted);}
+  .seg{display:flex;gap:6px}
+  .seg button{flex:1;font:600 12.5px var(--sans);padding:8px 6px;border-radius:9px;cursor:pointer;border:1px solid var(--hair);background:#fff;color:var(--ink);}
+  .seg button[aria-pressed=true]{background:#2b3a47;border-color:#2b3a47;color:#fff;}
+  .readout{margin-top:14px;display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+  .stat{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:12px 14px;text-align:center;}
+  .stat .k{font-size:11px;color:var(--muted);} .stat .v{font:700 20px/1.1 var(--mono);margin-top:5px;}
+  .stat.la .v{color:var(--a)} .stat.lb .v{color:var(--b)} .stat.mix .v{color:var(--focus)}
+  .note{margin-top:12px;background:#fff;border:1px solid var(--hair);border-left:3px solid var(--focus);border-radius:8px;padding:11px 14px;font-size:13.5px;line-height:1.5;}
+  .note b{font-weight:700}
+  .foot{margin-top:12px;font-size:11px;color:var(--muted);line-height:1.5;}
+  @media (max-width:640px){ .readout{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <p class="eyebrow">Kinetisk gassteori · diffusjon</p>
+  <h1>Diffusjon: tilfeldig bevegelse gir blanding</h1>
+  <p class="sub">To gasser er skilt av en vegg –
+     <span style="color:var(--a);font-weight:700">A</span> til venstre,
+     <span style="color:var(--b);font-weight:700">B</span> til høyre. Fjern veggen. Ingen molekyler
+     «vet» hvor de skal, men den tilfeldige bevegelsen gir en netto spredning helt til gassene er
+     jevnt blandet. Profilen under boksen viser tettheten langs beholderen.</p>
+
+  <div class="stage">
+    <div class="canvholder"><canvas id="c"></canvas></div>
+    <p class="caption"><b>Øverst:</b> molekylene i beholderen. <b>Nederst:</b> et diagram som viser
+       hvor mange A og B det er ved hver posisjon. Det starter som to trinn (A til venstre, B til høyre)
+       og flater ut mot den stiplede linjen når gassene er jevnt blandet.</p>
+
+    <div class="btnrow">
+      <button class="btn primary" id="remove">Fjern skilleveggen</button>
+      <button class="btn" id="reset">Nullstill</button>
+      <button class="btn" id="pause">Pause</button>
+    </div>
+
+    <div class="controls">
+      <div class="ctrl"><h3>Temperatur (fart)</h3>
+        <input id="temp" type="range" min="0.3" max="2.2" step="0.05" value="1.0">
+        <div class="rangelbl"><span>kald</span><span>varm</span></div>
+      </div>
+      <div class="ctrl"><h3>Molekylmasse</h3>
+        <div class="seg" id="mass">
+          <button data-m="1" aria-pressed="true">Lik masse</button>
+          <button data-m="4" aria-pressed="false">B er 4× tyngre</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="readout">
+      <div class="stat la"><div class="k">A på venstre halvdel</div><div class="v"><span id="rLA">–</span> %</div></div>
+      <div class="stat lb"><div class="k">B på venstre halvdel</div><div class="v"><span id="rLB">–</span> %</div></div>
+      <div class="stat mix"><div class="k">Blandingsgrad</div><div class="v"><span id="rMix">–</span> %</div></div>
+    </div>
+
+    <div class="note" id="note"></div>
+  </div>
+
+  <p class="foot">Lette molekyler beveger seg raskere (farten går som √(T/M)) og diffunderer derfor
+     fortere – samme sammenheng som i fartsfordelingen, og grunnen til at valg av bæregass betyr noe
+     i gasskromatografi. Når blandingen er jevn, beveger molekylene seg fortsatt, men det er ingen
+     netto strøm: dynamisk likevekt. Og de skiller seg aldri av seg selv igjen – det er entropi.</p>
+</div>
+
+<script>
+const NA=80, NB=80, BINS=24;
+let partition=true, running=true, Trel=1.0, massB=1;
+let mols=[];
+
+/* controls */
+const removeBtn=document.getElementById("remove"), resetBtn=document.getElementById("reset"), pauseBtn=document.getElementById("pause");
+removeBtn.onclick=()=>{ partition=false; removeBtn.disabled=true; };
+resetBtn.onclick=()=>{ init(); removeBtn.disabled=false; };
+pauseBtn.onclick=()=>{ running=!running; pauseBtn.textContent=running?"Pause":"Spill av"; if(running) requestAnimationFrame(loop); };
+document.getElementById("temp").oninput=e=>{ Trel=+e.target.value; };
+const massSeg=document.getElementById("mass");
+massSeg.querySelectorAll("button").forEach(b=>{ b.onclick=()=>{ massB=+b.dataset.m;
+  massSeg.querySelectorAll("button").forEach(x=>x.setAttribute("aria-pressed",x===b)); }; });
+if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){ running=false; pauseBtn.textContent="Spill av"; }
+
+/* model */
+let g_spare=null;
+function gauss(){ if(g_spare!==null){const s=g_spare;g_spare=null;return s;}
+  let u,v,s; do{u=Math.random()*2-1;v=Math.random()*2-1;s=u*u+v*v;}while(s===0||s>=1);
+  const m=Math.sqrt(-2*Math.log(s)/s); g_spare=v*m; return u*m; }
+function init(){
+  partition=true; mols=[];
+  for(let i=0;i<NA;i++) mols.push({x:Math.random()*0.48, y:Math.random(), ang:Math.random()*6.283, type:'A'});
+  for(let i=0;i<NB;i++) mols.push({x:0.52+Math.random()*0.48, y:Math.random(), ang:Math.random()*6.283, type:'B'});
+}
+
+/* canvas */
+const cv=document.getElementById("c"), ctx=cv.getContext("2d");
+function size(){ const dpr=Math.min(window.devicePixelRatio||1,2); const r=cv.getBoundingClientRect();
+  cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); return {w:r.width,h:r.height}; }
+
+function step(w, boxW, boxH){
+  const baseSpd=w*0.0060;
+  for(const m of mols){
+    const mass = (m.type==='B')?massB:1;
+    const spd = baseSpd*Math.sqrt(Trel/mass);
+    m.ang += gauss()*0.5;                          // random-walk direction (mimics collisions)
+    let nx = m.x + Math.cos(m.ang)*spd/boxW;
+    let ny = m.y + Math.sin(m.ang)*spd/boxH;
+    // outer walls
+    if(nx<0){nx=0;m.ang=Math.PI-m.ang;} if(nx>1){nx=1;m.ang=Math.PI-m.ang;}
+    if(ny<0){ny=0;m.ang=-m.ang;} if(ny>1){ny=1;m.ang=-m.ang;}
+    // partition at x=0.5
+    if(partition){
+      if(m.type==='A' && nx>0.485){ nx=0.485; m.ang=Math.PI-m.ang; }
+      if(m.type==='B' && nx<0.515){ nx=0.515; m.ang=Math.PI-m.ang; }
+    }
+    m.x=nx; m.y=ny;
+  }
+}
+
+function draw(){
+  const {w,h}=size(); ctx.clearRect(0,0,w,h);
+  const bx=w*0.04, by=h*0.03, boxW=w*0.92, boxH=h*0.53;
+  const px=nx=>bx+nx*boxW, py=ny=>by+ny*boxH;
+
+  if(running) step(w, boxW, boxH);
+
+  // box frame
+  ctx.strokeStyle="#33475b"; ctx.lineWidth=2; ctx.strokeRect(bx,by,boxW,boxH);
+  // partition
+  if(partition){ const mx=px(0.5); ctx.strokeStyle="#8aa0b4"; ctx.lineWidth=4;
+    ctx.beginPath(); ctx.moveTo(mx,by); ctx.lineTo(mx,by+boxH); ctx.stroke();
+    ctx.fillStyle="#5C6B78"; ctx.font="600 11px system-ui,sans-serif"; ctx.textAlign="center";
+    ctx.textBaseline="top"; ctx.fillText("skillevegg", mx, by+boxH+4); }
+
+  // molecules
+  const rA=Math.max(2.4,w/150);
+  for(const m of mols){ ctx.beginPath(); ctx.arc(px(m.x),py(m.y),rA,0,7);
+    ctx.fillStyle=(m.type==='A')?"#2E6FE4":"#D1502E"; ctx.fill(); }
+
+  // ---- concentration profile (chart under the box) ----
+  const pT=h*0.72, pB=h*0.95, pH=pB-pT;
+  const cA=new Array(BINS).fill(0), cB=new Array(BINS).fill(0);
+  for(const m of mols){ let bi=Math.min(BINS-1,Math.floor(m.x*BINS)); (m.type==='A'?cA:cB)[bi]++; }
+  const yMax=(NA/(BINS/2))*1.45;
+  const Xb=i=>bx+(i/BINS)*boxW, Yb=v=>pB-(v/yMax)*pH;
+  const evenLevel=NA/BINS;                    // density once a gas is spread evenly
+
+  // subtle panel background so it reads as its own chart
+  ctx.fillStyle="rgba(255,255,255,0.045)"; ctx.fillRect(bx-6,pT-20,boxW+12,pH+36);
+
+  // heading + legend on the same top line
+  ctx.textBaseline="alphabetic";
+  ctx.fillStyle="#9fb0be"; ctx.font="600 11px system-ui,sans-serif"; ctx.textAlign="left";
+  ctx.fillText("Antall molekyler ved hver posisjon", bx, pT-7);
+  ctx.textBaseline="middle"; ctx.font="600 11px system-ui,sans-serif";
+  let lx=bx+boxW-72, ly=pT-10;
+  ctx.fillStyle="#2E6FE4"; ctx.fillRect(lx,ly-4,12,8); ctx.fillStyle="#cdd8e2"; ctx.textAlign="left"; ctx.fillText("A",lx+16,ly);
+  ctx.fillStyle="#D1502E"; ctx.fillRect(lx+34,ly-4,12,8); ctx.fillStyle="#cdd8e2"; ctx.fillText("B",lx+50,ly);
+
+  // former partition position
+  const mxp=bx+0.5*boxW;
+  ctx.strokeStyle="#33475b"; ctx.setLineDash([2,4]); ctx.lineWidth=1;
+  ctx.beginPath(); ctx.moveTo(mxp,pT); ctx.lineTo(mxp,pB); ctx.stroke(); ctx.setLineDash([]);
+  // baseline
+  ctx.strokeStyle="#2b3a47"; ctx.lineWidth=1; ctx.beginPath(); ctx.moveTo(bx,pB); ctx.lineTo(bx+boxW,pB); ctx.stroke();
+
+  // "evenly spread" reference line — curves flatten onto this when mixed
+  const yEven=Yb(evenLevel);
+  ctx.strokeStyle="#8fa3b3"; ctx.setLineDash([5,4]); ctx.lineWidth=1.3;
+  ctx.beginPath(); ctx.moveTo(bx,yEven); ctx.lineTo(bx+boxW,yEven); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle="#aebccb"; ctx.font="10px system-ui,sans-serif"; ctx.textAlign="left"; ctx.textBaseline="bottom";
+  ctx.fillText("jevnt fordelt (blandet)", bx+4, yEven-2);
+
+  function profile(counts,color,fill){
+    ctx.beginPath(); ctx.moveTo(bx,pB);
+    for(let i=0;i<BINS;i++){ const x0=Xb(i),x1=Xb(i+1),yv=Yb(counts[i]);
+      ctx.lineTo(x0,yv); ctx.lineTo(x1,yv); }
+    ctx.lineTo(bx+boxW,pB); ctx.closePath();
+    ctx.fillStyle=fill; ctx.fill();
+    ctx.beginPath();
+    for(let i=0;i<BINS;i++){ const x0=Xb(i),x1=Xb(i+1),yv=Yb(counts[i]);
+      if(i===0)ctx.moveTo(x0,yv); else ctx.lineTo(x0,yv); ctx.lineTo(x1,yv); }
+    ctx.strokeStyle=color; ctx.lineWidth=2; ctx.stroke();
+  }
+  profile(cA,"#2E6FE4","rgba(46,111,228,0.15)");
+  profile(cB,"#D1502E","rgba(209,80,46,0.15)");
+
+  // x-axis labels
+  ctx.fillStyle="#8fa3b3"; ctx.font="10px system-ui,sans-serif"; ctx.textBaseline="top";
+  ctx.textAlign="left"; ctx.fillText("← venstre", bx, pB+3);
+  ctx.textAlign="right"; ctx.fillText("høyre →", bx+boxW, pB+3);
+
+  updateReadout();
+}
+
+/* readouts + note */
+function updateReadout(){
+  let aL=0,bL=0; for(const m of mols){ if(m.x<0.5){ if(m.type==='A')aL++; else bL++; } }
+  const fLA=aL/NA, fLB=bL/NB;
+  document.getElementById("rLA").textContent=Math.round(fLA*100);
+  document.getElementById("rLB").textContent=Math.round(fLB*100);
+  const mix=Math.max(0,Math.min(1, 1-Math.abs(fLA-0.5)*2 ))*0.5 + Math.max(0,Math.min(1,1-Math.abs(fLB-0.5)*2))*0.5;
+  const mixPct=Math.round(mix*100);
+  document.getElementById("rMix").textContent=mixPct;
+  let m;
+  if(partition){ m="Skilleveggen er på: hver gass er fanget på sin side. Trykk «Fjern skilleveggen»."; }
+  else if(mixPct<80){ m="<b>Diffusjon.</b> Hvert molekyl beveger seg helt tilfeldig – ingen retning er foretrukket. Likevel sprer <b>A</b> seg mot høyre og <b>B</b> mot venstre, fordi det er flere som kan vandre <i>ut</i> fra den fulle siden enn <i>inn</i>. Netto strøm går fra høy til lav konsentrasjon."; }
+  else { m="<b>Jevn blanding.</b> Profilene er flate. Molekylene beveger seg fortsatt like mye, men nå krysser like mange hver vei – ingen netto strøm. Dette er <b>dynamisk likevekt</b>. Og blandingen skiller seg aldri av seg selv igjen: det er <b>entropi</b> og irreversibilitet i praksis."; }
+  document.getElementById("note").innerHTML=m;
+}
+
+/* loop */
+function loop(){ draw(); if(running) requestAnimationFrame(loop); }
+window.addEventListener("resize",draw);
+function boot(t){ if(cv.getBoundingClientRect().width<5){ if(t>0) return setTimeout(()=>boot(t-1),120); }
+  init(); draw(); if(running) requestAnimationFrame(loop); else setInterval(()=>{if(!running)draw();},300); }
+boot(12);
+</script>
+</body>
+</html>
