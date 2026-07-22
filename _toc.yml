@@ -8,8 +8,7 @@ chapters:
 - file: docs/gasses
 - file: docs/Makroskopisk_termodynamikk_1
 - file: docs/Makroskopisk_termodynamikk_II
-- file: docs/Intermolekylære_Krefter
-- file: docs/intermolecular_interactions_exercises
+- file: docs/Intermolekylære_krefter
 - file: docs/ukesoppgaver
 - file: docs/løsningsforslag
 - file: docs/howto
