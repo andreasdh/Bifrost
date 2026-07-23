@@ -7,73 +7,115 @@
 <style>
   :root{
     --paper:#EAEEF2; --panel:#FBFCFD; --ink:#16212B; --muted:#5C6B78;
-    --hair:#D3DBE2; --grid:#E1E7ec; --accent:#26408B; --accent-soft:#5C77C4;
-    --warm:#D1502E; --focus:#26408B;
+    --hair:#D3DBE2; --grid:#E4E9EE; --accent:#26408B; --accent-soft:#5C77C4;
+    --warm:#C4451F; --ghost:#9AA8B4; --boxbg:#0F1620; --boxedge:#223041;
+    --chipbg:#FFFFFF; --focus:#26408B;
     --mono:ui-monospace,"SF Mono","Cascadia Code","Roboto Mono",Menlo,Consolas,monospace;
     --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
   }
+  @media (prefers-color-scheme: dark){
+    :root{
+      --paper:#131A21; --panel:#1B242D; --ink:#E6ECF2; --muted:#93A2AF;
+      --hair:#2C3946; --grid:#28343F; --accent:#8FA8E8; --accent-soft:#6D86C9;
+      --warm:#E8794F; --ghost:#66757F; --boxbg:#0B1118; --boxedge:#243343;
+      --chipbg:#222C36;
+    }
+  }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);-webkit-font-smoothing:antialiased;}
-  .wrap{max-width:960px;margin:0 auto;padding:22px 18px 30px;}
+  .wrap{max-width:980px;margin:0 auto;padding:22px 18px 30px;}
   .eyebrow{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--accent);margin:0 0 6px;}
-  h1{font-weight:800;letter-spacing:-.02em;font-size:clamp(20px,3.4vw,28px);margin:0 0 4px;}
-  .sub{color:var(--muted);font-size:14px;margin:0 0 20px;max-width:60ch;line-height:1.5;}
-  .stage{display:grid;grid-template-columns:minmax(0,230px) minmax(0,1fr);gap:16px;
-         background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px;
-         box-shadow:0 1px 0 rgba(22,33,43,.04),0 10px 30px -22px rgba(22,33,43,.4);}
+  h1{font-weight:800;letter-spacing:-.02em;font-size:clamp(20px,3.4vw,28px);margin:0 0 6px;}
+  .sub{color:var(--muted);font-size:14px;margin:0 0 18px;max-width:64ch;line-height:1.55;}
+
+  .missions{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;}
+  .mission{font:600 13px var(--sans);padding:8px 14px;border-radius:999px;cursor:pointer;
+           border:1px solid var(--hair);background:var(--chipbg);color:var(--ink);transition:.12s;}
+  .mission:hover{border-color:var(--accent-soft);}
+  .mission[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff;}
+  @media (prefers-color-scheme: dark){ .mission[aria-pressed=true]{color:#101820;} }
+  .taskbar{background:var(--panel);border:1px solid var(--hair);border-left:3px solid var(--accent);
+           border-radius:0 10px 10px 0;padding:11px 14px;font-size:13.5px;line-height:1.5;margin:0 0 14px;
+           color:var(--ink);min-height:44px;display:flex;align-items:center;}
+  .taskbar em{color:var(--muted);font-style:normal;}
+
+  .stage{display:grid;grid-template-columns:minmax(0,220px) minmax(0,1fr);gap:16px;
+         background:var(--panel);border:1px solid var(--hair);border-radius:14px;padding:16px;}
   .col{display:flex;flex-direction:column;gap:10px;min-width:0;}
-  .canvholder{position:relative;width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;background:#0f1620;border:1px solid #223041;}
+  .canvholder{position:relative;width:100%;aspect-ratio:1/1;border-radius:10px;overflow:hidden;
+              background:var(--boxbg);border:1px solid var(--boxedge);}
   .chartholder{position:relative;width:100%;aspect-ratio:16/9;}
   canvas{display:block;width:100%;height:100%;}
-  .caption{font-size:12px;color:var(--muted);line-height:1.45;} .caption b{color:var(--ink);font-weight:600;}
-  .controls{margin-top:16px;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
+  .caption{font-size:12px;color:var(--muted);line-height:1.5;} .caption b{color:var(--ink);font-weight:600;}
+
+  .controls{margin-top:14px;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;}
   .ctrl{background:var(--panel);border:1px solid var(--hair);border-radius:12px;padding:14px 15px;}
-  .ctrl h3{margin:0 0 10px;font-size:12px;font-weight:700;letter-spacing:.02em;text-transform:uppercase;color:var(--muted);display:flex;justify-content:space-between;align-items:center;}
-  .val{font:700 15px/1 var(--mono);color:var(--accent);}
-  input[type=range]{width:100%;accent-color:var(--accent);margin:8px 0 2px;}
+  .ctrl h3{margin:0 0 8px;font-size:11.5px;font-weight:700;letter-spacing:.03em;text-transform:uppercase;
+           color:var(--muted);display:flex;justify-content:space-between;align-items:center;gap:8px;}
+  .val{font:700 16px/1 var(--mono);color:var(--accent);}
+  input[type=range]{width:100%;accent-color:var(--accent);margin:9px 0 2px;}
   .rangelbl{display:flex;justify-content:space-between;font:500 11px/1 var(--mono);color:var(--muted);}
   .gasrow{display:flex;flex-wrap:wrap;gap:6px;}
-  .chip{font:600 13px/1 var(--sans);padding:7px 11px;border-radius:999px;cursor:pointer;border:1px solid var(--hair);background:#fff;color:var(--ink);transition:.12s;}
+  .chip{font:600 13px var(--sans);padding:7px 11px;border-radius:999px;cursor:pointer;
+        border:1px solid var(--hair);background:var(--chipbg);color:var(--ink);transition:.12s;}
   .chip:hover{border-color:var(--accent-soft);}
   .chip[aria-pressed=true]{background:var(--accent);border-color:var(--accent);color:#fff;}
-  .chip:focus-visible,select:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+  @media (prefers-color-scheme: dark){ .chip[aria-pressed=true]{color:#101820;} }
   .cmprow{display:flex;align-items:center;gap:8px;margin-top:10px;}
-  select{font:500 13px var(--sans);padding:6px 8px;border-radius:8px;border:1px solid var(--hair);background:#fff;color:var(--ink);}
+  select{font:500 13px var(--sans);padding:6px 8px;border-radius:8px;border:1px solid var(--hair);
+         background:var(--chipbg);color:var(--ink);}
+  .btn{font:600 12px var(--sans);border:1px solid var(--hair);background:var(--chipbg);color:var(--ink);
+       border-radius:8px;padding:6px 11px;cursor:pointer;white-space:nowrap;}
+  .btn:hover{border-color:var(--accent-soft);}
   .thr h3{color:var(--warm);}
-  .fracbig{font:800 24px/1 var(--mono);color:var(--warm);margin:2px 0;}
-  input#thr{accent-color:var(--warm);}
-  .pausebtn{font:600 12px var(--sans);border:1px solid var(--hair);background:#fff;color:var(--ink);border-radius:8px;padding:6px 12px;cursor:pointer;}
-  .foot{margin-top:14px;font-size:11px;color:var(--muted);line-height:1.5;}
-  @media (max-width:680px){ .stage{grid-template-columns:1fr} .canvholder{max-width:320px;margin:0 auto;width:100%} }
+  .fracbig{font:800 26px/1 var(--mono);color:var(--warm);margin:2px 0 3px;}
+  .tiny{font-size:11.5px;color:var(--muted);line-height:1.5;}
+  .tiny code{font:600 11.5px var(--mono);color:var(--ink);}
+  .chip:focus-visible,.btn:focus-visible,.mission:focus-visible,select:focus-visible,input:focus-visible{
+    outline:2px solid var(--focus);outline-offset:2px;}
+  .foot{margin-top:14px;font-size:11.5px;color:var(--muted);line-height:1.6;}
+  .foot b{color:var(--ink);}
+  @media (max-width:680px){ .stage{grid-template-columns:1fr} .canvholder{max-width:300px;margin:0 auto;} }
 </style>
 </head>
 <body>
 <div class="wrap">
   <p class="eyebrow">Kinetisk gassteori · interaktiv</p>
   <h1>Fartsfordelingen i en gass</h1>
-  <p class="sub">Molekylene har ikke samme fart. Fargen viser farten (blå = treg, rød = rask). Endre
-     temperatur og gass, og dra terskelen for å se hvor få molekyler som er raske nok til å reagere.</p>
+  <p class="sub">Alle molekylene i boksen har samme temperatur, men de har ikke samme fart. Fargen viser
+     farten (blå = treg, rød = rask), og hvit ring betyr at molekylet er raskt nok til å reagere.
+     Aksene i grafen står fast, så du kan se kurven faktisk flytte på seg.</p>
+
+  <div class="missions" id="missions"></div>
+  <div class="taskbar" id="taskbar"><em>Velg et oppdrag over, eller utforsk fritt med knappene nederst.</em></div>
 
   <div class="stage">
     <div class="col">
       <div class="canvholder"><canvas id="box"></canvas></div>
-      <p class="caption"><b>Molekylene i boksen.</b> Ved høyere temperatur beveger de seg raskere, og
-         flere kommer over terskelen (hvit ring).</p>
+      <p class="caption"><b>Molekylene i boksen.</b> Hvert punkt er ett molekyl. Ved høyere temperatur
+         beveger de seg raskere, og flere får hvit ring.</p>
     </div>
     <div class="col">
       <div class="chartholder"><canvas id="chart"></canvas></div>
-      <p class="caption">Søylene er molekylene i boksen; kurven er Maxwell–Boltzmann-fordelingen. Det
-         skraverte området er molekylene raskere enn terskelen v*.</p>
+      <p class="caption">Søylene teller molekylene i boksen; den heltrukne kurven er
+         Maxwell–Boltzmann-fordelingen. Det skraverte feltet til høyre for <b>v*</b> er molekylene som
+         har nok energi til å reagere.</p>
     </div>
   </div>
 
   <div class="controls">
     <div class="ctrl">
-      <h3>Temperatur <button id="pause" class="pausebtn">Pause</button></h3>
-      <div class="val"><span id="tout">298</span> K</div>
-      <input id="temp" type="range" min="80" max="1500" step="5" value="298">
-      <div class="rangelbl"><span>80 K</span><span>1500 K</span></div>
+      <h3>Temperatur
+        <span style="display:flex;gap:6px">
+          <button id="freeze" class="btn">Frys kurven</button>
+          <button id="pause" class="btn">Pause</button>
+        </span>
+      </h3>
+      <div class="val"><span id="tout">300</span> K</div>
+      <input id="temp" type="range" min="200" max="1200" step="10" value="300" aria-label="Temperatur i kelvin">
+      <div class="rangelbl"><span>200 K</span><span>1200 K</span></div>
     </div>
+
     <div class="ctrl">
       <h3>Gass</h3>
       <div class="gasrow" id="gasrow"></div>
@@ -82,141 +124,310 @@
         <select id="cmp"><option value="">ingen</option></select>
       </div>
     </div>
+
     <div class="ctrl thr">
-      <h3>Reaktiv terskel</h3>
+      <h3>Over energibarrieren</h3>
       <div class="fracbig"><span id="frac">–</span> %</div>
-      <div style="font-size:11px;color:var(--muted);margin-bottom:6px">av molekylene er raskere enn v*</div>
-      <input id="thr" type="range" min="0" max="3000" step="20" value="900">
-      <div class="rangelbl"><span>v* = <span id="throut">900</span> m/s</span></div>
+      <div class="tiny" style="margin-bottom:8px">av molekylene er raske nok til å reagere</div>
+      <div class="tiny">
+        Barrieren er fast: <code>E<sub>a</sub> = 15 kJ/mol</code><br>
+        <span id="vstarline"></span><br>
+        I boksen akkurat nå: <span id="obs">–</span>
+      </div>
     </div>
   </div>
 
-  <p class="foot">Farten skalerer med <b>√(T/M)</b> — derfor buzzer varm og lett gass raskere. Bare
-     de raskeste molekylene har nok energi til å reagere: det er derfor reaksjoner går fortere når temperaturen stiger.</p>
+  <p class="foot">Farten skalerer med <b>√(T/M)</b>: varm gass er rask, tung gass er treg.
+     Terskelfarten er <b>v* = √(2E<sub>a</sub>/M)</b> — den minste farten som gir nok bevegelsesenergi
+     til å komme over barrieren. Den flytter seg ikke når du varmer opp gassen; det er kurven som flytter seg.</p>
 </div>
 
 <script>
-const R=8.314;
-const GASES={ "H₂":{M:0.002016},"He":{M:0.004003},"CH₄":{M:0.016043},
-             "N₂":{M:0.028014},"O₂":{M:0.031998},"CO₂":{M:0.044010} };
-let state={ T:298, gas:"N₂", cmp:"", thr:900, running:true };
+const R = 8.314;
+const EA = 15000;                        // J/mol — fast energibarriere
+const T_LO = 200, T_HI = 1200;           // ytterpunktene på temperaturskalaen
+const N = 240;                           // antall molekyler i boksen
 
-const gasrow=document.getElementById("gasrow"), cmpSel=document.getElementById("cmp");
-Object.keys(GASES).forEach(name=>{
-  const b=document.createElement("button"); b.className="chip"; b.textContent=name;
-  b.setAttribute("aria-pressed",name===state.gas);
-  b.onclick=()=>{ state.gas=name; syncChips(); resample(); };
-  gasrow.appendChild(b);
-  const o=document.createElement("option"); o.value=name; o.textContent=name; cmpSel.appendChild(o);
+const GASES = {
+  "H₂":{M:0.002016}, "He":{M:0.004003}, "CH₄":{M:0.016043},
+  "N₂":{M:0.028014}, "O₂":{M:0.031998}, "CO₂":{M:0.044010}
+};
+
+let state = { T:300, gas:"N₂", cmp:"", running:true, frozen:null, mission:null };
+
+/* ---------- fysikk ---------- */
+const vmp  = (T,M) => Math.sqrt(2*R*T/M);
+const vrms = (T,M) => Math.sqrt(3*R*T/M);
+const vstar = M => Math.sqrt(2*EA/M);
+function mb(v,T,M){ const a = M/(2*R*T); return 4*Math.PI*Math.pow(a/Math.PI,1.5)*v*v*Math.exp(-a*v*v); }
+
+function erfc(x){
+  const t = 1/(1+0.3275911*x), e = Math.exp(-x*x);
+  return ((((1.061405429*t - 1.453152027)*t + 1.421413741)*t - 0.284496736)*t + 0.254829592)*t*e;
+}
+// Andelen med v > v*. x = v*/vp = √(Ea/RT) — merk at massen faller bort.
+function tailFraction(T){
+  const x = Math.sqrt(EA/(R*T));
+  return erfc(x) + (2*x/Math.sqrt(Math.PI))*Math.exp(-x*x);
+}
+
+/* ---------- oppdrag ---------- */
+const MISSIONS = [
+  { id:"masse", label:"1 · Masse",
+    setup:()=>{ state.gas="H₂"; state.cmp="CO₂"; state.T=600; state.frozen=null; },
+    text:"To gasser, <b>nøyaktig samme temperatur</b>. Kurvene ligger helt forskjellig — men se på prosenten: den er den samme. Hvordan kan H₂ være så mye raskere enn CO₂ uten å være mer reaktivt?" },
+  { id:"temp", label:"2 · Temperatur",
+    setup:()=>{ state.gas="N₂"; state.cmp=""; state.T=300; state.frozen={T:300,M:GASES["N₂"].M}; },
+    text:"Kurven ved 300 K er frosset som grå stiplet linje. Dra temperaturen oppover: toppen synker mens kurven blir bredere. Molekylene forsvinner jo ikke — hvor blir det av dem?" },
+  { id:"barriere", label:"3 · Barrieren",
+    setup:()=>{ state.gas="N₂"; state.cmp=""; state.T=300; state.frozen={T:300,M:GASES["N₂"].M}; },
+    text:"Noter prosenten ved 300 K. Doble temperaturen til 600 K. Den doblet seg ikke — den ble omtrent femtendoblet. Hvorfor gir en liten forskyvning av kurven en så stor endring?" }
+];
+
+const missionRow = document.getElementById("missions"), taskbar = document.getElementById("taskbar");
+MISSIONS.forEach(m=>{
+  const b = document.createElement("button");
+  b.className = "mission"; b.textContent = m.label; b.setAttribute("aria-pressed","false");
+  b.onclick = ()=>{
+    state.mission = m.id; m.setup();
+    taskbar.innerHTML = m.text;
+    syncAll(); resample(); draw();
+  };
+  missionRow.appendChild(b);
 });
-function syncChips(){ [...gasrow.children].forEach(c=>c.setAttribute("aria-pressed",c.textContent===state.gas)); }
-cmpSel.onchange=()=>{ state.cmp=cmpSel.value; };
-const tempInput=document.getElementById("temp"), tout=document.getElementById("tout");
-tempInput.oninput=()=>{ state.T=+tempInput.value; tout.textContent=state.T; resample(); };
-const thrInput=document.getElementById("thr"), throut=document.getElementById("throut");
-thrInput.oninput=()=>{ state.thr=+thrInput.value; throut.textContent=state.thr; };
-const pauseBtn=document.getElementById("pause");
-pauseBtn.onclick=()=>{ state.running=!state.running; pauseBtn.textContent=state.running?"Pause":"Spill av";
-                       if(state.running) requestAnimationFrame(loop); };
-if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){ state.running=false; pauseBtn.textContent="Spill av"; }
+function syncMissions(){
+  [...missionRow.children].forEach((b,i)=>b.setAttribute("aria-pressed", MISSIONS[i].id===state.mission));
+}
 
-const vmp=(T,M)=>Math.sqrt(2*R*T/M), vrms=(T,M)=>Math.sqrt(3*R*T/M);
-function mb(v,T,M){ const a=M/(2*R*T); return 4*Math.PI*Math.pow(a/Math.PI,1.5)*v*v*Math.exp(-a*v*v); }
-let g_spare=null;
-function gauss(){ if(g_spare!==null){const s=g_spare;g_spare=null;return s;}
-  let u,v,s; do{u=Math.random()*2-1;v=Math.random()*2-1;s=u*u+v*v;}while(s===0||s>=1);
-  const m=Math.sqrt(-2*Math.log(s)/s); g_spare=v*m; return u*m; }
-function sampleSpeed(T,M){ const sd=Math.sqrt(R*T/M); const x=gauss()*sd,y=gauss()*sd,z=gauss()*sd; return Math.sqrt(x*x+y*y+z*z); }
+/* ---------- kontroller ---------- */
+const gasrow = document.getElementById("gasrow"), cmpSel = document.getElementById("cmp");
+Object.keys(GASES).forEach(name=>{
+  const b = document.createElement("button");
+  b.className = "chip"; b.textContent = name; b.setAttribute("aria-pressed", name===state.gas);
+  b.onclick = ()=>{ state.gas = name; if(state.cmp===name) state.cmp=""; syncAll(); resample(); draw(); };
+  gasrow.appendChild(b);
+  const o = document.createElement("option"); o.value = name; o.textContent = name; cmpSel.appendChild(o);
+});
+cmpSel.onchange = ()=>{ state.cmp = cmpSel.value; draw(); };
 
-const boxC=document.getElementById("box"), bctx=boxC.getContext("2d");
-const N=150; let parts=[]; const KSTEP=1.15e-5;
-function speedColor(v,ref){ const t=Math.max(0,Math.min(1,v/(2.4*ref))); return `hsl(${220-220*t} 78% 58%)`; }
-function resample(){ const M=GASES[state.gas].M;
-  parts.forEach(p=>{ p.s=sampleSpeed(state.T,M); const a=Math.random()*2*Math.PI; p.dx=Math.cos(a); p.dy=Math.sin(a); }); }
-function initParts(){ parts=[]; for(let i=0;i<N;i++) parts.push({x:Math.random(),y:Math.random(),dx:0,dy:0,s:0}); resample(); }
-function sizeCanvas(cv,ctx){ const dpr=Math.min(window.devicePixelRatio||1,2); const r=cv.getBoundingClientRect();
-  cv.width=Math.round(r.width*dpr); cv.height=Math.round(r.height*dpr); ctx.setTransform(dpr,0,0,dpr,0,0); return {w:r.width,h:r.height}; }
+const tempInput = document.getElementById("temp"), tout = document.getElementById("tout");
+tempInput.oninput = ()=>{ state.T = +tempInput.value; syncAll(); resample(); draw(); };
+
+const pauseBtn = document.getElementById("pause");
+pauseBtn.onclick = ()=>{
+  state.running = !state.running; pauseBtn.textContent = state.running ? "Pause" : "Spill av";
+  if(state.running) requestAnimationFrame(loop);
+};
+const freezeBtn = document.getElementById("freeze");
+freezeBtn.onclick = ()=>{
+  state.frozen = state.frozen ? null : { T:state.T, M:GASES[state.gas].M };
+  syncAll(); draw();
+};
+if(window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches){
+  state.running = false; pauseBtn.textContent = "Spill av";
+}
+
+function syncAll(){
+  [...gasrow.children].forEach(c=>c.setAttribute("aria-pressed", c.textContent===state.gas));
+  cmpSel.value = state.cmp;
+  tempInput.value = state.T; tout.textContent = state.T;
+  freezeBtn.textContent = state.frozen ? "Fjern frossen" : "Frys kurven";
+  syncMissions();
+  const parts = [state.gas].concat(state.cmp && state.cmp!==state.gas ? [state.cmp] : []);
+  document.getElementById("vstarline").innerHTML =
+    parts.map(n=>`v*(${n}) = <code>${Math.round(vstar(GASES[n].M))}</code> m/s`).join("<br>");
+}
+
+/* ---------- molekylene i boksen ---------- */
+let g_spare = null;
+function gauss(){
+  if(g_spare!==null){ const s=g_spare; g_spare=null; return s; }
+  let u,v,s; do{ u=Math.random()*2-1; v=Math.random()*2-1; s=u*u+v*v; } while(s===0||s>=1);
+  const m = Math.sqrt(-2*Math.log(s)/s); g_spare = v*m; return u*m;
+}
+function sampleSpeed(T,M){
+  const sd = Math.sqrt(R*T/M);
+  const x=gauss()*sd, y=gauss()*sd, z=gauss()*sd;
+  return Math.sqrt(x*x+y*y+z*z);
+}
+let parts = [];
+const KSTEP = 9e-6;
+function resample(){
+  const M = GASES[state.gas].M;
+  parts.forEach(p=>{ p.s = sampleSpeed(state.T,M); const a=Math.random()*2*Math.PI; p.dx=Math.cos(a); p.dy=Math.sin(a); });
+}
+function initParts(){
+  parts = [];
+  for(let i=0;i<N;i++) parts.push({x:Math.random(),y:Math.random(),dx:0,dy:0,s:0});
+  resample();
+}
+
+const boxC = document.getElementById("box"), bctx = boxC.getContext("2d");
+function sizeCanvas(cv,ctx){
+  const dpr = Math.min(window.devicePixelRatio||1,2), r = cv.getBoundingClientRect();
+  cv.width = Math.round(r.width*dpr); cv.height = Math.round(r.height*dpr);
+  ctx.setTransform(dpr,0,0,dpr,0,0);
+  return { w:r.width, h:r.height };
+}
+// Fargeskalaen er knyttet til v*, ikke til temperaturen — ellers ser kald og varm gass like ut.
+function speedColor(v,vs){
+  const t = Math.max(0, Math.min(1, v/(1.35*vs)));
+  const r = Math.round( 74 + (214-74)*t );
+  const g = Math.round(134 + ( 78-134)*t );
+  const b = Math.round(224 + ( 52-224)*t );
+  return `rgb(${r},${g},${b})`;
+}
 function drawBox(){
-  const {w,h}=sizeCanvas(boxC,bctx); bctx.clearRect(0,0,w,h);
-  const M=GASES[state.gas].M, ref=vmp(state.T,M), rad=Math.max(2.2,w/95), rn=rad/w;
+  const {w,h} = sizeCanvas(boxC,bctx);
+  bctx.clearRect(0,0,w,h);
+  const M = GASES[state.gas].M, vs = vstar(M), rad = Math.max(2,w/100), rn = rad/w;
   for(const p of parts){
     if(state.running){
-      let d=p.s*KSTEP; if(d>0.05)d=0.05;
-      p.x+=p.dx*d; p.y+=p.dy*d;
-      if(p.x<rn){p.x=rn;p.dx*=-1;} if(p.x>1-rn){p.x=1-rn;p.dx*=-1;}
-      if(p.y<rn){p.y=rn;p.dy*=-1;} if(p.y>1-rn){p.y=1-rn;p.dy*=-1;}
+      let d = p.s*KSTEP; if(d>0.05) d = 0.05;
+      p.x += p.dx*d; p.y += p.dy*d;
+      if(p.x<rn){ p.x=rn; p.dx*=-1; }  if(p.x>1-rn){ p.x=1-rn; p.dx*=-1; }
+      if(p.y<rn){ p.y=rn; p.dy*=-1; }  if(p.y>1-rn){ p.y=1-rn; p.dy*=-1; }
     }
-    const hot=p.s>=state.thr;
-    bctx.beginPath(); bctx.arc(p.x*w,p.y*h,rad,0,7);
-    bctx.globalAlpha=hot?1:0.5; bctx.fillStyle=speedColor(p.s,ref); bctx.fill();
-    if(hot){ bctx.globalAlpha=1; bctx.lineWidth=1.6; bctx.strokeStyle="#fff"; bctx.stroke(); }
+    const hot = p.s >= vs;
+    bctx.beginPath(); bctx.arc(p.x*w, p.y*h, rad, 0, 7);
+    bctx.globalAlpha = hot ? 1 : 0.55;
+    bctx.fillStyle = speedColor(p.s, vs); bctx.fill();
+    if(hot){ bctx.globalAlpha=1; bctx.lineWidth=1.7; bctx.strokeStyle="#fff"; bctx.stroke(); }
   }
-  bctx.globalAlpha=1;
+  bctx.globalAlpha = 1;
 }
 
-const chC=document.getElementById("chart"), cctx=chC.getContext("2d");
-function niceCeil(x){ const p=Math.pow(10,Math.floor(Math.log10(x))); const n=x/p;
-  let m; if(n<=1)m=1;else if(n<=2)m=2;else if(n<=2.5)m=2.5;else if(n<=5)m=5;else m=10; return m*p; }
-function getCss(v){ return getComputedStyle(document.documentElement).getPropertyValue(v).trim(); }
+/* ---------- grafen ---------- */
+const chC = document.getElementById("chart"), cctx = chC.getContext("2d");
+const css = v => getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const STEPS = [1,1.5,2,2.5,3,4,5,7.5,10];
+function niceCeil(x){
+  const p = Math.pow(10, Math.floor(Math.log10(x))), n = x/p;
+  for(const s of STEPS) if(n<=s) return s*p;
+  return 10*p;
+}
+function activeGases(){
+  const a = [{ name:state.gas, M:GASES[state.gas].M, color:css('--accent'), primary:true }];
+  if(state.cmp && state.cmp!==state.gas)
+    a.push({ name:state.cmp, M:GASES[state.cmp].M, color:css('--warm'), primary:false });
+  return a;
+}
 function drawChart(){
-  const {w,h}=sizeCanvas(chC,cctx); cctx.clearRect(0,0,w,h);
-  const x0=8,x1=w-10,y0=h-26,y1=12;
-  const Mp=GASES[state.gas].M;
-  const active=[{name:state.gas,M:Mp,color:getCss('--accent')}];
-  if(state.cmp && state.cmp!==state.gas) active.push({name:state.cmp,M:GASES[state.cmp].M,color:getCss('--warm')});
-  const lightest=Math.min(...active.map(a=>a.M));
-  const xmax=niceCeil(2.7*vrms(state.T,lightest));
-  let ymax=0; active.forEach(a=>ymax=Math.max(ymax,mb(vmp(state.T,a.M),state.T,a.M))); ymax*=1.12;
-  const X=v=>x0+(v/xmax)*(x1-x0), Y=f=>y0-(f/ymax)*(y0-y1);
+  const {w,h} = sizeCanvas(chC,cctx);
+  cctx.clearRect(0,0,w,h);
+  const x0=34, x1=w-10, y0=h-40, y1=14;
+  const act = activeGases();
 
-  // axis + x labels
-  cctx.strokeStyle=getCss('--grid'); cctx.lineWidth=1; cctx.fillStyle=getCss('--muted');
-  cctx.font="11px "+getCss('--mono'); cctx.textAlign="center"; cctx.textBaseline="top";
-  for(let i=0;i<=5;i++){ const v=xmax*i/5, px=X(v);
-    cctx.beginPath();cctx.moveTo(px,y1);cctx.lineTo(px,y0);cctx.stroke(); cctx.fillText(Math.round(v),px,y0+6); }
-  cctx.strokeStyle=getCss('--hair'); cctx.beginPath();cctx.moveTo(x0,y0);cctx.lineTo(x1,y0);cctx.stroke();
-  cctx.textAlign="right"; cctx.fillText("fart (m/s) →",x1,y0+6);
+  // Aksene låses til gassvalget, ALDRI til temperaturen.
+  const mLight = Math.min(...act.map(a=>a.M)), mHeavy = Math.max(...act.map(a=>a.M));
+  const xmax = niceCeil(2.4*vrms(T_HI, mLight));
+  const ymax = 1.1*mb(vmp(T_LO,mHeavy), T_LO, mHeavy);
+  const X = v => x0 + (v/xmax)*(x1-x0);
+  const Y = f => y0 - (f/ymax)*(y0-y1);
 
-  // histogram of box speeds (primary gas) — subtle
-  const nb=26,bw=xmax/nb,counts=new Array(nb).fill(0);
-  parts.forEach(p=>{const b=Math.floor(p.s/bw); if(b>=0&&b<nb)counts[b]++;});
-  cctx.fillStyle="rgba(38,64,139,0.11)";
-  for(let b=0;b<nb;b++){ if(!counts[b])continue; const dens=counts[b]/(N*bw), px=X(b*bw), pw=X((b+1)*bw)-px-1, py=Y(dens);
-    cctx.fillRect(px,py,Math.max(1,pw),y0-py); }
+  // rutenett + akseverdier
+  cctx.strokeStyle = css('--grid'); cctx.lineWidth = 1;
+  cctx.fillStyle = css('--muted'); cctx.font = "11px "+css('--mono');
+  cctx.textAlign = "center"; cctx.textBaseline = "top";
+  for(let i=0;i<=5;i++){
+    const v = xmax*i/5, px = X(v);
+    cctx.beginPath(); cctx.moveTo(px,y1); cctx.lineTo(px,y0); cctx.stroke();
+    cctx.fillText(Math.round(v), px, y0+7);
+  }
+  cctx.strokeStyle = css('--hair');
+  cctx.beginPath(); cctx.moveTo(x0,y0); cctx.lineTo(x1,y0); cctx.stroke();
+  cctx.font = "600 11px "+css('--sans');
+  cctx.fillText("fart (m/s)", (x0+x1)/2, y0+23);
+  cctx.save();
+  cctx.translate(11, (y0+y1)/2); cctx.rotate(-Math.PI/2);
+  cctx.textAlign = "center"; cctx.textBaseline = "middle";
+  cctx.fillText("antall molekyler", 0, 0);
+  cctx.restore();
 
-  // reactive tail shading (right of threshold, primary gas)
-  if(state.thr<xmax){
-    cctx.fillStyle="rgba(209,80,46,0.16)"; cctx.beginPath(); cctx.moveTo(X(state.thr),y0);
-    for(let px=X(state.thr);px<=x1;px++){ const v=(px-x0)/(x1-x0)*xmax; cctx.lineTo(px,Y(mb(v,state.T,Mp))); }
-    cctx.lineTo(x1,y0); cctx.closePath(); cctx.fill();
+  // søyler: molekylene i boksen
+  const nb = 30, bw = xmax/nb, counts = new Array(nb).fill(0);
+  parts.forEach(p=>{ const b = Math.floor(p.s/bw); if(b>=0&&b<nb) counts[b]++; });
+  cctx.fillStyle = css('--accent'); cctx.globalAlpha = 0.16;
+  for(let b=0;b<nb;b++){
+    if(!counts[b]) continue;
+    const dens = counts[b]/(N*bw), px = X(b*bw), pw = X((b+1)*bw)-px-1, py = Y(dens);
+    cctx.fillRect(px, py, Math.max(1,pw), y0-py);
+  }
+  cctx.globalAlpha = 1;
+
+  // skravert hale for hovedgassen
+  const Mp = GASES[state.gas].M, vsP = vstar(Mp);
+  if(vsP < xmax){
+    cctx.fillStyle = css('--warm'); cctx.globalAlpha = 0.18;
+    cctx.beginPath(); cctx.moveTo(X(vsP), y0);
+    for(let px=X(vsP); px<=x1; px++){ const v=(px-x0)/(x1-x0)*xmax; cctx.lineTo(px, Y(mb(v,state.T,Mp))); }
+    cctx.lineTo(x1,y0); cctx.closePath(); cctx.fill(); cctx.globalAlpha = 1;
   }
 
-  // curves
-  active.forEach(a=>{ cctx.strokeStyle=a.color; cctx.lineWidth=a.name===state.gas?2.4:1.8;
-    if(a.name!==state.gas)cctx.setLineDash([5,4]); cctx.beginPath();
-    for(let px=x0;px<=x1;px++){ const v=(px-x0)/(x1-x0)*xmax, py=Y(mb(v,state.T,a.M)); px===x0?cctx.moveTo(px,py):cctx.lineTo(px,py); }
-    cctx.stroke(); cctx.setLineDash([]); });
-
-  // threshold line + fraction
-  if(state.thr<xmax){ const px=X(state.thr);
-    cctx.strokeStyle=getCss('--warm'); cctx.lineWidth=1.6; cctx.beginPath(); cctx.moveTo(px,y0); cctx.lineTo(px,y1); cctx.stroke();
-    cctx.fillStyle=getCss('--warm'); cctx.textAlign="left"; cctx.textBaseline="top"; cctx.font="700 12px "+getCss('--mono');
-    cctx.fillText("v*",px+4,y1+2);
+  // frossen kurve
+  if(state.frozen){
+    cctx.strokeStyle = css('--ghost'); cctx.lineWidth = 1.6; cctx.setLineDash([4,4]);
+    cctx.beginPath();
+    for(let px=x0; px<=x1; px++){
+      const v = (px-x0)/(x1-x0)*xmax, py = Y(mb(v, state.frozen.T, state.frozen.M));
+      px===x0 ? cctx.moveTo(px,py) : cctx.lineTo(px,py);
+    }
+    cctx.stroke(); cctx.setLineDash([]);
   }
-  document.getElementById("frac").textContent=(parts.filter(p=>p.s>=state.thr).length/N*100).toFixed(1);
 
-  // legend
-  cctx.textAlign="left"; cctx.textBaseline="middle"; cctx.font="600 12px "+getCss('--sans');
-  let lx=x0+6, ly=y1+6;
-  active.forEach(a=>{ cctx.fillStyle=a.color; cctx.fillRect(lx,ly-5,14,3);
-    cctx.fillStyle=getCss('--ink'); cctx.fillText(a.name,lx+20,ly); lx+=20+cctx.measureText(a.name).width+20; });
+  // kurvene
+  act.forEach(a=>{
+    cctx.strokeStyle = a.color; cctx.lineWidth = a.primary ? 2.4 : 2;
+    if(!a.primary) cctx.setLineDash([6,4]);
+    cctx.beginPath();
+    for(let px=x0; px<=x1; px++){
+      const v = (px-x0)/(x1-x0)*xmax, py = Y(mb(v, state.T, a.M));
+      px===x0 ? cctx.moveTo(px,py) : cctx.lineTo(px,py);
+    }
+    cctx.stroke(); cctx.setLineDash([]);
+  });
+
+  // terskellinjer
+  act.forEach(a=>{
+    const vs = vstar(a.M); if(vs>=xmax) return;
+    const px = X(vs);
+    cctx.strokeStyle = css('--warm'); cctx.lineWidth = a.primary ? 1.8 : 1.2;
+    if(!a.primary) cctx.setLineDash([3,3]);
+    cctx.beginPath(); cctx.moveTo(px,y0); cctx.lineTo(px,y1+16); cctx.stroke(); cctx.setLineDash([]);
+    cctx.fillStyle = css('--warm'); cctx.textAlign = "left"; cctx.textBaseline = "top";
+    cctx.font = "700 11px "+css('--mono');
+    cctx.fillText(act.length>1 ? "v* "+a.name : "v*", px+4, y1+2);
+  });
+
+  // tegnforklaring
+  cctx.textAlign = "left"; cctx.textBaseline = "middle"; cctx.font = "600 12px "+css('--sans');
+  let lx = x0+6, ly = y1+7;
+  act.forEach(a=>{
+    cctx.fillStyle = a.color; cctx.fillRect(lx, ly-2, 15, 3);
+    cctx.fillStyle = css('--ink'); cctx.fillText(a.name, lx+21, ly);
+    lx += 21 + cctx.measureText(a.name).width + 18;
+  });
+  if(state.frozen){
+    cctx.fillStyle = css('--ghost'); cctx.fillRect(lx, ly-2, 15, 3);
+    cctx.fillStyle = css('--muted'); cctx.fillText(state.frozen.T+" K", lx+21, ly);
+  }
 }
 
-function loop(){ drawBox(); drawChart(); if(state.running) requestAnimationFrame(loop); }
-window.addEventListener("resize",()=>{ drawBox(); drawChart(); });
-initParts(); drawBox(); drawChart();
+function updateReadout(){
+  document.getElementById("frac").textContent = tailFraction(state.T).toFixed(2);
+  const vs = vstar(GASES[state.gas].M);
+  const n = parts.filter(p=>p.s>=vs).length;
+  document.getElementById("obs").textContent = n+" av "+N+" molekyler";
+}
+
+function draw(){ drawBox(); drawChart(); updateReadout(); }
+function loop(){ draw(); if(state.running) requestAnimationFrame(loop); }
+addEventListener("resize", draw);
+matchMedia("(prefers-color-scheme: dark)").addEventListener("change", draw);
+
+initParts(); syncAll(); draw();
 if(state.running) requestAnimationFrame(loop);
-setInterval(()=>{ if(!state.running) drawChart(); },300);
+setInterval(()=>{ if(!state.running) draw(); }, 400);
 </script>
 </body>
 </html>
