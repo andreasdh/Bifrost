@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fakultet</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --c1:#1f5f8b;--c2:#c0392b;--c3:#1a7a4c;--c4:#d68910;--c5:#8e44ad;--c6:#16867e;
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+
+  .calcbar{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;padding:14px 16px;
+    text-align:center;margin-bottom:14px;}
+  .calcline{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:17px;color:var(--ink);
+    letter-spacing:.02em;}
+  .calcline .step{display:inline-block;padding:2px 7px;border-radius:3px;margin:2px 1px;}
+  .calcline .eq{color:var(--muted);margin:0 6px;}
+  .calcline .res{color:var(--c2);font-size:20px;}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  .caption{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px;}
+  .perms{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-height:280px;overflow-y:auto;padding:2px;}
+  .perm{display:inline-flex;gap:2px;padding:3px 5px;border:1px solid var(--grid);border-radius:3px;
+    background:#fbf9f3;}
+  .tile{width:19px;height:19px;border-radius:2px;color:#fff;font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    font-size:11px;display:flex;align-items:center;justify-content:center;}
+  .toomany{text-align:center;color:var(--muted);font-size:14px;padding:26px 10px;line-height:1.6;}
+  .toomany b{color:var(--c2);font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:17px;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);}
+  .val.big{color:var(--c2);font-size:16px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:"SF Mono",ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--c4);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--c4);
+    border:2px solid var(--paper);cursor:pointer;}
+  svg{display:block;width:100%;height:auto;margin-top:6px;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--c4);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Fakultet</div>
+  <h1>Hvor mange rekkefølger finnes?</h1>
+  <p class="sub">Med n forskjellige objekter kan vi stille dem opp i n! ulike rekkefølger. Her ser du alle sammen — helt til det blir for mange til å vise.</p>
+
+  <div class="calcbar">
+    <div class="calcline" id="calcLine">—</div>
+  </div>
+
+  <div class="stage">
+    <div class="caption" id="permCap">alle rekkefølger</div>
+    <div class="perms" id="perms"></div>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Kontroll</h2>
+      <div class="ctl">
+        <label>antall objekter n <b id="nLab">4</b></label>
+        <input type="range" id="nRange" min="1" max="12" step="1" value="4">
+      </div>
+      <div class="row"><span class="lab">n!</span><span class="val big" id="factVal">24</span></div>
+      <div class="row"><span class="lab">ganger større enn (n−1)!</span><span class="val" id="ratioVal">4</span></div>
+      <div class="row"><span class="lab">tid å lese alle, 1 per sekund</span><span class="val" id="timeVal">—</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Veksten</h2>
+      <svg id="chart" viewBox="0 0 300 150" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="row" style="margin-top:8px;"><span class="lab">merk: loddrett akse er logaritmisk</span></div>
+    </div>
+  </div>
+
+  <p class="note">Legg merke til hvor fort det går. Hvert steg opp ganger antallet med det nye tallet, så kurven stiger langt raskere enn noen potensfunksjon. Det er derfor vi trenger Stirlings tilnærming når N er på størrelse med Avogadros tall.</p>
+</div>
+
+<script>
+(function(){
+  const COLORS=['var(--c1)','var(--c2)','var(--c3)','var(--c4)','var(--c5)','var(--c6)',
+                '#7f8c8d','#2c3e50','#a0522d','#556b2f','#8b008b','#b8860b'];
+  const LETTERS='ABCDEFGHIJKL'.split('');
+  const MAXSHOW=6;   // show every ordering up to 6! = 720
+  let n=4;
+
+  function fact(k){let r=1;for(let i=2;i<=k;i++)r*=i;return r;}
+
+  function fmt(x){
+    if(x<1e15) return x.toLocaleString('no-NO');
+    return x.toExponential(3).replace('e+','·10^');
+  }
+
+  function permutations(arr){
+    if(arr.length<=1) return [arr];
+    const out=[];
+    for(let i=0;i<arr.length;i++){
+      const rest=arr.slice(0,i).concat(arr.slice(i+1));
+      for(const p of permutations(rest)) out.push([arr[i]].concat(p));
+    }
+    return out;
+  }
+
+  function drawCalc(){
+    const parts=[];
+    for(let i=n;i>=1;i--){
+      parts.push(`<span class="step" style="background:${COLORS[(n-i)%COLORS.length]};color:#fff">${i}</span>`);
+    }
+    const body = n===0? '1' : parts.join('<span class="eq">×</span>');
+    document.getElementById('calcLine').innerHTML =
+      `<b>${n}!</b> <span class="eq">=</span> ${body} <span class="eq">=</span> <span class="res">${fmt(fact(n))}</span>`;
+  }
+
+  function drawPerms(){
+    const box=document.getElementById('perms');
+    const cap=document.getElementById('permCap');
+    box.innerHTML='';
+    if(n>MAXSHOW){
+      cap.textContent='for mange til å vises';
+      box.innerHTML=`<div class="toomany">Å tegne alle <b>${fmt(fact(n))}</b> rekkefølger ville sprengt siden.<br>
+        Prøv n ≤ ${MAXSHOW} for å se dem alle.</div>`;
+      return;
+    }
+    cap.textContent='alle '+fact(n)+' rekkefølger';
+    const items=LETTERS.slice(0,n);
+    const perms=permutations(items);
+    const frag=document.createDocumentFragment();
+    for(const p of perms){
+      const d=document.createElement('div');d.className='perm';
+      for(const ch of p){
+        const t=document.createElement('span');t.className='tile';
+        t.style.background=COLORS[LETTERS.indexOf(ch)%COLORS.length];
+        t.textContent=ch;d.appendChild(t);
+      }
+      frag.appendChild(d);
+    }
+    box.appendChild(frag);
+  }
+
+  function drawChart(){
+    const NS="http://www.w3.org/2000/svg";
+    const svg=document.getElementById('chart');
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=300,H=150,padL=30,padR=10,padT=10,padB=22;
+    const NMAX=12;
+    const maxLog=Math.log10(fact(NMAX));
+    const sx=k=>padL+(k-1)/(NMAX-1)*(W-padL-padR);
+    const sy=v=>(H-padB)-(Math.log10(v)/maxLog)*(H-padT-padB);
+
+    // axes
+    const line=(x1,y1,x2,y2,col,w)=>{
+      const l=document.createElementNS(NS,'line');
+      l.setAttribute('x1',x1);l.setAttribute('y1',y1);l.setAttribute('x2',x2);l.setAttribute('y2',y2);
+      l.setAttribute('stroke',col);l.setAttribute('stroke-width',w);svg.appendChild(l);
+    };
+    line(padL,padT,padL,H-padB,'var(--axis)',1.2);
+    line(padL,H-padB,W-padR,H-padB,'var(--axis)',1.2);
+
+    // curve
+    let d='';
+    for(let k=1;k<=NMAX;k++){d+=(k===1?'M':'L')+sx(k).toFixed(1)+','+sy(fact(k)).toFixed(1)+' ';}
+    const p=document.createElementNS(NS,'path');
+    p.setAttribute('d',d);p.setAttribute('fill','none');
+    p.setAttribute('stroke','var(--c1)');p.setAttribute('stroke-width',2);
+    svg.appendChild(p);
+
+    // points, current highlighted
+    for(let k=1;k<=NMAX;k++){
+      const c=document.createElementNS(NS,'circle');
+      c.setAttribute('cx',sx(k));c.setAttribute('cy',sy(fact(k)));
+      c.setAttribute('r',k===n?5:2.4);
+      c.setAttribute('fill',k===n?'var(--c2)':'var(--c1)');
+      if(k===n){c.setAttribute('stroke','#fff');c.setAttribute('stroke-width',1.5);}
+      svg.appendChild(c);
+    }
+    // x labels
+    for(const k of [1,4,8,12]){
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',sx(k));t.setAttribute('y',H-8);t.setAttribute('text-anchor','middle');
+      t.setAttribute('font-family','monospace');t.setAttribute('font-size','9');
+      t.setAttribute('fill','var(--muted)');t.textContent=k;svg.appendChild(t);
+    }
+    // y labels (powers of ten)
+    for(const e of [0,3,6,9]){
+      const t=document.createElementNS(NS,'text');
+      t.setAttribute('x',padL-4);t.setAttribute('y',sy(Math.pow(10,e))+3);
+      t.setAttribute('text-anchor','end');t.setAttribute('font-family','monospace');
+      t.setAttribute('font-size','9');t.setAttribute('fill','var(--muted)');
+      t.textContent=e===0?'1':'10^'+e;svg.appendChild(t);
+    }
+  }
+
+  function timeText(v){
+    const s=v;
+    if(s<90) return Math.round(s)+' sekunder';
+    if(s<5400) return (s/60).toFixed(1)+' minutter';
+    if(s<172800) return (s/3600).toFixed(1)+' timer';
+    if(s<3.15e7) return (s/86400).toFixed(1)+' dager';
+    return (s/3.156e7).toExponential(2).replace('e+','·10^')+' år';
+  }
+
+  function update(){
+    document.getElementById('nLab').textContent=n;
+    document.getElementById('factVal').textContent=fmt(fact(n));
+    document.getElementById('ratioVal').textContent=n<=1?'—':n;
+    document.getElementById('timeVal').textContent=timeText(fact(n));
+    drawCalc();drawPerms();drawChart();
+  }
+
+  document.getElementById('nRange').addEventListener('input',e=>{n=+e.target.value;update();});
+  update();
+})();
+</script>
+</body>
+</html>
