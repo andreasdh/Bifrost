@@ -3,8 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>C&#8321;&#8324;-TAB i vann</title>
+<title>C14-TAB i vann</title>
 <style>
+  html,body{ margin:0; padding:0; }
+  iframe{ width:100%; height:1000px; border:none; display:block; }
+</style>
+</head>
+<body>
+<iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;no&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;UTF-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1.0&quot;&gt;
+&lt;title&gt;C&amp;#8321;&amp;#8324;-TAB i vann&lt;/title&gt;
+&lt;style&gt;
   :root{
     --ink:#2b2a27;
     --paper:#faf8f4;
@@ -17,8 +29,8 @@
     --oxygen-dark:#8a2f22;
     --hydrogen:#f5f1e8;
     --hbond:#b9832f;
-    --font: "Iowan Old Style","Palatino Linotype",Georgia,serif;
-    --font-ui: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font: &quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Georgia,serif;
+    --font-ui: -apple-system, &quot;Segoe UI&quot;, Helvetica, Arial, sans-serif;
   }
   *{box-sizing:border-box;}
   body{
@@ -130,52 +142,52 @@
   @media (prefers-reduced-motion: reduce){
     .water-outer, .iondipole-line, .cage-line{ transition:none; }
   }
-</style>
-</head>
-<body>
-<div class="card">
-  <h1>Hydratisering av C<sub>14</sub>-TAB</h1>
-  <p class="formula">Tetradecyltrimetylammoniumbromid &mdash; forenklet modell av kationet</p>
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;card&quot;&gt;
+  &lt;h1&gt;Hydratisering av C&lt;sub&gt;14&lt;/sub&gt;-TAB&lt;/h1&gt;
+  &lt;p class=&quot;formula&quot;&gt;Tetradecyltrimetylammoniumbromid &amp;mdash; forenklet modell av kationet&lt;/p&gt;
 
-  <div class="stage">
-    <svg id="scene" viewBox="0 0 700 460" role="img" aria-label="Animasjon av vannmolekyler som ordner seg rundt en forenklet modell av C14-TAB n&#229;r det l&#248;ses i vann">
-      <desc>En forenklet modell av C14-TAB-kationet med et ladet hode og en lang hydrokarbonhale er omgitt av vannmolekyler. N&#229;r reaksjonen startes, ordner noen vannmolekyler seg rundt det ladede hodet, og noen ordner seg langs den hydrofobe halen.</desc>
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;svg id=&quot;scene&quot; viewBox=&quot;0 0 700 460&quot; role=&quot;img&quot; aria-label=&quot;Animasjon av vannmolekyler som ordner seg rundt en forenklet modell av C14-TAB n&amp;#229;r det l&amp;#248;ses i vann&quot;&gt;
+      &lt;desc&gt;En forenklet modell av C14-TAB-kationet med et ladet hode og en lang hydrokarbonhale er omgitt av vannmolekyler. N&amp;#229;r reaksjonen startes, ordner noen vannmolekyler seg rundt det ladede hodet, og noen ordner seg langs den hydrofobe halen.&lt;/desc&gt;
 
-      <text x="18" y="26" class="label">Vannmolekyler (l&#248;sningsmiddel)</text>
+      &lt;text x=&quot;18&quot; y=&quot;26&quot; class=&quot;label&quot;&gt;Vannmolekyler (l&amp;#248;sningsmiddel)&lt;/text&gt;
 
-      <g id="tailGroup"></g>
-      <g id="bondLayer"></g>
-      <g id="waterLayer"></g>
+      &lt;g id=&quot;tailGroup&quot;&gt;&lt;/g&gt;
+      &lt;g id=&quot;bondLayer&quot;&gt;&lt;/g&gt;
+      &lt;g id=&quot;waterLayer&quot;&gt;&lt;/g&gt;
 
-      <text id="headText" x="500" y="278" text-anchor="middle" class="label" opacity="0.75">hydrofilt hode</text>
-      <text id="tailText" x="330" y="278" text-anchor="middle" class="label" opacity="0.75">hydrofob hale (C14-kjede)</text>
-    </svg>
-  </div>
+      &lt;text id=&quot;headText&quot; x=&quot;500&quot; y=&quot;278&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot; opacity=&quot;0.75&quot;&gt;hydrofilt hode&lt;/text&gt;
+      &lt;text id=&quot;tailText&quot; x=&quot;330&quot; y=&quot;278&quot; text-anchor=&quot;middle&quot; class=&quot;label&quot; opacity=&quot;0.75&quot;&gt;hydrofob hale (C14-kjede)&lt;/text&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
 
-  <div class="controls">
-    <button id="toggleBtn">L&#248;s C14-TAB i vann</button>
-    <span class="state-text" id="stateText">Vannmolekylene beveger seg fritt og tilfeldig omkring molekylet.</span>
-  </div>
+  &lt;div class=&quot;controls&quot;&gt;
+    &lt;button id=&quot;toggleBtn&quot;&gt;L&amp;#248;s C14-TAB i vann&lt;/button&gt;
+    &lt;span class=&quot;state-text&quot; id=&quot;stateText&quot;&gt;Vannmolekylene beveger seg fritt og tilfeldig omkring molekylet.&lt;/span&gt;
+  &lt;/div&gt;
 
-  <div class="legend">
-    <span><span class="swatch" style="background:var(--cation)"></span>Kationisk hode</span>
-    <span><span class="swatch" style="background:var(--tail)"></span>Hydrokarbonhale</span>
-    <span><span class="swatch" style="background:var(--oxygen)"></span>Oksygen (vann)</span>
-    <span><span class="swatch" style="background:var(--hydrogen);border:1px solid #8a8578"></span>Hydrogen (vann)</span>
-  </div>
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;span class=&quot;swatch&quot; style=&quot;background:var(--cation)&quot;&gt;&lt;/span&gt;Kationisk hode&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;swatch&quot; style=&quot;background:var(--tail)&quot;&gt;&lt;/span&gt;Hydrokarbonhale&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;swatch&quot; style=&quot;background:var(--oxygen)&quot;&gt;&lt;/span&gt;Oksygen (vann)&lt;/span&gt;
+    &lt;span&gt;&lt;span class=&quot;swatch&quot; style=&quot;background:var(--hydrogen);border:1px solid #8a8578&quot;&gt;&lt;/span&gt;Hydrogen (vann)&lt;/span&gt;
+  &lt;/div&gt;
 
-  <p class="caption">
-    Bruk animasjonen til &#229; tenke gjennom hvordan vannmolekylene rundt de ulike delene av molekylet p&#229;virker bevegelsesfrihet og orden i l&#248;sningen &mdash; og hva slags vekselvirkninger som oppst&#229;r mellom vann og de ladede/upolare delene av C14-TAB.
-  </p>
-</div>
+  &lt;p class=&quot;caption&quot;&gt;
+    Bruk animasjonen til &amp;#229; tenke gjennom hvordan vannmolekylene rundt de ulike delene av molekylet p&amp;#229;virker bevegelsesfrihet og orden i l&amp;#248;sningen &amp;mdash; og hva slags vekselvirkninger som oppst&amp;#229;r mellom vann og de ladede/upolare delene av C14-TAB.
+  &lt;/p&gt;
+&lt;/div&gt;
 
-<script>
+&lt;script&gt;
 (function(){
-  const svgNS = "http://www.w3.org/2000/svg";
-  const waterLayer = document.getElementById('waterLayer');
-  const bondLayer = document.getElementById('bondLayer');
-  const tailGroup = document.getElementById('tailGroup');
-  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const svgNS = &quot;http://www.w3.org/2000/svg&quot;;
+  const waterLayer = document.getElementById(&#x27;waterLayer&#x27;);
+  const bondLayer = document.getElementById(&#x27;bondLayer&#x27;);
+  const tailGroup = document.getElementById(&#x27;tailGroup&#x27;);
+  const reducedMotion = window.matchMedia(&#x27;(prefers-reduced-motion: reduce)&#x27;).matches;
 
   const HEAD = { x:500, y:230, r:16 };
   const TAIL_POINTS = [
@@ -191,23 +203,23 @@
 
   // --- draw the C14-TAB skeleton ---
   let pathD = `M ${HEAD.x-HEAD.r} ${HEAD.y}`;
-  TAIL_POINTS.forEach(([x,y]) => { pathD += ` L ${x} ${y}`; });
-  tailGroup.appendChild(el('path', { d: pathD, class:'bond-tail' }));
-  tailGroup.appendChild(el('circle', { cx:HEAD.x, cy:HEAD.y, r:HEAD.r, class:'head-circle' }));
-  const headLabel = el('text', { x:HEAD.x, y:HEAD.y+4, class:'head-label' });
-  headLabel.textContent = 'N+';
+  TAIL_POINTS.forEach(([x,y]) =&gt; { pathD += ` L ${x} ${y}`; });
+  tailGroup.appendChild(el(&#x27;path&#x27;, { d: pathD, class:&#x27;bond-tail&#x27; }));
+  tailGroup.appendChild(el(&#x27;circle&#x27;, { cx:HEAD.x, cy:HEAD.y, r:HEAD.r, class:&#x27;head-circle&#x27; }));
+  const headLabel = el(&#x27;text&#x27;, { x:HEAD.x, y:HEAD.y+4, class:&#x27;head-label&#x27; });
+  headLabel.textContent = &#x27;N+&#x27;;
   tailGroup.appendChild(headLabel);
 
   // --- water molecule factory ---
   function makeWater(){
-    const outer = el('g', { class:'water-outer' });
-    const jitter = el('g', { class:'water-jitter' });
-    const mol = el('g', {});
-    mol.appendChild(el('line', { x1:0, y1:8, x2:-9, y2:-6, class:'bond' }));
-    mol.appendChild(el('line', { x1:0, y1:8, x2:9,  y2:-6, class:'bond' }));
-    mol.appendChild(el('circle', { cx:-9, cy:-6, r:3.4, class:'hydrogen' }));
-    mol.appendChild(el('circle', { cx:9,  cy:-6, r:3.4, class:'hydrogen' }));
-    mol.appendChild(el('circle', { cx:0,  cy:8,  r:5.2, class:'oxygen' }));
+    const outer = el(&#x27;g&#x27;, { class:&#x27;water-outer&#x27; });
+    const jitter = el(&#x27;g&#x27;, { class:&#x27;water-jitter&#x27; });
+    const mol = el(&#x27;g&#x27;, {});
+    mol.appendChild(el(&#x27;line&#x27;, { x1:0, y1:8, x2:-9, y2:-6, class:&#x27;bond&#x27; }));
+    mol.appendChild(el(&#x27;line&#x27;, { x1:0, y1:8, x2:9,  y2:-6, class:&#x27;bond&#x27; }));
+    mol.appendChild(el(&#x27;circle&#x27;, { cx:-9, cy:-6, r:3.4, class:&#x27;hydrogen&#x27; }));
+    mol.appendChild(el(&#x27;circle&#x27;, { cx:9,  cy:-6, r:3.4, class:&#x27;hydrogen&#x27; }));
+    mol.appendChild(el(&#x27;circle&#x27;, { cx:0,  cy:8,  r:5.2, class:&#x27;oxygen&#x27; }));
     jitter.appendChild(mol);
     outer.appendChild(jitter);
     waterLayer.appendChild(outer);
@@ -230,31 +242,31 @@
   // jitter animation on the inner group (small Brownian motion)
   function jitter(item, amplitude, duration){
     if (item.anim) item.anim.cancel();
-    if (reducedMotion) { item.jitter.style.transform = ''; return; }
+    if (reducedMotion) { item.jitter.style.transform = &#x27;&#x27;; return; }
     const dx = rand(-amplitude, amplitude);
     const dy = rand(-amplitude, amplitude);
     item.anim = item.jitter.animate([
-      { transform:'translate(0px,0px)' },
+      { transform:&#x27;translate(0px,0px)&#x27; },
       { transform:`translate(${dx}px, ${dy}px)` },
-      { transform:'translate(0px,0px)' }
-    ], { duration, iterations: Infinity, easing:'ease-in-out' });
+      { transform:&#x27;translate(0px,0px)&#x27; }
+    ], { duration, iterations: Infinity, easing:&#x27;ease-in-out&#x27; });
   }
 
-  // scatter zone for the "before" / bulk state
-  const scatterZone = () => {
+  // scatter zone for the &quot;before&quot; / bulk state
+  const scatterZone = () =&gt; {
     let x, y;
     do {
       x = rand(30, 670);
       y = rand(40, 440);
-    } while (Math.hypot(x-HEAD.x, y-HEAD.y) < 60 &&
-             x > 150 && x < 560 && y > 170 && y < 300);
+    } while (Math.hypot(x-HEAD.x, y-HEAD.y) &lt; 60 &amp;&amp;
+             x &gt; 150 &amp;&amp; x &lt; 560 &amp;&amp; y &gt; 170 &amp;&amp; y &lt; 300);
     return [x,y];
   };
 
   // --- shell waters around the charged head ---
   const shellWaters = [];
   const shellAngles = [0, 60, 120, 180, 240, 300];
-  shellAngles.forEach(deg => {
+  shellAngles.forEach(deg =&gt; {
     const rad = deg * Math.PI/180;
     const tx = HEAD.x + 36*Math.cos(rad);
     const ty = HEAD.y + 36*Math.sin(rad);
@@ -263,23 +275,23 @@
     const [sx,sy] = scatterZone();
     setTransform(item.outer, sx, sy, rand(0,360));
     jitter(item, 9, 2400 + Math.random()*700);
-    const bondLine = el('line', { x1:tx, y1:ty, x2:HEAD.x, y2:HEAD.y, class:'iondipole-line' });
+    const bondLine = el(&#x27;line&#x27;, { x1:tx, y1:ty, x2:HEAD.x, y2:HEAD.y, class:&#x27;iondipole-line&#x27; });
     bondLayer.appendChild(bondLine);
     shellWaters.push({ item, tx, ty, rot });
   });
 
   // --- cage waters along the hydrophobic tail ---
   const cageWaters = [];
-  [1,3,5,7,9].forEach(i => {
+  [1,3,5,7,9].forEach(i =&gt; {
     const [px,py] = TAIL_POINTS[i];
-    [-1,1].forEach(side => {
+    [-1,1].forEach(side =&gt; {
       const tx = px, ty = py + side*24;
       const rot = side === -1 ? -15 : 15;
       const item = makeWater();
       const [sx,sy] = scatterZone();
       setTransform(item.outer, sx, sy, rand(0,360));
       jitter(item, 9, 2400 + Math.random()*700);
-      const bondLine = el('line', { x1:tx, y1:ty, x2:px, y2:py, class:'cage-line' });
+      const bondLine = el(&#x27;line&#x27;, { x1:tx, y1:ty, x2:px, y2:py, class:&#x27;cage-line&#x27; });
       bondLayer.appendChild(bondLine);
       cageWaters.push({ item, tx, ty, rot });
     });
@@ -287,7 +299,7 @@
 
   // --- bulk waters, always disordered ---
   const bulkWaters = [];
-  for(let i=0;i<14;i++){
+  for(let i=0;i&lt;14;i++){
     const item = makeWater();
     const [sx,sy] = scatterZone();
     setTransform(item.outer, sx, sy, rand(0,360));
@@ -295,40 +307,43 @@
     bulkWaters.push({ item, sx, sy });
   }
 
-  const btn = document.getElementById('toggleBtn');
-  const stateText = document.getElementById('stateText');
-  const stage = document.querySelector('.stage');
+  const btn = document.getElementById(&#x27;toggleBtn&#x27;);
+  const stateText = document.getElementById(&#x27;stateText&#x27;);
+  const stage = document.querySelector(&#x27;.stage&#x27;);
   let reacted = false;
 
   function react(){
     reacted = true;
-    stage.classList.add('reacted');
-    shellWaters.forEach(w => {
+    stage.classList.add(&#x27;reacted&#x27;);
+    shellWaters.forEach(w =&gt; {
       setTransform(w.item.outer, w.tx, w.ty, w.rot);
-      setTimeout(() => jitter(w.item, 2, 2600), 1250);
+      setTimeout(() =&gt; jitter(w.item, 2, 2600), 1250);
     });
-    cageWaters.forEach(w => {
+    cageWaters.forEach(w =&gt; {
       setTransform(w.item.outer, w.tx, w.ty, w.rot);
-      setTimeout(() => jitter(w.item, 2.5, 2600), 1250);
+      setTimeout(() =&gt; jitter(w.item, 2.5, 2600), 1250);
     });
-    btn.textContent = 'Tilbakestill';
-    stateText.textContent = 'Noen vannmolekyler har nå ordnet seg rundt hodet og halen i molekylet.';
+    btn.textContent = &#x27;Tilbakestill&#x27;;
+    stateText.textContent = &#x27;Noen vannmolekyler har nå ordnet seg rundt hodet og halen i molekylet.&#x27;;
   }
 
   function reset(){
     reacted = false;
-    stage.classList.remove('reacted');
-    [...shellWaters, ...cageWaters].forEach(w => {
+    stage.classList.remove(&#x27;reacted&#x27;);
+    [...shellWaters, ...cageWaters].forEach(w =&gt; {
       const [sx,sy] = scatterZone();
       setTransform(w.item.outer, sx, sy, rand(0,360));
       jitter(w.item, 9, 2400 + Math.random()*700);
     });
-    btn.textContent = 'Løs C14-TAB i vann';
-    stateText.textContent = 'Vannmolekylene beveger seg fritt og tilfeldig omkring molekylet.';
+    btn.textContent = &#x27;Løs C14-TAB i vann&#x27;;
+    stateText.textContent = &#x27;Vannmolekylene beveger seg fritt og tilfeldig omkring molekylet.&#x27;;
   }
 
-  btn.addEventListener('click', () => { reacted ? reset() : react(); });
+  btn.addEventListener(&#x27;click&#x27;, () =&gt; { reacted ? reset() : react(); });
 })();
-</script>
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" title="Animasjon av hydratisering av C14-TAB" loading="lazy"></iframe>
 </body>
 </html>
