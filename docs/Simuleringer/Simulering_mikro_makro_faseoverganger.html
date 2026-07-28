@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Mikro og makro ved faseoverganger</title>
+<style>
+  #s8-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:12px; border-radius:12px; max-width:600px; margin:0 auto; }
+  #s8-root h2 { text-align:center; font-size:1.05em; margin:0 0 3px 0; font-weight:600; }
+  #s8-root .s8-sub { text-align:center; font-size:0.74em; color:#9aa5c0; margin-bottom:10px; line-height:1.4; }
+  #s8-root .s8-main { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  #s8-root .s8-col { display:flex; flex-direction:column; align-items:center; background:#161d2e; border-radius:8px; padding:8px; width:270px; box-sizing:border-box; }
+  #s8-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s8-root .s8-caption { font-size:0.68em; color:#9aa5c0; margin-top:5px; text-align:center; }
+  #s8-root .s8-peakinfo { font-size:0.78em; margin-top:4px; font-weight:600; }
+  #s8-root .s8-peakinfo.bimodal { color:#ff8a8a; }
+  #s8-root .s8-peakinfo.unimodal { color:#7fe0a8; }
+  #s8-root .s8-statsrow { display:flex; gap:16px; justify-content:center; margin-top:8px; font-size:0.8em; }
+  #s8-root .s8-statsrow b { color:#ffb15a; }
+  #s8-root .s8-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:10px; }
+  #s8-root select, #s8-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;
+  }
+  #s8-root button:hover, #s8-root select:hover { background:#3a4a70; }
+  #s8-root button.s8-active { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s8-root button.s8-primary { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s8-root .s8-slider-row { display:flex; align-items:center; gap:6px; font-size:0.78em; width:100%; justify-content:center; }
+  #s8-root input[type=range] { width:220px; }
+  #s8-root .s8-legend { font-size:0.66em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div id="s8-root">
+  <h2>Mikro og makro ved smelting: is og vann</h2>
+  <div class="s8-sub">x = andel av systemet som er is (fast fase), fra 0 (alt vann) til 1 (all is). Se hvordan sannsynlighetsfordelingen (mikro) og den observerbare kurven (makro) henger sammen &ndash; og hvordan de ville sett ut om smeltingen i stedet var andreordens.</div>
+
+  <div class="s8-controls">
+    <button id="s8-mode1" class="s8-active">Ekte smelting (1. orden)</button>
+    <button id="s8-mode2">Hypotetisk 2. orden</button>
+  </div>
+
+  <div class="s8-main">
+    <div class="s8-col">
+      <canvas id="s8-micro" width="250" height="170"></canvas>
+      <div class="s8-caption">Mikro: sannsynlighetsfordeling P(x)</div>
+      <div class="s8-peakinfo" id="s8-peakinfo">...</div>
+    </div>
+    <div class="s8-col">
+      <canvas id="s8-macro" width="250" height="170"></canvas>
+      <div class="s8-caption">Makro: andel is mot T</div>
+    </div>
+  </div>
+
+  <div class="s8-statsrow">
+    <span>T = <b id="s8-Tval">-50</b> &deg;C</span>
+    <span>andel is = <b id="s8-xavg">0.00</b></span>
+  </div>
+
+  <div class="s8-controls">
+    <div class="s8-slider-row">
+      <label for="s8-T">T:</label>
+      <input type="range" id="s8-T" min="-50" max="50" step="1" value="-50">
+    </div>
+  </div>
+  <div class="s8-controls">
+    <button id="s8-run" class="s8-primary">Start sveip</button>
+    <button id="s8-reset">Reset</button>
+    <button id="s8-speed">Fart: 1x</button>
+  </div>
+
+  <div class="s8-legend">
+    F&oslash;rsteordens er ekte fysikk for is/vann (smeltepunkt 0&deg;C). Andreordens-versjonen er et <b>tenkt</b> scenario &ndash; ekte smelting er alltid f&oslash;rsteordens, men sammenligningen viser hva forskjellen faktisk best&aring;r i.<br>
+    Den smale (men ikke helt loddrette) overgangen ved f&oslash;rsteordens representerer et endelig system; i den termodynamiske grensen (N&rarr;&infin;) blir spranget fullstendig skarpt.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const Tc = 0; // ekte smeltepunkt for vann, 0°C
+  // ekte smelting (førsteordens)
+  const width1 = 2.2;
+  const xVann = 0.12, xIs = 0.88; // "andel is"-verdi for hver av de to fasene
+  const sigmaPeak = 0.045;
+  // hypotetisk andreordens-versjon
+  const width2 = 20;
+
+  let mode = 'first'; // 'first' eller 'second'
+  let Tcur = -50;
+  let playing = false;
+  let elapsed = 0, lastTs = null;
+  let speedMult = 1;
+  const sweepDuration = 16000; // ms for full sveip -50 -> 50
+
+  const microCv = document.getElementById('s8-micro');
+  const macroCv = document.getElementById('s8-macro');
+  const mctx = microCv.getContext('2d');
+  const Mctx = macroCv.getContext('2d');
+  const peakInfoEl = document.getElementById('s8-peakinfo');
+  const TvalEl = document.getElementById('s8-Tval');
+  const xavgEl = document.getElementById('s8-xavg');
+  const Tslider = document.getElementById('s8-T');
+  const mode1Btn = document.getElementById('s8-mode1');
+  const mode2Btn = document.getElementById('s8-mode2');
+  const runBtn = document.getElementById('s8-run');
+  const resetBtn = document.getElementById('s8-reset');
+  const speedBtn = document.getElementById('s8-speed');
+
+  function wSolid(T){ return 1/(1+Math.exp((T-Tc)/width1)); }
+  function xEq2(T){ return 1/(1+Math.exp((T-Tc)/width2)); }
+  function sigma2(T){ return 0.04 + 0.05*Math.exp(-Math.pow((T-Tc)/12,2)); }
+
+  function gauss(x, mu, sigma){
+    return Math.exp(-Math.pow(x-mu,2)/(2*sigma*sigma)) / (sigma*Math.sqrt(2*Math.PI));
+  }
+
+  function Pdist(x, T){
+    if(mode==='first'){
+      const w = wSolid(T);
+      return w*gauss(x,xIs,sigmaPeak) + (1-w)*gauss(x,xVann,sigmaPeak);
+    } else {
+      return gauss(x, xEq2(T), sigma2(T));
+    }
+  }
+
+  function xAvg(T){
+    if(mode==='first'){
+      const w = wSolid(T);
+      return w*xIs + (1-w)*xVann;
+    } else {
+      return xEq2(T);
+    }
+  }
+
+  function drawMicro(T){
+    const w = microCv.width, h = microCv.height;
+    mctx.clearRect(0,0,w,h);
+    const margin = {l:30,r:10,t:10,b:22};
+    const pw = w-margin.l-margin.r, ph = h-margin.t-margin.b;
+
+    let maxY = 0;
+    const steps = 150;
+    const vals = [];
+    for(let i=0;i<=steps;i++){
+      const x = i/steps;
+      const p = Pdist(x,T);
+      vals.push(p);
+      if(p>maxY) maxY = p;
+    }
+    maxY *= 1.15;
+
+    mctx.strokeStyle='#3a4360'; mctx.lineWidth=1;
+    mctx.beginPath(); mctx.moveTo(margin.l,margin.t); mctx.lineTo(margin.l,margin.t+ph); mctx.lineTo(margin.l+pw,margin.t+ph); mctx.stroke();
+    mctx.fillStyle='#9aa5c0'; mctx.font='10px Times New Roman'; mctx.textAlign='center';
+    mctx.fillText('x = andel is', margin.l+pw/2, h-4);
+
+    mctx.strokeStyle='#5aa9ff'; mctx.lineWidth=2.2;
+    mctx.beginPath();
+    for(let i=0;i<=steps;i++){
+      const x = margin.l + (i/steps)*pw;
+      const y = margin.t + ph - (vals[i]/maxY)*ph;
+      if(i===0) mctx.moveTo(x,y); else mctx.lineTo(x,y);
+    }
+    mctx.stroke();
+
+    // fyll under kurven
+    mctx.lineTo(margin.l+pw, margin.t+ph);
+    mctx.lineTo(margin.l, margin.t+ph);
+    mctx.closePath();
+    mctx.fillStyle='rgba(90,169,255,0.18)';
+    mctx.fill();
+
+    // peak-info
+    if(mode==='first'){
+      const w2 = wSolid(T);
+      if(w2>0.05 && w2<0.95){
+        peakInfoEl.textContent = '2 topper (sameksisterende faser)';
+        peakInfoEl.className = 's8-peakinfo bimodal';
+      } else {
+        peakInfoEl.textContent = '1 dominerende topp (kun én fase)';
+        peakInfoEl.className = 's8-peakinfo unimodal';
+      }
+    } else {
+      peakInfoEl.textContent = '1 topp (glir kontinuerlig)';
+      peakInfoEl.className = 's8-peakinfo unimodal';
+    }
+  }
+
+  function drawMacro(T){
+    const w = macroCv.width, h = macroCv.height;
+    Mctx.clearRect(0,0,w,h);
+    const margin = {l:30,r:10,t:10,b:22};
+    const pw = w-margin.l-margin.r, ph = h-margin.t-margin.b;
+
+    function X(TT){ return margin.l + ((TT+50)/100)*pw; }
+    function Y(x){ return margin.t + ph - x*ph; }
+
+    Mctx.strokeStyle='#3a4360'; Mctx.lineWidth=1;
+    Mctx.beginPath(); Mctx.moveTo(margin.l,margin.t); Mctx.lineTo(margin.l,margin.t+ph); Mctx.lineTo(margin.l+pw,margin.t+ph); Mctx.stroke();
+    Mctx.fillStyle='#9aa5c0'; Mctx.font='10px Times New Roman'; Mctx.textAlign='center';
+    Mctx.fillText('T (\u00b0C)', margin.l+pw/2, h-4);
+
+    // referansekurve
+    Mctx.strokeStyle='#5aa9ff'; Mctx.lineWidth=2.2;
+    Mctx.beginPath();
+    const steps=150;
+    for(let i=0;i<=steps;i++){
+      const TT = -50+(100*i)/steps;
+      const x = xAvg(TT);
+      const px=X(TT), py=Y(x);
+      if(i===0) Mctx.moveTo(px,py); else Mctx.lineTo(px,py);
+    }
+    Mctx.stroke();
+
+    // markør ved nåværende T
+    const xnow = xAvg(T);
+    Mctx.beginPath();
+    Mctx.arc(X(T), Y(xnow), 4, 0, 2*Math.PI);
+    Mctx.fillStyle = '#ffb15a';
+    Mctx.fill();
+    Mctx.strokeStyle='#2a3652'; Mctx.setLineDash([3,3]);
+    Mctx.beginPath(); Mctx.moveTo(X(T),margin.t); Mctx.lineTo(X(T),margin.t+ph); Mctx.stroke();
+    Mctx.setLineDash([]);
+  }
+
+  function render(){
+    drawMicro(Tcur);
+    drawMacro(Tcur);
+    TvalEl.textContent = Tcur.toFixed(0);
+    xavgEl.textContent = xAvg(Tcur).toFixed(2);
+    Tslider.value = Tcur;
+  }
+
+  function loop(ts){
+    if(playing){
+      if(lastTs===null) lastTs=ts;
+      const dt = ts-lastTs;
+      lastTs = ts;
+      elapsed += dt*speedMult;
+      const frac = Math.min(1, elapsed/sweepDuration);
+      Tcur = -50 + frac*100;
+      if(frac>=1){
+        playing=false;
+        runBtn.textContent='Ferdig (trykk Reset)';
+        runBtn.disabled=true;
+      }
+    } else {
+      lastTs = null;
+    }
+    render();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  mode1Btn.addEventListener('click', function(){
+    mode='first'; mode1Btn.classList.add('s8-active'); mode2Btn.classList.remove('s8-active');
+    render();
+  });
+  mode2Btn.addEventListener('click', function(){
+    mode='second'; mode2Btn.classList.add('s8-active'); mode1Btn.classList.remove('s8-active');
+    render();
+  });
+  Tslider.addEventListener('input', function(){
+    if(playing) return;
+    Tcur = parseFloat(Tslider.value);
+    render();
+  });
+  runBtn.addEventListener('click', function(){
+    playing = !playing;
+    runBtn.textContent = playing ? 'Pause' : 'Fortsett sveip';
+  });
+  resetBtn.addEventListener('click', function(){
+    playing=false; lastTs=null; elapsed=0;
+    Tcur=-50;
+    runBtn.disabled=false;
+    runBtn.textContent='Start sveip';
+    render();
+  });
+  speedBtn.addEventListener('click', function(){
+    speedMult = speedMult===1?2:(speedMult===2?0.5:1);
+    speedBtn.textContent='Fart: '+speedMult+'x';
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>
