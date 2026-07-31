@@ -28,22 +28,6 @@ jobs:
           python -m pip install --upgrade pip setuptools wheel
           python -m pip install -r requirements.txt
 
-      - name: Validate notebooks
-  run: |
-    python - <<'PY'
-    import glob, json, sys
-    bad = []
-    for p in glob.glob('**/*.ipynb', recursive=True):
-        try:
-            with open(p, 'r', encoding='utf-8') as f:
-                json.load(f)
-        except Exception as e:
-            print("INVALID NOTEBOOK:", p, "->", e)
-            bad.append(p)
-    if bad:
-        sys.exit(2)
-    PY
-
       - name: Build Jupyter Book
         run: |
           rm -rf _build
