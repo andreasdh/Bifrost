@@ -15,9 +15,8 @@
     "\n",
     "$$N = N_A + N_B$$\n",
     "\n",
-    "Antall tilgjengelige mikrotilstander vil da kunne beskrives som: \n",
-    "\n",
-$$\\Omega = \\frac{N!}{N_A!N_B!}$$\n
+    "Antall tilgjengelige mikrotilstander vil da kunn"$$\\Omega = \\frac{N!}{N_A!N_B!}$$\n",
+Omega = \\frac{N!}{N_A!N_B!}$$\n
     "\n",
     "som beskrevet [her](https://andreasdh.github.io/Bifrost/docs/mattehjelp.html#kombinasjoner-og-permutasjoner). Utforsk gittermodellen og mikrotilstandene ved hjelp av animasjonen under!"
    ]
