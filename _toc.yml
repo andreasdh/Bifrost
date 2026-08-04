@@ -23,6 +23,8 @@ parts:
   - file: docs/Intermolekylære_krefter
   - file: docs/Lattice_modeller_løs_bland
 - caption: Likevekter og kinetikk
+  chapters:
+  -file: docs/likevekter
 - caption: Ukesoppgaver
   chapters:
   - file: docs/ukesoppgaver
