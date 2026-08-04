@@ -1,33 +1,42 @@
 format: jb-book
 root: intro
-chapters:
+
 parts:
-- caption: Introduksjon 
-  chapters: 
+- caption: Introduksjon
+  chapters:
   - file: docs/intro
+
 - caption: Matematisk verktøykasse
-  chapters: 
+  chapters:
   - file: docs/mattehjelp
+
 - caption: Statistisk termodynamikk
-  chapters: 
+  chapters:
   - file: docs/statmek
   - file: docs/entropi
   - file: docs/gasses
-- caption: Markoskopisk termodynamikk
-  chapters: 
+
+- caption: Makroskopisk termodynamikk
+  chapters:
   - file: docs/Makroskopisk_termodynamikk_1
   - file: docs/Makroskopisk_termodynamikk_II
+
 - caption: Faser og blandinger
-  chapters: 
+  chapters:
   - file: docs/faser
   - file: docs/Intermolekylære_krefter
   - file: docs/Lattice_modeller_løs_bland
+
 - caption: Likevekter og kinetikk
   chapters:
-  -file: docs/likevekter
+  - file: docs/likevekter
+  - file: docs/kinetikk
+
 - caption: Ukesoppgaver
   chapters:
   - file: docs/ukesoppgaver
   - file: docs/løsningsforslag
+
 - caption: Arbeidsflyt (slettes)
-- file: docs/howto
+  chapters:
+  - file: docs/howto
