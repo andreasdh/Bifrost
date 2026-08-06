@@ -57,14 +57,15 @@ jobs:
           }
 
           for cell in notebook["cells"]:
-              src = embeds.get(cell.get("id"))
+              cell_id = cell.get("id")
+              src = embeds.get(cell_id)
               if src is None:
                   continue
               cell.clear()
               cell.update(
                   {
                       "cell_type": "markdown",
-                      "id": next(key for key, value in embeds.items() if value == src),
+                      "id": cell_id,
                       "metadata": {},
                       "source": [
                           f'<iframe src="{src}" width="100%" height="720" '
@@ -81,6 +82,12 @@ jobs:
 
       - name: Build Jupyter Book
         run: jupyter-book build .
+
+      - name: Verify week 5 simulations
+        run: |
+          page="_build/html/docs/ukesoppgaver/uke_05.html"
+          grep -q "Simulering_varmekapasitet_entalpi_CV_Cp.html" "$page"
+          grep -q "Simulering_fri_energi_spontanitet.html" "$page"
 
       - name: Deploy to gh-pages
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
