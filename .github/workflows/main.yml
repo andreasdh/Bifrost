@@ -6,6 +6,13 @@ on:
   push:
     branches:
       - main
+  pull_request:
+    branches:
+      - main
+
+concurrency:
+  group: bifrost-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 permissions:
   contents: write
@@ -13,6 +20,7 @@ permissions:
 jobs:
   build:
     runs-on: ubuntu-22.04
+    timeout-minutes: 20
 
     steps:
       - name: Checkout
@@ -22,6 +30,16 @@ jobs:
         uses: actions/setup-python@v6
         with:
           python-version: "3.11"
+          cache: pip
+          cache-dependency-path: requirements.txt
+
+      - name: Restore Jupyter execution cache
+        uses: actions/cache@v4
+        with:
+          path: _build/.jupyter_cache
+          key: jupyter-cache-${{ runner.os }}-${{ hashFiles('requirements.txt', '_config.yml', '_toc.yml', '**/*.ipynb') }}
+          restore-keys: |
+            jupyter-cache-${{ runner.os }}-
 
       - name: Install
         run: |
@@ -29,11 +47,10 @@ jobs:
           python -m pip install -r requirements.txt
 
       - name: Build Jupyter Book
-        run: |
-          rm -rf _build
-          jupyter-book build .
+        run: jupyter-book build .
 
       - name: Deploy to gh-pages
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
