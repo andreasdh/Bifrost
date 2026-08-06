@@ -3,9 +3,7 @@ author: Ditt navn
 logo: logo.png
 
 execute:
-  execute_notebooks: cache
-  timeout: 120
-  allow_errors: false
+  execute_notebooks: auto
 
 bibtex_bibfiles:
   - references.bib
