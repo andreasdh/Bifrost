@@ -1,0 +1,68 @@
+name: Fix kinetikk conflict
+
+on:
+  push:
+    branches:
+      - agent/fix-myst-notebook-warnings
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/fix-myst-notebook-warnings
+
+      - name: Resolve accidental conflict markers
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          path = Path('docs/kinetikk.ipynb')
+          text = path.read_text(encoding='utf-8')
+          conflict = '''<<<<<<< Updated upstream
+              "I denne kule modulen kan du lese om:\\n",
+          =======
+              ":::{admonition} I denne modulen kan du lese om:\\n",
+              ":class: note\\n",
+          >>>>>>> Stashed changes
+          '''
+          replacement = '''    ":::{admonition} I denne modulen kan du lese om:\\n",
+              ":class: note\\n",
+          '''
+          # Match without relying on indentation of the conflict marker lines.
+          old = '''<<<<<<< Updated upstream
+              "I denne kule modulen kan du lese om:\\n",
+          =======
+              ":::{admonition} I denne modulen kan du lese om:\\n",
+              ":class: note\\n",
+          >>>>>>> Stashed changes
+          '''.replace('          ', '')
+          new = '''    ":::{admonition} I denne modulen kan du lese om:\\n",
+              ":class: note\\n",
+          '''.replace('          ', '')
+          if old not in text:
+              # Use the exact raw block seen in the notebook.
+              old = '<<<<<<< Updated upstream\n    "I denne kule modulen kan du lese om:\\n",\n=======\n    ":::{admonition} I denne modulen kan du lese om:\\n",\n    ":class: note\\n",\n>>>>>>> Stashed changes\n'
+              new = '    ":::{admonition} I denne modulen kan du lese om:\\n",\n    ":class: note\\n",\n'
+          if old not in text:
+              raise RuntimeError('Expected kinetikk merge-conflict block not found')
+          text = text.replace(old, new, 1)
+          json.loads(text)
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fix and remove one-off workflow
+        shell: bash
+        run: |
+          rm .github/workflows/fix-kinetikk-conflict.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/kinetikk.ipynb .github/workflows/fix-kinetikk-conflict.yml
+          git commit -m "Resolve kinetikk notebook conflict markers"
+          git push
