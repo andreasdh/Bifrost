@@ -1,0 +1,67 @@
+name: Fix MyST notebook warnings
+
+on:
+  push:
+    branches:
+      - agent/fix-myst-notebook-warnings
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: agent/fix-myst-notebook-warnings
+
+      - name: Apply targeted notebook fixes
+        shell: bash
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              Path('docs/Likevekter_oppgaver.ipynb'): [
+                  ('## Uke X - Likevekt', '# Uke X - Likevekt'),
+                  ('Simuleringer/graf_likevekt.png', 'bilder/graf_likevekt.png'),
+              ],
+              Path('docs/Termokjemi_oppgaver.ipynb'): [
+                  ('## Termokjemi - oppgaver', '# Termokjemi - oppgaver'),
+              ],
+              Path('docs/Termokjemi_oppgaver_løsningsforslag.ipynb'): [
+                  ('## Termokjemi\\n', '# Termokjemi\\n'),
+                  ('## Regneoppgaver\\n', '# Regneoppgaver\\n'),
+              ],
+              Path('docs/faser.ipynb'): [
+                  (':class: \\n', ':class: important\\n'),
+              ],
+          }
+
+          for path, pairs in replacements.items():
+              text = path.read_text(encoding='utf-8')
+              original = text
+              for old, new in pairs:
+                  count = text.count(old)
+                  if count != 1:
+                      raise RuntimeError(f'{path}: expected exactly one occurrence of {old!r}, found {count}')
+                  text = text.replace(old, new, 1)
+              if text == original:
+                  raise RuntimeError(f'{path}: no changes made')
+              path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Commit fixes and remove one-off workflow
+        shell: bash
+        run: |
+          rm .github/workflows/fix-myst-notebook-warnings.yml
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/Likevekter_oppgaver.ipynb \
+                  docs/Termokjemi_oppgaver.ipynb \
+                  docs/Termokjemi_oppgaver_løsningsforslag.ipynb \
+                  docs/faser.ipynb \
+                  .github/workflows/fix-myst-notebook-warnings.yml
+          git commit -m "Fix MyST notebook warnings"
+          git push
