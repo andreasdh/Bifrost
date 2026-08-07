@@ -27,6 +27,7 @@ parts:
   chapters:
   - file: docs/Makroskopisk_termodynamikk_1
   - file: docs/Makroskopisk_termodynamikk_II
+  - file: docs/varmekapasitet
 
 - caption: Faser og blandinger
   chapters:
