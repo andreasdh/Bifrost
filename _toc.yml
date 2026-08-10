@@ -6,17 +6,6 @@ parts:
   chapters:
   - file: docs/intro
 
-- caption: Matematisk verktøykasse
-  chapters:
-  - file: docs/mattehjelp
-    sections:
-    - file: docs/matematikk/formler_og_enheter
-    - file: docs/matematikk/kombinatorikk
-    - file: docs/matematikk/sannsynlighet
-    - file: docs/matematikk/kalkulus
-    - file: docs/matematikk/flervariabel_kalkulus
-    - file: docs/matematikk/statistikk
-
 - caption: Statistisk termodynamikk
   chapters:
   - file: docs/statmek
@@ -39,6 +28,17 @@ parts:
   chapters:
   - file: docs/likevekter
   - file: docs/kinetikk
+
+- caption: Appendiks: Matematisk verktøykasse
+  chapters:
+  - file: docs/mattehjelp
+    sections:
+    - file: docs/matematikk/formler_og_enheter
+    - file: docs/matematikk/kombinatorikk
+    - file: docs/matematikk/sannsynlighet
+    - file: docs/matematikk/kalkulus
+    - file: docs/matematikk/flervariabel_kalkulus
+    - file: docs/matematikk/statistikk
 
 - caption: Oppgaver og løsningsforslag
   chapters:
