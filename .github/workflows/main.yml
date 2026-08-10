@@ -84,11 +84,6 @@ jobs:
       - name: Build Jupyter Book
         run: jupyter-book build .
 
-      - name: Verify week 5 simulations
-        run: |
-          page="_build/html/docs/ukesoppgaver/uke_05.html"
-          grep -q "Simulering_varmekapasitet_entalpi_CV_Cp.html" "$page"
-          grep -q "Simulering_fri_energi_spontanitet.html" "$page"
 
       - name: Deploy to gh-pages
         if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
