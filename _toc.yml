@@ -29,7 +29,7 @@ parts:
   - file: docs/likevekter
   - file: docs/kinetikk
 
-- caption: Appendiks: Matematisk verktøykasse
+- caption: Appendiks - Matematisk verktøykasse
   chapters:
   - file: docs/mattehjelp
     sections:
