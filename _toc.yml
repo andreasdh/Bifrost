@@ -8,8 +8,8 @@ parts:
 
 - caption: Statistisk termodynamikk
   chapters:
-  - file: docs/entropi_boltzmann
-  - file: docs/partisjonsfunksjoner
+  - file: docs/entropi_og_boltzmann
+  - file: docs/partisjonsfunksjonen
   - file: docs/gasses
 
 - caption: Makroskopisk termodynamikk
