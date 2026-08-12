@@ -6,4 +6,40 @@ I norrøn mytologi står guden Heimdall og vokter Bifrost, broa mellom gudenes r
 
 Vi skal bruke fysikkens lover, matematikkens presisjon og kjemiens nysgjerrighet som kart og kompass. Vi spør ikke bare hva som skjer, men hvorfor — med hvilken kraft, i hvilken retning, og hvor raskt. Underveis vil du oppdage at de største spørsmålene ofte gjemmer seg i de minste detaljene. Velkommen til fysikalsk kjemi.
 
+Boksene på denne nettsiden brukes som følgende:
+
+:::{admonition} Innhold / Hint videre / Til ettertanke
+:class: note
+...
+:::
+
+:::{admonition} Kjerneidé / Lov / Definisjon
+:class: important
+...
+:::
+
+:::{admonition} OBS / Husk
+:class: error
+...
+:::
+
+:::{admonition} Underveisoppgave
+:class: tip
+...
+:::
+
+:::{admonition} Løsningsforslag
+:class: tip, dropdown
+...
+:::
+
+:::{card} 
+**Eksempel**
+^^^
+...
+:::
+
+Vi anbefaler at du gjør underveisoppgavene etter at du har lest - på denne måten tester du om du har forstått det du har lest før du går videre. Fysikalsk kjemi bygger stein på stein, så det er fort gjort å falle av hvis fundamentet ikke er skikkelig på plass.
+
 ![Hemidall](docs/bilder/heimdall.png)
+

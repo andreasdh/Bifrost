@@ -4,7 +4,7 @@ root: intro
 parts:
 - caption: Introduksjon
   chapters:
-  - file: docs/intro
+  - file: docs/introduksjon
 
 - caption: Statistisk termodynamikk
   chapters:
@@ -29,8 +29,9 @@ parts:
   - file: docs/likevekter
   - file: docs/kinetikk
 
-- caption: Appendiks - Matematisk verktøykasse
+- caption: Appendiks
   chapters:
+  - file: docs/grunnleggende_begreper
   - file: docs/mattehjelp
     sections:
     - file: docs/matematikk/formler_og_enheter
@@ -68,7 +69,3 @@ parts:
     - file: docs/losningsforslag/uke_09
     - file: docs/losningsforslag/uke_10
     - file: docs/losningsforslag/uke_11
-
-- caption: Arbeidsflyt (slettes)
-  chapters:
-  - file: docs/howto
