@@ -3,702 +3,374 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Entropi — Gass i to kamre</title>
+<title>Gass i to kamre</title>
+</head>
+<body style="margin:0">
+
+<!-- ══ widget start ══ alt mellom disse merkene er selvstendig ══════════ -->
+<div id="gassim">
+
+  <div class="gs-bar">
+    <span class="gs-n">N =</span>
+    <div class="gs-seg">
+      <button type="button" data-n="4" aria-pressed="false">4</button>
+      <button type="button" data-n="20" class="on" aria-pressed="true">20</button>
+      <button type="button" data-n="100" aria-pressed="false">100</button>
+      <button type="button" data-n="200" aria-pressed="false">200</button>
+    </div>
+    <span class="gs-n">Start i</span>
+    <div class="gs-seg gs-side">
+      <button type="button" data-s="A" class="on" aria-pressed="true">A</button>
+      <button type="button" data-s="B" aria-pressed="false">B</button>
+    </div>
+    <button type="button" id="gs-reset" class="gs-ghost">Start på nytt</button>
+    <button type="button" id="gs-main" class="gs-primary">Åpne ventilen</button>
+  </div>
+
+  <canvas id="gs-box"></canvas>
+
+  <div class="gs-data">
+    <span>&Omega;(n<sub>A</sub> = <b id="gs-na">20</b>) = <b id="gs-om">1</b></span>
+    <span>&Omega;<sub>maks</sub> = <b id="gs-omax">1</b></span>
+  </div>
+
+  <canvas id="gs-hist"></canvas>
+
+  <div class="gs-foot">
+    <span class="gs-key"><i class="sw-bar"></i>simulert<i class="sw-line"></i>teori</span>
+    <span class="gs-x">n<sub>A</sub></span>
+    <span></span>
+  </div>
+
+</div>
+
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;1,300&family=Space+Mono:wght@400;700&display=swap');
-
-:root {
-  --bg:    #0a0a0f;
-  --surf:  #0f1118;
-  --border:rgba(255,255,255,0.08);
-  --gold:  #f5c842;
-  --hot:   #f07050;
-  --cold:  #50b8f0;
-  --green: #72d48a;
-  --text:  #e8e0d0;
-  --dim:   rgba(232,224,208,0.36);
-  --serif: 'Spectral', serif;
-  --mono:  'Space Mono', monospace;
+#gassim{
+  --ink:#1f2933; --muted:#6b7480; --line:#cdd5dd;
+  --acc:#2c6e9b; --acc2:#c07423;
+  --tintA:rgba(44,110,155,0.055); --tintB:rgba(44,110,155,0.02);
+  --chip:rgba(44,110,155,0.09);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); max-width:760px; margin:0 auto; padding:2px 0 4px;
+  -webkit-font-smoothing:antialiased;
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
-body{background:var(--bg);color:var(--text);font-family:var(--mono);min-height:100vh;}
+#gassim canvas{display:block;width:100%;}
 
-header{text-align:center;padding:1.4rem 1rem 0.9rem;border-bottom:1px solid var(--border);}
-header h1{font-family:var(--serif);font-weight:300;font-size:clamp(1.4rem,4vw,2.4rem);color:var(--gold);letter-spacing:0.04em;}
-header p{font-size:0.62rem;color:var(--dim);letter-spacing:0.17em;text-transform:uppercase;margin-top:0.2rem;}
-
-.top-area{
-  display:grid;grid-template-columns:460px 1fr;gap:1.2rem;
-  max-width:1280px;margin:0 auto;padding:1.2rem 1.2rem 0;align-items:start;
+#gassim .gs-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+#gassim .gs-n{font-size:13px;color:var(--muted);letter-spacing:0.03em;}
+#gassim .gs-seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;}
+#gassim .gs-seg button{
+  font:inherit;font-size:13px;padding:5px 14px;border:0;background:none;color:var(--muted);
+  cursor:pointer;border-right:1px solid var(--line);transition:background .12s,color .12s;
 }
-.viz-section{display:flex;flex-direction:column;gap:0.65rem;}
-
-.chamber-labels{display:flex;width:460px;justify-content:space-around;}
-.chamber-lbl{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:0.2rem 0.5rem;border-radius:3px;}
-.chamber-lbl.A{color:var(--gold);border:1px solid rgba(245,200,66,0.25);background:rgba(245,200,66,0.05);}
-.chamber-lbl.B{color:var(--cold);border:1px solid rgba(80,184,240,0.25);background:rgba(80,184,240,0.05);}
-
-#boxCanvas{background:#07070d;border:1px solid var(--border);border-radius:4px;display:block;}
-
-.count-bar-row{display:grid;grid-template-columns:1fr 40px 1fr;width:460px;gap:0;}
-.count-side{display:flex;flex-direction:column;align-items:center;gap:0.2rem;padding:0.5rem 0.3rem;background:var(--surf);border:1px solid var(--border);border-radius:4px;}
-.cs-label{font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;}
-.cs-label.A{color:var(--gold);}
-.cs-label.B{color:var(--cold);}
-.cs-count{font-size:1.4rem;font-weight:700;line-height:1;}
-.cs-sub{font-size:0.5rem;color:var(--dim);}
-.bar-h{width:100%;height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;margin-top:0.15rem;}
-.bar-h-fill{height:100%;border-radius:4px;transition:width 0.25s ease;}
-.count-mid{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0.2rem;padding:0.3rem 0;}
-.valve-icon{font-size:1.3rem;line-height:1;transition:all 0.25s;}
-
-.step-row{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
-.step-row span{color:var(--gold);}
-
-.hist-section{display:flex;flex-direction:column;gap:0.7rem;}
-.hist-title-row{display:flex;justify-content:space-between;align-items:baseline;padding:0 0.2rem;}
-.hist-main-title{font-family:var(--serif);font-size:1.05rem;color:var(--text);font-weight:400;}
-.hist-subtitle{font-size:0.58rem;color:var(--dim);letter-spacing:0.1em;}
-.hist-chart-wrap{background:var(--surf);border:2px solid rgba(255,255,255,0.15);border-radius:4px;padding:0.5rem 0.5rem 0.3rem;position:relative;}
-#histCanvas{width:100%;display:block;}
-.hist-axis-label{text-align:center;font-size:0.6rem;color:var(--dim);letter-spacing:0.12em;margin-top:0.3rem;font-family:var(--serif);font-style:italic;}
-.hist-legend{display:flex;gap:1.2rem;justify-content:center;font-size:0.55rem;color:var(--dim);margin-top:0.2rem;}
-.hist-legend span{display:inline-flex;align-items:center;gap:0.35rem;}
-.swatch{width:14px;height:8px;border-radius:2px;display:inline-block;}
-.swatch.emp{background:rgba(245,200,66,0.75);}
-.swatch.theo{background:transparent;border:1.5px solid var(--green);height:0;border-radius:0;width:16px;}
-
-.bottom-area{max-width:1280px;margin:0.8rem auto 0;padding:0 1.2rem;display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;align-items:start;}
-.card{background:var(--surf);border:1px solid var(--border);border-radius:5px;padding:0.8rem 1rem;}
-.card-label{font-size:0.54rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--dim);margin-bottom:0.55rem;}
-
-button{
-  font-family:var(--mono);font-size:0.58rem;letter-spacing:0.1em;text-transform:uppercase;
-  padding:0.45rem 0.85rem;border-radius:3px;border:1px solid var(--border);
-  background:rgba(255,255,255,0.03);color:var(--text);cursor:pointer;transition:all 0.13s;
+#gassim .gs-seg button:last-child{border-right:0;}
+#gassim .gs-seg button:hover{background:var(--chip);color:var(--ink);}
+#gassim .gs-seg button.on{background:var(--acc);color:#fff;}
+#gassim .gs-ghost{
+  font:inherit;font-size:13px;padding:6px 14px;margin-left:auto;cursor:pointer;
+  border:1px solid var(--line);border-radius:7px;background:none;color:var(--muted);
+  transition:color .12s,border-color .12s;
 }
-button:hover{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.08);}
-button.primary{border-color:var(--gold);color:var(--gold);background:rgba(245,200,66,0.1);}
-button.valve-open{border-color:var(--green);color:var(--green);background:rgba(114,212,138,0.1);}
-button.danger{border-color:var(--hot);color:var(--hot);}
-button.active-preset{border-color:var(--green);color:var(--green);background:rgba(114,212,138,0.08);}
-.btn-row{display:flex;gap:0.4rem;flex-wrap:wrap;margin-bottom:0.5rem;}
-
-.sl-row{display:flex;align-items:center;gap:0.5rem;font-size:0.57rem;color:var(--dim);margin-bottom:0.35rem;}
-input[type=range]{-webkit-appearance:none;flex:1;height:3px;background:rgba(255,255,255,0.12);border-radius:2px;outline:none;}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:11px;height:11px;border-radius:50%;background:var(--gold);cursor:pointer;}
-.sv{color:var(--gold);min-width:3.5rem;text-align:right;font-size:0.57rem;}
-
-.preset-row{display:grid;grid-template-columns:repeat(5,1fr);gap:0.35rem;}
-.preset-btn{font-size:0.55rem;padding:0.45rem 0.3rem;text-align:center;}
-
-.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:0.5rem 0.8rem;}
-.st-lbl{font-size:0.52rem;color:var(--dim);margin-bottom:0.1rem;}
-.st-val{font-size:1rem;font-weight:700;color:var(--gold);}
-.st-val.rare{color:var(--hot);}
-.st-val.typ{color:var(--cold);}
-
-.omega-text{font-size:0.65rem;line-height:1.9;}
-
-.insight{
-  font-family:var(--serif);font-style:italic;font-size:0.82rem;line-height:1.6;color:var(--dim);
-  border-left:2px solid var(--gold);padding-left:0.8rem;margin-top:0.8rem;
+#gassim .gs-ghost:hover{color:var(--ink);border-color:var(--muted);}
+#gassim .gs-primary{
+  font:inherit;font-size:13px;padding:6px 16px;cursor:pointer;
+  border:1px solid var(--acc);border-radius:7px;background:var(--acc);color:#fff;
+  transition:background .12s,border-color .12s,color .12s;
 }
-.insight strong{color:var(--gold);font-style:normal;}
+#gassim .gs-primary:hover{background:#255c82;border-color:#255c82;}
+#gassim button:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;}
 
-.explainers{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;max-width:1280px;margin:1rem auto 2rem;padding:1rem 1.2rem 0;border-top:1px solid var(--border);}
-.exp-title{font-size:0.53rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:0.3rem;}
-.exp-body{font-family:var(--serif);font-size:0.83rem;line-height:1.6;color:var(--dim);}
+#gassim .gs-data{
+  display:flex;gap:22px;flex-wrap:wrap;margin:7px 2px 12px;
+  font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+}
+#gassim .gs-data b{font-weight:600;color:var(--ink);}
 
-#tt{position:fixed;background:rgba(10,10,15,0.96);border:1px solid var(--gold);border-radius:4px;padding:0.4rem 0.7rem;font-size:0.57rem;pointer-events:none;opacity:0;transition:opacity 0.1s;z-index:999;line-height:1.7;}
+#gassim .gs-foot{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  margin-top:1px;font-size:11.5px;color:var(--muted);
+}
+#gassim .gs-key{display:flex;align-items:center;gap:6px;}
+#gassim .gs-key i{display:inline-block;vertical-align:middle;}
+#gassim .sw-bar{width:11px;height:9px;border-radius:1px;background:var(--acc);opacity:.5;}
+#gassim .sw-line{width:15px;border-top:2px solid var(--acc2);margin-left:8px;}
+#gassim .gs-x{font-style:italic;}
 
-@media(max-width:1000px){
-  .top-area,.bottom-area,.explainers{grid-template-columns:1fr;}
-  #boxCanvas,.chamber-labels,.count-bar-row{width:100%;max-width:460px;}
+@media (prefers-color-scheme: dark){
+  #gassim{
+    --ink:#e4e7eb; --muted:#a9b3bd; --line:rgba(255,255,255,0.2);
+    --acc:#7ec4e6; --acc2:#e2a44f;
+    --tintA:rgba(126,196,230,0.07); --tintB:rgba(126,196,230,0.025);
+    --chip:rgba(126,196,230,0.12);
+  }
+  #gassim .gs-seg button.on,#gassim .gs-primary{color:#12181d;}
+  #gassim .gs-primary:hover{background:#9ad3ef;border-color:#9ad3ef;}
+}
+@media (max-width:420px){
+  #gassim .gs-ghost{margin-left:0;}
 }
 </style>
-</head>
-<body>
-
-<header>
-  <h1>Gass i to kamre</h1>
-  <p>En simulering av fri ekspansjon</p>
-</header>
-
-<div class="top-area">
-
-  <!-- LEFT: molecule box -->
-  <div class="viz-section">
-    <div class="chamber-labels">
-      <span class="chamber-lbl A" id="lblA">Kammer A</span>
-      <span class="chamber-lbl B" id="lblB">Kammer B</span>
-    </div>
-    <canvas id="boxCanvas" width="460" height="300"></canvas>
-
-    <div class="count-bar-row">
-      <div class="count-side">
-        <div class="cs-label A">Kammer A</div>
-        <div class="cs-count" id="countA" style="color:var(--gold)">—</div>
-        <div class="cs-sub" id="fracA">n<sub>A</sub>/N</div>
-        <div class="bar-h"><div class="bar-h-fill" id="barA" style="background:var(--gold)"></div></div>
-      </div>
-      <div class="count-mid">
-        <div class="valve-icon" id="valveIcon">╳</div>
-      </div>
-      <div class="count-side">
-        <div class="cs-label B">Kammer B</div>
-        <div class="cs-count" id="countB" style="color:var(--cold)">—</div>
-        <div class="cs-sub" id="fracB">n<sub>B</sub>/N</div>
-        <div class="bar-h"><div class="bar-h-fill" id="barB" style="background:var(--cold)"></div></div>
-      </div>
-    </div>
-
-    <div class="step-row">
-      Ventil: <span id="valveState">lukket</span> &nbsp;·&nbsp;
-      Samples: <span id="sampleCount">0</span>
-    </div>
-  </div>
-
-  <!-- RIGHT: histogram -->
-  <div class="hist-section">
-    <div class="hist-title-row">
-      <div class="hist-main-title">Sannsynlighetsfordeling — molekyler i kammer A</div>
-      <div class="hist-subtitle" id="histSubtitle"></div>
-    </div>
-    <div class="hist-chart-wrap">
-      <canvas id="histCanvas" height="300"></canvas>
-    </div>
-    <div class="hist-axis-label">Antall molekyler i kammer A (n<sub>A</sub>)</div>
-    <div class="hist-legend">
-      <span><span class="swatch emp"></span> Simulert fordeling</span>
-      <span><span class="swatch theo"></span> Teoretisk: C(N, n<sub>A</sub>) / 2<sup>N</sup></span>
-    </div>
-  </div>
-
-</div>
-
-<!-- BOTTOM CONTROLS -->
-<div class="bottom-area">
-
-  <!-- Col 1: controls -->
-  <div style="display:flex;flex-direction:column;gap:0.8rem;">
-    <div class="card">
-      <div class="card-label">Kontroller</div>
-      <div class="btn-row">
-        <button class="primary" id="btnPlay">▶ Start</button>
-        <button id="btnValve">Åpne ventil</button>
-        <button class="danger" id="btnReset">↺ Nullstill</button>
-        <button id="btnClearHist">Tøm hist.</button>
-      </div>
-      <div class="sl-row">Hastighet<input type="range" id="speedSlider" min="1" max="40" value="18"><span class="sv" id="speedVal">—</span></div>
-      <div class="sl-row">Molekyler N<input type="range" id="nSlider" min="4" max="200" value="16"><span class="sv" id="nVal" style="color:var(--gold)">16</span></div>
-    </div>
-
-    <div class="card">
-      <div class="card-label">Oppskalering — klikk for å se effekten</div>
-      <div class="preset-row">
-        <button class="preset-btn" id="pre_A">N=4</button>
-        <button class="preset-btn" id="pre_B">N=16</button>
-        <button class="preset-btn" id="pre_C">N=50</button>
-        <button class="preset-btn" id="pre_D">N=100</button>
-        <button class="preset-btn" id="pre_E">N=200</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Col 2: stats -->
-  <div style="display:flex;flex-direction:column;gap:0.8rem;">
-    <div class="card">
-      <div class="card-label">Statistikk</div>
-      <div class="stats-grid">
-        <div><div class="st-lbl">⟨n<sub>A</sub>⟩ gjennomsnitt</div><div class="st-val" id="statMean">—</div></div>
-        <div><div class="st-lbl">Std.avvik σ</div><div class="st-val" id="statStd">—</div></div>
-        <div><div class="st-lbl">P(alle tilbake i A)</div><div class="st-val rare" id="statAllA">—</div></div>
-        <div><div class="st-lbl">P(n<sub>A</sub> = N/2 ± 10%)</div><div class="st-val typ" id="statTyp">—</div></div>
-      </div>
-    </div>
-    <div class="card">
-      <div class="card-label">Relativ svingning</div>
-      <div class="omega-text" id="fluctText">—</div>
-    </div>
-  </div>
-
-  <!-- Col 3: omega + insight -->
-  <div style="display:flex;flex-direction:column;gap:0.8rem;">
-    <div class="card">
-      <div class="card-label">Mikrotilstander Ω(n<sub>A</sub>) = C(N, n<sub>A</sub>)</div>
-      <div class="omega-text" id="omegaText">—</div>
-    </div>
-    <div class="insight" id="insightBox">
-      Alle molekylene starter i kammer A med ventilen lukket — Ω = 1, entropien er minimal. Åpne ventilen og se hva som skjer.
-    </div>
-  </div>
-
-</div>
-
-<!-- EXPLAINERS -->
-<div class="explainers">
-  <div>
-    <div class="exp-title">Hvert molekyl er et myntkast</div>
-    <div class="exp-body">Når ventilen er åpen og kamrene er like store, er hvert molekyl like sannsynlig i A som i B — akkurat som kron eller mynt. Makrotilstanden n<sub>A</sub> har derfor Ω = C(N, n<sub>A</sub>) mikrotilstander, samme kombinatorikk som myntene.</div>
-  </div>
-  <div>
-    <div class="exp-title">Hvorfor er det irreversibelt?</div>
-    <div class="exp-body">Gassen fyller begge kamrene fordi den jevne fordelingen har overveldende flest mikrotilstander. Sjansen for at alle molekylene spontant samler seg i A igjen er 1/2<sup>N</sup> — for N=4 skjer det av og til, for N=200 aldri.</div>
-  </div>
-  <div>
-    <div class="exp-title">ΔS = N k<sub>B</sub> ln 2</div>
-    <div class="exp-body">Fra «alt i A» til fylt dobbeltvolum vokser Ω med 2<sup>N</sup>, så ΔS = k<sub>B</sub> ln 2<sup>N</sup> = N k<sub>B</sub> ln 2 = nR ln 2. Dette er nettopp den makroskopiske ekspansjonsentropien ΔS = nR ln(V<sub>2</sub>/V<sub>1</sub>).</div>
-  </div>
-</div>
-
-<div id="tt"></div>
 
 <script>
-// ═══════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════
-let N = 16;
-let molecules = [];
-let valveOpen = false;
-let running = false, animId = null;
-let speedMult = 18;
+(function(){
+"use strict";
+const root = document.getElementById('gassim');
+const bc = root.querySelector('#gs-box'), bx = bc.getContext('2d');
+const hc = root.querySelector('#gs-hist'), hx = hc.getContext('2d');
+const btn = root.querySelector('#gs-main');
+const btnReset = root.querySelector('#gs-reset');
 
-const BW = 460, BH = 300;
-const WALL = BW / 2;          // divider x
-let gapH = 110;               // valve opening height
-const MARGIN = 6;
+// ── parametre ────────────────────────────────────────────────────────
+const LW = 480, LH = 192;   // logisk koordinatsystem for kammerboksen
+const HH = 148;             // histogramhøyde i css-piksler
+const SPEED = 300;          // fysikksteg per sekund
+const EQUIL = 130;          // steg etter ventilåpning før vi teller statistikk
+const WALL = LW/2, GAP = LH*0.66, EDGE = 5;
 
-// sampling
-const SAMPLE_EVERY = 2;
-let frameCount = 0;
-let histBins = [];            // histBins[nA] = count
-let sampleTotal = 0;
+let N = 20, mol = [], open = false, running = false, steps = 0, startB = false;
+let bins = [], samples = 0, scale = 1, visible = true, C = {};
+let prev = 0, acc = 0;
 
-// canvas
-const bc = document.getElementById('boxCanvas');
-const ctx = bc.getContext('2d');
-const hc = document.getElementById('histCanvas');
-const hctx = hc.getContext('2d');
+// ── farger leses fra CSS, så mørk modus følger med ───────────────────
+function readColors(){
+  const s = getComputedStyle(root);
+  const g = k => s.getPropertyValue(k).trim();
+  C = {ink:g('--ink'), muted:g('--muted'), line:g('--line'),
+       acc:g('--acc'), acc2:g('--acc2'), tintA:g('--tintA'), tintB:g('--tintB')};
+}
 
-// ═══════════════════════════════════════════════
-// MATH — ln Gamma (Lanczos) for large binomials
-// ═══════════════════════════════════════════════
+// ── kombinatorikk ────────────────────────────────────────────────────
 function lgamma(x){
-  const g = 7;
-  const c = [0.99999999999980993,676.5203681218851,-1259.1392167224028,
-             771.32342877765313,-176.61502916214059,12.507343278686905,
-             -0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
-  if(x < 0.5) return Math.log(Math.PI/Math.sin(Math.PI*x)) - lgamma(1-x);
-  x -= 1;
-  let a = c[0];
-  const t = x + g + 0.5;
-  for(let i=1;i<g+2;i++) a += c[i]/(x+i);
-  return 0.5*Math.log(2*Math.PI) + (x+0.5)*Math.log(t) - t + Math.log(a);
+  const c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,
+           771.32342877765313,-176.61502916214059,12.507343278686905,
+           -0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+  if(x<0.5) return Math.log(Math.PI/Math.sin(Math.PI*x))-lgamma(1-x);
+  x-=1; let a=c[0]; const t=x+7.5;
+  for(let i=1;i<9;i++) a+=c[i]/(x+i);
+  return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
 }
 function lnBinom(n,k){
   if(k<0||k>n) return -Infinity;
-  return lgamma(n+1) - lgamma(k+1) - lgamma(n-k+1);
+  return lgamma(n+1)-lgamma(k+1)-lgamma(n-k+1);
 }
-function omegaLabel(n,k){
-  const ln = lnBinom(n,k);
+function fmt(ln){
   if(!isFinite(ln)) return '0';
-  const log10 = ln / Math.LN10;
-  if(log10 < 12) return Math.round(Math.exp(ln)).toLocaleString('no');
-  return `~10^${log10.toFixed(1)}`;
-}
-function pow2Label(n){
-  const log10 = n*Math.LN2/Math.LN10;
-  if(log10 < 12) return Math.round(Math.pow(2,n)).toLocaleString('no');
-  return `~10^${log10.toFixed(1)}`;
+  const l10 = ln/Math.LN10;
+  if(l10 < 7) return Math.round(Math.exp(ln)).toLocaleString('nb-NO');
+  const e = Math.floor(l10);
+  return (Math.pow(10,l10-e)).toFixed(1).replace('.',',')+' &middot; 10<sup>'+e+'</sup>';
 }
 
-// ═══════════════════════════════════════════════
-// INIT
-// ═══════════════════════════════════════════════
-function initSim(){
-  molecules = [];
-  valveOpen = false;
-  // all molecules start in chamber A, valve closed
+// ── oppsett ──────────────────────────────────────────────────────────
+function radius(){ return N<=4 ? 7 : N<=20 ? 5.2 : N<=100 ? 3.4 : 2.6; }
+function reset(){
+  const r = radius(), x0 = startB ? WALL+EDGE+r : EDGE+r;
+  mol = [];
   for(let i=0;i<N;i++){
-    const r = molRadius();
-    const speed = 1.9;
-    const ang = Math.random()*Math.PI*2;
-    molecules.push({
-      x: MARGIN + r + Math.random()*(WALL - 2*MARGIN - 2*r),
-      y: MARGIN + r + Math.random()*(BH - 2*MARGIN - 2*r),
-      vx: Math.cos(ang)*speed,
-      vy: Math.sin(ang)*speed,
-      r
-    });
+    const a = Math.random()*Math.PI*2, v = 1.5;
+    mol.push({x: x0+Math.random()*(WALL-2*EDGE-2*r),
+              y: EDGE+r+Math.random()*(LH-2*EDGE-2*r),
+              vx: Math.cos(a)*v, vy: Math.sin(a)*v, r});
   }
-  frameCount = 0;
-  clearHist();
-  updateValveUI();
+  open = false; running = false; steps = 0; acc = 0;
+  bins = new Array(N+1).fill(0); samples = 0;
+  updateBtn();
+  draw(true);
 }
-function molRadius(){
-  if(N <= 20) return 4.5;
-  if(N <= 60) return 3.5;
-  if(N <= 120) return 2.8;
-  return 2.2;
+function updateBtn(){
+  btn.textContent = !open ? 'Åpne ventilen' : (running ? 'Pause' : 'Fortsett');
 }
-function clearHist(){
-  histBins = new Array(N+1).fill(0);
-  sampleTotal = 0;
-}
-function countA(){
-  let s = 0;
-  for(const m of molecules) if(m.x < WALL) s++;
-  return s;
-}
+function nA(){ let s=0; for(const m of mol) if(m.x<WALL) s++; return s; }
 
-// ═══════════════════════════════════════════════
-// PHYSICS
-// ═══════════════════════════════════════════════
-function stepMolecules(dtSteps){
-  for(let s=0;s<dtSteps;s++){
-    for(const m of molecules){
-      let nx = m.x + m.vx;
-      let ny = m.y + m.vy;
-      // outer walls
-      if(nx < MARGIN + m.r){ nx = MARGIN + m.r; m.vx = Math.abs(m.vx); }
-      if(nx > BW - MARGIN - m.r){ nx = BW - MARGIN - m.r; m.vx = -Math.abs(m.vx); }
-      if(ny < MARGIN + m.r){ ny = MARGIN + m.r; m.vy = Math.abs(m.vy); }
-      if(ny > BH - MARGIN - m.r){ ny = BH - MARGIN - m.r; m.vy = -Math.abs(m.vy); }
-      // central divider
-      const inGap = Math.abs(ny - BH/2) < gapH/2;
-      const blocked = !valveOpen || !inGap;
-      if(blocked){
-        if(m.x <= WALL && nx > WALL - m.r){ nx = WALL - m.r; m.vx = -Math.abs(m.vx); }
-        else if(m.x >= WALL && nx < WALL + m.r){ nx = WALL + m.r; m.vx = Math.abs(m.vx); }
+// ── fysikk ───────────────────────────────────────────────────────────
+function step(sub){
+  for(let s=0;s<sub;s++){
+    for(const m of mol){
+      let x = m.x+m.vx, y = m.y+m.vy, hit = false;
+      if(x < EDGE+m.r){ x = EDGE+m.r; m.vx = Math.abs(m.vx); hit = true; }
+      if(x > LW-EDGE-m.r){ x = LW-EDGE-m.r; m.vx = -Math.abs(m.vx); hit = true; }
+      if(y < EDGE+m.r){ y = EDGE+m.r; m.vy = Math.abs(m.vy); hit = true; }
+      if(y > LH-EDGE-m.r){ y = LH-EDGE-m.r; m.vy = -Math.abs(m.vy); hit = true; }
+      // veggen har en temperatur: retningen forstyrres litt ved hvert støt.
+      // Uten dette blir banene periodiske, og n_A treffer ikke binomialfordelingen.
+      if(hit){
+        const a = (Math.random()-0.5)*0.7, c = Math.cos(a), k = Math.sin(a);
+        const vx = m.vx*c - m.vy*k;
+        m.vy = m.vx*k + m.vy*c; m.vx = vx;
       }
-      m.x = nx; m.y = ny;
+      if(!open || Math.abs(y-LH/2) > GAP/2){
+        if(m.x <= WALL && x > WALL-m.r){ x = WALL-m.r; m.vx = -Math.abs(m.vx); }
+        else if(m.x >= WALL && x < WALL+m.r){ x = WALL+m.r; m.vx = Math.abs(m.vx); }
+      }
+      m.x = x; m.y = y;
     }
-    frameCount++;
-    if(frameCount % SAMPLE_EVERY === 0){
-      const nA = countA();
-      histBins[nA] = (histBins[nA]||0) + 1;
-      sampleTotal++;
+    if(open){
+      steps++;
+      if(steps > EQUIL && steps % 2 === 0){ bins[nA()]++; samples++; }
     }
   }
 }
 
-// ═══════════════════════════════════════════════
-// DRAW BOX
-// ═══════════════════════════════════════════════
-function drawBox(){
-  ctx.clearRect(0,0,BW,BH);
-  // chamber tints
-  ctx.fillStyle = 'rgba(245,200,66,0.028)'; ctx.fillRect(0,0,WALL,BH);
-  ctx.fillStyle = 'rgba(80,184,240,0.028)'; ctx.fillRect(WALL,0,BW-WALL,BH);
-  // outer frame
-  ctx.strokeStyle = 'rgba(255,255,255,0.10)'; ctx.lineWidth = 1;
-  ctx.strokeRect(MARGIN/2,MARGIN/2,BW-MARGIN,BH-MARGIN);
-
-  // divider
-  ctx.strokeStyle = 'rgba(255,255,255,0.4)';
-  ctx.lineWidth = 2;
-  if(valveOpen){
-    // two segments, leaving the gap open
-    ctx.beginPath();
-    ctx.moveTo(WALL, MARGIN/2); ctx.lineTo(WALL, BH/2 - gapH/2);
-    ctx.moveTo(WALL, BH/2 + gapH/2); ctx.lineTo(WALL, BH-MARGIN/2);
-    ctx.stroke();
-    // gap markers
-    ctx.strokeStyle = 'rgba(114,212,138,0.5)';
-    ctx.setLineDash([3,4]); ctx.lineWidth = 1;
-    ctx.beginPath();
-    ctx.moveTo(WALL, BH/2 - gapH/2); ctx.lineTo(WALL, BH/2 + gapH/2);
-    ctx.stroke(); ctx.setLineDash([]);
-  } else {
-    ctx.beginPath();
-    ctx.moveTo(WALL, MARGIN/2); ctx.lineTo(WALL, BH-MARGIN/2);
-    ctx.stroke();
-  }
-
-  // molecules
-  for(const m of molecules){
-    const inA = m.x < WALL;
-    const hue = inA ? 46 : 202;      // gold-ish vs blue-ish
-    const g = ctx.createRadialGradient(m.x,m.y,0,m.x,m.y,m.r*2.4);
-    g.addColorStop(0, `hsla(${hue},90%,78%,0.95)`);
-    g.addColorStop(1, `hsla(${hue},90%,60%,0)`);
-    ctx.fillStyle = g;
-    ctx.beginPath(); ctx.arc(m.x,m.y,m.r*2.4,0,Math.PI*2); ctx.fill();
-    ctx.fillStyle = inA ? '#ffe9a8' : '#b8e2ff';
-    ctx.beginPath(); ctx.arc(m.x,m.y,m.r*0.75,0,Math.PI*2); ctx.fill();
-  }
-}
-
-// ═══════════════════════════════════════════════
-// HISTOGRAM
-// ═══════════════════════════════════════════════
-function drawHistogram(){
+// ── tegning ──────────────────────────────────────────────────────────
+function fit(){
   const dpr = window.devicePixelRatio || 1;
-  const W = hc.offsetWidth * dpr || 600;
-  const H = 300 * dpr;
-  hc.width = W; hc.height = H;
-  hctx.clearRect(0,0,W,H);
-
-  if(sampleTotal < 5){
-    hctx.fillStyle = 'rgba(232,224,208,0.2)';
-    hctx.font = `${12*dpr}px Spectral,serif`; hctx.textAlign = 'center';
-    hctx.fillText('Åpne ventilen og start — fordelingen bygges opp ved sampling', W/2, H/2);
-    return;
-  }
-
-  const padL = 46*dpr, padR = 14*dpr, padT = 14*dpr, padB = 30*dpr;
-  const pW = W - padL - padR, pH = H - padT - padB;
-  const bw = pW / (N + 1);
-
-  // empirical + theoretical peak for scaling
-  const maxEmp = Math.max(...histBins, 1) / sampleTotal;
-  let maxTheo = 0;
-  for(let k=0;k<=N;k++) maxTheo = Math.max(maxTheo, Math.exp(lnBinom(N,k) - N*Math.LN2));
-  const maxP = Math.max(maxEmp, maxTheo) * 1.1;
-
-  // empirical bars
-  for(let nA=0;nA<=N;nA++){
-    const p = (histBins[nA]||0) / sampleTotal;
-    const barH = (p / maxP) * pH;
-    const x = padL + nA*bw;
-    hctx.fillStyle = 'rgba(245,200,66,0.75)';
-    hctx.fillRect(x + bw*0.12, padT + pH - barH, bw*0.76, barH);
-  }
-
-  // theoretical binomial curve
-  hctx.strokeStyle = 'rgba(114,212,138,0.95)';
-  hctx.lineWidth = 1.8*dpr;
-  hctx.beginPath();
-  for(let nA=0;nA<=N;nA++){
-    const pt = Math.exp(lnBinom(N,nA) - N*Math.LN2);
-    const x = padL + nA*bw + bw/2;
-    const y = padT + pH - (pt/maxP)*pH;
-    if(nA===0) hctx.moveTo(x,y); else hctx.lineTo(x,y);
-  }
-  hctx.stroke();
-  // theoretical points
-  hctx.fillStyle = 'rgba(114,212,138,0.95)';
-  for(let nA=0;nA<=N;nA++){
-    const pt = Math.exp(lnBinom(N,nA) - N*Math.LN2);
-    const x = padL + nA*bw + bw/2;
-    const y = padT + pH - (pt/maxP)*pH;
-    hctx.beginPath(); hctx.arc(x,y,1.6*dpr,0,Math.PI*2); hctx.fill();
-  }
-
-  // axes
-  hctx.strokeStyle = 'rgba(255,255,255,0.55)'; hctx.lineWidth = 1.5*dpr;
-  hctx.beginPath();
-  hctx.moveTo(padL,padT); hctx.lineTo(padL,padT+pH); hctx.lineTo(padL+pW,padT+pH);
-  hctx.stroke();
-
-  // y ticks
-  const yTicks = 5;
-  hctx.fillStyle = 'rgba(232,224,208,0.5)';
-  hctx.font = `${7.5*dpr}px 'Space Mono',monospace`; hctx.textAlign = 'right';
-  for(let i=0;i<=yTicks;i++){
-    const pct = (maxP*100)/yTicks*i;
-    const y = padT + pH*(1 - i/yTicks);
-    hctx.fillText(pct.toFixed(1), padL-5*dpr, y+3*dpr);
-    hctx.strokeStyle = 'rgba(255,255,255,0.06)'; hctx.lineWidth = dpr;
-    hctx.beginPath(); hctx.moveTo(padL,y); hctx.lineTo(padL+pW,y); hctx.stroke();
-  }
-  hctx.save();
-  hctx.translate(11*dpr, padT+pH/2); hctx.rotate(-Math.PI/2);
-  hctx.fillStyle = 'rgba(232,224,208,0.45)'; hctx.font = `${8*dpr}px Spectral,serif`;
-  hctx.textAlign = 'center'; hctx.fillText('Sannsynlighet (%)', 0, 0);
-  hctx.restore();
-
-  // x ticks
-  hctx.fillStyle = 'rgba(232,224,208,0.45)';
-  hctx.font = `${7.5*dpr}px 'Space Mono',monospace`; hctx.textAlign = 'center';
-  const xStep = Math.max(1, Math.round(N/10));
-  for(let nA=0;nA<=N;nA+=xStep){
-    const x = padL + nA*bw + bw/2;
-    hctx.fillText(nA, x, padT+pH+18*dpr);
-  }
-
-  // N/2 line (max entropy)
-  const halfX = padL + (N/2)*bw + bw/2;
-  hctx.setLineDash([4*dpr,4*dpr]);
-  hctx.strokeStyle = 'rgba(114,212,138,0.5)'; hctx.lineWidth = dpr;
-  hctx.beginPath(); hctx.moveTo(halfX,padT); hctx.lineTo(halfX,padT+pH); hctx.stroke();
-  hctx.setLineDash([]);
-  hctx.fillStyle = 'rgba(114,212,138,0.7)'; hctx.font = `${6.5*dpr}px 'Space Mono'`;
-  hctx.textAlign = 'center'; hctx.fillText('N/2 · maks entropi', halfX, padT+9*dpr);
-
-  document.getElementById('histSubtitle').textContent = `n = ${sampleTotal.toLocaleString('no')} samples`;
+  const w = bc.clientWidth || root.clientWidth || 640;
+  scale = w/LW;
+  bc.width = Math.round(w*dpr);
+  bc.height = Math.round(LH*scale*dpr);
+  bc.style.height = (LH*scale)+'px';
+  bx.setTransform(dpr*scale,0,0,dpr*scale,0,0);
+  hc.width = Math.round((hc.clientWidth||w)*dpr);
+  hc.height = Math.round(HH*dpr);
+  hc.style.height = HH+'px';
+  hx.setTransform(dpr,0,0,dpr,0,0);
 }
 
-// ═══════════════════════════════════════════════
-// UI UPDATE
-// ═══════════════════════════════════════════════
-function updateAll(){
-  const nA = countA(), nB = N - nA;
-  document.getElementById('countA').textContent = nA;
-  document.getElementById('countB').textContent = nB;
-  document.getElementById('barA').style.width = (nA/N*100)+'%';
-  document.getElementById('barB').style.width = (nB/N*100)+'%';
-  document.getElementById('lblA').textContent = `Kammer A · n=${nA}`;
-  document.getElementById('lblB').textContent = `Kammer B · n=${nB}`;
-  document.getElementById('sampleCount').textContent = sampleTotal.toLocaleString('no');
+function drawBox(){
+  const n = nA();
+  bx.clearRect(0,0,LW,LH);
+  bx.fillStyle = C.tintA; bx.fillRect(0,0,WALL,LH);
+  bx.fillStyle = C.tintB; bx.fillRect(WALL,0,LW-WALL,LH);
+  bx.strokeStyle = C.line; bx.lineWidth = 1;
+  bx.strokeRect(0.5,0.5,LW-1,LH-1);
 
-  // omega
-  document.getElementById('omegaText').innerHTML =
-    `Ω(n<sub>A</sub>=${nA}) = <span style="color:var(--gold)">${omegaLabel(N,nA)}</span><br>` +
-    `Ω<sub>maks</sub> (n<sub>A</sub>=N/2) = <span style="color:var(--green)">${omegaLabel(N,Math.round(N/2))}</span><br>` +
-    `Ω<sub>tot</sub> = 2<sup>N</sup> = <span style="color:var(--cold)">${pow2Label(N)}</span>`;
-
-  // stats
-  if(sampleTotal > 2){
-    let mean=0; histBins.forEach((c,k)=>{ mean += k*c; }); mean /= sampleTotal;
-    let v=0; histBins.forEach((c,k)=>{ v += (k-mean)**2*c; }); v /= sampleTotal;
-    const std = Math.sqrt(v);
-    document.getElementById('statMean').textContent = mean.toFixed(1);
-    document.getElementById('statStd').textContent = std.toFixed(2);
-    const lo = Math.ceil(N/2*0.9), hi = Math.floor(N/2*1.1);
-    let ptyp=0; for(let i=lo;i<=hi;i++) ptyp += (histBins[i]||0)/sampleTotal;
-    document.getElementById('statTyp').textContent = (ptyp*100).toFixed(1)+'%';
+  // skillevegg
+  bx.strokeStyle = open ? C.line : C.muted;
+  bx.lineWidth = 2;
+  bx.beginPath();
+  if(open){
+    bx.moveTo(WALL,0); bx.lineTo(WALL,LH/2-GAP/2);
+    bx.moveTo(WALL,LH/2+GAP/2); bx.lineTo(WALL,LH);
+  }else{
+    bx.moveTo(WALL,0); bx.lineTo(WALL,LH);
   }
-  // P(all back in A) is analytic: 1/2^N
-  const pAllA = Math.exp(-N*Math.LN2);
-  document.getElementById('statAllA').textContent =
-    pAllA < 1e-4 ? `~10^${(-N*Math.LN2/Math.LN10).toFixed(0)}` : (pAllA*100).toFixed(2)+'%';
+  bx.stroke();
 
-  // relative fluctuation ~ 1/sqrt(N)
-  const relFluc = 1/Math.sqrt(N);
-  document.getElementById('fluctText').innerHTML =
-    `Typisk svingning rundt N/2:<br>σ/⟨n<sub>A</sub>⟩ ≈ 1/√N = <span style="color:var(--gold)">${(relFluc*100).toFixed(1)}%</span><br>` +
-    `<span style="color:var(--dim);font-size:0.9em">Jo større N, desto skarpere topp — og desto mer «lovmessig» blir 2. lov.</span>`;
+  // molekyler
+  bx.fillStyle = C.acc;
+  for(const m of mol){
+    bx.beginPath(); bx.arc(m.x,m.y,m.r,0,6.2832); bx.fill();
+  }
 
-  updateInsight(nA);
+  // tellere
+  bx.font = '600 21px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  bx.fillStyle = C.ink; bx.textBaseline = 'top';
+  bx.textAlign = 'left';  bx.fillText(n, 14, 12);
+  bx.textAlign = 'right'; bx.fillText(N-n, LW-14, 12);
+  bx.font = '12px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  bx.fillStyle = C.muted;
+  bx.textAlign = 'left';  bx.fillText('A', 14, 36);
+  bx.textAlign = 'right'; bx.fillText('B', LW-14, 36);
 }
 
-function updateInsight(nA){
-  const box = document.getElementById('insightBox');
-  if(!valveOpen && nA === N){
-    box.innerHTML = `Ventilen er lukket: all gass i A, Ω = 1. Dette er den <strong>minst sannsynlige</strong> makrotilstanden når ventilen åpnes. Trykk «Åpne ventil».`;
-  } else if(Math.abs(nA - N/2) <= N*0.12){
-    box.innerHTML = `Nær likevekt: n<sub>A</sub> ≈ N/2. Ω er nær maksimum — dette er den <strong>mest sannsynlige</strong> makrotilstanden, og der systemet tilbringer nesten all tida.`;
-  } else if(nA > N/2){
-    box.innerHTML = `Flere molekyler i A (n<sub>A</sub>=${nA}) enn i B. En midlertidig svingning — den forsvinner fordi Ω er størst ved jevn fordeling.`;
-  } else {
-    box.innerHTML = `Gassen sprer seg mot begge kamrene. Systemet beveger seg mot makrotilstanden med flest mikrotilstander — <strong>helt av seg selv</strong>.`;
-  }
-}
+function drawHist(){
+  const W = hc.clientWidth || 640;
+  hx.clearRect(0,0,W,HH);
+  const padL=10, padR=10, padT=8, padB=19;
+  const pW = W-padL-padR, pH = HH-padT-padB;
+  const bw = pW/(N+1);
 
-function updateValveUI(){
-  const btn = document.getElementById('btnValve');
-  const icon = document.getElementById('valveIcon');
-  const state = document.getElementById('valveState');
-  if(valveOpen){
-    btn.textContent = 'Lukk ventil'; btn.className = 'valve-open';
-    icon.textContent = '⇄'; icon.style.color = 'var(--green)';
-    state.textContent = 'åpen';
-  } else {
-    btn.textContent = 'Åpne ventil'; btn.className = '';
-    icon.textContent = '╳'; icon.style.color = 'var(--hot)';
-    state.textContent = 'lukket';
-  }
-}
+  let maxP = 0;
+  for(let k=0;k<=N;k++) maxP = Math.max(maxP, Math.exp(lnBinom(N,k)-N*Math.LN2));
+  if(samples) for(let k=0;k<=N;k++) maxP = Math.max(maxP, bins[k]/samples);
+  maxP *= 1.12;
 
-// ═══════════════════════════════════════════════
-// PRESETS
-// ═══════════════════════════════════════════════
-function setPreset(n, id){
-  running = false;
-  if(animId){ cancelAnimationFrame(animId); animId = null; }
-  document.getElementById('btnPlay').textContent = '▶ Start';
-  document.getElementById('btnPlay').className = 'primary';
-  N = n;
-  document.getElementById('nSlider').value = Math.min(n,200);
-  document.getElementById('nVal').textContent = n;
-  gapH = n > 100 ? 130 : 110;
-  ['A','B','C','D','E'].forEach(k=>{
-    document.getElementById('pre_'+k).className = 'preset-btn' + (k===id?' active-preset':'');
+  // simulerte søyler
+  const barW = Math.min(Math.max(bw*0.76, 1.2), 44);
+  hx.fillStyle = C.acc; hx.globalAlpha = 0.5;
+  if(samples) for(let k=0;k<=N;k++){
+    const h = (bins[k]/samples/maxP)*pH;
+    if(h > 0.4) hx.fillRect(padL+k*bw+(bw-barW)/2, padT+pH-h, barW, h);
+  }
+  hx.globalAlpha = 1;
+
+  // teoretisk binomialfordeling
+  hx.strokeStyle = C.acc2; hx.lineWidth = 1.8;
+  hx.beginPath();
+  for(let k=0;k<=N;k++){
+    const x = padL+k*bw+bw/2;
+    const y = padT+pH-(Math.exp(lnBinom(N,k)-N*Math.LN2)/maxP)*pH;
+    k ? hx.lineTo(x,y) : hx.moveTo(x,y);
+  }
+  hx.stroke();
+  if(N <= 20){
+    hx.fillStyle = C.acc2;
+    for(let k=0;k<=N;k++){
+      const x = padL+k*bw+bw/2;
+      const y = padT+pH-(Math.exp(lnBinom(N,k)-N*Math.LN2)/maxP)*pH;
+      hx.beginPath(); hx.arc(x,y,2.2,0,6.2832); hx.fill();
+    }
+  }
+
+  // akse og merker
+  hx.strokeStyle = C.line; hx.lineWidth = 1;
+  hx.beginPath(); hx.moveTo(padL,padT+pH+0.5); hx.lineTo(padL+pW,padT+pH+0.5); hx.stroke();
+  hx.fillStyle = C.muted; hx.textAlign = 'center'; hx.textBaseline = 'top';
+  hx.font = '10.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  [0, N/2, N].forEach(k=>{
+    hx.fillText(Math.round(k), padL+k*bw+bw/2, padT+pH+5);
   });
-  initSim(); drawBox(); drawHistogram(); updateAll();
 }
 
-// ═══════════════════════════════════════════════
-// ANIMATION
-// ═══════════════════════════════════════════════
-function sliderToSteps(v){ return Math.max(1, Math.round(v/3.5)); }
-function rateLabel(v){ return sliderToSteps(v) + '×/frame'; }
-
-function loop(){
-  if(!running) return;
-  stepMolecules(sliderToSteps(speedMult));
-  drawBox(); drawHistogram(); updateAll();
-  animId = requestAnimationFrame(loop);
+let lastRead = -1;
+function readout(force){
+  const n = nA();
+  if(n === lastRead && !force) return;
+  lastRead = n;
+  root.querySelector('#gs-na').textContent = n;
+  root.querySelector('#gs-om').innerHTML = fmt(lnBinom(N,n));
+  root.querySelector('#gs-omax').innerHTML = fmt(lnBinom(N,Math.round(N/2)));
 }
-function toggleRun(){
+function draw(force){ drawBox(); drawHist(); readout(force); }
+
+// ── hendelser ────────────────────────────────────────────────────────
+btn.addEventListener('click', ()=>{
+  if(!open){ open = true; steps = 0; }
   running = !running;
-  const b = document.getElementById('btnPlay');
-  b.textContent = running ? '⏸ Pause' : '▶ Start';
-  b.className = running ? 'primary' : 'primary';
-  if(running) animId = requestAnimationFrame(loop);
-}
+  prev = performance.now(); acc = 0;
+  updateBtn();
+  draw(true);
+});
+btnReset.addEventListener('click', reset);
+root.querySelectorAll('.gs-side button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    root.querySelectorAll('.gs-side button').forEach(o=>{
+      o.classList.remove('on'); o.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    startB = b.dataset.s === 'B';
+    reset();
+  });
+});
+root.querySelectorAll('.gs-seg:not(.gs-side) button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    root.querySelectorAll('.gs-seg:not(.gs-side) button').forEach(o=>{
+      o.classList.remove('on'); o.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    N = +b.dataset.n;
+    reset();
+  });
+});
+new ResizeObserver(()=>{ fit(); draw(true); }).observe(root);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ readColors(); draw(true); });
+new IntersectionObserver(e=>{ visible = e[0].isIntersecting; }, {threshold:0}).observe(root);
 
-// ═══════════════════════════════════════════════
-// EVENTS
-// ═══════════════════════════════════════════════
-document.getElementById('btnPlay').addEventListener('click', toggleRun);
-document.getElementById('btnValve').addEventListener('click', ()=>{
-  valveOpen = !valveOpen;
-  updateValveUI();
-  // clear histogram so distribution reflects the new regime
-  clearHist();
-  if(!running){ drawBox(); drawHistogram(); updateAll(); }
-});
-document.getElementById('btnReset').addEventListener('click', ()=>{
-  running = false; if(animId) cancelAnimationFrame(animId);
-  document.getElementById('btnPlay').textContent = '▶ Start';
-  initSim(); drawBox(); drawHistogram(); updateAll();
-});
-document.getElementById('btnClearHist').addEventListener('click', ()=>{
-  clearHist(); drawHistogram();
-  document.getElementById('sampleCount').textContent = '0';
-});
-document.getElementById('speedSlider').addEventListener('input', e=>{
-  speedMult = +e.target.value;
-  document.getElementById('speedVal').textContent = rateLabel(speedMult);
-});
-document.getElementById('nSlider').addEventListener('input', e=>{
-  N = +e.target.value;
-  document.getElementById('nVal').textContent = N;
-  gapH = N > 100 ? 130 : 110;
-  ['A','B','C','D','E'].forEach(k=>document.getElementById('pre_'+k).className='preset-btn');
-  initSim(); if(!running){ drawBox(); drawHistogram(); updateAll(); }
-});
-
-// tooltip on box
-const tt = document.getElementById('tt');
-bc.addEventListener('mousemove', e=>{
-  const rect = bc.getBoundingClientRect();
-  const mx = (e.clientX-rect.left)*(BW/rect.width);
-  const inA = mx < WALL;
-  tt.innerHTML = `${inA?'Kammer A':'Kammer B'}<br>n = <strong>${inA?countA():N-countA()}</strong>`;
-  tt.style.left = (e.clientX+12)+'px'; tt.style.top = (e.clientY-8)+'px'; tt.style.opacity = 1;
-});
-bc.addEventListener('mouseleave', ()=>{ tt.style.opacity = 0; });
-document.addEventListener('keydown', e=>{
-  if(e.code === 'Space'){ e.preventDefault(); toggleRun(); }
-});
-window.addEventListener('resize', ()=>{ drawHistogram(); });
-
-// ═══════════════════════════════════════════════
-// BOOT
-// ═══════════════════════════════════════════════
-document.getElementById('pre_A').addEventListener('click', ()=>setPreset(4,'A'));
-document.getElementById('pre_B').addEventListener('click', ()=>setPreset(16,'B'));
-document.getElementById('pre_C').addEventListener('click', ()=>setPreset(50,'C'));
-document.getElementById('pre_D').addEventListener('click', ()=>setPreset(100,'D'));
-document.getElementById('pre_E').addEventListener('click', ()=>setPreset(200,'E'));
-
-initSim(); drawBox(); drawHistogram(); updateAll();
-document.getElementById('speedVal').textContent = rateLabel(speedMult);
-document.getElementById('pre_B').className = 'preset-btn active-preset';
+// ── start ────────────────────────────────────────────────────────────
+readColors(); fit(); reset();
+(function loop(now){
+  const dt = Math.min((now - prev)/1000, 0.1);
+  prev = now;
+  if(running && visible){
+    acc += SPEED*dt;
+    const k = Math.floor(acc); acc -= k;
+    if(k){ step(k); draw(); }
+  }
+  requestAnimationFrame(loop);
+})(performance.now());
+})();
 </script>
+<!-- ══ widget end ══════════════════════════════════════════════════════ -->
+
 </body>
 </html>
