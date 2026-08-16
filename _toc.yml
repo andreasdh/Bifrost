@@ -10,24 +10,24 @@ parts:
   chapters:
   - file: docs/entropi_og_boltzmann
   - file: docs/partisjonsfunksjonen
-  - file: docs/gasses
+#   - file: docs/gasses
 
-- caption: Makroskopisk termodynamikk
-  chapters:
-  - file: docs/Makroskopisk_termodynamikk_1
-  - file: docs/Makroskopisk_termodynamikk_II
-  - file: docs/varmekapasitet
+# - caption: Makroskopisk termodynamikk
+#   chapters:
+#   - file: docs/Makroskopisk_termodynamikk_1
+#   - file: docs/Makroskopisk_termodynamikk_II
+#   - file: docs/varmekapasitet
 
-- caption: Faser og blandinger
-  chapters:
-  - file: docs/faser
-  - file: docs/Intermolekylære_krefter
-  - file: docs/Lattice_modeller_løs_bland
+# - caption: Faser og blandinger
+#   chapters:
+#   - file: docs/faser
+#   - file: docs/Intermolekylære_krefter
+#   - file: docs/Lattice_modeller_løs_bland
 
-- caption: Likevekter og kinetikk
-  chapters:
-  - file: docs/likevekter
-  - file: docs/kinetikk
+# - caption: Likevekter og kinetikk
+#   chapters:
+#   - file: docs/likevekter
+#   - file: docs/kinetikk
 
 - caption: Appendiks
   chapters:
@@ -47,25 +47,25 @@ parts:
     sections:
     - file: docs/ukesoppgaver/uke_01
     - file: docs/ukesoppgaver/uke_02
-    - file: docs/ukesoppgaver/uke_03
-    - file: docs/ukesoppgaver/uke_04
-    - file: docs/ukesoppgaver/uke_05
-    - file: docs/ukesoppgaver/uke_06
-    - file: docs/ukesoppgaver/uke_07
-    - file: docs/ukesoppgaver/uke_08
-    - file: docs/ukesoppgaver/uke_09
-    - file: docs/ukesoppgaver/uke_10
-    - file: docs/ukesoppgaver/uke_11
-  - file: docs/løsningsforslag
-    sections:
-    - file: docs/losningsforslag/uke_01
-    - file: docs/losningsforslag/uke_02
-    - file: docs/losningsforslag/uke_03
-    - file: docs/losningsforslag/uke_04
-    - file: docs/losningsforslag/uke_05
-    - file: docs/losningsforslag/uke_06
-    - file: docs/losningsforslag/uke_07
-    - file: docs/losningsforslag/uke_08
-    - file: docs/losningsforslag/uke_09
-    - file: docs/losningsforslag/uke_10
-    - file: docs/losningsforslag/uke_11
+    # - file: docs/ukesoppgaver/uke_03
+    # - file: docs/ukesoppgaver/uke_04
+    # - file: docs/ukesoppgaver/uke_05
+    # - file: docs/ukesoppgaver/uke_06
+    # - file: docs/ukesoppgaver/uke_07
+    # - file: docs/ukesoppgaver/uke_08
+    # - file: docs/ukesoppgaver/uke_09
+    # - file: docs/ukesoppgaver/uke_10
+    # - file: docs/ukesoppgaver/uke_11
+  # - file: docs/løsningsforslag
+  #   sections:
+  #   - file: docs/losningsforslag/uke_01
+  #   - file: docs/losningsforslag/uke_02
+  #   - file: docs/losningsforslag/uke_03
+  #   - file: docs/losningsforslag/uke_04
+  #   - file: docs/losningsforslag/uke_05
+  #   - file: docs/losningsforslag/uke_06
+  #   - file: docs/losningsforslag/uke_07
+  #   - file: docs/losningsforslag/uke_08
+  #   - file: docs/losningsforslag/uke_09
+  #   - file: docs/losningsforslag/uke_10
+  #   - file: docs/losningsforslag/uke_11
