@@ -42,9 +42,9 @@ parts:
     - file: docs/matematikk/statistikk
 
 - caption: Oppgaver og løsningsforslag
-  chapters:
-  - file: docs/ukesoppgaver
-    sections:
+  #chapters:
+  #- file: docs/ukesoppgaver
+    #sections:
     #- file: docs/ukesoppgaver/uke_01
     #- file: docs/ukesoppgaver/uke_02
     # - file: docs/ukesoppgaver/uke_03
