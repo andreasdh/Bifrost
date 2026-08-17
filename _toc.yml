@@ -41,7 +41,7 @@ parts:
     - file: docs/matematikk/flervariabel_kalkulus
     - file: docs/matematikk/statistikk
 
-- caption: Oppgaver og løsningsforslag
+#- caption: Oppgaver og løsningsforslag
   #chapters:
   #- file: docs/ukesoppgaver
     #sections:
