@@ -9,8 +9,8 @@ parts:
 - caption: Statistisk termodynamikk
   chapters:
   - file: docs/entropi_og_boltzmann
-  #- file: docs/partisjonsfunksjonen
-  #- file: docs/gasses
+# - file: docs/partisjonsfunksjonen
+# - file: docs/gasses
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
