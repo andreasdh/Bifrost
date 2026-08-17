@@ -1,0 +1,1052 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fra molekylstøt til PV = nRT</title>
+<style>
+*,*::before,*::after{box-sizing:border-box}
+
+:root{
+  --paper:#eef1f5;
+  --card:#ffffff;
+  --ink:#16202e;
+  --ink-soft:#5d6b80;
+  --line:#d6dce6;
+  --line-soft:#e7ebf1;
+
+  --stage-1:#1e2745;
+  --stage-2:#0f1424;
+
+  --micro:#5ec8e5;        /* mikroskopiske størrelser */
+  --micro-deep:#1f7f9e;
+  --macro:#f2a03d;        /* målt, makroskopisk */
+  --macro-deep:#b96a12;
+  --bridge:#a98cf0;       /* det utledede uttrykket */
+  --bridge-deep:#6f4fc0;
+
+  --sans:ui-sans-serif,system-ui,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  --serif:"Iowan Old Style","Palatino Linotype",Palatino,"Book Antiqua",Georgia,serif;
+  --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+}
+
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--sans);font-size:15px;line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 44px}
+
+:focus-visible{outline:2px solid var(--bridge-deep);outline-offset:2px;border-radius:4px}
+
+/* ---------- topp ---------- */
+.eyebrow{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
+h1{font-size:clamp(25px,3.6vw,40px);line-height:1.08;letter-spacing:-.022em;font-weight:750;margin:12px 0 8px}
+h1 .goal{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--macro-deep)}
+.lede{max-width:66ch;color:var(--ink-soft);margin:0}
+
+.key{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;padding:0;list-style:none}
+.key li{display:flex;align-items:center;gap:7px;font:600 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
+.key i{width:11px;height:11px;border-radius:3px;display:block}
+
+/* ---------- trinnrail ---------- */
+.rail{display:flex;flex-wrap:wrap;gap:4px;margin:18px 0 16px;padding:6px;background:var(--card);border:1px solid var(--line);border-radius:15px}
+.rail button{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:8px 11px;border-radius:10px;
+  cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap}
+.rail button:hover{background:var(--line-soft);color:var(--ink)}
+.rail .dot{width:9px;height:9px;border-radius:50%;background:var(--dc,var(--micro));flex:none}
+.rail .num{font:700 10px var(--mono);opacity:.75}
+.rail button[aria-current="true"]{background:var(--stage-2);color:#fff}
+.rail button[aria-current="true"] .num{opacity:.9}
+
+/* ---------- oppsett ---------- */
+.grid{display:grid;grid-template-columns:minmax(0,1.32fr) minmax(330px,1fr);gap:16px;align-items:start}
+@media (max-width:940px){.grid{grid-template-columns:1fr}}
+
+/* ---------- scene ---------- */
+.stage{position:relative;border-radius:16px;overflow:hidden;border:1px solid #0b0f1c;
+  background:radial-gradient(130% 105% at 22% 0%,var(--stage-1) 0%,#151b31 55%,var(--stage-2) 100%)}
+.stage canvas{display:block;width:100%;height:auto}
+.hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:10px;
+  padding:11px 13px;pointer-events:none;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase}
+.hud .l{display:flex;align-items:center;gap:7px;color:#f6d9ae}
+.hud .l i{width:10px;height:10px;background:var(--macro);border-radius:2px;display:block;box-shadow:0 0 12px rgba(242,160,61,.8)}
+.hud .r{color:#93a3c4;text-align:right;font-variant-numeric:tabular-nums}
+.hud .r b{color:#dbe4f7;font-weight:700}
+
+/* ---------- målespor ---------- */
+.aux{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px 15px 6px}
+.aux h3{margin:0 0 2px;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
+.aux p{margin:0 0 6px;font-size:12.5px;color:var(--ink-soft)}
+.aux canvas{display:block;width:100%;height:auto}
+
+/* ---------- panel ---------- */
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 20px}
+.panel .step-tag{font:700 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--macro-deep)}
+.panel h2{margin:8px 0 10px;font-size:21px;letter-spacing:-.015em;line-height:1.2}
+.panel p{margin:0 0 10px}
+.panel p:last-of-type{margin-bottom:0}
+
+.eqcard{background:#f5f7fb;border:1px solid var(--line-soft);border-left:3px solid var(--bridge);
+  border-radius:11px;padding:13px 15px;margin:14px 0;font-family:var(--serif);font-size:17.5px;line-height:2.1}
+.eqcard div+div{margin-top:2px}
+.eqcard .qm{color:var(--micro-deep);font-style:italic}
+.eqcard .qM{color:var(--macro-deep);font-style:italic}
+.frac{display:inline-flex;flex-direction:column;vertical-align:-0.55em;text-align:center;font-size:.92em;margin:0 .12em}
+.frac .num{padding:0 .35em}
+.frac .den{border-top:1px solid currentColor;padding:0 .35em}
+
+.controls{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:12px}
+.ctrl{margin:0 0 12px}
+.ctrl.hide{display:none}
+.ctrl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px;
+  font:600 10.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
+.ctrl .lab b{font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
+input[type=range]{width:100%;margin:0;accent-color:var(--macro-deep);cursor:pointer}
+select{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
+.switch{display:flex;align-items:center;gap:9px;font-size:14px;cursor:pointer;user-select:none}
+.switch input{width:17px;height:17px;accent-color:var(--macro-deep);cursor:pointer}
+
+.reads{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);
+  border:1px solid var(--line-soft);border-radius:11px;overflow:hidden;margin-top:14px}
+.read{background:var(--card);padding:9px 11px;min-width:0}
+.read .k{font:600 10px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.read .v{margin-top:2px;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.01em}
+.read.mi .v{color:var(--micro-deep)}
+.read.ma .v{color:var(--macro-deep)}
+.read.de .v{color:var(--bridge-deep)}
+
+.predict{margin-top:15px;background:#faf9ff;border:1px dashed #cfc4ee;border-radius:11px;padding:12px 14px}
+.predict .q{font-size:14px;margin:0}
+.predict .q b{font:700 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bridge-deep);display:block;margin-bottom:4px}
+.predict details{margin-top:8px}
+.predict summary{cursor:pointer;font:700 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bridge-deep)}
+.predict details p{margin:8px 0 0;font-size:14px;color:var(--ink)}
+
+/* ---------- bunnlinje ---------- */
+.bar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px;padding:10px 12px;
+  background:var(--card);border:1px solid var(--line);border-radius:15px}
+.btn{font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:#fff;
+  border:1px solid var(--line);border-radius:9px;padding:8px 13px;cursor:pointer}
+.btn:hover{background:var(--line-soft)}
+.btn:disabled{opacity:.42;cursor:default}
+.btn:disabled:hover{background:#fff}
+.btn.primary{background:var(--stage-2);border-color:var(--stage-2);color:#fff}
+.btn.primary:hover{background:#1c2440}
+.bar .spd{display:flex;align-items:center;gap:9px;margin-left:auto;min-width:190px;flex:1}
+.bar .spd span{font:600 10.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
+@media (max-width:520px){.bar .spd{margin-left:0;width:100%}}
+
+.foot{margin-top:18px;font-size:12.5px;color:var(--ink-soft);max-width:70ch}
+
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Bifrost · Kinetisk gassteori</p>
+  <h1>Fra molekylstøt til <span class="goal">PV = nRT</span></h1>
+  <p class="lede">Utledningen bygges opp trinn for trinn. I hvert trinn måler simuleringen den samme størrelsen som du nettopp har utledet, slik at du kan sjekke om uttrykket stemmer.</p>
+  <ul class="key">
+    <li><i style="background:var(--micro)"></i>Mikroskopisk</li>
+    <li><i style="background:var(--bridge)"></i>Utledet uttrykk</li>
+    <li><i style="background:var(--macro)"></i>Målt på veggen</li>
+  </ul>
+
+  <nav class="rail" id="rail" aria-label="Trinn i utledningen"></nav>
+
+  <div class="grid">
+    <div>
+      <div class="stage">
+        <canvas id="scene" width="690" height="380" role="img" aria-label="Simulering av gassmolekyler i en boks"></canvas>
+        <div class="hud">
+          <div class="l"><i></i><span>Måleveggen</span></div>
+          <div class="r">t = <b id="hudT">0</b> ps &nbsp;·&nbsp; støt: <b id="hudN">0</b></div>
+        </div>
+      </div>
+      <div class="aux">
+        <h3 id="auxTitle">Målespor</h3>
+        <p id="auxNote"></p>
+        <canvas id="aux" width="690" height="168"></canvas>
+      </div>
+    </div>
+
+    <aside class="panel">
+      <p class="step-tag" id="stepTag"></p>
+      <h2 id="stepTitle"></h2>
+      <div id="stepBody"></div>
+      <div class="eqcard" id="stepEq"></div>
+
+      <div class="controls" id="controls">
+        <div class="ctrl hide" id="c-gas">
+          <div class="lab"><span>Gass</span></div>
+          <select id="in-gas"></select>
+        </div>
+        <div class="ctrl hide" id="c-N">
+          <div class="lab"><span>Antall molekyler N</span><b id="v-N"></b></div>
+          <input type="range" id="in-N" min="1" max="500" step="1" value="200">
+        </div>
+        <div class="ctrl hide" id="c-T">
+          <div class="lab"><span>Temperatur T</span><b id="v-T"></b></div>
+          <input type="range" id="in-T" min="50" max="1000" step="10" value="300">
+        </div>
+        <div class="ctrl hide" id="c-a">
+          <div class="lab"><span>Boksens lengde a</span><b id="v-a"></b></div>
+          <input type="range" id="in-a" min="4" max="20" step="0.5" value="10">
+        </div>
+        <div class="ctrl hide" id="c-vx">
+          <div class="lab"><span>Hastighetskomponent v<sub>x</sub></span><b id="v-vx"></b></div>
+          <input type="range" id="in-vx" min="100" max="900" step="10" value="400">
+        </div>
+        <div class="ctrl hide" id="c-yz">
+          <label class="switch"><input type="checkbox" id="in-yz"> Gi molekylet fart i y og z</label>
+        </div>
+      </div>
+
+      <div class="reads" id="reads"></div>
+      <div class="predict" id="predict"></div>
+    </aside>
+  </div>
+
+  <div class="bar">
+    <button class="btn" id="prev">Forrige</button>
+    <button class="btn primary" id="next">Neste trinn</button>
+    <button class="btn" id="play">Pause</button>
+    <button class="btn" id="reset">Nullstill måling</button>
+    <div class="spd"><span>Fart</span><input type="range" id="in-spd" min="1" max="60" step="1" value="24"></div>
+  </div>
+
+  <p class="foot">Simuleringen er ekte tredimensjonal fysikk med elastiske støt mot veggene og ingen krefter mellom molekylene, altså nøyaktig den modellen utledningen bygger på. Farter trekkes fra Maxwell.Boltzmann-fordelingen. Tastatur: mellomrom starter og stopper, piltastene bytter trinn.</p>
+</div>
+
+<script>
+"use strict";
+
+/* ============================ konstanter ============================ */
+const KB = 1.380649e-23, NA = 6.02214076e23, RGAS = 8.314462618, AMU = 1.66053906660e-27;
+const LY = 10e-9, LZ = 10e-9;            // faste tverrmål på boksen
+const DT = 2e-14;                        // tidssteg i sekunder
+const GASES = [
+  {n:"He",  M:4.0026},
+  {n:"Ne",  M:20.1797},
+  {n:"N\u2082", M:28.0134},
+  {n:"Ar",  M:39.948},
+  {n:"CO\u2082", M:44.0095}
+];
+
+/* ============================ formatering ============================ */
+const SUPS = {"-":"\u207B","0":"\u2070","1":"\u00B9","2":"\u00B2","3":"\u00B3","4":"\u2074","5":"\u2075","6":"\u2076","7":"\u2077","8":"\u2078","9":"\u2079"};
+function sup(n){ return String(n).split("").map(c => SUPS[c] || c).join(""); }
+function nf(x, d){
+  if(!isFinite(x)) return "\u2026";
+  return x.toLocaleString("nb-NO", {minimumFractionDigits:d, maximumFractionDigits:d});
+}
+function sci(x, d){
+  if(x === 0) return "0";
+  if(!isFinite(x)) return "\u2026";
+  const e = Math.floor(Math.log10(Math.abs(x)));
+  return nf(x / Math.pow(10, e), d === undefined ? 2 : d) + " \u00B7 10" + sup(e);
+}
+const pct = x => (x >= 0 ? "+" : "") + nf(x, 1) + " %";
+
+/* ============================ tilstand ============================ */
+const sim = {
+  mode:"many", N:200, T:300, Lx:10e-9, m:GASES[2].M*AMU, gas:2,
+  vxSet:400, yz:false,
+  x:[], y:[], z:[], vx:[], vy:[], vz:[],
+  t:0, cumImp:0, cumT:0,
+  win:[], winImp:0, winT:0,
+  hits:0, hitTimes:[], impacts:[], trail:[], flash:0,
+  hist:[], running:true, speed:24, stepIdx:0
+};
+
+const A_wall = () => LY*LZ;
+const vol = () => sim.Lx*LY*LZ;
+
+function gauss(){
+  let u = 0, v = 0;
+  while(u === 0) u = Math.random();
+  while(v === 0) v = Math.random();
+  return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);
+}
+
+function initMany(){
+  const s = Math.sqrt(KB*sim.T/sim.m);
+  sim.x.length = 0; sim.y.length = 0; sim.z.length = 0;
+  sim.vx.length = 0; sim.vy.length = 0; sim.vz.length = 0;
+  for(let i = 0; i < sim.N; i++){
+    sim.x.push(Math.random()*sim.Lx); sim.y.push(Math.random()*LY); sim.z.push(Math.random()*LZ);
+    sim.vx.push(gauss()*s); sim.vy.push(gauss()*s); sim.vz.push(gauss()*s);
+  }
+  rescaleToT();
+  resetStats();
+}
+
+function initSingle(){
+  sim.x = [sim.Lx*0.35]; sim.y = [LY*0.5]; sim.z = [LZ*0.5];
+  const v = sim.vxSet;
+  sim.vx = [v];
+  sim.vy = [sim.yz ? 190 : 0];
+  sim.vz = [sim.yz ? 130 : 0];
+  resetStats();
+}
+
+function rescaleToT(){
+  let s = 0;
+  for(let i = 0; i < sim.N; i++) s += sim.vx[i]*sim.vx[i] + sim.vy[i]*sim.vy[i] + sim.vz[i]*sim.vz[i];
+  if(s <= 0) return;
+  const f = Math.sqrt(3*sim.N*KB*sim.T/(sim.m*s));
+  for(let i = 0; i < sim.N; i++){ sim.vx[i] *= f; sim.vy[i] *= f; sim.vz[i] *= f; }
+}
+
+function resetStats(){
+  sim.t = 0; sim.cumImp = 0; sim.cumT = 0;
+  sim.win.length = 0; sim.winImp = 0; sim.winT = 0;
+  sim.hits = 0; sim.hitTimes.length = 0;
+  sim.impacts.length = 0; sim.trail.length = 0; sim.hist.length = 0;
+}
+
+/* ============================ fysikk ============================ */
+function advance(nsteps){
+  const m = sim.m, Lx = sim.Lx;
+  let imp = 0, nhit = 0;
+  for(let s = 0; s < nsteps; s++){
+    for(let i = 0; i < sim.N; i++){
+      let x = sim.x[i] + sim.vx[i]*DT;
+      let y = sim.y[i] + sim.vy[i]*DT;
+      let z = sim.z[i] + sim.vz[i]*DT;
+      if(x >= Lx){                                  // måleveggen
+        x = 2*Lx - x; sim.vx[i] = -sim.vx[i];
+        imp += 2*m*Math.abs(sim.vx[i]); nhit++;
+        sim.hits++;
+        if(sim.mode === "single"){ sim.hitTimes.push(sim.t + s*DT); if(sim.hitTimes.length > 14) sim.hitTimes.shift(); }
+        if(sim.impacts.length < 90) sim.impacts.push({y:y, z:z, a:0});
+      } else if(x <= 0){ x = -x; sim.vx[i] = -sim.vx[i]; }
+      if(y >= LY){ y = 2*LY - y; sim.vy[i] = -sim.vy[i]; } else if(y <= 0){ y = -y; sim.vy[i] = -sim.vy[i]; }
+      if(z >= LZ){ z = 2*LZ - z; sim.vz[i] = -sim.vz[i]; } else if(z <= 0){ z = -z; sim.vz[i] = -sim.vz[i]; }
+      sim.x[i] = x; sim.y[i] = y; sim.z[i] = z;
+    }
+  }
+  const dt = nsteps*DT;
+  sim.t += dt; sim.cumT += dt; sim.cumImp += imp;
+  sim.win.push({i:imp, t:dt}); sim.winImp += imp; sim.winT += dt;
+  while(sim.win.length > 70){ const o = sim.win.shift(); sim.winImp -= o.i; sim.winT -= o.t; }
+  sim.flash = Math.min(1, sim.flash + 0.30*nhit);
+  return nhit;
+}
+
+/* ============================ avledede størrelser ============================ */
+function meanSq(arr){ let s = 0; for(let i = 0; i < sim.N; i++) s += arr[i]*arr[i]; return s/sim.N; }
+const mvx2 = () => meanSq(sim.vx);
+const mvy2 = () => meanSq(sim.vy);
+const mvz2 = () => meanSq(sim.vz);
+const mv2  = () => mvx2() + mvy2() + mvz2();
+const vrms = () => Math.sqrt(mv2());
+const Fmeas = () => sim.cumT > 0 ? sim.cumImp/sim.cumT : 0;
+const Fwin  = () => sim.winT > 0 ? sim.winImp/sim.winT : 0;
+const Pmeas = () => Fmeas()/A_wall();
+const Pwin  = () => Fwin()/A_wall();
+const Etrans = () => 0.5*sim.m*mv2();
+const Tsim = () => sim.m*mv2()/(3*KB);
+const F1theory = () => sim.m*sim.vxSet*sim.vxSet/sim.Lx;
+const Ftheory = () => sim.N*sim.m*mvx2()/sim.Lx;
+const dtTheory = () => 2*sim.Lx/Math.abs(sim.vxSet);
+function dtMeas(){
+  const h = sim.hitTimes;
+  if(h.length < 2) return NaN;
+  const k = Math.min(6, h.length - 1);
+  return (h[h.length-1] - h[h.length-1-k])/k;
+}
+const rate = () => sim.cumT > 0 ? sim.hits/(sim.cumT*1e9) : 0;
+
+/* ============================ tekstbyggere ============================ */
+const fr = (n,d) => '<span class="frac"><span class="num">'+n+'</span><span class="den">'+d+'</span></span>';
+const mi = s => '<i class="qm">'+s+'</i>';
+const ma = s => '<i class="qM">'+s+'</i>';
+const it = s => '<i>'+s+'</i>';
+const VX  = mi("v")+"<sub>x</sub>";
+const VX2 = mi("v")+"<sub>x</sub><sup>2</sup>";
+const AVX2 = "\u27E8"+mi("v")+"<sub>x</sub><sup>2</sup>\u27E9";
+const AV2  = "\u27E8"+mi("v")+"<sup>2</sup>\u27E9";
+
+/* ============================ trinn ============================ */
+const STEPS = [
+{
+  key:"Modell", num:"0", tag:"Modellen", title:"En ideell gass i en boks",
+  mode:"many", controls:["gas","N","T"], aux:"hist",
+  auxTitle:"Fartsfordeling", auxNote:"S\u00F8ylene er molekylene i simuleringen akkurat n\u00E5. Kurven er Maxwell.Boltzmann-fordelingen ved den temperaturen du har valgt.",
+  body:"<p>Boksen inneholder "+it("N")+" molekyler. Vi behandler dem som punkter uten eget volum, og mellom st\u00F8tene virker det ingen krefter mellom dem. Hvert molekyl g\u00E5r derfor i rett linje helt til det treffer en vegg.</p>"+
+       "<p>Simuleringen er tredimensjonal. Dybden er tegnet som en forskyvning opp mot h\u00F8yre, slik at du ser inn i boksen. Den gule flaten til h\u00F8yre er m\u00E5leveggen. Alt vi gj\u00F8r videre handler om \u00E5 finne kraften den kjenner.</p>"+
+       "<p>Fra mekanikken trenger vi bare \u00E9n st\u00F8rrelse: kraft er endring i bevegelsesmengde per tid.</p>",
+  eq:"<div>"+it("p")+" = "+it("m")+mi("v")+"</div><div>"+it("F")+" = "+fr("\u0394"+it("p"),"\u0394"+it("t"))+"</div>",
+  reads:[
+    ["Gass", () => GASES[sim.gas].n+" (M = "+nf(GASES[sim.gas].M,2)+" g/mol)", ""],
+    ["Molekylmasse m", () => sci(sim.m,2)+" kg", "mi"],
+    ["Antall N", () => String(sim.N), "mi"],
+    ["Temperatur T", () => nf(sim.T,0)+" K", "ma"],
+    ["Rotmiddelkvadratfart v<sub>rms</sub>", () => nf(vrms(),0)+" m/s", "mi"],
+    ["St\u00F8t p\u00E5 m\u00E5leveggen", () => nf(rate(),1)+" per ns", "ma"]
+  ],
+  q:"Hva skjer med fartsfordelingen hvis du dobler temperaturen?",
+  a:"Hele fordelingen flytter seg mot h\u00F8yere farter og blir bredere. Farten vokser som kvadratroten av temperaturen, s\u00E5 en dobling av T gir en faktor 1,41 i rotmiddelkvadratfart. Bytt ogs\u00E5 gass: tyngre molekyler er tregere ved samme temperatur."
+},
+{
+  key:"Ett st\u00F8t", num:"1", tag:"Trinn 1", title:"Hvor mye bevegelsesmengde f\u00E5r veggen i ett st\u00F8t?",
+  mode:"single", controls:["gas","vx","yz"], aux:"mom",
+  auxTitle:"Bevegelsesmengde i x-retning", auxNote:"Piltegningen viser molekylet f\u00F8r og etter st\u00F8tet, endringen i bevegelsesmengde og det veggen mottar.",
+  body:"<p>Vi f\u00F8lger n\u00E5 ett enkelt molekyl. Det treffer m\u00E5leveggen med hastighetskomponenten "+VX+". St\u00F8tet er elastisk, s\u00E5 molekylet spretter tilbake med samme fartskomponent i motsatt retning. Bevegelsen parallelt med veggen er upåvirket.</p>"+
+       "<p>I x-retning g\u00E5r bevegelsesmengden fra +"+it("m")+VX+" til \u2212"+it("m")+VX+". Veggen mottar like mye bevegelsesmengde den andre veien.</p>",
+  eq:"<div>\u0394"+it("p")+" = (\u2212"+it("m")+VX+") \u2212 ("+it("m")+VX+") = \u22122"+it("m")+VX+"</div>"+
+     "<div>|\u0394"+it("p")+"| = 2"+it("m")+"|"+VX+"|</div>",
+  reads:[
+    ["Masse m", () => sci(sim.m,2)+" kg", "mi"],
+    ["Fartskomponent v<sub>x</sub>", () => nf(sim.vxSet,0)+" m/s", "mi"],
+    ["Bevegelsesmengde mv<sub>x</sub>", () => sci(sim.m*sim.vxSet,2)+" kg\u00B7m/s", "mi"],
+    ["Overf\u00F8rt |\u0394p| = 2mv<sub>x</sub>", () => sci(2*sim.m*sim.vxSet,2)+" kg\u00B7m/s", "de"],
+    ["St\u00F8t registrert", () => String(sim.hits), "ma"],
+    ["Samlet til veggen", () => sci(sim.cumImp,2)+" kg\u00B7m/s", "ma"]
+  ],
+  q:"Du dobler v\u2093. Hvor mye bevegelsesmengde f\u00E5r veggen da i hvert st\u00F8t?",
+  a:"Dobbelt s\u00E5 mye. |\u0394p| = 2m|v\u2093| er rett proporsjonal med v\u2093. Legg merke til at massen teller like mye: et CO\u2082-molekyl gir et kraftigere dytt enn et helium-atom ved samme fart."
+},
+{
+  key:"St\u00F8tfrekvens", num:"2", tag:"Trinn 2", title:"Hvor ofte kommer st\u00F8tene?",
+  mode:"single", controls:["vx","a","yz"], aux:"hits",
+  auxTitle:"Tidslinje for st\u00F8t p\u00E5 m\u00E5leveggen", auxNote:"Hvert merke er et treff. Den lilla streken er den utledede tiden 2a/|v<sub>x</sub>|.",
+  body:"<p>Etter st\u00F8tet g\u00E5r molekylet bort til motsatt vegg og tilbake igjen. Mellom to treff p\u00E5 den samme veggen tilbakelegger det alts\u00E5 strekningen 2"+it("a")+" langs x-aksen.</p>"+
+       "<p>Farten i x-retning er konstant mellom st\u00F8tene, s\u00E5 tiden mellom to treff f\u00F8lger direkte. Et raskt molekyl treffer veggen oftere enn et langsomt.</p>"+
+       "<p>Legg merke til hva som "+it("ikke")+" st\u00E5r i uttrykket: "+mi("v")+"<sub>y</sub> og "+mi("v")+"<sub>z</sub> spiller ingen rolle for hvor ofte veggen treffes.</p>",
+  eq:"<div>\u0394"+it("t")+" = "+fr("2"+it("a"),"|"+VX+"|")+"</div>",
+  reads:[
+    ["Lengde a", () => nf(sim.Lx*1e9,1)+" nm", "ma"],
+    ["Rundtur 2a", () => nf(2*sim.Lx*1e9,1)+" nm", "ma"],
+    ["Fartskomponent v<sub>x</sub>", () => nf(sim.vxSet,0)+" m/s", "mi"],
+    ["Utledet \u0394t = 2a/v<sub>x</sub>", () => nf(dtTheory()*1e12,1)+" ps", "de"],
+    ["M\u00E5lt \u0394t", () => isNaN(dtMeas()) ? "venter \u2026" : nf(dtMeas()*1e12,1)+" ps", "ma"],
+    ["St\u00F8t per ns", () => nf(rate(),2), "ma"]
+  ],
+  q:"Skru p\u00E5 fart i y og z. Endrer tiden mellom to treff p\u00E5 m\u00E5leveggen seg?",
+  a:"Nei. Molekylet g\u00E5r p\u00E5 skr\u00E5 gjennom boksen og treffer veggen andre steder, men reisen frem og tilbake langs x tar n\u00F8yaktig like lang tid. Bare v\u2093 avgj\u00F8r st\u00F8tfrekvensen mot denne veggen."
+},
+{
+  key:"Kraft", num:"3", tag:"Trinn 3", title:"Kraften fra ett molekyl",
+  mode:"single", controls:["vx","a"], aux:"force",
+  auxTitle:"M\u00E5lt kraft mot utledet kraft", auxNote:"Den oransje kurven er all bevegelsesmengde veggen har mottatt, delt p\u00E5 m\u00E5letiden. Den lilla streken er mv<sub>x</sub><sup>2</sup>/a.",
+  body:"<p>N\u00E5 setter vi sammen de to foreg\u00E5ende trinnene. Molekylet gir veggen 2"+it("m")+"|"+VX+"| i hvert st\u00F8t, og st\u00F8tene kommer med et mellomrom p\u00E5 2"+it("a")+"/|"+VX+"|.</p>"+
+       "<p>Begge effektene vokser med "+VX+", og derfor kommer farten inn i andre potens: raske molekyler treffer b\u00E5de hardere og oftere.</p>"+
+       "<p>Sporet under scenen viser dette som en m\u00E5ling. Kurven hopper opp for hvert st\u00F8t og synker mellom st\u00F8tene, men tidsgjennomsnittet kryper mot den utledede verdien.</p>",
+  eq:"<div>"+it("F")+"<sub>1</sub> = "+fr("|\u0394"+it("p")+"|","\u0394"+it("t"))+" = "+fr("2"+it("m")+"|"+VX+"|","2"+it("a")+" / |"+VX+"|")+" = "+fr(it("m")+VX2,it("a"))+"</div>",
+  reads:[
+    ["Fartskomponent v<sub>x</sub>", () => nf(sim.vxSet,0)+" m/s", "mi"],
+    ["Utledet F<sub>1</sub> = mv<sub>x</sub><sup>2</sup>/a", () => nf(F1theory()*1e15,2)+" fN", "de"],
+    ["M\u00E5lt kraft", () => nf(Fmeas()*1e15,2)+" fN", "ma"],
+    ["Avvik", () => sim.hits < 2 ? "venter \u2026" : pct(100*(Fmeas()-F1theory())/F1theory()), ""],
+    ["M\u00E5letid", () => nf(sim.cumT*1e12,0)+" ps", ""],
+    ["St\u00F8t i m\u00E5lingen", () => String(sim.hits), "ma"]
+  ],
+  q:"Hvorfor er ikke kraften bare proporsjonal med v\u2093?",
+  a:"Fordi v\u2093 p\u00E5virker to ting samtidig. Bevegelsesmengden per st\u00F8t vokser proporsjonalt med v\u2093, og antall st\u00F8t per tid vokser ogs\u00E5 proporsjonalt med v\u2093. Produktet av de to gir v\u2093\u00B2. Prøv \u00E5 doble v\u2093 og se at den utledede kraften firedobles."
+},
+{
+  key:"Sum over N", num:"4", tag:"Trinn 4", title:"Alle molekylene til sammen",
+  mode:"many", controls:["N","T","a"], aux:"force",
+  auxTitle:"M\u00E5lt kraft mot utledet kraft", auxNote:"Med f\u00E5 molekyler svinger m\u00E5lingen kraftig. \u00D8k N og se hvordan sporet legger seg inntil den utledede verdien.",
+  body:"<p>Hvert molekyl bidrar med sin egen kraft, s\u00E5 den totale kraften er summen over alle "+it("N")+". Molekylene har ulike farter, og da er det naturlig \u00E5 beskrive dem med gjennomsnittet av "+VX2+".</p>"+
+       "<p>Her ser du hvorfor en statistisk beskrivelse er n\u00F8dvendig. Den detaljerte mikrotilstanden endrer seg hele tiden, men gjennomsnittet "+AVX2+" ligger stille ved likevekt.</p>"+
+       "<p>Sett "+it("N")+" = 5 og se hvor urolig m\u00E5lingen er. \u00D8k s\u00E5 til noen hundre. Det er f\u00F8rst da kraften blir en st\u00F8rrelse det gir mening \u00E5 kalle konstant.</p>",
+  eq:"<div>"+it("F")+" = "+fr(it("m"),it("a"))+" \u2211 "+mi("v")+"<sub>x,i</sub><sup>2</sup> = "+fr(it("N")+it("m")+AVX2,it("a"))+"</div>",
+  reads:[
+    ["Antall N", () => String(sim.N), "mi"],
+    ["\u27E8v<sub>x</sub><sup>2</sup>\u27E9", () => sci(mvx2(),2)+" m\u00B2/s\u00B2", "mi"],
+    ["Utledet F = Nm\u27E8v<sub>x</sub><sup>2</sup>\u27E9/a", () => nf(Ftheory()*1e12,2)+" pN", "de"],
+    ["M\u00E5lt kraft", () => nf(Fmeas()*1e12,2)+" pN", "ma"],
+    ["Avvik", () => sim.hits < 5 ? "venter \u2026" : pct(100*(Fmeas()-Ftheory())/Ftheory()), ""],
+    ["St\u00F8t i m\u00E5lingen", () => String(sim.hits), "ma"]
+  ],
+  q:"Hvor mye svinger den m\u00E5lte kraften med N = 5, og hvordan endrer det seg ved N = 400?",
+  a:"Det relative st\u00F8yniv\u00E5et faller omtrent som 1 over kvadratroten av antall st\u00F8t i m\u00E5lingen. Med f\u00E5 molekyler er trykket i praksis ikke en veldefinert st\u00F8rrelse over korte tider. Med mange molekyler er svingningene s\u00E5 sm\u00E5 at vi kan behandle trykket som konstant."
+},
+{
+  key:"Retninger", num:"5", tag:"Trinn 5", title:"Fra v\u2093 til den totale farten",
+  mode:"many", controls:["N","T"], aux:"bars",
+  auxTitle:"Gjennomsnitt i de tre retningene", auxNote:"S\u00F8ylene er m\u00E5lt i simuleringen. Den lilla streken er en tredel av \u27E8v<sup>2</sup>\u27E9.",
+  body:"<p>Kraften p\u00E5 m\u00E5leveggen avhenger bare av "+VX2+", men molekylene beveger seg i tre retninger. For hvert enkelt molekyl er farten knyttet til komponentene ved Pytagoras, og det samme gjelder gjennomsnittene.</p>"+
+       "<p>I en gass ved likevekt er ingen retning foretrukket. Da m\u00E5 de tre gjennomsnittene v\u00E6re like store, og hver av dem er en tredel av "+AV2+".</p>"+
+       "<p>Med f\u00E5 molekyler er s\u00F8ylene tydelig ulike. Det er ren tilfeldighet, ikke fysikk. \u00D8k "+it("N")+" og se dem jevne seg ut.</p>",
+  eq:"<div>"+AV2+" = "+AVX2+" + \u27E8"+mi("v")+"<sub>y</sub><sup>2</sup>\u27E9 + \u27E8"+mi("v")+"<sub>z</sub><sup>2</sup>\u27E9</div>"+
+     "<div>"+AVX2+" = "+fr("1","3")+" "+AV2+"</div>",
+  reads:[
+    ["\u27E8v<sub>x</sub><sup>2</sup>\u27E9", () => sci(mvx2(),2), "mi"],
+    ["\u27E8v<sub>y</sub><sup>2</sup>\u27E9", () => sci(mvy2(),2), "mi"],
+    ["\u27E8v<sub>z</sub><sup>2</sup>\u27E9", () => sci(mvz2(),2), "mi"],
+    ["\u27E8v<sup>2</sup>\u27E9", () => sci(mv2(),2)+" m\u00B2/s\u00B2", "mi"],
+    ["\u27E8v<sub>x</sub><sup>2</sup>\u27E9 / \u27E8v<sup>2</sup>\u27E9", () => nf(mvx2()/mv2(),4), "de"],
+    ["En tredel", () => nf(1/3,4), "de"]
+  ],
+  q:"Hvor n\u00E6r en tredel kommer forholdet med N = 10, og med N = 500?",
+  a:"Avviket krymper omtrent som 1 over kvadratroten av N. Likefordelingen mellom retningene er ikke en egenskap ved det enkelte molekylet, men et statistisk resultat for mange molekyler. Det er derfor faktoren en tredel er trygg \u00E5 bruke i en makroskopisk gass med enormt mange partikler."
+},
+{
+  key:"Trykk", num:"6", tag:"Trinn 6", title:"Fra kraft til trykk",
+  mode:"many", controls:["N","a"], aux:"press",
+  auxTitle:"M\u00E5lt trykk mot utledet trykk", auxNote:"Oransje kurve er m\u00E5lt trykk p\u00E5 veggen. Lilla strek er en tredel av Nm\u27E8v<sup>2</sup>\u27E9 delt p\u00E5 V.",
+  body:"<p>Trykk er kraft per areal. M\u00E5leveggen har arealet "+ma("A")+", og boksen har volumet "+ma("V")+" = "+ma("A")+it("a")+". N\u00E5r vi setter inn kraften fra trinn 4 og resultatet fra trinn 5, sl\u00E5r "+ma("A")+" og "+it("a")+" seg sammen til volumet.</p>"+
+       "<p>Dette er et rent mekanisk resultat. Vi har fortsatt ikke nevnt temperatur med et ord. Trykket bestemmes av hvor mange partikler vi har per volum og hvor stor translasjonsenergi de har i gjennomsnitt.</p>"+
+       "<p>Dra i volumet og f\u00F8lg med p\u00E5 to tall samtidig: trykket endrer seg, men produktet "+ma("PV")+" st\u00E5r stille.</p>",
+  eq:"<div>"+ma("P")+" = "+fr(it("F"),ma("A"))+" = "+fr(it("N")+it("m")+AVX2,ma("A")+it("a"))+" = "+fr("1","3")+fr(it("N")+it("m")+AV2,ma("V"))+"</div>"+
+     "<div>"+ma("PV")+" = "+fr("1","3")+it("N")+it("m")+AV2+" = "+fr("2","3")+it("N")+"\u27E8"+it("E")+"<sub>trans</sub>\u27E9</div>",
+  reads:[
+    ["Areal A", () => nf(A_wall()*1e18,0)+" nm\u00B2", "ma"],
+    ["Volum V = Aa", () => nf(vol()*1e27,0)+" nm\u00B3", "ma"],
+    ["Utledet P = \u2153Nm\u27E8v<sup>2</sup>\u27E9/V", () => nf(sim.N*sim.m*mv2()/3/vol()/1e5,2)+" bar", "de"],
+    ["M\u00E5lt P", () => nf(Pmeas()/1e5,2)+" bar", "ma"],
+    ["PV (m\u00E5lt)", () => sci(Pmeas()*vol(),2)+" J", "ma"],
+    ["\u2154N\u27E8E<sub>trans</sub>\u27E9", () => sci(2/3*sim.N*Etrans(),2)+" J", "de"]
+  ],
+  q:"Halver volumet ved fast N og T. Hva skjer med P, og hva skjer med PV?",
+  a:"Trykket dobles, mens PV st\u00E5r stille. Fartene endrer seg ikke n\u00E5r du flytter veggen i denne simuleringen, men rundturen 2a halveres, s\u00E5 hvert molekyl treffer dobbelt s\u00E5 ofte. Dobbelt s\u00E5 mange st\u00F8t per tid p\u00E5 samme areal gir dobbelt trykk."
+},
+{
+  key:"Temperatur", num:"7", tag:"Trinn 7", title:"Temperaturen kobles p\u00E5",
+  mode:"many", controls:["gas","N","T","a"], aux:"press",
+  auxTitle:"M\u00E5lt trykk mot Nk<sub>B</sub>T/V", auxNote:"Den lilla streken er n\u00E5 regnet ut fra temperaturen alene, uten \u00E5 se p\u00E5 fartene i simuleringen.",
+  body:"<p>Til slutt trenger vi broen mellom molekylenes bevegelse og den makroskopiske temperaturen. Ekvipartisjonsteoremet gir at de tre translasjonelle frihetsgradene til sammen b\u00E6rer 3/2 "+it("k")+"<sub>B</sub>"+ma("T")+".</p>"+
+       "<p>Setter vi det inn, forsvinner b\u00E5de massen og farten ut av uttrykket. Igjen st\u00E5r en lov som bare inneholder makroskopiske st\u00F8rrelser.</p>"+
+       "<p>Bytt gass og hold "+ma("T")+", "+it("N")+" og "+ma("V")+" fast. Helium-atomene farer av g\u00E5rde mye raskere enn CO\u2082-molekylene, men trykket er det samme. Tyngre molekyler treffer hardere og sjeldnere, og de to effektene opphever hverandre n\u00F8yaktig.</p>",
+  eq:"<div>\u27E8"+it("E")+"<sub>trans</sub>\u27E9 = "+fr("3","2")+it("k")+"<sub>B</sub>"+ma("T")+"</div>"+
+     "<div>"+ma("PV")+" = "+fr("2","3")+it("N")+" \u00B7 "+fr("3","2")+it("k")+"<sub>B</sub>"+ma("T")+" = "+it("N")+it("k")+"<sub>B</sub>"+ma("T")+"</div>",
+  reads:[
+    ["Temperatur T", () => nf(sim.T,0)+" K", "ma"],
+    ["M\u00E5lt \u27E8E<sub>trans</sub>\u27E9", () => nf(Etrans()*1e21,3)+" zJ", "mi"],
+    ["Utledet \u00B3\u2044\u2082 k<sub>B</sub>T", () => nf(1.5*KB*sim.T*1e21,3)+" zJ", "de"],
+    ["Utledet Nk<sub>B</sub>T/V", () => nf(sim.N*KB*sim.T/vol()/1e5,2)+" bar", "de"],
+    ["M\u00E5lt P", () => nf(Pmeas()/1e5,2)+" bar", "ma"],
+    ["Rotmiddelkvadratfart v<sub>rms</sub>", () => nf(vrms(),0)+" m/s", "mi"]
+  ],
+  q:"Hvorfor gir helium og karbondioksid n\u00F8yaktig samme trykk ved samme T, N og V?",
+  a:"Fordi trykket bare avhenger av produktet m\u27E8v\u00B2\u27E9, og ekvipartisjon fastl\u00E5ser nettopp dette produktet til 3k\u1D2ET. Et lett atom har stor fart og liten masse, et tungt molekyl har liten fart og stor masse. Produktet er det samme, og derfor kjenner ikke veggen forskjell."
+},
+{
+  key:"Utforsk", num:"", tag:"Til slutt", title:"PV = nRT",
+  mode:"many", controls:["gas","N","T","a"], aux:"press",
+  auxTitle:"M\u00E5lt trykk mot nRT/V", auxNote:"Sporet viser hvor lang m\u00E5letid som trengs f\u00F8r m\u00E5lingen faller til ro rundt loven.",
+  body:"<p>Med "+it("N")+" = "+it("n")+it("N")+"<sub>A</sub> og "+it("R")+" = "+it("N")+"<sub>A</sub>"+it("k")+"<sub>B</sub> st\u00E5r vi igjen med den formen du kjenner fra generell kjemi. Ingen av st\u00F8rrelsene i den endelige loven sier noe om molekyler, men hvert eneste ledd kom derfra.</p>"+
+       "<p>N\u00E5 kan du skru p\u00E5 alt samtidig. Legg merke til at simuleringen aldri er helt enig med loven: den m\u00E5lte verdien svinger rundt "+ma("nRT")+"/"+ma("V")+". Det er ikke en feil i loven, men en p\u00E5minnelse om at trykk er et gjennomsnitt over mange tilfeldige st\u00F8t.</p>",
+  eq:"<div>"+ma("PV")+" = "+it("N")+it("k")+"<sub>B</sub>"+ma("T")+" = "+it("n")+it("R")+ma("T")+"</div>",
+  reads:[
+    ["Stoffmengde n", () => sci(sim.N/NA,2)+" mol", "ma"],
+    ["Volum V", () => nf(vol()*1e27,0)+" nm\u00B3", "ma"],
+    ["nRT/V", () => nf((sim.N/NA)*RGAS*sim.T/vol()/1e5,2)+" bar", "de"],
+    ["M\u00E5lt P", () => nf(Pmeas()/1e5,2)+" bar", "ma"],
+    ["Avvik", () => sim.hits < 20 ? "venter \u2026" : pct(100*(Pmeas()-sim.N*KB*sim.T/vol())/(sim.N*KB*sim.T/vol())), ""],
+    ["T avlest fra fartene", () => nf(Tsim(),0)+" K", "mi"]
+  ],
+  q:"Finn en innstilling der m\u00E5lt trykk bommer p\u00E5 nRT/V med mer enn fem prosent. Hva skal til?",
+  a:"F\u00E5 molekyler og kort m\u00E5letid. Nullstill m\u00E5lingen med N = 3 og les av med \u00E9n gang. Loven gjelder fortsatt, men gjennomsnittet er ikke etablert enn\u00E5. Dette er selve grensen mellom mikroskopisk mekanikk og makroskopisk termodynamikk."
+}
+];
+
+/* ============================ DOM ============================ */
+const $ = id => document.getElementById(id);
+const scene = $("scene"), sctx = scene.getContext("2d");
+const auxc = $("aux"), actx = auxc.getContext("2d");
+const CSS = getComputedStyle(document.documentElement);
+const C = k => CSS.getPropertyValue(k).trim();
+
+function hidpi(cv, ctx, w, h){
+  const r = Math.min(window.devicePixelRatio || 1, 2);
+  cv.width = w*r; cv.height = h*r;
+  ctx.setTransform(r,0,0,r,0,0);
+}
+hidpi(scene, sctx, 690, 380);
+hidpi(auxc, actx, 690, 168);
+
+/* rail */
+function lerpHex(a, b, t){
+  const p = h => [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+  const A = p(a), B = p(b);
+  return "rgb("+A.map((v,i) => Math.round(v + (B[i]-v)*t)).join(",")+")";
+}
+const rail = $("rail");
+STEPS.forEach((s, i) => {
+  const b = document.createElement("button");
+  b.style.setProperty("--dc", lerpHex("#5ec8e5", "#f2a03d", i/(STEPS.length-1)));
+  b.innerHTML = '<span class="dot"></span>' + (s.num ? '<span class="num">'+s.num+'</span>' : "") + "<span>"+s.key+"</span>";
+  b.addEventListener("click", () => goto(i));
+  rail.appendChild(b);
+});
+
+/* gassvalg */
+const selGas = $("in-gas");
+GASES.forEach((g, i) => {
+  const o = document.createElement("option");
+  o.value = String(i); o.textContent = g.n + "  (" + nf(g.M,2) + " g/mol)";
+  selGas.appendChild(o);
+});
+selGas.value = "2";
+
+/* ============================ kontroller ============================ */
+function showControls(list){
+  ["gas","N","T","a","vx","yz"].forEach(k => $("c-"+k).classList.toggle("hide", list.indexOf(k) < 0));
+}
+function syncLabels(){
+  $("v-N").textContent = sim.N;
+  $("v-T").textContent = nf(sim.T,0) + " K";
+  $("v-a").textContent = nf(sim.Lx*1e9,1) + " nm";
+  $("v-vx").textContent = nf(sim.vxSet,0) + " m/s";
+}
+$("in-N").addEventListener("input", e => {
+  const n = +e.target.value;
+  if(n > sim.N){
+    const s = Math.sqrt(KB*sim.T/sim.m);
+    for(let i = sim.N; i < n; i++){
+      sim.x.push(Math.random()*sim.Lx); sim.y.push(Math.random()*LY); sim.z.push(Math.random()*LZ);
+      sim.vx.push(gauss()*s); sim.vy.push(gauss()*s); sim.vz.push(gauss()*s);
+    }
+  } else {
+    sim.x.length = n; sim.y.length = n; sim.z.length = n;
+    sim.vx.length = n; sim.vy.length = n; sim.vz.length = n;
+  }
+  sim.N = n; rescaleToT(); resetStats(); syncLabels();
+});
+$("in-T").addEventListener("input", e => {
+  sim.T = +e.target.value;
+  if(sim.mode === "many") rescaleToT();
+  resetStats(); syncLabels();
+});
+$("in-a").addEventListener("input", e => {
+  const L = +e.target.value*1e-9, f = L/sim.Lx;
+  for(let i = 0; i < sim.N; i++) sim.x[i] *= f;
+  sim.Lx = L; resetStats(); syncLabels();
+});
+$("in-vx").addEventListener("input", e => {
+  sim.vxSet = +e.target.value;
+  if(sim.mode === "single"){ sim.vx[0] = Math.sign(sim.vx[0] || 1)*sim.vxSet; }
+  resetStats(); syncLabels();
+});
+$("in-yz").addEventListener("change", e => {
+  sim.yz = e.target.checked;
+  if(sim.mode === "single"){ sim.vy[0] = sim.yz ? 190 : 0; sim.vz[0] = sim.yz ? 130 : 0; sim.y[0] = LY*0.5; sim.z[0] = LZ*0.5; }
+  resetStats();
+});
+selGas.addEventListener("change", e => {
+  sim.gas = +e.target.value;
+  const mNew = GASES[sim.gas].M*AMU;
+  if(sim.mode === "many"){ sim.m = mNew; rescaleToT(); } else { sim.m = mNew; }
+  resetStats();
+});
+$("in-spd").addEventListener("input", e => { sim.speed = +e.target.value; });
+
+$("play").addEventListener("click", () => {
+  sim.running = !sim.running;
+  $("play").textContent = sim.running ? "Pause" : "Start";
+});
+$("reset").addEventListener("click", resetStats);
+$("prev").addEventListener("click", () => goto(sim.stepIdx - 1));
+$("next").addEventListener("click", () => goto(sim.stepIdx === STEPS.length - 1 ? 0 : sim.stepIdx + 1));
+document.addEventListener("keydown", e => {
+  if(e.target.matches("input, select, summary")) return;
+  if(e.code === "Space"){ e.preventDefault(); $("play").click(); }
+  if(e.code === "ArrowRight") goto(sim.stepIdx + 1);
+  if(e.code === "ArrowLeft") goto(sim.stepIdx - 1);
+});
+
+/* ============================ trinnbytte ============================ */
+function goto(i){
+  i = Math.max(0, Math.min(STEPS.length - 1, i));
+  sim.stepIdx = i;
+  const s = STEPS[i];
+  Array.from(rail.children).forEach((b, k) => b.setAttribute("aria-current", k === i ? "true" : "false"));
+  $("stepTag").textContent = s.tag;
+  $("stepTitle").textContent = s.title;
+  $("stepBody").innerHTML = s.body;
+  $("stepEq").innerHTML = s.eq;
+  $("auxTitle").innerHTML = s.auxTitle;
+  $("auxNote").innerHTML = s.auxNote;
+  showControls(s.controls);
+
+  $("reads").innerHTML = s.reads.map(r => '<div class="read '+(r[2]||"")+'"><div class="k">'+r[0]+'</div><div class="v" data-v></div></div>').join("");
+  $("predict").innerHTML = '<p class="q"><b>Tenk f\u00F8rst</b>'+s.q+"</p>"+
+    "<details><summary>Vis svar</summary><p>"+s.a+"</p></details>";
+
+  if(s.mode !== sim.mode){
+    sim.mode = s.mode;
+    if(s.mode === "single"){ sim.N = 1; initSingle(); }
+    else { sim.N = +$("in-N").value; initMany(); }
+  } else if(s.mode === "single"){ initSingle(); } else { resetStats(); }
+
+  $("in-spd").value = String(s.mode === "single" ? 16 : 24);
+  sim.speed = s.mode === "single" ? 16 : 24;
+  $("prev").disabled = i === 0;
+  $("next").textContent = i === STEPS.length - 1 ? "Til start" : "Neste trinn";
+  syncLabels(); updateReads();
+}
+
+/* ============================ visning av tall ============================ */
+let readTick = 0;
+function updateReads(){
+  const s = STEPS[sim.stepIdx];
+  const cells = $("reads").querySelectorAll("[data-v]");
+  for(let i = 0; i < cells.length && i < s.reads.length; i++){
+    const txt = s.reads[i][1]();
+    if(cells[i].textContent !== txt) cells[i].textContent = txt;
+  }
+  $("hudT").textContent = nf(sim.t*1e12, 0);
+  $("hudN").textContent = String(sim.hits);
+}
+
+/* ============================ scene ============================ */
+const SC = 26/1e-9, OX = 46, OY = 336, DZX = 46, DZY = -34;
+function pr(x, y, z){ const f = z/LZ; return [OX + x*SC + f*DZX, OY - y*SC + f*DZY]; }
+function poly(ctx, pts, close){
+  ctx.beginPath(); ctx.moveTo(pts[0][0], pts[0][1]);
+  for(let i = 1; i < pts.length; i++) ctx.lineTo(pts[i][0], pts[i][1]);
+  if(close) ctx.closePath();
+}
+
+function drawScene(dtReal){
+  const L = sim.Lx;
+  sctx.clearRect(0, 0, 690, 380);
+
+  const c000 = pr(0,0,0), c100 = pr(L,0,0), c110 = pr(L,LY,0), c010 = pr(0,LY,0);
+  const c001 = pr(0,0,LZ), c101 = pr(L,0,LZ), c111 = pr(L,LY,LZ), c011 = pr(0,LY,LZ);
+
+  /* bakvegg og gulv */
+  poly(sctx, [c001,c101,c111,c011], true);
+  sctx.fillStyle = "rgba(255,255,255,.028)"; sctx.fill();
+  sctx.strokeStyle = "rgba(160,185,235,.20)"; sctx.lineWidth = 1; sctx.stroke();
+  poly(sctx, [c000,c100,c101,c001], true);
+  sctx.fillStyle = "rgba(94,200,229,.045)"; sctx.fill();
+
+  sctx.strokeStyle = "rgba(160,185,235,.16)";
+  [[c000,c001],[c100,c101],[c110,c111],[c010,c011]].forEach(p => { poly(sctx, p, false); sctx.stroke(); });
+
+  /* spor for ett molekyl */
+  if(sim.mode === "single"){
+    const p0 = pr(sim.x[0], sim.y[0], sim.z[0]);
+    sim.trail.push(p0);
+    if(sim.trail.length > 150) sim.trail.shift();
+    sctx.lineWidth = 1.6;
+    for(let i = 1; i < sim.trail.length; i++){
+      sctx.beginPath();
+      sctx.moveTo(sim.trail[i-1][0], sim.trail[i-1][1]);
+      sctx.lineTo(sim.trail[i][0], sim.trail[i][1]);
+      sctx.strokeStyle = "rgba(94,200,229," + (0.32*i/sim.trail.length).toFixed(3) + ")";
+      sctx.stroke();
+    }
+  }
+
+  /* molekyler */
+  for(let i = 0; i < sim.N; i++){
+    const f = sim.z[i]/LZ;
+    const p = pr(sim.x[i], sim.y[i], sim.z[i]);
+    const r = (sim.mode === "single" ? 7 : 4.4)*(1 - 0.34*f);
+    sctx.beginPath(); sctx.arc(p[0], p[1], r, 0, 6.2832);
+    sctx.fillStyle = "rgba(94,200,229," + (0.95 - 0.42*f).toFixed(3) + ")";
+    sctx.fill();
+    if(sim.mode === "single"){
+      sctx.beginPath(); sctx.arc(p[0], p[1], r + 6, 0, 6.2832);
+      sctx.strokeStyle = "rgba(94,200,229,.35)"; sctx.lineWidth = 1.5; sctx.stroke();
+    }
+  }
+
+  /* fartsvektorer for ett molekyl */
+  if(sim.mode === "single"){
+    const p = pr(sim.x[0], sim.y[0], sim.z[0]);
+    const k = 0.075;
+    arrow(sctx, p[0], p[1], p[0] + sim.vx[0]*k, p[1], C("--micro"), 2.2);
+    label(sctx, p[0] + sim.vx[0]*k*0.5, p[1] - 10, "v\u2093", C("--micro"));
+    if(sim.yz){
+      const p2 = pr(sim.x[0] + sim.vx[0]*k/SC, sim.y[0] + sim.vy[0]*k/SC, sim.z[0] + sim.vz[0]*k/SC);
+      arrow(sctx, p[0], p[1], p2[0], p2[1], "rgba(169,140,240,.95)", 2.2);
+      label(sctx, p2[0] + 8, p2[1] - 4, "v", "rgba(169,140,240,.95)");
+    }
+  }
+
+  /* nedslag */
+  for(let i = sim.impacts.length - 1; i >= 0; i--){
+    const im = sim.impacts[i];
+    im.a += dtReal;
+    if(im.a > 0.75){ sim.impacts.splice(i, 1); continue; }
+    const q = pr(L, im.y, im.z), u = im.a/0.75;
+    sctx.beginPath(); sctx.arc(q[0], q[1], 2 + 13*u, 0, 6.2832);
+    sctx.strokeStyle = "rgba(242,160,61," + (0.85*(1-u)).toFixed(3) + ")";
+    sctx.lineWidth = 2; sctx.stroke();
+  }
+
+  /* frontramme */
+  poly(sctx, [c000,c100,c110,c010], true);
+  sctx.strokeStyle = "rgba(190,210,245,.42)"; sctx.lineWidth = 1.3; sctx.stroke();
+
+  /* måleveggen */
+  sim.flash *= 0.90;
+  poly(sctx, [c100,c110,c111,c101], true);
+  sctx.fillStyle = "rgba(242,160,61," + (0.10 + 0.42*sim.flash).toFixed(3) + ")";
+  sctx.fill();
+  sctx.strokeStyle = "rgba(242,160,61," + (0.55 + 0.45*sim.flash).toFixed(3) + ")";
+  sctx.lineWidth = 2; sctx.stroke();
+
+  /* mål på boksen */
+  const y0 = OY + 18;
+  sctx.strokeStyle = "rgba(190,210,245,.45)"; sctx.lineWidth = 1;
+  sctx.beginPath(); sctx.moveTo(OX, y0); sctx.lineTo(OX + L*SC, y0); sctx.stroke();
+  sctx.beginPath(); sctx.moveTo(OX, y0-4); sctx.lineTo(OX, y0+4);
+  sctx.moveTo(OX + L*SC, y0-4); sctx.lineTo(OX + L*SC, y0+4); sctx.stroke();
+  label(sctx, OX + L*SC/2 - 22, y0 + 15, "a = " + nf(L*1e9,1) + " nm", "rgba(190,210,245,.75)");
+  label(sctx, c110[0] + 10, c110[1] - 6, "A = " + nf(A_wall()*1e18,0) + " nm\u00B2", "rgba(242,160,61,.9)");
+}
+
+function arrow(ctx, x0, y0, x1, y1, col, w){
+  const a = Math.atan2(y1-y0, x1-x0), h = 7;
+  ctx.strokeStyle = col; ctx.fillStyle = col; ctx.lineWidth = w;
+  ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y1); ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x1, y1);
+  ctx.lineTo(x1 - h*Math.cos(a-0.4), y1 - h*Math.sin(a-0.4));
+  ctx.lineTo(x1 - h*Math.cos(a+0.4), y1 - h*Math.sin(a+0.4));
+  ctx.closePath(); ctx.fill();
+}
+function label(ctx, x, y, t, col, size, align){
+  ctx.fillStyle = col;
+  ctx.font = (size || 11) + "px ui-monospace, Menlo, Consolas, monospace";
+  ctx.textAlign = align || "left";
+  ctx.fillText(t, x, y);
+  ctx.textAlign = "left";
+}
+
+/* ============================ målespor ============================ */
+function drawAux(){
+  const W = 690, H = 168;
+  actx.clearRect(0, 0, W, H);
+  const kind = STEPS[sim.stepIdx].aux;
+  if(kind === "hist") auxHist(W, H);
+  else if(kind === "mom") auxMom(W, H);
+  else if(kind === "hits") auxHits(W, H);
+  else if(kind === "bars") auxBars(W, H);
+  else auxTrace(W, H, kind === "press");
+}
+
+function axes(W, H, l, r, t, b){
+  actx.strokeStyle = "#dde3ec"; actx.lineWidth = 1;
+  actx.beginPath(); actx.moveTo(l, t); actx.lineTo(l, H-b); actx.lineTo(W-r, H-b); actx.stroke();
+}
+
+function auxTrace(W, H, isPress){
+  const l = 62, r = 92, t = 14, b = 26;
+  const s = STEPS[sim.stepIdx];
+  let theory;
+  if(s.key === "Kraft") theory = F1theory();
+  else if(s.key === "Sum over N") theory = Ftheory();
+  else if(s.key === "Trykk") theory = sim.N*sim.m*mv2()/3/vol();
+  else theory = sim.N*KB*sim.T/vol();
+  const meas = isPress ? Pmeas() : Fmeas();
+  const win = isPress ? Pwin() : Fwin();
+
+  if(sim.running){
+    sim.hist.push({t:sim.t, c:meas, w:win});
+    if(sim.hist.length > 420) sim.hist.shift();
+  }
+
+  axes(W, H, l, r, t, b);
+  if(theory <= 0) return;
+  const ymax = 2*theory;
+  const py = v => H - b - Math.max(0, Math.min(1, v/ymax))*(H - b - t);
+  const t0 = sim.hist.length ? sim.hist[0].t : 0;
+  const span = Math.max(sim.t - t0, 1e-12);
+  const px = tt => l + (tt - t0)/span*(W - r - l);
+
+  const unit = isPress ? "bar" : (s.key === "Kraft" ? "fN" : "pN");
+  const conv = isPress ? 1/1e5 : (s.key === "Kraft" ? 1e15 : 1e12);
+
+  /* rutenett */
+  [0, 0.5, 1].forEach(f => {
+    const v = ymax*f, y = py(v);
+    actx.strokeStyle = "#eef1f6"; actx.beginPath(); actx.moveTo(l, y); actx.lineTo(W-r, y); actx.stroke();
+    label(actx, l - 8, y + 3.5, nf(v*conv, 2), "#8b98ab", 10, "right");
+  });
+
+  /* vindusverdi */
+  actx.strokeStyle = "rgba(242,160,61,.28)"; actx.lineWidth = 1;
+  actx.beginPath();
+  sim.hist.forEach((h, i) => { const X = px(h.t), Y = py(h.w); i ? actx.lineTo(X,Y) : actx.moveTo(X,Y); });
+  actx.stroke();
+
+  /* utledet verdi */
+  const yT = py(theory);
+  actx.setLineDash([6,4]); actx.strokeStyle = C("--bridge"); actx.lineWidth = 1.8;
+  actx.beginPath(); actx.moveTo(l, yT); actx.lineTo(W-r, yT); actx.stroke();
+  actx.setLineDash([]);
+  label(actx, W-r+8, yT - 5, "utledet", C("--bridge-deep"), 10);
+  label(actx, W-r+8, yT + 9, nf(theory*conv,2) + " " + unit, C("--bridge-deep"), 11);
+
+  /* kumulativ måling */
+  actx.strokeStyle = C("--macro-deep"); actx.lineWidth = 2;
+  actx.beginPath();
+  sim.hist.forEach((h, i) => { const X = px(h.t), Y = py(h.c); i ? actx.lineTo(X,Y) : actx.moveTo(X,Y); });
+  actx.stroke();
+  if(sim.hist.length){
+    const last = sim.hist[sim.hist.length-1];
+    actx.beginPath(); actx.arc(px(last.t), py(last.c), 3.2, 0, 6.2832);
+    actx.fillStyle = C("--macro-deep"); actx.fill();
+    label(actx, W-r+8, py(last.c) + (Math.abs(py(last.c) - yT) < 18 ? 26 : 4), nf(last.c*conv,2) + " " + unit, C("--macro-deep"), 11);
+  }
+  label(actx, l, H - 8, "m\u00E5letid: " + nf(sim.cumT*1e12,0) + " ps", "#8b98ab", 10);
+  label(actx, W-r, H - 8, "m\u00E5lt", C("--macro-deep"), 10, "right");
+}
+
+function auxHits(W, H){
+  const l = 20, r = 20, b = 46, y = H - b;
+  const dtT = dtTheory(), span = Math.max(5.5*dtT, 1e-13);
+  const t1 = sim.t, t0 = t1 - span;
+  const px = tt => l + (tt - t0)/span*(W - r - l);
+  actx.strokeStyle = "#dde3ec"; actx.lineWidth = 1;
+  actx.beginPath(); actx.moveTo(l, y); actx.lineTo(W - r, y); actx.stroke();
+  label(actx, l, y + 34, "tid \u2192", "#8b98ab", 10);
+
+  const hs = sim.hitTimes.filter(h => h >= t0);
+  hs.forEach(h => {
+    const X = px(h);
+    actx.strokeStyle = C("--macro"); actx.lineWidth = 2;
+    actx.beginPath(); actx.moveTo(X, y - 34); actx.lineTo(X, y + 6); actx.stroke();
+  });
+  if(hs.length >= 2){
+    const a = px(hs[hs.length-2]), b2 = px(hs[hs.length-1]);
+    actx.strokeStyle = C("--macro-deep"); actx.lineWidth = 1.2;
+    actx.beginPath(); actx.moveTo(a, y - 44); actx.lineTo(b2, y - 44); actx.stroke();
+    label(actx, (a+b2)/2, y - 50, nf((hs[hs.length-1]-hs[hs.length-2])*1e12,1) + " ps", C("--macro-deep"), 11, "center");
+  }
+  /* utledet intervall */
+  const xr = W - r, xl = xr - dtT/span*(W - r - l);
+  actx.setLineDash([5,4]); actx.strokeStyle = C("--bridge"); actx.lineWidth = 2;
+  actx.beginPath(); actx.moveTo(xl, y + 20); actx.lineTo(xr, y + 20); actx.stroke();
+  actx.setLineDash([]);
+  label(actx, (xl+xr)/2, y + 34, "2a/|v\u2093| = " + nf(dtT*1e12,1) + " ps", C("--bridge-deep"), 11, "center");
+}
+
+function auxMom(W, H){
+  const cx = 330, vmax = 900, pmax = 2*sim.m*vmax;
+  const rows = [
+    ["f\u00F8r st\u00F8tet",  +1, sim.m*sim.vxSet,   C("--micro"),  C("--micro-deep"),  "p = +mv\u2093"],
+    ["etter st\u00F8tet", -1, sim.m*sim.vxSet,   C("--micro"),  C("--micro-deep"),  "p = \u2212mv\u2093"],
+    ["endring",       -1, 2*sim.m*sim.vxSet, C("--bridge"), C("--bridge-deep"), "\u0394p = \u22122mv\u2093"],
+    ["til veggen",    +1, 2*sim.m*sim.vxSet, C("--macro"),  C("--macro-deep"),  "+2mv\u2093"]
+  ];
+  actx.strokeStyle = "#e4e9f0"; actx.lineWidth = 1;
+  actx.beginPath(); actx.moveTo(cx, 10); actx.lineTo(cx, H - 10); actx.stroke();
+  rows.forEach((row, i) => {
+    const y = 28 + i*36;
+    label(actx, 14, y + 4, row[0], "#8b98ab", 10.5);
+    const len = Math.max(14, row[2]/pmax*170);
+    arrow(actx, cx, y, cx + row[1]*len, y, row[3], 2.4);
+    label(actx, cx + row[1]*(len + 12), y + 4, row[5], row[4], 11.5, row[1] > 0 ? "left" : "right");
+  });
+}
+
+function vlab(ctx, x, y, sub, col, size){
+  size = size || 13;
+  const F = '"Iowan Old Style", Palatino, Georgia, serif';
+  ctx.fillStyle = col; ctx.textAlign = "left";
+  const a = "\u27E8v", b = sub, c = "\u00B2\u27E9";
+  ctx.font = "italic " + size + "px " + F;
+  const wa = ctx.measureText(a).width, wc = ctx.measureText(c).width;
+  ctx.font = "italic " + (size*0.74) + "px " + F;
+  const wb = ctx.measureText(b).width;
+  let X = x - (wa + wb + wc)/2;
+  ctx.font = "italic " + size + "px " + F; ctx.fillText(a, X, y); X += wa;
+  ctx.font = "italic " + (size*0.74) + "px " + F; ctx.fillText(b, X, y + size*0.22); X += wb;
+  ctx.font = "italic " + size + "px " + F; ctx.fillText(c, X, y);
+}
+
+function auxBars(W, H){
+  const l = 70, b = 36, t = 16, base = H - b;
+  const vals = [mvx2(), mvy2(), mvz2()], third = mv2()/3;
+  const ymax = Math.max(third*1.8, Math.max.apply(null, vals)*1.15) || 1;
+  const bw = 100, gap = 40, x0 = 100;
+  axes(W, H, l, 190, t, b);
+  const py = v => base - Math.min(1, v/ymax)*(base - t);
+  [0, ymax/2, ymax].forEach(v => label(actx, l - 8, py(v) + 3.5, sci(v, 1), "#8b98ab", 10, "right"));
+  const subs = ["x", "y", "z"];
+  vals.forEach((v, i) => {
+    const x = x0 + i*(bw + gap), y = py(v);
+    actx.fillStyle = "rgba(94,200,229,.72)";
+    actx.fillRect(x, y, bw, base - y);
+    actx.strokeStyle = C("--micro-deep"); actx.lineWidth = 1.2;
+    actx.strokeRect(x + 0.5, y + 0.5, bw - 1, base - y - 1);
+    vlab(actx, x + bw/2, base + 17, subs[i], C("--micro-deep"), 14);
+    label(actx, x + bw/2, base + 30, nf(100*v/mv2(), 1) + " % av total", "#8b98ab", 10, "center");
+  });
+  const yT = py(third);
+  actx.setLineDash([6,4]); actx.strokeStyle = C("--bridge"); actx.lineWidth = 2;
+  actx.beginPath(); actx.moveTo(l, yT); actx.lineTo(500, yT); actx.stroke();
+  actx.setLineDash([]);
+  label(actx, 508, yT - 4, "en tredel av", C("--bridge-deep"), 10);
+  actx.textAlign = "left";
+  vlab(actx, 508 + 14, yT + 11, "", C("--bridge-deep"), 14);
+}
+
+function auxHist(W, H){
+  const l = 46, r = 20, t = 14, b = 30, base = H - b;
+  const s = Math.sqrt(KB*sim.T/sim.m), vmax = 4.2*s;
+  const nb = 26, bins = new Array(nb).fill(0);
+  for(let i = 0; i < sim.N; i++){
+    const v = Math.hypot(sim.vx[i], sim.vy[i], sim.vz[i]);
+    const k = Math.floor(v/vmax*nb);
+    if(k >= 0 && k < nb) bins[k]++;
+  }
+  const bwv = vmax/nb;
+  const f = v => 4*Math.PI*Math.pow(sim.m/(2*Math.PI*KB*sim.T), 1.5)*v*v*Math.exp(-sim.m*v*v/(2*KB*sim.T));
+  let ymax = 1;
+  for(let k = 0; k < nb; k++) ymax = Math.max(ymax, bins[k], sim.N*f((k+0.5)*bwv)*bwv);
+  ymax *= 1.15;
+  axes(W, H, l, r, t, b);
+  const px = v => l + v/vmax*(W - r - l);
+  const py = c => base - c/ymax*(base - t);
+  const bw = (W - r - l)/nb;
+  for(let k = 0; k < nb; k++){
+    if(!bins[k]) continue;
+    const y = py(bins[k]);
+    actx.fillStyle = "rgba(94,200,229,.62)";
+    actx.fillRect(px(k*bwv) + 1, y, bw - 2, base - y);
+  }
+  actx.strokeStyle = C("--bridge"); actx.lineWidth = 2;
+  actx.beginPath();
+  for(let k = 0; k <= 160; k++){
+    const v = k/160*vmax, X = px(v), Y = py(sim.N*f(v)*bwv);
+    k ? actx.lineTo(X, Y) : actx.moveTo(X, Y);
+  }
+  actx.stroke();
+  const vr = vrms(), xr = px(Math.min(vr, vmax));
+  actx.setLineDash([4,4]); actx.strokeStyle = C("--macro-deep"); actx.lineWidth = 1.6;
+  actx.beginPath(); actx.moveTo(xr, t); actx.lineTo(xr, base); actx.stroke();
+  actx.setLineDash([]);
+  label(actx, xr + 6, t + 11, "v_rms = " + nf(vr, 0) + " m/s", C("--macro-deep"), 11);
+  label(actx, l, H - 8, "0", "#8b98ab", 10);
+  label(actx, W - r, H - 8, nf(vmax, 0) + " m/s", "#8b98ab", 10, "right");
+  label(actx, l - 8, t + 4, "antall", "#8b98ab", 10, "right");
+}
+
+/* ============================ løkke ============================ */
+let last = performance.now();
+function frame(now){
+  const dtReal = Math.min((now - last)/1000, 0.05);
+  last = now;
+  if(sim.running) advance(sim.speed);
+  drawScene(dtReal);
+  drawAux();
+  if(++readTick % 5 === 0) updateReads();
+  requestAnimationFrame(frame);
+}
+
+/* ============================ oppstart ============================ */
+initMany();
+goto(0);
+if(window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches){
+  sim.running = false; $("play").textContent = "Start";
+}
+requestAnimationFrame(frame);
+</script>
+</body>
+</html>
