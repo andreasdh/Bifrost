@@ -5,13 +5,15 @@ parts:
 - caption: Introduksjon
   chapters:
   - file: docs/introduksjon
-  - file: docs/praktisk_statistikk 
-
+ 
 - caption: Statistisk termodynamikk
   chapters:
   - file: docs/entropi_og_boltzmann
 # - file: docs/partisjonsfunksjonen
 # - file: docs/gasses
+
+
+
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
@@ -41,6 +43,11 @@ parts:
     - file: docs/matematikk/kalkulus
     - file: docs/matematikk/flervariabel_kalkulus
     - file: docs/matematikk/statistikk
+
+caption: Praktisk statistikk for Lab-øvelser
+chapters: 
+ - file: docs/praktisk_statistikk 
+
 
 #- caption: Oppgaver og løsningsforslag
   #chapters:
