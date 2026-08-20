@@ -5,6 +5,7 @@ parts:
 - caption: Introduksjon
   chapters:
   - file: docs/introduksjon
+  - file: docs/praktisk_statistikk 
 
 - caption: Statistisk termodynamikk
   chapters:
