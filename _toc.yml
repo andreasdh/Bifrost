@@ -44,10 +44,9 @@ parts:
     - file: docs/matematikk/flervariabel_kalkulus
     - file: docs/matematikk/statistikk
 
--caption: Praktisk statistikk for Lab-øvelser
+caption: Praktisk statistikk for Lab-øvelser
 chapters: 
  - file: docs/praktisk_statistikk 
-
 
 #- caption: Oppgaver og løsningsforslag
   #chapters:
