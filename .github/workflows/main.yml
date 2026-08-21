@@ -50,6 +50,34 @@ jobs:
           config = config.replace("execute_notebooks: auto", "execute_notebooks: off")
           config_path.write_text(config, encoding="utf-8")
 
+          # Correct heading hierarchy in the active maths appendix.
+          maths_path = Path("docs/matematikk/formler_og_enheter.ipynb")
+          maths = json.loads(maths_path.read_text(encoding="utf-8"))
+          heading_fixes = {
+              "#### 1.2.1 Mengder, delmengder og elementer": "### 1.2.1 Mengder, delmengder og elementer",
+              "#### 1.2.2 Mengdenotasjon": "### 1.2.2 Mengdenotasjon",
+              "#### 1.2.3 Tallmengder": "### 1.2.3 Tallmengder",
+              "#### 1.4.1 Tabeller med enheter og konstanter": "### 1.4.1 Tabeller med enheter og konstanter",
+              "#### 1.4.2 Dimensjonsanalyse": "### 1.4.2 Dimensjonsanalyse",
+          }
+          for cell in maths["cells"]:
+              if cell.get("cell_type") != "markdown":
+                  continue
+              source = cell.get("source", [])
+              if isinstance(source, str):
+                  for old, new in heading_fixes.items():
+                      source = source.replace(old, new)
+                  cell["source"] = source
+              else:
+                  cell["source"] = [
+                      heading_fixes.get(line.rstrip("\n"), line.rstrip("\n")) + ("\n" if line.endswith("\n") else "")
+                      for line in source
+                  ]
+          maths_path.write_text(
+              json.dumps(maths, ensure_ascii=False, indent=1) + "\n",
+              encoding="utf-8",
+          )
+
           notebook_path = Path("docs/ukesoppgaver/uke_05.ipynb")
           notebook = json.loads(notebook_path.read_text(encoding="utf-8"))
           embeds = {
@@ -83,7 +111,6 @@ jobs:
 
       - name: Build Jupyter Book
         run: jupyter-book build .
-
 
       - name: Deploy to gh-pages
         if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
