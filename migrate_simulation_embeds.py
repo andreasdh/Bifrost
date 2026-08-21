@@ -85,9 +85,13 @@ def migrate_base64_embed(source):
 
 
 def migrate_notebook(path):
-    notebook = json.loads(path.read_text(encoding="utf-8"))
-    changed = 0
+    try:
+        notebook = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as error:
+        print(f"skipped malformed notebook {path.relative_to(ROOT).as_posix()}: {error}")
+        return 0
 
+    changed = 0
     for cell in notebook.get("cells", []):
         if cell.get("cell_type") != "code":
             continue
