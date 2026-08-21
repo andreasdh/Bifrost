@@ -2,6 +2,10 @@ title: Bifrost
 author: Andreas Haraldsrud
 logo: logo.png
 
+# Build only pages that are explicitly included in _toc.yml.
+# This keeps archived and superseded notebooks from generating warnings.
+only_build_toc_files: true
+
 execute:
   execute_notebooks: auto
 
