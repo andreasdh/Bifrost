@@ -4,7 +4,7 @@ root: intro
 parts:
 - caption: Introduksjon
   chapters:
-  - file: docs/introduksjon
+  - file: docs/1_introduksjon
  
 #- caption: Statistisk termodynamikk
 #  chapters:
