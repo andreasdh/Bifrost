@@ -6,8 +6,8 @@ parts:
   chapters:
   - file: docs/introduksjon
  
-- caption: Statistisk termodynamikk
-  chapters:
+#- caption: Statistisk termodynamikk
+#  chapters:
 # - file: docs/entropi_og_boltzmann
 # - file: docs/partisjonsfunksjonen
 # - file: docs/gasses
