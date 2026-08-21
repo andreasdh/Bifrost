@@ -36,22 +36,22 @@ body{
   font-family:var(--sans);font-size:15px;line-height:1.55;
   -webkit-font-smoothing:antialiased;
 }
-.wrap{max-width:1180px;margin:0 auto;padding:22px 18px 44px}
+.wrap{max-width:1180px;margin:0 auto;padding:20px 18px 34px}
 
 :focus-visible{outline:2px solid var(--bridge-deep);outline-offset:2px;border-radius:4px}
 
 /* ---------- topp ---------- */
 .eyebrow{font:600 11px/1 var(--mono);letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft)}
-h1{font-size:clamp(25px,3.6vw,40px);line-height:1.08;letter-spacing:-.022em;font-weight:750;margin:12px 0 8px}
+h1{font-size:clamp(24px,3.2vw,34px);line-height:1.1;letter-spacing:-.022em;font-weight:750;margin:9px 0 6px}
 h1 .goal{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--macro-deep)}
-.lede{max-width:66ch;color:var(--ink-soft);margin:0}
+.lede{max-width:66ch;color:var(--ink-soft);margin:0;font-size:14.5px}
 
-.key{display:flex;flex-wrap:wrap;gap:14px;margin:16px 0 0;padding:0;list-style:none}
+.key{display:flex;flex-wrap:wrap;gap:14px;margin:12px 0 0;padding:0;list-style:none}
 .key li{display:flex;align-items:center;gap:7px;font:600 11px var(--mono);letter-spacing:.05em;text-transform:uppercase;color:var(--ink-soft)}
 .key i{width:11px;height:11px;border-radius:3px;display:block}
 
 /* ---------- trinnrail ---------- */
-.rail{display:flex;flex-wrap:wrap;gap:4px;margin:18px 0 16px;padding:6px;background:var(--card);border:1px solid var(--line);border-radius:15px}
+.rail{display:flex;flex-wrap:wrap;gap:4px;margin:14px 0 14px;padding:6px;background:var(--card);border:1px solid var(--line);border-radius:15px}
 .rail button{display:flex;align-items:center;gap:8px;border:0;background:transparent;padding:8px 11px;border-radius:10px;
   cursor:pointer;font-family:inherit;font-size:13px;font-weight:600;color:var(--ink-soft);white-space:nowrap}
 .rail button:hover{background:var(--line-soft);color:var(--ink)}
@@ -68,6 +68,20 @@ h1 .goal{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--
 .stage{position:relative;border-radius:16px;overflow:hidden;border:1px solid #0b0f1c;
   background:radial-gradient(130% 105% at 22% 0%,var(--stage-1) 0%,#151b31 55%,var(--stage-2) 100%)}
 .stage canvas{display:block;width:100%;height:auto}
+.deck{display:flex;flex-wrap:wrap;align-items:center;gap:7px;padding:9px 11px;
+  background:rgba(9,13,26,.74);border-top:1px solid rgba(150,175,225,.16)}
+.deck .sep{width:1px;height:20px;background:rgba(150,175,225,.22);margin:0 3px}
+.dbtn{font-family:inherit;font-size:12.5px;font-weight:600;color:#dbe4f7;background:rgba(255,255,255,.07);
+  border:1px solid rgba(150,175,225,.24);border-radius:8px;padding:6px 11px;cursor:pointer}
+.dbtn:hover{background:rgba(255,255,255,.15)}
+.dbtn:disabled{opacity:.33;cursor:default}
+.dbtn:disabled:hover{background:rgba(255,255,255,.07)}
+.dbtn.go{background:var(--macro);border-color:var(--macro);color:#221708}
+.dbtn.go:hover{background:#f7b463}
+.deck .spd{display:flex;align-items:center;gap:8px;margin-left:auto;flex:1 1 140px;min-width:130px}
+.deck .spd span{font:600 10px var(--mono);letter-spacing:.11em;text-transform:uppercase;color:#8fa1c4}
+.deck .spd b{font:600 10.5px var(--mono);color:#c9d6ef;white-space:nowrap;min-width:54px;text-align:right;font-variant-numeric:tabular-nums}
+.deck input[type=range]{width:100%;accent-color:var(--macro)}
 .hud{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;gap:10px;
   padding:11px 13px;pointer-events:none;font:600 10.5px var(--mono);letter-spacing:.08em;text-transform:uppercase}
 .hud .l{display:flex;align-items:center;gap:7px;color:#f6d9ae}
@@ -76,20 +90,20 @@ h1 .goal{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--
 .hud .r b{color:#dbe4f7;font-weight:700}
 
 /* ---------- målespor ---------- */
-.aux{margin-top:14px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px 15px 6px}
+.aux{margin-top:13px;background:var(--card);border:1px solid var(--line);border-radius:15px;padding:13px 15px 6px}
 .aux h3{margin:0 0 2px;font:600 11px var(--mono);letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft)}
 .aux p{margin:0 0 6px;font-size:12.5px;color:var(--ink-soft)}
 .aux canvas{display:block;width:100%;height:auto}
 
 /* ---------- panel ---------- */
-.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 18px 20px}
-.panel .step-tag{font:700 11px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--macro-deep)}
-.panel h2{margin:8px 0 10px;font-size:21px;letter-spacing:-.015em;line-height:1.2}
-.panel p{margin:0 0 10px}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 16px 16px}
+.panel .step-tag{font:700 10.5px var(--mono);letter-spacing:.16em;text-transform:uppercase;color:var(--macro-deep)}
+.panel h2{margin:5px 0 8px;font-size:19px;letter-spacing:-.015em;line-height:1.22}
+.panel p{margin:0 0 7px;font-size:14.5px;line-height:1.5}
 .panel p:last-of-type{margin-bottom:0}
 
 .eqcard{background:#f5f7fb;border:1px solid var(--line-soft);border-left:3px solid var(--bridge);
-  border-radius:11px;padding:13px 15px;margin:14px 0;font-family:var(--serif);font-size:17.5px;line-height:2.1}
+  border-radius:11px;padding:10px 13px;margin:11px 0;font-family:var(--serif);font-size:16.5px;line-height:1.95}
 .eqcard div+div{margin-top:2px}
 .eqcard .qm{color:var(--micro-deep);font-style:italic}
 .eqcard .qM{color:var(--macro-deep);font-style:italic}
@@ -97,49 +111,42 @@ h1 .goal{font-family:var(--serif);font-style:italic;font-weight:500;color:var(--
 .frac .num{padding:0 .35em}
 .frac .den{border-top:1px solid currentColor;padding:0 .35em}
 
-.controls{margin-top:16px;border-top:1px solid var(--line-soft);padding-top:12px}
-.ctrl{margin:0 0 12px}
+.controls{margin-top:13px;border-top:1px solid var(--line-soft);padding-top:11px;
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(146px,1fr));gap:9px 14px;align-items:end}
+.ctrl{margin:0;min-width:0}
 .ctrl.hide{display:none}
-.ctrl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:5px;
-  font:600 10.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft)}
-.ctrl .lab b{font-size:13px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0}
+.ctrl .lab{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:3px;
+  font:600 9.5px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft)}
+.ctrl .lab b{font-size:12.5px;color:var(--ink);font-variant-numeric:tabular-nums;letter-spacing:0;white-space:nowrap}
+.hint{margin:10px 0 0;padding-left:15px;position:relative;font-size:12.5px;line-height:1.45;color:var(--ink-soft)}
+.hint::before{content:"\25B8";position:absolute;left:1px;top:-1px;color:var(--macro-deep)}
+.hint:empty{display:none}
 input[type=range]{width:100%;margin:0;accent-color:var(--macro-deep);cursor:pointer}
 select{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);border-radius:8px;background:#fff;color:var(--ink);width:100%}
 .switch{display:flex;align-items:center;gap:9px;font-size:14px;cursor:pointer;user-select:none}
 .switch input{width:17px;height:17px;accent-color:var(--macro-deep);cursor:pointer}
 
 .reads{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line-soft);
-  border:1px solid var(--line-soft);border-radius:11px;overflow:hidden;margin-top:14px}
-.read{background:var(--card);padding:9px 11px;min-width:0}
+  border:1px solid var(--line-soft);border-radius:11px;overflow:hidden;margin-top:12px}
+.read{background:var(--card);padding:7px 10px;min-width:0}
 .read .k{font:600 10px var(--mono);letter-spacing:.07em;text-transform:uppercase;color:var(--ink-soft);
   white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.read .v{margin-top:2px;font-family:var(--mono);font-size:14px;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.01em}
+.read .v{margin-top:1px;font-family:var(--mono);font-size:13.5px;font-variant-numeric:tabular-nums;font-weight:600;letter-spacing:-.01em}
 .read.mi .v{color:var(--micro-deep)}
 .read.ma .v{color:var(--macro-deep)}
 .read.de .v{color:var(--bridge-deep)}
 
-.predict{margin-top:15px;background:#faf9ff;border:1px dashed #cfc4ee;border-radius:11px;padding:12px 14px}
-.predict .q{font-size:14px;margin:0}
+.predict{margin-top:12px;background:#faf9ff;border:1px dashed #cfc4ee;border-radius:11px;padding:10px 12px}
+.predict .q{font-size:13.5px;margin:0;line-height:1.45}
 .predict .q b{font:700 10.5px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--bridge-deep);display:block;margin-bottom:4px}
 .predict details{margin-top:8px}
 .predict summary{cursor:pointer;font:700 10.5px var(--mono);letter-spacing:.1em;text-transform:uppercase;color:var(--bridge-deep)}
-.predict details p{margin:8px 0 0;font-size:14px;color:var(--ink)}
+.predict details p{margin:7px 0 0;font-size:13.5px;line-height:1.5;color:var(--ink)}
 
 /* ---------- bunnlinje ---------- */
-.bar{display:flex;flex-wrap:wrap;gap:9px;align-items:center;margin-top:16px;padding:10px 12px;
-  background:var(--card);border:1px solid var(--line);border-radius:15px}
-.btn{font-family:inherit;font-size:13.5px;font-weight:600;color:var(--ink);background:#fff;
-  border:1px solid var(--line);border-radius:9px;padding:8px 13px;cursor:pointer}
-.btn:hover{background:var(--line-soft)}
-.btn:disabled{opacity:.42;cursor:default}
-.btn:disabled:hover{background:#fff}
-.btn.primary{background:var(--stage-2);border-color:var(--stage-2);color:#fff}
-.btn.primary:hover{background:#1c2440}
-.bar .spd{display:flex;align-items:center;gap:9px;margin-left:auto;min-width:190px;flex:1}
-.bar .spd span{font:600 10.5px var(--mono);letter-spacing:.09em;text-transform:uppercase;color:var(--ink-soft);white-space:nowrap}
-@media (max-width:520px){.bar .spd{margin-left:0;width:100%}}
 
-.foot{margin-top:18px;font-size:12.5px;color:var(--ink-soft);max-width:70ch}
+.foot{margin-top:14px;font-size:12.5px;line-height:1.5;color:var(--ink-soft);max-width:74ch}
+.foot b{color:var(--ink);font-weight:700}
 
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
@@ -166,6 +173,14 @@ select{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);
           <div class="l"><i></i><span>Måleveggen</span></div>
           <div class="r">t = <b id="hudT">0</b> ps &nbsp;·&nbsp; støt: <b id="hudN">0</b></div>
         </div>
+        <div class="deck">
+          <button class="dbtn" id="prev">Forrige</button>
+          <button class="dbtn go" id="next">Neste trinn</button>
+          <span class="sep"></span>
+          <button class="dbtn" id="play">Pause</button>
+          <button class="dbtn" id="reset">Nullstill måling</button>
+          <label class="spd" title="Avspillingstempo. Påvirker ikke molekylenes farter."><span>Tempo</span><input type="range" id="in-spd" min="1" max="60" step="1" value="24"><b id="v-spd">–</b></label>
+        </div>
       </div>
       <div class="aux">
         <h3 id="auxTitle">Målespor</h3>
@@ -191,7 +206,7 @@ select{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);
         </div>
         <div class="ctrl hide" id="c-T">
           <div class="lab"><span>Temperatur T</span><b id="v-T"></b></div>
-          <input type="range" id="in-T" min="50" max="1000" step="10" value="300">
+          <input type="range" id="in-T" min="100" max="1000" step="10" value="300">
         </div>
         <div class="ctrl hide" id="c-a">
           <div class="lab"><span>Boksens lengde a</span><b id="v-a"></b></div>
@@ -206,20 +221,14 @@ select{font:inherit;font-size:14px;padding:6px 9px;border:1px solid var(--line);
         </div>
       </div>
 
+      <p class="hint" id="hint"></p>
       <div class="reads" id="reads"></div>
       <div class="predict" id="predict"></div>
     </aside>
   </div>
 
-  <div class="bar">
-    <button class="btn" id="prev">Forrige</button>
-    <button class="btn primary" id="next">Neste trinn</button>
-    <button class="btn" id="play">Pause</button>
-    <button class="btn" id="reset">Nullstill måling</button>
-    <div class="spd"><span>Fart</span><input type="range" id="in-spd" min="1" max="60" step="1" value="24"></div>
-  </div>
-
-  <p class="foot">Simuleringen er ekte tredimensjonal fysikk med elastiske støt mot veggene og ingen krefter mellom molekylene, altså nøyaktig den modellen utledningen bygger på. Farter trekkes fra Maxwell.Boltzmann-fordelingen. Tastatur: mellomrom starter og stopper, piltastene bytter trinn.</p>
+  <p class="foot">Simuleringen er ekte tredimensjonal fysikk med elastiske støt mot veggene og ingen krefter mellom molekylene, altså nøyaktig den modellen utledningen bygger på. Farter trekkes fra Maxwell.Boltzmann-fordelingen og settes av temperaturen.</p>
+  <p class="foot"><b>Tempo</b> styrer bare avspillingen, altså hvor mange tidssteg som regnes ut per bilde. Tallet viser hvor mange pikosekunder simulert tid som går per sekund på skjermen. Molekylenes farter er upåvirket av den. Når du endrer volumet, holdes fartene faste, slik at kompresjonen er isoterm. Tastatur: mellomrom starter og stopper, piltastene bytter trinn.</p>
 </div>
 
 <script>
@@ -260,7 +269,7 @@ const sim = {
   t:0, cumImp:0, cumT:0,
   win:[], winImp:0, winT:0,
   hits:0, hitTimes:[], impacts:[], trail:[], flash:0,
-  hist:[], running:true, speed:24, stepIdx:0
+  hist:[], running:true, speed:24, stepIdx:0, frameDt:1/60
 };
 
 const A_wall = () => LY*LZ;
@@ -377,10 +386,10 @@ const STEPS = [
 {
   key:"Modell", num:"0", tag:"Modellen", title:"En ideell gass i en boks",
   mode:"many", controls:["gas","N","T"], aux:"hist",
-  auxTitle:"Fartsfordeling", auxNote:"S\u00F8ylene er molekylene i simuleringen akkurat n\u00E5. Kurven er Maxwell.Boltzmann-fordelingen ved den temperaturen du har valgt.",
+  auxTitle:"Fartsfordeling", auxNote:"S\u00F8ylene er molekylene i simuleringen akkurat n\u00E5, kurven er Maxwell.Boltzmann-fordelingen ved valgt temperatur. Aksene st\u00E5r fast, s\u00E5 fordelingen flytter seg og flater ut n\u00E5r du endrer T.",
   body:"<p>Boksen inneholder "+it("N")+" molekyler. Vi behandler dem som punkter uten eget volum, og mellom st\u00F8tene virker det ingen krefter mellom dem. Hvert molekyl g\u00E5r derfor i rett linje helt til det treffer en vegg.</p>"+
-       "<p>Simuleringen er tredimensjonal. Dybden er tegnet som en forskyvning opp mot h\u00F8yre, slik at du ser inn i boksen. Den gule flaten til h\u00F8yre er m\u00E5leveggen. Alt vi gj\u00F8r videre handler om \u00E5 finne kraften den kjenner.</p>"+
-       "<p>Fra mekanikken trenger vi bare \u00E9n st\u00F8rrelse: kraft er endring i bevegelsesmengde per tid.</p>",
+       "<p>Den gule flaten til h\u00F8yre er m\u00E5leveggen. Fra mekanikken trenger vi bare \u00E9n st\u00F8rrelse for \u00E5 finne kraften den kjenner: kraft er endring i bevegelsesmengde per tid.</p>",
+  hint:"Simuleringen er tredimensjonal. Dybden er tegnet som en forskyvning opp mot h\u00F8yre, slik at du ser inn i boksen.",
   eq:"<div>"+it("p")+" = "+it("m")+mi("v")+"</div><div>"+it("F")+" = "+fr("\u0394"+it("p"),"\u0394"+it("t"))+"</div>",
   reads:[
     ["Gass", () => GASES[sim.gas].n+" (M = "+nf(GASES[sim.gas].M,2)+" g/mol)", ""],
@@ -397,8 +406,9 @@ const STEPS = [
   key:"Ett st\u00F8t", num:"1", tag:"Trinn 1", title:"Hvor mye bevegelsesmengde f\u00E5r veggen i ett st\u00F8t?",
   mode:"single", controls:["gas","vx","yz"], aux:"mom",
   auxTitle:"Bevegelsesmengde i x-retning", auxNote:"Piltegningen viser molekylet f\u00F8r og etter st\u00F8tet, endringen i bevegelsesmengde og det veggen mottar.",
-  body:"<p>Vi f\u00F8lger n\u00E5 ett enkelt molekyl. Det treffer m\u00E5leveggen med hastighetskomponenten "+VX+". St\u00F8tet er elastisk, s\u00E5 molekylet spretter tilbake med samme fartskomponent i motsatt retning. Bevegelsen parallelt med veggen er upåvirket.</p>"+
+  body:"<p>Vi f\u00F8lger n\u00E5 ett enkelt molekyl. Det treffer m\u00E5leveggen med hastighetskomponenten "+VX+". St\u00F8tet er elastisk, s\u00E5 "+VX+" skifter fortegn, mens bevegelsen parallelt med veggen er up\u00E5virket.</p>"+
        "<p>I x-retning g\u00E5r bevegelsesmengden fra +"+it("m")+VX+" til \u2212"+it("m")+VX+". Veggen mottar like mye bevegelsesmengde den andre veien.</p>",
+  hint:"Ett molekyl har ingen temperatur. Den h\u00F8rer til fordelingen over mange molekyler, og kobles p\u00E5 i trinn 7.",
   eq:"<div>\u0394"+it("p")+" = (\u2212"+it("m")+VX+") \u2212 ("+it("m")+VX+") = \u22122"+it("m")+VX+"</div>"+
      "<div>|\u0394"+it("p")+"| = 2"+it("m")+"|"+VX+"|</div>",
   reads:[
@@ -417,8 +427,8 @@ const STEPS = [
   mode:"single", controls:["vx","a","yz"], aux:"hits",
   auxTitle:"Tidslinje for st\u00F8t p\u00E5 m\u00E5leveggen", auxNote:"Hvert merke er et treff. Den lilla streken er den utledede tiden 2a/|v<sub>x</sub>|.",
   body:"<p>Etter st\u00F8tet g\u00E5r molekylet bort til motsatt vegg og tilbake igjen. Mellom to treff p\u00E5 den samme veggen tilbakelegger det alts\u00E5 strekningen 2"+it("a")+" langs x-aksen.</p>"+
-       "<p>Farten i x-retning er konstant mellom st\u00F8tene, s\u00E5 tiden mellom to treff f\u00F8lger direkte. Et raskt molekyl treffer veggen oftere enn et langsomt.</p>"+
-       "<p>Legg merke til hva som "+it("ikke")+" st\u00E5r i uttrykket: "+mi("v")+"<sub>y</sub> og "+mi("v")+"<sub>z</sub> spiller ingen rolle for hvor ofte veggen treffes.</p>",
+       "<p>Farten i x-retning er konstant mellom st\u00F8tene, s\u00E5 tiden mellom to treff f\u00F8lger direkte. Legg merke til hva som "+it("ikke")+" st\u00E5r i uttrykket: "+mi("v")+"<sub>y</sub> og "+mi("v")+"<sub>z</sub> spiller ingen rolle for hvor ofte denne veggen treffes.</p>",
+  hint:"Skru fart i y og z av og p\u00E5, og f\u00F8lg med p\u00E5 tidslinja mens du gj\u00F8r det.",
   eq:"<div>\u0394"+it("t")+" = "+fr("2"+it("a"),"|"+VX+"|")+"</div>",
   reads:[
     ["Lengde a", () => nf(sim.Lx*1e9,1)+" nm", "ma"],
@@ -435,9 +445,9 @@ const STEPS = [
   key:"Kraft", num:"3", tag:"Trinn 3", title:"Kraften fra ett molekyl",
   mode:"single", controls:["vx","a"], aux:"force",
   auxTitle:"M\u00E5lt kraft mot utledet kraft", auxNote:"Den oransje kurven er all bevegelsesmengde veggen har mottatt, delt p\u00E5 m\u00E5letiden. Den lilla streken er mv<sub>x</sub><sup>2</sup>/a.",
-  body:"<p>N\u00E5 setter vi sammen de to foreg\u00E5ende trinnene. Molekylet gir veggen 2"+it("m")+"|"+VX+"| i hvert st\u00F8t, og st\u00F8tene kommer med et mellomrom p\u00E5 2"+it("a")+"/|"+VX+"|.</p>"+
-       "<p>Begge effektene vokser med "+VX+", og derfor kommer farten inn i andre potens: raske molekyler treffer b\u00E5de hardere og oftere.</p>"+
+  body:"<p>N\u00E5 setter vi sammen de to foreg\u00E5ende trinnene. Molekylet gir veggen 2"+it("m")+"|"+VX+"| i hvert st\u00F8t, og st\u00F8tene kommer med et mellomrom p\u00E5 2"+it("a")+"/|"+VX+"|. Begge deler vokser med "+VX+", og derfor kommer farten inn i andre potens.</p>"+
        "<p>Sporet under scenen viser dette som en m\u00E5ling. Kurven hopper opp for hvert st\u00F8t og synker mellom st\u00F8tene, men tidsgjennomsnittet kryper mot den utledede verdien.</p>",
+  hint:"Dra opp farten hvis du vil samle mange st\u00F8t raskt.",
   eq:"<div>"+it("F")+"<sub>1</sub> = "+fr("|\u0394"+it("p")+"|","\u0394"+it("t"))+" = "+fr("2"+it("m")+"|"+VX+"|","2"+it("a")+" / |"+VX+"|")+" = "+fr(it("m")+VX2,it("a"))+"</div>",
   reads:[
     ["Fartskomponent v<sub>x</sub>", () => nf(sim.vxSet,0)+" m/s", "mi"],
@@ -454,9 +464,9 @@ const STEPS = [
   key:"Sum over N", num:"4", tag:"Trinn 4", title:"Alle molekylene til sammen",
   mode:"many", controls:["N","T","a"], aux:"force",
   auxTitle:"M\u00E5lt kraft mot utledet kraft", auxNote:"Med f\u00E5 molekyler svinger m\u00E5lingen kraftig. \u00D8k N og se hvordan sporet legger seg inntil den utledede verdien.",
-  body:"<p>Hvert molekyl bidrar med sin egen kraft, s\u00E5 den totale kraften er summen over alle "+it("N")+". Molekylene har ulike farter, og da er det naturlig \u00E5 beskrive dem med gjennomsnittet av "+VX2+".</p>"+
-       "<p>Her ser du hvorfor en statistisk beskrivelse er n\u00F8dvendig. Den detaljerte mikrotilstanden endrer seg hele tiden, men gjennomsnittet "+AVX2+" ligger stille ved likevekt.</p>"+
-       "<p>Sett "+it("N")+" = 5 og se hvor urolig m\u00E5lingen er. \u00D8k s\u00E5 til noen hundre. Det er f\u00F8rst da kraften blir en st\u00F8rrelse det gir mening \u00E5 kalle konstant.</p>",
+  body:"<p>Hvert molekyl bidrar med sin egen kraft, s\u00E5 den totale kraften er summen over alle "+it("N")+". Molekylene har ulike farter, og da beskriver vi dem med gjennomsnittet av "+VX2+".</p>"+
+       "<p>Den detaljerte mikrotilstanden endrer seg hele tiden, men gjennomsnittet "+AVX2+" ligger stille ved likevekt. Det er f\u00F8rst det som gj\u00F8r kraften til en st\u00F8rrelse det gir mening \u00E5 kalle konstant.</p>",
+  hint:"Sett "+it("N")+" = 5 og se hvor urolig m\u00E5lingen er. \u00D8k s\u00E5 til noen hundre.",
   eq:"<div>"+it("F")+" = "+fr(it("m"),it("a"))+" \u2211 "+mi("v")+"<sub>x,i</sub><sup>2</sup> = "+fr(it("N")+it("m")+AVX2,it("a"))+"</div>",
   reads:[
     ["Antall N", () => String(sim.N), "mi"],
@@ -473,9 +483,9 @@ const STEPS = [
   key:"Retninger", num:"5", tag:"Trinn 5", title:"Fra v\u2093 til den totale farten",
   mode:"many", controls:["N","T"], aux:"bars",
   auxTitle:"Gjennomsnitt i de tre retningene", auxNote:"S\u00F8ylene er m\u00E5lt i simuleringen. Den lilla streken er en tredel av \u27E8v<sup>2</sup>\u27E9.",
-  body:"<p>Kraften p\u00E5 m\u00E5leveggen avhenger bare av "+VX2+", men molekylene beveger seg i tre retninger. For hvert enkelt molekyl er farten knyttet til komponentene ved Pytagoras, og det samme gjelder gjennomsnittene.</p>"+
-       "<p>I en gass ved likevekt er ingen retning foretrukket. Da m\u00E5 de tre gjennomsnittene v\u00E6re like store, og hver av dem er en tredel av "+AV2+".</p>"+
-       "<p>Med f\u00E5 molekyler er s\u00F8ylene tydelig ulike. Det er ren tilfeldighet, ikke fysikk. \u00D8k "+it("N")+" og se dem jevne seg ut.</p>",
+  body:"<p>Kraften p\u00E5 m\u00E5leveggen avhenger bare av "+VX2+", men molekylene beveger seg i tre retninger. For hvert molekyl er farten knyttet til komponentene ved Pytagoras, og det samme gjelder gjennomsnittene.</p>"+
+       "<p>Ingen retning er foretrukket i en gass ved likevekt, s\u00E5 de tre gjennomsnittene m\u00E5 v\u00E6re like store. Hver av dem er da en tredel av "+AV2+".</p>",
+  hint:"Med f\u00E5 molekyler er s\u00F8ylene tydelig ulike. Det er tilfeldighet, ikke fysikk.",
   eq:"<div>"+AV2+" = "+AVX2+" + \u27E8"+mi("v")+"<sub>y</sub><sup>2</sup>\u27E9 + \u27E8"+mi("v")+"<sub>z</sub><sup>2</sup>\u27E9</div>"+
      "<div>"+AVX2+" = "+fr("1","3")+" "+AV2+"</div>",
   reads:[
@@ -494,8 +504,8 @@ const STEPS = [
   mode:"many", controls:["N","a"], aux:"press",
   auxTitle:"M\u00E5lt trykk mot utledet trykk", auxNote:"Oransje kurve er m\u00E5lt trykk p\u00E5 veggen. Lilla strek er en tredel av Nm\u27E8v<sup>2</sup>\u27E9 delt p\u00E5 V.",
   body:"<p>Trykk er kraft per areal. M\u00E5leveggen har arealet "+ma("A")+", og boksen har volumet "+ma("V")+" = "+ma("A")+it("a")+". N\u00E5r vi setter inn kraften fra trinn 4 og resultatet fra trinn 5, sl\u00E5r "+ma("A")+" og "+it("a")+" seg sammen til volumet.</p>"+
-       "<p>Dette er et rent mekanisk resultat. Vi har fortsatt ikke nevnt temperatur med et ord. Trykket bestemmes av hvor mange partikler vi har per volum og hvor stor translasjonsenergi de har i gjennomsnitt.</p>"+
-       "<p>Dra i volumet og f\u00F8lg med p\u00E5 to tall samtidig: trykket endrer seg, men produktet "+ma("PV")+" st\u00E5r stille.</p>",
+       "<p>Dette er et rent mekanisk resultat. Vi har fortsatt ikke nevnt temperatur med et ord. Trykket bestemmes av hvor mange partikler vi har per volum, og hvor stor translasjonsenergi de har i gjennomsnitt.</p>",
+  hint:"Dra i volumet og f\u00F8lg to tall samtidig: "+ma("P")+" endrer seg, "+ma("PV")+" st\u00E5r stille.",
   eq:"<div>"+ma("P")+" = "+fr(it("F"),ma("A"))+" = "+fr(it("N")+it("m")+AVX2,ma("A")+it("a"))+" = "+fr("1","3")+fr(it("N")+it("m")+AV2,ma("V"))+"</div>"+
      "<div>"+ma("PV")+" = "+fr("1","3")+it("N")+it("m")+AV2+" = "+fr("2","3")+it("N")+"\u27E8"+it("E")+"<sub>trans</sub>\u27E9</div>",
   reads:[
@@ -514,8 +524,8 @@ const STEPS = [
   mode:"many", controls:["gas","N","T","a"], aux:"press",
   auxTitle:"M\u00E5lt trykk mot Nk<sub>B</sub>T/V", auxNote:"Den lilla streken er n\u00E5 regnet ut fra temperaturen alene, uten \u00E5 se p\u00E5 fartene i simuleringen.",
   body:"<p>Til slutt trenger vi broen mellom molekylenes bevegelse og den makroskopiske temperaturen. Ekvipartisjonsteoremet gir at de tre translasjonelle frihetsgradene til sammen b\u00E6rer 3/2 "+it("k")+"<sub>B</sub>"+ma("T")+".</p>"+
-       "<p>Setter vi det inn, forsvinner b\u00E5de massen og farten ut av uttrykket. Igjen st\u00E5r en lov som bare inneholder makroskopiske st\u00F8rrelser.</p>"+
-       "<p>Bytt gass og hold "+ma("T")+", "+it("N")+" og "+ma("V")+" fast. Helium-atomene farer av g\u00E5rde mye raskere enn CO\u2082-molekylene, men trykket er det samme. Tyngre molekyler treffer hardere og sjeldnere, og de to effektene opphever hverandre n\u00F8yaktig.</p>",
+       "<p>Setter vi det inn, forsvinner b\u00E5de massen og farten ut av uttrykket. Igjen st\u00E5r en lov som bare inneholder makroskopiske st\u00F8rrelser.</p>",
+  hint:"Bytt gass ved fast "+ma("T")+", "+it("N")+" og "+ma("V")+". Helium farer av g\u00E5rde, men trykket er det samme.",
   eq:"<div>\u27E8"+it("E")+"<sub>trans</sub>\u27E9 = "+fr("3","2")+it("k")+"<sub>B</sub>"+ma("T")+"</div>"+
      "<div>"+ma("PV")+" = "+fr("2","3")+it("N")+" \u00B7 "+fr("3","2")+it("k")+"<sub>B</sub>"+ma("T")+" = "+it("N")+it("k")+"<sub>B</sub>"+ma("T")+"</div>",
   reads:[
@@ -534,7 +544,8 @@ const STEPS = [
   mode:"many", controls:["gas","N","T","a"], aux:"press",
   auxTitle:"M\u00E5lt trykk mot nRT/V", auxNote:"Sporet viser hvor lang m\u00E5letid som trengs f\u00F8r m\u00E5lingen faller til ro rundt loven.",
   body:"<p>Med "+it("N")+" = "+it("n")+it("N")+"<sub>A</sub> og "+it("R")+" = "+it("N")+"<sub>A</sub>"+it("k")+"<sub>B</sub> st\u00E5r vi igjen med den formen du kjenner fra generell kjemi. Ingen av st\u00F8rrelsene i den endelige loven sier noe om molekyler, men hvert eneste ledd kom derfra.</p>"+
-       "<p>N\u00E5 kan du skru p\u00E5 alt samtidig. Legg merke til at simuleringen aldri er helt enig med loven: den m\u00E5lte verdien svinger rundt "+ma("nRT")+"/"+ma("V")+". Det er ikke en feil i loven, men en p\u00E5minnelse om at trykk er et gjennomsnitt over mange tilfeldige st\u00F8t.</p>",
+       "<p>Legg merke til at simuleringen aldri er helt enig med loven. Den m\u00E5lte verdien svinger rundt "+ma("nRT")+"/"+ma("V")+", og det er en p\u00E5minnelse om at trykk er et gjennomsnitt over mange tilfeldige st\u00F8t.</p>",
+  hint:"Skru p\u00E5 alt samtidig og se hvor lang m\u00E5letid som trengs f\u00F8r m\u00E5lingen faller til ro.",
   eq:"<div>"+ma("PV")+" = "+it("N")+it("k")+"<sub>B</sub>"+ma("T")+" = "+it("n")+it("R")+ma("T")+"</div>",
   reads:[
     ["Stoffmengde n", () => sci(sim.N/NA,2)+" mol", "ma"],
@@ -664,6 +675,7 @@ function goto(i){
   $("stepTitle").textContent = s.title;
   $("stepBody").innerHTML = s.body;
   $("stepEq").innerHTML = s.eq;
+  $("hint").innerHTML = s.hint || "";
   $("auxTitle").innerHTML = s.auxTitle;
   $("auxNote").innerHTML = s.auxNote;
   showControls(s.controls);
@@ -694,6 +706,7 @@ function updateReads(){
     const txt = s.reads[i][1]();
     if(cells[i].textContent !== txt) cells[i].textContent = txt;
   }
+  $("v-spd").textContent = nf(sim.speed*DT/sim.frameDt*1e12, 0) + " ps/s";
   $("hudT").textContent = nf(sim.t*1e12, 0);
   $("hudN").textContent = String(sim.hits);
 }
@@ -988,22 +1001,21 @@ function auxBars(W, H){
 }
 
 function auxHist(W, H){
-  const l = 46, r = 20, t = 14, b = 30, base = H - b;
-  const s = Math.sqrt(KB*sim.T/sim.m), vmax = 4.2*s;
-  const nb = 26, bins = new Array(nb).fill(0);
+  const l = 46, r = 22, t = 16, b = 30, base = H - b;
+  /* Fast akse for gassen, slik at fordelingen faktisk flytter seg naar T endres. */
+  const vmax = 3.8*Math.sqrt(KB*1000/sim.m);
+  const nb = 38, bwv = vmax/nb, bins = new Array(nb).fill(0);
   for(let i = 0; i < sim.N; i++){
-    const v = Math.hypot(sim.vx[i], sim.vy[i], sim.vz[i]);
-    const k = Math.floor(v/vmax*nb);
+    const v = Math.sqrt(sim.vx[i]*sim.vx[i] + sim.vy[i]*sim.vy[i] + sim.vz[i]*sim.vz[i]);
+    const k = Math.floor(v/bwv);
     if(k >= 0 && k < nb) bins[k]++;
   }
-  const bwv = vmax/nb;
-  const f = v => 4*Math.PI*Math.pow(sim.m/(2*Math.PI*KB*sim.T), 1.5)*v*v*Math.exp(-sim.m*v*v/(2*KB*sim.T));
-  let ymax = 1;
-  for(let k = 0; k < nb; k++) ymax = Math.max(ymax, bins[k], sim.N*f((k+0.5)*bwv)*bwv);
-  ymax *= 1.15;
+  const f = (v, T) => 4*Math.PI*Math.pow(sim.m/(2*Math.PI*KB*T), 1.5)*v*v*Math.exp(-sim.m*v*v/(2*KB*T));
+  /* Fast y-skala, forankret i toppen ved 100 K, saa fordelingen ogsaa flater ut naar den brer seg. */
+  const ymax = 1.12*sim.N*f(Math.sqrt(2*KB*100/sim.m), 100)*bwv;
   axes(W, H, l, r, t, b);
-  const px = v => l + v/vmax*(W - r - l);
-  const py = c => base - c/ymax*(base - t);
+  const px = v => l + Math.min(v, vmax)/vmax*(W - r - l);
+  const py = c => base - Math.min(1, c/ymax)*(base - t);
   const bw = (W - r - l)/nb;
   for(let k = 0; k < nb; k++){
     if(!bins[k]) continue;
@@ -1013,18 +1025,24 @@ function auxHist(W, H){
   }
   actx.strokeStyle = C("--bridge"); actx.lineWidth = 2;
   actx.beginPath();
-  for(let k = 0; k <= 160; k++){
-    const v = k/160*vmax, X = px(v), Y = py(sim.N*f(v)*bwv);
+  for(let k = 0; k <= 200; k++){
+    const v = k/200*vmax, X = px(v), Y = py(sim.N*f(v, sim.T)*bwv);
     k ? actx.lineTo(X, Y) : actx.moveTo(X, Y);
   }
   actx.stroke();
-  const vr = vrms(), xr = px(Math.min(vr, vmax));
+  const vr = vrms(), xr = px(vr);
   actx.setLineDash([4,4]); actx.strokeStyle = C("--macro-deep"); actx.lineWidth = 1.6;
   actx.beginPath(); actx.moveTo(xr, t); actx.lineTo(xr, base); actx.stroke();
   actx.setLineDash([]);
-  label(actx, xr + 6, t + 11, "v_rms = " + nf(vr, 0) + " m/s", C("--macro-deep"), 11);
-  label(actx, l, H - 8, "0", "#8b98ab", 10);
-  label(actx, W - r, H - 8, nf(vmax, 0) + " m/s", "#8b98ab", 10, "right");
+  const right = xr > W - r - 130;
+  label(actx, xr + (right ? -7 : 7), t + 11, "v_rms = " + nf(vr, 0) + " m/s", C("--macro-deep"), 11, right ? "right" : "left");
+  label(actx, xr + (right ? -7 : 7), t + 24, nf(sim.T, 0) + " K", C("--macro-deep"), 11, right ? "right" : "left");
+  [0, 0.25, 0.5, 0.75, 1].forEach(q => {
+    const X = l + q*(W - r - l);
+    actx.strokeStyle = "#eef1f6"; actx.lineWidth = 1;
+    actx.beginPath(); actx.moveTo(X, base); actx.lineTo(X, base + 4); actx.stroke();
+    label(actx, X, H - 8, nf(q*vmax, 0) + (q === 1 ? " m/s" : ""), "#8b98ab", 10, q === 1 ? "right" : "center");
+  });
   label(actx, l - 8, t + 4, "antall", "#8b98ab", 10, "right");
 }
 
@@ -1033,6 +1051,7 @@ let last = performance.now();
 function frame(now){
   const dtReal = Math.min((now - last)/1000, 0.05);
   last = now;
+  if(dtReal > 0.002) sim.frameDt = sim.frameDt*0.9 + dtReal*0.1;
   if(sim.running) advance(sim.speed);
   drawScene(dtReal);
   drawAux();
