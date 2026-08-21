@@ -1,0 +1,276 @@
+<script>
+(function () {
+  const Nslider = document.getElementById('tns4-N');
+  const ratioSlider = document.getElementById('tns4-ratio');
+  const Nout = document.getElementById('tns4-N-out');
+  const ratioOut = document.getElementById('tns4-ratio-out');
+  const chart = document.getElementById('tns4-chart');
+  const ladder = document.getElementById('tns4-ladder');
+  const playNBtn = document.getElementById('tns4-play-N');
+  const playEqBtn = document.getElementById('tns4-play-eq');
+
+  const BAR_COLOR = '#4A4A48';
+  const HIGHLIGHT_COLOR = '#D33B2C';
+
+  // ---- TO NIVÅER ----
+  const LEVELS = 2;
+  const levelColors = ['#378ADD', '#D85A30'];      // f.eks. blå = 0Δε, oransje = 1Δε
+  const levelY = [150, 60];                       // to nivåer vertikalt
+  const ballSize = 8, ballGap = 2, maxPerRow = 26;
+
+  let ballLevels = [];
+  let barEls = {}; // energy -> DOM element
+  let playNInterval = null;
+  let playEqInterval = null;
+
+  // Boltzmann-sannsynligheter for to nivåer:
+  // p_0 ∝ 1, p_1 ∝ exp(-Δε/k_BT)
+  function levelProbs(ratio) {
+    const w = [1, Math.exp(-ratio)];  // bare to nivåer
+    const Z = w[0] + w[1];
+    return w.map(v => v / Z);
+  }
+
+  // Fordeling av total energi når hver partikkel kan være på nivå 0 eller 1
+  // E = (# partikler på nivå 1) * Δε
+  function energyDistribution(N, p) {
+    let dist = [1]; // starter med én partikkel, energi 0
+    for (let k = 0; k < N; k++) {
+      const nd = new Array(dist.length + 1).fill(0);
+      for (let e = 0; e < dist.length; e++) {
+        const prob = dist[e];
+        if (prob === 0) continue;
+        nd[e]     += prob * p[0]; // partikkel på nivå 0 (ingen energiendring)
+        nd[e + 1] += prob * p[1]; // partikkel på nivå 1 (energi +Δε)
+      }
+      dist = nd;
+    }
+    return dist;
+  }
+
+  function setupLadderLines() {
+    ladder.querySelectorAll('.tns4-line, .tns4-label').forEach(el => el.remove());
+    for (let lvl = 0; lvl < LEVELS; lvl++) {
+      const line = document.createElement('div');
+      line.className = 'tns4-line';
+      line.style.cssText =
+        'position:absolute; left:0; right:0; height:2px; background:#5f5e5a; top:' +
+        levelY[lvl] +
+        'px;';
+      ladder.appendChild(line);
+
+      const label = document.createElement('div');
+      label.className = 'tns4-label';
+      label.style.cssText =
+        'position:absolute; right:4px; font-size:10px; color:#888; top:' +
+        (levelY[lvl] + 4) +
+        'px;';
+      label.textContent = lvl + 'Δε';
+      ladder.appendChild(label);
+    }
+  }
+
+  function ballTargetPos(level, indexInLevel) {
+    const row = Math.floor(indexInLevel / maxPerRow);
+    const col = indexInLevel % maxPerRow;
+    const x = 4 + col * (ballSize + ballGap);
+    const y = levelY[level] - 4 - (row + 1) * (ballSize + ballGap);
+    return { x, y };
+  }
+
+  let ballEls = [];
+
+  function fullRenderBalls() {
+    ladder.querySelectorAll('.tns4-ball').forEach(el => el.remove());
+    ballEls = [];
+    const counts = [0, 0]; // to nivåer
+    ballLevels.forEach((lvl, i) => {
+      const idxInLevel = counts[lvl]++;
+      const pos = ballTargetPos(lvl, idxInLevel);
+      const el = document.createElement('div');
+      el.className = 'tns4-ball';
+      el.style.cssText =
+        'position:absolute; width:' +
+        ballSize +
+        'px; height:' +
+        ballSize +
+        'px; border-radius:50%; transition: left .35s ease, top .35s ease; background:' +
+        levelColors[lvl] +
+        '; left:' +
+        pos.x +
+        'px; top:' +
+        pos.y +
+        'px;';
+      ladder.appendChild(el);
+      ballEls[i] = el;
+    });
+  }
+
+  function repositionAllBalls() {
+    const counts = [0, 0];
+    ballLevels.forEach((lvl, i) => {
+      const idxInLevel = counts[lvl]++;
+      const pos = ballTargetPos(lvl, idxInLevel);
+      const el = ballEls[i];
+      if (el) {
+        el.style.left = pos.x + 'px';
+        el.style.top = pos.y + 'px';
+        el.style.background = levelColors[lvl];
+      }
+    });
+  }
+
+  function assignBallLevels(N, p) {
+    const counts = p.map(pi => Math.round(pi * N)); // [N_0, N_1]
+    let diff = N - counts.reduce((a, b) => a + b, 0);
+    counts[0] += diff; // juster slik at sum = N
+    ballLevels = [];
+    for (let lvl = 0; lvl < LEVELS; lvl++) {
+      for (let k = 0; k < counts[lvl]; k++) ballLevels.push(lvl);
+    }
+  }
+
+  function renderChart(dist) {
+    chart.innerHTML = '';
+    barEls = {};
+    const maxP = Math.max(...dist);
+    const n = dist.length;
+    const gap = n > 60 ? 0.5 : n > 25 ? 1.5 : 3;
+    const totalWidth = chart.clientWidth || 500;
+    const bw = Math.max(1, (totalWidth - gap * (n - 1)) / n);
+
+    dist.forEach((prob, i) => {
+      if (prob < 1e-6) return;
+      const h = (prob / maxP) * 130;
+      const bar = document.createElement('div');
+      bar.style.cssText =
+        'position:absolute; bottom:0; background:' +
+        BAR_COLOR +
+        '; border-radius:2px 2px 0 0; transition: background .15s ease;';
+      bar.style.left = i * (bw + gap) + 'px';
+      bar.style.width = bw + 'px';
+      bar.style.height = h + 'px';
+      chart.appendChild(bar);
+      barEls[i] = bar;
+    });
+  }
+
+  function highlightEnergy(e) {
+    Object.keys(barEls).forEach(key => {
+      barEls[key].style.background = BAR_COLOR;
+    });
+    if (barEls[e]) barEls[e].style.background = HIGHLIGHT_COLOR;
+  }
+
+  function currentTotalEnergy() {
+    // total energi = sum av nivå-indekser (0 eller 1) i enheter av Δε
+    return ballLevels.reduce((a, b) => a + b, 0);
+  }
+
+  function render(keepBallAssignment) {
+    const N = parseInt(Nslider.value);
+    const sliderVal = parseFloat(ratioSlider.value); // k_BT/Δε
+    const ratio = 1 / sliderVal; // Δε/k_BT
+
+    Nout.textContent = N;
+    ratioOut.textContent = sliderVal.toFixed(2);
+
+    const p = levelProbs(ratio);
+    const dist = energyDistribution(N, p);
+
+    let mean = 0;
+    dist.forEach((prob, e) => (mean += prob * e));
+    let variance = 0;
+    dist.forEach((prob, e) => (variance += prob * (e - mean) * (e - mean)));
+    const std = Math.sqrt(variance);
+    const relWidth = mean > 0 ? std / mean : 0;
+
+    document.getElementById('tns4-mean').textContent = mean.toFixed(2) + ' Δε';
+    document.getElementById('tns4-std').textContent = std.toFixed(2) + ' Δε';
+    document.getElementById('tns4-relwidth').textContent = isFinite(relWidth)
+      ? relWidth.toFixed(3)
+      : '-';
+
+    renderChart(dist);
+
+    if (!keepBallAssignment || ballLevels.length !== N) {
+      assignBallLevels(N, p);
+      fullRenderBalls();
+    }
+    highlightEnergy(currentTotalEnergy());
+  }
+
+  function stopEq() {
+    if (playEqInterval) {
+      clearInterval(playEqInterval);
+      playEqInterval = null;
+      playEqBtn.textContent = '▶ Simuler dynamisk likevekt';
+    }
+  }
+  function stopN() {
+    if (playNInterval) {
+      clearInterval(playNInterval);
+      playNInterval = null;
+      playNBtn.textContent = '▶ Øk N (4 → 100)';
+    }
+  }
+
+  playNBtn.addEventListener('click', function () {
+    stopEq();
+    if (playNInterval) {
+      stopN();
+      return;
+    }
+    Nslider.value = 4;
+    render(false);
+    playNBtn.textContent = '⏸ Spiller...';
+    let n = 4;
+    playNInterval = setInterval(function () {
+      n += 2;
+      if (n >= 100) {
+        n = 100;
+        stopN();
+      }
+      Nslider.value = n;
+      render(false);
+    }, 150);
+  });
+
+  playEqBtn.addEventListener('click', function () {
+    stopN();
+    if (playEqInterval) {
+      stopEq();
+      return;
+    }
+    if (ballLevels.length !== parseInt(Nslider.value)) render(false);
+    highlightEnergy(currentTotalEnergy());
+    playEqBtn.textContent = '⏸ Simulerer...';
+    playEqInterval = setInterval(function () {
+      const N = ballLevels.length;
+      if (N < 2) return;
+      const a = Math.floor(Math.random() * N);
+      let b = Math.floor(Math.random() * N);
+      while (b === a) b = Math.floor(Math.random() * N);
+      if (ballLevels[a] !== ballLevels[b]) {
+        const tmp = ballLevels[a];
+        ballLevels[a] = ballLevels[b];
+        ballLevels[b] = tmp;
+        repositionAllBalls();
+      }
+      highlightEnergy(currentTotalEnergy());
+    }, 260);
+  });
+
+  Nslider.addEventListener('input', function () {
+    stopEq();
+    render(false);
+  });
+  ratioSlider.addEventListener('input', function () {
+    stopEq();
+    render(false);
+  });
+
+  setupLadderLines();
+  render(false);
+})();
+</script>
