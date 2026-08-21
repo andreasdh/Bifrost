@@ -8,31 +8,31 @@ parts:
  
 #- caption: Statistisk termodynamikk
 #  chapters:
-# - file: docs/entropi_og_boltzmann
-# - file: docs/partisjonsfunksjonen
-# - file: docs/gasses
+# - file: docs/1_entropi_boltzmann
+# - file: docs/2_partisjonsfunksjonen
+# - file: docs/3_gasser
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
-#   - file: docs/Makroskopisk_termodynamikk_I_varme_arbeid_entalpi
-#   - file: docs/Makroskopisk_termodynamikk_II_termodynamiske_potensialer
-#   - file: docs/Termokjemi_entalpi_entropi_spontanitet
+#   - file: docs/5_varme_arbeid_entalpi
+#   - file: docs/6_termodynamiske_potensialer
+#   - file: docs/7_termokjemi
 
 # - caption: Faser og blandinger
 #   chapters:
-#   - file: docs/faser
-#   - file: docs/Intermolekylære_krefter
-#   - file: docs/Lattice_modeller_løs_bland
+#   - file: docs/8_faser
+#   - file: docs/9_intermolekylære_krefter
+#   - file: docs/10_løsninger_blandinger
 
 # - caption: Likevekter og kinetikk
 #   chapters:
-#   - file: docs/likevekter
-#   - file: docs/kinetikk
+#   - file: docs/11_likevekter
+#   - file: docs/12_kinetikk
 
 - caption: Appendiks
   chapters:
-  - file: docs/grunnleggende_begreper
-  - file: docs/mattehjelp
+  - file: docs/A1_grunnleggende_begreper
+  - file: docs/A2mattehjelp
     sections:
     - file: docs/matematikk/formler_og_enheter
     - file: docs/matematikk/kombinatorikk
@@ -40,7 +40,7 @@ parts:
     - file: docs/matematikk/kalkulus
     - file: docs/matematikk/flervariabel_kalkulus
     - file: docs/matematikk/statistikk
-  - file: docs/praktisk_statistikk 
+  - file: docs/A3_praktisk_statistikk
 
 #- caption: Oppgaver og løsningsforslag
   #chapters:
