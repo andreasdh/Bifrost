@@ -36,9 +36,6 @@ def source_text(cell: dict) -> str:
 
 def set_source(cell: dict, text: str) -> None:
     cell["source"] = text.splitlines(keepends=True)
-    if cell["source"] and not cell["source"][-1].endswith("\n"):
-        # Preserve normal notebook convention without forcing a trailing newline.
-        pass
 
 
 def migrate_vis_sim(src: str) -> str | None:
@@ -54,9 +51,9 @@ def migrate_base64_embed(src: str) -> str | None:
     if "base64.b64encode" not in src or "HTML(" not in src or "data:text/html;base64" not in src:
         return None
 
-    path_match = re.search(r'with open\((['\"].+?['\"])\s*,\s*[\'\"]r[\'\"]', src)
-    height_match = re.search(r'height=[\"\'](\d+)[\"\']', src)
-    width_match = re.search(r'width=[\"\']([^\"\']+)[\"\']', src)
+    path_match = re.search(r'''with open\((["'][^"']+["'])\s*,\s*["']r["']''', src)
+    height_match = re.search(r'''height=["'](\d+)["']''', src)
+    width_match = re.search(r'''width=["']([^"']+)["']''', src)
     if not path_match:
         return None
 
