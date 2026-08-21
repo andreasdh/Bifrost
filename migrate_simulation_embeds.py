@@ -4,6 +4,7 @@ import json
 import re
 from pathlib import Path
 
+# One-off source migration for active notebooks in _toc.yml.
 ROOT = Path(__file__).resolve().parent
 
 
