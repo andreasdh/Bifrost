@@ -6,11 +6,11 @@ parts:
   chapters:
   - file: docs/1_introduksjon
  
-#- caption: Statistisk termodynamikk
-#  chapters:
-# - file: docs/1_entropi_boltzmann
-# - file: docs/2_partisjonsfunksjonen
-# - file: docs/3_gasser
+- caption: Statistisk termodynamikk
+  chapters:
+  - file: docs/2_entropi_boltzmann
+  # - file: docs/3_partisjonsfunksjonen
+  # - file: docs/4_gasser
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
