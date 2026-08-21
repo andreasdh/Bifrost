@@ -14,9 +14,9 @@ parts:
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
-#   - file: docs/Makroskopisk_termodynamikk_1
-#   - file: docs/Makroskopisk_termodynamikk_II
-#   - file: docs/varmekapasitet
+#   - file: docs/Makroskopisk_termodynamikk_I_varme_arbeid_entalpi
+#   - file: docs/Makroskopisk_termodynamikk_II_termodynamiske_potensialer
+#   - file: docs/Termokjemi_entalpi_entropi_spontanitet
 
 # - caption: Faser og blandinger
 #   chapters:
