@@ -1,3 +1,122 @@
+<div id="tns4-root"
+     style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+            max-width: 780px; margin: 1.5rem auto; padding: 1.5rem;
+            border: 1px solid #ddd; border-radius: 10px; background: #fafafa;">
+
+  <style>
+    #tns4-root input[type=range] {
+      accent-color: #8a7355;
+    }
+    #tns4-root .tns4-btn {
+      font-size: 13px;
+      padding: 6px 14px;
+      border: 1px solid #c9c7bd;
+      background: #eeece4;
+      color: #5f5e5a;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+  </style>
+
+  <!-- Kontroller for N -->
+  <div style="display:flex; align-items:center; gap:12px; margin:0 0 6px;">
+    <label for="tns4-N"
+           style="font-size:14px; color:#444; white-space:nowrap; min-width:150px;">
+      Antall partikler N
+    </label>
+    <input type="range" id="tns4-N"
+           min="4" max="100" step="1" value="4"
+           style="flex:1;" />
+    <span id="tns4-N-out"
+          style="font-size:14px; font-weight:600; min-width:34px;
+                 text-align:right; color:#222;">
+      4
+    </span>
+  </div>
+
+  <!-- Kontroller for k_BT / Δε -->
+  <div style="display:flex; align-items:center; gap:12px; margin:0 0 10px;">
+    <label for="tns4-ratio"
+           style="font-size:14px; color:#444; white-space:nowrap; min-width:150px;">
+      Tilgjengelig energi (k<sub>B</sub>T/&Delta;&epsilon;)
+    </label>
+    <input type="range" id="tns4-ratio"
+           min="0.2" max="5" step="0.05" value="1"
+           style="flex:1;" />
+    <span id="tns4-ratio-out"
+          style="font-size:14px; font-weight:600; min-width:34px;
+                 text-align:right; color:#222;">
+      1.00
+    </span>
+  </div>
+
+  <!-- Animasjonsknapper -->
+  <div style="display:flex; gap:10px; margin-bottom:16px;">
+    <button id="tns4-play-N" class="tns4-btn">▶ Øk N (4 → 100)</button>
+    <button id="tns4-play-eq" class="tns4-btn">▶ Simuler dynamisk likevekt</button>
+  </div>
+
+  <!-- Hovedvisning: energistige + energifordeling -->
+  <div style="display:grid; grid-template-columns: 300px 1fr; gap:24px;
+              align-items:start; margin-bottom: 1.25rem;">
+
+    <!-- Energistige for to-nivåsystem -->
+    <div>
+      <p style="font-size:12px; color:#888; margin:0 0 6px;">
+        Energistige for to-nivåsystem (hver kule = én partikkel)
+      </p>
+      <div id="tns4-ladder" style="position:relative; height:190px;"></div>
+    </div>
+
+    <!-- Fordeling av total energi -->
+    <div>
+      <p style="font-size:12px; color:#888; margin:0 0 6px;">
+        Sannsynlighetsfordeling for total energi
+      </p>
+      <div style="display:flex;">
+        <div style="writing-mode: vertical-rl; transform: rotate(180deg);
+                    font-size:11px; color:#666; text-align:center; padding-right:4px;">
+          Sannsynlighet P(E)
+        </div>
+        <div style="flex:1;">
+          <div id="tns4-chart"
+               style="position:relative; height:140px; border-bottom:1px solid #ccc;">
+          </div>
+          <div style="text-align:center; font-size:11px; color:#666; margin-top:4px;">
+            Total energi E (i enheter av &Delta;&epsilon;)
+          </div>
+        </div>
+      </div>
+
+      <p style="font-size:11px; color:#888; margin:6px 0 0;">
+        Den røde søylen viser systemets gjennomsnittlige energi
+        <em>U</em> (avrundet til nærmeste lovlige energiverdi) — uendret av
+        «Simuler dynamisk likevekt», siden den knappen bare bytter om
+        <em>hvilke</em> partikler som er i grunnnivået og det exciterte nivået,
+        uten å endre total energi.
+      </p>
+    </div>
+  </div>
+
+  <!-- Tallverdier for fordelingen -->
+  <div style="display:flex; gap:20px; font-size:13px; color:#444;">
+    <span>
+      Gjennomsnittsenergi
+      <span id="tns4-mean" style="font-weight:600; color:#222;">-</span>
+    </span>
+    <span>
+      Standardavvik
+      <span id="tns4-std" style="font-weight:600; color:#222;">-</span>
+    </span>
+    <span>
+      Relativ bredde &sigma;/E&#772;
+      <span id="tns4-relwidth" style="font-weight:600; color:#222;">-</span>
+    </span>
+  </div>
+
+</div>
+
+
 <script>
 (function () {
   const Nslider = document.getElementById('tns4-N');
@@ -12,10 +131,10 @@
   const BAR_COLOR = '#4A4A48';
   const HIGHLIGHT_COLOR = '#D33B2C';
 
-  // ---- TO NIVÅER ----
+  // --- TO NIVÅER ---
   const LEVELS = 2;
-  const levelColors = ['#378ADD', '#D85A30'];      // f.eks. blå = 0Δε, oransje = 1Δε
-  const levelY = [150, 60];                       // to nivåer vertikalt
+  const levelColors = ['#378ADD', '#D85A30'];
+  const levelY = [150, 90]; // to nivåer
   const ballSize = 8, ballGap = 2, maxPerRow = 26;
 
   let ballLevels = [];
@@ -23,25 +142,23 @@
   let playNInterval = null;
   let playEqInterval = null;
 
-  // Boltzmann-sannsynligheter for to nivåer:
-  // p_0 ∝ 1, p_1 ∝ exp(-Δε/k_BT)
+  // Boltzmann-sannsynligheter for nivå 0 og 1
   function levelProbs(ratio) {
-    const w = [1, Math.exp(-ratio)];  // bare to nivåer
+    const w = [1, Math.exp(-ratio)]; // bare grunnnivå og ett exciterte nivå
     const Z = w[0] + w[1];
     return w.map(v => v / Z);
   }
 
-  // Fordeling av total energi når hver partikkel kan være på nivå 0 eller 1
-  // E = (# partikler på nivå 1) * Δε
+  // Fordeling av total energi når hver partikkel kan ha 0 eller 1Δε
   function energyDistribution(N, p) {
-    let dist = [1]; // starter med én partikkel, energi 0
+    let dist = [1]; // start med én partikkel, energi 0
     for (let k = 0; k < N; k++) {
       const nd = new Array(dist.length + 1).fill(0);
       for (let e = 0; e < dist.length; e++) {
         const prob = dist[e];
         if (prob === 0) continue;
-        nd[e]     += prob * p[0]; // partikkel på nivå 0 (ingen energiendring)
-        nd[e + 1] += prob * p[1]; // partikkel på nivå 1 (energi +Δε)
+        nd[e]     += prob * p[0]; // nivå 0: ingen energiendring
+        nd[e + 1] += prob * p[1]; // nivå 1: +Δε
       }
       dist = nd;
     }
@@ -135,8 +252,8 @@
     barEls = {};
     const maxP = Math.max(...dist);
     const n = dist.length;
-    const gap = n > 60 ? 0.5 : n > 25 ? 1.5 : 3;
-    const totalWidth = chart.clientWidth || 500;
+    const gap = n > 60 ? 0.5 : (n > 25 ? 1.5 : 3);
+        const totalWidth = chart.clientWidth || 500;
     const bw = Math.max(1, (totalWidth - gap * (n - 1)) / n);
 
     dist.forEach((prob, i) => {
@@ -147,7 +264,7 @@
         'position:absolute; bottom:0; background:' +
         BAR_COLOR +
         '; border-radius:2px 2px 0 0; transition: background .15s ease;';
-      bar.style.left = i * (bw + gap) + 'px';
+      bar.style.left = (i * (bw + gap)) + 'px';
       bar.style.width = bw + 'px';
       bar.style.height = h + 'px';
       chart.appendChild(bar);
@@ -156,20 +273,18 @@
   }
 
   function highlightEnergy(e) {
-    Object.keys(barEls).forEach(key => {
-      barEls[key].style.background = BAR_COLOR;
-    });
+    Object.keys(barEls).forEach(key => { barEls[key].style.background = BAR_COLOR; });
     if (barEls[e]) barEls[e].style.background = HIGHLIGHT_COLOR;
   }
 
   function currentTotalEnergy() {
-    // total energi = sum av nivå-indekser (0 eller 1) i enheter av Δε
+    // total energi = antall partikler i exciterte nivå (nivå 1)
     return ballLevels.reduce((a, b) => a + b, 0);
   }
 
   function render(keepBallAssignment) {
     const N = parseInt(Nslider.value);
-    const sliderVal = parseFloat(ratioSlider.value); // k_BT/Δε
+    const sliderVal = parseFloat(ratioSlider.value); // k_BT/Δε, 0.2..5
     const ratio = 1 / sliderVal; // Δε/k_BT
 
     Nout.textContent = N;
@@ -179,17 +294,15 @@
     const dist = energyDistribution(N, p);
 
     let mean = 0;
-    dist.forEach((prob, e) => (mean += prob * e));
+    dist.forEach((prob, e) => mean += prob * e);
     let variance = 0;
-    dist.forEach((prob, e) => (variance += prob * (e - mean) * (e - mean)));
+    dist.forEach((prob, e) => variance += prob * (e - mean) * (e - mean));
     const std = Math.sqrt(variance);
     const relWidth = mean > 0 ? std / mean : 0;
 
     document.getElementById('tns4-mean').textContent = mean.toFixed(2) + ' Δε';
     document.getElementById('tns4-std').textContent = std.toFixed(2) + ' Δε';
-    document.getElementById('tns4-relwidth').textContent = isFinite(relWidth)
-      ? relWidth.toFixed(3)
-      : '-';
+    document.getElementById('tns4-relwidth').textContent = isFinite(relWidth) ? relWidth.toFixed(3) : '-';
 
     renderChart(dist);
 
@@ -217,20 +330,14 @@
 
   playNBtn.addEventListener('click', function () {
     stopEq();
-    if (playNInterval) {
-      stopN();
-      return;
-    }
+    if (playNInterval) { stopN(); return; }
     Nslider.value = 4;
     render(false);
     playNBtn.textContent = '⏸ Spiller...';
     let n = 4;
     playNInterval = setInterval(function () {
       n += 2;
-      if (n >= 100) {
-        n = 100;
-        stopN();
-      }
+      if (n >= 100) { n = 100; stopN(); }
       Nslider.value = n;
       render(false);
     }, 150);
@@ -238,10 +345,7 @@
 
   playEqBtn.addEventListener('click', function () {
     stopN();
-    if (playEqInterval) {
-      stopEq();
-      return;
-    }
+    if (playEqInterval) { stopEq(); return; }
     if (ballLevels.length !== parseInt(Nslider.value)) render(false);
     highlightEnergy(currentTotalEnergy());
     playEqBtn.textContent = '⏸ Simulerer...';
@@ -261,16 +365,11 @@
     }, 260);
   });
 
-  Nslider.addEventListener('input', function () {
-    stopEq();
-    render(false);
-  });
-  ratioSlider.addEventListener('input', function () {
-    stopEq();
-    render(false);
-  });
+  Nslider.addEventListener('input', function () { stopEq(); render(false); });
+  ratioSlider.addEventListener('input', function () { stopEq(); render(false); });
 
   setupLadderLines();
   render(false);
 })();
 </script>
+
