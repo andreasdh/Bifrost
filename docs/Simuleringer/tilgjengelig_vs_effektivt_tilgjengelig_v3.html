@@ -16,11 +16,11 @@
 
     <div>
       <div style="background:#f0efe9;border-radius:10px;padding:1rem;margin-bottom:12px;">
-        <p style="font-size:13px;color:#555;margin:0 0 4px;">Tilgjengelige tilstander (t)</p>
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Tillatte energinivåer (t)</p>
         <p style="font-size:24px;font-weight:600;margin:0;color:#222;">5</p>
       </div>
       <div style="background:#f0efe9;border-radius:10px;padding:1rem;">
-        <p style="font-size:13px;color:#555;margin:0 0 4px;">Effektivt tilgjengelige (Q)</p>
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Sum av Boltzmann-vektene (Q)</p>
         <p id="tve3-qval" style="font-size:24px;font-weight:600;margin:0;color:#2a78d6;">-</p>
         <p id="tve3-qnote" style="font-size:12px;color:#888;margin:6px 0 0;min-height:16px;"></p>
       </div>
@@ -87,7 +87,7 @@
     }
 
     qval.textContent = Q.toFixed(2);
-    if (x <= 0.4) qnote.textContent = 'Q nærmer seg t';
+    if (x <= 0.4) qnote.textContent = 'Q nærmer seg t = 5';
     else if (x >= 4.5) qnote.textContent = 'Q nærmer seg 1';
     else qnote.textContent = '';
   }
