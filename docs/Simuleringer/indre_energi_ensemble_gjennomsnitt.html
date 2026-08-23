@@ -1,86 +1,116 @@
-<h2 class="sr-only">Interaktiv visning av hvordan indre energi U er et sannsynlighetsveid gjennomsnitt over mikrotilstandenes energier</h2>
+<div id="ieug-root" style="font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;max-width:720px;margin:1.5rem auto;padding:1.5rem;border:1px solid #ddd;border-radius:10px;background:#fafafa;">
+  <h2 class="sr-only">Indre energi og varmekapasitet fra en Boltzmann-fordeling</h2>
 
-<div style="display:flex;align-items:center;gap:12px;margin:0 0 4px;">
-<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">&Delta;&epsilon; / k<sub>B</sub>T</label>
-<input type="range" id="ratio" min="0.1" max="5" step="0.1" value="1" style="flex:1;" oninput="render()">
-<span id="ratio-out" style="font-size:14px;font-weight:500;min-width:30px;text-align:right;">1.0</span>
-</div>
+  <div style="display:flex;align-items:center;gap:12px;margin:0 0 4px;">
+    <label for="ieug-ratio" style="font-size:14px;color:#555;white-space:nowrap;">&Delta;&epsilon; / k<sub>B</sub>T</label>
+    <input type="range" id="ieug-ratio" min="0.1" max="5" step="0.1" value="1" style="flex:1;">
+    <span id="ieug-ratio-out" style="font-size:14px;font-weight:600;min-width:30px;text-align:right;color:#222;">1.0</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin:0 0 1.25rem;">
+    <span>Lite gap / høy temperatur</span>
+    <span>Stort gap / lav temperatur</span>
+  </div>
 
-<div style="display:grid;grid-template-columns:1fr 140px;gap:20px;align-items:start;">
+  <div style="display:grid;grid-template-columns:minmax(280px,1fr) 210px;gap:20px;align-items:start;">
+    <div>
+      <div id="ieug-ladder" style="position:relative;height:270px;"></div>
+      <p style="font-size:12px;color:#666;margin:8px 0 0;">Søylehøydene viser de normaliserte sannsynlighetene <em>p</em><sub>n</sub>. Den stiplede linjen viser gjennomsnittsenergien <em>U</em>.</p>
+    </div>
 
-<div id="ladder" style="position:relative;height:260px;"></div>
-
-<div style="background:var(--surface-1);border-radius:var(--radius);padding:1rem;">
-<p style="font-size:13px;color:var(--text-secondary);margin:0 0 4px;">U (i enheter av &Delta;&epsilon;)</p>
-<p id="uval" style="font-size:24px;font-weight:500;margin:0;color:var(--text-accent);">-</p>
-</div>
-
+    <div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;margin-bottom:12px;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Indre energi, U / &Delta;&epsilon;</p>
+        <p id="ieug-uval" style="font-size:24px;font-weight:600;margin:0;color:#2a78d6;">-</p>
+      </div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Varmekapasitet, C<sub>V</sub> / k<sub>B</sub></p>
+        <p id="ieug-cvval" style="font-size:24px;font-weight:600;margin:0;color:#0d7d6f;">-</p>
+        <p style="font-size:12px;color:#777;margin:6px 0 0;">Her er C<sub>V</sub> bestemt av hvor raskt U endres med T.</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <script>
-const t = 5;
-const box = document.getElementById('ladder');
-const baseY = 240;
-const gapPx = 48;
-const leftPx = 40;
-const widthPct = 0.6;
+(function () {
+  const root = document.getElementById('ieug-root');
+  const t = 5;
+  const box = root.querySelector('#ieug-ladder');
+  const slider = root.querySelector('#ieug-ratio');
+  const ratioOut = root.querySelector('#ieug-ratio-out');
+  const uval = root.querySelector('#ieug-uval');
+  const cvval = root.querySelector('#ieug-cvval');
+  const baseY = 245;
+  const gapPx = 48;
+  const leftPx = 42;
+  const widthPct = 0.62;
 
-for (let n = 0; n < t; n++) {
-  const bar = document.createElement('div');
-  bar.id = 'bar-' + n;
-  bar.style.cssText = 'position:absolute;left:'+leftPx+'px;background:#378ADD;opacity:0.55;border-radius:3px 3px 0 0;';
-  box.appendChild(bar);
-
-  const line = document.createElement('div');
-  line.id = 'lvl-' + n;
-  line.style.cssText = 'position:absolute;left:'+leftPx+'px;height:2.5px;background:var(--text-primary);border-radius:1px;top:'+(baseY-n*gapPx)+'px;';
-  box.appendChild(line);
-
-  const lab = document.createElement('div');
-  lab.style.cssText = 'position:absolute;font-size:12px;color:var(--text-secondary);top:'+(baseY-n*gapPx-8)+'px;';
-  lab.textContent = n + '\u0394\u03b5';
-  box.appendChild(lab);
-}
-
-const uline = document.createElement('div');
-uline.id = 'uline';
-uline.style.cssText = 'position:absolute;left:'+leftPx+'px;height:2px;border-top:2px dashed #D85A30;';
-box.appendChild(uline);
-
-const ulab = document.createElement('div');
-ulab.id = 'ulab';
-ulab.style.cssText = 'position:absolute;font-size:12px;font-weight:500;color:#993C1D;';
-ulab.textContent = 'U';
-box.appendChild(ulab);
-
-function render(){
-  const x = parseFloat(document.getElementById('ratio').value);
-  document.getElementById('ratio-out').textContent = x.toFixed(1);
-  const widthPx = box.clientWidth * widthPct;
-
-  const weights = [];
-  for (let n = 0; n < t; n++) weights.push(Math.exp(-n * x));
-  const Q = weights.reduce((a,b)=>a+b,0);
-
-  let U = 0;
   for (let n = 0; n < t; n++) {
-    const w = weights[n];
-    const h = Math.max(2, (gapPx - 6) * w);
-    const bar = document.getElementById('bar-'+n);
-    bar.style.width = widthPx + 'px';
-    bar.style.height = h + 'px';
-    bar.style.top = (baseY - n*gapPx - h) + 'px';
-    document.getElementById('lvl-'+n).style.width = widthPx + 'px';
-    U += n * (w/Q);
+    const bar = document.createElement('div');
+    bar.id = 'ieug-bar-' + n;
+    bar.style.cssText = 'position:absolute;left:' + leftPx + 'px;background:#378ADD;opacity:0.60;border-radius:3px 3px 0 0;';
+    box.appendChild(bar);
+
+    const line = document.createElement('div');
+    line.id = 'ieug-lvl-' + n;
+    line.style.cssText = 'position:absolute;left:' + leftPx + 'px;height:2.5px;background:#222;border-radius:1px;top:' + (baseY - n * gapPx) + 'px;';
+    box.appendChild(line);
+
+    const lab = document.createElement('div');
+    lab.style.cssText = 'position:absolute;font-size:12px;color:#555;top:' + (baseY - n * gapPx - 8) + 'px;';
+    lab.textContent = n + '\u0394\u03b5';
+    box.appendChild(lab);
   }
 
-  const uY = baseY - U*gapPx;
-  uline.style.top = uY + 'px';
-  uline.style.width = widthPx + 'px';
-  ulab.style.top = (uY - 9) + 'px';
-  ulab.style.left = (leftPx + widthPx + 10) + 'px';
+  const uline = document.createElement('div');
+  uline.style.cssText = 'position:absolute;left:' + leftPx + 'px;height:2px;border-top:2px dashed #D85A30;';
+  box.appendChild(uline);
 
-  document.getElementById('uval').textContent = U.toFixed(2);
-}
-render();
+  const ulab = document.createElement('div');
+  ulab.style.cssText = 'position:absolute;font-size:12px;font-weight:600;color:#993C1D;';
+  ulab.textContent = 'U';
+  box.appendChild(ulab);
+
+  function render() {
+    const x = parseFloat(slider.value);
+    ratioOut.textContent = x.toFixed(1);
+    const widthPx = box.clientWidth * widthPct;
+
+    const weights = [];
+    for (let n = 0; n < t; n++) weights.push(Math.exp(-n * x));
+    const Q = weights.reduce((a, b) => a + b, 0);
+    const probabilities = weights.map(w => w / Q);
+
+    let meanN = 0;
+    let meanN2 = 0;
+    for (let n = 0; n < t; n++) {
+      const p = probabilities[n];
+      meanN += n * p;
+      meanN2 += n * n * p;
+
+      const h = Math.max(2, (gapPx - 6) * p);
+      const bar = root.querySelector('#ieug-bar-' + n);
+      bar.style.width = widthPx + 'px';
+      bar.style.height = h + 'px';
+      bar.style.top = (baseY - n * gapPx - h) + 'px';
+      root.querySelector('#ieug-lvl-' + n).style.width = widthPx + 'px';
+    }
+
+    const varianceN = Math.max(0, meanN2 - meanN * meanN);
+    const cvOverKb = x * x * varianceN;
+    const uY = baseY - meanN * gapPx;
+
+    uline.style.top = uY + 'px';
+    uline.style.width = widthPx + 'px';
+    ulab.style.top = (uY - 9) + 'px';
+    ulab.style.left = (leftPx + widthPx + 10) + 'px';
+
+    uval.textContent = meanN.toFixed(2);
+    cvval.textContent = cvOverKb.toFixed(2);
+  }
+
+  slider.addEventListener('input', render);
+  window.addEventListener('resize', render);
+  render();
+})();
 </script>
