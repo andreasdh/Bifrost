@@ -6,7 +6,7 @@ parts:
   chapters:
   - file: docs/1_introduksjon
  
-#
+
   chapters:
   - file: docs/2_entropi_boltzmann
   # - file: docs/3_partisjonsfunksjonen
