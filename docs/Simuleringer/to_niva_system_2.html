@@ -22,7 +22,7 @@
   <div style="display:flex; align-items:center; gap:12px; margin:0 0 6px;">
     <label for="tns4-N"
            style="font-size:14px; color:#444; white-space:nowrap; min-width:150px;">
-      Antall partikler N
+      Antall delsystemer N
     </label>
     <input type="range" id="tns4-N"
            min="4" max="100" step="1" value="4"
@@ -38,7 +38,7 @@
   <div style="display:flex; align-items:center; gap:12px; margin:0 0 10px;">
     <label for="tns4-ratio"
            style="font-size:14px; color:#444; white-space:nowrap; min-width:150px;">
-      Tilgjengelig energi (k<sub>B</sub>T/&Delta;&epsilon;)
+      Forholdet k<sub>B</sub>T/&Delta;&epsilon;
     </label>
     <input type="range" id="tns4-ratio"
            min="0.2" max="5" step="0.05" value="1"
@@ -63,7 +63,7 @@
     <!-- Energistige for to-nivåsystem -->
     <div>
       <p style="font-size:12px; color:#888; margin:0 0 6px;">
-        Energistige for to-nivåsystem (hver kule = én partikkel)
+        Energistige for to-nivåsystem (hver kule = ett delsystem)
       </p>
       <div id="tns4-ladder" style="position:relative; height:190px;"></div>
     </div>
@@ -92,7 +92,7 @@
         Den røde søylen viser systemets gjennomsnittlige energi
         <em>U</em> (avrundet til nærmeste lovlige energiverdi) — uendret av
         «Simuler dynamisk likevekt», siden den knappen bare bytter om
-        <em>hvilke</em> partikler som er i grunnnivået og det exciterte nivået,
+        <em>hvilke</em> delsystemer som er i grunntilstanden og den eksiterte tilstanden,
         uten å endre total energi.
       </p>
     </div>
@@ -144,14 +144,14 @@
 
   // Boltzmann-sannsynligheter for nivå 0 og 1
   function levelProbs(ratio) {
-    const w = [1, Math.exp(-ratio)]; // bare grunnnivå og ett exciterte nivå
+    const w = [1, Math.exp(-ratio)]; // bare grunntilstanden og én eksitert tilstand
     const Z = w[0] + w[1];
     return w.map(v => v / Z);
   }
 
-  // Fordeling av total energi når hver partikkel kan ha 0 eller 1Δε
+  // Fordeling av total energi når hvert delsystem kan ha 0 eller 1Δε
   function energyDistribution(N, p) {
-    let dist = [1]; // start med én partikkel, energi 0
+    let dist = [1]; // start med ett delsystem, energi 0
     for (let k = 0; k < N; k++) {
       const nd = new Array(dist.length + 1).fill(0);
       for (let e = 0; e < dist.length; e++) {
@@ -278,7 +278,7 @@
   }
 
   function currentTotalEnergy() {
-    // total energi = antall partikler i exciterte nivå (nivå 1)
+    // total energi = antall delsystemer i den eksiterte tilstanden (nivå 1)
     return ballLevels.reduce((a, b) => a + b, 0);
   }
 
