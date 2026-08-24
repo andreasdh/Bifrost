@@ -127,6 +127,13 @@ jobs:
       - name: Build Jupyter Book
         run: jupyter-book build .
 
+      - name: Copy static notebook assets
+        run: |
+          mkdir -p _build/html/docs/ukesoppgaver
+          cp -a docs/Simuleringer _build/html/docs/Simuleringer
+          cp -a docs/bilder _build/html/docs/bilder
+          find docs/ukesoppgaver -maxdepth 1 -type f -name '*.html' -exec cp {} _build/html/docs/ukesoppgaver/ \;
+
       - name: Deploy to gh-pages
         if: (github.event_name == 'push' || github.event_name == 'workflow_dispatch') && github.ref == 'refs/heads/main'
         uses: peaceiris/actions-gh-pages@v4
