@@ -46,7 +46,7 @@ parts:
   chapters:
   - file: docs/ukesoppgaver
     sections:
-    - file: docs/ukesoppgaver/uke_01
+    - file: docs/ukesoppgaver/uke_01_under_revision
     #- file: docs/ukesoppgaver/uke_02
     # - file: docs/ukesoppgaver/uke_03
     # - file: docs/ukesoppgaver/uke_04
