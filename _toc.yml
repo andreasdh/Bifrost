@@ -42,11 +42,11 @@ parts:
     - file: docs/matematikk/statistikk
   - file: docs/A3_praktisk_statistikk
 
-#- caption: Oppgaver og løsningsforslag
-  #chapters:
-  #- file: docs/ukesoppgaver
-    #sections:
-    #- file: docs/ukesoppgaver/uke_01
+- caption: Oppgaver og løsningsforslag
+  chapters:
+  - file: docs/ukesoppgaver
+    sections:
+    - file: docs/ukesoppgaver/uke_01
     #- file: docs/ukesoppgaver/uke_02
     # - file: docs/ukesoppgaver/uke_03
     # - file: docs/ukesoppgaver/uke_04
