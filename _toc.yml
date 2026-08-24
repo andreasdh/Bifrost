@@ -7,8 +7,8 @@ parts:
   - file: docs/1_introduksjon
  
 #
-#  chapters:
-#  - file: docs/2_entropi_boltzmann
+  chapters:
+  - file: docs/2_entropi_boltzmann
   # - file: docs/3_partisjonsfunksjonen
   # - file: docs/4_gasser
 
