@@ -32,7 +32,7 @@ parts:
 - caption: Appendiks
   chapters:
   - file: docs/A1_grunnleggende_begreper
-  - file: docs/A2mattehjelp
+  - file: docs/A2_mattehjelp
     sections:
     - file: docs/matematikk/formler_og_enheter
     - file: docs/matematikk/kombinatorikk
