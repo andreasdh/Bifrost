@@ -1,4 +1,4 @@
-# trigger
+# trigger after PR
 name: Temporary restore original gas simulation 2
 
 on:
