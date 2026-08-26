@@ -1,6 +1,7 @@
 import json
 from pathlib import Path
 
+# Temporary helper for PR #11.
 path = Path("docs/A1_grunnleggende_begreper.ipynb")
 nb = json.loads(path.read_text(encoding="utf-8"))
 
