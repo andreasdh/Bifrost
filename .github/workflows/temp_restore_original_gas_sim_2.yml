@@ -1,0 +1,51 @@
+name: Temporary restore original gas simulation 2
+
+on:
+  push:
+    branches:
+      - fix/restore-original-gas-simulation-2
+
+permissions:
+  contents: write
+
+jobs:
+  restore:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          ref: fix/restore-original-gas-simulation-2
+
+      - name: Restore original ideal gas simulation reference
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+
+          path = Path('docs/4_gasser.ipynb')
+          text = path.read_text(encoding='utf-8')
+
+          old = 'Simuleringer/Simulering2_trykk_energi_entropi_3D.html'
+          new = 'simuleringer/idealgassloven-simulering.html'
+
+          count = text.count(old)
+          if count != 1:
+              raise SystemExit(f'Expected exactly one old simulation reference, found {count}')
+
+          text = text.replace(old, new)
+          json.loads(text)
+          path.write_text(text, encoding='utf-8')
+
+          if old in text or text.count(new) != 1:
+              raise SystemExit('Simulation reference validation failed')
+          PY
+
+      - name: Commit notebook change and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/temp_restore_original_gas_sim_2.yml
+          git add docs/4_gasser.ipynb
+          git commit -m "Restore original ideal gas simulation in gas chapter"
+          git push origin HEAD:fix/restore-original-gas-simulation-2
