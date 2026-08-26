@@ -1,0 +1,87 @@
+name: Temporary repair solution dropdowns
+
+on:
+  push:
+    branches:
+      - fix/gasser-dropdown-simuleringer
+
+permissions:
+  contents: write
+
+jobs:
+  repair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-22.04
+    steps:
+      - uses: actions/checkout@v5
+
+      - name: Repair and validate solution dropdowns
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import json
+          import re
+
+          changed_files = []
+          old_title = ':::{admonition} Løsningsforslag'
+          new_title = ':::{dropdown} Løsningsforslag'
+
+          for path in sorted(Path('docs').rglob('*.ipynb')):
+              text = path.read_text(encoding='utf-8')
+              original = text
+
+              # Repair malformed literal newline introduced by the previous raw-text pass.
+              text = text.replace(
+                  '":::{dropdown} Løsningsforslag\n"',
+                  '":::{dropdown} Løsningsforslag\\n"',
+              )
+
+              # Convert any remaining old directive using plain string replacement,
+              # which preserves the JSON-escaped backslash-n literally.
+              text = text.replace(
+                  '":::{admonition} Løsningsforslag\\n"',
+                  '":::{dropdown} Løsningsforslag\\n"',
+              )
+
+              # Remove an old admonition class line only when it immediately follows
+              # a Løsningsforslag dropdown. Lambda avoids re.sub backslash processing.
+              pattern = re.compile(
+                  r'(":::\{dropdown\} Løsningsforslag\\n",\n)(\s*)":class:[^"\\]*(?:\\.[^"\\]*)*\\n",\n'
+              )
+              text = pattern.sub(lambda m: m.group(1), text)
+
+              if text != original:
+                  path.write_text(text, encoding='utf-8')
+                  changed_files.append(path.as_posix())
+
+          # Validate every notebook under docs, not just the changed ones.
+          invalid = []
+          leftovers = []
+          for path in sorted(Path('docs').rglob('*.ipynb')):
+              text = path.read_text(encoding='utf-8')
+              try:
+                  json.loads(text)
+              except Exception as exc:
+                  invalid.append(f'{path}: {exc}')
+              if old_title in text:
+                  leftovers.append(path.as_posix())
+
+          if invalid:
+              raise SystemExit('Invalid notebook JSON:\n' + '\n'.join(invalid))
+          if leftovers:
+              raise SystemExit('Old solution admonitions remain:\n' + '\n'.join(leftovers))
+
+          print(f'Repaired {len(changed_files)} notebook(s).')
+          for name in changed_files:
+              print(name)
+          print('All docs notebooks are valid JSON; no old Løsningsforslag admonitions remain.')
+          PY
+
+      - name: Commit repairs and remove temporary workflow
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git rm .github/workflows/temp_repair_solution_dropdowns.yml
+          git add docs
+          git commit -m "Repair and validate solution dropdown conversion"
+          git push origin HEAD:fix/gasser-dropdown-simuleringer
