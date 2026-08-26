@@ -28,35 +28,6 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
 
-      - name: Restore original gas simulation for PR 16
-        if: github.event_name == 'pull_request' && github.head_ref == 'fix/restore-original-gas-simulation-2'
-        run: |
-          git fetch origin main fix/restore-original-gas-simulation-2
-          git checkout -B fix/restore-original-gas-simulation-2 origin/fix/restore-original-gas-simulation-2
-          python - <<'PY'
-          from pathlib import Path
-          import json
-
-          path = Path('docs/4_gasser.ipynb')
-          text = path.read_text(encoding='utf-8')
-          old = 'Simuleringer/Simulering2_trykk_energi_entropi_3D.html'
-          new = 'simuleringer/idealgassloven-simulering.html'
-          count = text.count(old)
-          if count != 1:
-              raise SystemExit(f'Expected exactly one old simulation reference, found {count}')
-          text = text.replace(old, new)
-          json.loads(text)
-          path.write_text(text, encoding='utf-8')
-          PY
-          git checkout origin/main -- .github/workflows/main.yml
-          git rm -f .github/workflows/temp_restore_original_gas_sim_2.yml || true
-          git rm -f .github/temp_restore_original_gas_sim_2.trigger || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add docs/4_gasser.ipynb .github/workflows/main.yml
-          git commit -m "Restore original ideal gas simulation in gas chapter"
-          git push origin HEAD:fix/restore-original-gas-simulation-2
-
       - name: Setup Python
         uses: actions/setup-python@v6
         with:
