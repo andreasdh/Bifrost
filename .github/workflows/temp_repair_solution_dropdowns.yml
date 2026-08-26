@@ -24,7 +24,9 @@ jobs:
 
           changed_files = []
           old_title = ':::{admonition} Løsningsforslag'
-          new_title = ':::{dropdown} Løsningsforslag'
+          known_preexisting_invalid = {
+              'docs/arkiv/statmek_BACKUP_64692.ipynb',
+          }
 
           for path in sorted(Path('docs').rglob('*.ipynb')):
               text = path.read_text(encoding='utf-8')
@@ -36,15 +38,14 @@ jobs:
                   '":::{dropdown} Løsningsforslag\\n"',
               )
 
-              # Convert any remaining old directive using plain string replacement,
-              # which preserves the JSON-escaped backslash-n literally.
+              # Convert any remaining old directive with literal JSON escaping preserved.
               text = text.replace(
                   '":::{admonition} Løsningsforslag\\n"',
                   '":::{dropdown} Løsningsforslag\\n"',
               )
 
               # Remove an old admonition class line only when it immediately follows
-              # a Løsningsforslag dropdown. Lambda avoids re.sub backslash processing.
+              # a Løsningsforslag dropdown. Lambda preserves backslashes literally.
               pattern = re.compile(
                   r'(":::\{dropdown\} Løsningsforslag\\n",\n)(\s*)":class:[^"\\]*(?:\\.[^"\\]*)*\\n",\n'
               )
@@ -54,27 +55,32 @@ jobs:
                   path.write_text(text, encoding='utf-8')
                   changed_files.append(path.as_posix())
 
-          # Validate every notebook under docs, not just the changed ones.
-          invalid = []
+          invalid_unexpected = []
           leftovers = []
+          valid_count = 0
           for path in sorted(Path('docs').rglob('*.ipynb')):
+              name = path.as_posix()
               text = path.read_text(encoding='utf-8')
               try:
                   json.loads(text)
+                  valid_count += 1
               except Exception as exc:
-                  invalid.append(f'{path}: {exc}')
+                  if name not in known_preexisting_invalid:
+                      invalid_unexpected.append(f'{name}: {exc}')
               if old_title in text:
-                  leftovers.append(path.as_posix())
+                  leftovers.append(name)
 
-          if invalid:
-              raise SystemExit('Invalid notebook JSON:\n' + '\n'.join(invalid))
+          if invalid_unexpected:
+              raise SystemExit('Unexpected invalid notebook JSON:\n' + '\n'.join(invalid_unexpected))
           if leftovers:
               raise SystemExit('Old solution admonitions remain:\n' + '\n'.join(leftovers))
 
           print(f'Repaired {len(changed_files)} notebook(s).')
           for name in changed_files:
               print(name)
-          print('All docs notebooks are valid JSON; no old Løsningsforslag admonitions remain.')
+          print(f'Validated {valid_count} notebook(s) as JSON.')
+          print('Only the known pre-existing conflicted backup is exempted.')
+          print('No old Løsningsforslag admonitions remain under docs/.')
           PY
 
       - name: Commit repairs and remove temporary workflow
