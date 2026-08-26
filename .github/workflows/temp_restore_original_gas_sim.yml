@@ -41,11 +41,12 @@ jobs:
           print('Restored existing idealgassloven-simulering.html in docs/4_gasser.ipynb')
           PY
 
-      - name: Commit change and remove temporary workflow
+      - name: Commit change and remove temporary files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm .github/workflows/temp_restore_original_gas_sim.yml
+          git rm -f .github/temp_restore_original_gas_sim.trigger || true
           git add docs/4_gasser.ipynb
           git commit -m "Restore original ideal gas simulation in gas chapter"
           git push origin HEAD:fix/restore-original-gas-simulation
