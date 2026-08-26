@@ -1,0 +1,40 @@
+name: Temporary pedagogical revision
+
+on:
+  push:
+    branches:
+      - pedagogisk-revisjon-partisjon-gasser
+
+permissions:
+  contents: write
+
+jobs:
+  revise:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out revision branch
+        uses: actions/checkout@v4
+        with:
+          ref: pedagogisk-revisjon-partisjon-gasser
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Revise notebooks conservatively
+        run: python tools/revise_partisjon_gasser.py
+
+      - name: Commit notebook changes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add docs/3_partisjonsfunksjonen.ipynb docs/4_gasser.ipynb
+          if git diff --cached --quiet; then
+            echo "No notebook changes to commit"
+          else
+            git commit -m "Revise partition function and gas chapters pedagogically"
+            git push origin HEAD:pedagogisk-revisjon-partisjon-gasser
+          fi
