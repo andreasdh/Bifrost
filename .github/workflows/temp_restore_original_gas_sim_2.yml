@@ -42,11 +42,12 @@ jobs:
               raise SystemExit('Simulation reference validation failed')
           PY
 
-      - name: Commit notebook change and remove temporary workflow
+      - name: Commit notebook change and remove temporary files
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git rm .github/workflows/temp_restore_original_gas_sim_2.yml
+          git rm -f .github/temp_restore_original_gas_sim_2.trigger || true
           git add docs/4_gasser.ipynb
           git commit -m "Restore original ideal gas simulation in gas chapter"
           git push origin HEAD:fix/restore-original-gas-simulation-2
