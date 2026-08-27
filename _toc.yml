@@ -19,8 +19,8 @@ parts:
 
 # - caption: Faser og blandinger
 #   chapters:
-#   - file: docs/8_faser
 #   - file: docs/9_intermolekylære_krefter
+#   - file: docs/8_faser
 #   - file: docs/10_løsninger_blandinger
 
 # - caption: Likevekter og kinetikk
