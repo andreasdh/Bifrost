@@ -10,17 +10,17 @@ parts:
   - file: docs/2_entropi_boltzmann
   - file: docs/3_partisjonsfunksjonen
   - file: docs/4_gasser
-#  - file: docs/9_intermolekylære_krefter
+#  - file: docs/5_intermolekylære_krefter
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
-#   - file: docs/5_varme_arbeid_entalpi
-#   - file: docs/6_termodynamiske_potensialer
-#   - file: docs/7_termokjemi
+#   - file: docs/6_varme_arbeid_entalpi
+#   - file: docs/7_termodynamiske_potensialer
+#   - file: docs/8_termokjemi
 
 # - caption: Faser og blandinger
 #   chapters:
-#   - file: docs/8_faser
+#   - file: docs/9_faser
 #   - file: docs/10_løsninger_blandinger
 
 # - caption: Likevekter og kinetikk
