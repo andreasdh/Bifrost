@@ -48,6 +48,6 @@
 <text x="522.5" y="41" text-anchor="middle" font-size="15" fill="#333">A</text>
 <text x="667.5" y="41" text-anchor="middle" font-size="15" fill="#333">B</text>
 <text x="595.0" y="261" text-anchor="middle" font-size="15" font-weight="bold" fill="#1a1a1a">Etter: likevekt</text>
-<text x="595.0" y="281" text-anchor="middle" font-size="14" fill="#2e8b57">&#937; = C(N, N/2)  ·  maksimal</text>
-<text x="390.0" y="332" text-anchor="middle" font-size="13.5" font-style="italic" fill="#555">Hvert molekyl er i A eller B — som kron eller mynt. Makrotilstanden n<tspan baseline-shift="sub" font-size="10">A</tspan> har &#937; = C(N, n<tspan baseline-shift="sub" font-size="10">A</tspan>) mikrotilstander.</text>
+<text x="595.0" y="281" text-anchor="middle" font-size="14" fill="#2e8b57">&#937; er størst ved n<tspan baseline-shift="sub" font-size="10">A</tspan> = N/2</text>
+<text x="390.0" y="332" text-anchor="middle" font-size="13.5" font-style="italic" fill="#555">Makrotilstanden n<tspan baseline-shift="sub" font-size="10">A</tspan> kan realiseres på &#937;(n<tspan baseline-shift="sub" font-size="10">A</tspan>) = N!/[n<tspan baseline-shift="sub" font-size="10">A</tspan>!(N &#8722; n<tspan baseline-shift="sub" font-size="10">A</tspan>)!] måter.</text>
 </svg>
