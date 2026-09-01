@@ -56,9 +56,9 @@ parts:
     # - file: docs/ukesoppgaver/uke_09
     # - file: docs/ukesoppgaver/uke_10
     # - file: docs/ukesoppgaver/uke_11
-  # - file: docs/løsningsforslag
-  #   sections:
-  #   - file: docs/losningsforslag/uke_01
+  - file: docs/løsningsforslag
+    sections:
+      - file: docs/losningsforslag/uke_01_under_revision_LF.ipynb
   #   - file: docs/losningsforslag/uke_02
   #   - file: docs/losningsforslag/uke_03
   #   - file: docs/losningsforslag/uke_04
