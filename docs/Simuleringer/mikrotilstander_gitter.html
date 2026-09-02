@@ -334,8 +334,8 @@
       </div>
 
       <div class="formula-box">
-        <p class="formula">S = k<sub>B</sub>ln ω = k<sub>B</sub>·<span class="val" id="lnVal">2.20</span></p>
-        <p class="delta" id="deltaText">Referansetilstand (én art)</p>
+        <p class="formula">S/k<sub>B</sub> = ln ω = <span class="val" id="lnVal">2.20</span></p>
+        <p class="delta" id="deltaText">Entropien gjelder systemet med én ball</p>
       </div>
 
       <div class="chart">
@@ -461,12 +461,9 @@
   function renderFormula(){
     const ln = LN[mode];
     lnVal.textContent = ln.toFixed(2);
-    if(mode === 1){
-      deltaText.textContent = 'Referansetilstand (én art)';
-    } else {
-      const ratio = (ln / LN[1]).toFixed(2);
-      deltaText.textContent = `ΔS = ln(ω)/ln(9) ≈ ${ratio} — nesten en dobling i entropi`;
-    }
+    deltaText.textContent = mode === 1
+      ? 'Entropien gjelder systemet med én ball'
+      : 'Entropien gjelder systemet med to baller';
   }
 
   function renderChart(){
