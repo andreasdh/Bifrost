@@ -10,7 +10,7 @@ parts:
   - file: docs/2_entropi_boltzmann
   - file: docs/3_partisjonsfunksjonen
   - file: docs/4_gasser
-#  - file: docs/5_intermolekylære_krefter
+  - file: docs/5_intermolekylære_krefter
 
 # - caption: Makroskopisk termodynamikk
 #   chapters:
