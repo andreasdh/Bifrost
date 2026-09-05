@@ -1,0 +1,817 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_01_under_revision_LF';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Løsningsforslag" href="../l%C3%B8sningsforslag.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_01_under_revision_LF.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-1-statistisk-mekanikk-og-mikromakro-sammenhengen">
+<h1>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen<a class="headerlink" href="#uke-1-statistisk-mekanikk-og-mikromakro-sammenhengen" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> En makrotilstand beskriver systemet med makroskopiske størrelser vi kan måle, for eksempel temperatur, trykk, volum eller total energi. En mikrotilstand er én bestemt, fullstendig mikroskopisk beskrivelse innenfor modellen. Mange forskjellige mikrotilstander kan gi samme makrotilstand.</p>
+<p><strong>b)</strong> Multiplisiteten til et system er antallet mulige måter ulike utfall kan forekomme. Typisk i kurset her vil dette være antallet måter vi kan fordele energien mellom partikler på for at den totale energien skal ha en gitt verdi.</p>
+<p><strong>c)</strong> Multiplisitet og sannsynlighet er tett knyttet sammen. Sammensetningen med høyest multiplisitet vil også være den mest sannsynlige.</p>
+<p><strong>d)</strong> Når vi snakker om distinguishable og indistinguishable partikler skiller vi mellom situasjoner hvor vi kan vite nøyaktig posisjon til hver bestemt partikkel - og dermed unikt identifisere hver partikkel (distinguishable), og situasjoner hvor det er umulig å skille mellom partiklene/ikke kan spores individuelt.</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>I det minste volumet (3) bokser er det kun én mulig måte å fordele kulene på. Dermed er multiplisitenen <span class="math notranslate nohighlight">\(\Omega(3 bokser)=1\)</span>. For de to neste tilfellene kan vi enten tegne opp og telle alle mulighetene, eller vi kan bruke kombinatorikk:</p>
+<p><span class="math notranslate nohighlight">\(\Omega(N,M)=\frac{M!}{N!(M-N)!}\)</span></p>
+<p>For tilfellet <span class="math notranslate nohighlight">\(M=4\)</span> får vi: <span class="math notranslate nohighlight">\(\Omega(3,4)=\frac{4!}{3!1!}=\frac{4\cdot3\cdot2\cdot1}{3\cdot2\cdot1}=\frac{4}{1}=4\)</span></p>
+<p>Og for <span class="math notranslate nohighlight">\(M=5\)</span>: <span class="math notranslate nohighlight">\(\Omega(3,5)=\frac{5!}{3!2!}=\frac{5\cdot4\cdot3\cdot2\cdot1}{3\cdot2\cdot1\cdot2\cdot1}=\frac{5\cdot4}{2}=10\)</span></p>
+<p>Multiplisiteten øker altså når volumet øker. Hvis systemet kun kan befinne seg i disse volumene, så er sannsynligheten for at kulene/molekylene begrenser seg til et volum på 3 bokser <span class="math notranslate nohighlight">\(p(3\text{ bokser}) = \frac{1}{1+4+10}=\frac{1}{15}\)</span>. Sannsynligheten for at de fordeler seg på et volum tilsvarende 4 bokser er <span class="math notranslate nohighlight">\(p(4\text{ bokser}) =\frac{4}{15}\)</span>, og <span class="math notranslate nohighlight">\(p(5\text{ bokser}) =\frac{10}{15}=\frac{2}{3}\)</span>. Sannsynligheten for at partiklene sprer seg utover er altså mye større enn sannsynligheten for at de befinner seg i et lite volum, og det er dette som ligger bak den kraften vi kjenner som <em>trykk</em>.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Hvis vi antar at hver sekvens av oransje/grå partikler er like sannsynlig, er det kun multiplisiteten av sammensetningen (antall av hver farge på høyre og venstre side) som bestemmer hvilken situasjon som er mest sannsynlig. Siden vi må vurdere de to sidene separat kan vi ta produktet av mutliplisitetene for hver side for å finne den totale multiplisiteten. Dette er fordi for hver unike sekvens på venstre side kan du ha alle de mulige sekvensene med det gitte antallet oransje/grå kuler på motsatt side. Vi gir de tre makrotilstandene i figuren navn A, B og C (fra toppen og nedover).</p>
+<p>For situasjonen med alle oransje på venstre side og alle grå på høyre, er det igjen bare én måte å oppnå denne mikrotilstanden på:
+<span class="math notranslate nohighlight">\(\Omega(A)=\Omega(venstre)\cdot\Omega(høyre)=\frac{4!}{0!4!}\cdot\frac{4!}{4!0!}=1\)</span></p>
+<p>For situasjon B får vi:</p>
+<p><span class="math notranslate nohighlight">\(\Omega(B)=\Omega(venstre)\cdot\Omega(høyre)=\frac{4!}{1!3!}\cdot\frac{4!}{3!1!}=16\)</span></p>
+<p>Og for situasjon C:</p>
+<p><span class="math notranslate nohighlight">\(\Omega(C)=\Omega(venstre)\cdot\Omega(høyre)=\frac{4!}{2!2!}\cdot\frac{4!}{2!2!}=36\)</span></p>
+<p>Vi ser at situasjon C, hvor partiklene er jevnest fordelt, har den høyeste multiplisiteten og er dermed den mest sannsynlige makrotilstanden. Uansett hvor mange bokser vi legger til vil sitasjonen hvor partiklene er separert (A), alltid ha <span class="math notranslate nohighlight">\(\Omega=1\)</span>, og dermed bli mer og mer usannsynlig jo større systemet vårt blir. I praksis ser vi dette som tendensen partikler har til å blande seg (<em>diffusjon</em>).</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>For å finne multiplisitetene for denne polymeren må vi tegne opp de ulike konformasjonene:</p>
+<p><img src="../bilder/losning_polymer_folding.png" width="50%" /><img src="../bilder/losning_polymer_folding_2.png" width="50%" /></p>
+<p>Multiplisitetene blir altså:</p>
+<p><span class="math notranslate nohighlight">\(\Omega(l=1)=2\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Omega(l=2)=8\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Omega(l=3)=6\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Omega(l=4)=1\)</span></p>
+<p>Denne enkle modellen viser at polymerer har en tendens til å befinne seg i en delvis foldet tilstand, heller enn å være helt strukket eller å ligge flatt langs en overflate.</p>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>La oss se på system A først. Fordi systemet kun består av to energi-nivå kan vi bruke binomial kombinatorikk for å finne multiplisitetene.</p>
+<p><span class="math notranslate nohighlight">\(\Omega(A) = \frac{10!}{2!8!}=45\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Omega(B) = \frac{10!}{4!6!}=210\)</span></p>
+<p>Dersom system A og B ikke er i termisk likevekt vil den totale multiplisiteten være</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=45\cdot210=9450\)</span>.</p>
+<p>Vi antar nå at systemene kan utveksle varme, slik at det innstiller seg en likevekt hvor <span class="math notranslate nohighlight">\(U_A=U_B=3\)</span>. Den totale multiplisiteten blir da</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=\frac{10!}{3!7!}\cdot \frac{10!}{3!7!}=14400\)</span>.</p>
+<p>Hvis vi bruker prinsippet om maksimal multiplisitet ser vi at det er mest sannsynlig at systemene utveksler energi slik at den ender opp likt fordelt.</p>
+<p>Vi kan også ta for oss det motsatte tilfellet, at vi senker energien til det ene systemet og øker energien til det andre, <span class="math notranslate nohighlight">\(U_A = 1\)</span> og <span class="math notranslate nohighlight">\(U_B=5\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=\frac{10!}{1!9!}\cdot \frac{10!}{5!5!}=2520\)</span>.</p>
+<p>Denne situasjonen er altså langt mindre sannsynlig.</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Multiplisiteten er antall måter vi kan velge hvilke <span class="math notranslate nohighlight">\(n_A\)</span> av de fem partiklene som er i A:</p>
+<div class="math notranslate nohighlight">
+\[\Omega(n_A)=\binom{5}{n_A}=\frac{5!}{n_A!(5-n_A)!}\]</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(n_A\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(0\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(1\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(2\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(3\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(4\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(5\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\Omega(n_A)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(10\)</span></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>b)</strong> Fordelingen av mikrotilstander vil være symmetrisk om forventningsverdien siden alle mikrotilstander er like sannsynlige. Det vil si at tilstanden med f.eks. 3 partikler i A og 2 i B vil tilsvare den motsatte tilstanden med 3 i B og 2 i A, og begge vil være like sannsynlige (samme multiplisitet).</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(n_A\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(0\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(1\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(2\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(3\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(4\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(5\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\Omega(n_A)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(10\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(10\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(5\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>c)</strong></p>
+<p>Hver partikkel kan være i enten boks A eller boks B. Det gir to muligheter for hver av fem partikler:</p>
+<div class="math notranslate nohighlight">
+\[2^5=32\]</div>
+<p>Det finnes altså 32 mikrotilstander. Dette kan også vises ved å summere antallet mikrotilstander funnet i oppgavene over.</p>
+<p>Sannsynligheten for <span class="math notranslate nohighlight">\(n_A=5\)</span> er</p>
+<div class="math notranslate nohighlight">
+\[P(5) = \frac{\Omega (n_A=5)}{\Omega_{tot}} = \frac{1}{32}\]</div>
+<p>og sannsynligheten for 3 i A er</p>
+<div class="math notranslate nohighlight">
+\[P(5) = \frac{\Omega (n_A=3)}{\Omega_{tot}} = \frac{10}{32}\]</div>
+<p><strong>d)</strong></p>
+<p>I den binomiske sannsynligheten <span class="math notranslate nohighlight">\(P(n_A)=\binom{N}{n_A}p^{n_A}(1-p)^{N-n_A}\)</span> er leddet <span class="math notranslate nohighlight">\(p^{n_A}(1-p)^{N-n_A}\)</span> sannsynligheten for å få en gitt sammensetning av “ønskede” og “uønskede” utfall. Siden vi ser på en <em>binomisk</em> fordeling har vi kun to mulige utfall, som i vårt tilfelle er at en partikkel enten er i boks A eller i boks B, der det “ønskede” utfallet er boks A. Ser man på kun én partikkel, og med antakelsen om at begge boksene er like sannsynlige, vil vi ha at <span class="math notranslate nohighlight">\(p=\frac{1}{2}\)</span> (implisitt <span class="math notranslate nohighlight">\(p(\text{partikkel i A})\)</span>). Sannsynligheten for at den neste partikkele også havner i A vil da være gitt ved <span class="math notranslate nohighlight">\(p = \frac{1}{2}\cdot \frac{1}{2}\)</span>, eller mer generelt vil sannsynligheten for at <span class="math notranslate nohighlight">\(n_A\)</span> partikler havner i A rett etter hverandre være <span class="math notranslate nohighlight">\(p^{n_A}\)</span>. Tilsvarende vil sannsynligheten for <span class="math notranslate nohighlight">\(N-n_A\)</span> partikler i B rett etter hverandre være <span class="math notranslate nohighlight">\((1-p)^{N-n_1}\)</span>. Oppsummert kan vi si at <span class="math notranslate nohighlight">\(p\)</span> er sannsynligheten for at en partikkel havner i boks A, det “ønskede” utfallet vårt, og at <span class="math notranslate nohighlight">\(p^{n_A}(1-p)^{N-n_A}\)</span> er sannsynligheten for <strong>én konkret</strong> rekkefølge hvor <span class="math notranslate nohighlight">\(n_A\)</span> er i A.</p>
+<p>Binomialkoeffisienten <span class="math notranslate nohighlight">\(\binom{N}{n_A}\)</span> gir antallet måter vi kan fordele <span class="math notranslate nohighlight">\(n_A\)</span> partikler i A på når posisjonene er skillbare, og leddet <span class="math notranslate nohighlight">\(p^{n_A}(1-p)^{N-n_A}\)</span> gir sannsynligheten for én bestemt rekkefølge, som i vårt tilfelle er <span class="math notranslate nohighlight">\(p^{n_A}(1-p)^{N-n_A}=\frac{1}{2}^3\cdot \frac{1}{2}^2=\frac{1}{32}\)</span>.</p>
+<p><strong>e)</strong> For <span class="math notranslate nohighlight">\(n_A=3\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[P(3)=\binom{5}{3}\frac{1}{2}^{3}\frac{1}{2}^{2}=\frac{10}{32}\]</div>
+<p><strong>f)</strong> Når <span class="math notranslate nohighlight">\(N\)</span> øker, blir fordelingen relativt smalere og mer konsentrert rundt den jevne fordelingen.</p>
+<p><strong>g)</strong> For et makroskopisk system med <span class="math notranslate nohighlight">\(N\sim10^{23}\)</span> blir relative fluktuasjoner ekstremt små. Systemet ser derfor ut til å ha stabile makroskopiske egenskaper selv om mikrotilstanden hele tiden endrer seg. Ekstreme fordelinger er ikke umulige, men sannsynligheten for dem er forsvinnende liten.</p>
+</section>
+<section id="oppgave-7">
+<h3>Oppgave 7<a class="headerlink" href="#oppgave-7" title="Link to this heading">#</a></h3>
+<p>Med <span class="math notranslate nohighlight">\(U_{tot}=4\)</span> kan vi ha <span class="math notranslate nohighlight">\(U_A=0,U_B=4\)</span>, <span class="math notranslate nohighlight">\(U_A=1,U_B=3\)</span>, <span class="math notranslate nohighlight">\(U_A=U_B=2\)</span>.Vi kan også ha de motsatte tilfellene, men siden de gir akkurat samme multiplisitet trenger vi ikke regne ut de eksplisitt.</p>
+<p>For <span class="math notranslate nohighlight">\(U_A=0,U_B=4\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=\frac{10!}{0!10!}\cdot\frac{10!}{4!6!}=210\)</span></p>
+<p>For <span class="math notranslate nohighlight">\(U_A=1,U_B=3\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=\frac{10!}{1!9!}\cdot\frac{10!}{3!7!}=1200\)</span></p>
+<p>For <span class="math notranslate nohighlight">\(U_A=2,U_B=2\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\Omega_{tot}=\Omega(A)\cdot\Omega(B)=\frac{10!}{2!8!}\cdot\frac{10!}{2!8!}=2025\)</span></p>
+<p>Igjen ser vi at den fordelingen som gir høyest multiplisitet er fordelingen som deler energien likt mellom de to del-systemene. Dette er rimelig fordi sannsynligheten for at en partikkel befinner seg i en eksitert tilstand er like stor i begge delsystemene, og begge delsystemene har samme antallet partikler.</p>
+</section>
+<section id="oppgave-8">
+<h3>Oppgave 8<a class="headerlink" href="#oppgave-8" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong></p>
+<p>Vi bruker binomialfordelingen:</p>
+<div class="math notranslate nohighlight">
+\[p(n_A)=\frac{N!}{(N-n_A)!n_A!}\cdot p^{n_A}\cdot (1-p)^{N-n_a}\]</div>
+<p>Hvor <span class="math notranslate nohighlight">\(n_A\)</span> er antall partikler i A, og N er antal partikler totalt, og <span class="math notranslate nohighlight">\(p\)</span> er sannsynligheten for at en partikkel er i boks a. Siden p=1/2, altså at det er lik sannsynlighet for A og B. forenkles formelen til:</p>
+<div class="math notranslate nohighlight">
+\[p(n_A)=\frac{N!}{(N-n_A)!n_A!}\cdot 1/2^{n_A}\cdot (1-1/2)^{N-n_a}=\frac{N!}{(N-n_A)!n_A!}\cdot 1/2^{N}\]</div>
+<p>Fyller vi inn <span class="math notranslate nohighlight">\(N=4\)</span> og <span class="math notranslate nohighlight">\(n_A=4\)</span> (alle partikler i A) får vi:</p>
+<div class="math notranslate nohighlight">
+\[p(n_A=4)=\frac{4!}{(4-4)!4!}\cdot 1/2^{4}=1\cdot (\frac{1}{2})^4=\frac{1}{16}\]</div>
+<p>Vi forventer dermed at alle partiklene er i A 1/16 av tiden.</p>
+<p><strong>b)</strong></p>
+<p>For <span class="math notranslate nohighlight">\(N=100\)</span> og <span class="math notranslate nohighlight">\(n_A=100\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[p(n_A=100)=\frac{100!}{(100-100)!100!}\cdot 1/2^{100}=1\cdot (\frac{1}{2})^{100} \approx 7.8886091\cdot 10^{-31}\]</div>
+<p>Altså er sannsynligheten for å finne alle partiklene i A være omtrent null!</p>
+<p><strong>c)</strong></p>
+<p>Sannsynligheten for at partiklene her helt likt fordelt mellom A og B, altså at det er akkurat 50 i hver er gitt ved samme binomialformel, med <span class="math notranslate nohighlight">\(n_A=50\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[p(n_A=50)=\frac{100!}{(100-50)!50!}\cdot 1/2^{100}=0.0795\]</div>
+<p>Her vil mange kalkulatorer begynne å slike med å regne ut <span class="math notranslate nohighlight">\(\frac{100!}{(100-50)!50!}=1.0089\cdot10^{29}\)</span> Det er mulig i python, men selv det blir vanskelig med litt større tall. Så en god strattegi her er å bruke tilnærmingen om at binominalfordelingen kan tilnermes med en normalfordeling hvis N er stor.</p>
+<p>Normalfordelingen er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ p(n_A)\approx n(n_A)=\frac{1}{\sqrt{2\pi\sigma^2}}e^{-\frac{(n_A-\mu)^2}{2\sigma^2}} \]</div>
+<p>der <span class="math notranslate nohighlight">\(\mu=N\cdot p=100\cdot 1/2=50\)</span> er middelverdien og <span class="math notranslate nohighlight">\(\sigma^2=N\cdot p\cdot (1-p)=100\cdot 1/2 \cdot 1/2=100/4=25\)</span> er variansen. Plugger vi inn disse tallene i normalfordelingen får vi at:</p>
+<div class="math notranslate nohighlight">
+\[ p(50)\approx n(50)=\frac{1}{\sqrt{2\pi \cdot 25}}e^{-\frac{(50-50)^2}{2\cdot 25^2}} = 0.07978\]</div>
+<p>Som er en veldig god tilnærming.</p>
+<p>Dette svaret er kanskje litt overaskende, at sannsynsligheten for 50-50, som vi kan forvente å være den mest sannsynlige fordelingen, er kun <span class="math notranslate nohighlight">\(p(n_A=50)\approx 8 \% \)</span>.</p>
+<p>Men hvis vi plotter normalfordelingen, som vi har gjort under, så ser vi at distribusjonen er sentrert rundt <span class="math notranslate nohighlight">\(n_A=50\)</span> og at nest hele fordelingen ligger mellom <span class="math notranslate nohighlight">\(n_A=40\)</span> og <span class="math notranslate nohighlight">\(n_A=60\)</span>. En egenskap ved normalfordelingen er at det er <span class="math notranslate nohighlight">\(68.2 \%\)</span> sannsynlig at <span class="math notranslate nohighlight">\(n_A\)</span> er mellom <span class="math notranslate nohighlight">\(\mu \pm \sqrt{\sigma^2}=\mu \pm \sigma=50 \pm 5\)</span>, alstså fra 45-55.</p>
+<p>Sannsynligheten for å få akkurat 50-50 er liten, men å sannsynligheten for å få noe rundt det, er veldig stor!</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">gauss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">):</span>
+    <span class="n">y</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">pi</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="o">*</span><span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="n">mu</span><span class="p">)</span><span class="o">**</span><span class="mi">2</span><span class="o">/</span><span class="p">(</span><span class="mi">2</span><span class="o">*</span><span class="n">sigma</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+    <span class="k">return</span> <span class="n">y</span>
+
+<span class="n">N</span><span class="o">=</span><span class="mi">100</span>
+<span class="n">p</span><span class="o">=</span><span class="mf">0.5</span>
+
+<span class="n">mu</span><span class="o">=</span><span class="n">N</span><span class="o">*</span><span class="n">p</span>
+<span class="n">sigma</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">N</span><span class="o">*</span><span class="n">p</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">-</span><span class="n">p</span><span class="p">))</span>
+
+<span class="n">x</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">100</span><span class="p">,</span><span class="mi">500</span><span class="p">)</span>
+<span class="n">y_list</span><span class="o">=</span><span class="n">gauss</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">mu</span><span class="p">,</span><span class="n">sigma</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y_list</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Binomial distribusjon tilnærmet med normalfordeling'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Antall partikler i boks A, $n_A$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Sannsynlighet, $P(n_A)$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ff01da109b2e679e62736b39e36455f47c6bbc37f2cb387fc1eecd4ac0897c55.png" src="../../_images/ff01da109b2e679e62736b39e36455f47c6bbc37f2cb387fc1eecd4ac0897c55.png" />
+</div>
+</div>
+<p><strong>d)</strong></p>
+<p>Den orasnje linjen viser normalfordelingen vi kan forvente for store N, som vi har definert og plottet i svaret til oppgave <em>c</em>.</p>
+<p><strong>e)</strong>
+Vi forventer at det stemmer bedre og bedre når vi øker N, siden sannsynligheten for ekstreme fordelinger (alt i en boks) blir mindre og mindre.</p>
+<p><strong>f)</strong> Ved likevekt slutter ikke atomene å bevege seg, og fordelingen er ikke fast på 50%-50%. Men vi ser at fordelingen svinger fram og tilbake rundt dette. En annen måde å se det på er at når vi er langt unna likevekt, som rett etter at vi åpner barieren, vil vi se en netto bevegelse mot gjevnere fordeling. Ved likevet har vi ikke noe netto bevegelse over tid.</p>
+</section>
+<section id="oppgave-9">
+<h3>Oppgave 9<a class="headerlink" href="#oppgave-9" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Når antallet partikler er <span class="math notranslate nohighlight">\(k\)</span> og antallet bokser er <span class="math notranslate nohighlight">\(N\)</span>, så er sannsynligheten <span class="math notranslate nohighlight">\(p\)</span> for at en tilfeldig valgt boks ineholder en partikkel:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{k}{N} \]</div>
+<p>som er antall gunstige delt på antall mulige. Den mootsatte sannsynligheten, for at en tilfeldig valgt boks <strong>ikke</strong> inneholder en partikkel er gitt ved:</p>
+<p><span class="math notranslate nohighlight">\(p(tom)=(1-p)=1-\frac{k}{N}=\frac{N-k}{N}\)</span></p>
+<p><strong>b)</strong> Bruker Stirlings approksimasjon på formen <span class="math notranslate nohighlight">\(x!\approx (x/e)^x\)</span>, og skriver om</p>
+<p><span class="math notranslate nohighlight">\(\Omega=\frac{N!}{k!(N-k)!}\approx \frac{(N/e)^N}{(k/e)^k\cdot((N-k)/e)^{(N-k)}}\)</span></p>
+<p>Ved å faktorere ut <span class="math notranslate nohighlight">\(1/e\)</span> kan vi videre skrive</p>
+<p><span class="math notranslate nohighlight">\(\Omega=\frac{N^N(\frac{1}{e})^N}{k^k(\frac{1}{e})^k(N-k)^{(N-k)}(\frac{1}{e})^{(N-k)}}=\frac{N^N(\frac{1}{e})^N}{k^k(N-k)^{(N-k)}(\frac{1}{e})^{(N-k)+k}}\)</span></p>
+<p>Vi kan da stryke <span class="math notranslate nohighlight">\((\frac{1}{e})^N\)</span> over og under brøkstreken:</p>
+<p><span class="math notranslate nohighlight">\(\Omega=\frac{N^N}{k^k(N-k)^{(N-k)}}\)</span></p>
+<p>Fra oppgave <em>a</em> har vi at <span class="math notranslate nohighlight">\(p=k/N\)</span> og <span class="math notranslate nohighlight">\(p(tom)=(1-p)=(N-k)/N\)</span>. Vi vet også at utrykket vi skal ende opp med har <span class="math notranslate nohighlight">\(1\)</span> i teller, og vi deler derfor på <span class="math notranslate nohighlight">\(N^N\)</span> i både teller og nevner:</p>
+<p><span class="math notranslate nohighlight">\(\Omega=\frac{N^N}{k^k(N-k)^{(N-k)}}\cdot \frac{\frac{1}{N^N}}{\frac{1}{N^N}}\)</span></p>
+<p>Vi vet også at vi kan skrive <span class="math notranslate nohighlight">\(N=N-k+k\)</span>, så i nevneren kan vi bruke <span class="math notranslate nohighlight">\(\frac{1}{N^N}=\frac{1}{N^{N-k+k}}=\frac{1}{N^kN^{(N-k)}}\)</span>. Setter dette inn i uttrykket for multiplisiteten og får</p>
+<p><span class="math notranslate nohighlight">\(\Omega=\frac{N^N}{k^k(N-k)^{(N-k)}}\cdot \frac{\frac{1}{N^N}}{\frac{1}{N^kN^{(N-k)}}}=\frac{1}{(\frac{k}{N})^k(\frac{N-k}{N})^{(N-k)}}\)</span></p>
+<p>Bruker at <span class="math notranslate nohighlight">\(p=k/N\)</span> og <span class="math notranslate nohighlight">\((1-p)=(N-k)/N\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\frac{1}{p^k(1-p)^{(N-k)}}\]</div>
+<p>Som er det vi skulle vise.</p>
+<p><strong>ekstra</strong>
+Framgangsmåten får å komme til Gibbs entropi fra multiplisiteten når vi har mer en to tilstander er veldig lik metoden vi brukte over. Vi begynner igjen med sterlings approximasjon</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\frac{N!}{n_1! n_2! ... n_t!} \approx \frac{(N/e)^N}{(n_1/e)^{n_1}\cdot((n_2)/e)^{n_2}\cdot...\cdot((n_t)/e)^{n_t}}\]</div>
+<p>igjen kan vi faktorisere ut <span class="math notranslate nohighlight">\(1/e\)</span> slik at vi får:</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\frac{N!}{n_1! n_2! ... n_t!} \approx \frac{(N)^N}{(n_1)^{n_1}\cdot(n_2)^{n_2}\cdot...\cdot(n_t)^{n_t}}\]</div>
+<p>Vi bruker så at <span class="math notranslate nohighlight">\( p_i=n_i/N \)</span> og som før deler vi både oppe og nede på <span class="math notranslate nohighlight">\( N^N \)</span>, som gir oss:</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\frac{N!}{n_1! n_2! ... n_t!} \approx \frac{(N)^N}{(n_1)^{n_1}\cdot(n_2)^{n_2}\cdot...\cdot(n_t)^{n_t}}=\frac{1}{(p_1)^{n_1}\cdot(p_2)^{n_2}\cdot...\cdot(p_t)^{n_t}}\]</div>
+<p>Vi tar så logaritmen på begge sider:</p>
+<div class="math notranslate nohighlight">
+\[\ln{\Omega}=\ln{\frac{1}{(p_1)^{n_1}\cdot(p_2)^{n_2}\cdot...\cdot(p_t)^{n_t}}}=ln(1)-ln((p_1)^{n_1}\cdot(p_2)^{n_2}\cdot...\cdot(p_t)^{n_t})=0-(\ln{(p_1^{n_1})}+\ln{(p_2^{n_2})})+ ... +\ln{(p_t^{n_t})})=-(n_1\ln{p_1}+n_2\ln{p_2}+...+n_t\ln{p_t})\]</div>
+<p>Vi kan dele begge sider på antall partikler N:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\ln{\Omega}}{N}=-(\frac{n_1}{N}\ln{p_1}+\frac{n_2}{N}\ln{p_2}+...+\frac{n_t}{N}\ln{p_t})=-(p_1\ln{p_1}+p_2\ln{p_2}+...+p_t\ln{p_t})=-\sum_{i=1}^t p_i\ln{p_i}\]</div>
+<div class="math notranslate nohighlight">
+\[\ln{\Omega}=-N\sum_{i=1}^t p_i\ln{p_i}\]</div>
+<p>Nå er vi nesten i mål. Hvis vi deler Boltzmanns utrykk for entropi <span class="math notranslate nohighlight">\(S_{tot}=k_B\cdot \ln{(\Omega)}\)</span> på <span class="math notranslate nohighlight">\(k_B\)</span> på begge sider får vi:</p>
+<div class="math notranslate nohighlight">
+\[\frac{S_{tot}}{k_B}=\ln{(\Omega)}\]</div>
+<p>Som er det vi har på venstresiden av utrykke vi kok fram til, dermed:</p>
+<div class="math notranslate nohighlight">
+\[\frac{S_{tot}}{k_B} =-N\sum_{i=1}^t p_i\ln{p_i} \]</div>
+<p>For å få svaret på samme form som i oppgaven må vi fram til entropien <em>per</em> partikkel, så vi deler vi på N partikler.</p>
+<div class="math notranslate nohighlight">
+\[\frac{S}{k_B}=\frac{S_{tot}}{Nk_B} =-\sum_{i=1}^t p_i\ln{p_i} \]</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../l%C3%B8sningsforslag.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Løsningsforslag</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

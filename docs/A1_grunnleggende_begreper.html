@@ -1,0 +1,1047 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Grunnleggende begreper &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/A1_grunnleggende_begreper';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Nyttige matematiske verktøy" href="A2_mattehjelp.html" />
+    <link rel="prev" title="Intermolekylære krefter og reelle gasser" href="5_intermolekyl%C3%A6re_krefter.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/A1_grunnleggende_begreper.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Grunnleggende begreper</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-et-system">Hva er et system?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ensembler">Ensembler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemblegjennomsnitt">Ensemblegjennomsnitt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mikrotilstander-og-makrotilstander">Mikrotilstander og makrotilstander</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intensive-og-ekstensive-storrelser">Intensive og ekstensive størrelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prosesser">Prosesser</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stifunksjoner-og-tilstandsfunksjoner">Stifunksjoner og tilstandsfunksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ulike-typer-prosesser">Ulike typer prosesser</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energi">Energi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empiriske-vs-statistiske-lover">Empiriske vs. statistiske “lover”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuerlige-vs-diskrete-verdier">Kontinuerlige vs. diskrete verdier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#termodynamikkens-lover">Termodynamikkens lover</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grunnleggende-antakelser-i-statistisk-mekanikk">Grunnleggende antakelser i statistisk mekanikk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kvantemekanikk">Kvantemekanikk</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kvantisert-energi">Kvantisert energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energitilstander-og-frihetsgrader">Energitilstander og frihetsgrader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-egentlig-en-mikrotilstand">Hva er <em>egentlig</em> en mikrotilstand?</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="grunnleggende-begreper">
+<h1>Grunnleggende begreper<a class="headerlink" href="#grunnleggende-begreper" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Innhold</p>
+<p>I denne modulen kan du lese om:</p>
+<ul class="simple">
+<li><p>Definisjoner og navn på antakelser og modeller i termodynamikken</p></li>
+<li><p>Mikro- og makrotilstander</p></li>
+<li><p>Forskjellen mellom empirisk og statistisk utgangspunkt</p></li>
+<li><p>Enkle definisjoner av termodynamikkens lover</p></li>
+<li><p>Kvantemekanikk: grunnlaget for statistisk mekanikk</p></li>
+</ul>
+</div>
+<p>Dette appendikset samler sentrale begreper og modeller som brukes gjennom Bifrost. Det er ment som et oppslagsverk, ikke som et kapittel du må lese fra begynnelse til slutt. Gå tilbake hit når du møter et uttrykk du er usikker på.</p>
+<p>I siste del finner du en kort introduksjon til kvantemekanikk. Dette er bakgrunnsstoff som forklarer hvor energitilstandene i statistisk termodynamikk kommer fra.</p>
+<section id="hva-er-et-system">
+<h2>Hva er et system?<a class="headerlink" href="#hva-er-et-system" title="Link to this heading">#</a></h2>
+<p>Et <strong>termodynamisk system</strong> er en del av universet vi velger ut for å studere. Resten av universet er da <strong>omgivelsene</strong>. Systemet og omgivelsene er skilt fra hverandre av en fysisk eller imaginær barriere. Hvordan du definerer grensene til systemet ditt, avhenger av hva slags problem du vil løse.</p>
+<p>Et <strong>delsystem</strong> er en avgrenset del av et større system som vi velger å se isolert på, for å forenkle analysen. I praksis betyr det at du “tegner en grense” et sted i et system, og alt innenfor denne grensen kalles delsystemet, mens resten ligger utenfor og kalles da omgivelsene. Et enkelt eksempel: hvis du studerer ett spesifikt gassmolekyl i en beholder med mange molekyler, kan du behandle det ene molekylet som et delsystem, og resten av molekylene som omgivelsene det vekselvirker med.</p>
+</section>
+<section id="ensembler">
+<span id="id1"></span><h2>Ensembler<a class="headerlink" href="#ensembler" title="Link to this heading">#</a></h2>
+<p>Et <strong>statistisk ensemble</strong> er en tenkt samling av mange identiske kopier av det samme systemet. Kopiene beskrives med de samme betingelsene, men kan befinne seg i ulike mikrotilstander. Ensemblet er et tanke- og regneverktøy som gjør det mulig å tolke sannsynligheter og gjennomsnittsverdier.</p>
+<p>Systemet som kopieres trenger ikke være makroskopisk. Det kan for eksempel være ett enkelt molekyl, et mindre delsystem eller en hel gassprøve. Det avgjørende er hva vi har valgt å definere som <strong>systemet</strong>.</p>
+<p>Valget av ensemble bestemmes av hva systemet kan utveksle med omgivelsene, og hvilke størrelser som holdes konstante:</p>
+<ul class="simple">
+<li><p><strong>Mikrokanonisk ensemble:</strong> Et isolert system med konstant energi <span class="math notranslate nohighlight">\(E\)</span>, volum <span class="math notranslate nohighlight">\(V\)</span> og antall partikler <span class="math notranslate nohighlight">\(N\)</span>. Systemet utveksler verken energi eller partikler med omgivelsene.</p></li>
+<li><p><strong>Kanonisk ensemble:</strong> Et system med konstant temperatur <span class="math notranslate nohighlight">\(T\)</span>, volum <span class="math notranslate nohighlight">\(V\)</span> og antall partikler <span class="math notranslate nohighlight">\(N\)</span>. Systemet kan utveksle energi med et varmereservoar, slik at energien kan variere selv om temperaturen er konstant.</p></li>
+<li><p><strong>Makrokanonisk ensemble:</strong> Et system med konstant temperatur <span class="math notranslate nohighlight">\(T\)</span>, volum <span class="math notranslate nohighlight">\(V\)</span> og kjemisk potensial <span class="math notranslate nohighlight">\(\mu\)</span>. Systemet kan utveksle både energi og partikler med et reservoar, slik at både energien og antall partikler kan variere.</p></li>
+</ul>
+<p>Når en størrelse holdes konstant, vises dette ofte i notasjonen. Et eksempel er varmekapasiteten ved konstant volum,</p>
+<div class="math notranslate nohighlight">
+\[ C_V = \left(\frac{\partial U}{\partial T}\right)_{V,N}.\]</div>
+<p>Her viser <span class="math notranslate nohighlight">\(V,N\)</span> at volumet og antall partikler holdes konstant mens temperaturen endres. Se også <a class="reference internal" href="#matematikk/flervariabel_kalkulus.html#blandede-partiellderiverte"><span class="xref myst">blandede partiellderiverte</span></a>.</p>
+<section id="ensemblegjennomsnitt">
+<h3>Ensemblegjennomsnitt<a class="headerlink" href="#ensemblegjennomsnitt" title="Link to this heading">#</a></h3>
+<p>I et ensemble kan de ulike kopiene befinne seg i forskjellige mikrotilstander. En gjennomsnittsverdi over ensemblet trenger derfor ikke være lik verdien i én bestemt kopi.</p>
+<p>Simuleringen nedenfor viser et enkelt system med fem tillatte energinivåer. Hver kopi i ensemblet befinner seg på ett av nivåene. Søylene viser fordelingen av kopiene mellom energinivåene, mens den stiplede linjen viser gjennomsnittsenergien <span class="math notranslate nohighlight">\(U\)</span> for hele ensemblet. Derfor kan <span class="math notranslate nohighlight">\(U\)</span> ligge mellom to tillatte energinivåer selv om ingen enkelt kopi har akkurat denne energien.</p>
+<p>Glideren endrer forholdet <span class="math notranslate nohighlight">\(\Delta\varepsilon/k_\mathrm{B}T\)</span>. Når forholdet er stort, er fordelingen konsentrert mot de laveste energinivåene. Når forholdet blir mindre, fordeles kopiene over flere nivåer.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">IPython.display</span><span class="w"> </span><span class="kn">import</span> <span class="n">HTML</span>
+
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s2">"Simuleringer/indre_energi_ensemble_gjennomsnitt.html"</span><span class="p">,</span> <span class="s2">"r"</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s2">"utf-8"</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+    <span class="n">html</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">HTML</span><span class="p">(</span><span class="n">html</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</details>
+</div>
+</section>
+</section>
+<section id="mikrotilstander-og-makrotilstander">
+<h2>Mikrotilstander og makrotilstander<a class="headerlink" href="#mikrotilstander-og-makrotilstander" title="Link to this heading">#</a></h2>
+<p>En <strong>makrotilstand</strong> beskriver systemet med størrelser vi kan måle i laboratoriet: temperatur, trykk, volum, total energi. En <strong>mikrotilstand</strong> er én bestemt måte energien i et system kan fordeles på som resulterer i den makrotistanden vi observerer. En makrotilstand kan derfor ha mange mulige tilhørende mikrotilstander, men i et gitt øyeblikk vil kun én bestemt mikrotilstand være realisert, tenk et øyeblikksbilde av alle molekylene i en gass.</p>
+<p><strong>Mikroskopisk:</strong></p>
+<ul class="simple">
+<li><p>Mikroskopisk nivå: når vi beskriver individuelle atomer eller molekyler.</p></li>
+<li><p>Mikroskopisk egenskap: energier, posisjoner og hastigheter til individuelle atomer eller molekyler.</p></li>
+<li><p>Mikrostilstand: Den nøyaktige fordelingen av energier til hvert enkelt atom eller molekyl i systemet.</p></li>
+</ul>
+<p><strong>Makroskopisk:</strong></p>
+<ul class="simple">
+<li><p>Makroskopisk nivå: når vi beskriver et system som helhet, slik vi kan observere og måle det. For eksempel egenskapene til en gass (bestående av flere enkelte gassmolekyler) i en beholder.</p></li>
+<li><p>Makroskopisk egenskap: størrelser vi kan måle på laben, for eksempel temperatur, trykk, volum og indre energi.</p></li>
+<li><p>Makrotilstand: en bestemt målbar størrelse (f.eks. energi, trykk, volum), som er resulatet av én eller flere mikrotilstander.</p></li>
+</ul>
+<p>La oss se på et enkelt eksempel utenfor molekylverdenen, der vi kaster fire mynter. Makrotilstanden «to kron» kan realiseres med <span class="math notranslate nohighlight">\(\binom{4}{2} = 6\)</span> forskjellige mikrotilstander — avhengig av <em>hvilke</em> to mynter som viser kron. Makrotilstanden «fire kron» har bare én mikrotilstand. Dette har vi illustrert nedenfor, der antallet mikrotilstander for makrotilstandene en «kron», «to kron» og «tre kron» er representert med de mulige makrotilstandene dette tilsvarer.</p>
+<p><img alt="Mikro- og makrotilstander" src="../_images/mikro_makro_mynter.svg" /></p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Skriv makrotilstandene som mangler i figuren ovenfor, og tegn alle mulige mikrotilstander for disse makrotilstandene. Hint, vi trenger ikke regne ut noe for vi har egentlig svaret allerede, hvorfor?</p>
+</div>
+<p>Enda et eksempel: tenk deg at du kaster to terninger. Det du bryr deg om er summen av øynene, det er makrotilstanden. Men det finnes mange forskjellige kombinasjoner av terning 1 og terning 2 som gir akkurat samme sum. Hver slik kombinasjon er en egen mikrotilstand, men <em>samme</em> makrotilstand:</p>
+<p><img alt="Mikro og makro introduksjon" src="../_images/terningkast_mikro_vs_makro.png" /></p>
+<p>Èn eller flere mikrotilstander kan altså tilsvare en makrotilstand, men du kan ikke gå baklengs. Hvis du bare vet at summen er 7, vet du ikke om det var (3,4), (1,6) eller (5,2) som ble kastet.</p>
+<p><strong>Vit hva systemet ditt er:</strong></p>
+<p>Vi kan velge å se på mikrotilstandene til et system bestående av én terning, da er det bare 6 mulige mikrotilstander. I dette tilfellet gir ingen av mikrotilstandene samme makrotilstand, så det er også bare 6 makrotillstander.</p>
+<p>Vi kan også velge å se på mikrotilstandene til et system bestående av to terninger, som på figuren. Da blir det plutselig betydelig flere mulige mikrotilstander. I dette tilfellet kan flere mikrotilstander gi opphav til samme makrotilstand, som i figuren.</p>
+<p>Bryr vi oss om hvilken av de to terningene som viser hvilket tall? Eller bryr vi oss kun om summen? Det velger vi selv, men vi er nødt til å ta et valg slik at vi vet hva vi evt finner ut av når vi studerer systemet.</p>
+<p>Det er altså viktig å være obs på nøyaktig hva som er systemet man ser på.</p>
+</section>
+<section id="intensive-og-ekstensive-storrelser">
+<span id="id2"></span><h2>Intensive og ekstensive størrelser<a class="headerlink" href="#intensive-og-ekstensive-storrelser" title="Link to this heading">#</a></h2>
+<p>Vi deler de termodynamiske størrelsene inn i to kategorier, basert på om størrelsen avhenger av <em>mengden stoff</em>, altså antall atomer/molekyler, eller ikke. Hvis du kutter et system i to, vil verdien av størrelsen også halveres?</p>
+<p><strong>Intensive størrelser:</strong> Avhenger ikke av mengden stoff (f.eks. temperatur, trykk, tetthet, farge, smeltepunkt).</p>
+<p>Å gange en intensiv størrelse med en ekstensiv størrelse, gir en ekstensiv størrelse. For eksempel er tettheten ganger volumet lik massen: <span class="math notranslate nohighlight">\(\rho \times V = m\)</span>.</p>
+<p><strong>Ekstensive størrelser:</strong> Avhenger av mengden stoff (f.eks. volum, masse, total energi, mol).</p>
+<p>En ekstensiv størrelse gjøres intensiv ved å dele den på en annen ekstensiv størrelse. For eksempel masse delt på volum: <span class="math notranslate nohighlight">\(m / V = \rho\)</span> gir tettheten.</p>
+<p>En annen fin måte å se på forskjellen på intensive og ekstensive størrelser er at <em><strong>ekstensive</strong></em> størrelser får vi ved å summere bidragene fra alle atomene/molekylene i sytemet, mens <em><strong>intensive</strong></em> størrelser får vi ved å ta gjennomsnittet over alle atomene/molekylene i systemet.</p>
+</section>
+<section id="prosesser">
+<h2>Prosesser<a class="headerlink" href="#prosesser" title="Link to this heading">#</a></h2>
+<p>Hva er egentlig en prosess? Vi bruker gjerne ordet for å beskrive at <em>noe skjer</em>, men det kan spesifiseres litt mer i konteksten av kjemi.</p>
+<p>En <strong>prosess</strong> er en <em>endring i tilstanden til et system</em>, systemet går fra én tilstand (f.eks. gitt trykk, volum og temperatur) til en annen.</p>
+<section id="stifunksjoner-og-tilstandsfunksjoner">
+<h3>Stifunksjoner og tilstandsfunksjoner<a class="headerlink" href="#stifunksjoner-og-tilstandsfunksjoner" title="Link to this heading">#</a></h3>
+<p><strong>Stifunksjoner:</strong> avhenger av veien mellom start- og sluttilstanden (f.eks. varme og arbeid).</p>
+<p><strong>Tilstandsfunksjoner:</strong> avhenger kun av start- og sluttilstanden, og ikke av veien dit (f.eks. indre energi, entalpi, entropi).</p>
+<p>Et intuitivt eksempel kan være en fjelltur: Vi kan ta mange ulike stier opp et fjell, noen tyngre enn andre (ulikt arbeid), og spise og frobrenne en variende mengde Kvikk Lunsj for å komme oss opp fjellet, men til slutt vil man uansett ha kommet seg fra bunn til topp og den potensielle energien du har når du er på toppen vil være den samme uansett hvilken vei du tok, den avhenger kun av start- og slutt-posisjon.</p>
+</section>
+<section id="ulike-typer-prosesser">
+<h3>Ulike typer prosesser<a class="headerlink" href="#ulike-typer-prosesser" title="Link to this heading">#</a></h3>
+<p><strong>Isoterm:</strong> temperaturen holdes konstant gjennom hele prosessen (<span class="math notranslate nohighlight">\(\Delta T = 0\)</span>).</p>
+<p><strong>Isokor:</strong> volumet holdes konstant gjennom hele prosessen (<span class="math notranslate nohighlight">\(\Delta V = 0\)</span>).</p>
+<p><strong>Isobar:</strong> trykket holdes konstant gjennom hele prosessen (<span class="math notranslate nohighlight">\(\Delta P = 0\)</span>).</p>
+<p><strong>Adiabatisk:</strong> ingen varme utveksles med omgivelsene (<span class="math notranslate nohighlight">\(q = 0\)</span>), all endring i indre energi skyldes da arbeid.</p>
+<div class="important admonition">
+<p class="admonition-title">Definisjon</p>
+<p><strong>Iso</strong> kommer fra det greske ordet isos og betyr “lik” eller “samme”. Da betyr  <em>isoterm</em> “lik temperatur”.
+<strong>Adiabatisk</strong> kommer fra adiabatos som betyr ugjennomtrengelig, altså varme slipper ikke gjennom, det utveksles ikke.</p>
+</div>
+</section>
+</section>
+<section id="energi">
+<h2>Energi<a class="headerlink" href="#energi" title="Link to this heading">#</a></h2>
+<p><strong>Kinetisk energi:</strong> eller bevegelsesenergi, dette er energien et objekt har på grunn av sin hastighet gjennom rommet (f.eks. molekyler i bevegelse), den uttrykkes som</p>
+<div class="math notranslate nohighlight">
+\[E_k = \frac{1}{2}mv^2\]</div>
+<p>der <span class="math notranslate nohighlight">\(m\)</span> er massen og <span class="math notranslate nohighlight">\(v\)</span> er hastigheten. Legg merke til at kinetisk energi øker med <em>kvadratet</em> av hastigheten: dobler du hastigheten, firedobler du den kinetiske energien.</p>
+<p><strong>Potensiell energi:</strong> energi et object har på grunn av posisjon eller tilstand. Den potensielle energien til et objekt øker når arbeid utføres på objektet mot en kraft. To kjente eksempler fra klassisk mekanikk:</p>
+<ul class="simple">
+<li><p>Gravitasjonell potensielle energi: <span class="math notranslate nohighlight">\(E_p = mgh\)</span> (høyde over bakken), arbeidet er å løfte gjenstanden opp.</p></li>
+<li><p>Potensiell energi i en fjær: <span class="math notranslate nohighlight">\(E_p = \frac{1}{2}kx^2\)</span>, arbeidet er å strekke ut fjæren er strukket/komprimert.</p></li>
+</ul>
+<p>I kjemi er det ikke høyde eller fjær som bestemmer potensiell energi, men <strong>avstanden mellom atomer/molekyler</strong>. Dette kalles ofte <strong>kjemisk energi</strong>, og henger sammen med hvor sterkt atomene tiltrekker eller frastøter hverandre avhengig av hvor langt fra hverandre de er. I denne sammenheng vil det å bryte bindinger kreve arbeid. Vi kommer tilbake til dette i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/9_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter</a>, der den potensielle energien modelleres som et “parpotensial”.</p>
+<p><strong>Total energi</strong> i et system er (i klassisk forstand) summen av disse to: <span class="math notranslate nohighlight">\(E = E_k + E_p\)</span>.</p>
+<p><strong>Indre engergi</strong> I dette kurset skal dere jobbe mye med indre energi U. Dette er den totale energien til atomene/molekylene i et system og er gitt av summen av indre kinetisk energi (atomenes bevegelse) og indre potensiel enegi (energi lagret i vekselvirkningene mellom atomer, f.eks. kovalente bindinger)</p>
+</section>
+<section id="empiriske-vs-statistiske-lover">
+<h2>Empiriske vs. statistiske “lover”<a class="headerlink" href="#empiriske-vs-statistiske-lover" title="Link to this heading">#</a></h2>
+<p>Som ellers i naturvitenskapen bruker vi ordet “lover” litt annerledes enn i jusen, og i denne sammenhengen mener vi de sammenhenger, prinsipper og matematiske utrykk vi bruker til å beskrive verden rundt oss. Disse blir omtalt som lover fordi de har vist seg nyttige til å både beskrive observasjoner vi gjør, og til å forutsi eller predikere hva resultatet av gitte eksperimenter burde være. Selv om disse lovene er svært nyttige, er det viktig å huske på at dette er <em>modeller</em> vi har for å beskrive virkeligheten, og ikke virkeligheten i seg selv, de har dermed alle begrensinger for når de gjelder og hvilke antagelser som må være oppfylt.</p>
+<p>Det kan være nyttig å skille mellom empiriske lover og statistiske lover:</p>
+<p><strong>Empiriske lover</strong> er matematiske uttrykk for sammenhenger vi har funnet for observasjoner av makroskopisk oppførsel. Eksempler på dette er idealgassloven (PV=nRT), Ohms lov for spenning (U = RI) og Hooke’s lov for kraften som kreves for å strekke ut en fjær (F = kx). Slike lover gjør oss istand til å forutsi hvordan en endrig i en størrelse vil påvirke en annen, for eksempel hva som skjer med trykket av en ideel gass i en lukket beholder om vi øker temperaturen, men de sier i seg self ikke <em>hvorfor</em> det er slik. Empiriske lover er veldig godt støttet av eksperimenter, men <em>bare</em> når de underliggende antagelsene og begrensingene gjelder. Om vi har en beholder med gass der molekylene vekselvirker sterkt med hverandre og dermed ikke oppfører seg som klinkekuler, vil ikke idealgassloven lengre være en god beskrivelse av sammenhengen mellom trykket og temperature til gassen. Empiriske lover kan likevel være svært nyttige, og Newtons 2. lov (F = ma) var (mer eller mindre) en god nok beskrivelse av sammenhengen mellom kraft, masse og akkselerasjon til å få oss til månen.</p>
+<p><strong>Statistiske lover</strong> bygger på en grunnleggende fortåelse om hvordan partikler, atomer og molekyler vekselvirker med hverandre. I stedet for å tilpasse modeller til observasjoner i etterkant av eksperimenter, som vi gjør med empiriske lover, bruker vi de grunnleggende prinsippene om hvordan enkeltatomer/molekyler interagerer med hverandre til å regne oss fram systemets makrotilstand. Dette gjør vi typisk ved å snitte eller summere over alle atomene (mikrotilstandene). Den store fordelen er at dette sier oss noe om <em>hvorfor</em> vi observerer det vi gjør, og at vi kan bruke disse lovene til å beskrive systemer som ikke følger de underliggende antagelsene som er nødvendige for at empiriske lover skal gjelde (en <em>ikke-ideel</em> gass), gitt at vi har en god nok beskrivelse av hvordan enkeltpartiklene vekselvirker.</p>
+<p>Gjennom semesteret skal vi se at disse lovene har sine begrensinger og vi kan med fordel benytte oss av begge for å forstå kjemien. Termodynamikk er et vakkert eksempel på hvordan teori og eksperimenter bidrar til å danne vår samlede beskrivelse og forståelse av virkeligheten.</p>
+</section>
+<section id="kontinuerlige-vs-diskrete-verdier">
+<h2>Kontinuerlige vs. diskrete verdier<a class="headerlink" href="#kontinuerlige-vs-diskrete-verdier" title="Link to this heading">#</a></h2>
+<p><strong>Kontinuerlige verdier:</strong> dette er den typen størrelse du alltid forholder deg til, og det er sånn vi kjenner verden. Du kan befinne deg nøyaktig hvor du vil i et rom, vannglasset ditt kan ha hvilken som helst mengde vann frem til det blir fult, bilen din kan kjøre hvilken som helst hastighet opp til en maksgrense. Men denne maksgrensen er ikke noe grunnleggende ved universet, det er bare en begrensning hos bilen. Kontinuerlig betyr at det ikke er noen avbrudd eller hopp, for eksempel når du går opp en bakke må du være på hver eneste posisjon fra bunnen til toppen, du kan ikke eksistere ved bunnen og plutselig på toppen uten å forflytte deg veien imellom. Klassisk fysikk, dvs. mest sannsynlig all fysikken du har vært borti tidligere, beskriver kontinuerlige størrelser.</p>
+<p><strong>Diskrete verdier:</strong> En diskret verdi er en spesifikk, adskilt verdi. Tenk på trinnene i en stige, det finnes ikke noe trinn nummer <span class="math notranslate nohighlight">\(1.5\)</span> eller <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span>, kun <span class="math notranslate nohighlight">\(0, 1, 2\)</span> osv, og det er “umulig” å flyte i luften mellom trinnene. Det viser seg at energi også er en diskret verdi, og kommer kun i enkelte bestemte verdier. Dette var det største oppbruddet med klassisk fysikk og den “nye” kvantemekanikken som begynte på slutten av 1800-tallet. Ved å anta at energi er kvantisert kunne tidligere uforklarte observasjoner beskrives med stor nøyaktiget (Fotoelektrisk effekt, varmestråling, absorbsjonsspektre for å nevne noen). Vi skal ikke gå nærmere inn på kvanteteori i dette kurset, annet en å si at energi er kvantisert. Når vi snakker om diskret energi senere, snakker vi om helt bestemte verdier av en eller annen energi <span class="math notranslate nohighlight">\(E_0, E_1, E_2,...\)</span> som et system kan ha, og det er ikke mulig for systemet å ha en energi med en verdi som ligger <em>mellom</em> disse.</p>
+<p><img alt="Kontinuerlig vs diskret" src="../_images/kontinuerlig_diskret.svg" /></p>
+</section>
+<section id="termodynamikkens-lover">
+<h2>Termodynamikkens lover<a class="headerlink" href="#termodynamikkens-lover" title="Link to this heading">#</a></h2>
+<p>Disse kommer vi tilbake til igjen og igjen. Her er en opplisting av konkrete formuleringer av lovene, forståelse for dem vil du bygge underveis i emnet.</p>
+<div class="important admonition">
+<p class="admonition-title">Termodynamikkens 0. lov</p>
+<p>Hvis to objekter er begge i termisk likevekt med et tredje objekt, er de også i termisk likevekt med hverandre.</p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Termodynamikkens 1. lov</p>
+<p>Energi kan ikke skapes eller ødelegges, men den kan endre form eller forflytte seg mellom system og omgivelser. Den totale energien i et isolert system endrer seg ikke.</p>
+<div class="math notranslate nohighlight">
+\[ \Delta U = q + w,\]</div>
+<p>der <span class="math notranslate nohighlight">\(\Delta U\)</span> er endringen i systemets indre energi, <span class="math notranslate nohighlight">\(q&gt;0\)</span> når systemet mottar energi som varme, og <span class="math notranslate nohighlight">\(w&gt;0\)</span> når omgivelsene gjør arbeid på systemet.</p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Termodynamikkens 2. lov</p>
+<p>Den totale entropien i et isolert system kan ikke avta.</p>
+<div class="math notranslate nohighlight">
+\[ \Delta S_{univers} \geq 0,\]</div>
+<p>der <span class="math notranslate nohighlight">\(\Delta S_{univers}\)</span> er endringen i universets entropi, og universet behandles som et isolert system. Entropien øker for en irreversibel prosess og er konstant i den reversible grensen.</p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Termodynamikkens 3. lov</p>
+<p>Entropien til en ren, perfekt krystall går mot null når temperaturen går mot det absolutte nullpunktet, <span class="math notranslate nohighlight">\(0\ \mathrm{K}=-273{,}15\ ^\circ\mathrm{C}\)</span>. For en slik krystall er grunntilstanden entydig, slik at <span class="math notranslate nohighlight">\(\Omega=1\)</span> og Boltzmanns uttrykk gir <span class="math notranslate nohighlight">\(S=k_\mathrm{B}\ln 1=0\)</span>.</p>
+</div>
+</section>
+<section id="grunnleggende-antakelser-i-statistisk-mekanikk">
+<h2>Grunnleggende antakelser i statistisk mekanikk<a class="headerlink" href="#grunnleggende-antakelser-i-statistisk-mekanikk" title="Link to this heading">#</a></h2>
+<p>I dette kurset skal vi begynne å beskrive kjemien statistisk, det vil si at vi beskriver egenskaper til makroskopiske systemer basert på felles egenskaper til mange individuelle mikroskopiske systemer, alstå hvordan de atomistiske interaksjonene gir opphav til de observasjonene vi gjør på laben. Vi begynner med  noen grunnleggende antakelser.</p>
+<p><strong>Like molekyler beskrives av de samme fysiske prinsipper:</strong> To molekyler av samme stoff følger de samme fysiske lovene og har de samme mulige energiene. Vi kan heller ikke “se” forskjell på to atomer eller molekyler av samme stoff, de er helt identiske. På engelsk bruker vi begrepet “indistinguishable”.</p>
+<p><strong>Makroskopiske variable er kontinuerlige:</strong> Selv om systemet egentlig består av et diskret (heltallig) antall partikler, er dette tallet så stort at makroskopiske størrelser (temperatur, trykk, volum osv.) med god tilnærming kan behandles som kontinuerlige variabler. Dette forutsetter at systemet er stort nok, men når vi i kjemien jobber med 1 mol av noe har vi <span class="math notranslate nohighlight">\(6.022\cdot 10^{23}\)</span> partikler, noe som virkelig er mer enn stort nok.</p>
+<!-- -->
+<p><strong>Målte egenskaper reflekterer ensemblet’s gjennomsnitt:</strong> Det vi måler eksperimentelt er ikke egenskapen til ett enkelt molekyl, men et gjennomsnitt tatt over det enorme antallet mikrotilstander systemet befinner seg i (eller beveger seg gjennom).</p>
+</section>
+<section id="kvantemekanikk">
+<h2>Kvantemekanikk<a class="headerlink" href="#kvantemekanikk" title="Link to this heading">#</a></h2>
+<p>Kjemikere arbeider som oftest med stoffmengder som inneholder <span class="math notranslate nohighlight">\(10^{23}\)</span> molekyler eller mer. I laboratoriet observerer vi derfor alltid den samlede oppførselen til et enormt antall partikler. På denne skalaen beskrives systemene godt av termodynamikk og klassisk fysikk, men de makroskopiske egenskapene har sitt opphav i prosesser som foregår på atom- og molekylnivå. For å beskrive disse prosessene trenger vi kvantemekanikken.</p>
+<p>I dette delkapitlet går vi gjennom det helt grunnleggende og dropper utledninger og tung matte. Er du interessert, blir “hvorfor”-spørsmålet til noe av det vi bare tar som fakta i dette kurset besvart i Fysikalsk Kjemi II</p>
+<p>Her går vi gjennom de grunnleggende ideene innen kvantemekanikk som kan være nyttige for å forstå termodynamikken. Vi kommer ikke til å gå i detalj og dersom du er interessert i å forstå dette bedre er det bare å glede seg til Fysikalsk Kjemi II.</p>
+<section id="kvantisert-energi">
+<h3>Kvantisert energi<a class="headerlink" href="#kvantisert-energi" title="Link to this heading">#</a></h3>
+<p>På laboratoriet observerer vi alltid den samlede oppførselen til et enormt antall partikler. På denne skalaen beskrives systemene ofte godt av termodynamikk og klassisk fysikk, mens de makroskopiske egenskapene har sitt opphav i prosesser som foregår på atom- og molekylnivå. Den beste beskrivelsen vi har av disse atomistiske prosessene er kvantemekanikken, men som vi allerede har nevnt er det viktigste i dette kurset å huske på at det er energien som er kvantisert, dette utdyper vi litt i avsnittene under.</p>
+<p><strong>Kvantemekanikken</strong> er en matematisk beskrivelse av oppførselen til enkelte molekyler, atomer eller partikler. Tidligere var det antatt at klassisk fysikk var nok til å beskrive disse systemene, men eksperimentelle funn (Ultrafiolett katastrofe, dobbeltspalteeksperimentet, fotoelektrisk effekt, Comptonspredning, Stern-Gerlach eksperimentet mm.) stemte ikke overens med fysikken slik vi kjente den, og en helt ny gren ble nødvendig for å forklare funnene. Felles for etterarbeidet med mange av disse eksperimentene var at <strong>kvantisering</strong> av energi ble forklaringen for å få observasjonene til å gi mening.</p>
+<p>Klassisk fysikk handler om kontinuerlige spektre av størrelser; kjører du oppover en bakke får du og bilen din (systemet) litt og litt mer potensiell energi mens du beveger deg oppover. Vår virkelighetsoppfattelse utfordres når dette ikke lenger stemmer i kvanteverdenen. Vi kan se på <strong>Franck-Hertz eksperimentet</strong> for å illustrere hva kvantisering er. Eksperimentet selv er ikke del av pensum, men den konseptuelle forståelsen er det. Franck-Hertz eksperimentet ble utført i 1914 av James Franck og Gustav Hertz, og ga oss det første beviset på atomenes diskrete, kvantiserte energinivåer.</p>
+<p>I Franck-Hertz eksperimentet ble en strøm av elektroner dyttet gjennom en beholder fylt med kvikksølv (<span class="math notranslate nohighlight">\(\text{Hg}\)</span>) i gassform, altså kvikksølvatomer, ved å sette på en elektrisk spenning over beholderen. Franck og Hertz økte gradvis spenningen mens de målte strømmen som gikk gjennom. På forhånd hadde man forventet elektronene koliderte med kviksølatimene og at det derfor ville kreve energi (elektrisk spenning) å få dyttet elektronene gjennom, men dersom det bare var kolisjoner hadde gassen oppført seg som en motsand slik at ved høyere spenning ville tilsvarende mer strøm gå gjennom, altså at den fulgte Ohms lov.</p>
+<p><img alt="Franck-Hertz oppsett" src="../_images/franck_hertz_oppsett.png" /></p>
+<p>De observerte derimot noe helt annet som vist i kurven under som viser den målte strømmen ved økende spenning:</p>
+<ol class="arabic simple">
+<li><p>Ved lav spenning, økte strømmen linjert med spenningen, som forventet.</p></li>
+<li><p>Når spenningen kom på 4.9 volt falt strømmen brått, før den igjen begynte å øke.</p></li>
+<li><p>Når spenningen kom på <span class="math notranslate nohighlight">\(2 \cdot 4.9 = 9.8\)</span> volt falt strømmen igjen.</p></li>
+<li><p>Strømmen falt hver gang spenningen nådde en multippel av 4.9 volt (<span class="math notranslate nohighlight">\(3 \cdot 4.9\)</span>, <span class="math notranslate nohighlight">\(4 \cdot 4.9\)</span> osv.)</p></li>
+</ol>
+<p><img alt="Franck-Hertz oppsett" src="../_images/Frank_Herts_IvV.png" /></p>
+<p>Hva er det som skjer her, hvorfor ser vi de fallene i strømmen som går gjennom?</p>
+<p>Energien til elektroner er direkte gitt av spenningen i feltet de beveger seg i, altså vil en spenning på 4.9 volt tilsvare en energi på 4.9 eV (elektronvolt). Franck og Hertz så at hver gang spenningen var en multippel av 4.9 V falt strømmen, alstå hver gang elektronene har en energi som er en multippel av 4.9 eV, kunne kviksølvatomene absorbere energi fra elektronene og antallet elektroner som hadde nok energi til å komme seg gjennom gassen (den elektriske strømen) falt brått. Dette skjedde altså ikke når elektronenergien hadde en verdi immellom (f.eks. 6 eV).</p>
+<p>Forklaringen på dette var at atomene kunne ta opp helt spesifike distrete energiverdier. Dette samsvarte med Bohrs atommodell kun har enkelte diskrete energinivåer som atomet kan være i, og kan derfor bare absorbere energi som tilsvarer hopp mellom disse energinivåene, og for kviksølvatomer er et sånt hopp på <span class="math notranslate nohighlight">\(\Delta \epsilon \approx 4.9\)</span> eV</p>
+<p>Denne kvantiseringen er også grunnen til noe kjemikere bruker daglig: <strong>spektre</strong>. Et eksitert atom sender bare ut og tar bare opp lys ved bestemte, skarpe bølgelengder i stedet for et jevnt fargebånd, fordi lyset som sendes ut tilsvarer nøyaktig energiforskjellen <span class="math notranslate nohighlight">\(\Delta\varepsilon\)</span> mellom to tillatte nivåer i atomet. Kvikksølvs emisjonsspekter under viser nettopp dette: noen få skarpe linjer, ikke et kontinuerlig spekter. Avstanden mellom to av linjene er markert med <span class="math notranslate nohighlight">\(\Delta\varepsilon\)</span>, den samme størrelsen som dukket opp i Franck-Hertz eksperimentet.</p>
+<p><img alt="Kvikksølvs absorbsjonsspekter med markert energigap" src="../_images/kvikksolv_spekter.png" /></p>
+</section>
+<section id="energitilstander-og-frihetsgrader">
+<h3>Energitilstander og frihetsgrader<a class="headerlink" href="#energitilstander-og-frihetsgrader" title="Link to this heading">#</a></h3>
+<p>Fokus: hvilke forskjellige former for energi har vi i et molekyl, hvor er energi lagret?
+Frihetsgrader</p>
+<p>Vi har nå sett at atomer kun kan eksistere i bestemte energinivåer. Spørsmålet blir da <em>hvor</em> kommer denne energien fra? Og når vi skalerer opp til molekyler, hvordan beskriver vi da alle de mulige energiene et system kan ha? For å svare på dette introduserer vi begrepene <strong>kvantetilstand</strong> og <strong>frihetsgrader</strong>. En kvantetilstand gir en matematisk beskrivelse av den fysiske tilstanden til et kvantesystem (partikkel, atom eller molekyl), og gir dermed informasjon om hvilke verdier man kan få når man gjør målinger på systemet. De to største forskjellene på en klassisk tilstand, hvor den romlige posisjonen og hastigheten er fastsatt, gir en kvantetilstand kun sannsynligheter for de ulike egenskapene til systemet.</p>
+<p>En kvantetilstand har én bestemt energi, og siden denne energien er kvantisert, finnes det bare bestemte kvantetilstander et system kan befinne seg i. De mulige energiene et kvantesystem kan være i, kan vi skrive som:</p>
+<div class="math notranslate nohighlight">
+\[\varepsilon = \varepsilon_0,\varepsilon_1,\varepsilon_2,...\text{,}\]</div>
+<div class="math notranslate nohighlight">
+\[ \text{eller} \, \varepsilon_n, \text{der} \, n=0,1,2,...\]</div>
+<p>Vi bruker <span class="math notranslate nohighlight">\(\varepsilon\)</span> i stedet for det vanlige symbolet for energi, <span class="math notranslate nohighlight">\(E\)</span>, fordi vi nå snakker om enkelt-atomer eller -molekyler. For den totale energien til en samling av flere atomer eller molekyler bruker vi symbolet <span class="math notranslate nohighlight">\(E\)</span>.</p>
+<p>For ett enkelt atom er energien i stor grad knyttet til elektronenes tillatte tilstander rundt atomkjernen, men merk at det også kan være andre bidrag til energien, slik som at atomet beveger seg gjennom rommet. Den laveste mulige energien atomet kan ha kalles <strong>grunntilstanden</strong>, og betegnes her med <span class="math notranslate nohighlight">\(\varepsilon_0\)</span>. Et atom befinner seg i sin grunntilstand når alle elektroner rundt atomkjernen er i sine laveste mulige energinivåer. Alle tilstander med høyere energi kalles <strong>eksiterte tilstander</strong> <span class="math notranslate nohighlight">\(\varepsilon_1, \varepsilon_2\)</span> osv. Når et elektron eksiteres, sier vi at <em>elektronet</em> er eksitert og at <em>atomet</em> er i en eksitert <em>tilstand</em>. Dersom et system (atom) går fra en kvantetilstand med energi <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> til en annen kvantetilstand med energi <span class="math notranslate nohighlight">\(\varepsilon_f\)</span>, er energiforskjellen</p>
+<div class="math notranslate nohighlight">
+\[\Delta \varepsilon=\varepsilon_f-\varepsilon_i\text{.}\]</div>
+<p>Ulike kvantetilstander med samme energi kalles <strong>degenererte tilstander</strong> og vi sier at et energinivå med flere mulige kvantetilstander er et <strong>degenerert energinivå</strong>.</p>
+<p><img alt="Energier" src="../_images/energi_stige_atom.png" /></p>
+<p>For molekyler blir situasjonen mer kompleks. I tillegg til elektronenes energi kan molekylet også bevege seg som en helhet, rotere, og vibrere. Disse bevegelsesmåtene er uavhengige av hverandre og kalles <strong>frihetsgrader</strong>. Hver frihetsgrad representerer en måte molekylet kan lagre energi på. En frihetsgrad er altså en uavhengig type bevegelse eller dynamikk som bidrar til systemets totale energi <span class="math notranslate nohighlight">\(\varepsilon_{tot}\)</span>.</p>
+<p>For å beskrive den fullstendige energitilstanden for et molekyl må vi ta hensyn til de fire bidragene vi har nevnt over, altså:</p>
+<ul class="simple">
+<li><p><strong>Den elektroniske tilstanden</strong> beskriver hvilken kvantetilstand elektronene rundt atomkjernene befinner seg i (tenk orbitalokkupasjon), akkurat det samme prinsippet som for et enkeltatom, bare nå fordelt på flere atomkjerner. Den elektroniske tilstanden er ofte beskrevet med kvantetallene; hovedkvantetall (n, altså hovedenerginivå), banespinnkvantetall (l, orbital-kvantetall), magnetisk kvantetall (<span class="math notranslate nohighlight">\(m_l\)</span>, orbitalenes symmetri/retning) og spinnkvantetall (<span class="math notranslate nohighlight">\(m_s\)</span>, spinn opp/ned).</p></li>
+<li><p><strong>Vibrasjonstilstanden</strong> beskriver hvordan atomene i molekylet oscillerer rundt sine likevektsposisjoner i bindingene. Et molekyl med flere atomer kan vibrere på flere uavhengige måter samtidig (kalt normalmoder), og hver av disse har sitt eget sett med kvantiserte energinivåer.</p></li>
+<li><p><strong>Rotasjonstilstanden</strong> beskriver hvordan molekylet som en helhet roterer om en akse. Også rotasjonsenergien er kvantisert, molekylet kan bare rotere ved bestemte, tillatte “hastigheter”.</p></li>
+<li><p><strong>Translasjonen</strong> beskriver bevegelsen til hele molekylets massesenter gjennom rommet.</p></li>
+</ul>
+<p>Vi kan altså tenke på en kvantetilstand som en fullstendig beskrivelse av hvordan energien er fordelt mellom systemets ulike frihetsgrader. Den totale energien til et molekyl, <span class="math notranslate nohighlight">\(\varepsilon_n\)</span>, kan skrives som summen av bidragene fra hver frihetsgrad:</p>
+<div class="math notranslate nohighlight">
+\[\varepsilon_n=\varepsilon_{tot}=\varepsilon_{elec}+\varepsilon_{trans}+\varepsilon_{rot}+\varepsilon_{vib}\text{.}\]</div>
+<p>Se på simulasjonen av et vann -og oksygenmolekyl nedenfor. Et vannmolekyl består av tre atomer som ikke ligger på en rett linje — det er <em>ikke-lineært</em>. Med <span class="math notranslate nohighlight">\(N = 3\)</span> atomer har molekylet til sammen <span class="math notranslate nohighlight">\(3N = 9\)</span> frihetsgrader. Tre av dem er translasjon (bevegelse langs <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> og <span class="math notranslate nohighlight">\(z\)</span>), og tre er rotasjon, siden molekylet kan rotere om alle tre akser. De resterende <span class="math notranslate nohighlight">\(3N - 6 = 3\)</span> er vibrasjoner: symmetrisk strekk, asymmetrisk strekk og bøying. I simuleringen under kan du slå hver av disse på og av og se hvordan de til sammen utgjør de ni frihetsgradene.</p>
+<p>Et oksygenmolekyl har bare to atomer, som alltid ligger på en rett linje — det er <em>lineært</em>. Med <span class="math notranslate nohighlight">\(N = 2\)</span> blir det <span class="math notranslate nohighlight">\(3N = 6\)</span> frihetsgrader, men fordelingen er annerledes enn for vann. Translasjonen bidrar fortsatt med 3, men rotasjonen bidrar bare med 2: å rotere molekylet om sin egen bindingsakse gir ingen målbar energi, fordi atomene ligger på aksen. Derfor teller den rotasjonen ikke. Det gir <span class="math notranslate nohighlight">\(3N - 5 = 1\)</span> vibrasjon — det eneste strekket langs bindingen. Legg merke til i simuleringen at O₂ mangler den ene rotasjonsaksen som vann har.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div id="fdof-root" style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;">
+<style>
+#fdof-root .fdof-card{border:1px solid #ddd;border-radius:12px;padding:1.25rem;margin-bottom:16px;background:#fafafa;}
+#fdof-root .fdof-btn{font-size:12px;padding:6px 10px;width:100%;text-align:left;margin-bottom:6px;border:1px solid #ccc;background:#fff;border-radius:8px;cursor:pointer;color:#222;}
+#fdof-root .fdof-btn.fdof-on{background:#eef4fb;border-color:#378ADD;font-weight:600;}
+#fdof-root .fdof-btn-off{opacity:0.45;cursor:default;font-style:italic;}
+#fdof-root .fdof-group-label{font-size:11px;text-transform:uppercase;letter-spacing:0.05em;color:#999;margin:8px 0 4px;}
+#fdof-root .fdof-eq{font-size:16px;margin:0 0 6px;color:#222;}
+#fdof-root .fdof-count{font-size:13px;margin:0 0 16px;color:#378ADD;font-weight:600;}
+#fdof-root .fdof-count .fdof-part{color:#666;font-weight:400;}
+#fdof-root .fdof-label{font-size:13px;color:#666;margin:0 0 4px;font-weight:600;}
+@keyframes fdof-trans{0%,100%{transform:translate(-24px,0)}50%{transform:translate(24px,0)}}
+/* rotasjon om z (i planet) */
+@keyframes fdof-rotz{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+/* rotasjon om y (loddrett akse): klem horisontalt for pseudo-3D */
+@keyframes fdof-roty{0%{transform:scaleX(1)}25%{transform:scaleX(0.15)}50%{transform:scaleX(1)}75%{transform:scaleX(0.15)}100%{transform:scaleX(1)}}
+/* rotasjon om x (vannrett akse): klem vertikalt for pseudo-3D */
+@keyframes fdof-rotx{0%{transform:scaleY(1)}25%{transform:scaleY(0.15)}50%{transform:scaleY(1)}75%{transform:scaleY(0.15)}100%{transform:scaleY(1)}}
+@keyframes fdof-o2v1{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,0)}}
+@keyframes fdof-o2v2{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,0)}}
+@keyframes fdof-hsym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes fdof-hsym2{0%,100%{transform:translate(0,0)}50%{transform:translate(4px,5px)}}
+@keyframes fdof-hasym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes fdof-hasym2{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,-5px)}}
+@keyframes fdof-hbendO{0%,100%{transform:translate(0,0)}50%{transform:translate(0,-6px)}}
+@keyframes fdof-hbendH1{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,3px)}}
+@keyframes fdof-hbendH2{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,3px)}}
+</style>
+
+<!-- =================== H2O =================== -->
+<div class="fdof-card">
+<p class="fdof-label">H&#8322;O &mdash; ikke-line&aelig;rt molekyl (N = 3 atomer)</p>
+<p id="fdof-h2o-eq" class="fdof-eq">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<p id="fdof-h2o-count" class="fdof-count"></p>
+<div style="display:grid;grid-template-columns:1fr 190px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+  <!-- akser -->
+  <g id="fdof-h2o-axes" opacity="0.5">
+    <line x1="40" y1="90" x2="180" y2="90" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="184" y="94" font-size="11" fill="#378ADD">x</text>
+    <line x1="110" y1="20" x2="110" y2="160" stroke="#2FA84F" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="114" y="30" font-size="11" fill="#2FA84F">y</text>
+    <line x1="70" y1="130" x2="150" y2="50" stroke="#B4783A" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="152" y="48" font-size="11" fill="#B4783A">z</text>
+  </g>
+  <g id="fdof-h2o-trans" style="animation:none;">
+  <g id="fdof-h2o-rot" style="transform-origin:110px 90px;">
+    <line x1="110" y1="60" x2="75" y2="110" stroke="#3d3d3a" stroke-width="3"/>
+    <line x1="110" y1="60" x2="145" y2="110" stroke="#3d3d3a" stroke-width="3"/>
+    <g id="fdof-h2o-o" style="transform-origin:110px 60px;"><circle cx="110" cy="60" r="15" fill="#D85A30"/></g>
+    <g id="fdof-h2o-h1" style="transform-origin:75px 110px;"><circle cx="75" cy="110" r="11" fill="#B4B2A9"/></g>
+    <g id="fdof-h2o-h2" style="transform-origin:145px 110px;"><circle cx="145" cy="110" r="11" fill="#B4B2A9"/></g>
+  </g>
+  </g>
+</svg>
+<div>
+<p class="fdof-group-label">Translasjon (3)</p>
+<button class="fdof-btn" id="fdof-h2o-btn-trans">Bevegelse gjennom rommet</button>
+<p class="fdof-group-label">Rotasjon (3 akser)</p>
+<button class="fdof-btn" id="fdof-h2o-btn-rotx">Roter om x-aksen</button>
+<button class="fdof-btn" id="fdof-h2o-btn-roty">Roter om y-aksen</button>
+<button class="fdof-btn" id="fdof-h2o-btn-rotz">Roter om z-aksen</button>
+<p class="fdof-group-label">Vibrasjon (3N &minus; 6 = 3)</p>
+<button class="fdof-btn" id="fdof-h2o-btn-sym">Symmetrisk strekk</button>
+<button class="fdof-btn" id="fdof-h2o-btn-asym">Asymmetrisk strekk</button>
+<button class="fdof-btn" id="fdof-h2o-btn-bend">B&oslash;ying</button>
+</div>
+</div>
+</div>
+
+<!-- =================== O2 =================== -->
+<div class="fdof-card">
+<p class="fdof-label">O&#8322; &mdash; line&aelig;rt molekyl (N = 2 atomer)</p>
+<p id="fdof-o2-eq" class="fdof-eq">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<p id="fdof-o2-count" class="fdof-count"></p>
+<div style="display:grid;grid-template-columns:1fr 190px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+  <!-- akser: bindingen ligger langs x -->
+  <g id="fdof-o2-axes" opacity="0.5">
+    <line x1="40" y1="85" x2="180" y2="85" stroke="#378ADD" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="184" y="89" font-size="11" fill="#378ADD">x</text>
+    <line x1="110" y1="20" x2="110" y2="150" stroke="#2FA84F" stroke-width="1.5" stroke-dasharray="4 3"/>
+    <text x="114" y="30" font-size="11" fill="#2FA84F">y</text>
+    <line x1="75" y1="120" x2="145" y2="50" stroke="#bbb" stroke-width="1.5" stroke-dasharray="2 3"/>
+    <text x="147" y="48" font-size="10" fill="#bbb">z</text>
+  </g>
+  <g id="fdof-o2-trans" style="animation:none;">
+  <g id="fdof-o2-rot" style="transform-origin:110px 85px;">
+    <line x1="80" y1="85" x2="140" y2="85" stroke="#3d3d3a" stroke-width="3"/>
+    <g id="fdof-o2-a1" style="transform-origin:80px 85px;"><circle cx="80" cy="85" r="16" fill="#378ADD"/></g>
+    <g id="fdof-o2-a2" style="transform-origin:140px 85px;"><circle cx="140" cy="85" r="16" fill="#378ADD"/></g>
+  </g>
+  </g>
+</svg>
+<div>
+<p class="fdof-group-label">Translasjon (3)</p>
+<button class="fdof-btn" id="fdof-o2-btn-trans">Bevegelse gjennom rommet</button>
+<p class="fdof-group-label">Rotasjon (2 akser)</p>
+<button class="fdof-btn" id="fdof-o2-btn-roty">Roter om y-aksen</button>
+<button class="fdof-btn" id="fdof-o2-btn-rotz">Roter om z-aksen</button>
+<button class="fdof-btn fdof-btn-off" id="fdof-o2-btn-rotx" title="Rotasjon om bindingsaksen teller ikke for line&aelig;re molekyler">Om x-aksen: teller ikke</button>
+<p class="fdof-group-label">Vibrasjon (3N &minus; 5 = 1)</p>
+<button class="fdof-btn" id="fdof-o2-btn-vib">Strekk</button>
+</div>
+</div>
+</div>
+
+<script>
+(function () {
+  const state = {
+    h2o:{trans:false, rotx:false, roty:false, rotz:false, sym:false, asym:false, bend:false},
+    o2:{trans:false, roty:false, rotz:false, vib:false}
+  };
+
+  function byId(id){ return document.getElementById(id); }
+
+  function toggle(mol,key){
+    state[mol][key] = !state[mol][key];
+    render(mol);
+  }
+
+  // hvilken rotasjons-animasjon som skal vises (prioriter z i planet, ellers y, ellers x)
+  function rotAnim(s){
+    if(s.rotz) return 'fdof-rotz 2.4s linear infinite';
+    if(s.roty) return 'fdof-roty 2.4s ease-in-out infinite';
+    if(s.rotx) return 'fdof-rotx 2.4s ease-in-out infinite';
+    return 'none';
+  }
+
+  function render(mol){
+    const s = state[mol];
+
+    for(const k in s){
+      const btn = byId('fdof-'+mol+'-btn-'+k);
+      if(btn) btn.classList.toggle('fdof-on', s[k]);
+    }
+
+    if(mol==='h2o'){
+      byId('fdof-h2o-trans').style.animation = s.trans ? 'fdof-trans 1.6s ease-in-out infinite' : 'none';
+      byId('fdof-h2o-rot').style.animation = rotAnim(s);
+
+      let h1='none', h2='none', o='none';
+      if(s.sym){ h1='fdof-hsym1 .5s ease-in-out infinite'; h2='fdof-hsym2 .5s ease-in-out infinite'; }
+      else if(s.asym){ h1='fdof-hasym1 .5s ease-in-out infinite'; h2='fdof-hasym2 .5s ease-in-out infinite'; }
+      else if(s.bend){ h1='fdof-hbendH1 .5s ease-in-out infinite'; h2='fdof-hbendH2 .5s ease-in-out infinite'; o='fdof-hbendO .5s ease-in-out infinite'; }
+      byId('fdof-h2o-h1').style.animation = h1;
+      byId('fdof-h2o-h2').style.animation = h2;
+      byId('fdof-h2o-o').style.animation = o;
+
+      let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+      if(s.rotx||s.roty||s.rotz) terms.push('&epsilon;<sub>rot</sub>');
+      if(s.sym||s.asym||s.bend) terms.push('&epsilon;<sub>vib</sub>');
+      byId('fdof-h2o-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+
+      const t = s.trans ? 3 : 0;
+      const r = (s.rotx?1:0)+(s.roty?1:0)+(s.rotz?1:0);
+      const v = (s.sym?1:0)+(s.asym?1:0)+(s.bend?1:0);
+      const sum = t + r + v;
+      byId('fdof-h2o-count').innerHTML =
+        'Frihetsgrader: ' + sum + ' / 9 &nbsp; ' +
+        '<span class="fdof-part">(translasjon ' + t + ', rotasjon ' + r + ', vibrasjon ' + v + ')</span>';
+    }
+
+    if(mol==='o2'){
+      byId('fdof-o2-trans').style.animation = s.trans ? 'fdof-trans 1.6s ease-in-out infinite' : 'none';
+      byId('fdof-o2-rot').style.animation = rotAnim(s);
+      byId('fdof-o2-a1').style.animation = s.vib ? 'fdof-o2v1 .5s ease-in-out infinite' : 'none';
+      byId('fdof-o2-a2').style.animation = s.vib ? 'fdof-o2v2 .5s ease-in-out infinite' : 'none';
+
+      let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+      if(s.roty||s.rotz) terms.push('&epsilon;<sub>rot</sub>');
+      if(s.vib) terms.push('&epsilon;<sub>vib</sub>');
+      byId('fdof-o2-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+
+      const t = s.trans ? 3 : 0;
+      const r = (s.roty?1:0)+(s.rotz?1:0);
+      const v = s.vib ? 1 : 0;
+      const sum = t + r + v;
+      byId('fdof-o2-count').innerHTML =
+        'Frihetsgrader: ' + sum + ' / 6 &nbsp; ' +
+        '<span class="fdof-part">(translasjon ' + t + ', rotasjon ' + r + ', vibrasjon ' + v + ')</span>';
+    }
+  }
+
+  byId('fdof-h2o-btn-trans').addEventListener('click', () => toggle('h2o','trans'));
+  byId('fdof-h2o-btn-rotx').addEventListener('click', () => toggle('h2o','rotx'));
+  byId('fdof-h2o-btn-roty').addEventListener('click', () => toggle('h2o','roty'));
+  byId('fdof-h2o-btn-rotz').addEventListener('click', () => toggle('h2o','rotz'));
+  byId('fdof-h2o-btn-sym').addEventListener('click', () => toggle('h2o','sym'));
+  byId('fdof-h2o-btn-asym').addEventListener('click', () => toggle('h2o','asym'));
+  byId('fdof-h2o-btn-bend').addEventListener('click', () => toggle('h2o','bend'));
+
+  byId('fdof-o2-btn-trans').addEventListener('click', () => toggle('o2','trans'));
+  byId('fdof-o2-btn-roty').addEventListener('click', () => toggle('o2','roty'));
+  byId('fdof-o2-btn-rotz').addEventListener('click', () => toggle('o2','rotz'));
+  // x-aksen for O2 er bevisst uten handler (teller ikke)
+
+  byId('fdof-o2-btn-vib').addEventListener('click', () => toggle('o2','vib'));
+
+  render('h2o');
+  render('o2');
+})();
+</script>
+</div>
+</div></div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Noe å tenke over</p>
+<p>Hvorfor er translasjon med, når den ikke er kvantisert? Molekyler kan vel bevege seg rundt i rommet, uten å gjøre hopp mellom tillatte posisjoner? Strengt tatt <em>er</em> faktisk også translasjonsenergien kvantisert, det skal vi ikke beskrive så nøye nå. Et molekyl beveger seg typisk fritt i et makroskopisk volum (en beholder, et reagensrør, et rom), og da blir avstanden mellom de tillatte translasjonsenerginivåene enormt liten sammenlignet med termisk energi, så liten at den i praksis er umulig å skille fra en kontinuerlig fordeling av energier, dette beskriver vi mer nøye i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#nar-gjelder-ikke-den-klassiske-opptellingen">neste modul</a>. Du har kanskje merket at vibrasjonen i simuleringene over ikke kan aktiveres uten å aktivere rotasjonen først? Det kommer vi også tilbake til.</p>
+</div>
+</section>
+<section id="hva-er-egentlig-en-mikrotilstand">
+<h3>Hva er <em>egentlig</em> en mikrotilstand?<a class="headerlink" href="#hva-er-egentlig-en-mikrotilstand" title="Link to this heading">#</a></h3>
+<p>Nå kan vi knytte kvantetilstander til et begrep vi allerede har møtt: mikrotilstander. En mikrotilstand i statistisk mekanikk er en komplett, nøyaktig spesifikasjon av posisjonen og hastigheten (eller kvantetilstanden) til hver eneste lille partikkel i et system i et bestemt øyeblikk. I kvantemekanikk tilsvarer en mikrotilstand én bestemt kvantetilstand. Når vi sier at vi kjenner systemets mikrotilstand, mener vi derfor at vi kjenner alle kvantetallene som beskriver systemets frihetsgrader. Dersom flere forskjellige kvantetilstander har samme energi (degenererte tilstander), finnes det altså flere mikrotilstander som tilsvarer den samme energien. Vi kan tenke oss sammenhengen slik:</p>
+<div class="math notranslate nohighlight">
+\[\text{Mikrotilstand} \longleftrightarrow \text{Kvantetilstand} \longrightarrow \text{Energinivå}\]</div>
+<p>Flere forskjellige kvantetilstander kan altså peke mot det samme energinivået, tilstandene er da degenererte.</p>
+<p>Hvis energi ikke var kvantisert, ville hver frihetsgrad kunne anta kontinuerlig mange energier. Da ville antallet mulige kvantetilstander, og dermed mikrotilstander, vært uendelig selv innenfor et begrenset energiintervall. Kvantemekanikkens lover begrenser altså hvilke tilstander naturen faktisk tillater. Det er derfor mikrotilstander ikke bare er et matematisk hjelpemiddel. De er en del av naturen.</p>
+<p>Nå vet du hvor mikrotilstandene til atomer og molekyler kommer fra, og det kan bli veldig veldig komplisert når man går mer i dybden, men ikke stress. Vi skal ikke kartlegge disse mikrotilstandene nøye i dette kurset, og vi bruker som regel forenklede modeller som f.eks. kun ser på den totale energien <span class="math notranslate nohighlight">\(\varepsilon_{tot}\)</span>. Videre skal vi se på mikrotilstanden for systemer av <em>flere partikler</em> og hvordan gjennomsnittene over disse gir opphav til størrelsene vi kan observere, eller dvs. måle,  som temperatur.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="5_intermolekyl%C3%A6re_krefter.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Intermolekylære krefter og reelle gasser</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="A2_mattehjelp.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Nyttige matematiske verktøy</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-et-system">Hva er et system?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ensembler">Ensembler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ensemblegjennomsnitt">Ensemblegjennomsnitt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mikrotilstander-og-makrotilstander">Mikrotilstander og makrotilstander</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#intensive-og-ekstensive-storrelser">Intensive og ekstensive størrelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#prosesser">Prosesser</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#stifunksjoner-og-tilstandsfunksjoner">Stifunksjoner og tilstandsfunksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ulike-typer-prosesser">Ulike typer prosesser</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#energi">Energi</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#empiriske-vs-statistiske-lover">Empiriske vs. statistiske “lover”</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuerlige-vs-diskrete-verdier">Kontinuerlige vs. diskrete verdier</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#termodynamikkens-lover">Termodynamikkens lover</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grunnleggende-antakelser-i-statistisk-mekanikk">Grunnleggende antakelser i statistisk mekanikk</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kvantemekanikk">Kvantemekanikk</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kvantisert-energi">Kvantisert energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energitilstander-og-frihetsgrader">Energitilstander og frihetsgrader</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-egentlig-en-mikrotilstand">Hva er <em>egentlig</em> en mikrotilstand?</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

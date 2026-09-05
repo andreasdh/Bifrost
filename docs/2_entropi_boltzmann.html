@@ -1,0 +1,1845 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Entropi, temperatur og Boltzmann-fordelingen &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/2_entropi_boltzmann';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Partisjonsfunksjonen og molekylær energi" href="3_partisjonsfunksjonen.html" />
+    <link rel="prev" title="Fra molekyler til termodynamikk" href="1_introduksjon.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/2_entropi_boltzmann.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Entropi, temperatur og Boltzmann-fordelingen</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-multiplisitet-til-entropi">Fra multiplisitet til entropi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksempel-gass-i-to-kamre">Eksempel: gass i to kamre</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksempel-energi-fordelt-pa-to-og-tre-nivaer">Eksempel: Energi fordelt på to og tre nivåer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#termodynamikkens-andre-lov-som-statistisk-lov">Termodynamikkens andre lov som statistisk lov</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energifordeling-og-termisk-likevekt">Energifordeling og termisk likevekt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur">Temperatur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-entropimaksimum-til-boltzmann-fordelingen">Fra entropimaksimum til Boltzmann-fordelingen</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entropi-uttrykt-ved-sannsynligheter-gibbs-entropien">Entropi uttrykt ved sannsynligheter: Gibbs-entropien</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-gibbs-entropien-til-boltzmann-fordelingen">Fra Gibbs-entropien til Boltzmann-fordelingen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utforsk-boltzmann-fordelingen">Utforsk Boltzmann-fordelingen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videre-til-partisjonsfunksjonen">Videre til partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="entropi-temperatur-og-boltzmann-fordelingen">
+<h1>Entropi, temperatur og Boltzmann-fordelingen<a class="headerlink" href="#entropi-temperatur-og-boltzmann-fordelingen" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Læringsmål</p>
+<p>Etter å ha arbeidet med dette kapitlet skal du kunne:</p>
+<ul class="simple">
+<li><p>forklare sammenhengen mellom multiplisitet og Boltzmanns entropi</p></li>
+<li><p>beregne multiplisiteten og entropien for enkle systemer</p></li>
+<li><p>bruke sannsynlighetsargumenter til å forklare likevekt og retningen til spontane prosesser</p></li>
+<li><p>forklare det statistiske grunnlaget for termodynamikkens andre lov</p></li>
+<li><p>forklare hvordan temperatur knytter sammen energi og entropi</p></li>
+<li><p>gjøre rede for betydningen av Boltzmann-fordelingen</p></li>
+</ul>
+</div>
+<p>Når et egg først er knust, samler det seg ikke igjen. En bakt kake blir ikke rå, og rust dannes lettere enn den forsvinner. Kroppene våre eldes. Prosessene kan gå med svært ulik hastighet, men de har en foretrukket retning. Hvorfor? En viktig del av svaret ligger i fenomenet <em>entropi</em>.</p>
+<p>Entropi er ett av de begrepene i kjemien som lett kan virke abstrakt og unnvikende. Det blir ofte knyttet til «uorden», men det ordet forklarer verken hvorfor varme strømmer fra varmt til kaldt, eller hvorfor en gass fyller beholderen den slippes fri i. Den statistiske tolkningen gir oss en mer presis forklaring: Vi må undersøke hvor mange mikroskopiske måter hver makroskopiske tilstand kan realiseres på.</p>
+<p>I dette kapitlet tar vi den mikroskopiske veien inn i entropibegrepet. Den østerrikske fysikeren Ludwig Boltzmann viste på slutten av 1800-tallet at entropi har en dyp statistisk betydning. For et isolert system der de tilgjengelige mikrotilstandene er like sannsynlige, er <strong>entropi et mål på antall mikroskopiske måter systemet kan realisere sin makroskopiske tilstand på</strong>. Jo flere måter, desto høyere entropi og desto mer sannsynlig er tilstanden.</p>
+<div class="note admonition">
+<p class="admonition-title">Kapitlet i et nøtteskall</p>
+<p>Energien bestemmes av hvilke energinivåer partiklene befinner seg på, entropien forteller hvor mange mikrotilstander som gir samme makrotilstand, og temperaturen styrer hvilke energifordelinger som er sannsynlige.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Tenk over før du går videre</p>
+<p>Hva forbinder du med entropi fra før? Prøv også å formulere hvorfor det er utilstrekkelig å si at entropi bare er «uorden».</p>
+</div>
+<section id="fra-multiplisitet-til-entropi">
+<h2>Fra multiplisitet til entropi<a class="headerlink" href="#fra-multiplisitet-til-entropi" title="Link to this heading">#</a></h2>
+<p>Vi repeterer kort utgangspunktet fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/1_introduksjon.html">introduksjonen</a>: En <strong>makrotilstand</strong> beskriver systemet med noen få størrelser, mens en <strong>mikrotilstand</strong> angir den fullstendige tilstanden innenfor modellen vi bruker. Antallet mikrotilstander som er forenlige med en bestemt makrotilstand, kalles <strong>multiplisiteten</strong> og betegnes <span class="math notranslate nohighlight">\(\Omega\)</span>.</p>
+<p>For et <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/1_introduksjon.html#system-og-omgivelser">isolert system</a> med fast energi, volum og partikkeltall behandles de tilgjengelige mikrotilstandene som like sannsynlige. En makrotilstand med stor <span class="math notranslate nohighlight">\(\Omega\)</span> kan da realiseres på flere måter og observeres oftere enn en makrotilstand med liten <span class="math notranslate nohighlight">\(\Omega\)</span>. Boltzmann knyttet denne opptellingen til entropien:</p>
+<div class="important admonition">
+<p class="admonition-title">Boltzmanns entropi</p>
+<div class="math notranslate nohighlight">
+\[S=k_\mathrm{B}\ln\Omega\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(k_\mathrm{B}=1{,}380\,649\times10^{-23}\ \mathrm{J\,K^{-1}}\)</span> Boltzmanns konstant.</p>
+</div>
+<p>Entropi er derfor ikke ganske enkelt «uorden». I denne sammenhengen er entropi et mål på hvor mange mikroskopiske muligheter som er forenlige med den makroskopiske tilstanden.</p>
+<p>Logaritmen gjør entropien additiv. For to uavhengige delsystemer er</p>
+<div class="math notranslate nohighlight">
+\[\Omega_\mathrm{tot}=\Omega_A\Omega_B\]</div>
+<p>Dermed er</p>
+<div class="math notranslate nohighlight">
+\[S_\mathrm{tot}=k_\mathrm{B}\ln(\Omega_A\Omega_B)=S_A+S_B\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Et system kan realisere makrotilstand A på 10 måter og makrotilstand B på 1000 måter.</p>
+<ol class="arabic simple">
+<li><p>Hvilken makrotilstand har størst entropi?</p></li>
+<li><p>Regn ut <span class="math notranslate nohighlight">\(S_B-S_A\)</span> uttrykt ved <span class="math notranslate nohighlight">\(k_\mathrm{B}\)</span>.</p></li>
+<li><p>Hvorfor er ikke entropiforskjellen proporsjonal med <span class="math notranslate nohighlight">\(1000-10\)</span>?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Makrotilstand B har størst entropi. Forskjellen er</p>
+<div class="math notranslate nohighlight">
+\[S_B-S_A=k_\mathrm{B}\ln\!\left(\frac{1000}{10}\right)=k_\mathrm{B}\ln100\approx4{,}61k_\mathrm{B}\]</div>
+<p class="sd-card-text">Entropien avhenger av logaritmen til multiplisiteten. Det er forholdet mellom antall muligheter, ikke differansen mellom dem, som bestemmer entropiforskjellen.</p>
+</div>
+</details><section id="eksempel-gass-i-to-kamre">
+<h3>Eksempel: gass i to kamre<a class="headerlink" href="#eksempel-gass-i-to-kamre" title="Link to this heading">#</a></h3>
+<p>Tenk deg en beholder delt i to like store kamre, <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>, forbundet med en ventil. Til å begynne med er all gassen i kammer <span class="math notranslate nohighlight">\(A\)</span>, og ventilen er lukket. Så åpner vi ventilen. Vi vet alle hva som skjer: gassen fyller hele beholderen. Men <em>hvorfor</em> skjer det helt av seg selv, og hvorfor ser vi aldri det motsatte: at gassen spontant trekker seg tilbake til <span class="math notranslate nohighlight">\(A\)</span>?</p>
+<p>For en ideell gass beveger molekylene seg uavhengig av hverandre. Når gassen har nådd likevekt og de to kamrene er like store, er hvert molekyl like sannsynlig i <span class="math notranslate nohighlight">\(A\)</span> som i <span class="math notranslate nohighlight">\(B\)</span>. Man kan si at hvert molekyl er som et myntkast. Kron <span class="math notranslate nohighlight">\(=\)</span> kammer <span class="math notranslate nohighlight">\(A\)</span>, mynt <span class="math notranslate nohighlight">\(=\)</span> kammer <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p>Antallet molekyler i kammer <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(n_A\)</span>, kan variere fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(N\)</span>. For en bestemt verdi av <span class="math notranslate nohighlight">\(n_A\)</span> finnes det</p>
+<div class="math notranslate nohighlight">
+\[
+\Omega(n_A)=\binom{N}{n_A}
+\]</div>
+<p>mikrotilstander. Binomialkoeffisienten <span class="math notranslate nohighlight">\(\binom{N}{n_A}\)</span> teller hvor mange måter vi kan velge hvilke <span class="math notranslate nohighlight">\(n_A\)</span> av de <span class="math notranslate nohighlight">\(N\)</span> molekylene som befinner seg i <span class="math notranslate nohighlight">\(A\)</span>. Her er <span class="math notranslate nohighlight">\(N\)</span> fast, mens <span class="math notranslate nohighlight">\(n_A\)</span> varierer. For partall <span class="math notranslate nohighlight">\(N\)</span> er multiplisiteten størst ved <span class="math notranslate nohighlight">\(n_A=N/2\)</span>.</p>
+<p><img alt="Fri ekspansjon av en gass mellom to kamre" src="../_images/gass_mikro_makro.svg" /></p>
+<p>Det finnes <span class="math notranslate nohighlight">\(2^N\)</span> mikrotilstander til sammen, fordi hvert av de <span class="math notranslate nohighlight">\(N\)</span> molekylene kan befinne seg i enten <span class="math notranslate nohighlight">\(A\)</span> eller <span class="math notranslate nohighlight">\(B\)</span>. Når kamrene er like store, er mikrotilstandene like sannsynlige. Sannsynligheten for makrotilstanden <span class="math notranslate nohighlight">\(n_A\)</span> blir derfor</p>
+<div class="math notranslate nohighlight">
+\[
+P(n_A)=\frac{\Omega(n_A)}{2^N}
+=\frac{1}{2^N}\binom{N}{n_A}.
+\]</div>
+<p>En slik sannsynlighetsfordeling kan se slik ut:</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/f4c58deb76c0e952a4673ffffcb72359cacb64cd1a5b373a1eb6fd6956c46b19.png" src="../_images/f4c58deb76c0e952a4673ffffcb72359cacb64cd1a5b373a1eb6fd6956c46b19.png" />
+</div>
+</div>
+<p>Fordelingen topper seg der molekylene er jevnt fordelt (<span class="math notranslate nohighlight">\(n_A = N/2\)</span>), og faller bratt mot kantene. Tilstanden «alle molekyler i <span class="math notranslate nohighlight">\(A\)</span>» (<span class="math notranslate nohighlight">\(n_A = N\)</span>) er bare <em>én</em> av <span class="math notranslate nohighlight">\(2^N\)</span> mikrotilstander. Allerede med <span class="math notranslate nohighlight">\(N = 10\)</span> molekyler er sannsynligheten for at gassen spontant samler seg i <span class="math notranslate nohighlight">\(A\)</span> igjen under <strong>0,1 %</strong>. Det er dette som gjør fri ekspansjon irreversibel — det er ikke en kraft som drar molekylene utover, men det er rett og slett mange flere muligheter for at det skal skje!</p>
+<p>Toppen ved <span class="math notranslate nohighlight">\(n_A=N/2\)</span> er systemets <strong>likevektsområde</strong>: Det er her multiplisiteten og entropien er størst. Likevekt betyr ikke at molekylene slutter å bevege seg, eller at <span class="math notranslate nohighlight">\(n_A\)</span> blir stående nøyaktig på <span class="math notranslate nohighlight">\(N/2\)</span>. Systemet skifter hele tiden mikrotilstand, og <span class="math notranslate nohighlight">\(n_A\)</span> varierer rundt den mest sannsynlige verdien.</p>
+<p>Når <span class="math notranslate nohighlight">\(N\)</span> øker, blir fordelingen bredere målt i antall molekyler, men smalere målt i forhold til systemets størrelse. Det er denne stadig mindre <em>relative bredden</em> som gjør likevektstilstanden forutsigbar i et makroskopisk system.</p>
+<p>Simuleringen nedenfor viser <span class="math notranslate nohighlight">\(N\)</span> molekyler i en beholder med en ventil i midten. Molekylene starter i kammer <span class="math notranslate nohighlight">\(A\)</span> med ventilen lukket. Åpne ventilen og se gassen spre seg. Histogrammet til høyre bygger seg opp over tid og viser den observerte fordelingen av <span class="math notranslate nohighlight">\(n_A\)</span> (blå søyler), mens den oransje kurven er den teoretiske fordelingen. Med preset-knappene kan du skalere <span class="math notranslate nohighlight">\(N\)</span> opp og se hvordan dette påvirker systemet.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html">
+        <iframe
+            width="100%"
+            height="860"
+            src="data:text/html;base64,PCFET0NUWVBFIGh0bWw+CjxodG1sIGxhbmc9Im5vIj4KPGhlYWQ+CjxtZXRhIGNoYXJzZXQ9IlVURi04Ij4KPG1ldGEgbmFtZT0idmlld3BvcnQiIGNvbnRlbnQ9IndpZHRoPWRldmljZS13aWR0aCwgaW5pdGlhbC1zY2FsZT0xLjAiPgo8dGl0bGU+R2FzcyBpIHRvIGthbXJlPC90aXRsZT4KPC9oZWFkPgo8Ym9keSBzdHlsZT0ibWFyZ2luOjAiPgoKPCEtLSDilZDilZAgd2lkZ2V0IHN0YXJ0IOKVkOKVkCBhbHQgbWVsbG9tIGRpc3NlIG1lcmtlbmUgZXIgc2VsdnN0ZW5kaWcg4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQ4pWQIC0tPgo8ZGl2IGlkPSJnYXNzaW0iPgoKICA8ZGl2IGNsYXNzPSJncy1iYXIiPgogICAgPHNwYW4gY2xhc3M9ImdzLW4iPk4gPTwvc3Bhbj4KICAgIDxkaXYgY2xhc3M9ImdzLXNlZyI+CiAgICAgIDxidXR0b24gdHlwZT0iYnV0dG9uIiBkYXRhLW49IjQiIGFyaWEtcHJlc3NlZD0iZmFsc2UiPjQ8L2J1dHRvbj4KICAgICAgPGJ1dHRvbiB0eXBlPSJidXR0b24iIGRhdGEtbj0iMjAiIGNsYXNzPSJvbiIgYXJpYS1wcmVzc2VkPSJ0cnVlIj4yMDwvYnV0dG9uPgogICAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgZGF0YS1uPSIxMDAiIGFyaWEtcHJlc3NlZD0iZmFsc2UiPjEwMDwvYnV0dG9uPgogICAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgZGF0YS1uPSIyMDAiIGFyaWEtcHJlc3NlZD0iZmFsc2UiPjIwMDwvYnV0dG9uPgogICAgPC9kaXY+CiAgICA8c3BhbiBjbGFzcz0iZ3MtbiI+U3RhcnQgaTwvc3Bhbj4KICAgIDxkaXYgY2xhc3M9ImdzLXNlZyBncy1zaWRlIj4KICAgICAgPGJ1dHRvbiB0eXBlPSJidXR0b24iIGRhdGEtcz0iQSIgY2xhc3M9Im9uIiBhcmlhLXByZXNzZWQ9InRydWUiPkE8L2J1dHRvbj4KICAgICAgPGJ1dHRvbiB0eXBlPSJidXR0b24iIGRhdGEtcz0iQiIgYXJpYS1wcmVzc2VkPSJmYWxzZSI+QjwvYnV0dG9uPgogICAgPC9kaXY+CiAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgaWQ9ImdzLXJlc2V0IiBjbGFzcz0iZ3MtZ2hvc3QiPlN0YXJ0IHDDpSBueXR0PC9idXR0b24+CiAgICA8YnV0dG9uIHR5cGU9ImJ1dHRvbiIgaWQ9ImdzLW1haW4iIGNsYXNzPSJncy1wcmltYXJ5Ij7DhXBuZSB2ZW50aWxlbjwvYnV0dG9uPgogIDwvZGl2PgoKICA8Y2FudmFzIGlkPSJncy1ib3giPjwvY2FudmFzPgoKICA8ZGl2IGNsYXNzPSJncy1kYXRhIj4KICAgIDxzcGFuPiZPbWVnYTsobjxzdWI+QTwvc3ViPiA9IDxiIGlkPSJncy1uYSI+MjA8L2I+KSA9IDxiIGlkPSJncy1vbSI+MTwvYj48L3NwYW4+CiAgICA8c3Bhbj4mT21lZ2E7PHN1Yj5tYWtzPC9zdWI+ID0gPGIgaWQ9ImdzLW9tYXgiPjE8L2I+PC9zcGFuPgogIDwvZGl2PgoKICA8Y2FudmFzIGlkPSJncy1oaXN0Ij48L2NhbnZhcz4KCiAgPGRpdiBjbGFzcz0iZ3MtZm9vdCI+CiAgICA8c3BhbiBjbGFzcz0iZ3Mta2V5Ij48aSBjbGFzcz0ic3ctYmFyIj48L2k+c2ltdWxlcnQ8aSBjbGFzcz0ic3ctbGluZSI+PC9pPnRlb3JpPC9zcGFuPgogICAgPHNwYW4gY2xhc3M9ImdzLXgiPm48c3ViPkE8L3N1Yj48L3NwYW4+CiAgICA8c3Bhbj48L3NwYW4+CiAgPC9kaXY+Cgo8L2Rpdj4KCjxzdHlsZT4KI2dhc3NpbXsKICAtLWluazojMWYyOTMzOyAtLW11dGVkOiM2Yjc0ODA7IC0tbGluZTojY2RkNWRkOwogIC0tYWNjOiMyYzZlOWI7IC0tYWNjMjojYzA3NDIzOwogIC0tdGludEE6cmdiYSg0NCwxMTAsMTU1LDAuMDU1KTsgLS10aW50QjpyZ2JhKDQ0LDExMCwxNTUsMC4wMik7CiAgLS1jaGlwOnJnYmEoNDQsMTEwLDE1NSwwLjA5KTsKICBmb250LWZhbWlseTotYXBwbGUtc3lzdGVtLEJsaW5rTWFjU3lzdGVtRm9udCwiU2Vnb2UgVUkiLFJvYm90byxIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZjsKICBjb2xvcjp2YXIoLS1pbmspOyBtYXgtd2lkdGg6NzYwcHg7IG1hcmdpbjowIGF1dG87IHBhZGRpbmc6MnB4IDAgNHB4OwogIC13ZWJraXQtZm9udC1zbW9vdGhpbmc6YW50aWFsaWFzZWQ7Cn0KI2dhc3NpbSBjYW52YXN7ZGlzcGxheTpibG9jazt3aWR0aDoxMDAlO30KCiNnYXNzaW0gLmdzLWJhcntkaXNwbGF5OmZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO2dhcDo4cHg7ZmxleC13cmFwOndyYXA7bWFyZ2luLWJvdHRvbToxMHB4O30KI2dhc3NpbSAuZ3Mtbntmb250LXNpemU6MTNweDtjb2xvcjp2YXIoLS1tdXRlZCk7bGV0dGVyLXNwYWNpbmc6MC4wM2VtO30KI2dhc3NpbSAuZ3Mtc2Vne2Rpc3BsYXk6aW5saW5lLWZsZXg7Ym9yZGVyOjFweCBzb2xpZCB2YXIoLS1saW5lKTtib3JkZXItcmFkaXVzOjdweDtvdmVyZmxvdzpoaWRkZW47fQojZ2Fzc2ltIC5ncy1zZWcgYnV0dG9uewogIGZvbnQ6aW5oZXJpdDtmb250LXNpemU6MTNweDtwYWRkaW5nOjVweCAxNHB4O2JvcmRlcjowO2JhY2tncm91bmQ6bm9uZTtjb2xvcjp2YXIoLS1tdXRlZCk7CiAgY3Vyc29yOnBvaW50ZXI7Ym9yZGVyLXJpZ2h0OjFweCBzb2xpZCB2YXIoLS1saW5lKTt0cmFuc2l0aW9uOmJhY2tncm91bmQgLjEycyxjb2xvciAuMTJzOwp9CiNnYXNzaW0gLmdzLXNlZyBidXR0b246bGFzdC1jaGlsZHtib3JkZXItcmlnaHQ6MDt9CiNnYXNzaW0gLmdzLXNlZyBidXR0b246aG92ZXJ7YmFja2dyb3VuZDp2YXIoLS1jaGlwKTtjb2xvcjp2YXIoLS1pbmspO30KI2dhc3NpbSAuZ3Mtc2VnIGJ1dHRvbi5vbntiYWNrZ3JvdW5kOnZhcigtLWFjYyk7Y29sb3I6I2ZmZjt9CiNnYXNzaW0gLmdzLWdob3N0ewogIGZvbnQ6aW5oZXJpdDtmb250LXNpemU6MTNweDtwYWRkaW5nOjZweCAxNHB4O21hcmdpbi1sZWZ0OmF1dG87Y3Vyc29yOnBvaW50ZXI7CiAgYm9yZGVyOjFweCBzb2xpZCB2YXIoLS1saW5lKTtib3JkZXItcmFkaXVzOjdweDtiYWNrZ3JvdW5kOm5vbmU7Y29sb3I6dmFyKC0tbXV0ZWQpOwogIHRyYW5zaXRpb246Y29sb3IgLjEycyxib3JkZXItY29sb3IgLjEyczsKfQojZ2Fzc2ltIC5ncy1naG9zdDpob3Zlcntjb2xvcjp2YXIoLS1pbmspO2JvcmRlci1jb2xvcjp2YXIoLS1tdXRlZCk7fQojZ2Fzc2ltIC5ncy1wcmltYXJ5ewogIGZvbnQ6aW5oZXJpdDtmb250LXNpemU6MTNweDtwYWRkaW5nOjZweCAxNnB4O2N1cnNvcjpwb2ludGVyOwogIGJvcmRlcjoxcHggc29saWQgdmFyKC0tYWNjKTtib3JkZXItcmFkaXVzOjdweDtiYWNrZ3JvdW5kOnZhcigtLWFjYyk7Y29sb3I6I2ZmZjsKICB0cmFuc2l0aW9uOmJhY2tncm91bmQgLjEycyxib3JkZXItY29sb3IgLjEycyxjb2xvciAuMTJzOwp9CiNnYXNzaW0gLmdzLXByaW1hcnk6aG92ZXJ7YmFja2dyb3VuZDojMjU1YzgyO2JvcmRlci1jb2xvcjojMjU1YzgyO30KI2dhc3NpbSBidXR0b246Zm9jdXMtdmlzaWJsZXtvdXRsaW5lOjJweCBzb2xpZCB2YXIoLS1hY2MyKTtvdXRsaW5lLW9mZnNldDoycHg7fQoKI2dhc3NpbSAuZ3MtZGF0YXsKICBkaXNwbGF5OmZsZXg7Z2FwOjIycHg7ZmxleC13cmFwOndyYXA7bWFyZ2luOjdweCAycHggMTJweDsKICBmb250LXNpemU6MTIuNXB4O2NvbG9yOnZhcigtLW11dGVkKTtmb250LXZhcmlhbnQtbnVtZXJpYzp0YWJ1bGFyLW51bXM7Cn0KI2dhc3NpbSAuZ3MtZGF0YSBie2ZvbnQtd2VpZ2h0OjYwMDtjb2xvcjp2YXIoLS1pbmspO30KCiNnYXNzaW0gLmdzLWZvb3R7CiAgZGlzcGxheTpncmlkO2dyaWQtdGVtcGxhdGUtY29sdW1uczoxZnIgYXV0byAxZnI7YWxpZ24taXRlbXM6Y2VudGVyOwogIG1hcmdpbi10b3A6MXB4O2ZvbnQtc2l6ZToxMS41cHg7Y29sb3I6dmFyKC0tbXV0ZWQpOwp9CiNnYXNzaW0gLmdzLWtleXtkaXNwbGF5OmZsZXg7YWxpZ24taXRlbXM6Y2VudGVyO2dhcDo2cHg7fQojZ2Fzc2ltIC5ncy1rZXkgaXtkaXNwbGF5OmlubGluZS1ibG9jazt2ZXJ0aWNhbC1hbGlnbjptaWRkbGU7fQojZ2Fzc2ltIC5zdy1iYXJ7d2lkdGg6MTFweDtoZWlnaHQ6OXB4O2JvcmRlci1yYWRpdXM6MXB4O2JhY2tncm91bmQ6dmFyKC0tYWNjKTtvcGFjaXR5Oi41O30KI2dhc3NpbSAuc3ctbGluZXt3aWR0aDoxNXB4O2JvcmRlci10b3A6MnB4IHNvbGlkIHZhcigtLWFjYzIpO21hcmdpbi1sZWZ0OjhweDt9CiNnYXNzaW0gLmdzLXh7Zm9udC1zdHlsZTppdGFsaWM7fQoKQG1lZGlhIChwcmVmZXJzLWNvbG9yLXNjaGVtZTogZGFyayl7CiAgI2dhc3NpbXsKICAgIC0taW5rOiNlNGU3ZWI7IC0tbXV0ZWQ6I2E5YjNiZDsgLS1saW5lOnJnYmEoMjU1LDI1NSwyNTUsMC4yKTsKICAgIC0tYWNjOiM3ZWM0ZTY7IC0tYWNjMjojZTJhNDRmOwogICAgLS10aW50QTpyZ2JhKDEyNiwxOTYsMjMwLDAuMDcpOyAtLXRpbnRCOnJnYmEoMTI2LDE5NiwyMzAsMC4wMjUpOwogICAgLS1jaGlwOnJnYmEoMTI2LDE5NiwyMzAsMC4xMik7CiAgfQogICNnYXNzaW0gLmdzLXNlZyBidXR0b24ub24sI2dhc3NpbSAuZ3MtcHJpbWFyeXtjb2xvcjojMTIxODFkO30KICAjZ2Fzc2ltIC5ncy1wcmltYXJ5OmhvdmVye2JhY2tncm91bmQ6IzlhZDNlZjtib3JkZXItY29sb3I6IzlhZDNlZjt9Cn0KQG1lZGlhIChtYXgtd2lkdGg6NDIwcHgpewogICNnYXNzaW0gLmdzLWdob3N0e21hcmdpbi1sZWZ0OjA7fQp9Cjwvc3R5bGU+Cgo8c2NyaXB0PgooZnVuY3Rpb24oKXsKInVzZSBzdHJpY3QiOwpjb25zdCByb290ID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoJ2dhc3NpbScpOwpjb25zdCBiYyA9IHJvb3QucXVlcnlTZWxlY3RvcignI2dzLWJveCcpLCBieCA9IGJjLmdldENvbnRleHQoJzJkJyk7CmNvbnN0IGhjID0gcm9vdC5xdWVyeVNlbGVjdG9yKCcjZ3MtaGlzdCcpLCBoeCA9IGhjLmdldENvbnRleHQoJzJkJyk7CmNvbnN0IGJ0biA9IHJvb3QucXVlcnlTZWxlY3RvcignI2dzLW1haW4nKTsKY29uc3QgYnRuUmVzZXQgPSByb290LnF1ZXJ5U2VsZWN0b3IoJyNncy1yZXNldCcpOwoKLy8g4pSA4pSAIHBhcmFtZXRyZSDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKY29uc3QgTFcgPSA0ODAsIExIID0gMTkyOyAgIC8vIGxvZ2lzayBrb29yZGluYXRzeXN0ZW0gZm9yIGthbW1lcmJva3Nlbgpjb25zdCBISCA9IDE0ODsgICAgICAgICAgICAgLy8gaGlzdG9ncmFtaMO4eWRlIGkgY3NzLXBpa3NsZXIKY29uc3QgU1BFRUQgPSAzMDA7ICAgICAgICAgIC8vIGZ5c2lra3N0ZWcgcGVyIHNla3VuZApjb25zdCBFUVVJTCA9IDEzMDsgICAgICAgICAgLy8gc3RlZyBldHRlciB2ZW50aWzDpXBuaW5nIGbDuHIgdmkgdGVsbGVyIHN0YXRpc3Rpa2sKY29uc3QgV0FMTCA9IExXLzIsIEdBUCA9IExIKjAuNjYsIEVER0UgPSA1OwoKbGV0IE4gPSAyMCwgbW9sID0gW10sIG9wZW4gPSBmYWxzZSwgcnVubmluZyA9IGZhbHNlLCBzdGVwcyA9IDAsIHN0YXJ0QiA9IGZhbHNlOwpsZXQgYmlucyA9IFtdLCBzYW1wbGVzID0gMCwgc2NhbGUgPSAxLCB2aXNpYmxlID0gdHJ1ZSwgQyA9IHt9OwpsZXQgcHJldiA9IDAsIGFjYyA9IDA7CgovLyDilIDilIAgZmFyZ2VyIGxlc2VzIGZyYSBDU1MsIHPDpSBtw7hyayBtb2R1cyBmw7hsZ2VyIG1lZCDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKZnVuY3Rpb24gcmVhZENvbG9ycygpewogIGNvbnN0IHMgPSBnZXRDb21wdXRlZFN0eWxlKHJvb3QpOwogIGNvbnN0IGcgPSBrID0+IHMuZ2V0UHJvcGVydHlWYWx1ZShrKS50cmltKCk7CiAgQyA9IHtpbms6ZygnLS1pbmsnKSwgbXV0ZWQ6ZygnLS1tdXRlZCcpLCBsaW5lOmcoJy0tbGluZScpLAogICAgICAgYWNjOmcoJy0tYWNjJyksIGFjYzI6ZygnLS1hY2MyJyksIHRpbnRBOmcoJy0tdGludEEnKSwgdGludEI6ZygnLS10aW50QicpfTsKfQoKLy8g4pSA4pSAIGtvbWJpbmF0b3Jpa2sg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmZ1bmN0aW9uIGxnYW1tYSh4KXsKICBjb25zdCBjPVswLjk5OTk5OTk5OTk5OTgwOTkzLDY3Ni41MjAzNjgxMjE4ODUxLC0xMjU5LjEzOTIxNjcyMjQwMjgsCiAgICAgICAgICAgNzcxLjMyMzQyODc3NzY1MzEzLC0xNzYuNjE1MDI5MTYyMTQwNTksMTIuNTA3MzQzMjc4Njg2OTA1LAogICAgICAgICAgIC0wLjEzODU3MTA5NTI2NTcyMDEyLDkuOTg0MzY5NTc4MDE5NTcxNmUtNiwxLjUwNTYzMjczNTE0OTMxMTZlLTddOwogIGlmKHg8MC41KSByZXR1cm4gTWF0aC5sb2coTWF0aC5QSS9NYXRoLnNpbihNYXRoLlBJKngpKS1sZ2FtbWEoMS14KTsKICB4LT0xOyBsZXQgYT1jWzBdOyBjb25zdCB0PXgrNy41OwogIGZvcihsZXQgaT0xO2k8OTtpKyspIGErPWNbaV0vKHgraSk7CiAgcmV0dXJuIDAuNSpNYXRoLmxvZygyKk1hdGguUEkpKyh4KzAuNSkqTWF0aC5sb2codCktdCtNYXRoLmxvZyhhKTsKfQpmdW5jdGlvbiBsbkJpbm9tKG4sayl7CiAgaWYoazwwfHxrPm4pIHJldHVybiAtSW5maW5pdHk7CiAgcmV0dXJuIGxnYW1tYShuKzEpLWxnYW1tYShrKzEpLWxnYW1tYShuLWsrMSk7Cn0KZnVuY3Rpb24gZm10KGxuKXsKICBpZighaXNGaW5pdGUobG4pKSByZXR1cm4gJzAnOwogIGNvbnN0IGwxMCA9IGxuL01hdGguTE4xMDsKICBpZihsMTAgPCA3KSByZXR1cm4gTWF0aC5yb3VuZChNYXRoLmV4cChsbikpLnRvTG9jYWxlU3RyaW5nKCduYi1OTycpOwogIGNvbnN0IGUgPSBNYXRoLmZsb29yKGwxMCk7CiAgcmV0dXJuIChNYXRoLnBvdygxMCxsMTAtZSkpLnRvRml4ZWQoMSkucmVwbGFjZSgnLicsJywnKSsnICZtaWRkb3Q7IDEwPHN1cD4nK2UrJzwvc3VwPic7Cn0KCi8vIOKUgOKUgCBvcHBzZXR0IOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApmdW5jdGlvbiByYWRpdXMoKXsgcmV0dXJuIE48PTQgPyA3IDogTjw9MjAgPyA1LjIgOiBOPD0xMDAgPyAzLjQgOiAyLjY7IH0KZnVuY3Rpb24gcmVzZXQoKXsKICBjb25zdCByID0gcmFkaXVzKCksIHgwID0gc3RhcnRCID8gV0FMTCtFREdFK3IgOiBFREdFK3I7CiAgbW9sID0gW107CiAgZm9yKGxldCBpPTA7aTxOO2krKyl7CiAgICBjb25zdCBhID0gTWF0aC5yYW5kb20oKSpNYXRoLlBJKjIsIHYgPSAxLjU7CiAgICBtb2wucHVzaCh7eDogeDArTWF0aC5yYW5kb20oKSooV0FMTC0yKkVER0UtMipyKSwKICAgICAgICAgICAgICB5OiBFREdFK3IrTWF0aC5yYW5kb20oKSooTEgtMipFREdFLTIqciksCiAgICAgICAgICAgICAgdng6IE1hdGguY29zKGEpKnYsIHZ5OiBNYXRoLnNpbihhKSp2LCByfSk7CiAgfQogIG9wZW4gPSBmYWxzZTsgcnVubmluZyA9IGZhbHNlOyBzdGVwcyA9IDA7IGFjYyA9IDA7CiAgYmlucyA9IG5ldyBBcnJheShOKzEpLmZpbGwoMCk7IHNhbXBsZXMgPSAwOwogIHVwZGF0ZUJ0bigpOwogIGRyYXcodHJ1ZSk7Cn0KZnVuY3Rpb24gdXBkYXRlQnRuKCl7CiAgYnRuLnRleHRDb250ZW50ID0gIW9wZW4gPyAnw4VwbmUgdmVudGlsZW4nIDogKHJ1bm5pbmcgPyAnUGF1c2UnIDogJ0ZvcnRzZXR0Jyk7Cn0KZnVuY3Rpb24gbkEoKXsgbGV0IHM9MDsgZm9yKGNvbnN0IG0gb2YgbW9sKSBpZihtLng8V0FMTCkgcysrOyByZXR1cm4gczsgfQoKLy8g4pSA4pSAIGZ5c2lrayDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIDilIAKZnVuY3Rpb24gc3RlcChzdWIpewogIGZvcihsZXQgcz0wO3M8c3ViO3MrKyl7CiAgICBmb3IoY29uc3QgbSBvZiBtb2wpewogICAgICBsZXQgeCA9IG0ueCttLnZ4LCB5ID0gbS55K20udnksIGhpdCA9IGZhbHNlOwogICAgICBpZih4IDwgRURHRSttLnIpeyB4ID0gRURHRSttLnI7IG0udnggPSBNYXRoLmFicyhtLnZ4KTsgaGl0ID0gdHJ1ZTsgfQogICAgICBpZih4ID4gTFctRURHRS1tLnIpeyB4ID0gTFctRURHRS1tLnI7IG0udnggPSAtTWF0aC5hYnMobS52eCk7IGhpdCA9IHRydWU7IH0KICAgICAgaWYoeSA8IEVER0UrbS5yKXsgeSA9IEVER0UrbS5yOyBtLnZ5ID0gTWF0aC5hYnMobS52eSk7IGhpdCA9IHRydWU7IH0KICAgICAgaWYoeSA+IExILUVER0UtbS5yKXsgeSA9IExILUVER0UtbS5yOyBtLnZ5ID0gLU1hdGguYWJzKG0udnkpOyBoaXQgPSB0cnVlOyB9CiAgICAgIC8vIHZlZ2dlbiBoYXIgZW4gdGVtcGVyYXR1cjogcmV0bmluZ2VuIGZvcnN0eXJyZXMgbGl0dCB2ZWQgaHZlcnQgc3TDuHQuCiAgICAgIC8vIFV0ZW4gZGV0dGUgYmxpciBiYW5lbmUgcGVyaW9kaXNrZSwgb2cgbl9BIHRyZWZmZXIgaWtrZSBiaW5vbWlhbGZvcmRlbGluZ2VuLgogICAgICBpZihoaXQpewogICAgICAgIGNvbnN0IGEgPSAoTWF0aC5yYW5kb20oKS0wLjUpKjAuNywgYyA9IE1hdGguY29zKGEpLCBrID0gTWF0aC5zaW4oYSk7CiAgICAgICAgY29uc3QgdnggPSBtLnZ4KmMgLSBtLnZ5Kms7CiAgICAgICAgbS52eSA9IG0udngqayArIG0udnkqYzsgbS52eCA9IHZ4OwogICAgICB9CiAgICAgIGlmKCFvcGVuIHx8IE1hdGguYWJzKHktTEgvMikgPiBHQVAvMil7CiAgICAgICAgaWYobS54IDw9IFdBTEwgJiYgeCA+IFdBTEwtbS5yKXsgeCA9IFdBTEwtbS5yOyBtLnZ4ID0gLU1hdGguYWJzKG0udngpOyB9CiAgICAgICAgZWxzZSBpZihtLnggPj0gV0FMTCAmJiB4IDwgV0FMTCttLnIpeyB4ID0gV0FMTCttLnI7IG0udnggPSBNYXRoLmFicyhtLnZ4KTsgfQogICAgICB9CiAgICAgIG0ueCA9IHg7IG0ueSA9IHk7CiAgICB9CiAgICBpZihvcGVuKXsKICAgICAgc3RlcHMrKzsKICAgICAgaWYoc3RlcHMgPiBFUVVJTCAmJiBzdGVwcyAlIDIgPT09IDApeyBiaW5zW25BKCldKys7IHNhbXBsZXMrKzsgfQogICAgfQogIH0KfQoKLy8g4pSA4pSAIHRlZ25pbmcg4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSA4pSACmZ1bmN0aW9uIGZpdCgpewogIGNvbnN0IGRwciA9IHdpbmRvdy5kZXZpY2VQaXhlbFJhdGlvIHx8IDE7CiAgY29uc3QgdyA9IGJjLmNsaWVudFdpZHRoIHx8IHJvb3QuY2xpZW50V2lkdGggfHwgNjQwOwogIHNjYWxlID0gdy9MVzsKICBiYy53aWR0aCA9IE1hdGgucm91bmQodypkcHIpOwogIGJjLmhlaWdodCA9IE1hdGgucm91bmQoTEgqc2NhbGUqZHByKTsKICBiYy5zdHlsZS5oZWlnaHQgPSAoTEgqc2NhbGUpKydweCc7CiAgYnguc2V0VHJhbnNmb3JtKGRwcipzY2FsZSwwLDAsZHByKnNjYWxlLDAsMCk7CiAgaGMud2lkdGggPSBNYXRoLnJvdW5kKChoYy5jbGllbnRXaWR0aHx8dykqZHByKTsKICBoYy5oZWlnaHQgPSBNYXRoLnJvdW5kKEhIKmRwcik7CiAgaGMuc3R5bGUuaGVpZ2h0ID0gSEgrJ3B4JzsKICBoeC5zZXRUcmFuc2Zvcm0oZHByLDAsMCxkcHIsMCwwKTsKfQoKZnVuY3Rpb24gZHJhd0JveCgpewogIGNvbnN0IG4gPSBuQSgpOwogIGJ4LmNsZWFyUmVjdCgwLDAsTFcsTEgpOwogIGJ4LmZpbGxTdHlsZSA9IEMudGludEE7IGJ4LmZpbGxSZWN0KDAsMCxXQUxMLExIKTsKICBieC5maWxsU3R5bGUgPSBDLnRpbnRCOyBieC5maWxsUmVjdChXQUxMLDAsTFctV0FMTCxMSCk7CiAgYnguc3Ryb2tlU3R5bGUgPSBDLmxpbmU7IGJ4LmxpbmVXaWR0aCA9IDE7CiAgYnguc3Ryb2tlUmVjdCgwLjUsMC41LExXLTEsTEgtMSk7CgogIC8vIHNraWxsZXZlZ2cKICBieC5zdHJva2VTdHlsZSA9IG9wZW4gPyBDLmxpbmUgOiBDLm11dGVkOwogIGJ4LmxpbmVXaWR0aCA9IDI7CiAgYnguYmVnaW5QYXRoKCk7CiAgaWYob3Blbil7CiAgICBieC5tb3ZlVG8oV0FMTCwwKTsgYngubGluZVRvKFdBTEwsTEgvMi1HQVAvMik7CiAgICBieC5tb3ZlVG8oV0FMTCxMSC8yK0dBUC8yKTsgYngubGluZVRvKFdBTEwsTEgpOwogIH1lbHNlewogICAgYngubW92ZVRvKFdBTEwsMCk7IGJ4LmxpbmVUbyhXQUxMLExIKTsKICB9CiAgYnguc3Ryb2tlKCk7CgogIC8vIG1vbGVreWxlcgogIGJ4LmZpbGxTdHlsZSA9IEMuYWNjOwogIGZvcihjb25zdCBtIG9mIG1vbCl7CiAgICBieC5iZWdpblBhdGgoKTsgYnguYXJjKG0ueCxtLnksbS5yLDAsNi4yODMyKTsgYnguZmlsbCgpOwogIH0KCiAgLy8gdGVsbGVyZQogIGJ4LmZvbnQgPSAnNjAwIDIxcHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsIlNlZ29lIFVJIixIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZic7CiAgYnguZmlsbFN0eWxlID0gQy5pbms7IGJ4LnRleHRCYXNlbGluZSA9ICd0b3AnOwogIGJ4LnRleHRBbGlnbiA9ICdsZWZ0JzsgIGJ4LmZpbGxUZXh0KG4sIDE0LCAxMik7CiAgYngudGV4dEFsaWduID0gJ3JpZ2h0JzsgYnguZmlsbFRleHQoTi1uLCBMVy0xNCwgMTIpOwogIGJ4LmZvbnQgPSAnMTJweCAtYXBwbGUtc3lzdGVtLEJsaW5rTWFjU3lzdGVtRm9udCwiU2Vnb2UgVUkiLEhlbHZldGljYSxBcmlhbCxzYW5zLXNlcmlmJzsKICBieC5maWxsU3R5bGUgPSBDLm11dGVkOwogIGJ4LnRleHRBbGlnbiA9ICdsZWZ0JzsgIGJ4LmZpbGxUZXh0KCdBJywgMTQsIDM2KTsKICBieC50ZXh0QWxpZ24gPSAncmlnaHQnOyBieC5maWxsVGV4dCgnQicsIExXLTE0LCAzNik7Cn0KCmZ1bmN0aW9uIGRyYXdIaXN0KCl7CiAgY29uc3QgVyA9IGhjLmNsaWVudFdpZHRoIHx8IDY0MDsKICBoeC5jbGVhclJlY3QoMCwwLFcsSEgpOwogIGNvbnN0IHBhZEw9MTAsIHBhZFI9MTAsIHBhZFQ9OCwgcGFkQj0xOTsKICBjb25zdCBwVyA9IFctcGFkTC1wYWRSLCBwSCA9IEhILXBhZFQtcGFkQjsKICBjb25zdCBidyA9IHBXLyhOKzEpOwoKICBsZXQgbWF4UCA9IDA7CiAgZm9yKGxldCBrPTA7azw9TjtrKyspIG1heFAgPSBNYXRoLm1heChtYXhQLCBNYXRoLmV4cChsbkJpbm9tKE4sayktTipNYXRoLkxOMikpOwogIGlmKHNhbXBsZXMpIGZvcihsZXQgaz0wO2s8PU47aysrKSBtYXhQID0gTWF0aC5tYXgobWF4UCwgYmluc1trXS9zYW1wbGVzKTsKICBtYXhQICo9IDEuMTI7CgogIC8vIHNpbXVsZXJ0ZSBzw7h5bGVyCiAgY29uc3QgYmFyVyA9IE1hdGgubWluKE1hdGgubWF4KGJ3KjAuNzYsIDEuMiksIDQ0KTsKICBoeC5maWxsU3R5bGUgPSBDLmFjYzsgaHguZ2xvYmFsQWxwaGEgPSAwLjU7CiAgaWYoc2FtcGxlcykgZm9yKGxldCBrPTA7azw9TjtrKyspewogICAgY29uc3QgaCA9IChiaW5zW2tdL3NhbXBsZXMvbWF4UCkqcEg7CiAgICBpZihoID4gMC40KSBoeC5maWxsUmVjdChwYWRMK2sqYncrKGJ3LWJhclcpLzIsIHBhZFQrcEgtaCwgYmFyVywgaCk7CiAgfQogIGh4Lmdsb2JhbEFscGhhID0gMTsKCiAgLy8gdGVvcmV0aXNrIGJpbm9taWFsZm9yZGVsaW5nCiAgaHguc3Ryb2tlU3R5bGUgPSBDLmFjYzI7IGh4LmxpbmVXaWR0aCA9IDEuODsKICBoeC5iZWdpblBhdGgoKTsKICBmb3IobGV0IGs9MDtrPD1OO2srKyl7CiAgICBjb25zdCB4ID0gcGFkTCtrKmJ3K2J3LzI7CiAgICBjb25zdCB5ID0gcGFkVCtwSC0oTWF0aC5leHAobG5CaW5vbShOLGspLU4qTWF0aC5MTjIpL21heFApKnBIOwogICAgayA/IGh4LmxpbmVUbyh4LHkpIDogaHgubW92ZVRvKHgseSk7CiAgfQogIGh4LnN0cm9rZSgpOwogIGlmKE4gPD0gMjApewogICAgaHguZmlsbFN0eWxlID0gQy5hY2MyOwogICAgZm9yKGxldCBrPTA7azw9TjtrKyspewogICAgICBjb25zdCB4ID0gcGFkTCtrKmJ3K2J3LzI7CiAgICAgIGNvbnN0IHkgPSBwYWRUK3BILShNYXRoLmV4cChsbkJpbm9tKE4sayktTipNYXRoLkxOMikvbWF4UCkqcEg7CiAgICAgIGh4LmJlZ2luUGF0aCgpOyBoeC5hcmMoeCx5LDIuMiwwLDYuMjgzMik7IGh4LmZpbGwoKTsKICAgIH0KICB9CgogIC8vIGFrc2Ugb2cgbWVya2VyCiAgaHguc3Ryb2tlU3R5bGUgPSBDLmxpbmU7IGh4LmxpbmVXaWR0aCA9IDE7CiAgaHguYmVnaW5QYXRoKCk7IGh4Lm1vdmVUbyhwYWRMLHBhZFQrcEgrMC41KTsgaHgubGluZVRvKHBhZEwrcFcscGFkVCtwSCswLjUpOyBoeC5zdHJva2UoKTsKICBoeC5maWxsU3R5bGUgPSBDLm11dGVkOyBoeC50ZXh0QWxpZ24gPSAnY2VudGVyJzsgaHgudGV4dEJhc2VsaW5lID0gJ3RvcCc7CiAgaHguZm9udCA9ICcxMC41cHggLWFwcGxlLXN5c3RlbSxCbGlua01hY1N5c3RlbUZvbnQsIlNlZ29lIFVJIixIZWx2ZXRpY2EsQXJpYWwsc2Fucy1zZXJpZic7CiAgWzAsIE4vMiwgTl0uZm9yRWFjaChrPT57CiAgICBoeC5maWxsVGV4dChNYXRoLnJvdW5kKGspLCBwYWRMK2sqYncrYncvMiwgcGFkVCtwSCs1KTsKICB9KTsKfQoKbGV0IGxhc3RSZWFkID0gLTE7CmZ1bmN0aW9uIHJlYWRvdXQoZm9yY2UpewogIGNvbnN0IG4gPSBuQSgpOwogIGlmKG4gPT09IGxhc3RSZWFkICYmICFmb3JjZSkgcmV0dXJuOwogIGxhc3RSZWFkID0gbjsKICByb290LnF1ZXJ5U2VsZWN0b3IoJyNncy1uYScpLnRleHRDb250ZW50ID0gbjsKICByb290LnF1ZXJ5U2VsZWN0b3IoJyNncy1vbScpLmlubmVySFRNTCA9IGZtdChsbkJpbm9tKE4sbikpOwogIHJvb3QucXVlcnlTZWxlY3RvcignI2dzLW9tYXgnKS5pbm5lckhUTUwgPSBmbXQobG5CaW5vbShOLE1hdGgucm91bmQoTi8yKSkpOwp9CmZ1bmN0aW9uIGRyYXcoZm9yY2UpeyBkcmF3Qm94KCk7IGRyYXdIaXN0KCk7IHJlYWRvdXQoZm9yY2UpOyB9CgovLyDilIDilIAgaGVuZGVsc2VyIOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApidG4uYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoKT0+ewogIGlmKCFvcGVuKXsgb3BlbiA9IHRydWU7IHN0ZXBzID0gMDsgfQogIHJ1bm5pbmcgPSAhcnVubmluZzsKICBwcmV2ID0gcGVyZm9ybWFuY2Uubm93KCk7IGFjYyA9IDA7CiAgdXBkYXRlQnRuKCk7CiAgZHJhdyh0cnVlKTsKfSk7CmJ0blJlc2V0LmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgcmVzZXQpOwpyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJy5ncy1zaWRlIGJ1dHRvbicpLmZvckVhY2goYj0+ewogIGIuYWRkRXZlbnRMaXN0ZW5lcignY2xpY2snLCAoKT0+ewogICAgcm9vdC5xdWVyeVNlbGVjdG9yQWxsKCcuZ3Mtc2lkZSBidXR0b24nKS5mb3JFYWNoKG89PnsKICAgICAgby5jbGFzc0xpc3QucmVtb3ZlKCdvbicpOyBvLnNldEF0dHJpYnV0ZSgnYXJpYS1wcmVzc2VkJywnZmFsc2UnKTsKICAgIH0pOwogICAgYi5jbGFzc0xpc3QuYWRkKCdvbicpOyBiLnNldEF0dHJpYnV0ZSgnYXJpYS1wcmVzc2VkJywndHJ1ZScpOwogICAgc3RhcnRCID0gYi5kYXRhc2V0LnMgPT09ICdCJzsKICAgIHJlc2V0KCk7CiAgfSk7Cn0pOwpyb290LnF1ZXJ5U2VsZWN0b3JBbGwoJy5ncy1zZWc6bm90KC5ncy1zaWRlKSBidXR0b24nKS5mb3JFYWNoKGI9PnsKICBiLmFkZEV2ZW50TGlzdGVuZXIoJ2NsaWNrJywgKCk9PnsKICAgIHJvb3QucXVlcnlTZWxlY3RvckFsbCgnLmdzLXNlZzpub3QoLmdzLXNpZGUpIGJ1dHRvbicpLmZvckVhY2gobz0+ewogICAgICBvLmNsYXNzTGlzdC5yZW1vdmUoJ29uJyk7IG8uc2V0QXR0cmlidXRlKCdhcmlhLXByZXNzZWQnLCdmYWxzZScpOwogICAgfSk7CiAgICBiLmNsYXNzTGlzdC5hZGQoJ29uJyk7IGIuc2V0QXR0cmlidXRlKCdhcmlhLXByZXNzZWQnLCd0cnVlJyk7CiAgICBOID0gK2IuZGF0YXNldC5uOwogICAgcmVzZXQoKTsKICB9KTsKfSk7Cm5ldyBSZXNpemVPYnNlcnZlcigoKT0+eyBmaXQoKTsgZHJhdyh0cnVlKTsgfSkub2JzZXJ2ZShyb290KTsKbWF0Y2hNZWRpYSgnKHByZWZlcnMtY29sb3Itc2NoZW1lOiBkYXJrKScpLmFkZEV2ZW50TGlzdGVuZXIoJ2NoYW5nZScsICgpPT57IHJlYWRDb2xvcnMoKTsgZHJhdyh0cnVlKTsgfSk7Cm5ldyBJbnRlcnNlY3Rpb25PYnNlcnZlcihlPT57IHZpc2libGUgPSBlWzBdLmlzSW50ZXJzZWN0aW5nOyB9LCB7dGhyZXNob2xkOjB9KS5vYnNlcnZlKHJvb3QpOwoKLy8g4pSA4pSAIHN0YXJ0IOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgOKUgApyZWFkQ29sb3JzKCk7IGZpdCgpOyByZXNldCgpOwooZnVuY3Rpb24gbG9vcChub3cpewogIGNvbnN0IGR0ID0gTWF0aC5taW4oKG5vdyAtIHByZXYpLzEwMDAsIDAuMSk7CiAgcHJldiA9IG5vdzsKICBpZihydW5uaW5nICYmIHZpc2libGUpewogICAgYWNjICs9IFNQRUVEKmR0OwogICAgY29uc3QgayA9IE1hdGguZmxvb3IoYWNjKTsgYWNjIC09IGs7CiAgICBpZihrKXsgc3RlcChrKTsgZHJhdygpOyB9CiAgfQogIHJlcXVlc3RBbmltYXRpb25GcmFtZShsb29wKTsKfSkocGVyZm9ybWFuY2Uubm93KCkpOwp9KSgpOwo8L3NjcmlwdD4KPCEtLSDilZDilZAgd2lkZ2V0IGVuZCDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZDilZAgLS0+Cgo8L2JvZHk+CjwvaHRtbD4K"
+            frameborder="0"
+            allowfullscreen
+            
+        ></iframe>
+        </div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Bruk simuleringen til å svare. Skriv gjerne ned observasjonene underveis. «Start på nytt»
+nullstiller alt, og histogrammet tømmes også når du bytter <span class="math notranslate nohighlight">\(N\)</span>.</p>
+<p><strong>A. Fri ekspansjon.</strong> Velg <span class="math notranslate nohighlight">\(N = 20\)</span>. Før du åpner ventilen: hva er <span class="math notranslate nohighlight">\(n_A\)</span>, og hva er <span class="math notranslate nohighlight">\(\Omega\)</span>?
+Åpne ventilen. Hvilken vei går molekylene først, og hva skjer med <span class="math notranslate nohighlight">\(n_A\)</span> og <span class="math notranslate nohighlight">\(\Omega\)</span> etter hvert?
+Legger <span class="math notranslate nohighlight">\(n_A\)</span> seg helt i ro på <span class="math notranslate nohighlight">\(N/2\)</span>?</p>
+<p><strong>B. Sammenlign med teorien.</strong> La simuleringen kjøre en stund. Hvor godt følger de blå søylene den oransje kurven, og hvor ligger toppen? Den oransje kurven viser den teoretiske sannsynlighetsfordelingen</p>
+<div class="math notranslate nohighlight">
+\[
+P(n_A)=\frac{\Omega(n_A)}{2^N}
+=\frac{1}{2^N}\binom{N}{n_A}.
+\]</div>
+<p>Forklar hvorfor det finnes <span class="math notranslate nohighlight">\(2^N\)</span> mikrotilstander til sammen, og hvorfor <span class="math notranslate nohighlight">\(\binom{N}{n_A}\)</span> av dem tilhører makrotilstanden <span class="math notranslate nohighlight">\(n_A\)</span>. Hvorfor skal de blå søylene nærme seg denne fordelingen?</p>
+<p><strong>C. Sjeldne hendelser.</strong> Velg <span class="math notranslate nohighlight">\(N = 4\)</span>. Hvor ofte havner alle fire molekylene i <span class="math notranslate nohighlight">\(A\)</span> samtidig?
+Sammenlign med <span class="math notranslate nohighlight">\(1/2^4\)</span>. Regn så ut det samme for <span class="math notranslate nohighlight">\(N = 100\)</span>: hvor mange observasjoner måtte du
+i snitt gjøre, og hvor lenge ville du holdt på med hundre observasjoner i sekundet?</p>
+<p><strong>D. Oppskalering.</strong> Gå fra <span class="math notranslate nohighlight">\(N = 4\)</span> til <span class="math notranslate nohighlight">\(20\)</span> til <span class="math notranslate nohighlight">\(100\)</span>. Blir fordelingen bredere eller smalere
+målt i antall molekyler? Og målt mot hele aksen fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(N\)</span>? Hva skjer med <span class="math notranslate nohighlight">\(\Omega_{maks}\)</span>?</p>
+<p><strong>E. Andre lov.</strong> For hvilke <span class="math notranslate nohighlight">\(N\)</span> ser ekspansjonen ut som en lov, og for hvilke ser du tydelige
+tilbakeslag? Hva sier det om termodynamikkens andre lov?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>A.</strong> Med ventilen lukket er <span class="math notranslate nohighlight">\(n_A = 20\)</span> og <span class="math notranslate nohighlight">\(\Omega = 1\)</span>. Det finnes bare én måte å ha alle
+molekylene i <span class="math notranslate nohighlight">\(A\)</span> på. Når ventilen åpnes, går nettostrømmen mot <span class="math notranslate nohighlight">\(B\)</span>, rett og slett fordi det
+er tjue kandidater på venstre side og ingen på høyre. <span class="math notranslate nohighlight">\(n_A\)</span> synker mot 10, og <span class="math notranslate nohighlight">\(\Omega\)</span> vokser
+til <span class="math notranslate nohighlight">\(\Omega_{maks} = 184\,756\)</span>. Men <span class="math notranslate nohighlight">\(n_A\)</span> blir ikke liggende i ro. Den svinger et par molekyler opp og ned rundt 10, med typisk størrelse <span class="math notranslate nohighlight">\(\sigma = \sqrt{N}/2 \approx 2{,}2\)</span>.</p>
+<p class="sd-card-text"><strong>B.</strong> Søylene nærmer seg den oransje kurven, med en topp ved <span class="math notranslate nohighlight">\(n_A=N/2\)</span>. For <span class="math notranslate nohighlight">\(N=20\)</span> ligger toppen dermed ved <span class="math notranslate nohighlight">\(n_A=10\)</span>.</p>
+<p class="sd-card-text">Hvert av de <span class="math notranslate nohighlight">\(N\)</span> molekylene kan befinne seg i enten <span class="math notranslate nohighlight">\(A\)</span> eller <span class="math notranslate nohighlight">\(B\)</span>. Det finnes derfor <span class="math notranslate nohighlight">\(2^N\)</span> mulige mikrotilstander. Når kamrene er like store, er mikrotilstandene like sannsynlige, og hver av dem har sannsynligheten <span class="math notranslate nohighlight">\(2^{-N}\)</span>.</p>
+<p class="sd-card-text">Makrotilstanden <span class="math notranslate nohighlight">\(n_A\)</span> omfatter alle mikrotilstander der akkurat <span class="math notranslate nohighlight">\(n_A\)</span> molekyler befinner seg i <span class="math notranslate nohighlight">\(A\)</span>. Antallet slike mikrotilstander er</p>
+<div class="math notranslate nohighlight">
+\[
+\Omega(n_A)=\binom{N}{n_A}.
+\]</div>
+<p class="sd-card-text">Sannsynligheten for makrotilstanden blir derfor</p>
+<div class="math notranslate nohighlight">
+\[
+P(n_A)=\Omega(n_A)\cdot 2^{-N}
+=\frac{1}{2^N}\binom{N}{n_A}.
+\]</div>
+<p class="sd-card-text">Når simuleringen har kjørt lenge nok, skal den observerte fordelingen derfor nærme seg den teoretiske kurven. Søylene vil likevel fortsette å variere noe fordi simuleringen bygger på et endelig antall observasjoner.</p>
+<p class="sd-card-text"><strong>C.</strong> For <span class="math notranslate nohighlight">\(N = 4\)</span> er <span class="math notranslate nohighlight">\(\Omega_{tot} = 2^4 = 16\)</span>, og bare én mikrotilstand har alle i <span class="math notranslate nohighlight">\(A\)</span>. Altså <span class="math notranslate nohighlight">\(P = 1/16 = 6{,}25\ \%\)</span>, omtrent én av seksten observasjoner. Det er den lille søyla helt til høyre i histogrammet, og den er like høy som søyla helt til venstre, som er tilfellet der alle er i <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(N = 100\)</span> er <span class="math notranslate nohighlight">\(P = 1/2^{100} = 7{,}9 \cdot 10^{-31}\)</span>, altså i snitt <span class="math notranslate nohighlight">\(1{,}3 \cdot 10^{30}\)</span>
+observasjoner. Med hundre i sekundet tar det <span class="math notranslate nohighlight">\(4 \cdot 10^{20}\)</span> år, omtrent tretti milliarder ganger universets alder. Hendelsen er ikke forbudt, men observeres for alle praktiske formål aldri.</p>
+<p class="sd-card-text"><strong>D.</strong> Bredden i antall molekyler vokser: <span class="math notranslate nohighlight">\(\sigma = \sqrt{N}/2\)</span> gir 1, 2,2 og 5. Bredden målt mot aksen krymper: <span class="math notranslate nohighlight">\(\sigma/\langle n_A \rangle = 1/\sqrt{N}\)</span> gir 50 %, 22 % og 10 %. Det er derfor toppen ser skarpere og skarpere ut selv om den faktisk blir bredere. <span class="math notranslate nohighlight">\(\Omega_{maks}\)</span> vokser eksplosivt: 6, deretter <span class="math notranslate nohighlight">\(184\,756\)</span>, deretter omtrent <span class="math notranslate nohighlight">\(10^{29}\)</span>. For ett mol er <span class="math notranslate nohighlight">\(1/\sqrt{N}\approx10^{-12}\)</span>, så den relative svingningen er forsvinnende liten på makroskopisk nivå.</p>
+<p class="sd-card-text"><strong>E.</strong> Med <span class="math notranslate nohighlight">\(N = 4\)</span> ser du regelmessig at alt samler seg i det ene kammeret. Med <span class="math notranslate nohighlight">\(N = 20\)</span> er store avvik sjeldne, men <span class="math notranslate nohighlight">\(n_A = 15\)</span> dukker opp innimellom. Med <span class="math notranslate nohighlight">\(N = 100\)</span> ser du aldri noe langt fra 50.</p>
+<p class="sd-card-text">Dette viser det statistiske grunnlaget for termodynamikkens 2. lov. I et makroskopisk system framstår ekspansjonen som en lovmessighet fordi tilbakeslag er overveldende usannsynlige, selv om de mikroskopiske bevegelseslovene ikke foretrekker én tidsretning.</p>
+</div>
+</details></section>
+<section id="eksempel-energi-fordelt-pa-to-og-tre-nivaer">
+<h3>Eksempel: Energi fordelt på to og tre nivåer<a class="headerlink" href="#eksempel-energi-fordelt-pa-to-og-tre-nivaer" title="Link to this heading">#</a></h3>
+<p>I gasseksemplet beskrev mikrotilstanden hvilket kammer hvert molekyl befant seg i. Nå ser vi på en annen enkel modell: <span class="math notranslate nohighlight">\(N\)</span> partikler som kan befinne seg på noen få bestemte energinivåer. Vi begynner med et system med to nivåer. Det nederste nivået har energi <span class="math notranslate nohighlight">\(0\)</span>, mens det øverste har energi <span class="math notranslate nohighlight">\(\varepsilon\)</span>.</p>
+<p>I denne enkle tellingsmodellen behandler vi partiklene som <strong>skjelnbare</strong>: Dersom to bestemte partikler bytter energinivå, teller det som en ny mikrotilstand. Vi antar også at hvert energinivå svarer til én mulig tilstand. Dersom flere ulike tilstander hadde hatt samme energi, ville energinivået vært <a class="reference internal" href="1_introduksjon.html#degenerasjon"><span class="std std-ref">degenerert</span></a>.</p>
+<p>Tenk deg at vi har fire partikler. Dersom tre partikler er på det nederste nivået og én er på det øverste, kan vi beskrive fordelingen som</p>
+<div class="math notranslate nohighlight">
+\[(n_0,n_1)=(3,1)\]</div>
+<p>Her forteller <span class="math notranslate nohighlight">\(n_0\)</span> hvor mange partikler som har energi <span class="math notranslate nohighlight">\(0\)</span>, og <span class="math notranslate nohighlight">\(n_1\)</span> hvor mange som har energi <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Til sammen er det fire partikler.</p>
+<p>Totalenergien er i dette tilfellet</p>
+<div class="math notranslate nohighlight">
+\[E=3\cdot0+1\cdot\varepsilon=\varepsilon\]</div>
+<p>Fordelingen forteller bare hvor mange partikler som er på hvert nivå. Mikrotilstanden forteller i tillegg hvilken av de fire partiklene som er eksitert. Det finnes derfor fire forskjellige mikrotilstander som gir fordelingen <span class="math notranslate nohighlight">\((3,1)\)</span>.</p>
+<p>Antallet mikrotilstander som gir en bestemt fordeling, kalles multiplisiteten <span class="math notranslate nohighlight">\(\Omega\)</span>. For fordelingen <span class="math notranslate nohighlight">\((3,1)\)</span> er dermed <span class="math notranslate nohighlight">\(\Omega=4\)</span>.</p>
+<p>Med to nivåer bestemmer energien fordelingen fullstendig. Hvis <span class="math notranslate nohighlight">\(n\)</span> partikler er på det øverste nivået, er</p>
+<div class="math notranslate nohighlight">
+\[E=n\varepsilon\]</div>
+<p>Når vi legger til et tredje nivå med energi <span class="math notranslate nohighlight">\(2\varepsilon\)</span>, blir situasjonen litt mer interessant. Den samme totalenergien kan nå oppstå fra forskjellige fordelinger. Energien <span class="math notranslate nohighlight">\(E=2\varepsilon\)</span> kan for eksempel lages ved at</p>
+<ul class="simple">
+<li><p>to partikler har energi <span class="math notranslate nohighlight">\(\varepsilon\)</span></p></li>
+<li><p>én partikkel har energi <span class="math notranslate nohighlight">\(2\varepsilon\)</span></p></li>
+</ul>
+<p>Disse fordelingene har samme energi, men de kan ha ulik multiplisitet og dermed ulik entropi.</p>
+<p>Simuleringen nedenfor lar deg utforske forskjellen mellom mikrotilstand, fordeling, energi og multiplisitet.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div id="sim-2niva-multiplisitet-a1c9"></div>
+<style>
+  #sim-2niva-multiplisitet-a1c9 {
+    --s2lm-bg: #fbfaf7;
+    --s2lm-panel: #ffffff;
+    --s2lm-ink: #1f2937;
+    --s2lm-muted: #6b7280;
+    --s2lm-line: #e5e2da;
+    --s2lm-ground: #334155;
+    --s2lm-excited: #d97706;
+    --s2lm-top: #dc2626;
+    --s2lm-accent: #0ea5e9;
+    --s2lm-accent-soft: #bae6fd;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--s2lm-ink);
+    background: var(--s2lm-bg);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 10px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    max-width: 780px;
+    margin: 1.5rem auto;
+    box-sizing: border-box;
+  }
+  #sim-2niva-multiplisitet-a1c9 * { box-sizing: border-box; }
+  #sim-2niva-multiplisitet-a1c9 .tns-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom: .25rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-title { font-size: 1.05rem; font-weight: 600; margin:0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-sub { color: var(--s2lm-muted); font-size: .85rem; margin: 0 0 1.1rem; }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-controls { display:flex; flex-wrap:wrap; gap:1.25rem; align-items:center; margin-bottom: 1.1rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap { display:flex; align-items:center; gap:.6rem; font-size:.9rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap label { color: var(--s2lm-muted); white-space:nowrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap input[type=range] { accent-color: var(--s2lm-accent); width: 140px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-n-val { font-variant-numeric: tabular-nums; font-weight:600; min-width: 1.4em; display:inline-block; text-align:center;}
+
+  #sim-2niva-multiplisitet-a1c9 .tns-seg { display:inline-flex; border:1px solid var(--s2lm-line); border-radius:7px; overflow:hidden; background: var(--s2lm-panel); }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button {
+    border:0; background:transparent; color: var(--s2lm-ink); font: inherit; font-size:.85rem;
+    padding:.4rem .75rem; cursor:pointer; border-left:1px solid var(--s2lm-line);
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button:first-child { border-left:0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button:hover { background:#f1f5f9; }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button[aria-pressed="true"] { background: var(--s2lm-accent); color:#fff; }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-buttons { display:flex; gap:.5rem; flex-wrap:wrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn {
+    border: 1px solid var(--s2lm-line);
+    background: var(--s2lm-panel);
+    color: var(--s2lm-ink);
+    padding: .45rem .8rem;
+    border-radius: 7px;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:hover { border-color: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:active { transform: scale(0.97); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-particles {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    padding: 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+    margin-bottom: 1.1rem;
+    min-height: 92px;
+    align-content: flex-start;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle {
+    position: relative;
+    width: 30px;
+    height: 66px;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle:focus-visible { outline:2px solid var(--s2lm-accent); outline-offset:3px; border-radius:3px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-line { position:absolute; left:0; right:0; height:2px; background:#cbd5e1; }
+  #sim-2niva-multiplisitet-a1c9 .tns-lvl-label { position:absolute; right:100%; margin-right:4px; font-size:.6rem; color:var(--s2lm-muted); transform: translateY(-50%); white-space:nowrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-dot {
+    position:absolute;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: top .35s cubic-bezier(.4,0,.2,1), background .35s, box-shadow .35s;
+  }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-readout {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1.6rem;
+    font-size: .92rem;
+    margin-bottom: 1.3rem;
+    padding: .8rem 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-metric { display:flex; flex-direction:column; gap: .1rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-label { color: var(--s2lm-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-value { font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 600; }
+  #sim-2niva-multiplisitet-a1c9 .tns-value.tns-omega { color: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-value .tns-lvl { font-weight:700; }
+  #sim-2niva-multiplisitet-a1c9 .tns-frac { font-size:.85rem; font-weight:500; color: var(--s2lm-muted); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-title { font-size: .85rem; color: var(--s2lm-muted); margin: 0 0 .5rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom {
+    display:inline-flex;
+    align-items:center;
+    font-variant-numeric: tabular-nums;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-paren {
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: 1;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-col {
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    line-height: 1.15;
+    padding: 0 .2rem;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-wrap { display:flex; gap: .4rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-yaxis-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    align-self: stretch;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space: nowrap;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-col { flex: 1; min-width: 0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart {
+    display:flex;
+    align-items:flex-end;
+    gap: 4px;
+    height: 120px;
+    padding: .5rem .5rem 0;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px 8px 0 0;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-col { display:flex; flex-direction:column; align-items:center; flex:1; min-width:0; height:100%; justify-content:flex-end; gap:3px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar {
+    width: 100%; max-width: 26px; background: #cbd5e1; border-radius: 3px 3px 0 0;
+    transition: height .35s ease, background .25s;
+    display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar.tns-current { background: var(--s2lm-accent-soft); }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-part { width:100%; background: var(--s2lm-accent); transition: height .35s ease; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-n { font-size: .65rem; color: var(--s2lm-muted); }
+  #sim-2niva-multiplisitet-a1c9 .tns-xaxis-label {
+    text-align: center;
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    padding: .35rem .5rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-note { font-size: .8rem; line-height:1.5; color: var(--s2lm-muted); margin: .7rem 0 0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-note b { color: var(--s2lm-ink); font-weight:600; }
+
+  @media (max-width: 480px) {
+    #sim-2niva-multiplisitet-a1c9 .tns-particles { padding: .75rem; }
+    #sim-2niva-multiplisitet-a1c9 .tns-readout { gap: 1rem; }
+  }
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById('sim-2niva-multiplisitet-a1c9');
+  if (!root) return;
+
+  root.innerHTML = `
+    <div class="tns-head">
+      <p class="tns-title tns-title-txt">To-nivå-system: mikrotilstander og multiplisitet</p>
+    </div>
+    <p class="tns-sub"></p>
+
+    <div class="tns-controls">
+      <div class="tns-slider-wrap">
+        <label>Antall nivåer</label>
+        <div class="tns-seg">
+          <button type="button" data-m="2" aria-pressed="true">2</button>
+          <button type="button" data-m="3" aria-pressed="false">3</button>
+        </div>
+      </div>
+      <div class="tns-slider-wrap">
+        <label>Antall partikler N</label>
+        <input type="range" class="tns-N" min="2" max="16" value="8" step="1">
+        <span class="tns-n-val">8</span>
+      </div>
+      <div class="tns-buttons">
+        <button class="tns-btn" type="button" data-act="same-dist">Ny mikrotilstand (samme fordeling)</button>
+        <button class="tns-btn" type="button" data-act="same-energy">Ny mikrotilstand (samme energi)</button>
+        <button class="tns-btn" type="button" data-act="random">Helt tilfeldig</button>
+        <button class="tns-btn" type="button" data-act="reset">Nullstill</button>
+      </div>
+    </div>
+
+    <div class="tns-particles"></div>
+
+    <div class="tns-readout"></div>
+
+    <p class="tns-chart-title"></p>
+    <div class="tns-chart-wrap">
+      <span class="tns-yaxis-label">Multiplisitet</span>
+      <div class="tns-chart-col">
+        <div class="tns-chart"></div>
+        <div class="tns-xaxis-label"></div>
+      </div>
+    </div>
+    <p class="tns-note"></p>
+  `;
+
+  /* ---------- tilstand ---------- */
+  const LEVEL_COLORS = ['#334155', '#d97706', '#dc2626'];
+  const LEVEL_RINGS  = ['rgba(51,65,85,0.12)', 'rgba(217,119,6,0.15)', 'rgba(220,38,38,0.15)'];
+  const LEVEL_NAMES  = ['0', '\u03B5', '2\u03B5'];
+
+  let M = 2;                 // antall niv\u00E5er
+  let N = 8;                 // antall partikler
+  let state = [];            // state[i] = niv\u00E5indeks for partikkel i
+
+  const FACT = [1];
+  for (let i = 1; i <= 24; i++) FACT[i] = FACT[i - 1] * i;
+
+  const nb = x => Math.round(x).toLocaleString('nb-NO');
+
+  /* ---------- kombinatorikk ---------- */
+  // Antall mikrotilstander for hver mulige totalenergi: koeffisientene i (1 + x + ... + x^(M-1))^N
+  function omegaByEnergy(n, m) {
+    let c = [1];
+    for (let k = 0; k < n; k++) {
+      const nc = new Array(c.length + m - 1).fill(0);
+      for (let e = 0; e < c.length; e++) {
+        if (c[e] === 0) continue;
+        for (let j = 0; j < m; j++) nc[e + j] += c[e];
+      }
+      c = nc;
+    }
+    return c;
+  }
+
+  // Multiplisiteten til \u00E9n bestemt fordeling: N! / (n0! n1! ...)
+  function multinomial(counts) {
+    let d = 1;
+    counts.forEach(c => { d *= FACT[c]; });
+    return Math.round(FACT[counts.reduce((a, b) => a + b, 0)] / d);
+  }
+
+  // Alle fordelinger (n0, n1, ...) med gitt partikkeltall og gitt totalenergi
+  function distsWithEnergy(n, m, E) {
+    const res = [], cur = new Array(m).fill(0);
+    (function rec(lvl, nLeft, eLeft) {
+      if (lvl === 0) {
+        if (eLeft === 0) { cur[0] = nLeft; res.push(cur.slice()); }
+        return;
+      }
+      const maxc = Math.min(nLeft, Math.floor(eLeft / lvl));
+      for (let c = 0; c <= maxc; c++) {
+        cur[lvl] = c;
+        rec(lvl - 1, nLeft - c, eLeft - c * lvl);
+      }
+      cur[lvl] = 0;
+    })(m - 1, n, E);
+    return res;
+  }
+
+  const counts = () => { const c = new Array(M).fill(0); state.forEach(l => c[l]++); return c; };
+  const energy = () => state.reduce((a, b) => a + b, 0);
+
+  /* ---------- tilstandsendringer ---------- */
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function setGround() { state = new Array(N).fill(0); }
+  function setRandom() { state = Array.from({ length: N }, () => Math.floor(Math.random() * M)); }
+
+  // ny mikrotilstand med n\u00F8yaktig samme fordeling p\u00E5 niv\u00E5ene
+  function shuffleSameDistribution() { state = shuffle(state.slice()); }
+
+  // ny mikrotilstand med samme totalenergi, trukket likt fordelt blant alle slike mikrotilstander
+  function shuffleSameEnergy() {
+    const dists = distsWithEnergy(N, M, energy());
+    if (!dists.length) return;
+    const w = dists.map(multinomial);
+    const tot = w.reduce((a, b) => a + b, 0);
+    let r = Math.random() * tot, pick = dists[dists.length - 1];
+    for (let i = 0; i < dists.length; i++) { r -= w[i]; if (r <= 0) { pick = dists[i]; break; } }
+    const levels = [];
+    pick.forEach((c, lvl) => { for (let k = 0; k < c; k++) levels.push(lvl); });
+    state = shuffle(levels);
+  }
+
+  /* ---------- tegning ---------- */
+  function drawParticles() {
+    const cont = root.querySelector('.tns-particles');
+    const H = M === 2 ? 66 : 76, pad = 8;
+    const y = lvl => H - pad - lvl * (H - 2 * pad) / (M - 1);
+    cont.style.gap = M === 2 ? '8px' : '14px';
+    const tip = M === 2 ? 'klikk for \u00E5 eksitere eller de-eksitere'
+                        : 'klikk for \u00E5 flytte ett trinn opp';
+    cont.innerHTML = state.map((lvl, i) => {
+      const lines = [], labels = [];
+      for (let k = 0; k < M; k++) {
+        lines.push('<div class="tns-line" style="top:' + y(k) + 'px"></div>');
+        labels.push('<span class="tns-lvl-label" style="top:' + y(k) + 'px">' + LEVEL_NAMES[k] + '</span>');
+      }
+      return '<div class="tns-particle" role="button" tabindex="0" data-i="' + i + '"' +
+        ' style="height:' + H + 'px" title="Partikkel ' + (i + 1) + ': ' + tip + '">' +
+        labels.join('') + lines.join('') +
+        '<div class="tns-dot" style="top:' + y(lvl) + 'px; background:' + LEVEL_COLORS[lvl] +
+        '; box-shadow: 0 0 0 3px ' + LEVEL_RINGS[lvl] + '"></div></div>';
+    }).join('');
+  }
+
+  function microstateHTML() {
+    if (M === 2) return state.map(l => l ? '\u2191' : '\u2193').join(' ');
+    return state.map(l => '<span class="tns-lvl" style="color:' + LEVEL_COLORS[l] + '">' + l + '</span>').join(' ');
+  }
+
+  function drawReadout(c, E, omegaDist, omegaE) {
+    const box = root.querySelector('.tns-readout');
+    const metric = (label, value, cls) =>
+      '<div class="tns-metric"><span class="tns-label">' + label + '</span>' +
+      '<span class="tns-value ' + (cls || '') + '">' + value + '</span></div>';
+
+    if (M === 2) {
+      const n = c[1];
+      const binom = '<span class="tns-binom"><span class="tns-binom-paren">(</span>' +
+        '<span class="tns-binom-col"><span>' + N + '</span><span>' + n + '</span></span>' +
+        '<span class="tns-binom-paren">)</span></span>';
+      box.innerHTML =
+        metric('Mikrotilstand', microstateHTML()) +
+        metric('Makrotilstand (energi)', 'E = ' + n + '\u03B5 &nbsp;(' + n + ' av ' + N + ' eksitert)') +
+        metric('Multiplisitet \u03A9(n)', '\u03A9(' + n + ') = ' + binom + ' = ' + nb(omegaDist), 'tns-omega');
+      return;
+    }
+
+    const fracTop = N + '!';
+    const fracBot = c.map(x => x + '!').join('\u00B7');
+    box.innerHTML =
+      metric('Mikrotilstand', microstateHTML()) +
+      metric('Fordeling (n\u2080, n\u2081, n\u2082)', '(' + c.join(', ') + ')') +
+      metric('Multiplisitet for fordelingen',
+             nb(omegaDist) + ' <span class="tns-frac">= ' + fracTop + ' / (' + fracBot + ')</span>') +
+      metric('Makrotilstand (energi)', 'E = ' + E + '\u03B5') +
+      metric('\u03A9(E), alle fordelinger', nb(omegaE), 'tns-omega');
+  }
+
+  function drawChart(coeffs, E, omegaDist, omegaE) {
+    const chart = root.querySelector('.tns-chart');
+    const maxOmega = Math.max.apply(null, coeffs);
+    const step = Math.ceil(coeffs.length / 18);
+    chart.innerHTML = coeffs.map((c, k) => {
+      const h = Math.max(3, (c / maxOmega) * 100);
+      const isNow = k === E;
+      const part = isNow && omegaE > 0
+        ? '<div class="tns-bar-part" style="height:' + (omegaDist / omegaE * 100).toFixed(1) + '%"></div>' : '';
+      const lab = (k % step === 0 || isNow) ? k : '&nbsp;';
+      return '<div class="tns-bar-col">' +
+        '<div class="tns-bar' + (isNow ? ' tns-current' : '') + '" style="height:' + h + '%">' + part + '</div>' +
+        '<span class="tns-bar-n">' + lab + '</span></div>';
+    }).join('');
+  }
+
+  function drawText(nDists) {
+    root.querySelector('.tns-title-txt').textContent = M === 2
+      ? 'To-niv\u00E5-system: mikrotilstander og multiplisitet'
+      : 'Tre-niv\u00E5-system: mikrotilstander og multiplisitet';
+
+    root.querySelector('.tns-sub').innerHTML = M === 2
+      ? 'Hver partikkel kan v\u00E6re i grunntilstanden (energi 0) eller den eksiterte tilstanden (energi \u03B5). Klikk p\u00E5 en partikkel for \u00E5 eksitere eller de-eksitere den.'
+      : 'Hver partikkel kan v\u00E6re p\u00E5 ett av tre niv\u00E5er med energi 0, \u03B5 og 2\u03B5. Klikk p\u00E5 en partikkel for \u00E5 flytte den ett trinn opp. Fra \u00F8verste niv\u00E5 faller den ned i grunntilstanden igjen.';
+
+    root.querySelector('.tns-chart-title').textContent = M === 2
+      ? 'Multiplisitet \u03A9(n) for hver mulig makrotilstand'
+      : 'Multiplisitet \u03A9(E) for hver mulig totalenergi';
+
+    root.querySelector('.tns-xaxis-label').textContent = M === 2
+      ? 'Antall eksiterte partikler, n'
+      : 'Total energi E (i enheter av \u03B5)';
+
+    root.querySelector('.tns-note').innerHTML = M === 2
+      ? 'Med to niv\u00E5er bestemmer energien fordelingen fullstendig: sier du at <b>n</b> partikler er eksitert, har du sagt alt om makrotilstanden.'
+      : 'Med tre niv\u00E5er er ikke lenger energien og fordelingen det samme. Denne energien kan lages av <b>' +
+        nDists + (nDists === 1 ? ' fordeling' : ' ulike fordelinger') +
+        '</b>, og \u03A9(E) er summen av multiplisitetene deres. Den m\u00F8rke delen av den markerte s\u00F8ylen er bidraget fra fordelingen du har n\u00E5.';
+  }
+
+  function render() {
+    const c = counts(), E = energy();
+    const coeffs = omegaByEnergy(N, M);
+    const omegaDist = multinomial(c);
+    const omegaE = coeffs[E];
+    const nDists = distsWithEnergy(N, M, E).length;
+
+    drawParticles();
+    drawReadout(c, E, omegaDist, omegaE);
+    drawChart(coeffs, E, omegaDist, omegaE);
+    drawText(nDists);
+  }
+
+  /* ---------- hendelser ---------- */
+  function setM(m) {
+    if (m === M) return;
+    M = m;
+    root.querySelectorAll('.tns-seg button').forEach(b =>
+      b.setAttribute('aria-pressed', String(+b.dataset.m === M)));
+    root.querySelector('[data-act="same-dist"]').style.display = M === 2 ? 'none' : '';
+    state = state.map(l => Math.min(l, M - 1));
+    render();
+  }
+
+  function act(a) {
+    if (a === 'same-dist') shuffleSameDistribution();
+    else if (a === 'same-energy') shuffleSameEnergy();
+    else if (a === 'random') setRandom();
+    else if (a === 'reset') setGround();
+    render();
+  }
+
+  function bump(i) { state[i] = (state[i] + 1) % M; render(); }
+
+  root.addEventListener('click', function (ev) {
+    const seg = ev.target.closest('.tns-seg button');
+    if (seg) { setM(+seg.dataset.m); return; }
+    const btn = ev.target.closest('[data-act]');
+    if (btn) { act(btn.dataset.act); return; }
+    const p = ev.target.closest('.tns-particle');
+    if (p) bump(+p.dataset.i);
+  });
+
+  root.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    const p = ev.target.closest('.tns-particle');
+    if (p) { ev.preventDefault(); bump(+p.dataset.i); }
+  });
+
+  root.querySelector('.tns-N').addEventListener('input', function (e) {
+    N = +e.target.value;
+    root.querySelector('.tns-n-val').textContent = N;
+    setGround();
+    render();
+  });
+
+  root.querySelector('[data-act="same-dist"]').style.display = 'none';
+  setGround();
+  render();
+})();
+</script>
+</div></div>
+</div>
+<p>Øverste del av simuleringen viser én mikrotilstand. Tallene under viser fordelingen, energien og multiplisiteten. Diagrammet nederst viser hvor mange mikrotilstander som finnes ved de ulike energiene. Diagrammet er en opptelling, ikke i seg selv en sannsynlighetsfordeling ved en bestemt temperatur. For å finne sannsynligheten ved fast temperatur må multiplisiteten også kombineres med Boltzmann-faktoren, som vi skal se på senere.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p><strong>A. To nivåer.</strong> Velg to nivåer og <span class="math notranslate nohighlight">\(N=8\)</span>. Lag tilstander med henholdsvis <span class="math notranslate nohighlight">\(n=0\)</span>, <span class="math notranslate nohighlight">\(n=2\)</span> og <span class="math notranslate nohighlight">\(n=4\)</span> eksiterte partikler. Noter energien og multiplisiteten. Hvor er <span class="math notranslate nohighlight">\(\Omega\)</span> størst? Trykk flere ganger på «Ny mikrotilstand (samme fordeling)». Hva endres, og hva er uendret?</p>
+<p><strong>B. Multiplisitet og systemstørrelse.</strong> Sammenlikn diagrammet for <span class="math notranslate nohighlight">\(N=4\)</span>, <span class="math notranslate nohighlight">\(N=8\)</span> og <span class="math notranslate nohighlight">\(N=16\)</span>. Blir toppen bredere eller smalere målt i antall eksiterte partikler? Hva skjer med bredden målt i forhold til hele systemet?</p>
+<p><strong>C. Tre nivåer.</strong> Velg tre nivåer og <span class="math notranslate nohighlight">\(N=4\)</span>. Lag energien <span class="math notranslate nohighlight">\(E=2\varepsilon\)</span>. Finn de to mulige fordelingene <span class="math notranslate nohighlight">\((n_0,n_1,n_2)\)</span> og multiplisiteten til hver av dem. Kontroller at summen er lik <span class="math notranslate nohighlight">\(\Omega(E)\)</span>. Trykk deretter mange ganger på «Ny mikrotilstand (samme energi)». Hvilken fordeling ser du oftest, og hvorfor?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>A.</strong> For to nivåer er</p>
+<div class="math notranslate nohighlight">
+\[\Omega(n)=\binom{N}{n}\]</div>
+<p class="sd-card-text">Med <span class="math notranslate nohighlight">\(N=8\)</span> får vi <span class="math notranslate nohighlight">\(\Omega(0)=1\)</span>, <span class="math notranslate nohighlight">\(\Omega(2)=28\)</span> og <span class="math notranslate nohighlight">\(\Omega(4)=70\)</span>. Multiplisiteten er størst når partiklene er jevnest mulig fordelt mellom nivåene. Knappen for samme fordeling bytter hvilke partikler som er eksiterte. Mikrotilstanden endres, mens <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(E\)</span> og <span class="math notranslate nohighlight">\(\Omega\)</span> er uendret.</p>
+<p class="sd-card-text"><strong>B.</strong> Den absolutte bredden i <span class="math notranslate nohighlight">\(n\)</span> vokser som <span class="math notranslate nohighlight">\(\sqrt{N}/2\)</span>, men andelen <span class="math notranslate nohighlight">\(x=n/N\)</span> får standardavviket <span class="math notranslate nohighlight">\(1/(2\sqrt{N})\)</span>. Fordelingen blir derfor smalere i forhold til systemets størrelse. For et stort system blir området rundt toppen ekstremt smalt relativt til systemets størrelse.</p>
+<p class="sd-card-text"><strong>C.</strong> Ved <span class="math notranslate nohighlight">\(N=4\)</span> og <span class="math notranslate nohighlight">\(E=2\varepsilon\)</span> er de mulige fordelingene</p>
+<div class="math notranslate nohighlight">
+\[ (n_0,n_1,n_2)=(2,2,0) \]</div>
+<p class="sd-card-text">og</p>
+<div class="math notranslate nohighlight">
+\[ (n_0,n_1,n_2)=(3,0,1) \]</div>
+<p class="sd-card-text">Multiplisitetene er henholdsvis <span class="math notranslate nohighlight">\(4!/(2!2!)=6\)</span> og <span class="math notranslate nohighlight">\(4!/(3!1!)=4\)</span>, slik at <span class="math notranslate nohighlight">\(\Omega(E)=6+4=10\)</span>. Når mikrotilstandene trekkes likt ved fast energi, kommer den første fordelingen i gjennomsnitt seks av ti ganger og den andre fire av ti ganger.</p>
+</div>
+</details><p>Vi kan nå oppsummere modellen mer generelt. La <span class="math notranslate nohighlight">\(n_i\)</span> være antallet partikler på energinivået <span class="math notranslate nohighlight">\(\varepsilon_i\)</span>. Det totale partikkeltallet er da</p>
+<div class="math notranslate nohighlight">
+\[N=\sum_i n_i\]</div>
+<p>Den totale energien finner vi ved å multiplisere antallet partikler på hvert nivå med energien til nivået og summere bidragene:</p>
+<div class="math notranslate nohighlight">
+\[E=\sum_i n_i\varepsilon_i\]</div>
+<p>Med modellforutsetningene ovenfor – skjelnbare partikler og energinivåer som ikke er <a class="reference internal" href="1_introduksjon.html#degenerasjon"><span class="std std-ref">degenererte</span></a> – er multiplisiteten til fordelingen</p>
+<div class="math notranslate nohighlight">
+\[\Omega(\{n_i\})=\frac{N!}{\prod_i n_i!}\]</div>
+<p>Telleren <span class="math notranslate nohighlight">\(N!\)</span> teller alle mulige rekkefølger av de <span class="math notranslate nohighlight">\(N\)</span> partiklene. Men en ombytting av partiklene som allerede befinner seg på det samme nivået, endrer ikke hvilke partikler som er på hvert nivå og gir derfor ikke en ny mikrotilstand. Derfor deler vi på <span class="math notranslate nohighlight">\(n_i!\)</span> for hvert nivå. For fordelingen <span class="math notranslate nohighlight">\((3,1)\)</span> får vi for eksempel</p>
+<div class="math notranslate nohighlight">
+\[\Omega(3,1)=\frac{4!}{3!1!}=4\]</div>
+</section>
+</section>
+<section id="termodynamikkens-andre-lov-som-statistisk-lov">
+<h2>Termodynamikkens andre lov som statistisk lov<a class="headerlink" href="#termodynamikkens-andre-lov-som-statistisk-lov" title="Link to this heading">#</a></h2>
+<p>De små systemene ovenfor viser at systemet stadig skifter mikrotilstand, men som oftest befinner seg i makrotilstandene med størst multiplisitet, altså de som kan realiseres av flest mikrotilstander. Det som gjør termodynamikken <em>praktisk nyttig</em>, er at reelle systemer inneholder omtrent <span class="math notranslate nohighlight">\(10^{23}\)</span> partikler. I et lite system kan det av og til oppstå tydelige avvik fra den mest sannsynlige makrotilstanden. I et makroskopisk system blir slike variasjoner forsvinnende små relativt til systemets størrelse.</p>
+<p>For et isolert system formuleres <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/A1_grunnleggende_begreper.html#termodynamikkens-lover">termodynamikkens andre lov</a> som</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_\mathrm{tot}\geq0\]</div>
+<p>for en spontan makroskopisk prosess. Den statistiske forklaringen er at makrotilstander med høy entropi svarer til langt flere mikrotilstander enn makrotilstander med lav entropi.</p>
+<p>Når antallet partikler øker, vokser antallet mikrotilstander enormt, samtidig som sannsynlighetsfordelingen blir stadig smalere <em>relativt til systemets størrelse</em>. For den symmetriske tosidige modellen med <span class="math notranslate nohighlight">\(N\)</span> partikler i to kamre er middelverdien og standardavviket til antallet partikler i kammer <span class="math notranslate nohighlight">\(A\)</span></p>
+<div class="math notranslate nohighlight">
+\[\mu_{n_A}=\frac{N}{2}\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma_{n_A}=\frac{\sqrt{N}}{2}\]</div>
+<p>For andelen <span class="math notranslate nohighlight">\(x=n_A/N\)</span> er middelverdien <span class="math notranslate nohighlight">\(\mu_x=1/2\)</span>, mens standardavviket er</p>
+<div class="math notranslate nohighlight">
+\[\sigma_x=\frac{1}{2\sqrt{N}}\]</div>
+<p>Dersom bredden måles relativt til middelverdien, kanselleres faktoren <span class="math notranslate nohighlight">\(1/2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\sigma_x}{\mu_x}=\frac{1}{\sqrt{N}}\]</div>
+<div class="seealso admonition">
+<p class="admonition-title">Nyttige matematiske verktøy</p>
+<p>Hva er <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(\mu\)</span> og <span class="math notranslate nohighlight">\(\sigma\)</span>? Du kan lese mer om dette i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/statistikk.html#normalfordelingen">6.4 Normalfordeling</a>. Resultatet ovenfor kan begrunnes i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/statistikk.html#sentralgrenseteoremet">6.5 Sentralgrenseteoremet</a>. Matematikken i detalj er ikke pensum, men et nyttig hjelpemiddel i forståelsen av statistikken vi presenterer her.</p>
+</div>
+<p>For <span class="math notranslate nohighlight">\(N\approx10^{23}\)</span> er dette omtrent <span class="math notranslate nohighlight">\(3\times10^{-12}\)</span>. Systemet skifter hele tiden mikrotilstand, men nesten alle mikrotilstandene vi observerer, tilhører makrotilstander svært nær entropimaksimum. En målbar, spontan reduksjon i total entropi er derfor ikke matematisk umulig, men så usannsynlig at den ikke observeres i et makroskopisk system.</p>
+<div class="important admonition">
+<p class="admonition-title">Termodynamikkens andre lov</p>
+<p>For en spontan prosess i et isolert system kan den totale entropien ikke avta:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_\mathrm{tot}\geq 0\]</div>
+<p>Entropien øker for en irreversibel prosess og er konstant for en reversibel prosess. Ved likevekt har entropien nådd sin maksimale verdi gitt systemets betingelser.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Forklar med egne ord hvorfor et svært lite system kan ha tydelige fluktuasjoner bort fra entropimaksimum, mens slike avvik ikke observeres som en vedvarende makroskopisk prosess.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">I et lite system er sannsynlighetsfordelingen relativt bred, og fluktuasjoner bort fra entropimaksimum kan derfor observeres. Når systemet blir makroskopisk, blir fordelingen svært smal relativt til systemets størrelse. Variasjoner finnes fortsatt på molekylnivå, men et vedvarende makroskopisk avvik fra entropimaksimum er overveldende usannsynlig.</p>
+</div>
+</details><section id="energifordeling-og-termisk-likevekt">
+<h3>Energifordeling og termisk likevekt<a class="headerlink" href="#energifordeling-og-termisk-likevekt" title="Link to this heading">#</a></h3>
+<p>I simuleringene ovenfor så vi at noen makrotilstander kan realiseres gjennom langt flere mikrotilstander enn andre. Systemet skifter hele tiden mikrotilstand, men observeres oftest i makrotilstandene med størst multiplisitet og entropi.</p>
+<p>Vi bruker nå det samme prinsippet på et system som består av to deler, A og B. Makrotilstanden beskriver denne gangen hvordan den totale energien er fordelt mellom delsystemene. Totalsystemet er isolert, men A og B kan utveksle energi. Hvis A har energien <span class="math notranslate nohighlight">\(U_A\)</span>, må resten av energien være i B:</p>
+<div class="math notranslate nohighlight">
+\[U_B=U_\mathrm{tot}-U_A\]</div>
+<p>For hver mulig energifordeling finnes det et bestemt antall mikrotilstander i A og et bestemt antall i B. En mikrotilstand for totalsystemet må angi mikrotilstanden til begge delsystemene. Multiplisitetene må derfor kombineres, og entropiene blir additive:</p>
+<div class="math notranslate nohighlight">
+\[S_\mathrm{tot}=S_A+S_B\]</div>
+<p>Den mest sannsynlige energifordelingen er den som gir flest mulige mikrotilstander for totalsystemet og dermed størst total entropi. Vi kan forstå maksimumspunktet ved å tenke oss at en liten energimengde flyttes fra B til A. Entropien til A vil da øke, mens entropien til B vil avta. Hvis økningen i <span class="math notranslate nohighlight">\(S_A\)</span> er større enn reduksjonen i <span class="math notranslate nohighlight">\(S_B\)</span>, øker den totale entropien. Den opprinnelige energifordelingen kan da ikke ha vært den mest sannsynlige. Hvis reduksjonen i <span class="math notranslate nohighlight">\(S_B\)</span> er størst, ville den totale entropien i stedet økt dersom energien ble flyttet den andre veien. Ved den mest sannsynlige energifordelingen må de to endringene akkurat oppveie hverandre. En liten omfordeling av energien kan da ikke øke den totale entropien ytterligere. Systemet er da i <strong>termisk likevekt</strong>. Figuren nedenfor viser dette for to systemer som deler en fast total energi.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<img alt="../_images/f466131d55d4d167d92f519e559f93785a029ac8e2fc7f01e190a7f81a131c28.svg" src="../_images/f466131d55d4d167d92f519e559f93785a029ac8e2fc7f01e190a7f81a131c28.svg" />
+</div>
+</div>
+<p>Legg merke til de to stiplede tangentene. I maksimumspunktet er de like bratte,
+men peker hver sin vei. Det A vinner i entropi ved å få litt energi, taper B
+nøyaktig like mye av. Nettopp derfor er den totale entropien flat akkurat der.</p>
+<p>Begge grafene bruker <span class="math notranslate nohighlight">\(U_A\)</span> på den horisontale aksen. Når <span class="math notranslate nohighlight">\(U_A\)</span> øker, må <span class="math notranslate nohighlight">\(U_B\)</span> avta like mye. Derfor har kurven til høyre helningen <span class="math notranslate nohighlight">\(dS_B/dU_A=-1/T_B\)</span>. Måler vi i stedet endringen med hensyn på energien til B, er helningen <span class="math notranslate nohighlight">\(\partial S_B/\partial U_B=1/T_B\)</span>. Det er denne positive deriverte som inngår i likevektsbetingelsen nedenfor.</p>
+<p>Størrelsen</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial S}{\partial U}\right)_{V,N}\]</div>
+<p>forteller hvor mye entropien endres når systemet får litt mer energi. Betingelsen for termisk likevekt er derfor</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial S_A}{\partial U_A}\right)_{V_A,N_A}=\left(\frac{\partial S_B}{\partial U_B}\right)_{V_B,N_B}\]</div>
+<p>Termisk likevekt oppstår altså når en liten energimengde har den samme betydningen for entropien i begge delsystemene.</p>
+<p>Likevekt betyr ikke at energien er låst i én bestemt fordeling. I et lite system kan energi fortsatt utveksles mellom A og B. Systemet befinner seg likevel oftest nær fordelingen med størst total entropi. Når systemet blir større, blir disse variasjonene stadig mindre i forhold til den totale energien, og likevekten blir mer tydelig.</p>
+</section>
+</section>
+<section id="temperatur">
+<h2>Temperatur<a class="headerlink" href="#temperatur" title="Link to this heading">#</a></h2>
+<p>Vi har nå kommet fram til en størrelse som har samme verdi i begge delsystemene ved termisk likevekt. Denne størrelsen beskriver hvor mye entropien endres når energien til systemet øker. På den absolutte temperaturskalaen defineres den som den inverse temperaturen, og dette gir oss dermed en definisjon av temperatur som er begrunnet mikroskopisk, ut i fra tilgjengelige mikrotilstander:</p>
+<div class="important admonition">
+<p class="admonition-title">Temperatur</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{T}=\left(\frac{\partial S}{\partial U}\right)_{V,N}\]</div>
+</div>
+<p>Temperatur er dermed et mål på sammenhengen mellom energi og entropi:</p>
+<ul class="simple">
+<li><p>Stor <span class="math notranslate nohighlight">\(\partial S/\partial U\)</span> betyr at litt ekstra energi gir en stor økning i entropien. Da er temperaturen lav.</p></li>
+<li><p>Liten <span class="math notranslate nohighlight">\(\partial S/\partial U\)</span> betyr at litt ekstra energi gir en mindre økning i entropien. Da er temperaturen høy.</p></li>
+</ul>
+<p>Betingelsen for termisk likevekt kan derfor skrives som</p>
+<div class="math notranslate nohighlight">
+\[T_A=T_B\]</div>
+<p>Betingelsen <span class="math notranslate nohighlight">\(T_A=T_B\)</span> forteller hvor systemet ender, men den samme tankegangen forteller også hvilken vei energien går. Hvis A er varmere enn B, gir en liten energioverføring fra A til B en større entropiøkning i B enn entropireduksjonen i A. Den totale entropien øker derfor når A avgir energi og B tar imot.</p>
+<p>Energi går altså spontant fra varmt til kaldt, fordi denne energifordelingen kan realiseres av flere mikrotilstander. Det er multiplisiteten som bestemmer retningen, akkurat som da gassen fylte begge kamrene i tokammersystemet.</p>
+<p>Etter hvert som temperaturene nærmer seg hverandre, blir gevinsten i total entropi mindre. Ved <span class="math notranslate nohighlight">\(T_A=T_B\)</span> er ingen retning statistisk foretrukket. Nettostrømmen stopper, men små energiutvekslinger fortsetter likevel – likevekten er altså dynamisk.</p>
+<div class="important admonition">
+<p class="admonition-title">Termisk likevekt</p>
+<p>Termisk likevekt er den mest sannsynlige fordelingen av energien mellom delsystemer i kontakt. Ved denne fordelingen er den totale entropien maksimal og delsystemene har samme temperatur. Systemet  vil likevel konstant fortsatt skifte mikrotilstand og utveksle små energimengder rundt denne fordelingen.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hvor kommer temperaturdefinisjonen fra?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">La delsystemene A og B kunne omfordele energi, mens totalsystemets energi er konstant:</p>
+<div class="math notranslate nohighlight">
+\[U_\mathrm{tot}=U_A+U_B\]</div>
+<p class="sd-card-text">Hvis system A mottar en liten energimengde, må system B miste den samme energimengden:</p>
+<div class="math notranslate nohighlight">
+\[dU_B=-dU_A\]</div>
+<p class="sd-card-text">Endringen i den totale entropien er</p>
+<div class="math notranslate nohighlight">
+\[dS_\mathrm{tot}=dS_A+dS_B\]</div>
+<p class="sd-card-text">Ved konstant volum og partikkeltall kan entropiendringene skrives som</p>
+<div class="math notranslate nohighlight">
+\[dS_A=\left(\frac{\partial S_A}{\partial U_A}\right)_{V_A,N_A}dU_A\]</div>
+<div class="math notranslate nohighlight">
+\[dS_B=\left(\frac{\partial S_B}{\partial U_B}\right)_{V_B,N_B}dU_B\]</div>
+<p class="sd-card-text">Når vi bruker at <span class="math notranslate nohighlight">\(dU_B=-dU_A\)</span>, får vi</p>
+<div class="math notranslate nohighlight">
+\[dS_\mathrm{tot}=\left[\left(\frac{\partial S_A}{\partial U_A}\right)_{V_A,N_A}-\left(\frac{\partial S_B}{\partial U_B}\right)_{V_B,N_B}\right]dU_A\]</div>
+<p class="sd-card-text">Ved termisk likevekt er den totale entropien maksimal. En liten omfordeling av energien kan da ikke øke entropien ytterligere. Derfor må</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial S_A}{\partial U_A}\right)_{V_A,N_A}=\left(\frac{\partial S_B}{\partial U_B}\right)_{V_B,N_B}\]</div>
+<p class="sd-card-text">Vi har dermed funnet en størrelse som får samme verdi i begge delsystemene ved termisk likevekt. På den absolutte temperaturskalaen defineres denne størrelsen som den inverse temperaturen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{1}{T}=\left(\frac{\partial S}{\partial U}\right)_{V,N}\)</span> som betyr at ved likevekt så vil <span class="math notranslate nohighlight">\(\frac{1}{T_A}=\left(\frac{\partial S_A}{\partial U_A}\right)_{V,N} = \left(\frac{\partial S_B}{\partial U_B}\right)_{V,N} = \frac{1}{T_A}\)</span>, og dermed er <span class="math notranslate nohighlight">\(T_A = T_B\)</span>.</p>
+</div>
+</details><p>Temperaturen forteller dermed hvor raskt antallet tilgjengelige mikrotilstander vokser når systemets energi øker.</p>
+</section>
+<section id="fra-entropimaksimum-til-boltzmann-fordelingen">
+<h2>Fra entropimaksimum til Boltzmann-fordelingen<a class="headerlink" href="#fra-entropimaksimum-til-boltzmann-fordelingen" title="Link to this heading">#</a></h2>
+<p>Så langt har vi hovedsakelig sett på isolerte systemer der de tilgjengelige mikrotilstandene behandles som like sannsynlige. I et system som kan utveksle energi med omgivelsene, er dette ikke lenger tilfelle. Mikrotilstander med ulik energi har også ulik sannsynlighet.</p>
+<p>Vi trenger derfor en entropidefinisjon som tar hensyn til sannsynligheten for hver enkelt mikrotilstand. Deretter kan vi undersøke hvilken sannsynlighetsfordeling som gir størst entropi når middelenergien er bestemt.</p>
+<section id="entropi-uttrykt-ved-sannsynligheter-gibbs-entropien">
+<h3>Entropi uttrykt ved sannsynligheter: Gibbs-entropien<a class="headerlink" href="#entropi-uttrykt-ved-sannsynligheter-gibbs-entropien" title="Link to this heading">#</a></h3>
+<p>La <span class="math notranslate nohighlight">\(p_i\)</span> være sannsynligheten for at hele systemet befinner seg i mikrotilstand <span class="math notranslate nohighlight">\(i\)</span>. Siden systemet må befinne seg i én av mikrotilstandene, må sannsynlighetene til sammen være lik 1:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_i p_i=1.
+\]</div>
+<p>Når mikrotilstandene ikke er like sannsynlige, beskrives entropien av Gibbs-entropien.</p>
+<div class="important admonition">
+<p class="admonition-title">Gibbs-entropien</p>
+<p>Dersom systemet kan befinne seg i mikrotilstand <span class="math notranslate nohighlight">\(i\)</span> med sannsynlighet <span class="math notranslate nohighlight">\(p_i\)</span>, er Gibbs-entropien</p>
+<div class="math notranslate nohighlight">
+\[
+S=-k_\mathrm{B}\sum_i p_i\ln p_i.
+\]</div>
+<p>Entropien er stor når sannsynligheten er fordelt over mange mikrotilstander, og mindre når noen få mikrotilstander dominerer.</p>
+</div>
+<p>Boltzmanns uttrykk,</p>
+<div class="math notranslate nohighlight">
+\[
+S=k_\mathrm{B}\ln\Omega,
+\]</div>
+<p>er et spesialtilfelle av Gibbs-entropien. Dersom systemet har <span class="math notranslate nohighlight">\(\Omega\)</span> tilgjengelige mikrotilstander og alle er like sannsynlige, er</p>
+<div class="math notranslate nohighlight">
+\[
+p_i=\frac{1}{\Omega}.
+\]</div>
+<p>Setter vi dette inn i Gibbs-entropien, får vi</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+S
+&amp;=-k_\mathrm{B}\sum_{i=1}^{\Omega}
+\frac{1}{\Omega}\ln\left(\frac{1}{\Omega}\right)\\
+&amp;=-k_\mathrm{B}\,\Omega\frac{1}{\Omega}
+\ln\left(\frac{1}{\Omega}\right)\\
+&amp;=k_\mathrm{B}\ln\Omega.
+\end{aligned}
+\end{split}\]</div>
+<p>Gibbs-entropien kan altså brukes både når mikrotilstandene er like sannsynlige, og når de har ulike sannsynligheter.</p>
+</section>
+<section id="fra-gibbs-entropien-til-boltzmann-fordelingen">
+<h3>Fra Gibbs-entropien til Boltzmann-fordelingen<a class="headerlink" href="#fra-gibbs-entropien-til-boltzmann-fordelingen" title="Link to this heading">#</a></h3>
+<p>Anta at systemets mikrotilstander har energier <span class="math notranslate nohighlight">\(E_i\)</span>. Vi ønsker å finne sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for hver mikrotilstand ved termisk likevekt.</p>
+<p>Likevektsfordelingen skal gjøre Gibbs-entropien størst, men den må samtidig oppfylle to betingelser. Sannsynlighetene må summere seg til 1,</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_i p_i=1,
+\]</div>
+<p>og systemets middelenergi skal ha en bestemt verdi:</p>
+<div class="math notranslate nohighlight">
+\[
+\sum_i p_iE_i=\langle E\rangle.
+\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(\langle E\rangle\)</span> gjennomsnittsenergien vi ville fått dersom vi målte energien til systemet mange ganger.</p>
+<p>For å finne maksimum av entropien under disse betingelsene bruker vi <a class="reference internal" href="matematikk/flervariabel_kalkulus.html#lagrange-multiplikatormetode"><span class="std std-ref">Lagrange-multiplikatorer</span></a>. Metoden lar oss ta hensyn til betingelsene samtidig som vi maksimerer entropien. Vi innfører Lagrange-multiplikatorene <span class="math notranslate nohighlight">\(\alpha\)</span> og <span class="math notranslate nohighlight">\(\beta\)</span> og skriver</p>
+<div class="math notranslate nohighlight">
+\[
+\Phi
+=
+-k_\mathrm{B}\sum_i p_i\ln p_i
+-\alpha\left(\sum_i p_i-1\right)
+-k_\mathrm{B}\beta
+\left(\sum_i p_iE_i-\langle E\rangle\right).
+\]</div>
+<p>Ved maksimum må den deriverte av <span class="math notranslate nohighlight">\(\Phi\)</span> med hensyn på hver sannsynlighet <span class="math notranslate nohighlight">\(p_i\)</span> være lik null:</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{\partial\Phi}{\partial p_i}=0.
+\]</div>
+<p>Siden den deriverte av <span class="math notranslate nohighlight">\(p_i\ln p_i\)</span> er <span class="math notranslate nohighlight">\(\ln p_i+1\)</span>, får vi</p>
+<div class="math notranslate nohighlight">
+\[
+-k_\mathrm{B}(\ln p_i+1)
+-\alpha
+-k_\mathrm{B}\beta E_i
+=0.
+\]</div>
+<p>Vi løser uttrykket med hensyn på <span class="math notranslate nohighlight">\(\ln p_i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+\ln p_i
+=
+-1-\frac{\alpha}{k_\mathrm{B}}-\beta E_i.
+\]</div>
+<p>De to første leddene på høyre side er like for alle mikrotilstandene. Vi samler dem derfor i en konstant <span class="math notranslate nohighlight">\(A\)</span>. Når vi opphøyer begge sider med grunntall <span class="math notranslate nohighlight">\(e\)</span>, får vi</p>
+<div class="math notranslate nohighlight">
+\[
+p_i=Ae^{-\beta E_i}.
+\]</div>
+<p>Konstanten <span class="math notranslate nohighlight">\(A\)</span> bestemmes av at sannsynlighetene skal summere seg til 1:</p>
+<div class="math notranslate nohighlight">
+\[
+1=\sum_i p_i
+=A\sum_i e^{-\beta E_i}.
+\]</div>
+<p>Dermed er</p>
+<div class="math notranslate nohighlight">
+\[
+A=\frac{1}{\sum_i e^{-\beta E_i}}.
+\]</div>
+<p>Summen i nevneren kalles partisjonsfunksjonen og betegnes <span class="math notranslate nohighlight">\(Q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+Q=\sum_i e^{-\beta E_i}.
+\]</div>
+<p>Sannsynligheten for mikrotilstand <span class="math notranslate nohighlight">\(i\)</span> blir dermed</p>
+<div class="math notranslate nohighlight">
+\[
+p_i=\frac{e^{-\beta E_i}}{Q}.
+\]</div>
+<p>Lagrange-multiplikatoren <span class="math notranslate nohighlight">\(\beta\)</span> har en fysisk betydning. I denne utledningen gjelder</p>
+<div class="math notranslate nohighlight">
+\[
+k_\mathrm{B}\beta
+=
+\left(\frac{\partial S}{\partial U}\right)_{V,N}.
+\]</div>
+<p>Tidligere definerte vi temperatur ved</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{1}{T}
+=
+\left(\frac{\partial S}{\partial U}\right)_{V,N}.
+\]</div>
+<p>Dermed er</p>
+<div class="math notranslate nohighlight">
+\[
+\beta=\frac{1}{k_\mathrm{B}T}.
+\]</div>
+<p>Når dette settes inn i uttrykket for <span class="math notranslate nohighlight">\(p_i\)</span>, får vi Boltzmann-fordelingen.</p>
+<div class="important admonition">
+<p class="admonition-title">Boltzmann-fordelingen</p>
+<p>For et system i termisk likevekt med omgivelsene er sannsynligheten for mikrotilstand <span class="math notranslate nohighlight">\(i\)</span></p>
+<div class="math notranslate nohighlight">
+\[
+p_i=\frac{1}{Q}e^{-E_i/k_\mathrm{B}T},
+\]</div>
+<p>der partisjonsfunksjonen er</p>
+<div class="math notranslate nohighlight">
+\[
+Q=\sum_i e^{-E_i/k_\mathrm{B}T}.
+\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(E_i\)</span> energien til mikrotilstanden og <span class="math notranslate nohighlight">\(T\)</span> temperaturen. Partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span> sørger for at summen av alle sannsynlighetene blir 1.</p>
+</div>
+<p>Mikrotilstander med lav energi er mer sannsynlige enn mikrotilstander med høy energi. Når temperaturen øker, blir energiforskjellene mindre viktige, og sannsynligheten fordeles jevnere mellom mikrotilstandene.</p>
+<p>Boltzmann-fordelingen er dermed den sannsynlighetsfordelingen som gir størst Gibbs-entropi når sannsynlighetene skal summere seg til 1 og middelenergien holdes konstant.</p>
+</section>
+<section id="utforsk-boltzmann-fordelingen">
+<h3>Utforsk Boltzmann-fordelingen<a class="headerlink" href="#utforsk-boltzmann-fordelingen" title="Link to this heading">#</a></h3>
+<p>Vi kan nå se hvordan Boltzmann-fordelingen endres med temperaturen. I simuleringen under har systemet seks tillatte, ikke degenererte energinivåer med samme avstand <span class="math notranslate nohighlight">\(\Delta\varepsilon\)</span> mellom nivåene. Hvert nivå representerer dermed én mikrotilstand:</p>
+<div class="math notranslate nohighlight">
+\[E_n=n\Delta\varepsilon\]</div>
+<p>Sannsynligheten for hvert nivå bestemmes av Boltzmann-fordelingen</p>
+<div class="math notranslate nohighlight">
+\[p_n=\frac{e^{-E_n/k_\mathrm{B}T}}{Q}\]</div>
+<p>Hvis et nivå i stedet hadde vært degenerert med <span class="math notranslate nohighlight">\(g_n\)</span> mikrotilstander, ville sannsynligheten for å finne systemet på dette energinivået vært proporsjonal med</p>
+<div class="math notranslate nohighlight">
+\[p_n\propto g_n e^{-E_n/k_\mathrm{B}T}\]</div>
+<p>Glidebryteren styrer forholdet <span class="math notranslate nohighlight">\(k_\mathrm{B}T/\Delta\varepsilon\)</span>. Dette sammenlikner den termiske energiskalaen <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span> med energiforskjellen mellom nivåene. Legg merke til at <strong>energinivåene ikke flytter seg når temperaturen endres</strong>. Det er sannsynligheten for å finne systemet på hvert nivå som endres. Søylene viser de normaliserte sannsynlighetene, slik at</p>
+<div class="math notranslate nohighlight">
+\[\sum_n p_n=1\]</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 640px; margin: 1.5rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 10px; background: #fafafa;">
+
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+    <label for="temp-slider" style="font-size: 14px; color: #444; white-space: nowrap;">k<sub>B</sub>T / &Delta;&epsilon;</label>
+    <input type="range" id="temp-slider" min="0.2" max="4" step="0.1" value="1" style="flex: 1;" />
+    <span id="temp-out" style="font-size: 14px; font-weight: 600; min-width: 34px; text-align: right; color: #222;">1.0</span>
+  </div>
+  <p style="font-size: 13px; color: #777; margin: 0 0 1.25rem;">
+    Dra i glidebryteren for å endre temperaturen, målt i enheter av energitrinnet &Delta;&epsilon; mellom nivåene.
+  </p>
+
+  <div id="bars" style="display: flex; align-items: flex-end; gap: 10px; height: 200px; padding: 0 4px; border-bottom: 2px solid #333;"></div>
+  <div id="labels" style="display: flex; gap: 10px; padding: 4px 4px 0;"></div>
+
+  <div style="display: flex; gap: 24px; margin-top: 1.25rem; font-size: 13px; color: #555;">
+    <span>Grunntilstand (&epsilon;<sub>0</sub> = 0): <span id="p0" style="font-weight: 600; color: #111;">-</span></span>
+    <span>Høyeste nivå (&epsilon;<sub>5</sub> = 5&Delta;&epsilon;): <span id="p5" style="font-weight: 600; color: #111;">-</span></span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const N = 6;
+  const container = document.currentScript.previousElementSibling.parentElement || document;
+  const barsEl = document.getElementById('bars');
+  const labelsEl = document.getElementById('labels');
+  const slider = document.getElementById('temp-slider');
+  const tempOut = document.getElementById('temp-out');
+  const p0El = document.getElementById('p0');
+  const p5El = document.getElementById('p5');
+
+  for (let n = 0; n < N; n++) {
+    const col = document.createElement('div');
+    col.style.cssText = 'flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;';
+
+    const valLabel = document.createElement('div');
+    valLabel.className = 'val-label';
+    valLabel.style.cssText = 'font-size:11px; color:#555; margin-bottom:4px;';
+
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.cssText = 'width:100%; max-width:44px; background:#3f7fbf; border-radius:4px 4px 0 0; transition: height 0.15s ease;';
+
+    col.appendChild(valLabel);
+    col.appendChild(bar);
+    barsEl.appendChild(col);
+
+    const lab = document.createElement('div');
+    lab.style.cssText = 'flex:1; text-align:center; font-size:12px; color:#888;';
+    lab.innerHTML = n + '&Delta;&epsilon;';
+    labelsEl.appendChild(lab);
+  }
+
+  function render() {
+    const x = parseFloat(slider.value);
+    tempOut.textContent = x.toFixed(1);
+
+    const weights = [];
+    for (let n = 0; n < N; n++) weights.push(Math.exp(-n / x));
+    const q = weights.reduce((a, b) => a + b, 0);
+    const probs = weights.map(w => w / q);
+    const maxP = Math.max.apply(null, probs);
+
+    const bars = barsEl.querySelectorAll('.bar');
+    const valLabels = barsEl.querySelectorAll('.val-label');
+    probs.forEach((p, n) => {
+      const heightPct = (p / maxP) * 100;
+      bars[n].style.height = heightPct + '%';
+      valLabels[n].textContent = (p * 100).toFixed(1) + '%';
+    });
+
+    p0El.textContent = (probs[0] * 100).toFixed(1) + '%';
+    p5El.textContent = (probs[5] * 100).toFixed(1) + '%';
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>
+</div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Prøv selv: Boltzmann-fordelingen</p>
+<ol class="arabic simple">
+<li><p>Sett <span class="math notranslate nohighlight">\(k_\mathrm{B}T/\Delta\varepsilon\)</span> svært lavt. Hvilket nivå har størst sannsynlighet?</p></li>
+<li><p>Øk temperaturen. Endres de tillatte energinivåene, eller bare sannsynlighetene?</p></li>
+<li><p>Finn omtrent når det første eksiterte nivået får en tydelig sannsynlighet.</p></li>
+<li><p>Forklar hvorfor elektroniske og vibrasjonelle eksitasjoner ofte er mindre sannsynlige enn rotasjonelle eksitasjoner ved romtemperatur.</p></li>
+<li><p>Kontroller at sannsynlighetene alltid summerer til 1.</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Ved lav temperatur dominerer grunntilstanden. Temperaturen skaper ikke nye energinivåer; den endrer Boltzmann-vektene. Eksiterte nivåer får merkbar sannsynlighet når energigapet ikke lenger er stort sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>. Vibrasjonelle og elektroniske energigap er ofte større enn rotasjonelle energigap og krever derfor høyere temperatur før de bidrar tydelig.</p>
+</div>
+</details></section>
+</section>
+<section id="videre-til-partisjonsfunksjonen">
+<h2>Videre til partisjonsfunksjonen<a class="headerlink" href="#videre-til-partisjonsfunksjonen" title="Link to this heading">#</a></h2>
+<p>Boltzmann-fordelingen forteller hvordan energien vekter mikrotilstandene, men normaliseringsfaktoren <span class="math notranslate nohighlight">\(Q\)</span> er fortsatt delvis uforklart. Så langt har vi sett at summen sørger for at sannsynlighetene blir 1. I <a class="reference internal" href="3_partisjonsfunksjonen.html"><span class="std std-doc">neste kapittel</span></a> ser vi at den også knytter mikrotilstandenes energier til målbare størrelser som indre energi, entropi og varmekapasitet.</p>
+</section>
+<section id="oppgaver">
+<h2>Oppgaver<a class="headerlink" href="#oppgaver" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 1: Et to-nivåsystem</p>
+<p>Åtte partikler kan befinne seg på energinivåene <span class="math notranslate nohighlight">\(0\)</span> og <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Tre av partiklene er eksiterte.</p>
+<ol class="arabic simple">
+<li><p>Finn totalenergien.</p></li>
+<li><p>Beregn multiplisiteten.</p></li>
+<li><p>Beregn entropien uttrykt ved <span class="math notranslate nohighlight">\(k_\mathrm{B}\)</span>.</p></li>
+<li><p>Sammenlikn med makrotilstanden der fire partikler er eksiterte. Hvilken makrotilstand har størst entropi?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Totalenergien er</p>
+<div class="math notranslate nohighlight">
+\[E=3\varepsilon\]</div>
+<p class="sd-card-text">Multiplisiteten er</p>
+<div class="math notranslate nohighlight">
+\[\Omega(3)=\binom{8}{3}=56\]</div>
+<p class="sd-card-text">Entropien er</p>
+<div class="math notranslate nohighlight">
+\[S=k_\mathrm{B}\ln56\approx4{,}03k_\mathrm{B}\]</div>
+<p class="sd-card-text">Når fire partikler er eksiterte, er multiplisiteten</p>
+<div class="math notranslate nohighlight">
+\[\Omega(4)=\binom{8}{4}=70\]</div>
+<p class="sd-card-text">Denne makrotilstanden har derfor størst entropi. Entropien er størst når partiklene er fordelt så jevnt som mulig mellom de to nivåene.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 2: Samme energi, ulike fordelinger</p>
+<p>Fire partikler kan befinne seg på nivåene <span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(\varepsilon\)</span> og <span class="math notranslate nohighlight">\(2\varepsilon\)</span>. Totalenergien er <span class="math notranslate nohighlight">\(E=2\varepsilon\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Finn alle mulige fordelinger <span class="math notranslate nohighlight">\((n_0,n_1,n_2)\)</span>.</p></li>
+<li><p>Beregn multiplisiteten til hver fordeling.</p></li>
+<li><p>Finn den samlede multiplisiteten <span class="math notranslate nohighlight">\(\Omega(E)\)</span>.</p></li>
+<li><p>Dersom alle mikrotilstander med denne energien er like sannsynlige, hva er sannsynligheten for hver av fordelingene?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">De mulige fordelingene er</p>
+<div class="math notranslate nohighlight">
+\[(n_0,n_1,n_2)=(2,2,0)\]</div>
+<p class="sd-card-text">og</p>
+<div class="math notranslate nohighlight">
+\[(n_0,n_1,n_2)=(3,0,1)\]</div>
+<p class="sd-card-text">Multiplisitetene er</p>
+<div class="math notranslate nohighlight">
+\[\Omega(2,2,0)=\frac{4!}{2!2!}=6\]</div>
+<div class="math notranslate nohighlight">
+\[\Omega(3,0,1)=\frac{4!}{3!1!}=4\]</div>
+<p class="sd-card-text">Den samlede multiplisiteten ved denne energien er</p>
+<div class="math notranslate nohighlight">
+\[\Omega(E)=6+4=10\]</div>
+<p class="sd-card-text">Sannsynlighetene for de to fordelingene er dermed</p>
+<div class="math notranslate nohighlight">
+\[P(2,2,0)=\frac{6}{10}=0{,}60\]</div>
+<div class="math notranslate nohighlight">
+\[P(3,0,1)=\frac{4}{10}=0{,}40\]</div>
+<p class="sd-card-text">Fordelingene har samme totalenergi, men ulik sannsynlighet fordi de kan realiseres gjennom ulikt antall mikrotilstander.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 3: Et sporstoff fordeler seg i laboratoriet</p>
+<p>Hundre sporstoffmolekyler slippes inn i kammer A i en beholder som består av to like store kamre. Deretter åpnes ventilen mellom kamrene. Når systemet har kommet til likevekt med ventilen åpen, er hvert molekyl like sannsynlig i A som i B.</p>
+<ol class="arabic simple">
+<li><p>Beregn multiplisiteten når alle molekylene er i A.</p></li>
+<li><p>Beregn multiplisiteten når 50 molekyler er i hvert kammer.</p></li>
+<li><p>Hvor mange ganger mer sannsynlig er fordelingen <span class="math notranslate nohighlight">\(50/50\)</span> enn fordelingen der alle molekylene er i A?</p></li>
+<li><p>Beregn sannsynligheten for hver av de to fordelingene.</p></li>
+<li><p>Beregn standardavviket til antallet molekyler i A.</p></li>
+<li><p>Beregn standardavviket til andelen <span class="math notranslate nohighlight">\(x=n_A/N\)</span> og bredden relativt til middelverdien.</p></li>
+<li><p>Forklar hvordan resultatene illustrerer termodynamikkens andre lov.</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Når alle molekylene er i A, finnes det bare én mikrotilstand:</p>
+<div class="math notranslate nohighlight">
+\[\Omega(100)=1\]</div>
+<p class="sd-card-text">Når 50 molekyler er i hvert kammer, er multiplisiteten</p>
+<div class="math notranslate nohighlight">
+\[\Omega(50)=\binom{100}{50}\approx1{,}01\times10^{29}\]</div>
+<p class="sd-card-text">Fordelingen <span class="math notranslate nohighlight">\(50/50\)</span> er derfor omtrent <span class="math notranslate nohighlight">\(10^{29}\)</span> ganger mer sannsynlig enn fordelingen der alle molekylene er i A.</p>
+<p class="sd-card-text">Det finnes totalt <span class="math notranslate nohighlight">\(2^{100}\)</span> mikrotilstander. Sannsynlighetene blir dermed</p>
+<div class="math notranslate nohighlight">
+\[P(100)=\frac{1}{2^{100}}\approx7{,}9\times10^{-31}\]</div>
+<div class="math notranslate nohighlight">
+\[P(50)=\frac{\binom{100}{50}}{2^{100}}\approx0{,}0796\]</div>
+<p class="sd-card-text">Standardavviket til antallet molekyler i A er</p>
+<div class="math notranslate nohighlight">
+\[\sigma_{n_A}=\frac{\sqrt{N}}{2}=5\]</div>
+<p class="sd-card-text">For andelen <span class="math notranslate nohighlight">\(x=n_A/N\)</span> er standardavviket</p>
+<div class="math notranslate nohighlight">
+\[\sigma_x=\frac{1}{2\sqrt{N}}=0{,}05\]</div>
+<p class="sd-card-text">Middelverdien er <span class="math notranslate nohighlight">\(\mu_x=0{,}5\)</span>. Bredden relativt til middelverdien er derfor</p>
+<div class="math notranslate nohighlight">
+\[\frac{\sigma_x}{\mu_x}=\frac{1}{\sqrt{N}}=0{,}10\]</div>
+<p class="sd-card-text">Med hundre molekyler kan det fortsatt observeres tydelige fluktuasjoner. For ett mol molekyler er den relative bredden omtrent <span class="math notranslate nohighlight">\(10^{-12}\)</span>. Makrotilstander langt fra den jevne fordelingen er da ikke umulige, men så usannsynlige at de ikke observeres som vedvarende makroskopiske tilstander.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 4: Konformasjoner av butan</p>
+<p>Butan kan befinne seg i én transkonformasjon og to energimessig like gauchekonformasjoner. I en forenklet modell setter vi energien til transkonformasjonen lik null. Hver gauchekonformasjon ligger <span class="math notranslate nohighlight">\(3{,}8\ \mathrm{kJ\,mol^{-1}}\)</span> høyere i energi.</p>
+<p>Ved <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span> kan du bruke</p>
+<div class="math notranslate nohighlight">
+\[RT=2{,}48\ \mathrm{kJ\,mol^{-1}}\]</div>
+<ol class="arabic simple">
+<li><p>Beregn Boltzmann-faktoren til én gauchekonformasjon relativt til transkonformasjonen.</p></li>
+<li><p>Hvorfor må bidraget fra gauche multipliseres med 2?</p></li>
+<li><p>Finn partisjonsfunksjonen for denne modellen.</p></li>
+<li><p>Beregn sannsynligheten for trans og den samlede sannsynligheten for gauche.</p></li>
+<li><p>Forklar hvordan energi og degenerasjon konkurrerer om å bestemme fordelingen.</p></li>
+<li><p>Hvilke sannsynligheter nærmer konformasjonene seg ved svært høy temperatur?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Boltzmann-faktoren til én gauchekonformasjon relativt til trans er</p>
+<div class="math notranslate nohighlight">
+\[e^{-\Delta E/RT}=e^{-3{,}8/2{,}48}\approx0{,}216\]</div>
+<p class="sd-card-text">Det finnes to forskjellige gauchekonformasjoner med samme energi. Den samlede vekten til gauche blir derfor</p>
+<div class="math notranslate nohighlight">
+\[2e^{-\Delta E/RT}\approx0{,}432\]</div>
+<p class="sd-card-text">Partisjonsfunksjonen for de tre mikrotilstandene er</p>
+<div class="math notranslate nohighlight">
+\[Q=1+2e^{-\Delta E/RT}\approx1{,}432\]</div>
+<p class="sd-card-text">Sannsynligheten for trans er</p>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{trans}=\frac{1}{Q}\approx0{,}698\]</div>
+<p class="sd-card-text">Den samlede sannsynligheten for gauche er</p>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{gauche}=\frac{2e^{-\Delta E/RT}}{Q}\approx0{,}302\]</div>
+<p class="sd-card-text">Den lave energien favoriserer trans, mens det større antallet tilgjengelige gauchekonformasjoner favoriserer gauche. Fordelingen bestemmes av konkurransen mellom disse bidragene.</p>
+<p class="sd-card-text">Ved svært høy temperatur nærmer alle de tre mikrotilstandene seg samme sannsynlighet. Da får vi</p>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{trans}\rightarrow\frac{1}{3}\]</div>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{gauche}\rightarrow\frac{2}{3}\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 5: Rotasjon og vibrasjon i HCl</p>
+<p>Energigapet mellom de to laveste rotasjonsnivåene i HCl er omtrent <span class="math notranslate nohighlight">\(0{,}25\ \mathrm{kJ\,mol^{-1}}\)</span>. Energigapet mellom den vibrasjonelle grunntilstanden og den første vibrasjonelt eksiterte tilstanden er omtrent <span class="math notranslate nohighlight">\(35\ \mathrm{kJ\,mol^{-1}}\)</span>.</p>
+<p>Ved <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span> kan du bruke <span class="math notranslate nohighlight">\(RT=2{,}48\ \mathrm{kJ\,mol^{-1}}\)</span>. Ved <span class="math notranslate nohighlight">\(600\ \mathrm{K}\)</span> kan du bruke <span class="math notranslate nohighlight">\(RT=4{,}99\ \mathrm{kJ\,mol^{-1}}\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Beregn Boltzmann-faktoren til én mikrotilstand på det første rotasjonelt eksiterte nivået relativt til rotasjonsgrunntilstanden ved <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span>.</p></li>
+<li><p>Rotasjonsgrunntilstanden er ikke degenerert, mens det første eksiterte rotasjonsnivået har degenerasjonen <span class="math notranslate nohighlight">\(g=3\)</span>. Beregn forholdet mellom den samlede populasjonen på de to nivåene.</p></li>
+<li><p>Beregn forholdet mellom populasjonene i den første vibrasjonelt eksiterte tilstanden og vibrasjonsgrunntilstanden ved <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span>. Anta at nivåene ikke er degenererte.</p></li>
+<li><p>Gjenta beregningen for vibrasjon ved <span class="math notranslate nohighlight">\(600\ \mathrm{K}\)</span>.</p></li>
+<li><p>Forklar hvorfor rotasjonelle eksitasjoner er vanlige ved romtemperatur, mens nesten alle HCl-molekylene er i den vibrasjonelle grunntilstanden.</p></li>
+<li><p>Endrer temperaturen energinivåene eller sannsynligheten for å finne molekylene på nivåene?</p></li>
+<li><p>Forklar med reservoarmodellen hvorfor en mikrotilstand med høy energi får en mindre Boltzmann-faktor.</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">For én rotasjonelt eksitert mikrotilstand er forholdet</p>
+<div class="math notranslate nohighlight">
+\[\frac{p_1}{p_0}=e^{-0{,}25/2{,}48}\approx0{,}904\]</div>
+<p class="sd-card-text">Når vi tar hensyn til degenerasjonen til det eksiterte nivået, blir forholdet mellom nivåpopulasjonene</p>
+<div class="math notranslate nohighlight">
+\[\frac{P_1}{P_0}=3e^{-0{,}25/2{,}48}\approx2{,}71\]</div>
+<p class="sd-card-text">Det eksiterte rotasjonsnivået kan dermed ha større samlet populasjon enn grunntilstanden, selv om hver enkelt mikrotilstand på nivået har lavere sannsynlighet enn grunntilstanden.</p>
+<p class="sd-card-text">For vibrasjon ved <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[\frac{P_1}{P_0}=e^{-35/2{,}48}\approx7{,}4\times10^{-7}\]</div>
+<p class="sd-card-text">Ved <span class="math notranslate nohighlight">\(600\ \mathrm{K}\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[\frac{P_1}{P_0}=e^{-35/4{,}99}\approx9{,}0\times10^{-4}\]</div>
+<p class="sd-card-text">Det rotasjonelle energigapet er lite sammenliknet med <span class="math notranslate nohighlight">\(RT\)</span>, mens det vibrasjonelle energigapet er mye større. Derfor er flere rotasjonsnivåer merkbart befolket ved romtemperatur, mens nesten alle molekylene befinner seg i den vibrasjonelle grunntilstanden.</p>
+<p class="sd-card-text">Temperaturen endrer ikke de tillatte energinivåene i denne modellen. Den endrer sannsynligheten for å finne molekylene på nivåene.</p>
+<p class="sd-card-text">Når molekylet befinner seg i en mikrotilstand med høy energi, må reservoaret ha tilsvarende mindre energi. Reservoaret får da færre tilgjengelige mikrotilstander. Derfor finnes det færre mikrotilstander for totalsystemet som er forenlige med den energirike mikrotilstanden til molekylet.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 6: Vurder en simuleringsrapport</p>
+<p>En student har brukt simuleringene i kapitlet og skrevet følgende konklusjon:</p>
+<blockquote>
+<div><p>Ved likevekt har systemet sluttet å skifte mikrotilstand. Når temperaturen øker, flyttes energinivåene oppover. Energien med størst multiplisitet er alltid mest sannsynlig. Når antallet partikler øker, blir sannsynlighetsfordelingen smalere målt i antall partikler.</p>
+</div></blockquote>
+<p>Vurder hver av påstandene. Forklar hva som er feil eller upresist, og skriv en faglig bedre versjon.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Likevekt betyr ikke at systemet har sluttet å skifte mikrotilstand. Systemet fortsetter å bevege seg mellom mikrotilstander, men befinner seg oftest i makrotilstander nær den mest sannsynlige fordelingen.</p>
+<p class="sd-card-text">Temperaturen flytter ikke energinivåene i modellene vi har brukt. Den endrer Boltzmann-faktorene og dermed sannsynligheten for å finne systemet på de ulike nivåene.</p>
+<p class="sd-card-text">Energien med størst multiplisitet er ikke nødvendigvis mest sannsynlig når systemet har en bestemt temperatur. Sannsynligheten for en energi bestemmes av både multiplisiteten og Boltzmann-faktoren:</p>
+<div class="math notranslate nohighlight">
+\[P(E)\propto\Omega(E)e^{-E/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Når antallet partikler øker, blir fordelingen vanligvis bredere målt i antall partikler:</p>
+<div class="math notranslate nohighlight">
+\[\sigma_{n_A}=\frac{\sqrt{N}}{2}\]</div>
+<p class="sd-card-text">Den blir samtidig smalere relativt til systemets størrelse:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\sigma_x}{\mu_x}=\frac{1}{\sqrt{N}}\]</div>
+<p class="sd-card-text">Det er den stadig mindre relative bredden som gjør makroskopisk likevekt stabil og forutsigbar.</p>
+</div>
+</details></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="1_introduksjon.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Fra molekyler til termodynamikk</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="3_partisjonsfunksjonen.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Partisjonsfunksjonen og molekylær energi</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-multiplisitet-til-entropi">Fra multiplisitet til entropi</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksempel-gass-i-to-kamre">Eksempel: gass i to kamre</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#eksempel-energi-fordelt-pa-to-og-tre-nivaer">Eksempel: Energi fordelt på to og tre nivåer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#termodynamikkens-andre-lov-som-statistisk-lov">Termodynamikkens andre lov som statistisk lov</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#energifordeling-og-termisk-likevekt">Energifordeling og termisk likevekt</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur">Temperatur</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-entropimaksimum-til-boltzmann-fordelingen">Fra entropimaksimum til Boltzmann-fordelingen</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#entropi-uttrykt-ved-sannsynligheter-gibbs-entropien">Entropi uttrykt ved sannsynligheter: Gibbs-entropien</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-gibbs-entropien-til-boltzmann-fordelingen">Fra Gibbs-entropien til Boltzmann-fordelingen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utforsk-boltzmann-fordelingen">Utforsk Boltzmann-fordelingen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videre-til-partisjonsfunksjonen">Videre til partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

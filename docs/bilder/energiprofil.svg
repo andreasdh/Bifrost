@@ -1,0 +1,56 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 400" font-family="Georgia, 'Iowan Old Style', serif">
+  <defs>
+    <marker id="ax" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 3.5 L 0 7 z" fill="#6b6252"/>
+    </marker>
+    <marker id="eaTop" markerWidth="8" markerHeight="8" refX="4" refY="1" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 7 L 4 0 L 8 7" fill="none" stroke="#c0392b" stroke-width="1.4"/>
+    </marker>
+    <marker id="eaBot" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 1 L 4 8 L 8 1" fill="none" stroke="#c0392b" stroke-width="1.4"/>
+    </marker>
+    <marker id="dTop" markerWidth="8" markerHeight="8" refX="4" refY="1" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 7 L 4 0 L 8 7" fill="none" stroke="#1a7a4c" stroke-width="1.4"/>
+    </marker>
+    <marker id="dBot" markerWidth="8" markerHeight="8" refX="4" refY="7" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 1 L 4 8 L 8 1" fill="none" stroke="#1a7a4c" stroke-width="1.4"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="700" height="400" fill="#f5f2ea"/>
+
+  <!-- title -->
+  <text x="350" y="34" text-anchor="middle" font-size="18" fill="#1c2321" font-weight="600">Energiprofil for en reaksjon</text>
+
+  <!-- axes -->
+  <line x1="90" y1="330" x2="640" y2="330" stroke="#6b6252" stroke-width="1.6" marker-end="url(#ax)"/>
+  <line x1="90" y1="330" x2="90" y2="70" stroke="#6b6252" stroke-width="1.6" marker-end="url(#ax)"/>
+  <text x="70" y="76" text-anchor="middle" font-size="13.5" fill="#1c2321" font-style="italic">E</text>
+
+  <!-- reference dashed levels -->
+  <line x1="90" y1="250" x2="350" y2="250" stroke="#7d7566" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.6"/>
+  <line x1="350" y1="290" x2="610" y2="290" stroke="#7d7566" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.6"/>
+  <line x1="200" y1="110" x2="470" y2="110" stroke="#7d7566" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.5"/>
+
+  <!-- the energy profile curve -->
+  <path d="M 90.0 250.0 L 110.8 250.0 L 131.6 250.0 L 147.2 249.2 L 162.8 249.5 L 178.4 249.4 L 188.8 248.5 L 199.2 246.8 L 209.6 244.0 L 220.0 239.7 L 230.4 233.8 L 240.8 225.9 L 251.2 216.0 L 261.6 204.1 L 272.0 190.6 L 282.4 175.7 L 292.8 160.4 L 303.2 145.5 L 313.6 132.0 L 324.0 121.1 L 334.4 113.5 L 344.8 110.0 L 350.0 110.0 L 355.2 111.1 L 365.6 116.6 L 376.0 126.3 L 386.4 139.4 L 396.8 155.0 L 407.2 172.0 L 417.6 189.4 L 428.0 206.3 L 438.4 222.0 L 448.8 236.0 L 459.2 248.0 L 469.6 258.0 L 480.0 266.1 L 490.4 272.4 L 500.8 277.4 L 511.2 281.2 L 521.6 284.1 L 532.0 286.4 L 542.4 288.3 L 552.8 290.0 L 573.6 290.0 L 599.6 290.0 L 610.0 290.0"
+        fill="none" stroke="#1f5f8b" stroke-width="2.8"/>
+
+  <!-- reactant / product / transition-state labels -->
+  <text x="150" y="242" text-anchor="middle" font-size="12.5" fill="#1c2321">reaktanter</text>
+  <text x="558" y="308" text-anchor="middle" font-size="12.5" fill="#1c2321">produkter</text>
+  <circle cx="350" cy="110" r="4.5" fill="#8e44ad"/>
+  <text x="350" y="98" text-anchor="middle" font-size="12" fill="#8e44ad" font-family="'SF Mono', monospace">overgangstilstand</text>
+  <text x="350" y="84" text-anchor="middle" font-size="11" fill="#8e44ad" font-family="'SF Mono', monospace">(aktivert kompleks)</text>
+
+  <!-- Ea double arrow: from reactant level (250) up to peak (110), at x=200 -->
+  <line x1="200" y1="248" x2="200" y2="112" stroke="#c0392b" stroke-width="1.4"
+        marker-start="url(#eaBot)" marker-end="url(#eaTop)"/>
+  <text x="190" y="184" text-anchor="end" font-size="13" fill="#c0392b" font-family="'SF Mono', monospace">E&#8336;</text>
+
+  <!-- Delta E double arrow: centred under the peak (x=350), joining the two dashed levels -->
+  <line x1="350" y1="252" x2="350" y2="288" stroke="#1a7a4c" stroke-width="1.4"
+        marker-start="url(#dTop)" marker-end="url(#dBot)"/>
+  <text x="362" y="274" text-anchor="start" font-size="12.5" fill="#1a7a4c" font-family="'SF Mono', monospace">&#916;E</text>
+
+</svg>

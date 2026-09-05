@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hva avgjør om en prosess er spontan?</title>
+<style>
+  :root{
+    --bg:#0e1a20;
+    --card:#13212b;
+    --panel:#1a2c38;
+    --line:#26414f;
+    --ice:#7fc4e8;
+    --warm:#e8a13a;
+    --cold:#6ea8d8;
+    --text:#e4edf2;
+    --muted:#8ba3b2;
+    --spont:#6fcf97;
+    --spont-bg:#16302370;
+    --nospont:#e88a8a;
+    --nospont-bg:#3a1e1e70;
+    --eq:#e8b84a;
+    --eq-bg:#33291270;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:24px;
+    background:#f4f1ea;
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    color:var(--text);
+    display:flex; justify-content:center;
+  }
+  .card{
+    width:100%; max-width:640px;
+    background:var(--bg);
+    border-radius:18px;
+    padding:26px 28px 30px;
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+  }
+  h1{ text-align:center; margin:.1em 0 .3em; font-size:1.5rem; font-weight:600; }
+  .lede{ text-align:center; color:var(--muted); font-size:.92rem; line-height:1.5; margin:0 auto 18px; max-width:480px; }
+  .emoji{ text-align:center; font-size:2.6rem; margin:8px 0 14px; height:44px; }
+  .sliderRow{ display:flex; align-items:center; gap:14px; margin:6px 0 20px; }
+  .sliderRow .lab{ color:var(--muted); font-size:1rem; }
+  .sliderRow .tval{ color:var(--warm); font-weight:700; min-width:66px; text-align:right; font-size:1rem; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; flex:1; height:8px; border-radius:5px;
+    background:linear-gradient(90deg,var(--cold),#4a6b82 45%,#c98a3a 75%,var(--warm)); outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:22px; height:22px; border-radius:50%;
+    background:var(--warm); cursor:pointer; border:3px solid #fff3; box-shadow:0 2px 6px #0006;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:22px; height:22px; border-radius:50%;
+    background:var(--warm); cursor:pointer; border:3px solid #fff3;
+  }
+  .values{
+    background:var(--panel); border:1px solid var(--line);
+    border-radius:12px; padding:16px 20px; text-align:center; line-height:2;
+    font-size:1.02rem;
+  }
+  .values .v{ color:var(--warm); font-weight:700; }
+  .values .fixed{ color:var(--muted); font-size:.85rem; }
+  .values .big{ font-size:1.1rem; }
+  .verdict{
+    margin-top:14px; padding:14px 18px; border-radius:12px; text-align:center;
+    font-weight:700; font-size:1.05rem; border:1px solid transparent;
+    transition:background .3s, color .3s, border-color .3s;
+  }
+  .graphWrap{ margin-top:18px; }
+  canvas{ width:100%; display:block; border-radius:10px; background:var(--panel); border:1px solid var(--line); }
+  .graphCap{ text-align:center; color:var(--muted); font-size:.8rem; margin-top:8px; line-height:1.45; }
+  .foot{ text-align:center; color:var(--muted); font-size:.8rem; margin-top:16px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hva avgjør om en prosess er spontan?</h1>
+  <p class="lede">Is smelter til vann. &Delta;H og &Delta;S er faste — bare temperaturen endres. Dra i skyveren og se når smelting blir spontan.</p>
+
+  <div class="emoji" id="emoji">❄️</div>
+
+  <div class="sliderRow">
+    <span class="lab">T:</span>
+    <input type="range" id="temp" min="-40" max="40" value="-10" step="1">
+    <span class="tval" id="tval">−10 °C</span>
+  </div>
+
+  <div class="values">
+    <div>&Delta;H = <span class="v">+6,01 kJ/mol</span> <span class="fixed">(fast)</span></div>
+    <div>&Delta;S = <span class="v">+22,0 J/(mol·K)</span> <span class="fixed">(fast)</span></div>
+    <div>T&Delta;S = <span class="v" id="tds">–</span> kJ/mol</div>
+    <div class="big">&Delta;G = &Delta;H − T&Delta;S = <span class="v" id="dg">–</span> kJ/mol</div>
+  </div>
+
+  <div class="verdict" id="verdict">–</div>
+
+  <div class="graphWrap">
+    <canvas id="graph" width="580" height="220"></canvas>
+    <div class="graphCap">&Delta;G mot temperatur. Der linja krysser null (0 °C) bytter smelting fra ikke-spontan til spontan.</div>
+  </div>
+
+  <p class="foot">Med disse verdiene ligger smeltepunktet (&Delta;G = 0) akkurat ved 0 °C (273,15 K) — slik det skal for is.</p>
+</div>
+
+<script>
+(() => {
+  const dH = 6.01;            // kJ/mol
+  const dS = 22.0/1000;       // kJ/(mol·K)
+  const tempEl = document.getElementById('temp');
+  const g = document.getElementById('graph').getContext('2d');
+  const gc = document.getElementById('graph');
+
+  function fmt(x){ return (x>=0?'+':'−') + Math.abs(x).toFixed(2); }
+
+  function dgAt(tC){ const T=tC+273.15; return dH - T*dS; }
+
+  function update(){
+    const tC = +tempEl.value;
+    const T = tC + 273.15;
+    const tds = T*dS;
+    const dg = dH - tds;
+
+    document.getElementById('tval').textContent = (tC<0?'−':'') + Math.abs(tC) + ' °C';
+    document.getElementById('tds').textContent = tds.toFixed(2);
+    document.getElementById('dg').textContent = fmt(dg);
+
+    const v = document.getElementById('verdict');
+    const e = document.getElementById('emoji');
+    if(dg < -0.05){
+      v.textContent = 'Spontant: is smelter (ΔG < 0)';
+      v.style.background = 'var(--spont-bg)'; v.style.color='var(--spont)'; v.style.borderColor='#2e6b4a';
+      e.textContent = '💧';
+    } else if(dg > 0.05){
+      v.textContent = 'Ikke spontant: vann fryser i stedet (ΔG > 0)';
+      v.style.background = 'var(--nospont-bg)'; v.style.color='var(--nospont)'; v.style.borderColor='#6b2e2e';
+      e.textContent = '❄️';
+    } else {
+      v.textContent = 'Likevekt: is og vann side om side (ΔG ≈ 0)';
+      v.style.background = 'var(--eq-bg)'; v.style.color='var(--eq)'; v.style.borderColor='#6b5a2e';
+      e.textContent = '⚖️';
+    }
+    drawGraph(tC, dg);
+  }
+
+  function drawGraph(curT, curDg){
+    const w=gc.width, h=gc.height;
+    g.clearRect(0,0,w,h);
+    const pad={l:44,r:14,t:14,b:26};
+    const pw=w-pad.l-pad.r, ph=h-pad.t-pad.b;
+    const tMin=-40, tMax=40;
+    const dgMin=-1.0, dgMax=1.0;
+
+    const X = t => pad.l + ((t-tMin)/(tMax-tMin))*pw;
+    const Y = d => pad.t + ((dgMax-d)/(dgMax-dgMin))*ph;
+
+    // zero line
+    g.strokeStyle='#3a5568'; g.lineWidth=1; g.setLineDash([4,3]);
+    g.beginPath(); g.moveTo(pad.l,Y(0)); g.lineTo(w-pad.r,Y(0)); g.stroke();
+    g.setLineDash([]);
+    // 0 °C vertical
+    g.strokeStyle='#3a5568'; g.beginPath(); g.moveTo(X(0),pad.t); g.lineTo(X(0),pad.t+ph); g.stroke();
+
+    // shade spontan region (dg<0)
+    g.fillStyle='rgba(111,207,151,0.08)';
+    g.fillRect(pad.l, Y(0), pw, pad.t+ph-Y(0));
+    g.fillStyle='rgba(232,138,138,0.07)';
+    g.fillRect(pad.l, pad.t, pw, Y(0)-pad.t);
+
+    // dG line
+    g.strokeStyle='#e8a13a'; g.lineWidth=2.6; g.beginPath();
+    let first=true;
+    for(let t=tMin;t<=tMax;t+=1){
+      const x=X(t), y=Y(dgAt(t));
+      if(first){g.moveTo(x,y);first=false;} else g.lineTo(x,y);
+    }
+    g.stroke();
+
+    // current point
+    g.fillStyle = curDg<-0.05?'#6fcf97':(curDg>0.05?'#e88a8a':'#e8b84a');
+    g.beginPath(); g.arc(X(curT),Y(curDg),5.5,0,2*Math.PI); g.fill();
+    g.strokeStyle='#fff8'; g.lineWidth=1.5; g.stroke();
+
+    // labels
+    g.fillStyle='#8ba3b2'; g.font='11px Georgia'; g.textAlign='center';
+    g.fillText('0 °C', X(0), pad.t+ph+16);
+    g.fillText('−40', X(-40), pad.t+ph+16);
+    g.fillText('40 °C', X(40), pad.t+ph+16);
+    g.textAlign='right';
+    g.fillText('ΔG', pad.l-8, pad.t+8);
+    g.fillText('+1', pad.l-8, Y(1)+4);
+    g.fillText('0', pad.l-8, Y(0)+4);
+    g.fillText('−1', pad.l-8, Y(-1)+4);
+  }
+
+  tempEl.addEventListener('input', update);
+  update();
+})();
+</script>
+</body>
+</html>

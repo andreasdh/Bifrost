@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 450" font-family="Arial, sans-serif">
+  <!-- x in [-1,4] (5 units), y in [-2,6] (8 units) -->
+  <!-- px = 70 + (x+1)*152 ; py = 40 + (6-y)*46.25 -->
+  <!-- x=-1->70 ; x=0->222 ; x=1->374 ; x=2->526 ; x=3->678 ; x=4->830 -->
+  <!-- y=0->317.5 ; y=1->271.25 ; y=2->225 ; y=-1->363.75 -->
+  <rect x="0" y="0" width="900" height="450" fill="white"/>
+
+  <!-- Grid -->
+  <g stroke="#e0e0e0" stroke-width="1">
+    <line x1="70"  y1="40" x2="70"  y2="410"/>
+    <line x1="222" y1="40" x2="222" y2="410"/>
+    <line x1="374" y1="40" x2="374" y2="410"/>
+    <line x1="526" y1="40" x2="526" y2="410"/>
+    <line x1="678" y1="40" x2="678" y2="410"/>
+    <line x1="830" y1="40" x2="830" y2="410"/>
+    <line x1="70" y1="40"     x2="830" y2="40"/>
+    <line x1="70" y1="86.25"  x2="830" y2="86.25"/>
+    <line x1="70" y1="132.5"  x2="830" y2="132.5"/>
+    <line x1="70" y1="178.75" x2="830" y2="178.75"/>
+    <line x1="70" y1="225"    x2="830" y2="225"/>
+    <line x1="70" y1="271.25" x2="830" y2="271.25"/>
+    <line x1="70" y1="317.5"  x2="830" y2="317.5"/>
+    <line x1="70" y1="363.75" x2="830" y2="363.75"/>
+    <line x1="70" y1="410"    x2="830" y2="410"/>
+  </g>
+
+  <!-- Axes: y-axis x=0 -> 222 ; x-axis y=0 -> 317.5 -->
+  <g stroke="#333" stroke-width="2">
+    <line x1="222" y1="40" x2="222" y2="410"/>
+    <line x1="70" y1="317.5" x2="830" y2="317.5"/>
+  </g>
+  <polygon points="222,34 217,46 227,46" fill="#333"/>
+  <polygon points="836,317.5 824,312.5 824,322.5" fill="#333"/>
+
+  <!-- x tick numbers -->
+  <g font-size="14" fill="#333" text-anchor="middle">
+    <text x="374" y="337">1</text>
+    <text x="526" y="337">2</text>
+    <text x="678" y="337">3</text>
+  </g>
+  <!-- y tick numbers -->
+  <g font-size="14" fill="#333" text-anchor="end">
+    <text x="214" y="91">5</text>
+    <text x="214" y="137">4</text>
+    <text x="214" y="183">3</text>
+    <text x="214" y="230">2</text>
+    <text x="214" y="276">1</text>
+    <text x="214" y="368">-1</text>
+  </g>
+
+  <!-- axis labels -->
+  <text x="234" y="52" font-size="16" fill="#333" font-style="italic">y</text>
+  <text x="824" y="310" font-size="16" fill="#333" font-style="italic">x</text>
+
+  <!-- Line f(x)=x+1 with gap at hole (374,225) -->
+  <!-- x=-1 -> (70, y=0 ->317.5) ; x=4 -> (830, y=5 ->86.25) -->
+  <g stroke="#1565c0" stroke-width="3" fill="none">
+    <line x1="70" y1="317.5" x2="370" y2="228" />
+    <line x1="378" y1="222" x2="830" y2="86.25" />
+  </g>
+
+  <!-- Open circle (hole) at (1,2) -> (374,225) -->
+  <circle cx="374" cy="225" r="6" fill="white" stroke="#1565c0" stroke-width="3"/>
+
+  <!-- Curved arrow -->
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <polygon points="0,0 8,3 0,6" fill="#d32f2f"/>
+    </marker>
+  </defs>
+  <path d="M 540 300 Q 445 305 390 235" stroke="#d32f2f" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <text x="545" y="304" font-size="14" fill="#d32f2f">Hull i (x,y)=(1,2)</text>
+
+  <!-- Function label with real stacked fraction, above the graph over the hole -->
+  <g fill="#1565c0" font-style="italic">
+    <text x="300" y="112" font-size="18">f(x) =</text>
+    <text x="392" y="104" font-size="16" text-anchor="middle">x&#178; &#8722; 1</text>
+    <line x1="368" y1="110" x2="416" y2="110" stroke="#1565c0" stroke-width="1.5"/>
+    <text x="392" y="127" font-size="16" text-anchor="middle">x &#8722; 1</text>
+  </g>
+</svg>

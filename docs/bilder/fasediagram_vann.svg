@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 480" font-family="Georgia, 'Iowan Old Style', serif">
+  <defs>
+    <marker id="arrowGray" markerWidth="10" markerHeight="10" refX="7" refY="3.5"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 3.5 L 0 7 z" fill="#6b6252"/>
+    </marker>
+    <marker id="arrowRed" markerWidth="9" markerHeight="9" refX="6.5" refY="3"
+            orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 7 3 L 0 6 z" fill="#c0392b"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="640" height="480" fill="#f5f2ea"/>
+
+  <!-- title -->
+  <text x="320" y="42" text-anchor="middle" font-size="19" fill="#1c2321" font-weight="600">Fasediagram for vann</text>
+
+  <!-- ==== faint phase-region tints ==== -->
+  <!-- solid: left of fusion line and above the bent sublimation line, faint green -->
+  <path d="M 90 410 L 90 72 L 168 72 L 200 320 Q 188 405 155 410 Z" fill="#1a7a4c" fill-opacity="0.06"/>
+  <!-- liquid (blue): above the coexistence curve. Past the critical point the border
+       continues along the curve's tangent up to the top-right, so the little corner
+       rectangle is split diagonally (blue above the divide, amber below). -->
+  <path d="M 168 72 L 200 320 Q 360 315 470 150 L 515 82.5 L 515 72 Z" fill="#1f5f8b" fill-opacity="0.06"/>
+  <!-- gas (amber): below the SAME coexistence curve + its diagonal extension -->
+  <path d="M 155 410 Q 188 405 200 320 Q 360 315 470 150 L 515 82.5 L 515 410 Z"
+        fill="#d68910" fill-opacity="0.06"/>
+
+  <!-- ==== axes (T-axis cut just past critical point) ==== -->
+  <line x1="90" y1="410" x2="515" y2="410" stroke="#6b6252" stroke-width="1.6" marker-end="url(#arrowGray)"/>
+  <line x1="90" y1="410" x2="90" y2="72" stroke="#6b6252" stroke-width="1.6" marker-end="url(#arrowGray)"/>
+  <text x="511" y="432" text-anchor="end" font-size="14" fill="#1c2321" font-style="italic">T</text>
+  <text x="74" y="82" text-anchor="middle" font-size="14" fill="#1c2321" font-style="italic">P</text>
+
+  <!-- ==== phase-boundary lines (grey, no arrow tips) ==== -->
+  <path d="M 200 320 L 168 72" fill="none" stroke="#6b6252" stroke-width="2.4"/>
+  <path d="M 155 410 Q 188 405 200 320" fill="none" stroke="#6b6252" stroke-width="2.4"/>
+  <path d="M 200 320 Q 360 315 470 150" fill="none" stroke="#6b6252" stroke-width="2.4"/>
+
+  <!-- ==== region labels ==== -->
+  <text x="120" y="196" text-anchor="middle" font-size="14" fill="#1a7a4c" font-weight="600">fast</text>
+  <text x="120" y="214" text-anchor="middle" font-size="14" fill="#1a7a4c" font-weight="600">stoff</text>
+  <text x="290" y="140" text-anchor="middle" font-size="14" fill="#1f5f8b" font-weight="600">v&#230;ske</text>
+  <text x="330" y="385" text-anchor="middle" font-size="14" fill="#a8690b" font-weight="600">gass</text>
+
+  <!-- ==== triple point (red callout) ==== -->
+  <circle cx="200" cy="320" r="5.5" fill="#c0392b"/>
+  <line x1="238" y1="348" x2="208" y2="326" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arrowRed)"/>
+  <text x="242" y="352" text-anchor="start" font-size="12.5" fill="#c0392b"
+        font-family="'SF Mono', monospace">trippelpunkt</text>
+
+  <!-- ==== critical point (red callout, arrow up from below) ==== -->
+  <circle cx="470" cy="150" r="5.5" fill="#c0392b"/>
+  <line x1="470" y1="120" x2="470" y2="142" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arrowRed)"/>
+  <text x="470" y="112" text-anchor="middle" font-size="12.5" fill="#c0392b"
+        font-family="'SF Mono', monospace">kritisk punkt</text>
+
+  <!-- ==== coexistence line callout (red), far right, arrow up onto the curve from below ==== -->
+  <line x1="410" y1="290" x2="410" y2="230" stroke="#c0392b" stroke-width="1.2" marker-end="url(#arrowRed)"/>
+  <text x="410" y="308" text-anchor="middle" font-size="12" fill="#c0392b"
+        font-family="'SF Mono', monospace">koeksistenslinje</text>
+</svg>

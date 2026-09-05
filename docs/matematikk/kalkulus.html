@@ -1,0 +1,2318 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>4. Funksjoner, derivasjon og integrasjon &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/matematikk/kalkulus';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="5. Flervariabel kalkulus og optimering" href="flervariabel_kalkulus.html" />
+    <link rel="prev" title="3. Sannsynlighet" href="sannsynlighet.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/matematikk/kalkulus.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>4. Funksjoner, derivasjon og integrasjon</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjoner">4.1 Funksjoner</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjon-definisjonmengde-og-verdiomrade">4.1.1 Funksjon, definisjonmengde og verdiområde</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representasjon-av-funksjoner">4.1.2 Representasjon av funksjoner</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jevne-og-odde-funksjoner">4.2 Jevne og odde funksjoner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grenseverdier-og-kontinuitet">4.3 Grenseverdier og kontinuitet</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grenseverdier">4.3.1 Grenseverdier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuitet">4.3.2 Kontinuitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivasjon">4.4 Derivasjon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gjennomsnittlig-endringsrate">4.4.1 Gjennomsnittlig endringsrate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisjonen-av-den-deriverte">4.4.2 Definisjonen av den deriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstremalpunkter">4.4.3 Ekstremalpunkter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoyere-ordens-deriverte">4.4.4 Høyere-ordens deriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#de-deriverte-til-kjente-funksjoner">4.4.5 De deriverte til kjente funksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivasjonsregler">4.4.6 Derivasjonsregler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasjon">4.5 Integrasjon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#den-antideriverte">4.5.1 Den antideriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ubestemte-integraler-og-integrasjonskonstanten">4.5.2 Ubestemte integraler og integrasjonskonstanten</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integralene-til-kjente-funksjoner">4.5.3 Integralene til kjente funksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#det-bestemte-integralet-og-riemann-summer">4.5.4 Det bestemte integralet og Riemann-summer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasjonsregler">4.5.5 Integrasjonsregler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differensiallikninger">4.6 Differensiallikninger</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="funksjoner-derivasjon-og-integrasjon">
+<h1>4. Funksjoner, derivasjon og integrasjon<a class="headerlink" href="#funksjoner-derivasjon-og-integrasjon" title="Link to this heading">#</a></h1>
+<p>Der de to foregående delene handlet om usikkerhet og telling, handler kalkulus om <em>endring</em>. Hvor raskt stiger temperaturen? Hvor mye arbeid utføres når en gass utvider seg? Hvordan finner vi det punktet der energien er lavest?</p>
+<p>Kalkulus gir oss to verktøy som svarer på hver sin side av dette. <strong>Derivasjon</strong> måler hvor raskt noe endrer seg akkurat nå, og <strong>integrasjon</strong> summerer opp mange små bidrag til en helhet. Det som gjør kalkulus til noe mer enn to regneteknikker, er at disse to viser seg å være hverandres motsatte.</p>
+<p>For en kjemiker er kalkulus arbeidsspråket i store deler av faget. Reaksjonskinetikk handler om den deriverte av konsentrasjon med hensyn på tid. Termodynamikk er full av partiellderiverte som <span class="math notranslate nohighlight">\(\left(\frac{\partial P}{\partial T}\right)_V\)</span>, der vi spør hvordan én størrelse endrer seg mens andre holdes fast. Arbeidet en gass utfører er et integral, <span class="math notranslate nohighlight">\(W=-\int P\,dV\)</span>, og normaliseringen av en orbital er et trippelintegral over hele rommet.</p>
+<section id="funksjoner">
+<h2>4.1 Funksjoner<a class="headerlink" href="#funksjoner" title="Link to this heading">#</a></h2>
+<p>Allerede i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/formler_og_enheter.html#mengdelaere">1.2 Mengdelære</a> gjennomgikk vi mengder, og nå skal vi se på hvordan funksjoner knytter to eller samme mengde sammen. <strong>Funksjoner</strong> i matematikk er regler som forbinder hvert eneste tall i en mengde med ett og bare ett tall i en annen eller samme mengde. Du er allerede kjent med flere funksjoner, som for eksempel funksjonen for arealet av en sirkel gitt dens radius, pH-en til en løsning gitt dens syrekonsentrasjon eller antall H-atomer i et alkan gitt antallet C-atomer.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">For et alkan med et heltall <span class="math notranslate nohighlight">\(n\)</span> antall C-atomer, er antallet H-atomer <span class="math notranslate nohighlight">\(H\)</span> gitt ved funksjonen</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(H=2n+2\)</span></p>
+<p class="sd-card-text">Dette er en funksjon fordi for hver <span class="math notranslate nohighlight">\(n\)</span> får vi nøyaktig én <span class="math notranslate nohighlight">\(H\)</span>. Vi kan også skrive <span class="math notranslate nohighlight">\(H(n)\)</span> for <span class="math notranslate nohighlight">\(H\)</span> for å spesifisere at <span class="math notranslate nohighlight">\(H\)</span> er en funksjon av <span class="math notranslate nohighlight">\(n\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(H(n)=2n+2\)</span></p>
+</div>
+</div>
+<section id="funksjon-definisjonmengde-og-verdiomrade">
+<span id="id1"></span><h3>4.1.1 Funksjon, definisjonmengde og verdiområde<a class="headerlink" href="#funksjon-definisjonmengde-og-verdiomrade" title="Link to this heading">#</a></h3>
+<p>Som du nå ser kan funksjoner brukes til å si noe om hvordan en størrelse varierer med en annen størrelse. Derfor er det naturlig å finne ut nøyaktig hva vi kan si om disse såkalte funksjonene. Vi begynner med definisjonen av en <strong>funksjon</strong>, og dens <strong>definisjonsmengde</strong> og <strong>verdiområde</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.1 - Funksjon av én variabel</p>
+<p><em>Intuitivt:</em> En funksjon <span class="math notranslate nohighlight">\(f\)</span> er en regel som tildeler hver verdi <span class="math notranslate nohighlight">\(x\)</span> nøyaktig én verdi <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+<p><em>Matematisk:</em> La <span class="math notranslate nohighlight">\(X\)</span> og <span class="math notranslate nohighlight">\(Y\)</span> være to mengder. En funksjon <span class="math notranslate nohighlight">\(f\)</span> fra <span class="math notranslate nohighlight">\(X\)</span> til <span class="math notranslate nohighlight">\(Y\)</span>, tildeler hvert element <span class="math notranslate nohighlight">\(x \in X\)</span> nøyaktig ett element i <span class="math notranslate nohighlight">\(Y\)</span>, <span class="math notranslate nohighlight">\(f(x)\)</span>.</p>
+<p>Vi bruker følgende notasjon:</p>
+<p><span class="math notranslate nohighlight">\(f:X \rightarrow Y\)</span></p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.2 - Definisjonsmengde og verdiområde</p>
+<p>La <span class="math notranslate nohighlight">\(f:X \to Y\)</span> være en funksjon fra <span class="math notranslate nohighlight">\(X\)</span> til <span class="math notranslate nohighlight">\(Y\)</span>. Da kalles <span class="math notranslate nohighlight">\(X\)</span> for <strong>definisjonsmengden</strong> til <span class="math notranslate nohighlight">\(f\)</span>, mens <span class="math notranslate nohighlight">\(Y\)</span> kalles for <strong>verdiområdet</strong>.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(H:\{1,2,3,4,5\} \to N\)</span> være funksjonen for antallet H-atomer <span class="math notranslate nohighlight">\(H(n)\)</span> i et alkan med <span class="math notranslate nohighlight">\(n\)</span>-antall C-atomer, gitt ved</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(H(n)=2n+2\)</span></p>
+<p class="sd-card-text">a) Hva er definisjonsområdet til <span class="math notranslate nohighlight">\(H\)</span>?</p>
+<p class="sd-card-text">Definisjonsmengden er <span class="math notranslate nohighlight">\(\{1,2,3,4,5\}\)</span> og sier noe om hvilke <span class="math notranslate nohighlight">\(n\)</span>-verdier vi ser på. Merk at dette er en diskret definisjonsmengde fordi vi ikke har alle tallene mellom <span class="math notranslate nohighlight">\(1\)</span> og <span class="math notranslate nohighlight">\(5\)</span>, men spesifikt <span class="math notranslate nohighlight">\(1,2,3,4\)</span> eller <span class="math notranslate nohighlight">\(5\)</span>. Med andre ord ser vi på metan, etan, propan, butan og pentan.</p>
+<p class="sd-card-text">b) Hva er verdiområdet til <span class="math notranslate nohighlight">\(H\)</span>?</p>
+<p class="sd-card-text">Verdiområdet er <span class="math notranslate nohighlight">\(N\)</span>, altså de naturlige tallene. Det betyr at antallet H-atomer <span class="math notranslate nohighlight">\(H(n)\)</span> er et naturlig tall.</p>
+</div>
+</div>
+</section>
+<section id="representasjon-av-funksjoner">
+<h3>4.1.2 Representasjon av funksjoner<a class="headerlink" href="#representasjon-av-funksjoner" title="Link to this heading">#</a></h3>
+<p>Vi er ferdig med første steg, nemlig definisjonen av en funksjon. Allerede nå har vi fått to nye begreper å beskrive funksjoner med - definisjonsmengde og verdiområde. Før vi går videre, skal vi se på noen måter å representere funksjoner på. Du er allerede kjent med grafer og algebraisk representasjon (formelen for funksjonen). Det er i hovedsak disse representasjonene som er mest relevante for deg som kjemistudent, men det finnes også flere!</p>
+<p><img alt="Ulike representasjoner av funksjoner" src="../../_images/funksjon_representasjoner.svg" /></p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 4.1</p>
+<p>En rett sylinder har en fast høyde på <span class="math notranslate nohighlight">\(10\)</span> cm. Volumet <span class="math notranslate nohighlight">\(V\)</span> (i cm³) avhenger av radien <span class="math notranslate nohighlight">\(r\)</span> (i cm) gjennom <span class="math notranslate nohighlight">\(V(r)=10 \cdot \pi r^2\)</span>.</p>
+<p>a) Forklar hvorfor <span class="math notranslate nohighlight">\(V\)</span> er en funksjon av <span class="math notranslate nohighlight">\(r\)</span>.</p>
+<p>b) Hva er en naturlig definisjonsmengde for <span class="math notranslate nohighlight">\(V(r)\)</span> når vi tenker på en fysisk sylinder?</p>
+<p>c) Regn ut <span class="math notranslate nohighlight">\(V(2)\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 4.1</p>
+<p>a) <span class="math notranslate nohighlight">\(V\)</span> er en funksjon av <span class="math notranslate nohighlight">\(r\)</span> fordi hver verdi av radien <span class="math notranslate nohighlight">\(r\)</span> gir nøyaktig én verdi av volumet <span class="math notranslate nohighlight">\(V\)</span>. Dette er nettopp kravet fra Def. 4.1.</p>
+<p>b) Radien til en fysisk sylinder må være positiv, så en naturlig definisjonsmengde er alle positive reelle tall, altså <span class="math notranslate nohighlight">\(r&gt;0\)</span>. (Vi kan eventuelt ta med <span class="math notranslate nohighlight">\(r=0\)</span> om vi tillater en “sylinder” uten utstrekning, men da blir volumet <span class="math notranslate nohighlight">\(0\)</span>).</p>
+<p>c) Vi setter inn <span class="math notranslate nohighlight">\(r=2\)</span>: <span class="math notranslate nohighlight">\(V(2)=10 \cdot \pi \cdot 2^2 = 40\pi \approx 125{,}7\)</span> cm³.</p>
+</div>
+</section>
+</section>
+<section id="jevne-og-odde-funksjoner">
+<h2>4.2 Jevne og odde funksjoner<a class="headerlink" href="#jevne-og-odde-funksjoner" title="Link to this heading">#</a></h2>
+<p>To viktige typer funksjoner du kan komme på å møte i fysikalsk kjemi er <strong>jevne og odde funksjoner</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.3 - Jevne og odde funksjoner</p>
+<p>Anta at <span class="math notranslate nohighlight">\(f\)</span> er definert ved både <span class="math notranslate nohighlight">\(x\)</span> og <span class="math notranslate nohighlight">\(-x\)</span>.</p>
+<p>Vi kaller <span class="math notranslate nohighlight">\(f\)</span> for en <strong>jevn funksjon</strong> hvis</p>
+<p><span class="math notranslate nohighlight">\(f(-x)=f(x)\)</span> for alle <span class="math notranslate nohighlight">\(x\)</span> i definisjonsområdet til <span class="math notranslate nohighlight">\(f\)</span>.</p>
+<p>Vi kaller <span class="math notranslate nohighlight">\(f\)</span> for en <strong>odde funksjon</strong> hvis</p>
+<p><span class="math notranslate nohighlight">\(f(-x)=-f(x)\)</span> for alle <span class="math notranslate nohighlight">\(x\)</span> i definisjonsområdet til <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Vis at <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> er en jevn funksjon.</p>
+<p class="sd-card-text">Vi vet at <span class="math notranslate nohighlight">\(f\)</span> er definert for alle reelle tall.</p>
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(x\)</span> være et vilkårlig tall i definisjonsområdet til <span class="math notranslate nohighlight">\(f\)</span>, altså <span class="math notranslate nohighlight">\(x \in R\)</span>. Da blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(x)=x^2\)</span></p>
+<p class="sd-card-text">Samtidig blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(-x)=(-x)^2=x^2\)</span></p>
+<p class="sd-card-text">Altså har vi vist at <span class="math notranslate nohighlight">\(f(x)=f(-x)\)</span>, og <span class="math notranslate nohighlight">\(f\)</span> er en jevn funksjon.</p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Vis at <span class="math notranslate nohighlight">\(f(x)=x^3-2x\)</span> er en odde funksjon.</p>
+<p class="sd-card-text">Vi vet at <span class="math notranslate nohighlight">\(f\)</span> er definert for alle reelle tall.</p>
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(x\)</span> være et vilkårlig tall i definisjonsområdet til <span class="math notranslate nohighlight">\(f\)</span>, altså <span class="math notranslate nohighlight">\(x \in R\)</span>. Da blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(x)=x^3-2x\)</span></p>
+<p class="sd-card-text">Samtidig blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(-x)=(-x)^3-2(-x)=-x^3+2x=-(x^3-2x)\)</span></p>
+<p class="sd-card-text">Altså har vi vist at <span class="math notranslate nohighlight">\(f(x)=-f(x)\)</span>, og <span class="math notranslate nohighlight">\(f\)</span> er en odde funksjon.</p>
+</div>
+</div>
+<div class="error admonition">
+<p class="admonition-title">OBS</p>
+<p>En funksjon <strong>må ikke</strong> være enten jevn eller odde, den kan være ingen av delene.</p>
+</div>
+<p>Det er derimot mye enklere å forstå hva jevne og odde funksjoner er ved å visualisere dem, fordi egenskapene beskrevet ovenfor gir opphav til en symmetri. Jevne funksjoner er symmetriske om <span class="math notranslate nohighlight">\(y\)</span>-aksen, mens odde funksjoner er symmetriske om origo. Nedenfor får du eksempel på en jevn og en odde funksjon, og kan endre <span class="math notranslate nohighlight">\(x\)</span>-verdiene for å se hvordan <span class="math notranslate nohighlight">\(f(x)\)</span> og <span class="math notranslate nohighlight">\(f(-x)\)</span> endrer seg.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;div style=&quot;padding: 0.5rem 0;&quot;&gt;
+
+  &lt;div style=&quot;display: flex; gap: 8px; margin-bottom: 0.75rem;&quot;&gt;
+    &lt;button id=&quot;btn-even&quot; style=&quot;flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:7px; border-radius:10px; cursor:pointer;&quot;&gt;
+      &lt;span style=&quot;font-size:13px; font-weight:500;&quot;&gt;Jevn funksjon&lt;/span&gt;
+      &lt;span style=&quot;font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);&quot;&gt;f(x) = x²&lt;/span&gt;
+    &lt;/button&gt;
+    &lt;button id=&quot;btn-odd&quot; style=&quot;flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:7px; border-radius:10px; cursor:pointer;&quot;&gt;
+      &lt;span style=&quot;font-size:13px; font-weight:500;&quot;&gt;Odde funksjon&lt;/span&gt;
+      &lt;span style=&quot;font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);&quot;&gt;f(x) = x³&lt;/span&gt;
+    &lt;/button&gt;
+  &lt;/div&gt;
+
+  &lt;div style=&quot;position:relative; width:100%;&quot;&gt;
+    &lt;canvas id=&quot;cv&quot; style=&quot;width:100%; display:block;&quot;&gt;&lt;/canvas&gt;
+  &lt;/div&gt;
+
+  &lt;div style=&quot;display:flex; align-items:center; gap:10px; margin:0.75rem 0 0.6rem;&quot;&gt;
+    &lt;label style=&quot;font-size:13px; color:var(--text-secondary); min-width:14px;&quot;&gt;x&lt;/label&gt;
+    &lt;input type=&quot;range&quot; id=&quot;xslider&quot; min=&quot;-2.4&quot; max=&quot;2.4&quot; step=&quot;0.01&quot; value=&quot;1.2&quot; style=&quot;flex:1;&quot; /&gt;
+    &lt;span id=&quot;xval&quot; style=&quot;font-family:var(--font-mono); font-size:13px; font-weight:500; min-width:48px; text-align:right;&quot;&gt;1.20&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div style=&quot;display:flex; gap:8px; margin-bottom:0.6rem;&quot;&gt;
+    &lt;div style=&quot;flex:1; background:var(--surface-1); border-radius:var(--radius); padding:6px 10px; display:flex; align-items:center; justify-content:space-between;&quot;&gt;
+      &lt;span style=&quot;display:flex; align-items:center; gap:6px;&quot;&gt;
+        &lt;span style=&quot;width:10px; height:10px; border-radius:50%; background:#D85A30; display:inline-block;&quot;&gt;&lt;/span&gt;
+        &lt;span id=&quot;lbl-pos&quot; style=&quot;font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);&quot;&gt;f(x)&lt;/span&gt;
+      &lt;/span&gt;
+      &lt;span id=&quot;val-pos&quot; style=&quot;font-family:var(--font-mono); font-size:15px; font-weight:500;&quot;&gt;1.44&lt;/span&gt;
+    &lt;/div&gt;
+    &lt;div style=&quot;flex:1; background:var(--surface-1); border-radius:var(--radius); padding:6px 10px; display:flex; align-items:center; justify-content:space-between;&quot;&gt;
+      &lt;span style=&quot;display:flex; align-items:center; gap:6px;&quot;&gt;
+        &lt;span style=&quot;width:10px; height:10px; border-radius:50%; background:#1D9E75; display:inline-block;&quot;&gt;&lt;/span&gt;
+        &lt;span id=&quot;lbl-neg&quot; style=&quot;font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);&quot;&gt;f(−x)&lt;/span&gt;
+      &lt;/span&gt;
+      &lt;span id=&quot;val-neg&quot; style=&quot;font-family:var(--font-mono); font-size:15px; font-weight:500;&quot;&gt;1.44&lt;/span&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div id=&quot;rule&quot; style=&quot;text-align:center; font-family:var(--font-mono); font-size:14px; padding:7px; border-radius:var(--radius); background:var(--bg-accent); color:var(--text-accent);&quot;&gt;
+    f(−x) = f(x)
+  &lt;/div&gt;
+
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  var cv = document.getElementById(&#x27;cv&#x27;);
+  var ctx = cv.getContext(&#x27;2d&#x27;);
+  var slider = document.getElementById(&#x27;xslider&#x27;);
+  var state = &#x27;even&#x27;;
+
+  function cssvar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var W, H, dpr;
+  function resize(){
+    dpr = window.devicePixelRatio || 1;
+    W = cv.clientWidth;
+    H = Math.round(W * 0.42);
+    cv.width = W * dpr;
+    cv.height = H * dpr;
+    cv.style.height = H + &#x27;px&#x27;;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+
+  var RANGE = 2.6;
+  function fx(x){ return state === &#x27;even&#x27; ? x*x : x*x*x; }
+  function yspan(){ return state === &#x27;even&#x27; ? 6.8 : 9.0; }
+
+  function toPx(x, y){
+    var px = W/2 + (x/RANGE)*(W/2 - 20);
+    var py = H/2 - (y/yspan())*(H/2 - 14);
+    return [px, py];
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var grid = cssvar(&#x27;--border&#x27;) || &#x27;#e5e5e5&#x27;;
+    var axis = cssvar(&#x27;--border-strong&#x27;) || &#x27;#888&#x27;;
+    var txt = cssvar(&#x27;--text-secondary&#x27;) || &#x27;#666&#x27;;
+    var curve = cssvar(&#x27;--text-primary&#x27;) || &#x27;#111&#x27;;
+
+    var ox = toPx(0,0)[0];
+    var oy = toPx(0,0)[1];
+
+    ctx.strokeStyle = grid;
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.55;
+    for(var gx=-2; gx&lt;=2; gx++){
+      if(gx===0) continue;
+      var px = toPx(gx,0)[0];
+      ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,H); ctx.stroke();
+    }
+    var ymax = Math.floor(yspan());
+    for(var gy=-ymax; gy&lt;=ymax; gy+=2){
+      if(gy===0) continue;
+      var py = toPx(0,gy)[1];
+      if(py&lt;0||py&gt;H) continue;
+      ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(W,py); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = axis;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(W, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, 0); ctx.lineTo(ox, H); ctx.stroke();
+
+    ctx.fillStyle = txt;
+    ctx.font = &#x27;11px &#x27; + (cssvar(&#x27;--font-mono&#x27;)||&#x27;monospace&#x27;);
+    ctx.fillText(&#x27;x = 0&#x27;, ox + 5, 12);
+    ctx.fillText(&#x27;y = 0&#x27;, W - 40, oy - 5);
+
+    ctx.strokeStyle = curve;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    var started = false;
+    for(var i=0;i&lt;=400;i++){
+      var x = -RANGE + (2*RANGE)*(i/400);
+      var p = toPx(x, fx(x));
+      if(!started){ ctx.moveTo(p[0],p[1]); started=true; } else { ctx.lineTo(p[0],p[1]); }
+    }
+    ctx.stroke();
+
+    var xv = parseFloat(slider.value);
+    drawPoint(xv, fx(xv), &#x27;#D85A30&#x27;);
+    drawPoint(-xv, fx(-xv), &#x27;#1D9E75&#x27;);
+  }
+
+  function drawPoint(x, y, color){
+    var p = toPx(x, y);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(p[0], p[1], 5.5, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.strokeStyle = cssvar(&#x27;--surface-2&#x27;) || &#x27;#fff&#x27;;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  function update(){
+    var xv = parseFloat(slider.value);
+    document.getElementById(&#x27;xval&#x27;).textContent = xv.toFixed(2);
+    document.getElementById(&#x27;val-pos&#x27;).textContent = fx(xv).toFixed(2);
+    document.getElementById(&#x27;val-neg&#x27;).textContent = fx(-xv).toFixed(2);
+    draw();
+  }
+
+  function setState(s){
+    state = s;
+    var even = document.getElementById(&#x27;btn-even&#x27;);
+    var odd = document.getElementById(&#x27;btn-odd&#x27;);
+    var acc = cssvar(&#x27;--border-accent&#x27;) || &#x27;#378ADD&#x27;;
+    var norm = cssvar(&#x27;--border-strong&#x27;) || &#x27;#aaa&#x27;;
+    even.style.border = (s===&#x27;even&#x27;?&#x27;2px solid &#x27;+acc:&#x27;0.5px solid &#x27;+norm);
+    odd.style.border = (s===&#x27;odd&#x27;?&#x27;2px solid &#x27;+acc:&#x27;0.5px solid &#x27;+norm);
+    document.getElementById(&#x27;rule&#x27;).textContent = (s===&#x27;even&#x27;) ? &#x27;f(−x) = f(x)&#x27; : &#x27;f(−x) = −f(x)&#x27;;
+    update();
+  }
+
+  document.getElementById(&#x27;btn-even&#x27;).addEventListener(&#x27;click&#x27;, function(){ setState(&#x27;even&#x27;); });
+  document.getElementById(&#x27;btn-odd&#x27;).addEventListener(&#x27;click&#x27;, function(){ setState(&#x27;odd&#x27;); });
+  slider.addEventListener(&#x27;input&#x27;, update);
+  window.addEventListener(&#x27;resize&#x27;, resize);
+
+  setState(&#x27;even&#x27;);
+  resize();
+})();
+&lt;/script&gt;" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 4.2</p>
+<p>Avgjør om hver av funksjonene er jevn, odde, eller ingen av delene. Begrunn svaret ved å regne ut <span class="math notranslate nohighlight">\(f(-x)\)</span>.</p>
+<p>a) <span class="math notranslate nohighlight">\(f(x)=x^4-3x^2\)</span></p>
+<p>b) <span class="math notranslate nohighlight">\(f(x)=x^3+x\)</span></p>
+<p>c) <span class="math notranslate nohighlight">\(f(x)=x^2+x\)</span></p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 4.2</p>
+<p>a) <span class="math notranslate nohighlight">\(f(-x)=(-x)^4-3(-x)^2=x^4-3x^2=f(x)\)</span>. Siden <span class="math notranslate nohighlight">\(f(-x)=f(x)\)</span>, er <span class="math notranslate nohighlight">\(f\)</span> <strong>jevn</strong>.</p>
+<p>b) <span class="math notranslate nohighlight">\(f(-x)=(-x)^3+(-x)=-x^3-x=-(x^3+x)=-f(x)\)</span>. Siden <span class="math notranslate nohighlight">\(f(-x)=-f(x)\)</span>, er <span class="math notranslate nohighlight">\(f\)</span> <strong>odde</strong>.</p>
+<p>c) <span class="math notranslate nohighlight">\(f(-x)=(-x)^2+(-x)=x^2-x\)</span>. Dette er verken lik <span class="math notranslate nohighlight">\(f(x)=x^2+x\)</span> eller lik <span class="math notranslate nohighlight">\(-f(x)=-x^2-x\)</span>. Funksjonen er derfor <strong>hverken jevn eller odde</strong>, akkurat som advarselen etter Def. 4.3 påpeker.</p>
+</div>
+</section>
+<section id="grenseverdier-og-kontinuitet">
+<h2>4.3 Grenseverdier og kontinuitet<a class="headerlink" href="#grenseverdier-og-kontinuitet" title="Link to this heading">#</a></h2>
+<p>Vi bygger videre på funksjoner ved å introdusere grenseverdier, og dereter kontinuitet. Dette er to konsepter som blir svært sentrale i derivasjon og integrasjon senere!</p>
+<section id="grenseverdier">
+<h3>4.3.1 Grenseverdier<a class="headerlink" href="#grenseverdier" title="Link to this heading">#</a></h3>
+<p>Vi innleder <strong>grenseverdier</strong> med et eksempel.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Beskriv funksjonen <span class="math notranslate nohighlight">\(f(x)=\frac{x^2-1}{x-1}\)</span> omkring <span class="math notranslate nohighlight">\(x=1\)</span>.</p>
+<p class="sd-card-text">La oss se hva vi kan si om definisjonsmengden til <span class="math notranslate nohighlight">\(f\)</span>, altså hvilke <span class="math notranslate nohighlight">\(x\)</span>-verdier vi kan ha. Annet enn <span class="math notranslate nohighlight">\(x=1\)</span> som gir <span class="math notranslate nohighlight">\(0\)</span> i nevneren, er alle reelle <span class="math notranslate nohighlight">\(x\)</span>-verdier tillate. Verdiområdet er de reelle tallene.</p>
+<p class="sd-card-text">Et observant øye ser at det er mulig å faktorisere uttrykket, slik at:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(x)=\frac{x^2-1}{x-1}=\frac{(x-1)(x+1)}{(x-1)}=x+1\)</span> for <span class="math notranslate nohighlight">\(x\neq1\)</span></p>
+<p class="sd-card-text">Grafen til <span class="math notranslate nohighlight">\(f\)</span> blir dermed linjen <span class="math notranslate nohighlight">\(y=x+1\)</span> <strong>uten</strong> punktet i <span class="math notranslate nohighlight">\((1,2)\)</span>, der blir det et hull! Selv om <span class="math notranslate nohighlight">\(f(1)\)</span> ikke er definert, kan vi få <span class="math notranslate nohighlight">\(f(x)\)</span> så nærme vi vil <span class="math notranslate nohighlight">\(2\)</span> ved å velge en <span class="math notranslate nohighlight">\(x\)</span> nærme nok <span class="math notranslate nohighlight">\(1\)</span>. Vi sier at <span class="math notranslate nohighlight">\(f(x)\)</span> går mot grenseverdien <span class="math notranslate nohighlight">\(2\)</span> når <span class="math notranslate nohighlight">\(x\)</span> går mot <span class="math notranslate nohighlight">\(1\)</span>. Notasjonen for dette er:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\lim_{x \to 1} f(x)=2\)</span></p>
+<p class="sd-card-text">eller</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\lim_{x \to 1} \frac{x^2-1}{x-1} = 2\)</span></p>
+</div>
+</div>
+<p><img alt="Grenseverdi eksempel med hull" src="../../_images/funksjon_hull.svg" /></p>
+<p>Den formelle definisjonen av grenseverdi er komplisert, og muligens kjent for deg som har hatt MAT1100. Vi går for å presentere den uformelle definisjonen i stedet, da detaljene ikke er særlig viktig for oss.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.4 - Grenseverdi (uformelt)</p>
+<p>La <span class="math notranslate nohighlight">\(f\)</span> være en funksjon og <span class="math notranslate nohighlight">\(L\)</span> et tall. Hvis <span class="math notranslate nohighlight">\(f(x) \to L\)</span> når <span class="math notranslate nohighlight">\(x \to a\)</span>, kaller vi <span class="math notranslate nohighlight">\(L\)</span> for <strong>grenseverdien</strong> til <span class="math notranslate nohighlight">\(f(x)\)</span> når <span class="math notranslate nohighlight">\(x\)</span> går mot <span class="math notranslate nohighlight">\(a\)</span>. Vi skriver:</p>
+<p><span class="math notranslate nohighlight">\(\lim_{x \to a} f(x) = L\)</span></p>
+</div>
+</section>
+<section id="kontinuitet">
+<span id="id2"></span><h3>4.3.2 Kontinuitet<a class="headerlink" href="#kontinuitet" title="Link to this heading">#</a></h3>
+<p>Vi har nå nok verktøy til å gå løs på <strong>kontinuitet</strong>. Heldigvis har kontinuitet en veldig intuitiv forklaring: hvis du kan tegne grafen til en funksjon fra start til slutt uten å måtte løfte pennen din av papiret, vel da er den kontinuerlig. Men, matematikken er formell og vi må ha klare og tydelige definisjoner.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.5 - Kontinuitiet i et punkt</p>
+<p>Vi sier at funksjonen <span class="math notranslate nohighlight">\(f\)</span> er <strong>kontinuerlig i et punkt</strong> <span class="math notranslate nohighlight">\(c\)</span> i definisjonsområdet hvis</p>
+<p><span class="math notranslate nohighlight">\(\lim_{x \to c} f(x) = f(c)\)</span></p>
+<p>Hvis</p>
+<p><span class="math notranslate nohighlight">\(\lim_{x \to c} f(x)\)</span> ikke eksisterer</p>
+<p>eller
+<span class="math notranslate nohighlight">\(\lim_{x \to c} f(x) \neq f(c)\)</span></p>
+<p>så er <span class="math notranslate nohighlight">\(f\)</span> <strong>diskontinuerlig</strong> i <span class="math notranslate nohighlight">\(c\)</span>.</p>
+</div>
+<p><img alt="Kontinuitet i ett punkt" src="../../_images/kontinuitet_tre_grafer.svg" /></p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.6 - Kontinuitiet i et intervall</p>
+<p>Vi sier at funksjonen <span class="math notranslate nohighlight">\(f\)</span> er <strong>kontinuerlig på intervallet</strong> <span class="math notranslate nohighlight">\(I\)</span> hvis den er kontinuerlig i hver at punktene i <span class="math notranslate nohighlight">\(I\)</span>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.7 - Kontinuerlig funksjon</p>
+<p>Vi sier at funksjonen <span class="math notranslate nohighlight">\(f\)</span> er <strong>kontinuerlig</strong> (på hele definisjonsområdet) hvis den er kontinuerlig i hvert at punktene i definisjonsområdet.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 4.3</p>
+<p>a) Regn ut grenseverdien <span class="math notranslate nohighlight">\(\lim_{x \to 2} \dfrac{x^2-4}{x-2}\)</span> ved å faktorisere telleren.</p>
+<p>b) Funksjonen <span class="math notranslate nohighlight">\(g\)</span> er definert ved <span class="math notranslate nohighlight">\(g(x)=\dfrac{x^2-4}{x-2}\)</span> for <span class="math notranslate nohighlight">\(x \neq 2\)</span>, og <span class="math notranslate nohighlight">\(g(2)=3\)</span>. Er <span class="math notranslate nohighlight">\(g\)</span> kontinuerlig i <span class="math notranslate nohighlight">\(x=2\)</span>? Begrunn med Def. 4.5.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 4.3</p>
+<p>a) Vi faktoriserer telleren: <span class="math notranslate nohighlight">\(x^2-4=(x-2)(x+2)\)</span>. For <span class="math notranslate nohighlight">\(x \neq 2\)</span> er da</p>
+<p><span class="math notranslate nohighlight">\(\frac{x^2-4}{x-2}=\frac{(x-2)(x+2)}{x-2}=x+2\)</span></p>
+<p>slik at <span class="math notranslate nohighlight">\(\lim_{x \to 2} \dfrac{x^2-4}{x-2}=\lim_{x \to 2}(x+2)=4\)</span>.</p>
+<p>b) For at <span class="math notranslate nohighlight">\(g\)</span> skal være kontinuerlig i <span class="math notranslate nohighlight">\(x=2\)</span>, må <span class="math notranslate nohighlight">\(\lim_{x \to 2} g(x)=g(2)\)</span>. Vi fant at grenseverdien er <span class="math notranslate nohighlight">\(4\)</span>, men <span class="math notranslate nohighlight">\(g(2)=3\)</span>. Siden <span class="math notranslate nohighlight">\(\lim_{x \to 2} g(x)=4 \neq 3=g(2)\)</span>, er <span class="math notranslate nohighlight">\(g\)</span> <strong>diskontinuerlig</strong> i <span class="math notranslate nohighlight">\(x=2\)</span>. (Hadde vi i stedet satt <span class="math notranslate nohighlight">\(g(2)=4\)</span>, ville funksjonen vært kontinuerlig.)</p>
+</div>
+</section>
+</section>
+<section id="derivasjon">
+<span id="id3"></span><h2>4.4 Derivasjon<a class="headerlink" href="#derivasjon" title="Link to this heading">#</a></h2>
+<p><strong>Derivasjon</strong> er et matematisk verktøy for å sette ord på noe du sannsynligvis allerede ser på grafen til en funksjon. Følger du en graf, kan du for eksempel observere at den stiger, når et toppunkt, synker litt og kanskje treffer et bunnpunkt. Husk at en av hovedgrunnene til at vi interesserer oss for funksjoner er at de kan modellere virkelige fenomener og sammenhengen mellom to størrelser. Ofte er vi derfor interessert i hvordan denne sammenhengen endrer seg, hvor mye den endrer seg, og i hvilken retning.</p>
+<section id="gjennomsnittlig-endringsrate">
+<span id="id4"></span><h3>4.4.1 Gjennomsnittlig endringsrate<a class="headerlink" href="#gjennomsnittlig-endringsrate" title="Link to this heading">#</a></h3>
+<p>Tenk deg at du går hjem fra skolen og når du er hjemme ser du at du har brukt <span class="math notranslate nohighlight">\(60 \text{ min}\)</span>. Du gikk totalt <span class="math notranslate nohighlight">\(6 \text{ km}\)</span>. Først og fremst er du veldig fornøyd med innsatsen, og kan regne ut at gjennomsnittsfarten din var <span class="math notranslate nohighlight">\(\frac{6 \text{ km}}{1 \text{ time}} = 6 \text{ km}/\text{t}\)</span>. Dette er et eksempel på <strong>den gjennomsnittlige endringsraten</strong> mellom to punkter.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.8 - Gjennomsnittlig endringsrate mellom to punkter</p>
+<p>Den gjennomsnittlige endringsraten til en funksjon <span class="math notranslate nohighlight">\(f\)</span> over et intervall <span class="math notranslate nohighlight">\([a,b]\)</span> er gitt ved</p>
+<p><span class="math notranslate nohighlight">\(\frac{\Delta y}{\Delta x}=\frac{f(b)-f(a)}{b-a}\)</span></p>
+</div>
+<p><img alt="Gjennomsnittlig endringsrate" src="../../_images/gjennomsnittlig_endring.svg" /></p>
+<p>En rett linje som går gjennom to punkter, slik som den rette linjen som går gjennom <span class="math notranslate nohighlight">\((a,f(a))\)</span> og <span class="math notranslate nohighlight">\((b,f(b))\)</span>, kalles en <strong>sekant</strong>. Den gjennomsnittlige endringsraten mellom disse to punktene er da stigningstallet til sekanten.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Hva er den gjennomsnittlige endringsraten for funksjonen <span class="math notranslate nohighlight">\(f(x)=x^2+1\)</span> i intervallet <span class="math notranslate nohighlight">\([1,3]\)</span>?</p>
+<p class="sd-card-text">Vi har at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(1)=1^2+1=2\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(3)=3^2+1=10\)</span></p>
+<p class="sd-card-text">Dermed får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\Delta y}{\Delta x}=\frac{10-2}{3-1}=\frac{8}{2}=4\)</span></p>
+</div>
+</div>
+</section>
+<section id="definisjonen-av-den-deriverte">
+<span id="id5"></span><h3>4.4.2 Definisjonen av den deriverte<a class="headerlink" href="#definisjonen-av-den-deriverte" title="Link to this heading">#</a></h3>
+<p>I eksempelet over så vi at du gikk på en gjennomsnittsfart på <span class="math notranslate nohighlight">\(6 \text{ km}/\text{t}\)</span>, men det betyr ikke nødvendigvis at du gikk i den farten hele turen. Kanskje stoppet du opp for å klappe en katt, og da gikk jo farten ned, og kanskje du gikk raskere noen steder. Vi spør oss - hva er endringsraten i ett enkelt punkt, som for eksempel på et spesifikt sted på veien? Det er nettopp dette derivasjon handler om - endringen i funksjonsverdien i spesifikke punkter. Ved å minimere avstanden mellom to punkter, kan vi komme så nærme punktet vi er interessert i og kun se på gjennomsnittlig endringsrate der. Vi introduserer <strong>definisjonen av den deriverte</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.9 - Den deriverte</p>
+<p>Den <strong>deriverte</strong> til en funksjon <span class="math notranslate nohighlight">\(f\)</span> er en annen funksjon <span class="math notranslate nohighlight">\(f'\)</span> definert ved</p>
+<p><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0} \frac{f(x+h)-f(x)}{h}\)</span></p>
+<p>for alle <span class="math notranslate nohighlight">\(x\)</span> der grenseverdien eksisterer.</p>
+<p>Hvis <span class="math notranslate nohighlight">\(f'(x)\)</span> eksisterer, sier vi at <span class="math notranslate nohighlight">\(f\)</span> er <strong>deriverbar</strong> i <span class="math notranslate nohighlight">\(x\)</span>.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Bruk definisjonen til å finne den deriverte av <span class="math notranslate nohighlight">\(f(x)=x^2\)</span>.</p>
+<p class="sd-card-text">Vi setter inn i definisjonen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0} \frac{f(x+h)-f(x)}{h}=\lim_{h \to 0} \frac{(x+h)^2-x^2}{h}\)</span></p>
+<p class="sd-card-text">Vi regner ut telleren:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\((x+h)^2-x^2=x^2+2xh+h^2-x^2=2xh+h^2\)</span></p>
+<p class="sd-card-text">Dermed får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0} \frac{2xh+h^2}{h}=\lim_{h \to 0} (2x+h)=2x\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Bruk definisjonen til å finne den deriverte av <span class="math notranslate nohighlight">\(f(x)=x^2-3x\)</span>.</p>
+<p class="sd-card-text">Vi setter inn i definisjonen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0} \frac{f(x+h)-f(x)}{h}=\lim_{h \to 0} \frac{\left[(x+h)^2-3(x+h)\right]-\left[x^2-3x\right]}{h}\)</span></p>
+<p class="sd-card-text">Vi regner ut telleren:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\((x+h)^2-3(x+h)-x^2+3x=x^2+2xh+h^2-3x-3h-x^2+3x=2xh+h^2-3h\)</span></p>
+<p class="sd-card-text">Dermed får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0} \frac{2xh+h^2-3h}{h}=\lim_{h \to 0} (2x+h-3)=2x-3\)</span></p>
+</div>
+</div>
+<p>Definisjonen av den deriverte er ikke akkurat lett fordøyelig. Vi har punktene <span class="math notranslate nohighlight">\((x, f(x))\)</span> og tar et steg <span class="math notranslate nohighlight">\(h\)</span> fra <span class="math notranslate nohighlight">\(x\)</span> til punktet <span class="math notranslate nohighlight">\((x+h, f(x+h))\)</span>. Så gjør vi <span class="math notranslate nohighlight">\(h\)</span> mindre og mindre - vi finner altså grenseverdien av den gjennomsnittlige endringsraten mellom disse punktene når <span class="math notranslate nohighlight">\(h\)</span> går mot <span class="math notranslate nohighlight">\(0\)</span>. Nedenfor kan du endre på <span class="math notranslate nohighlight">\(x\)</span> og <span class="math notranslate nohighlight">\(h\)</span> og se hvordan den gjennomsnittlige endringsraten og den deriverte endrer seg. Se spesielt på hva som skjer når <span class="math notranslate nohighlight">\(h\)</span> går mot <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Fra sekant til tangent&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;
+    --paper:#f5f2ea;
+    --grid:#d8d2c4;
+    --axis:#6b6252;
+    --curve:#1f5f8b;      /* deep teal-blue for f */
+    --secant:#c0392b;     /* clay red for secant */
+    --tangent:#1a7a4c;    /* green for tangent (the limit) */
+    --pt:#d68910;         /* amber points */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;
+    padding:22px;
+    line-height:1.5;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{
+    font-family:&quot;SF Mono&quot;,ui-monospace,&quot;Cascadia Code&quot;,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  h1{
+    font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;
+  }
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{
+    background:var(--paper);
+    border:1px solid var(--grid);
+    border-radius:4px;
+    padding:8px;
+  }
+  svg{display:block;width:100%;height:auto;}
+  .panel{
+    display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;
+  }
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{
+    border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;
+  }
+  .card h2{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    color:var(--muted);font-weight:600;margin-bottom:10px;
+  }
+  .quotient{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    font-size:15px;color:var(--ink);
+    margin:4px 0 6px;
+  }
+  .frac{
+    display:inline-flex;flex-direction:column;align-items:center;
+    color:var(--secant);
+  }
+  .frac-num{padding:0 8px 3px;}
+  .frac-den{
+    padding:3px 8px 0;
+    border-top:1.5px solid var(--secant);
+    align-self:stretch;text-align:center;
+  }
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:17px;
+  }
+  .val.slope{color:var(--secant);}
+  .val.deriv{color:var(--tangent);}
+  .controls{margin-top:18px;}
+  .ctl{margin-bottom:14px;}
+  .ctl label{
+    display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+  }
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--pt);border:2px solid var(--paper);cursor:pointer;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;
+  }
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  button{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;
+    letter-spacing:.04em;padding:7px 13px;border:1px solid var(--axis);
+    background:transparent;color:var(--ink);border-radius:3px;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  button:hover{background:var(--ink);color:var(--paper);}
+  button.on{background:var(--tangent);border-color:var(--tangent);color:#fff;}
+  .note{
+    margin-top:16px;font-size:14px;color:var(--muted);
+    border-left:2px solid var(--pt);padding-left:12px;
+  }
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;margin-top:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Grenseprosessen&lt;/div&gt;
+  &lt;h1&gt;Fra gjennomsnittlig endringsrate til den deriverte&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Sekanten gjennom (x, f(x)) og (x+h, f(x+h)) nærmer seg tangenten når h → 0. Her er f(x) = x².&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;svg id=&quot;plot&quot; viewBox=&quot;0 0 600 420&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--curve)&quot;&gt;&lt;/i&gt; f(x) = x²&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--secant)&quot;&gt;&lt;/i&gt; sekant&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--tangent)&quot;&gt;&lt;/i&gt; tangent (h → 0)&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Differansekvotienten&lt;/h2&gt;
+      &lt;div class=&quot;quotient&quot;&gt;
+        &lt;span class=&quot;frac&quot;&gt;
+          &lt;span class=&quot;frac-num&quot;&gt;f(x+h) &amp;minus; f(x)&lt;/span&gt;
+          &lt;span class=&quot;frac-den&quot;&gt;h&lt;/span&gt;
+        &lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;= stigningstall til sekanten&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;sekantstigning&lt;/span&gt;
+        &lt;span class=&quot;val slope&quot; id=&quot;slopeVal&quot;&gt;—&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;f&amp;prime;(x) = 2x (eksakt)&lt;/span&gt;
+        &lt;span class=&quot;val deriv&quot; id=&quot;derivVal&quot;&gt;—&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;punkt x &lt;b id=&quot;xLab&quot;&gt;1.00&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;xRange&quot; min=&quot;-2.4&quot; max=&quot;2.4&quot; step=&quot;0.01&quot; value=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;steg h &lt;b id=&quot;hLab&quot;&gt;1.50&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;hRange&quot; min=&quot;0.02&quot; max=&quot;2.5&quot; step=&quot;0.01&quot; value=&quot;1.5&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button id=&quot;animBtn&quot;&gt;Kjør h → 0&lt;/button&gt;
+        &lt;button id=&quot;resetBtn&quot;&gt;Nullstill&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot; id=&quot;note&quot;&gt;Dra &lt;b&gt;h&lt;/b&gt; mot venstre og se sekanten legge seg inntil tangenten. Sekantstigningen nærmer seg 2x.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const svg = document.getElementById(&#x27;plot&#x27;);
+  const NS = &quot;http://www.w3.org/2000/svg&quot;;
+  // world coords: x in [-3,3], y in [-1,9]
+  const W=600,H=420, padL=44,padR=20,padT=18,padB=34;
+  const xmin=-3,xmax=3,ymin=-1,ymax=9;
+  const sx = v =&gt; padL + (v-xmin)/(xmax-xmin)*(W-padL-padR);
+  const sy = v =&gt; (H-padB) - (v-ymin)/(ymax-ymin)*(H-padT-padB);
+  const f = x =&gt; x*x;
+
+  function el(tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  function clear(){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+
+  const state={x:1,h:1.5};
+
+  function draw(){
+    clear();
+    // grid
+    for(let gx=-3;gx&lt;=3;gx++){
+      svg.appendChild(el(&#x27;line&#x27;,{x1:sx(gx),y1:sy(ymin),x2:sx(gx),y2:sy(ymax),stroke:&#x27;var(--grid)&#x27;,&#x27;stroke-width&#x27;:gx===0?1.4:0.6}));
+    }
+    for(let gy=-1;gy&lt;=9;gy++){
+      svg.appendChild(el(&#x27;line&#x27;,{x1:sx(xmin),y1:sy(gy),x2:sx(xmax),y2:sy(gy),stroke:&#x27;var(--grid)&#x27;,&#x27;stroke-width&#x27;:gy===0?1.4:0.6}));
+    }
+    // axes labels
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(xmin),y1:sy(0),x2:sx(xmax),y2:sy(0),stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.4}));
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(0),y1:sy(ymin),x2:sx(0),y2:sy(ymax),stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.4}));
+
+    // curve f(x)=x^2
+    let d=&quot;&quot;;
+    for(let i=0;i&lt;=240;i++){
+      const xx=xmin+(xmax-xmin)*i/240, yy=f(xx);
+      if(yy&gt;ymax+0.5)continue;
+      d+=(d===&quot;&quot;?&quot;M&quot;:&quot;L&quot;)+sx(xx).toFixed(1)+&quot;,&quot;+sy(yy).toFixed(1)+&quot; &quot;;
+    }
+    svg.appendChild(el(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:&#x27;var(--curve)&#x27;,&#x27;stroke-width&#x27;:2.6}));
+
+    const x=state.x, h=state.h;
+    const x2=x+h;
+    const y1=f(x), y2=f(x2);
+    const slope=(y2-y1)/h;          // secant slope
+    const dslope=2*x;               // exact derivative
+
+    // tangent line (the limit) drawn faint across view
+    const tangent = t =&gt; dslope*(t-x)+y1;
+    svg.appendChild(el(&#x27;line&#x27;,{
+      x1:sx(xmin),y1:sy(tangent(xmin)),x2:sx(xmax),y2:sy(tangent(xmax)),
+      stroke:&#x27;var(--tangent)&#x27;,&#x27;stroke-width&#x27;:1.6,&#x27;stroke-dasharray&#x27;:&#x27;2 4&#x27;,opacity:0.85
+    }));
+
+    // secant line across view
+    const secant = t =&gt; slope*(t-x)+y1;
+    svg.appendChild(el(&#x27;line&#x27;,{
+      x1:sx(xmin),y1:sy(secant(xmin)),x2:sx(xmax),y2:sy(secant(xmax)),
+      stroke:&#x27;var(--secant)&#x27;,&#x27;stroke-width&#x27;:2.2
+    }));
+
+    // step triangle (h and Δf)
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(x),y1:sy(y1),x2:sx(x2),y2:sy(y1),stroke:&#x27;var(--muted)&#x27;,&#x27;stroke-width&#x27;:1,&#x27;stroke-dasharray&#x27;:&#x27;3 3&#x27;}));
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(x2),y1:sy(y1),x2:sx(x2),y2:sy(y2),stroke:&#x27;var(--muted)&#x27;,&#x27;stroke-width&#x27;:1,&#x27;stroke-dasharray&#x27;:&#x27;3 3&#x27;}));
+    // h label
+    svg.appendChild(el(&#x27;text&#x27;,{x:sx((x+x2)/2),y:sy(y1)+15,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,fill:&#x27;var(--muted)&#x27;,&#x27;font-size&#x27;:12,&#x27;font-family&#x27;:&#x27;monospace&#x27;})).textContent=&#x27;h&#x27;;
+
+    // points
+    const p1=el(&#x27;circle&#x27;,{cx:sx(x),cy:sy(y1),r:5,fill:&#x27;var(--pt)&#x27;,stroke:&#x27;var(--paper)&#x27;,&#x27;stroke-width&#x27;:1.5});
+    const p2=el(&#x27;circle&#x27;,{cx:sx(x2),cy:sy(y2),r:5,fill:&#x27;var(--pt)&#x27;,stroke:&#x27;var(--paper)&#x27;,&#x27;stroke-width&#x27;:1.5});
+    svg.appendChild(p1);svg.appendChild(p2);
+
+    // update readouts
+    document.getElementById(&#x27;slopeVal&#x27;).textContent=slope.toFixed(3);
+    document.getElementById(&#x27;derivVal&#x27;).textContent=dslope.toFixed(3);
+    document.getElementById(&#x27;xLab&#x27;).textContent=x.toFixed(2);
+    document.getElementById(&#x27;hLab&#x27;).textContent=h.toFixed(2);
+  }
+
+  const xR=document.getElementById(&#x27;xRange&#x27;), hR=document.getElementById(&#x27;hRange&#x27;);
+  xR.addEventListener(&#x27;input&#x27;,e=&gt;{state.x=parseFloat(e.target.value);draw();});
+  hR.addEventListener(&#x27;input&#x27;,e=&gt;{state.h=parseFloat(e.target.value);draw();});
+
+  // animate h -&gt; 0
+  let raf=null;
+  const animBtn=document.getElementById(&#x27;animBtn&#x27;);
+  function stopAnim(){if(raf){cancelAnimationFrame(raf);raf=null;}animBtn.classList.remove(&#x27;on&#x27;);animBtn.textContent=&#x27;Kjør h → 0&#x27;;}
+  animBtn.addEventListener(&#x27;click&#x27;,()=&gt;{
+    if(raf){stopAnim();return;}
+    animBtn.classList.add(&#x27;on&#x27;);animBtn.textContent=&#x27;Stopp&#x27;;
+    const step=()=&gt;{
+      state.h*=0.965;
+      if(state.h&lt;0.03){state.h=0.03;hR.value=state.h;draw();stopAnim();return;}
+      hR.value=state.h;draw();
+      raf=requestAnimationFrame(step);
+    };
+    raf=requestAnimationFrame(step);
+  });
+  document.getElementById(&#x27;resetBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+    stopAnim();state.x=1;state.h=1.5;xR.value=1;hR.value=1.5;draw();
+  });
+
+  draw();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>For å få en enda bedre forståelse for hva den deriverte er, se hvordan verdien til den deriverte endrer seg i simulasjonen nedenfor når vi følger grafen fra mindre til større <span class="math notranslate nohighlight">\(x\)</span>-verdier. Hva skjer med den deriverte ved topp-og bunnpunktene?</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;div style=&quot;display:flex;align-items:center;gap:12px;margin-bottom:1rem;&quot;&gt;
+  &lt;label style=&quot;font-size:14px;color:var(--text-secondary);&quot;&gt;x&lt;/label&gt;
+  &lt;input type=&quot;range&quot; id=&quot;xSlider&quot; min=&quot;-3.5&quot; max=&quot;3.5&quot; step=&quot;0.02&quot; value=&quot;-3.5&quot; style=&quot;flex:1;&quot;&gt;
+  &lt;span id=&quot;xVal&quot; style=&quot;font-size:14px;font-weight:500;min-width:48px;&quot;&gt;-3.50&lt;/span&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem;&quot;&gt;
+  &lt;div style=&quot;background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;&quot;&gt;
+    &lt;div style=&quot;font-size:12px;color:var(--text-secondary);&quot;&gt;f(x)&lt;/div&gt;
+    &lt;div id=&quot;fVal&quot; style=&quot;font-size:20px;font-weight:500;&quot;&gt;0&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;&quot;&gt;
+    &lt;div style=&quot;font-size:12px;color:var(--text-secondary);&quot;&gt;f&#x27;(x)&lt;/div&gt;
+    &lt;div id=&quot;fpVal&quot; style=&quot;font-size:20px;font-weight:500;&quot;&gt;0&lt;/div&gt;
+  &lt;/div&gt;
+  &lt;div style=&quot;background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;&quot;&gt;
+    &lt;div style=&quot;font-size:12px;color:var(--text-secondary);&quot;&gt;type&lt;/div&gt;
+    &lt;div id=&quot;typeVal&quot; style=&quot;font-size:16px;font-weight:500;&quot;&gt;-&lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;div style=&quot;position:relative;width:100%;height:320px;&quot;&gt;
+  &lt;canvas id=&quot;cv&quot; style=&quot;width:100%;height:100%;&quot;&gt;&lt;/canvas&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+const canvas = document.getElementById(&#x27;cv&#x27;);
+const ctx = canvas.getContext(&#x27;2d&#x27;);
+function resize(){
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  draw();
+}
+const isDark = matchMedia(&#x27;(prefers-color-scheme: dark)&#x27;).matches;
+const inkMuted = isDark ? &#x27;#898781&#x27; : &#x27;#898781&#x27;;
+const grid = isDark ? &#x27;#2c2c2a&#x27; : &#x27;#e1e0d9&#x27;;
+const curveColor = isDark ? &#x27;#3987e5&#x27; : &#x27;#2a78d6&#x27;;
+const pointColor = &#x27;#d95926&#x27;;
+const tangentColor = isDark ? &#x27;#199e70&#x27; : &#x27;#1baf7a&#x27;;
+
+function f(x){ return 0.05*Math.pow(x,5) - 0.5*Math.pow(x,3); }
+function fp(x){ return 0.25*Math.pow(x,4) - 1.5*Math.pow(x,2); }
+
+const xMin=-3.5, xMax=3.5, yMin=-5.5, yMax=5.5;
+let W=0,H=0, pad=30;
+function toPx(x,y){
+  const px = pad + (x-xMin)/(xMax-xMin)*(W-2*pad);
+  const py = H-pad - (y-yMin)/(yMax-yMin)*(H-2*pad);
+  return [px,py];
+}
+
+const criticals = [-Math.sqrt(6), 0, Math.sqrt(6)];
+const snapTol = 0.09;
+
+function draw(){
+  const r = canvas.getBoundingClientRect();
+  W = r.width; H = r.height;
+  ctx.clearRect(0,0,W,H);
+
+  ctx.strokeStyle = grid;
+  ctx.lineWidth = 1;
+  for(let gx=-3;gx&lt;=3;gx++){
+    const [px] = toPx(gx,0);
+    ctx.beginPath(); ctx.moveTo(px,pad); ctx.lineTo(px,H-pad); ctx.stroke();
+  }
+  for(let gy=-4;gy&lt;=4;gy+=2){
+    const [,py] = toPx(0,gy);
+    ctx.beginPath(); ctx.moveTo(pad,py); ctx.lineTo(W-pad,py); ctx.stroke();
+  }
+
+  ctx.strokeStyle = inkMuted;
+  const [,y0px] = toPx(0,0);
+  const [x0px] = toPx(0,0);
+  ctx.beginPath(); ctx.moveTo(pad,y0px); ctx.lineTo(W-pad,y0px); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x0px,pad); ctx.lineTo(x0px,H-pad); ctx.stroke();
+
+  ctx.strokeStyle = curveColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for(let i=0;i&lt;=200;i++){
+    const xx = xMin + (xMax-xMin)*i/200;
+    const [px,py] = toPx(xx, f(xx));
+    if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  const raw = parseFloat(document.getElementById(&#x27;xSlider&#x27;).value);
+  let x = raw;
+  let snapped = false;
+  for(const c of criticals){
+    if(Math.abs(raw-c) &lt; snapTol){ x = c; snapped = true; break; }
+  }
+  const fx = f(x), fpx = snapped ? 0 : fp(x);
+
+  ctx.strokeStyle = tangentColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const dx = 1.1;
+  const [tx1,ty1] = toPx(x-dx, fx - fpx*dx);
+  const [tx2,ty2] = toPx(x+dx, fx + fpx*dx);
+  ctx.moveTo(tx1,ty1); ctx.lineTo(tx2,ty2); ctx.stroke();
+
+  const [px,py] = toPx(x,fx);
+  ctx.fillStyle = pointColor;
+  ctx.beginPath(); ctx.arc(px,py,6,0,7); ctx.fill();
+  ctx.strokeStyle = isDark ? &#x27;#1a1a19&#x27; : &#x27;#fcfcfb&#x27;;
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(px,py,6,0,7); ctx.stroke();
+
+  document.getElementById(&#x27;xVal&#x27;).textContent = x.toFixed(2);
+  document.getElementById(&#x27;fVal&#x27;).textContent = fx.toFixed(2);
+  document.getElementById(&#x27;fpVal&#x27;).textContent = fpx.toFixed(2);
+
+  let type;
+  if(snapped){
+    type = (x &lt; -1) ? &#x27;maksimum&#x27; : (x &gt; 1 ? &#x27;minimum&#x27; : &#x27;sadelpunkt&#x27;);
+  } else {
+    type = fpx &gt; 0 ? &#x27;stigende&#x27; : &#x27;avtagende&#x27;;
+  }
+  document.getElementById(&#x27;typeVal&#x27;).textContent = type;
+}
+
+document.getElementById(&#x27;xSlider&#x27;).addEventListener(&#x27;input&#x27;, draw);
+window.addEventListener(&#x27;resize&#x27;, resize);
+resize();
+&lt;/script&gt;" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+</section>
+<section id="ekstremalpunkter">
+<span id="id6"></span><h3>4.4.3 Ekstremalpunkter<a class="headerlink" href="#ekstremalpunkter" title="Link to this heading">#</a></h3>
+<p><strong>Ekstremalpunkter</strong> er enkelt forklart de minste eller største punktene på grafen til en funksjon. Vi skiller mellom <strong>minimumspunkter</strong> og <strong>maksimumspunkter</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.10 - Minimumspunkt</p>
+<ul class="simple">
+<li><p>Et punkt <span class="math notranslate nohighlight">\(a\)</span> er et <strong>lokalt minimumspunkt</strong> for en funksjon <span class="math notranslate nohighlight">\(f\)</span> dersom</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(a) \leq f(x)\)</span></p>
+<p>i en omegn om <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<ul class="simple">
+<li><p>Et punkt <span class="math notranslate nohighlight">\(a\)</span> er et <strong>globalt minimumspunkt</strong> for en funksjon <span class="math notranslate nohighlight">\(f\)</span> dersom</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(a) \leq f(x)\)</span></p>
+<p>for alle <span class="math notranslate nohighlight">\(x\)</span> i definisjonsmengden til <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.11 - Maksimumspunkt</p>
+<ul class="simple">
+<li><p>Et punkt <span class="math notranslate nohighlight">\(a\)</span> er et <strong>lokalt maksimumspunkt</strong> for en funksjon <span class="math notranslate nohighlight">\(f\)</span> dersom</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(a) \ge f(x)\)</span></p>
+<p>i en omegn om <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<ul class="simple">
+<li><p>Et punkt <span class="math notranslate nohighlight">\(a\)</span> er et <strong>globalt maksimumspunkt</strong> for en funksjon <span class="math notranslate nohighlight">\(f\)</span> dersom</p></li>
+</ul>
+<p><span class="math notranslate nohighlight">\(f(a) \ge f(x)\)</span></p>
+<p>for alle <span class="math notranslate nohighlight">\(x\)</span> i definisjonsmengden til <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</div>
+<p>Som vi så i simulasjonen over, er tangenten i et ekstremalpunkt en horisontal rett linje - den har ingen stigning, og den deriverte er null.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.1 - Den deriverte i et ekstremalpunkt</p>
+<p>Dersom <span class="math notranslate nohighlight">\(f\)</span> har et lokalt ekstremalpunkt (maksimum eller minimum) i et indre punkt <span class="math notranslate nohighlight">\(a\)</span>, og <span class="math notranslate nohighlight">\(f\)</span> er deriverbar der, så er</p>
+<p><span class="math notranslate nohighlight">\(f'(a) = 0\)</span></p>
+</div>
+<p>Vi kan altså finne ekstremalpunkter ved å derivere funksjonen, og finne punktet/punktene der den deriverte er lik null!</p>
+</section>
+<section id="hoyere-ordens-deriverte">
+<span id="id7"></span><h3>4.4.4 Høyere-ordens deriverte<a class="headerlink" href="#hoyere-ordens-deriverte" title="Link to this heading">#</a></h3>
+<p>Vi har funnet den første-deriverte til <span class="math notranslate nohighlight">\(f\)</span>, men det er ingenting som stopper oss fra å finne <strong>høyere-ordens deriverte</strong> slik som den dobbelderiverte, tredje deriverte osv.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.12 - Høyere-ordens deriverte (n-te deriverte)</p>
+<p>Den <span class="math notranslate nohighlight">\(n\)</span><strong>-te deriverte</strong> til en funksjon <span class="math notranslate nohighlight">\(f\)</span> er en annen funksjon <span class="math notranslate nohighlight">\(f^{(n)}\)</span> definert ved å ta den deriverte av <span class="math notranslate nohighlight">\(f\)</span> <span class="math notranslate nohighlight">\(n\)</span>-antall ganger.</p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>I kjemi som i fysikk er posisjon, fart og akselerasjon knyttet sammen gjennom derivasjon. La <span class="math notranslate nohighlight">\(x(t)\)</span> være posisjonen til en partikkel ved tid <span class="math notranslate nohighlight">\(t\)</span>, og anta at funksjonen er dobbeltderiverbar. Da er <span class="math notranslate nohighlight">\(v(t) = x'(t)\)</span> farten til partikkelen ved tid <span class="math notranslate nohighlight">\(t\)</span>, og <span class="math notranslate nohighlight">\(a(t) = v'(t) = x''(t)\)</span> akselerasjonen til partikkelen ved tid <span class="math notranslate nohighlight">\(t\)</span>. Med andre ord ser vi først på posisjon, deretter på endring i posisijon som er fart, og til slutt endringen i fart som er akselerasjon.</p>
+</div>
+</section>
+<section id="de-deriverte-til-kjente-funksjoner">
+<h3>4.4.5 De deriverte til kjente funksjoner<a class="headerlink" href="#de-deriverte-til-kjente-funksjoner" title="Link to this heading">#</a></h3>
+<p>Nå som vi har en idé av hva den deriverte er, skal vi lære oss å finne de deriverte for ulike funksjoner. I et av eksemplene ovenfor finner vi <span class="math notranslate nohighlight">\(f'\)</span> for <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> direkte ut ifra definisjonen av den deriverte. Heldigvis for oss har mange flinke matematikere funnet ut av de deriverte for de vanligste, elementære funksjonene. De aller vanligste er gitt i tabellen nedenfor.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(f(x)\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(f'(x)\)</span></p></th>
+<th class="head"><p>Betingelser</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(0\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x^a\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ax^{a-1}\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(e^x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(e^x\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a^x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(a^x \ln{(a)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(a&gt;0\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\ln{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{x}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x&gt;0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\log_{a}{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{x \ln{(a)}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x,a&gt;0\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\sin{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\cos{(x)}\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\cos{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\sin{(x)}\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\tan{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sec^2{(x)}=\frac{1}{\cos^2{(x)}}=1+\tan^2{(x)}\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\arcsin{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{1-x^2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-1 &lt; x &lt; 1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\arccos{(x)}\)</span></p></td>
+<td><p>-<span class="math notranslate nohighlight">\(\frac{1}{\sqrt{1-x^2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-1 &lt; x &lt; 1\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\arctan{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{1+x^2}\)</span></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="derivasjonsregler">
+<span id="id8"></span><h3>4.4.6 Derivasjonsregler<a class="headerlink" href="#derivasjonsregler" title="Link to this heading">#</a></h3>
+<p>For å finne de deriverte til sammensatte og mer kompliserte funksjoner, må vi ha noen derivasjonsregler. Først introduseres litt notasjon for å unngå forvirring!</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Lagrange</p></th>
+<th class="head"><p>Leipniz</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f'(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{df}{dx}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(f''(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{d^2f}{dx^2}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f'''(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{d^3f}{dx^3}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(f^{(n)}(x)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{d^nf}{dx^n}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Videre presenteres de ulike derivasjonsreglene.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.2 - Faktorregelen</p>
+<p>La <span class="math notranslate nohighlight">\(g\)</span> være en deriverbar funksjon i <span class="math notranslate nohighlight">\(x\)</span> og la <span class="math notranslate nohighlight">\(a\)</span> være et tall. Da er</p>
+<p><span class="math notranslate nohighlight">\(\frac{d}{dx} [a \cdot g(x)]=a \cdot g'(x)\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.3 - Summeregelen</p>
+<p>La funksjonene <span class="math notranslate nohighlight">\(g\)</span> og <span class="math notranslate nohighlight">\(h\)</span> er deriverbare i <span class="math notranslate nohighlight">\(x\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\frac{d}{dx} [g(x) + h(x)]=g'(x) + h'(x)\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.4 - Produktregelen</p>
+<p>La funksjonene <span class="math notranslate nohighlight">\(g\)</span> og <span class="math notranslate nohighlight">\(h\)</span> er deriverbare i <span class="math notranslate nohighlight">\(x\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\frac{d}{dx} [g(x) \cdot h(x)]=g'(x)h(x)+g(x)h'(x)\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.5 - Kvotientregelen</p>
+<p>La funksjonene <span class="math notranslate nohighlight">\(g\)</span> og <span class="math notranslate nohighlight">\(h\)</span> er deriverbare i <span class="math notranslate nohighlight">\(x\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\frac{d}{dx} [\frac{g(x)}{h(x)}]=\frac{g'(x)h(x)-g(x)h'(x)}{h(x)^2}\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.6 - Kjerneregelen</p>
+<p>La funksjonene <span class="math notranslate nohighlight">\(g\)</span> og <span class="math notranslate nohighlight">\(h\)</span> er deriverbare i <span class="math notranslate nohighlight">\(x\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\frac{d}{dx} [(g \circ h)(x)]=(g(h(x)))'=g(h(x)) \cdot h'(x)\)</span></p>
+</div>
+<p>Derivasjon av funksjoner er mengdetrening. Prøv å forstå alle eksemplene nedenfor.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 1</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=7x^4\)</span>.</p>
+<p class="sd-card-text">Vi kan faktorisere <span class="math notranslate nohighlight">\(7\)</span> ut ved faktorregelen, og bruker potensregelen på <span class="math notranslate nohighlight">\(x^4\)</span>, slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=7 \cdot \frac{d}{dx}\left(x^4\right)=7 \cdot 4x^3=28x^3\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 2</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=x^3+\sin{(x)}\)</span>.</p>
+<p class="sd-card-text">Ved summeregelen deriverer vi hvert ledd for seg, slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\frac{d}{dx}\left(x^3\right)+\frac{d}{dx}\left(\sin{(x)}\right)=3x^2+\cos{(x)}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 3</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=4x^2+3e^x-5\ln{(x)}\)</span>.</p>
+<p class="sd-card-text">Vi bruker summeregelen på leddene og faktorregelen på hver konstant:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=4 \cdot 2x+3 \cdot e^x-5 \cdot \frac{1}{x}=8x+3e^x-\frac{5}{x}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 4</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=x^2\sin{(x)}\)</span>.</p>
+<p class="sd-card-text">Dette er et produkt av <span class="math notranslate nohighlight">\(x^2\)</span> og <span class="math notranslate nohighlight">\(\sin{(x)}\)</span>, så vi bruker produktregelen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=2x\sin{(x)}+x^2\cos{(x)}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 5</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=e^x\cos{(x)}\)</span>.</p>
+<p class="sd-card-text">Vi bruker produktregelen, og husker at <span class="math notranslate nohighlight">\(e^x\)</span> er sin egen deriverte, slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=e^x\cos{(x)}+e^x\cdot(-\sin{(x)})=e^x\left(\cos{(x)}-\sin{(x)}\right)\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 6</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=\dfrac{x}{\cos{(x)}}\)</span>.</p>
+<p class="sd-card-text">Dette er en kvotient med teller <span class="math notranslate nohighlight">\(x\)</span> og nevner <span class="math notranslate nohighlight">\(\cos{(x)}\)</span>, så vi bruker kvotientregelen, slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\frac{1\cdot\cos{(x)}-x\cdot(-\sin{(x)})}{\cos^2{(x)}}=\frac{\cos{(x)}+x\sin{(x)}}{\cos^2{(x)}}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 7</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=\dfrac{\ln{(x)}}{x^2}\)</span>.</p>
+<p class="sd-card-text">Vi bruker kvotientregelen med teller <span class="math notranslate nohighlight">\(\ln{(x)}\)</span> og nevner <span class="math notranslate nohighlight">\(x^2\)</span>, slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=\frac{\frac{1}{x}\cdot x^2-\ln{(x)}\cdot 2x}{\left(x^2\right)^2}=\frac{x-2x\ln{(x)}}{x^4}=\frac{1-2\ln{(x)}}{x^3}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 8</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=\sin{(x^2)}\)</span>.</p>
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(g(x)=\sin{(x)}\)</span> være den ytre funksjonen og <span class="math notranslate nohighlight">\(h(x)=x^2\)</span> være den indre funksjonen. Vi har at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(g'(x)=\cos{(x)}\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(h'(x)=2x\)</span></p>
+<p class="sd-card-text">Ved kjerneregelen får vi derfor</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=g'(h(x)) \cdot h'(x)=\cos{(x^2)} \cdot 2x=2x\cos{(x^2)}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 9</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=e^{3x}\)</span>.</p>
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(g(x)=e^{x}\)</span> være den ytre funksjonen og <span class="math notranslate nohighlight">\(h(x)=3x\)</span> være den indre funksjonen. Vi har at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(g'(x)=e^{x}\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(h'(x)=3\)</span></p>
+<p class="sd-card-text">Ved kjerneregelen får vi derfor</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=g'(h(x)) \cdot h'(x)=e^{3x} \cdot 3=3e^{3x}\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel 10</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Deriver <span class="math notranslate nohighlight">\(f(x)=x \cdot \ln{(x^2+1)}\)</span>.</p>
+<p class="sd-card-text">Dette er et produkt av <span class="math notranslate nohighlight">\(u(x)=x\)</span> og <span class="math notranslate nohighlight">\(v(x)=\ln{(x^2+1)}\)</span>, så vi bruker produktregelen. Først deriverer vi hver faktor.</p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(u(x)=x\)</span> har vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(u'(x)=1\)</span></p>
+<p class="sd-card-text">Faktoren <span class="math notranslate nohighlight">\(v(x)=\ln{(x^2+1)}\)</span> deriverer vi med kjerneregelen. La <span class="math notranslate nohighlight">\(g(x)=\ln{(x)}\)</span> være den ytre funksjonen og <span class="math notranslate nohighlight">\(h(x)=x^2+1\)</span> være den indre funksjonen. Vi har at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(g'(x)=\frac{1}{x}\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(h'(x)=2x\)</span></p>
+<p class="sd-card-text">slik at</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(v'(x)=g'(h(x)) \cdot h'(x)=\frac{1}{x^2+1} \cdot 2x=\frac{2x}{x^2+1}\)</span></p>
+<p class="sd-card-text">Ved produktregelen får vi derfor</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f'(x)=u'(x)v(x)+u(x)v'(x)=1 \cdot \ln{(x^2+1)}+x \cdot \frac{2x}{x^2+1}=\ln{(x^2+1)}+\frac{2x^2}{x^2+1}\)</span></p>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 4.4</p>
+<p>a) Regn ut den gjennomsnittlige endringsraten til <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> over intervallet <span class="math notranslate nohighlight">\([1,4]\)</span>.</p>
+<p>b) Bruk definisjonen av den deriverte (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#derivasjon">Def. 4.9</a>) til å vise at <span class="math notranslate nohighlight">\(f(x)=x^2+x\)</span> har <span class="math notranslate nohighlight">\(f'(x)=2x+1\)</span>.</p>
+<p>c) Deriver <span class="math notranslate nohighlight">\(f(x)=x^3\cos{(x)}\)</span>.</p>
+<p>d) Deriver <span class="math notranslate nohighlight">\(f(x)=(2x+1)^5\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 4.4</p>
+<p>a) Vi bruker definisjonen av endringsrate (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#derivasjon">Def. 4.8</a>) med <span class="math notranslate nohighlight">\(a=1\)</span> og <span class="math notranslate nohighlight">\(b=4\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\frac{\Delta y}{\Delta x}=\frac{f(4)-f(1)}{4-1}=\frac{16-1}{3}=\frac{15}{3}=5\)</span></p>
+<p>b) Vi setter inn i definisjonen:</p>
+<p><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0}\frac{f(x+h)-f(x)}{h}=\lim_{h \to 0}\frac{\left[(x+h)^2+(x+h)\right]-\left[x^2+x\right]}{h}\)</span></p>
+<p>Vi regner ut telleren: <span class="math notranslate nohighlight">\((x+h)^2+(x+h)-x^2-x=x^2+2xh+h^2+x+h-x^2-x=2xh+h^2+h\)</span>. Dermed er</p>
+<p><span class="math notranslate nohighlight">\(f'(x)=\lim_{h \to 0}\frac{2xh+h^2+h}{h}=\lim_{h \to 0}(2x+h+1)=2x+1\)</span></p>
+<p>c) Med <span class="math notranslate nohighlight">\(g(x)=x^3\)</span> og <span class="math notranslate nohighlight">\(h(x)=\cos{(x)}\)</span> gir produktregelen</p>
+<p><span class="math notranslate nohighlight">\(f'(x)=3x^2\cos{(x)}+x^3\cdot(-\sin{(x)})=3x^2\cos{(x)}-x^3\sin{(x)}\)</span></p>
+<p>d) La <span class="math notranslate nohighlight">\(g(x)=x^5\)</span> være den ytre funksjonen og <span class="math notranslate nohighlight">\(h(x)=2x+1\)</span> være den indre funksjonen. Da er <span class="math notranslate nohighlight">\(g'(x)=5x^4\)</span> og <span class="math notranslate nohighlight">\(h'(x)=2\)</span>, slik at</p>
+<p><span class="math notranslate nohighlight">\(f'(x)=g'(h(x)) \cdot h'(x)=5(2x+1)^4 \cdot 2=10(2x+1)^4\)</span></p>
+</div>
+</section>
+</section>
+<section id="integrasjon">
+<span id="id9"></span><h2>4.5 Integrasjon<a class="headerlink" href="#integrasjon" title="Link to this heading">#</a></h2>
+<p>Vi har til nå sett på derivasjon, som handler om endring: gitt en funksjon <span class="math notranslate nohighlight">\(f\)</span>, finner vi den momentane endringsraten <span class="math notranslate nohighlight">\(f'\)</span>. Integrasjon er på mange måter den motsatte operasjonen. I stedet for å spørre “hvor raskt endrer <span class="math notranslate nohighlight">\(f\)</span> seg?”, spør vi “hvor mye har <span class="math notranslate nohighlight">\(f\)</span> samlet seg opp?”. Vi skal se at integrasjon svarer på to spørsmål som i utgangspunktet virker helt ulike - arealet under en graf, og det å reversere en derivasjon - og at disse to henger tett sammen.</p>
+<section id="den-antideriverte">
+<h3>4.5.1 Den antideriverte<a class="headerlink" href="#den-antideriverte" title="Link to this heading">#</a></h3>
+<p>Vi starter med å reversere derivasjon. Vi har sett at å derivere <span class="math notranslate nohighlight">\(F(x)=x^2\)</span> gir <span class="math notranslate nohighlight">\(f(x)=2x\)</span>. Men kan vi gå fra <span class="math notranslate nohighlight">\(f(x)=2x\)</span> tilbake til <span class="math notranslate nohighlight">\(F(x)=x^2\)</span>? En slik funksjon <span class="math notranslate nohighlight">\(F\)</span>, som har <span class="math notranslate nohighlight">\(f\)</span> som sin deriverte, kaller vi en <strong>antiderivert til <span class="math notranslate nohighlight">\(f\)</span></strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.13 - Antiderivert</p>
+<p>En funksjon <span class="math notranslate nohighlight">\(F\)</span> kalles en <strong>antiderivert</strong> til <span class="math notranslate nohighlight">\(f\)</span> dersom</p>
+<p><span class="math notranslate nohighlight">\(F'(x)=f(x)\)</span></p>
+<p>for alle <span class="math notranslate nohighlight">\(x\)</span> i definisjonsmengden til <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</div>
+</section>
+<section id="ubestemte-integraler-og-integrasjonskonstanten">
+<span id="id10"></span><h3>4.5.2 Ubestemte integraler og integrasjonskonstanten<a class="headerlink" href="#ubestemte-integraler-og-integrasjonskonstanten" title="Link to this heading">#</a></h3>
+<p>Legg merke til at en antiderivert aldri er entydig. Siden den deriverte av en konstant er <span class="math notranslate nohighlight">\(0\)</span>, vil både <span class="math notranslate nohighlight">\(F(x)=x^2\)</span>, <span class="math notranslate nohighlight">\(F(x)=x^2+1\)</span> og <span class="math notranslate nohighlight">\(F(x)=x^2-7\)</span> alle ha <span class="math notranslate nohighlight">\(f(x)=2x\)</span> som sin deriverte. Alle antideriverte til en funksjon skiller seg derfor bare med en konstant. Denne konstanten kaller vi <strong>integrasjonskonstanten</strong> <span class="math notranslate nohighlight">\(C\)</span>, og den må alltid tas med.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.14 - Det ubestemte integralet</p>
+<p>Det <strong>ubestemte integralet</strong> til en funksjon <span class="math notranslate nohighlight">\(f\)</span> er mengden av alle antideriverte til <span class="math notranslate nohighlight">\(f\)</span>, skrevet</p>
+<p><span class="math notranslate nohighlight">\(\int f(x) \, dx = F(x) + C\)</span></p>
+<p>der <span class="math notranslate nohighlight">\(F\)</span> er en antiderivert til <span class="math notranslate nohighlight">\(f\)</span>, og <span class="math notranslate nohighlight">\(C\)</span> er en konstant.</p>
+</div>
+</section>
+<section id="integralene-til-kjente-funksjoner">
+<h3>4.5.3 Integralene til kjente funksjoner<a class="headerlink" href="#integralene-til-kjente-funksjoner" title="Link to this heading">#</a></h3>
+<p>Symbolet <span class="math notranslate nohighlight">\(\int\)</span> kalles <strong>integraltegnet</strong>, funksjonen <span class="math notranslate nohighlight">\(f(x)\)</span> kalles <strong>integranden</strong>, og <span class="math notranslate nohighlight">\(dx\)</span> forteller oss hvilken variabel vi integrerer med hensyn på. På samme måte som med derivasjon finnes det en tabell over de vanligste integralene. Legg merke til at tabellen bare er derivasjonstabellen “lest baklengs”.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(f(x)\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(\int f(x)\,dx\)</span></p></th>
+<th class="head"><p>Betingelser</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(ax + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x^n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{1}{n+1}x^{n+1} + C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(n \neq -1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\frac{1}{x}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln{|x|} + C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x \neq 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(e^x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(e^x + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a^x\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\frac{a^x}{\ln{(a)}} + C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(a&gt;0,\ a\neq 1\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\sin{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-\cos{(x)} + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\cos{(x)}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\sin{(x)} + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\frac{1}{\cos^2{(x)}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\tan{(x)} + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\frac{1}{\sqrt{1-x^2}}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\arcsin{(x)} + C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(-1 &lt; x &lt; 1\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\frac{1}{1+x^2}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\arctan{(x)} + C\)</span></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Legg spesielt merke til graden for <span class="math notranslate nohighlight">\(x^n\)</span>: vi øker eksponenten med én og deler på den nye eksponenten. Dette er det motsatte av potensregelen for derivasjon. Regelen gjelder for alle <span class="math notranslate nohighlight">\(n \neq -1\)</span>, og tilfellet <span class="math notranslate nohighlight">\(n=-1\)</span> (altså <span class="math notranslate nohighlight">\(\frac{1}{x}\)</span>) er nettopp derfor gitt sin egen rad, med <span class="math notranslate nohighlight">\(\ln{|x|}\)</span> som svar.</p>
+</section>
+<section id="det-bestemte-integralet-og-riemann-summer">
+<span id="id11"></span><h3>4.5.4 Det bestemte integralet og Riemann-summer<a class="headerlink" href="#det-bestemte-integralet-og-riemann-summer" title="Link to this heading">#</a></h3>
+<p>Vi bytter nå perspektiv, og spør: hva er arealet mellom grafen til <span class="math notranslate nohighlight">\(f\)</span> og <span class="math notranslate nohighlight">\(x\)</span>-aksen, fra <span class="math notranslate nohighlight">\(x=a\)</span> til <span class="math notranslate nohighlight">\(x=b\)</span>? For en rett linje er dette lett - da får vi et rektangel eller en trekant. Men for en krum graf trenger vi en ny idé: vi deler intervallet opp i mange smale striper, tilnærmer hver stripe med et rektangel, og legger sammen arealene. Jo smalere striper, jo bedre tilnærming.</p>
+<p>Grenseverdien av disse rektangelsummene, når antall striper går mot uendelig og bredden mot null, kaller vi <strong>det bestemte integralet</strong>. Vi lar bredden på hver stripe være <span class="math notranslate nohighlight">\(\Delta x\)</span> og høyden <span class="math notranslate nohighlight">\(f(x_i)\)</span>, og summerer.</p>
+<p>Når vi tilnærmer arealet med rektangler, må vi bestemme hvor høyt hvert rektangel skal være - altså hvilket punkt i hver stripe vi leser av funksjonsverdien fra. Tre vanlige valg er å bruke venstre endepunkt, høyre endepunkt eller midtpunktet av hver stripe. Uansett hvilket vi velger, kaller vi en slik sum en <strong>Riemann-sum</strong>, etter matematikeren Bernhard Riemann. Velger vi venstre endepunkt for en stigende funksjon, blir rektanglene litt for lave og summen for liten; velger vi høyre endepunkt, blir den for stor. Midtpunktet treffer som regel best. Det avgjørende er at <em>alle</em> tre valgene gir samme grenseverdi når stripene blir uendelig smale.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 4.15 - Det bestemte integralet</p>
+<p>Det <strong>bestemte integralet</strong> til <span class="math notranslate nohighlight">\(f\)</span> fra <span class="math notranslate nohighlight">\(a\)</span> til <span class="math notranslate nohighlight">\(b\)</span> er grenseverdien av rektangelsummene når antall striper <span class="math notranslate nohighlight">\(n\)</span> går mot uendelig:</p>
+<p><span class="math notranslate nohighlight">\(\int_a^b f(x) \, dx = \lim_{n \to \infty} \sum_{i=1}^{n} f(x_i)\,\Delta x\)</span></p>
+<p>der <span class="math notranslate nohighlight">\(\Delta x = \frac{b-a}{n}\)</span>.</p>
+<p>Tallene <span class="math notranslate nohighlight">\(a\)</span> og <span class="math notranslate nohighlight">\(b\)</span> kalles henholdsvis nedre og øvre grense.</p>
+</div>
+<p>Bruk simulasjonen nedenfor til å velge gradvis mindre rektangler for å finne arealet under kurven. Legg merke til hva som skjer når <span class="math notranslate nohighlight">\(n \to \infty\)</span>.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Riemann-summer&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;
+    --paper:#f5f2ea;
+    --grid:#d8d2c4;
+    --axis:#6b6252;
+    --curve:#1f5f8b;      /* deep teal-blue for f */
+    --rect:#c0392b;       /* clay red for rectangles */
+    --exact:#1a7a4c;      /* green for exact area */
+    --pt:#d68910;         /* amber accents */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;
+    padding:22px;
+    line-height:1.5;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{
+    font-family:&quot;SF Mono&quot;,ui-monospace,&quot;Cascadia Code&quot;,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{
+    background:var(--paper);
+    border:1px solid var(--grid);
+    border-radius:4px;
+    padding:8px;
+  }
+  svg{display:block;width:100%;height:auto;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    color:var(--muted);font-weight:600;margin-bottom:10px;
+  }
+  .quotient{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    font-size:15px;color:var(--ink);margin:4px 0 10px;
+  }
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:17px;}
+  .val.sum{color:var(--rect);}
+  .val.exact{color:var(--exact);}
+  .val.err{color:var(--muted);font-size:15px;}
+  .ctl{margin-bottom:14px;}
+  .ctl label{
+    display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+  }
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--pt);border:2px solid var(--paper);cursor:pointer;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;
+  }
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  button{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;
+    letter-spacing:.04em;padding:7px 13px;border:1px solid var(--axis);
+    background:transparent;color:var(--ink);border-radius:3px;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  button:hover{background:var(--ink);color:var(--paper);}
+  button.on{background:var(--exact);border-color:var(--exact);color:#fff;}
+  .seg{display:flex;gap:0;margin-top:2px;}
+  .seg button{border-radius:0;border-right-width:0;}
+  .seg button:first-child{border-radius:3px 0 0 3px;}
+  .seg button:last-child{border-radius:0 3px 3px 0;border-right-width:1px;}
+  .seg button.on{background:var(--rect);border-color:var(--rect);color:#fff;}
+  .note{
+    margin-top:16px;font-size:14px;color:var(--muted);
+    border-left:2px solid var(--pt);padding-left:12px;
+  }
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;margin-top:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block;}
+  .swatch.box{height:11px;width:11px;border-radius:2px;opacity:.55;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Grenseprosessen&lt;/div&gt;
+  &lt;h1&gt;Riemann-summer: areal som grense&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Vi tilnærmer arealet under f(x) = x² på [0, 2] med n rektangler. Når n → ∞, nærmer summen seg det eksakte arealet.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;svg id=&quot;plot&quot; viewBox=&quot;0 0 600 420&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--curve)&quot;&gt;&lt;/i&gt; f(x) = x²&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch box&quot; style=&quot;background:var(--rect)&quot;&gt;&lt;/i&gt; rektangler&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--exact)&quot;&gt;&lt;/i&gt; eksakt areal = 8/3&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Arealsummen&lt;/h2&gt;
+      &lt;div class=&quot;quotient&quot;&gt;
+        S&lt;sub&gt;n&lt;/sub&gt; = &amp;sum; f(x&lt;sub&gt;i&lt;/sub&gt;) &amp;middot; &amp;Delta;x
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;rektangelsum S&lt;sub&gt;n&lt;/sub&gt;&lt;/span&gt;
+        &lt;span class=&quot;val sum&quot; id=&quot;sumVal&quot;&gt;—&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;eksakt areal (8/3)&lt;/span&gt;
+        &lt;span class=&quot;val exact&quot; id=&quot;exactVal&quot;&gt;2.6667&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;avvik |S&lt;sub&gt;n&lt;/sub&gt; &amp;minus; 8/3|&lt;/span&gt;
+        &lt;span class=&quot;val err&quot; id=&quot;errVal&quot;&gt;—&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;antall rektangler n &lt;b id=&quot;nLab&quot;&gt;4&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;nRange&quot; min=&quot;1&quot; max=&quot;200&quot; step=&quot;1&quot; value=&quot;4&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;metode&lt;/label&gt;
+        &lt;div class=&quot;seg&quot; id=&quot;modeSeg&quot;&gt;
+          &lt;button data-mode=&quot;left&quot;&gt;venstre&lt;/button&gt;
+          &lt;button data-mode=&quot;mid&quot; class=&quot;on&quot;&gt;midtpunkt&lt;/button&gt;
+          &lt;button data-mode=&quot;right&quot;&gt;høyre&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button id=&quot;animBtn&quot;&gt;Kjør n → ∞&lt;/button&gt;
+        &lt;button id=&quot;resetBtn&quot;&gt;Nullstill&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot; id=&quot;note&quot;&gt;Dra &lt;b&gt;n&lt;/b&gt; oppover og se rektanglene bli smalere. Summen nærmer seg 8/3 ≈ 2,667 uansett metode &amp;mdash; midtpunkt treffer raskest.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const svg = document.getElementById(&#x27;plot&#x27;);
+  const NS = &quot;http://www.w3.org/2000/svg&quot;;
+  const W=600,H=420, padL=44,padR=20,padT=18,padB=34;
+  const xmin=-0.3,xmax=2.4,ymin=-0.4,ymax=4.6;
+  const a=0,b=2;
+  const sx = v =&gt; padL + (v-xmin)/(xmax-xmin)*(W-padL-padR);
+  const sy = v =&gt; (H-padB) - (v-ymin)/(ymax-ymin)*(H-padT-padB);
+  const f = x =&gt; x*x;
+  const EXACT = 8/3;
+
+  function el(tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  function clear(){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+
+  const state={n:4,mode:&#x27;mid&#x27;};
+
+  function sampleX(i,dx){
+    if(state.mode===&#x27;left&#x27;) return a+i*dx;
+    if(state.mode===&#x27;right&#x27;) return a+(i+1)*dx;
+    return a+(i+0.5)*dx;
+  }
+
+  function draw(){
+    clear();
+    // grid
+    for(let gx=0;gx&lt;=2;gx++)
+      svg.appendChild(el(&#x27;line&#x27;,{x1:sx(gx),y1:sy(ymin),x2:sx(gx),y2:sy(ymax),stroke:&#x27;var(--grid)&#x27;,&#x27;stroke-width&#x27;:gx===0?1.4:0.6}));
+    for(let gy=0;gy&lt;=4;gy++)
+      svg.appendChild(el(&#x27;line&#x27;,{x1:sx(xmin),y1:sy(gy),x2:sx(xmax),y2:sy(gy),stroke:&#x27;var(--grid)&#x27;,&#x27;stroke-width&#x27;:gy===0?1.4:0.6}));
+    // axes
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(xmin),y1:sy(0),x2:sx(xmax),y2:sy(0),stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.4}));
+    svg.appendChild(el(&#x27;line&#x27;,{x1:sx(0),y1:sy(ymin),x2:sx(0),y2:sy(ymax),stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.4}));
+    // axis ticks
+    svg.appendChild(el(&#x27;text&#x27;,{x:sx(2),y:sy(0)+16,&#x27;text-anchor&#x27;:&#x27;middle&#x27;,fill:&#x27;var(--muted)&#x27;,&#x27;font-size&#x27;:11,&#x27;font-family&#x27;:&#x27;monospace&#x27;})).textContent=&#x27;2&#x27;;
+
+    const n=state.n, dx=(b-a)/n;
+    let sum=0;
+    // rectangles
+    for(let i=0;i&lt;n;i++){
+      const xi=sampleX(i,dx), h=f(xi);
+      sum+=h*dx;
+      const xl=a+i*dx;
+      const px=sx(xl), pw=sx(xl+dx)-sx(xl);
+      const py=sy(h), ph=sy(0)-sy(h);
+      svg.appendChild(el(&#x27;rect&#x27;,{
+        x:px.toFixed(2),y:py.toFixed(2),width:Math.max(0,pw).toFixed(2),height:Math.max(0,ph).toFixed(2),
+        fill:&#x27;var(--rect)&#x27;,&#x27;fill-opacity&#x27;:0.28,stroke:&#x27;var(--rect)&#x27;,&#x27;stroke-width&#x27;:n&gt;60?0.4:0.9,&#x27;stroke-opacity&#x27;:0.8
+      }));
+    }
+
+    // curve on top
+    let d=&quot;&quot;;
+    for(let i=0;i&lt;=240;i++){
+      const xx=xmin+(xmax-xmin)*i/240, yy=f(xx);
+      if(yy&gt;ymax+0.5)continue;
+      d+=(d===&quot;&quot;?&quot;M&quot;:&quot;L&quot;)+sx(xx).toFixed(1)+&quot;,&quot;+sy(yy).toFixed(1)+&quot; &quot;;
+    }
+    svg.appendChild(el(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:&#x27;var(--curve)&#x27;,&#x27;stroke-width&#x27;:2.6}));
+
+    // readouts
+    document.getElementById(&#x27;sumVal&#x27;).textContent=sum.toFixed(4);
+    document.getElementById(&#x27;errVal&#x27;).textContent=Math.abs(sum-EXACT).toFixed(4);
+    document.getElementById(&#x27;nLab&#x27;).textContent=n;
+  }
+
+  const nR=document.getElementById(&#x27;nRange&#x27;);
+  nR.addEventListener(&#x27;input&#x27;,e=&gt;{state.n=parseInt(e.target.value);draw();});
+
+  // mode segmented control
+  document.getElementById(&#x27;modeSeg&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{
+    const btn=e.target.closest(&#x27;button&#x27;); if(!btn)return;
+    state.mode=btn.dataset.mode;
+    [...document.querySelectorAll(&#x27;#modeSeg button&#x27;)].forEach(b=&gt;b.classList.toggle(&#x27;on&#x27;,b===btn));
+    draw();
+  });
+
+  // animate n -&gt; large
+  let raf=null;
+  const animBtn=document.getElementById(&#x27;animBtn&#x27;);
+  function stopAnim(){if(raf){cancelAnimationFrame(raf);raf=null;}animBtn.classList.remove(&#x27;on&#x27;);animBtn.textContent=&#x27;Kjør n → ∞&#x27;;}
+  animBtn.addEventListener(&#x27;click&#x27;,()=&gt;{
+    if(raf){stopAnim();return;}
+    animBtn.classList.add(&#x27;on&#x27;);animBtn.textContent=&#x27;Stopp&#x27;;
+    state.n=1;nR.value=1;draw();
+    let acc=1;
+    const step=()=&gt;{
+      acc*=1.06;
+      state.n=Math.min(200,Math.round(acc));
+      nR.value=state.n;draw();
+      if(state.n&gt;=200){stopAnim();return;}
+      raf=requestAnimationFrame(step);
+    };
+    raf=requestAnimationFrame(step);
+  });
+  document.getElementById(&#x27;resetBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+    stopAnim();state.n=4;state.mode=&#x27;mid&#x27;;nR.value=4;
+    [...document.querySelectorAll(&#x27;#modeSeg button&#x27;)].forEach(b=&gt;b.classList.toggle(&#x27;on&#x27;,b.dataset.mode===&#x27;mid&#x27;));
+    draw();
+  });
+
+  draw();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>Til forskjell fra det ubestemte integralet, som er en funksjon (pluss en konstant), er det bestemte integralet et tall. Det er verdt å merke seg at dette tallet er et areal med fortegn: der grafen ligger under <span class="math notranslate nohighlight">\(x\)</span>-aksen, teller arealet negativt.</p>
+<p>Vi har nå to helt forskjellige begreper som begge kalles “integral”: det ubestemte (antiderivasjon) og det bestemte (areal som grense av rektangelsummer). Det store, og på mange måter overraskende, resultatet i kalkulus er at disse to henger sammen. For å regne ut et areal trenger vi ikke summere uendelig mange rektangler - det holder å finne en antiderivert. Dette er <strong>analysens fundamentalteorem</strong>.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.7 - Analysens fundamentalteorem</p>
+<p>La <span class="math notranslate nohighlight">\(f\)</span> være en kontinuerlig funksjon på <span class="math notranslate nohighlight">\([a,b]\)</span>, og la <span class="math notranslate nohighlight">\(F\)</span> være en antiderivert til <span class="math notranslate nohighlight">\(f\)</span>, altså <span class="math notranslate nohighlight">\(F'=f\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int_a^b f(x) \, dx = F(b) - F(a)\)</span></p>
+<p>Vi bruker gjerne en kort skrivemåte for uttrykket <span class="math notranslate nohighlight">\(F(b)-F(a)\)</span>, nemlig</p>
+<p><span class="math notranslate nohighlight">\(\Big[F(x)\Big]_a^b\)</span></p>
+</div>
+<p>Fremgangsmåten for å regne ut et bestemt integral blir da: finn en antiderivert <span class="math notranslate nohighlight">\(F\)</span>, sett inn øvre grense, sett inn nedre grense, og trekk fra. Siden vi til slutt trekker <span class="math notranslate nohighlight">\(F(a)\)</span> fra <span class="math notranslate nohighlight">\(F(b)\)</span>, faller integrasjonskonstanten <span class="math notranslate nohighlight">\(C\)</span> alltid bort - derfor tar vi den ikke med i bestemte integraler.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut arealet under grafen til <span class="math notranslate nohighlight">\(f(x)=x^2\)</span> fra <span class="math notranslate nohighlight">\(x=0\)</span> til <span class="math notranslate nohighlight">\(x=2\)</span>, altså <span class="math notranslate nohighlight">\(\int_0^2 x^2 \, dx\)</span>.</p>
+<p class="sd-card-text">Vi finner først en antiderivert: <span class="math notranslate nohighlight">\(F(x)=\frac{x^3}{3}\)</span>. Ved fundamentalteoremet er</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^2 x^2 \, dx = \Big[\frac{x^3}{3}\Big]_0^2 = \frac{2^3}{3} - \frac{0^3}{3} = \frac{8}{3} - 0 = \frac{8}{3}\)</span></p>
+<p class="sd-card-text">Arealet er altså <span class="math notranslate nohighlight">\(\frac{8}{3} \approx 2{,}67\)</span>. Dette er nøyaktig den verdien rektangelsummene nærmet seg i simulasjonen ovenfor.</p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\int_1^3 (2x+1) \, dx\)</span>.</p>
+<p class="sd-card-text">En antiderivert til <span class="math notranslate nohighlight">\(2x+1\)</span> er <span class="math notranslate nohighlight">\(F(x)=x^2+x\)</span>. Da får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_1^3 (2x+1) \, dx = \Big[x^2+x\Big]_1^3 = \left(3^2+3\right) - \left(1^2+1\right) = 12 - 2 = 10\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\int_0^{\pi} \sin{(x)} \, dx\)</span>.</p>
+<p class="sd-card-text">En antiderivert til <span class="math notranslate nohighlight">\(\sin{(x)}\)</span> er <span class="math notranslate nohighlight">\(F(x)=-\cos{(x)}\)</span>. Dermed er</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^{\pi} \sin{(x)} \, dx = \Big[-\cos{(x)}\Big]_0^{\pi} = -\cos{(\pi)} - \left(-\cos{(0)}\right) = -(-1) + 1 = 2\)</span></p>
+</div>
+</div>
+</section>
+<section id="integrasjonsregler">
+<span id="id12"></span><h3>4.5.5 Integrasjonsregler<a class="headerlink" href="#integrasjonsregler" title="Link to this heading">#</a></h3>
+<p>Så langt har vi kunnet slå opp antideriverte i tabellen, men hva med funksjoner som <span class="math notranslate nohighlight">\(x e^x\)</span> eller <span class="math notranslate nohighlight">\(2x\cos{(x^2)}\)</span>, som ikke står i tabellen? For slike trenger vi teknikker. Akkurat som for derivasjon finnes det regneregler som lar oss integrere summer og konstant-multipler ledd for ledd. Vi har også to viktige integrasjonsteknikker: substitusjon (som reverserer kjerneregelen) og delvis integrasjon (som reverserer produktregelen).</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.8 - Linearitet ved integrasjon</p>
+<p>La <span class="math notranslate nohighlight">\(f\)</span> og <span class="math notranslate nohighlight">\(g\)</span> være integrerbare funksjoner og la <span class="math notranslate nohighlight">\(a\)</span> være et tall. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int a \cdot f(x) \, dx = a \int f(x) \, dx\)</span></p>
+<p><span class="math notranslate nohighlight">\(\int \left[ f(x) + g(x) \right] dx = \int f(x)\,dx + \int g(x)\,dx\)</span></p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\int \left( 3x^2 + 2x \right) dx\)</span>.</p>
+<p class="sd-card-text">Ved linearitet integrerer vi hvert ledd for seg, og trekker konstantene utenfor:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int \left( 3x^2 + 2x \right) dx = 3\int x^2 \, dx + 2\int x \, dx = 3 \cdot \frac{x^3}{3} + 2 \cdot \frac{x^2}{2} + C = x^3 + x^2 + C\)</span></p>
+<p class="sd-card-text">Merk at vi bare trenger én integrasjonskonstant <span class="math notranslate nohighlight">\(C\)</span> til slutt, siden summen av flere vilkårlige konstanter fortsatt bare er en vilkårlig konstant.</p>
+</div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.9 - Substitusjon</p>
+<p>La <span class="math notranslate nohighlight">\(f\)</span> og <span class="math notranslate nohighlight">\(g\)</span> være slik at <span class="math notranslate nohighlight">\(g\)</span> er deriverbar. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int f(g(x)) \cdot g'(x) \, dx = \int f(u) \, du\)</span></p>
+<p>der vi har satt <span class="math notranslate nohighlight">\(u=g(x)\)</span> og <span class="math notranslate nohighlight">\(du = g'(x)\,dx\)</span>.</p>
+</div>
+<p>Idéen bak substitusjon er å kjenne igjen en “indre funksjon” <span class="math notranslate nohighlight">\(g(x)\)</span> og dens deriverte <span class="math notranslate nohighlight">\(g'(x)\)</span> i integranden, og så bytte variabel fra <span class="math notranslate nohighlight">\(x\)</span> til <span class="math notranslate nohighlight">\(u=g(x)\)</span>. Da forsvinner den ytre kompleksiteten, og vi sitter igjen med et integral vi kan slå opp.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\int 2x \cos{(x^2)} \, dx\)</span>.</p>
+<p class="sd-card-text">Vi ser at <span class="math notranslate nohighlight">\(x^2\)</span> er en indre funksjon, og at dens deriverte <span class="math notranslate nohighlight">\(2x\)</span> står som faktor i integranden. Vi setter derfor</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(u = x^2 \quad \Rightarrow \quad \frac{du}{dx} = 2x \quad \Rightarrow \quad du = 2x \, dx\)</span></p>
+<p class="sd-card-text">Integralet blir da</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int 2x \cos{(x^2)} \, dx = \int \cos{(u)} \, du = \sin{(u)} + C = \sin{(x^2)} + C\)</span></p>
+<p class="sd-card-text">Vi bytter altså tilbake til <span class="math notranslate nohighlight">\(x\)</span> til slutt. Sjekk gjerne ved å derivere <span class="math notranslate nohighlight">\(\sin{(x^2)}\)</span> med kjerneregelen - da får vi <span class="math notranslate nohighlight">\(2x\cos{(x^2)}\)</span> tilbake.</p>
+</div>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 4.10 - Delvis integrasjon</p>
+<p>La <span class="math notranslate nohighlight">\(u\)</span> og <span class="math notranslate nohighlight">\(v\)</span> være deriverbare funksjoner av <span class="math notranslate nohighlight">\(x\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int u \, v' \, dx = u v - \int u' \, v \, dx\)</span></p>
+</div>
+<p>Delvis integrasjon er nyttig når integranden er et produkt av to funksjoner av ulik type - for eksempel et polynom ganget med en eksponential- eller trigonometrisk funksjon. Trikset er å velge den ene faktoren som <span class="math notranslate nohighlight">\(u\)</span> (den vi deriverer) og den andre som <span class="math notranslate nohighlight">\(v'\)</span> (den vi integrerer), slik at det nye integralet blir enklere enn det opprinnelige.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\int x e^x \, dx\)</span>.</p>
+<p class="sd-card-text">Vi velger <span class="math notranslate nohighlight">\(u=x\)</span> (som blir enklere når vi deriverer) og <span class="math notranslate nohighlight">\(v'=e^x\)</span> (som er lett å integrere). Da er</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(u = x \quad \Rightarrow \quad u' = 1\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(v' = e^x \quad \Rightarrow \quad v = e^x\)</span></p>
+<p class="sd-card-text">Ved delvis integrasjon får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int x e^x \, dx = u v - \int u' v \, dx = x e^x - \int 1 \cdot e^x \, dx = x e^x - e^x + C = (x-1)e^x + C\)</span></p>
+<p class="sd-card-text">Legg merke til at det nye integralet <span class="math notranslate nohighlight">\(\int e^x \, dx\)</span> var enklere enn det vi startet med - det er hele poenget med å velge <span class="math notranslate nohighlight">\(u\)</span> og <span class="math notranslate nohighlight">\(v'\)</span> smart.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Integrasjon er helt sentralt i termodynamikk. Når en gass utvider seg og utfører arbeid, er det totale arbeidet gitt ved integralet av trykket over volumendringen,</p>
+<p><span class="math notranslate nohighlight">\(W = -\int_{V_1}^{V_2} P \, dV\)</span></p>
+<p>altså arealet under kurven i et trykk-volum-diagram. På samme måte finner vi endring i entropi ved å integrere <span class="math notranslate nohighlight">\(\frac{dq_{rev}}{T}\)</span>, og sammenhengen mellom varmekapasitet og entalpi ved <span class="math notranslate nohighlight">\(\Delta H = \int_{T_1}^{T_2} C_p \, dT\)</span>. I alle disse tilfellene  summerer opp uendelig mange små bidrag til noe kontinuerlig endrer seg.</p>
+</div>
+<p>Med integrasjon på plass har vi de to grunnpilarene i kalkulus - derivasjon og integrasjon - og fundamentalteoremet som binder dem sammen. I <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus</a> utvider vi til funksjoner av flere variabler.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 4.5</p>
+<p>a) Regn ut det ubestemte integralet <span class="math notranslate nohighlight">\(\int \left(4x^3-2x\right)dx\)</span>.</p>
+<p>b) Regn ut det bestemte integralet <span class="math notranslate nohighlight">\(\int_1^2 6x^2 \, dx\)</span> med fundamentalteoremet.</p>
+<p>c) Regn ut <span class="math notranslate nohighlight">\(\int_0^{\pi/2} \cos{(x)} \, dx\)</span>.</p>
+<p>d) Regn ut <span class="math notranslate nohighlight">\(\int 3x^2 \sin{(x^3)} \, dx\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 4.5</p>
+<p>a) Vi integrerer ledd for ledd: <span class="math notranslate nohighlight">\(\int \left(4x^3-2x\right)dx = 4 \cdot \frac{x^4}{4} - 2 \cdot \frac{x^2}{2} + C = x^4 - x^2 + C\)</span>.</p>
+<p>b) En antiderivert til <span class="math notranslate nohighlight">\(6x^2\)</span> er <span class="math notranslate nohighlight">\(F(x)=2x^3\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int_1^2 6x^2 \, dx = \Big[2x^3\Big]_1^2 = 2\cdot 8 - 2 \cdot 1 = 16-2 = 14\)</span></p>
+<p>c) En antiderivert til <span class="math notranslate nohighlight">\(\cos{(x)}\)</span> er <span class="math notranslate nohighlight">\(F(x)=\sin{(x)}\)</span>. Da er</p>
+<p><span class="math notranslate nohighlight">\(\int_0^{\pi/2} \cos{(x)} \, dx = \Big[\sin{(x)}\Big]_0^{\pi/2} = \sin{\left(\tfrac{\pi}{2}\right)} - \sin{(0)} = 1 - 0 = 1\)</span></p>
+<p>d) Vi ser at <span class="math notranslate nohighlight">\(x^3\)</span> er en indre funksjon med deriverte <span class="math notranslate nohighlight">\(3x^2\)</span>, som står som faktor. Vi setter <span class="math notranslate nohighlight">\(u=x^3\)</span>, slik at <span class="math notranslate nohighlight">\(du=3x^2\,dx\)</span>. Da blir</p>
+<p><span class="math notranslate nohighlight">\(\int 3x^2 \sin{(x^3)} \, dx = \int \sin{(u)} \, du = -\cos{(u)} + C = -\cos{(x^3)} + C\)</span></p>
+</div>
+</section>
+</section>
+<section id="differensiallikninger">
+<h2>4.6 Differensiallikninger<a class="headerlink" href="#differensiallikninger" title="Link to this heading">#</a></h2>
+<p>Differensiallikninger er likninger som inneholder en ukjent funksjon, og én eller flere av dens deriverte. Løsningen på en slik likning er derfor ikke bare et tall, men en hel funksjon som beskriver hvordan en størrelse forandrer seg over tid eller rom. Vi ser for eksempel på differensiallikninger når vi ser på hastighetslover i det aller siste kapittelet - kinetikk.</p>
+<p>Vi skal hovedsakelig se på <strong>første-ordens differensiallikninger</strong>, altså likninger der kun den førstederiverte inngår.</p>
+<div class="danger admonition">
+<p class="admonition-title">Def. 4.16 - Første-ordens differensiallikninger</p>
+<p>En <strong>første ordens differensiallikning</strong> har den generelle formen</p>
+<p><span class="math notranslate nohighlight">\(\frac{dy}{dt} = f(t,y)\)</span></p>
+<p>og vi løser for <span class="math notranslate nohighlight">\(y(t)\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Første orden i kinetikk <span class="math notranslate nohighlight">\(\neq\)</span> første orden i matematikk</p>
+<p>Det er et svært uheldig faktum at <em>både</em> matematikken og kinetikken bruker “første orden” til å omtale to helt forskjellige konsepter. Husk at de betyr følgende:</p>
+<ul class="simple">
+<li><p><strong>Kinetikk</strong> : orden refererer til reaksjonsorden</p></li>
+<li><p><strong>Matematikk</strong> : orden refererer til ordenen til de deriverte i differensiallikningen</p></li>
+</ul>
+</div>
+<p>Til tross for at analytiske løsninger ikke er så viktig for oss, viser vi noen eksempler bare så det er klart hva vi har med å gjøre:</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Eksempler</div>
+<p class="sd-card-text">Vi løser én første ordens differensiallikning fra hver kategori. Å “løse” betyr å finne funksjonen <span class="math notranslate nohighlight">\(y(t)\)</span> som passer, og siden vi integrerer, dukker det alltid opp en konstant <span class="math notranslate nohighlight">\(C\)</span> som bestemmes av en startbetingelse.</p>
+<p class="sd-card-text">a) Høyresiden er konstant: <span class="math notranslate nohighlight">\(\dfrac{dy}{dt} = 5\)</span></p>
+<p class="sd-card-text">Vi integrerer begge sider med hensyn på <span class="math notranslate nohighlight">\(t\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y(t) = 5t + C\)</span></p>
+<p class="sd-card-text">Løsningen er en rett linje med stigningstall 5.</p>
+<p class="sd-card-text">b) Høyresiden avhenger bare av <span class="math notranslate nohighlight">\(t\)</span>: <span class="math notranslate nohighlight">\(\dfrac{dy}{dt} = 3t\)</span></p>
+<p class="sd-card-text">Vi integrerer høyresiden:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y(t) = \dfrac{3t^2}{2} + C\)</span></p>
+<p class="sd-card-text">Her får vi en parabel, fordi endringsraten selv vokser med <span class="math notranslate nohighlight">\(t\)</span>.</p>
+<p class="sd-card-text">c) Høyresiden avhenger bare av <span class="math notranslate nohighlight">\(y\)</span>: <span class="math notranslate nohighlight">\(\dfrac{dy}{dt} = -ky\)</span></p>
+<p class="sd-card-text">Denne kan ikke integreres direkte, fordi høyresiden inneholder den ukjente funksjonen. Vi samler <span class="math notranslate nohighlight">\(y\)</span> på én side og <span class="math notranslate nohighlight">\(t\)</span> på den andre (separasjon av variabler) og integrerer:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int \dfrac{1}{y}\, dy = \int -k\, dt \quad\Rightarrow\quad \ln y = -kt + C\)</span></p>
+<p class="sd-card-text">Løser vi for <span class="math notranslate nohighlight">\(y\)</span>, får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y(t) = C\,e^{-kt}\)</span></p>
+<p class="sd-card-text">Dette er den eksponentielle nedbrytningen som beskriver en første ordens reaksjon.</p>
+<p class="sd-card-text">d) Høyresiden avhenger av både <span class="math notranslate nohighlight">\(t\)</span> og <span class="math notranslate nohighlight">\(y\)</span>: <span class="math notranslate nohighlight">\(\dfrac{dy}{dt} = ty\)</span></p>
+<p class="sd-card-text">Vi separerer på samme måte, med <span class="math notranslate nohighlight">\(t\)</span> på høyre side:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int \dfrac{1}{y}\, dy = \int t\, dt \quad\Rightarrow\quad \ln y = \dfrac{t^2}{2} + C\)</span></p>
+<p class="sd-card-text">Løser vi for <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y(t) = C\,e^{t^2/2}\)</span></p>
+<p class="sd-card-text">Samme teknikk som i c), men nå vokser løsningen fordi høyresiden er positiv.</p>
+</div>
+</div>
+<p>Vi skal bruke differensiallikninger til å løse hastighetslover i kinetikk-kapittelet helt til slutt i pensum. Det er slike likninger:</p>
+<div class="math notranslate nohighlight">
+\[-\frac{d[A]}{dt} = k_r [A]^a\]</div>
+<p>der <span class="math notranslate nohighlight">\(a\)</span> er reaksjonsorden og vi løser for <span class="math notranslate nohighlight">\([A](t)\)</span>.</p>
+<p>Vi skal se på hvordan man løser de analytisk (direkte), men du har også lært å løse de numerisk ved <a class="reference external" href="https://andreasdh.github.io/programmering-i-kjemi/docs/modellering/differensiallikninger.html#hva-er-en-differensiallikning">Eulers metode i IN-KJM1900</a>. Her er for eksempel den numeriske løsningen av en første ordens (kjemisk orden) hastigehstlov, det vil si</p>
+<div class="math notranslate nohighlight">
+\[-\frac{d[A]}{dt} = k_r [A]\]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">k</span> <span class="o">=</span> <span class="mf">0.030</span>       <span class="c1"># s^-1</span>
+<span class="n">A</span> <span class="o">=</span> <span class="mf">1.00</span>        <span class="c1"># mol/L</span>
+<span class="n">t</span> <span class="o">=</span> <span class="mf">0.0</span>         <span class="c1"># s</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mf">1.0</span>        <span class="c1"># s</span>
+<span class="n">t_slutt</span> <span class="o">=</span> <span class="mf">150.0</span>
+
+<span class="n">tid</span> <span class="o">=</span> <span class="p">[</span><span class="n">t</span><span class="p">]</span>
+<span class="n">konsentrasjon</span> <span class="o">=</span> <span class="p">[</span><span class="n">A</span><span class="p">]</span>
+
+<span class="k">while</span> <span class="n">t</span> <span class="o">&lt;</span> <span class="n">t_slutt</span><span class="p">:</span>
+    <span class="n">dA_dt</span> <span class="o">=</span> <span class="o">-</span><span class="n">k</span><span class="o">*</span><span class="n">A</span>
+    <span class="n">A</span> <span class="o">=</span> <span class="n">A</span> <span class="o">+</span> <span class="n">dA_dt</span><span class="o">*</span><span class="n">dt</span>
+    <span class="n">t</span> <span class="o">=</span> <span class="n">t</span> <span class="o">+</span> <span class="n">dt</span>
+
+    <span class="n">tid</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+    <span class="n">konsentrasjon</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">A</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">tid</span><span class="p">,</span> <span class="n">konsentrasjon</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s2">"Tid (s)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"[A] (mol/L)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/703832b929a633b70672467b67e35893a2a826b74e6bee0333c9abe0e7674b00.png" src="../../_images/703832b929a633b70672467b67e35893a2a826b74e6bee0333c9abe0e7674b00.png" />
+</div>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/matematikk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="sannsynlighet.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">3. Sannsynlighet</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="flervariabel_kalkulus.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">5. Flervariabel kalkulus og optimering</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjoner">4.1 Funksjoner</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjon-definisjonmengde-og-verdiomrade">4.1.1 Funksjon, definisjonmengde og verdiområde</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#representasjon-av-funksjoner">4.1.2 Representasjon av funksjoner</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#jevne-og-odde-funksjoner">4.2 Jevne og odde funksjoner</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#grenseverdier-og-kontinuitet">4.3 Grenseverdier og kontinuitet</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#grenseverdier">4.3.1 Grenseverdier</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuitet">4.3.2 Kontinuitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#derivasjon">4.4 Derivasjon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gjennomsnittlig-endringsrate">4.4.1 Gjennomsnittlig endringsrate</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisjonen-av-den-deriverte">4.4.2 Definisjonen av den deriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstremalpunkter">4.4.3 Ekstremalpunkter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hoyere-ordens-deriverte">4.4.4 Høyere-ordens deriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#de-deriverte-til-kjente-funksjoner">4.4.5 De deriverte til kjente funksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#derivasjonsregler">4.4.6 Derivasjonsregler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasjon">4.5 Integrasjon</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#den-antideriverte">4.5.1 Den antideriverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ubestemte-integraler-og-integrasjonskonstanten">4.5.2 Ubestemte integraler og integrasjonskonstanten</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integralene-til-kjente-funksjoner">4.5.3 Integralene til kjente funksjoner</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#det-bestemte-integralet-og-riemann-summer">4.5.4 Det bestemte integralet og Riemann-summer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#integrasjonsregler">4.5.5 Integrasjonsregler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#differensiallikninger">4.6 Differensiallikninger</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

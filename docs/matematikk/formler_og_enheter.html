@@ -1,0 +1,1478 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>1. Formler, notasjon og enheter &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/matematikk/formler_og_enheter';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="2. Kombinatorikk" href="kombinatorikk.html" />
+    <link rel="prev" title="Nyttige matematiske verktøy" href="../A2_mattehjelp.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/matematikk/formler_og_enheter.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>1. Formler, notasjon og enheter</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-tolke-kompliserte-formler">1.1 Å tolke kompliserte formler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengdelaere">1.2 Mengdelære</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengder-delmengder-og-elementer">1.2.1 Mengder, delmengder og elementer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengdenotasjon">1.2.2 Mengdenotasjon</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tallmengder">1.2.3 Tallmengder</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-og-multiplikasjonsnotasjon">1.3 Sum-og multiplikasjonsnotasjon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enheter-konstanter-og-dimensjonsanalyse">1.4 Enheter, konstanter og dimensjonsanalyse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabeller-med-enheter-og-konstanter">1.4.1 Tabeller med enheter og konstanter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensjonsanalyse">1.4.2 Dimensjonsanalyse</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksponenter-logaritmer-og-rotter">1.5 Eksponenter, logaritmer og røtter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vektorer">1.6 Vektorer</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="formler-notasjon-og-enheter">
+<h1>1. Formler, notasjon og enheter<a class="headerlink" href="#formler-notasjon-og-enheter" title="Link to this heading">#</a></h1>
+<p>Hvis du lurer på noe og ikke helt vet hvilket kapittel det tilhører, er det mye mulig at du kan finne det her!</p>
+<section id="a-tolke-kompliserte-formler">
+<h2>1.1 Å tolke kompliserte formler<a class="headerlink" href="#a-tolke-kompliserte-formler" title="Link to this heading">#</a></h2>
+<p>I fysikalsk kjemi presenteres flere tunge formler som kan være vanskelige å fordøye. Vi skal derfor se et eksempel på hvordan du kan bryte ned og jobbe med formler, og vi tar utgangspunkt i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/4_gasser.html#maxwell-boltzmann-fordelingen">Maxwell-Boltzmann-fordelingen</a> som et eksempel.</p>
+<p><span class="math notranslate nohighlight">\(f(v)=4\pi \left( \frac{m}{2\pi k_B T} \right)^{\frac{3}{2}} v^2 e^{-\frac{mv^2}{2k_B T}}\)</span></p>
+<p><strong>1. Hvilke variable ser vi på?</strong></p>
+<p>Det første vi kan gjøre er å se på <em>hva</em> funksjonen beskriver, og hvilke enheter det er snakk om.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Variabel</p></th>
+<th class="head"><p>Enhet</p></th>
+<th class="head"><p>Forklaring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{kg}]\)</span></p></td>
+<td><p>Massen til ett molekyl</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(v\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{m}/\text{s}]\)</span></p></td>
+<td><p>Fart</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(k_B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}/\text{K}]=[\text{kg} \cdot \text{m}^2/\text{s}^2 \cdot \text{K}]\)</span></p></td>
+<td><p>Boltzmann-konstanten</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{K}]\)</span></p></td>
+<td><p>Temperatur</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(f(v)\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{s}/\text{m}]\)</span></p></td>
+<td><p>Sansynnlighetstettheten for farten <span class="math notranslate nohighlight">\(v\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Nå vet vi at vi ser på sannsynligheten <span class="math notranslate nohighlight">\(f(v)\)</span> som funksjon av fart <span class="math notranslate nohighlight">\(v\)</span>, der også masse <span class="math notranslate nohighlight">\(m\)</span>, Boltzmannkonstanten <span class="math notranslate nohighlight">\(k_B\)</span> og temperaturen <span class="math notranslate nohighlight">\(T\)</span> er med i funksjonen. Allerede her kan vi notere oss at sannsynligheten bare er en funksjon av <span class="math notranslate nohighlight">\(v\)</span>, det betyr at en slik funksjon holder de andre variablene konstante.</p>
+<p><strong>2. Er det noen antakelser for formelen?</strong></p>
+<p>Ofte er formlene i termodynamikk utledet fra andre og har forskjellige antakelser i grunn. Maxwell-Boltzmann-fordelingen har følgende antakelser i grunn:</p>
+<ol class="arabic simple">
+<li><p><strong>Ideell gass</strong> der molekylene antas å være punktpartikler uten intermolekylære krefter mellom seg, med elastiske kollisjoner.</p></li>
+<li><p><strong>Termisk likevekt</strong> ved temperatur <span class="math notranslate nohighlight">\(T\)</span>.</p></li>
+<li><p><strong>Klassisk tilnærming</strong>, altså kan farten ta hvilken som helst verdi og molekylene har veldefinert posisjon og fart.</p></li>
+<li><p><strong>Tilfeldig bevegelse</strong> der fordelingen av fart er lik i alle retninger i rommet, og der ingen retning som er favorisert.</p></li>
+</ol>
+<p>Nå har vi allerede styr på masse! Vi vet at Maxwell-Boltzmann-fordelingen beskriver sannsynlighetstettheten <span class="math notranslate nohighlight">\(f(v)\)</span> som funksjon av farten <span class="math notranslate nohighlight">\(v\)</span> til en ideell gass hvor molekylene har masse <span class="math notranslate nohighlight">\(m\)</span>, og ved termisk likevekt ved temperaturen <span class="math notranslate nohighlight">\(T\)</span>. Molekylene beveger seg tilfeldig, ingen retning er favorisert over en annen, og gassen vi beskriver er klassisk (heller enn kvantemekanisk).</p>
+<p><strong>3. Hva er sammenhengen mellom formel og graf?</strong></p>
+<p>Det kan være vanskelig å se hva som skjer når vi endrer de ulike variablene kun basert på formelen, men det er mye lettere visuelt. Simulasjonen nedenfor lar oss endre <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(m\)</span> og se hvordan fordelingen endrer seg.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Maxwell-Boltzmann-fordelingen&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--fill:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:14px;}
+
+  .formula{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;padding:13px 14px;
+    text-align:center;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:15px;
+    color:var(--ink);margin-bottom:14px;}
+  .formula .m{color:var(--fill);}
+  .formula .t{color:var(--curve);}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .ctl{margin-bottom:13px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{font-weight:600;}
+  .ctl.t label b{color:var(--curve);}
+  .ctl.m label b{color:var(--fill);}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  #tRange::-webkit-slider-thumb{background:var(--curve);}
+  #mRange::-webkit-slider-thumb{background:var(--fill);}
+  #tRange::-moz-range-thumb{background:var(--curve);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  #mRange::-moz-range-thumb{background:var(--fill);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  .gases{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
+  .gases button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;
+    padding:5px 9px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;}
+  .gases button:hover{background:var(--ink);color:var(--paper);}
+  .gases button.on{background:var(--fill);border-color:var(--fill);color:#fff;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:14px;}
+  .val.area{color:var(--fill);font-size:17px;}
+  .hint{margin-top:8px;font-size:12px;color:var(--muted);font-style:italic;min-height:34px;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--fill);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Maxwell-Boltzmann-fordelingen&lt;/div&gt;
+  &lt;h1&gt;Fartsfordelingen i en gass&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Aksene står fast, så du ser hvordan fordelingen blir bredere eller smalere når du endrer temperatur og masse. Dra over grafen for å markere et fartsintervall.&lt;/p&gt;
+
+  &lt;div class=&quot;formula&quot;&gt;
+    f(v) = 4π ( &lt;span class=&quot;m&quot;&gt;m&lt;/span&gt; / 2πk&lt;sub&gt;B&lt;/sub&gt;&lt;span class=&quot;t&quot;&gt;T&lt;/span&gt; )&lt;sup&gt;3/2&lt;/sup&gt; · v² · e&lt;sup&gt;−&lt;span class=&quot;m&quot;&gt;m&lt;/span&gt;v²/2k&lt;sub&gt;B&lt;/sub&gt;&lt;span class=&quot;t&quot;&gt;T&lt;/span&gt;&lt;/sup&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;svg id=&quot;viz&quot; viewBox=&quot;0 0 640 320&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Parametere&lt;/h2&gt;
+      &lt;div class=&quot;ctl t&quot;&gt;
+        &lt;label&gt;temperatur T &lt;b id=&quot;tLab&quot;&gt;300 K&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;tRange&quot; min=&quot;50&quot; max=&quot;600&quot; step=&quot;5&quot; value=&quot;300&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl m&quot;&gt;
+        &lt;label&gt;masse per molekyl &lt;b id=&quot;mLab&quot;&gt;28.01 u&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;mRange&quot; min=&quot;16&quot; max=&quot;140&quot; step=&quot;0.5&quot; value=&quot;28&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;gases&quot; id=&quot;gases&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Markert intervall&lt;/h2&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;andel av molekylene&lt;/span&gt;&lt;span class=&quot;val area&quot; id=&quot;areaVal&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;totalt areal under kurven&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;totVal&quot;&gt;1.000&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;hint&quot; id=&quot;hint&quot;&gt;Dra over grafen for å markere et intervall.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Prøv å skru temperaturen opp: kurven blir bredere og lavere, siden arealet alltid må være 1. Øker du massen i stedet, skjer det motsatte — tunge molekyler beveger seg langsommere og samler seg i en smal, høy topp.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const NS=&quot;http://www.w3.org/2000/svg&quot;;
+  const svg=document.getElementById(&#x27;viz&#x27;);
+  const kB=1.380649e-23, NA=6.02214076e23;
+
+  // masses in u (= g/mol numerically)
+  const GASES=[[&#x27;CH₄&#x27;,16.04],[&#x27;Ne&#x27;,20.18],[&#x27;N₂&#x27;,28.01],[&#x27;O₂&#x27;,32.00],
+               [&#x27;Ar&#x27;,39.95],[&#x27;CO₂&#x27;,44.01],[&#x27;Kr&#x27;,83.80],[&#x27;Xe&#x27;,131.3]];
+
+  let T=300, Mu=28.01;      // Mu in u
+  let sel=null;
+
+  const mkg=()=&gt;Mu/1000/NA;                       // kg per molecule
+  const f=v=&gt;{
+    const m=mkg();
+    return 4*Math.PI*Math.pow(m/(2*Math.PI*kB*T),1.5)*v*v*Math.exp(-m*v*v/(2*kB*T));
+  };
+  function integ(a,b){
+    if(b&lt;=a)return 0;
+    const n=800,h=(b-a)/n;let s=f(a)+f(b);
+    for(let i=1;i&lt;n;i++)s+=f(a+i*h)*(i%2?4:2);
+    return s*h/3;
+  }
+
+  // FIXED axes
+  const VMAX=2000, YMAX=1.15e-2;
+  const W=640,H=320,padL=58,padR=22,base=248,top=26;
+  const sx=v=&gt;padL+(v/VMAX)*(W-padL-padR);
+  const sy=y=&gt;base-(y/YMAX)*(base-top);
+  const xInv=px=&gt;Math.max(0,Math.min(VMAX,(px-padL)/(W-padL-padR)*VMAX));
+
+  const el=(t,a)=&gt;{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  function txt(x,y,s,o={}){
+    const t=el(&#x27;text&#x27;,{x,y,&#x27;text-anchor&#x27;:o.anchor||&#x27;middle&#x27;,
+      &#x27;font-family&#x27;:o.fam||&#x27;SF Mono, monospace&#x27;,&#x27;font-size&#x27;:o.size||11,fill:o.fill||&#x27;var(--muted)&#x27;});
+    t.textContent=s;svg.appendChild(t);
+  }
+
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+    // faint horizontal gridlines (fixed, so scale is visibly constant)
+    for(let i=1;i&lt;=4;i++){
+      const y=sy(YMAX*i/5);
+      svg.appendChild(el(&#x27;line&#x27;,{x1:padL,y1:y,x2:W-padR,y2:y,
+        stroke:&#x27;var(--grid)&#x27;,&#x27;stroke-width&#x27;:0.8}));
+    }
+
+    // shaded selection
+    if(sel &amp;&amp; sel.b&gt;sel.a){
+      let d=`M ${sx(sel.a)} ${base} `;
+      for(let i=0;i&lt;=140;i++){
+        const v=sel.a+(sel.b-sel.a)*i/140;
+        d+=`L ${sx(v).toFixed(2)} ${sy(f(v)).toFixed(2)} `;
+      }
+      d+=`L ${sx(sel.b)} ${base} Z`;
+      svg.appendChild(el(&#x27;path&#x27;,{d,fill:&#x27;var(--fill)&#x27;,&#x27;fill-opacity&#x27;:.40}));
+    }
+
+    // axes
+    svg.appendChild(el(&#x27;line&#x27;,{x1:padL-10,y1:base,x2:W-padR,y2:base,stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.5}));
+    svg.appendChild(el(&#x27;line&#x27;,{x1:padL,y1:base,x2:padL,y2:top-6,stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1.5}));
+    for(let v=0;v&lt;=VMAX;v+=250){
+      svg.appendChild(el(&#x27;line&#x27;,{x1:sx(v),y1:base,x2:sx(v),y2:base+5,stroke:&#x27;var(--axis)&#x27;,&#x27;stroke-width&#x27;:1}));
+      txt(sx(v),base+19,String(v),{size:11,fam:&#x27;Georgia&#x27;});
+    }
+    txt((padL+W-padR)/2,base+40,&#x27;fart v  (m/s)&#x27;,{size:12,fam:&#x27;Georgia&#x27;,fill:&#x27;var(--ink)&#x27;});
+    txt(padL-48,top+4,&#x27;f(v)&#x27;,{anchor:&#x27;start&#x27;,size:11});
+
+    // curve
+    let d=&#x27;&#x27;;
+    for(let i=0;i&lt;=500;i++){
+      const v=VMAX*i/500;
+      d+=(i===0?&#x27;M&#x27;:&#x27;L&#x27;)+sx(v).toFixed(2)+&#x27;,&#x27;+sy(f(v)).toFixed(2)+&#x27; &#x27;;
+    }
+    svg.appendChild(el(&#x27;path&#x27;,{d,fill:&#x27;none&#x27;,stroke:&#x27;var(--curve)&#x27;,&#x27;stroke-width&#x27;:2.8}));
+
+    // readouts
+    const areaEl=document.getElementById(&#x27;areaVal&#x27;);
+    const hintEl=document.getElementById(&#x27;hint&#x27;);
+    if(sel &amp;&amp; sel.b&gt;sel.a){
+      const p=integ(sel.a,sel.b);
+      areaEl.textContent=(p*100).toFixed(1)+&#x27; %&#x27;;
+      hintEl.textContent=`${sel.a.toFixed(0)}–${sel.b.toFixed(0)} m/s inneholder ${(p*100).toFixed(1)} % av molekylene.`;
+    }else{
+      areaEl.textContent=&#x27;—&#x27;;
+      hintEl.textContent=&#x27;Dra over grafen for å markere et intervall.&#x27;;
+    }
+    document.getElementById(&#x27;totVal&#x27;).textContent=integ(0,6000).toFixed(3);
+  }
+
+  // drag to select
+  let dragging=false,x0=0;
+  const locX=e=&gt;{const r=svg.getBoundingClientRect();const t=e.touches?e.touches[0]:e;
+    return (t.clientX-r.left)/r.width*W;};
+  const down=e=&gt;{dragging=true;x0=locX(e);sel={a:xInv(x0),b:xInv(x0)};draw();e.preventDefault();};
+  const move=e=&gt;{if(!dragging)return;const x1=locX(e);
+    sel={a:Math.min(xInv(x0),xInv(x1)),b:Math.max(xInv(x0),xInv(x1))};draw();e.preventDefault();};
+  const up=()=&gt;{dragging=false;};
+  svg.addEventListener(&#x27;mousedown&#x27;,down);
+  window.addEventListener(&#x27;mousemove&#x27;,move);
+  window.addEventListener(&#x27;mouseup&#x27;,up);
+  svg.addEventListener(&#x27;touchstart&#x27;,down,{passive:false});
+  svg.addEventListener(&#x27;touchmove&#x27;,move,{passive:false});
+  svg.addEventListener(&#x27;touchend&#x27;,up);
+
+  // controls
+  document.getElementById(&#x27;tRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{
+    T=+e.target.value;document.getElementById(&#x27;tLab&#x27;).textContent=T+&#x27; K&#x27;;draw();});
+  document.getElementById(&#x27;mRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{
+    Mu=+e.target.value;document.getElementById(&#x27;mLab&#x27;).textContent=Mu.toFixed(2)+&#x27; u&#x27;;
+    document.querySelectorAll(&#x27;#gases button&#x27;).forEach(b=&gt;b.classList.remove(&#x27;on&#x27;));draw();});
+
+  const gbox=document.getElementById(&#x27;gases&#x27;);
+  for(const [name,mm] of GASES){
+    const b=document.createElement(&#x27;button&#x27;);
+    b.textContent=name;
+    if(Math.abs(mm-Mu)&lt;0.01)b.classList.add(&#x27;on&#x27;);
+    b.addEventListener(&#x27;click&#x27;,()=&gt;{
+      Mu=mm;document.getElementById(&#x27;mRange&#x27;).value=mm;
+      document.getElementById(&#x27;mLab&#x27;).textContent=mm.toFixed(2)+&#x27; u&#x27;;
+      document.querySelectorAll(&#x27;#gases button&#x27;).forEach(x=&gt;x.classList.toggle(&#x27;on&#x27;,x===b));
+      draw();
+    });
+    gbox.appendChild(b);
+  }
+
+  draw();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>I flere tilfeller kan vi knytte opp formelen til viktige konsepter i matematikk, noe vi også kan her. For eksempel vet vi fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/statistikk.html#sannsynlighetsfordelinger">5.1 Sansynnlighetsfordelinger</a> at arealet under kurven til en sannsynlighetsfordeling må være <span class="math notranslate nohighlight">\(1\)</span>, som betyr at uansett hvilke parametre vi endrer, så må totalarealet være likt. En endring i én parameter går derfor på bekostning av en annen parameter. Siden sannsynlighetsfordelingen er kontinuerlig, vet vi også at sannsynligheten for én spesifikk <span class="math notranslate nohighlight">\(v\)</span> er null. Mye av dette blir nyttig i neste del der vi ser hvordan formelen henger sammen med kjemien.</p>
+<p><strong>4. Hvordan henger formel og kjemi sammen?</strong></p>
+<p>Dette er den viktigste delen. Vi har observert hvordan formelen endrer seg med de ulike variablene, men hva sier dette om kjemien?</p>
+<p><strong>Temperatur.</strong> Når du skrur opp <span class="math notranslate nohighlight">\(T\)</span>, flyttes kurven mot høyre og blir bredere og lavere. Molekylene beveger seg altså raskere, men fartene sprer seg også mer. Dette er grunnen til at reaksjoner går fortere ved høyere temperatur: en reaksjon krever som regel at molekylene har nok energi til å overkomme en aktiveringsbarriere, og andelen molekyler i den høye halen vokser kraftig med temperaturen. Legg merke til at det ikke er <em>gjennomsnittsfarten</em> som først og fremst avgjør dette - det er hvor mange som befinner seg helt ute i høyre hale.</p>
+<p><strong>Masse.</strong> Tyngre molekyler gir en smal, høy kurve nær lave farter, mens lette molekyler får en bred fordeling med langt høyere farter. Ved samme temperatur har alle molekyler like mye kinetisk energi i gjennomsnitt, men siden <span class="math notranslate nohighlight">\(E_k=\frac{1}{2}mv^2\)</span>, må de tunge kompensere med lavere fart. Dette forklarer hvorfor lette gasser diffunderer raskere enn tunge, og hvorfor helium lekker ut av en ballong mens nitrogen blir værende.</p>
+<p><strong>Arealet er alltid <span class="math notranslate nohighlight">\(1\)</span>.</strong> Uansett hvordan du stiller inn <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(m\)</span>, forblir det totale arealet under kurven det samme. Det er normeringskravet: hvert molekyl må ha <em>en eller annen</em> fart. Blir kurven bredere, må den nødvendigvis bli lavere - dette er den samme sammenhengen vi så for normalfordelingen.</p>
+<p><strong>Formen er alltid skjev.</strong> Kurven starter i null, stiger til en topp, og faller av med en lang hale mot høyre. Grunnen ligger i de to faktorene i formelen: <span class="math notranslate nohighlight">\(v^2\)</span> trekker kurven opp fra null, mens Boltzmann-faktoren <span class="math notranslate nohighlight">\(e^{-mv^2/2k_BT}\)</span> trekker den ned igjen for høye farter. Produktet av en voksende og en avtagende faktor gir toppen. Uten <span class="math notranslate nohighlight">\(v^2\)</span>-leddet ville flest molekyler hatt fart null, noe som åpenbart er feil - i en gass i likevekt står ingen molekyler stille.</p>
+<p><strong>Den lange halen betyr noe.</strong> At kurven aldri når helt ned til null mot høyre, forteller at det alltid finnes noen få molekyler med svært høy fart. Det er disse som fordamper fra en væskeoverflate, som rømmer fra en planets atmosfære, og som klarer å reagere selv når temperaturen er lav. Selv om de utgjør en forsvinnende liten andel, er det ofte de som styrer hva som faktisk skjer.</p>
+<p>Dette var et eksempel på hvordan man kan bryte ned en formel for å gjøre den lettere og mer intuitiv å forstå. Til det trenger vi både matte, kjemi og fysikk.</p>
+</section>
+<section id="mengdelaere">
+<span id="id1"></span><h2>1.2 Mengdelære<a class="headerlink" href="#mengdelaere" title="Link to this heading">#</a></h2>
+<p>Mengder er en helt grunnleggende del av flere grener i matematikk, og noe vi ofte ikke tenker over siden det er såpass abstrakt. Det er likevel viktig å ha noe forståelse når vi jobber med mengder, da de ofte forteller oss noe om hvilke tall ellr hvilket område vi jobber i. Vi begynner med å definere <strong>mengder</strong>, <strong>delmengder</strong> og <strong>elementer</strong>.</p>
+<section id="mengder-delmengder-og-elementer">
+<h3>1.2.1 Mengder, delmengder og elementer<a class="headerlink" href="#mengder-delmengder-og-elementer" title="Link to this heading">#</a></h3>
+<p>En <strong>mengde</strong> er et relativt intuitivt konsept - det er en samling av <em>noe</em>. Dette <em>noe</em> kaller vi <strong>elementer</strong>. En mengde som er i en annen mengde kaller vi en <strong>delmengde</strong>. I matematikken krever vi at elementene i mengder er tydelig beskrevet, slik at det ikke er noe tvil om hva som er med i mengden og ikke.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 1.1 - Mengde</p>
+<p>En <strong>mengde</strong> <span class="math notranslate nohighlight">\(A\)</span> er en veldefinert samling av objekter som kalles <strong>elementer</strong>. Definisjonen av en mengde skrives ofte som et sett av klammeparenteser.</p>
+<p>Den <strong>tomme mengden</strong> er en mengde uten elementer og skrives som <span class="math notranslate nohighlight">\(\emptyset\)</span> eller <span class="math notranslate nohighlight">\(\{\}\)</span>.</p>
+</div>
+<p>Merk at en mengde må være <em>veldefinert</em>, noe som betyr at det ikke kan være noe tvil om hvilke elementer som er med i mengden. Mengden av fine biler eller mengden av tall er ikke veldefinerte fordi det ikke er tydelig hvilke elementer som er med i mengdene. Mengden av alle partall eller mengden av alle røde biler er derimot mengder, fordi det er tydelig definert hva slags elementer som er i mengdene.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 1.2 - Delmengde</p>
+<p>Hvis <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> er mengder, og ethvert element i <span class="math notranslate nohighlight">\(A\)</span> også er et element i <span class="math notranslate nohighlight">\(B\)</span>, er <span class="math notranslate nohighlight">\(A\)</span> en delmengde av <span class="math notranslate nohighlight">\(B\)</span>. Vi skriver</p>
+<p><span class="math notranslate nohighlight">\(A \subset B\)</span></p>
+</div>
+<p>Et eksempel på en mengde er for eksempel alle heltallene mellom 0 og 10. Det er ingen tvil om hvilke elementer som er med, og mengden vår er <span class="math notranslate nohighlight">\(\{0,1,2,3,4,5,6,7,8,9,10\}\)</span>. Et eksempel på en delmende av denne mengden er alle heltallene fra 0 til 5.</p>
+</section>
+<section id="mengdenotasjon">
+<h3>1.2.2 Mengdenotasjon<a class="headerlink" href="#mengdenotasjon" title="Link to this heading">#</a></h3>
+<p>Man skal ikke la seg bli skremt av matematisk notasjon, og mye av den skumleste men enkleste notasjonen er fra mengdelære. La <span class="math notranslate nohighlight">\(x\)</span> være et element og la <span class="math notranslate nohighlight">\(A, B\)</span> og <span class="math notranslate nohighlight">\(C\)</span> være to mengder. Følgende notasjoner er verdt å vite:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Matematisk notasjon</p></th>
+<th class="head"><p>Forklaring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x \in A\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span> er et element i <span class="math notranslate nohighlight">\(A\)</span>. Ovenfor er for eksempel <span class="math notranslate nohighlight">\(1 \in A\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x \notin A\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(x\)</span> er ikke et element i <span class="math notranslate nohighlight">\(A\)</span>. Ovenfor er for eksempel <span class="math notranslate nohighlight">\(7 \notin A\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A=\{1,2,3,4,5\}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span> er en mengde som inneholder <span class="math notranslate nohighlight">\(5\)</span> elementer, altså tallene <span class="math notranslate nohighlight">\(1,2,3,4\)</span> og <span class="math notranslate nohighlight">\(5\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(B=\{1,2,3,\dots,10\}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(B\)</span> er en mengde som inneholder <span class="math notranslate nohighlight">\(10\)</span> elementer, altså tallene fra <span class="math notranslate nohighlight">\(1\)</span> til og med <span class="math notranslate nohighlight">\(10\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(C=\{x | P(x) \}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(C\)</span> er en mengde av alle <span class="math notranslate nohighlight">\(x\)</span> som oppfyller funksjonen <span class="math notranslate nohighlight">\(P(x)\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(A \subset B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span> er en delmengde av <span class="math notranslate nohighlight">\(B\)</span>. Alle elementene i <span class="math notranslate nohighlight">\(A\)</span> er også i <span class="math notranslate nohighlight">\(B\)</span>, men ikke alle elementene i <span class="math notranslate nohighlight">\(B\)</span> er i <span class="math notranslate nohighlight">\(A\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A \subseteq B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(A\)</span> er en delmengde av eller lik <span class="math notranslate nohighlight">\(B\)</span>. Alle elementene i <span class="math notranslate nohighlight">\(A\)</span> er også i <span class="math notranslate nohighlight">\(B\)</span>, og alle elementene i <span class="math notranslate nohighlight">\(B\)</span> <em>kan</em> være i <span class="math notranslate nohighlight">\(A\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(A \cup B\)</span></p></td>
+<td><p>Mengden av alle elementer som er i <span class="math notranslate nohighlight">\(A\)</span> eller <span class="math notranslate nohighlight">\(B\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(A \cap B\)</span></p></td>
+<td><p>Mengden av alle elementer som er i <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(A / B\)</span></p></td>
+<td><p>Mengden av alle elementer som er i <span class="math notranslate nohighlight">\(A\)</span> men ikke <span class="math notranslate nohighlight">\(B\)</span>.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">La oss se på to konkrete mengder, <span class="math notranslate nohighlight">\(A = \{2,4,6,8\}\)</span> og <span class="math notranslate nohighlight">\(B = \{1,2,3,4\}\)</span>, og gå gjennom de ulike operasjonene.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p class="sd-card-text">Matematisk notasjon</p></th>
+<th class="head"><p class="sd-card-text">Forklaring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(A = \{2,4,6,8\}, \ B = \{1,2,3,4\}\)</span></p></td>
+<td><p class="sd-card-text">To mengder. <span class="math notranslate nohighlight">\(A\)</span> inneholder partallene opp til <span class="math notranslate nohighlight">\(8\)</span>, og <span class="math notranslate nohighlight">\(B\)</span> tallene fra <span class="math notranslate nohighlight">\(1\)</span> til <span class="math notranslate nohighlight">\(4\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(A \cup B = \{1,2,3,4,6,8\}\)</span></p></td>
+<td><p class="sd-card-text">Foreningen av <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>: alle elementer som er i minst én av dem. Merk at <span class="math notranslate nohighlight">\(2\)</span> og <span class="math notranslate nohighlight">\(4\)</span> bare tas med én gang.</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(A \cap B = \{2,4\}\)</span></p></td>
+<td><p class="sd-card-text">Snittet av <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>: elementene som finnes i begge.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(A / B = \{6,8\}\)</span></p></td>
+<td><p class="sd-card-text">Elementene som er i <span class="math notranslate nohighlight">\(A\)</span>, men ikke i <span class="math notranslate nohighlight">\(B\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(6 \in A \ \text{og} \ 6 \notin B\)</span></p></td>
+<td><p class="sd-card-text">Tallet <span class="math notranslate nohighlight">\(6\)</span> er et element i <span class="math notranslate nohighlight">\(A\)</span>, men ikke i <span class="math notranslate nohighlight">\(B\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(\{2,4\} \subseteq A\)</span></p></td>
+<td><p class="sd-card-text">Mengden <span class="math notranslate nohighlight">\(\{2,4\}\)</span> er en delmengde av <span class="math notranslate nohighlight">\(A\)</span>, siden begge elementene ligger i <span class="math notranslate nohighlight">\(A\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(D = \{x \mid x \in A, \ x &gt; 4\} = \{6,8\}\)</span></p></td>
+<td><p class="sd-card-text"><span class="math notranslate nohighlight">\(D\)</span> er mengden av alle <span class="math notranslate nohighlight">\(x\)</span> i <span class="math notranslate nohighlight">\(A\)</span> som er større enn <span class="math notranslate nohighlight">\(4\)</span>.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(\{1,2,3,\dots,100\}\)</span></p></td>
+<td><p class="sd-card-text">Mengden av alle heltall fra <span class="math notranslate nohighlight">\(1\)</span> til og med <span class="math notranslate nohighlight">\(100\)</span>.</p></td>
+</tr>
+<tr class="row-even"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\(A \cap B \subset A\)</span></p></td>
+<td><p class="sd-card-text">Snittet <span class="math notranslate nohighlight">\(\{2,4\}\)</span> er en ekte delmengde av <span class="math notranslate nohighlight">\(A\)</span> - alle elementene er i <span class="math notranslate nohighlight">\(A\)</span>, men ikke omvendt.</p></td>
+</tr>
+<tr class="row-odd"><td><p class="sd-card-text"><span class="math notranslate nohighlight">\((A \cup B) / (A \cap B) = \{1,3,6,8\}\)</span></p></td>
+<td><p class="sd-card-text">Elementene som er i foreningen, men ikke i snittet - altså de som ligger i nøyaktig én av mengdene.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="tallmengder">
+<h3>1.2.3 Tallmengder<a class="headerlink" href="#tallmengder" title="Link to this heading">#</a></h3>
+<p>Fordi vi ofte regner med tall, er det noen grunnleggende tallmengder vi bør være kjent med ettersom symbolene for disse mengdene dukker opp ofte. Tabellen nedenfor viser 6 av de vanligste tallmengdene.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Navn</p></th>
+<th class="head"><p>Forklaring</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbb{N}\)</span></p></td>
+<td><p>Naturlige tall</p></td>
+<td><p>Positive heltall (ikke inkludert <span class="math notranslate nohighlight">\(0\)</span>).</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbb{Z}^+\)</span></p></td>
+<td><p>Positive heltall</p></td>
+<td><p>Positive heltall (inkludert <span class="math notranslate nohighlight">\(0\)</span>).</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbb{Z}\)</span></p></td>
+<td><p>Heltall</p></td>
+<td><p>Positive og negative heltall.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbb{Q}\)</span></p></td>
+<td><p>Rasjonale tall</p></td>
+<td><p>Tall som kan skrives som en brøk av to heltall.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbb{R}\)</span></p></td>
+<td><p>Reelle tall</p></td>
+<td><p>Alle tall som kan representere punkter på en uendelig lang tallinje.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbb{C}\)</span></p></td>
+<td><p>Komplekse tall</p></td>
+<td><p>Alle tall som kan representere punkter på en uendelig lang tallinje.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Tallmengdene er illustrert i bildet nedenfor. Merk at hver mengde inneholder mengdene inni seg! For eksempel er <span class="math notranslate nohighlight">\(\mathbb{N}\)</span> <em>og</em> <span class="math notranslate nohighlight">\(\mathbb{Z}^+\)</span> delmengder av <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span>, i tillegg til at <span class="math notranslate nohighlight">\(\mathbb{Z}\)</span> også inneholder de negative heltallene.</p>
+<p><img alt="Tallmengder" src="../../_images/tallmengder.svg" /></p>
+</section>
+</section>
+<section id="sum-og-multiplikasjonsnotasjon">
+<h2>1.3 Sum-og multiplikasjonsnotasjon<a class="headerlink" href="#sum-og-multiplikasjonsnotasjon" title="Link to this heading">#</a></h2>
+<p>Ofte summerer eller multipliserer vi flere tall, eller vil ha et generelt uttrykk for å forenkle operasjonene. Vi skal bli bedre kjent med følgende tegn som dukker opp igjen og igjen: <span class="math notranslate nohighlight">\(\Sigma\)</span> og <span class="math notranslate nohighlight">\(\Pi\)</span>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 1.3 - Summetegnet</p>
+<p>La <span class="math notranslate nohighlight">\(a_m, a_{m+1}, \dots, a_n\)</span> være en rekke tall. Summen av disse skrives med den store greske bokstaven sigma,</p>
+<p><span class="math notranslate nohighlight">\(\sum_{i=m}^{n} a_i = a_m + a_{m+1} + \dots + a_n\)</span></p>
+<p>Her er <span class="math notranslate nohighlight">\(i\)</span> en <strong>indeks</strong> som løper gjennom heltallene fra <span class="math notranslate nohighlight">\(m\)</span> til og med <span class="math notranslate nohighlight">\(n\)</span>. Tallet <span class="math notranslate nohighlight">\(m\)</span> under summetegnet er <strong>startverdien</strong>, tallet <span class="math notranslate nohighlight">\(n\)</span> over er <strong>sluttverdien</strong>, og <span class="math notranslate nohighlight">\(a_i\)</span> er <strong>leddet</strong> som summeres.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\sum_{i=1}^{4} i\)</span>.</p>
+<p class="sd-card-text">Indeksen <span class="math notranslate nohighlight">\(i\)</span> løper gjennom <span class="math notranslate nohighlight">\(1, 2, 3\)</span> og <span class="math notranslate nohighlight">\(4\)</span>, og vi legger sammen leddene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\sum_{i=1}^{4} i = 1+2+3+4=10\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\sum_{i=1}^{4} i^2\)</span>.</p>
+<p class="sd-card-text">Nå er leddet <span class="math notranslate nohighlight">\(a_i = i^2\)</span>, så vi kvadrerer hvert tall før vi summerer:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\sum_{i=1}^{4} i^2 = 1^2+2^2+3^2+4^2=1+4+9+16=30\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\sum_{i=1}^{n} x_i\)</span>.</p>
+<p class="sd-card-text">Nå er leddet <span class="math notranslate nohighlight">\(a_i = x_i\)</span>, så vi legger sammen leddene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\sum_{i=1}^{n} x_i = x_1+x_2+\dots+x_n\)</span></p>
+</div>
+</div>
+<p>Navnet på indeksen har ingen betydning. Uttrykkene <span class="math notranslate nohighlight">\(\sum_{i=1}^{3} i\)</span> og <span class="math notranslate nohighlight">\(\sum_{k=1}^{3} k\)</span> gir begge <span class="math notranslate nohighlight">\(6\)</span>, siden indeksen forsvinner når summen er regnet ut. Den kan derfor aldri stå igjen i svaret.</p>
+<p>Ofte møter du også skrivemåten <span class="math notranslate nohighlight">\(\sum_i a_i\)</span> uten grenser. Det betyr at vi summerer over alle verdiene av <span class="math notranslate nohighlight">\(i\)</span> som er aktuelle i sammenhengen. I del 1 skriver vi for eksempel <span class="math notranslate nohighlight">\(\sum_i P(i)=1\)</span>, altså at sannsynlighetene for alle utfallene til sammen blir <span class="math notranslate nohighlight">\(1\)</span>. Multiplikasjon har en tilsvarende operator.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 1.4 - Produkttegnet</p>
+<p>La <span class="math notranslate nohighlight">\(a_m, a_{m+1}, \dots, a_n\)</span> være en rekke tall. Produktet av disse skrives med den store greske bokstaven pi,</p>
+<p><span class="math notranslate nohighlight">\(\prod_{i=m}^{n} a_i = a_m \cdot a_{m+1} \cdot \ldots \cdot a_n\)</span></p>
+<p>Her er <span class="math notranslate nohighlight">\(i\)</span> en <strong>indeks</strong> som løper gjennom heltallene fra <span class="math notranslate nohighlight">\(m\)</span> til og med <span class="math notranslate nohighlight">\(n\)</span>. Tallet <span class="math notranslate nohighlight">\(m\)</span> under produkttegnet er <strong>startverdien</strong>, tallet <span class="math notranslate nohighlight">\(n\)</span> over er <strong>sluttverdien</strong>, og <span class="math notranslate nohighlight">\(a_i\)</span> er <strong>faktoren</strong> som multipliseres.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\prod_{i=1}^{4} i\)</span>.</p>
+<p class="sd-card-text">Indeksen <span class="math notranslate nohighlight">\(i\)</span> løper gjennom <span class="math notranslate nohighlight">\(1, 2, 3\)</span> og <span class="math notranslate nohighlight">\(4\)</span>, og vi multipliserer faktorene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\prod_{i=1}^{4} i = 1 \cdot 2 \cdot 3 \cdot 4 = 24\)</span></p>
+<p class="sd-card-text">Legg merke til at dette er nettopp <span class="math notranslate nohighlight">\(4!\)</span>, altså fakultet. Fakultet kan derfor skrives kompakt som <span class="math notranslate nohighlight">\(n!=\prod_{i=1}^{n} i\)</span>.</p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\prod_{i=1}^{3} (i+2)\)</span>.</p>
+<p class="sd-card-text">Nå er faktoren <span class="math notranslate nohighlight">\(a_i = i+2\)</span>, så vi legger til <span class="math notranslate nohighlight">\(2\)</span> før vi multipliserer:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\prod_{i=1}^{3} (i+2) = 3 \cdot 4 \cdot 5 = 60\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\prod_{i=1}^{n} x_i\)</span>.</p>
+<p class="sd-card-text">Nå er leddet <span class="math notranslate nohighlight">\(a_i = x_i\)</span>, så vi ganger sammen leddene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\prod_{i=1}^{n} x_i = x_1 \cdot x_2 \cdot \dots \cdot x_n\)</span></p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Produkttegnet dukker opp når mange bidrag skal ganges sammen i stedet for legges sammen. Et eksempel er <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/11_likevekter.html#likevektskonstanten">likevektskonstanten</a> for en reaksjon, der konsentrasjonene til produktene multipliseres:</p>
+<p><span class="math notranslate nohighlight">\(K = \dfrac{\prod_i [\text{produkt}_i]^{\nu_i}}{\prod_j [\text{reaktant}_j]^{\nu_j}}\)</span></p>
+<p>Notasjonen sier bare «gang sammen alle produktkonsentrasjonene, opphøyd i sine støkiometriske tall, og del på det samme for reaktantene».</p>
+</div>
+</section>
+<section id="enheter-konstanter-og-dimensjonsanalyse">
+<h2>1.4 Enheter, konstanter og dimensjonsanalyse<a class="headerlink" href="#enheter-konstanter-og-dimensjonsanalyse" title="Link to this heading">#</a></h2>
+<p>Enheter er minst like viktig i utregningene som selve tallresultatet. I dette delkapittelet finner du en oversikt over mange ulike størrelser og deres enheter. I tillegg presenteres en kort guide til <strong>dimensjonsanalyse</strong> - en måte å kontrollere enhetene i sluttsvaret ditt.</p>
+<section id="tabeller-med-enheter-og-konstanter">
+<h3>1.4.1 Tabeller med enheter og konstanter<a class="headerlink" href="#tabeller-med-enheter-og-konstanter" title="Link to this heading">#</a></h3>
+<p>I diskusjons- og regneoppgavene kan du få bruk for følgende størrelser og deres enheter:</p>
+<p><strong>Mekanikk og grunnstørrelser</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Størrelse</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Enhet</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Masse</p></td>
+<td><p><span class="math notranslate nohighlight">\(m\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{kg}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Lengde</p></td>
+<td><p><span class="math notranslate nohighlight">\(l\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{m}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Tid</p></td>
+<td><p><span class="math notranslate nohighlight">\(t\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{s}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Fart</p></td>
+<td><p><span class="math notranslate nohighlight">\(v\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{m/s}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Akselerasjon</p></td>
+<td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{m/s}^2]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Kraft</p></td>
+<td><p><span class="math notranslate nohighlight">\(F\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{N}] = [\text{kg} \cdot \text{m/s}^2]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Energi / arbeid</p></td>
+<td><p><span class="math notranslate nohighlight">\(E, W\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}] = [\text{kg} \cdot \text{m}^2/\text{s}^2]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Effekt</p></td>
+<td><p><span class="math notranslate nohighlight">\(P\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{W}] = [\text{J/s}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Trykk</p></td>
+<td><p><span class="math notranslate nohighlight">\(P\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{Pa}] = [\text{N/m}^2]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Kjemiske mengdestørrelser</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Størrelse</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Enhet</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Stoffmengde</p></td>
+<td><p><span class="math notranslate nohighlight">\(n\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{mol}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Molar masse</p></td>
+<td><p><span class="math notranslate nohighlight">\(M\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{kg/mol}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Konsentrasjon</p></td>
+<td><p><span class="math notranslate nohighlight">\(c\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{mol/m}^3]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Volum</p></td>
+<td><p><span class="math notranslate nohighlight">\(V\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{m}^3]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Tetthet</p></td>
+<td><p><span class="math notranslate nohighlight">\(\rho\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{kg/m}^3]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Termodynamikk</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Størrelse</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Enhet</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Temperatur</p></td>
+<td><p><span class="math notranslate nohighlight">\(T\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{K}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Varme</p></td>
+<td><p><span class="math notranslate nohighlight">\(q\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Indre energi</p></td>
+<td><p><span class="math notranslate nohighlight">\(U\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Entalpi</p></td>
+<td><p><span class="math notranslate nohighlight">\(H\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Entropi</p></td>
+<td><p><span class="math notranslate nohighlight">\(S\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J/K}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Gibbs fri energi</p></td>
+<td><p><span class="math notranslate nohighlight">\(G\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Varmekapasitet</p></td>
+<td><p><span class="math notranslate nohighlight">\(C\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\([\text{J/K}]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Konstanter</strong></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Størrelse</p></th>
+<th class="head"><p>Symbol</p></th>
+<th class="head"><p>Verdi og enhet</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Boltzmanns konstant</p></td>
+<td><p><span class="math notranslate nohighlight">\(k_B\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1{,}381 \times 10^{-23} \ [\text{J/K}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Gasskonstanten</p></td>
+<td><p><span class="math notranslate nohighlight">\(R\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(8{,}314 \ [\text{J/(mol} \cdot \text{K)}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Avogadros tall</p></td>
+<td><p><span class="math notranslate nohighlight">\(N_A\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(6{,}022 \times 10^{23} \ [\text{1/mol}]\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Plancks konstant</p></td>
+<td><p><span class="math notranslate nohighlight">\(h\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(6{,}626 \times 10^{-34} \ [\text{J} \cdot \text{s}]\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Elementærladning</p></td>
+<td><p><span class="math notranslate nohighlight">\(e\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1{,}602 \times 10^{-19} \ [\text{C}]\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="dimensjonsanalyse">
+<h3>1.4.2 Dimensjonsanalyse<a class="headerlink" href="#dimensjonsanalyse" title="Link to this heading">#</a></h3>
+<p>Målet med dimensjonsanlyse er å kontrollere at enhetene i likningen stemmer, altså at den er konsistent. Dette gjøres ved å behandle enhetene i en formel som algebraiske størrelser som kan multipliseres, forkortes og settes inn i hverandre, akkurat slik man gjør med tallene. Det er enklest forstått med et eksempel.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">En beholder inneholder <span class="math notranslate nohighlight">\(2{.}0 \text{ mol}\)</span> av en ideell gass ved temperatur <span class="math notranslate nohighlight">\(300 \text{ K}\)</span> og trykk <span class="math notranslate nohighlight">\(1{.}0 \times 10^5 \text{ Pa}\)</span>. Finn volumet <span class="math notranslate nohighlight">\(V\)</span>.</p>
+<p class="sd-card-text">Før vi regner ut <span class="math notranslate nohighlight">\(V\)</span> ved bruk av idealgassloven, kan vi bruke den samme formelen til å sjekke hva enhetene til svaret blir:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(PV=nRT \Rightarrow V=\frac{nRT}{P} \Rightarrow [V]=\frac{[\text{mol}] \cdot [\text{J}/\text{mol} \cdot \text{K}]\cdot [\text{K}]}{[\text{N}/\text{m}^2]}\)</span></p>
+<p class="sd-card-text">Vi kan stryke både <span class="math notranslate nohighlight">\(\text{K}\)</span> og <span class="math notranslate nohighlight">\(\text{mol}\)</span> i telleren, slik at vi får:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\([V]=\frac{[\text{J}]}{[\text{N}/\text{m}^2]}\)</span></p>
+<p class="sd-card-text">Vi setter inn enhetene for <span class="math notranslate nohighlight">\(\text{N}\)</span> og <span class="math notranslate nohighlight">\(\text{J}\)</span>, og kan forkorte <span class="math notranslate nohighlight">\(\text{m}\)</span> i nevneren:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\([V]=\frac{[\text{kg} \cdot \text{m}^2/\text{s}^2]}{[[\text{kg} \cdot \text{m}/\text{s}^2]/\text{m}^2]}=\frac{[\text{kg} \cdot \text{m}^2/\text{s}^2]}{[\text{kg}/\text{m} \cdot \text{s}^2]}\)</span></p>
+<p class="sd-card-text">Til slutt stryker vi <span class="math notranslate nohighlight">\(\text{kg}\)</span> og <span class="math notranslate nohighlight">\(\text{s}^2\)</span>, og forkorter <span class="math notranslate nohighlight">\(\text{m}\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\([V]=\frac{[\text{m}^2]}{[1/\text{m}]}=[\text{m}^3]\)</span></p>
+<p class="sd-card-text">Altså; i denne oppgaven er enheten for volum <span class="math notranslate nohighlight">\(V\)</span> lik <span class="math notranslate nohighlight">\(\text{m}^3\)</span>.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="eksponenter-logaritmer-og-rotter">
+<span id="id2"></span><h2>1.5 Eksponenter, logaritmer og røtter<a class="headerlink" href="#eksponenter-logaritmer-og-rotter" title="Link to this heading">#</a></h2>
+<p>Eksponenter, logaritmer og røtter er tre sider av samme sak: eksponenten bygger opp, mens logaritmen og roten er to ulike måter å ta den fra hverandre igjen på. Alle tre dukker opp overalt i fysikalsk kjemi - fra Boltzmann-faktoren og Arrhenius-likningen til pH-skalaen og fartsfordelingen i en gass.</p>
+<div class="important admonition">
+<p class="admonition-title">Def. 1.5 - Potens og logaritme</p>
+<p>For et grunntall <span class="math notranslate nohighlight">\(a&gt;0\)</span> og et reelt tall <span class="math notranslate nohighlight">\(x\)</span> er <strong>potensen</strong> <span class="math notranslate nohighlight">\(a^x\)</span> resultatet av å opphøye <span class="math notranslate nohighlight">\(a\)</span> i <span class="math notranslate nohighlight">\(x\)</span>.</p>
+<p><strong>Logaritmen</strong> er den omvendte operasjonen: <span class="math notranslate nohighlight">\(\log_a y\)</span> er den eksponenten <span class="math notranslate nohighlight">\(a\)</span> må opphøyes i for å gi <span class="math notranslate nohighlight">\(y\)</span>. De to er knyttet sammen ved</p>
+<p><span class="math notranslate nohighlight">\(\log_a y = x \quad \Longleftrightarrow \quad a^x = y\)</span></p>
+</div>
+<p>Det er et spesialtilfelle av logaritmer som er verdt å merke seg og som stadig dukker opp i kjemiske og fysiske beregninger, nemlig den <strong>dnaturlige logaritmen</strong>.</p>
+<div class="important admonition">
+<p class="admonition-title">Def. 1.6 - Naturlig logaritme</p>
+<p>Den <strong>naturlige logaritmen</strong> av et tall <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(\ln{x}\)</span> er definert ved</p>
+<p><span class="math notranslate nohighlight">\(\ln x = \log_e x \)</span></p>
+<p>der <span class="math notranslate nohighlight">\(e \approx 2{.}718\)</span> er Eulers tall.</p>
+</div>
+<p>Røtter hører naturlig hjemme her, for en rot er egentlig bare en potens med brøkeksponent.</p>
+<div class="important admonition">
+<p class="admonition-title">Def. 1.7 - n-te rot</p>
+<p>For et positivt heltall <span class="math notranslate nohighlight">\(n\)</span> er den <strong><span class="math notranslate nohighlight">\(n\)</span>-te roten</strong> av <span class="math notranslate nohighlight">\(a\)</span>, skrevet <span class="math notranslate nohighlight">\(\sqrt[n]{a}\)</span>, det tallet som opphøyd i <span class="math notranslate nohighlight">\(n\)</span>-te potens gir <span class="math notranslate nohighlight">\(a\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\sqrt[n]{a}=b \quad \Longleftrightarrow \quad b^n=a\)</span></p>
+<p>Tallet <span class="math notranslate nohighlight">\(n\)</span> kalles <strong>rotens orden</strong>.</p>
+<p>En rot er det samme som en potens med brøkeksponent,</p>
+<p><span class="math notranslate nohighlight">\(\sqrt[n]{a}=a^{1/n}\)</span></p>
+</div>
+<p>Reglene for potenser lar oss forenkle uttrykk der samme grunntall opptrer flere ganger.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Regel</p></th>
+<th class="head"><p>Formel</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Produkt</p></td>
+<td><p><span class="math notranslate nohighlight">\(a^x \cdot a^y = a^{x+y}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Kvotient</p></td>
+<td><p><span class="math notranslate nohighlight">\(\dfrac{a^x}{a^y} = a^{x-y}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Potens av potens</p></td>
+<td><p><span class="math notranslate nohighlight">\((a^x)^y = a^{xy}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Null</p></td>
+<td><p><span class="math notranslate nohighlight">\(a^0 = 1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Negativ eksponent</p></td>
+<td><p><span class="math notranslate nohighlight">\(a^{-x} = \dfrac{1}{a^x}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Brøkeksponent</p></td>
+<td><p><span class="math notranslate nohighlight">\(a^{1/n} = \sqrt[n]{a}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Logaritmereglene speiler eksponentreglene: der eksponenter gjør en sum om til et produkt, gjør logaritmen et produkt om til en sum.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Regel</p></th>
+<th class="head"><p>Formel</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Produkt</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln(x \cdot y) = \ln x + \ln y\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Kvotient</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln\left(\dfrac{x}{y}\right) = \ln x - \ln y\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Potens</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln(x^n) = n \ln x\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Grunntallet selv</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln e = 1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Én</p></td>
+<td><p><span class="math notranslate nohighlight">\(\ln 1 = 0\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempler</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<ul class="simple">
+<li><p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(2^3 \cdot 2^5\)</span>.</p></li>
+</ul>
+<p class="sd-card-text">Samme grunntall betyr at vi legger sammen eksponentene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(2^3 \cdot 2^5 = 2^{3+5}=2^8=256\)</span></p>
+<ul class="simple">
+<li><p class="sd-card-text">Forenkle <span class="math notranslate nohighlight">\((3^2)^4\)</span>.</p></li>
+</ul>
+<p class="sd-card-text">Vi ganger eksponentene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\((3^2)^4 = 3^{2 \cdot 4}=3^8=6561\)</span></p>
+<ul class="simple">
+<li><p class="sd-card-text">Skriv <span class="math notranslate nohighlight">\(\sqrt{50}\)</span> så enkelt som mulig.</p></li>
+</ul>
+<p class="sd-card-text">Vi trekker ut et perfekt kvadrat, og bruker at roten av et produkt er produktet av røttene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\sqrt{50}=\sqrt{25 \cdot 2}=\sqrt{25}\cdot\sqrt{2}=5\sqrt{2}\)</span></p>
+<ul class="simple">
+<li><p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\log 1000 - \log 10\)</span>.</p></li>
+</ul>
+<p class="sd-card-text">Differansen av to logaritmer er logaritmen av kvotienten:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\log 1000 - \log 10 = \log\frac{1000}{10}=\log 100 = 2\)</span></p>
+<ul class="simple">
+<li><p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\log_2\sqrt{64}\)</span>.</p></li>
+</ul>
+<p class="sd-card-text">Vi skriver roten som brøkeksponent og flytter den ned med potensregelen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\log_2\sqrt{64}=\log_2\left(64^{1/2}\right)=\frac{1}{2}\log_2 64=\frac{1}{2}\cdot 6=3\)</span></p>
+<p class="sd-card-text">der vi brukte at <span class="math notranslate nohighlight">\(64=2^6\)</span> gir <span class="math notranslate nohighlight">\(\log_2 64 = 6\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="vektorer">
+<h2>1.6 Vektorer<a class="headerlink" href="#vektorer" title="Link to this heading">#</a></h2>
+<p>Vektorer brukes når en fysisk størrelse har både <strong>størrelse og retning</strong>. I fysikalsk kjemi er dette særlig nyttig for å beskrive posisjon, fart, akselerasjon og krefter i flere dimensjoner, og ikke bare som tall på tallinjen.</p>
+<p>En vektor skrives ofte med pil over symbolet, for eksempel <span class="math notranslate nohighlight">\(\vec{v}\)</span>. Vi ser stort sett på vektorer i rommet, altså i tre dimensjoner, og en slik vektor kan skrives</p>
+<div class="math notranslate nohighlight">
+\[
+\vec{v} =
+\begin{pmatrix}
+v_x\
+v_y\
+v_z
+\end{pmatrix}
+\]</div>
+<p>der <span class="math notranslate nohighlight">\(v_x\)</span>, <span class="math notranslate nohighlight">\(v_y\)</span> og <span class="math notranslate nohighlight">\(v_z\)</span> er komponentene langs <span class="math notranslate nohighlight">\(x\)</span>- og <span class="math notranslate nohighlight">\(y\)</span>-aksen.</p>
+<div class="important admonition">
+<p class="admonition-title">Def. 1.8 - Vektorens lengde</p>
+<p>Lengden til en vektor <span class="math notranslate nohighlight">\(\vec{v}\)</span> er</p>
+<div class="math notranslate nohighlight">
+\[
+|\vec{v}|=\sqrt{v_x^2+v_y^2+v_z^2}.
+\]</div>
+<p>Dette gir størrelsen til den fysiske størrelsen uten å ta hensyn til retningen.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">En partikkel i to dimensjoner har hastigheten</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\vec{v}=
+\begin{pmatrix}
+3\\
+4
+\end{pmatrix}
+\text{ m/s}.
+\end{split}\]</div>
+<p class="sd-card-text">Farten er lengden av hastighetsvektoren:</p>
+<div class="math notranslate nohighlight">
+\[
+|\vec{v}|=\sqrt{3^2+4^2}
+=\sqrt{25}
+=5\text{ m/s}.
+\]</div>
+</div>
+</div>
+</div>
+<p>Vektorer kan også adderes komponentvis:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{pmatrix}
+a_x\\
+a_y
+\end{pmatrix}
++
+\begin{pmatrix}
+b_x\\
+b_y
+\end{pmatrix}
+=
+\begin{pmatrix}
+a_x+b_x\\
+a_y+b_y
+\end{pmatrix}.
+\end{split}\]</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>I fysikalsk kjemi brukes vektorer blant annet når vi beskriver <strong>bevegelse og krefter</strong>. En kraft kan for eksempel skrives som <span class="math notranslate nohighlight">\(\vec{F}\)</span>, og Newtons andre lov blir</p>
+<div class="math notranslate nohighlight">
+\[
+\vec{F}=m\vec{a}.
+\]</div>
+<p>Retningen er dermed en viktig del av informasjonen, ikke bare størrelsen <span class="math notranslate nohighlight">\(|\vec{F}|\)</span>.
+::</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/matematikk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../A2_mattehjelp.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Nyttige matematiske verktøy</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="kombinatorikk.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">2. Kombinatorikk</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#a-tolke-kompliserte-formler">1.1 Å tolke kompliserte formler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#mengdelaere">1.2 Mengdelære</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengder-delmengder-og-elementer">1.2.1 Mengder, delmengder og elementer</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#mengdenotasjon">1.2.2 Mengdenotasjon</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tallmengder">1.2.3 Tallmengder</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#sum-og-multiplikasjonsnotasjon">1.3 Sum-og multiplikasjonsnotasjon</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#enheter-konstanter-og-dimensjonsanalyse">1.4 Enheter, konstanter og dimensjonsanalyse</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tabeller-med-enheter-og-konstanter">1.4.1 Tabeller med enheter og konstanter</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#dimensjonsanalyse">1.4.2 Dimensjonsanalyse</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#eksponenter-logaritmer-og-rotter">1.5 Eksponenter, logaritmer og røtter</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#vektorer">1.6 Vektorer</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

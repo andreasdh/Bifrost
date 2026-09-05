@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To faste stoffer i kontakt</title>
+</head>
+<body style="margin:0">
+
+<!-- ══ widget start ══ alt mellom disse merkene er selvstendig ══════════ -->
+<div id="entsim">
+
+  <div class="es-bar">
+    <span class="es-n">Oscillatorer</span>
+    <div class="es-seg">
+      <button type="button" data-p="0" aria-pressed="false">4</button>
+      <button type="button" data-p="1" class="on" aria-pressed="true">12</button>
+      <button type="button" data-p="2" aria-pressed="false">30</button>
+      <button type="button" data-p="3" aria-pressed="false">80</button>
+    </div>
+    <button type="button" id="es-reset" class="es-ghost">Start på nytt</button>
+    <button type="button" id="es-main" class="es-primary">Sett i kontakt</button>
+  </div>
+
+  <canvas id="es-grid"></canvas>
+
+  <div class="es-data">
+    <span>&Omega;<sub>tot</sub> = <b id="es-om">1</b></span>
+    <span>&Omega;<sub>maks</sub> = <b id="es-omax">1</b></span>
+    <span>P(U<sub>A</sub> &gt; start) = <b id="es-pe">&ndash;</b> <span id="es-pt"></span></span>
+  </div>
+
+  <canvas id="es-hist"></canvas>
+
+  <div class="es-foot">
+    <span class="es-key"><i class="sw-bar"></i>simulert<i class="sw-line"></i>teori</span>
+    <span class="es-x">U<sub>A</sub></span>
+    <span></span>
+  </div>
+
+</div>
+
+<style>
+#entsim{
+  --ink:#1f2933; --muted:#6b7480; --line:#cdd5dd;
+  --acc:#2c6e9b; --acc2:#c07423;
+  --tintA:rgba(44,110,155,0.055); --tintB:rgba(44,110,155,0.02);
+  --chip:rgba(44,110,155,0.09);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); max-width:760px; margin:0 auto; padding:2px 0 4px;
+  -webkit-font-smoothing:antialiased;
+}
+#entsim canvas{display:block;width:100%;}
+
+#entsim .es-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+#entsim .es-n{font-size:13px;color:var(--muted);letter-spacing:0.03em;}
+#entsim .es-seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;}
+#entsim .es-seg button{
+  font:inherit;font-size:13px;padding:5px 14px;border:0;background:none;color:var(--muted);
+  cursor:pointer;border-right:1px solid var(--line);transition:background .12s,color .12s;
+}
+#entsim .es-seg button:last-child{border-right:0;}
+#entsim .es-seg button:hover{background:var(--chip);color:var(--ink);}
+#entsim .es-seg button.on{background:var(--acc);color:#fff;}
+#entsim .es-ghost{
+  font:inherit;font-size:13px;padding:6px 14px;margin-left:auto;cursor:pointer;
+  border:1px solid var(--line);border-radius:7px;background:none;color:var(--muted);
+  transition:color .12s,border-color .12s;
+}
+#entsim .es-ghost:hover{color:var(--ink);border-color:var(--muted);}
+#entsim .es-primary{
+  font:inherit;font-size:13px;padding:6px 16px;cursor:pointer;
+  border:1px solid var(--acc);border-radius:7px;background:var(--acc);color:#fff;
+  transition:background .12s,border-color .12s,color .12s;
+}
+#entsim .es-primary:hover{background:#255c82;border-color:#255c82;}
+#entsim button:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;}
+
+#entsim .es-data{
+  display:flex;gap:22px;flex-wrap:wrap;margin:7px 2px 12px;
+  font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+}
+#entsim .es-data b{font-weight:600;color:var(--ink);}
+
+#entsim .es-foot{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  margin-top:1px;font-size:11.5px;color:var(--muted);
+}
+#entsim .es-key{display:flex;align-items:center;gap:6px;}
+#entsim .es-key i{display:inline-block;vertical-align:middle;}
+#entsim .sw-bar{width:11px;height:9px;border-radius:1px;background:var(--acc);opacity:.5;}
+#entsim .sw-line{width:15px;border-top:2px solid var(--acc2);margin-left:8px;}
+#entsim .es-x{font-style:italic;}
+
+@media (prefers-color-scheme: dark){
+  #entsim{
+    --ink:#e4e7eb; --muted:#a9b3bd; --line:rgba(255,255,255,0.2);
+    --acc:#7ec4e6; --acc2:#e2a44f;
+    --tintA:rgba(126,196,230,0.07); --tintB:rgba(126,196,230,0.025);
+    --chip:rgba(126,196,230,0.12);
+  }
+  #entsim .es-seg button.on,#entsim .es-primary{color:#12181d;}
+  #entsim .es-primary:hover{background:#9ad3ef;border-color:#9ad3ef;}
+}
+@media (max-width:420px){
+  #entsim .es-ghost{margin-left:0;}
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+const root = document.getElementById('entsim');
+const gc = root.querySelector('#es-grid'), gx = gc.getContext('2d');
+const hc = root.querySelector('#es-hist'), hx = hc.getContext('2d');
+const btn = root.querySelector('#es-main');
+const btnReset = root.querySelector('#es-reset');
+
+// ── parametre ────────────────────────────────────────────────────────
+const LW = 720, LH = 236;      // logisk koordinatsystem for rutenettet
+const HH = 148;                // histogramhøyde i css-piksler
+const START = 0.8;             // andel av energien som ligger i A ved start
+const RATE = 5;                // hopp per oscillator per sekund
+const PAD = 8, MID = 44, TOP = 26, BOT = 6;
+
+// [celler per stoff i bredden, rader]  →  U_tot = antall oscillatorer
+const PRESET = [[2,1],[3,2],[5,3],[8,5]];
+const MAXCELL = 104;           // tak på cellestørrelsen, ellers blir 4 oscillatorer enorme
+let cps = 3, rows = 2, COLS = 6, N = 12, U = 12;
+let equil = 240;               // hopp etter kontakt før statistikken starter
+
+let g = [], contact = false, running = false, hops = 0, u0 = 0, prev = 0, acc = 0, tick = 0;
+let bins = [], samples = 0, theo = [], pTheo = 0, scale = 1, visible = true, C = {};
+
+function readColors(){
+  const s = getComputedStyle(root), p = k => s.getPropertyValue(k).trim();
+  C = {ink:p('--ink'), muted:p('--muted'), line:p('--line'),
+       acc:p('--acc'), acc2:p('--acc2'), tintA:p('--tintA'), tintB:p('--tintB')};
+}
+
+// ── kombinatorikk: Ω(U, N) = C(U+N-1, U) for et Einstein-faststoff ───
+function lgamma(x){
+  const c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,
+           771.32342877765313,-176.61502916214059,12.507343278686905,
+           -0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+  if(x<0.5) return Math.log(Math.PI/Math.sin(Math.PI*x))-lgamma(1-x);
+  x-=1; let a=c[0]; const t=x+7.5;
+  for(let i=1;i<9;i++) a+=c[i]/(x+i);
+  return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
+}
+function lnOmega(u,n){ return lgamma(u+n)-lgamma(u+1)-lgamma(n); }
+function fmt(ln){
+  if(!isFinite(ln)) return '0';
+  const l10 = ln/Math.LN10;
+  if(l10 < 7) return Math.round(Math.exp(ln)).toLocaleString('nb-NO');
+  const e = Math.floor(l10);
+  return Math.pow(10,l10-e).toFixed(1).replace('.',',')+' &middot; 10<sup>'+e+'</sup>';
+}
+
+function pct(p){
+  if(!(p > 0)) return '0 %';
+  const v = p*100, d = v >= 1 ? 1 : (v >= 0.1 ? 2 : 4);
+  return v.toFixed(d).replace('.',',')+' %';
+}
+
+// ── oppsett ──────────────────────────────────────────────────────────
+const half = () => cps*rows;                  // oscillatorer i hvert stoff
+const inA  = i => (i % COLS) < cps;
+function uA(){ let s=0; for(let i=0;i<COLS*rows;i++) if(inA(i)) s+=g[i]; return s; }
+
+function reset(){
+  N = 2*half(); U = N;
+  g = new Array(N).fill(0);
+  const a=[], b=[];
+  for(let i=0;i<N;i++) (inA(i)?a:b).push(i);
+  let ua = Math.round(U*START);
+  for(let k=0;k<ua;k++) g[a[Math.floor(Math.random()*a.length)]]++;
+  for(let k=0;k<U-ua;k++) g[b[Math.floor(Math.random()*b.length)]]++;
+  u0 = uA();
+  contact = false; hops = 0; equil = 8*N;
+  bins = new Array(U+1).fill(0); samples = 0;
+
+  // eksakt fordeling: P(U_A) ∝ Ω_A(U_A) · Ω_B(U − U_A)
+  const ln = [];
+  for(let k=0;k<=U;k++) ln.push(lnOmega(k,half())+lnOmega(U-k,half()));
+  const m = Math.max.apply(null, ln);
+  theo = ln.map(v=>Math.exp(v-m));
+  const s = theo.reduce((p,q)=>p+q,0);
+  theo = theo.map(v=>v/s);
+  pTheo = theo.slice(u0+1).reduce((p,q)=>p+q, 0);
+
+  running = false; acc = 0;
+  updateBtn();
+  draw(true); updateP();
+}
+
+function updateBtn(){
+  btn.textContent = !contact ? 'Sett i kontakt' : (running ? 'Pause' : 'Fortsett');
+}
+
+// ── dynamikk: én energipakke flytter seg til en annen oscillator ─────
+// Oscillatorene har ingen posisjon i modellen. Rutenettet er bare en måte å
+// tegne dem på, så en pakke kan flytte til hvilken som helst annen oscillator.
+// Alle mikrotilstander blir da like sannsynlige, som teorien forutsetter.
+function step(){
+  const from = Math.floor(Math.random()*N), to = Math.floor(Math.random()*N);
+  if(from !== to && g[from] > 0 && (contact || inA(from) === inA(to))){
+    g[from]--; g[to]++;
+  }
+  if(contact){
+    hops++;
+    if(hops > equil && hops % 3 === 0){ bins[uA()]++; samples++; }
+  }
+}
+
+// ── tegning ──────────────────────────────────────────────────────────
+function fit(){
+  const dpr = window.devicePixelRatio || 1;
+  const w = gc.clientWidth || root.clientWidth || 640;
+  scale = w/LW;
+  gc.width = Math.round(w*dpr);
+  gc.height = Math.round(LH*scale*dpr);
+  gc.style.height = (LH*scale)+'px';
+  gx.setTransform(dpr*scale,0,0,dpr*scale,0,0);
+  hc.width = Math.round((hc.clientWidth||w)*dpr);
+  hc.height = Math.round(HH*dpr);
+  hc.style.height = HH+'px';
+  hx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+function geom(){
+  const s = Math.min((LW-2*PAD-MID)/(2*cps), (LH-TOP-BOT)/rows, MAXCELL);
+  const bw = s*cps;
+  return {s, bw, x0:(LW-(2*bw+MID))/2, y0:TOP+((LH-TOP-BOT)-s*rows)/2};
+}
+function cellXY(i,G){
+  const c = i % COLS, r = (i-c)/COLS;
+  return {x: G.x0 + c*G.s + (c>=cps ? MID : 0), y: G.y0 + r*G.s};
+}
+
+function drawGrid(){
+  const G = geom(), a = uA(), b = U-a, n = half();
+  gx.clearRect(0,0,LW,LH);
+
+  // stoffene
+  gx.fillStyle = C.tintA; gx.fillRect(G.x0-5, G.y0-5, G.bw+10, G.s*rows+10);
+  gx.fillStyle = C.tintB; gx.fillRect(G.x0+G.bw+MID-5, G.y0-5, G.bw+10, G.s*rows+10);
+
+  // oscillatorer med energipakker
+  for(let i=0;i<N;i++){
+    const p = cellXY(i,G), m = G.s*0.14, e = g[i];
+    gx.strokeStyle = C.line; gx.lineWidth = 1;
+    gx.strokeRect(p.x+m, p.y+m, G.s-2*m, G.s-2*m);
+    if(e === 0) continue;
+    gx.fillStyle = C.acc2;
+    if(e <= 6){
+      const cols = e<=2?e:(e<=4?2:3), rws = Math.ceil(e/cols);
+      const d = G.s*0.155, rad = Math.max(G.s*0.055, 1.6);
+      for(let k=0;k<e;k++){
+        const cc = k%cols, rr = (k-cc)/cols;
+        gx.beginPath();
+        gx.arc(p.x+G.s/2+(cc-(cols-1)/2)*d, p.y+G.s/2+(rr-(rws-1)/2)*d, rad, 0, 6.2832);
+        gx.fill();
+      }
+    }else{
+      gx.font = '600 '+(G.s*0.34).toFixed(0)+'px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+      gx.textAlign = 'center'; gx.textBaseline = 'middle';
+      gx.fillText(e, p.x+G.s/2, p.y+G.s/2);
+    }
+  }
+
+  // isolerende vegg mellom stoffene
+  if(!contact){
+    gx.strokeStyle = C.muted; gx.lineWidth = 3;
+    gx.beginPath();
+    gx.moveTo(LW/2, G.y0-8); gx.lineTo(LW/2, G.y0+G.s*rows+8);
+    gx.stroke();
+  }
+
+  // merkelapper
+  gx.textBaseline = 'alphabetic';
+  gx.font = '600 13px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  gx.fillStyle = C.ink; gx.textAlign = 'left';
+  gx.fillText('A', G.x0-5, 17);
+  gx.fillText('B', G.x0+G.bw+MID-5, 17);
+  gx.font = '12px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  gx.fillStyle = C.muted;
+  gx.fillText('U = '+a+'   U/N = '+(a/n).toFixed(2).replace('.',','), G.x0+13, 17);
+  gx.fillText('U = '+b+'   U/N = '+(b/n).toFixed(2).replace('.',','), G.x0+G.bw+MID+13, 17);
+}
+
+function drawHist(){
+  const W = hc.clientWidth || 640;
+  hx.clearRect(0,0,W,HH);
+  const padL=10, padR=10, padT=8, padB=19;
+  const pW = W-padL-padR, pH = HH-padT-padB;
+  const bw = pW/(U+1);
+
+  let maxP = Math.max.apply(null, theo);
+  if(samples) for(let k=0;k<=U;k++) maxP = Math.max(maxP, bins[k]/samples);
+  maxP *= 1.12;
+
+  // linja ligger like til høyre for startsøyla, så alt i det skraverte feltet
+  // er tilstander der A har mer energi enn da stoffene ble satt i kontakt
+  const sx = Math.min(padL+(u0+1)*bw, padL+pW);
+  hx.fillStyle = C.acc2; hx.globalAlpha = 0.08;
+  hx.fillRect(sx, padT, padL+pW-sx, pH);
+  hx.globalAlpha = 1;
+
+  const barW = Math.min(Math.max(bw*0.76, 1.2), 44);
+  hx.fillStyle = C.acc; hx.globalAlpha = 0.5;
+  if(samples) for(let k=0;k<=U;k++){
+    const h = (bins[k]/samples/maxP)*pH;
+    if(h > 0.4) hx.fillRect(padL+k*bw+(bw-barW)/2, padT+pH-h, barW, h);
+  }
+  hx.globalAlpha = 1;
+
+  hx.strokeStyle = C.acc2; hx.lineWidth = 1.8;
+  hx.beginPath();
+  for(let k=0;k<=U;k++){
+    const x = padL+k*bw+bw/2, y = padT+pH-(theo[k]/maxP)*pH;
+    k ? hx.lineTo(x,y) : hx.moveTo(x,y);
+  }
+  hx.stroke();
+
+  hx.save();
+  hx.setLineDash([3,3]); hx.strokeStyle = C.muted; hx.lineWidth = 1;
+  hx.beginPath(); hx.moveTo(sx,padT); hx.lineTo(sx,padT+pH); hx.stroke();
+  hx.restore();
+  hx.fillStyle = C.muted; hx.textAlign = 'right'; hx.textBaseline = 'top';
+  hx.font = '10.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  hx.fillText('start', sx-4, padT+1);
+
+  hx.strokeStyle = C.line; hx.lineWidth = 1;
+  hx.beginPath(); hx.moveTo(padL,padT+pH+0.5); hx.lineTo(padL+pW,padT+pH+0.5); hx.stroke();
+  hx.textAlign = 'center';
+  [0, U/2, U].forEach(k=>{ hx.fillText(Math.round(k), padL+k*bw+bw/2, padT+pH+5); });
+}
+
+let last = -1;
+function readout(force){
+  const a = uA();
+  if(a === last && !force) return;
+  last = a;
+  const n = half();
+  root.querySelector('#es-om').innerHTML = fmt(lnOmega(a,n)+lnOmega(U-a,n));
+  root.querySelector('#es-omax').innerHTML =
+    fmt(lnOmega(Math.round(U/2),n)+lnOmega(U-Math.round(U/2),n));
+}
+function updateP(){
+  let above = 0;
+  for(let k=u0+1;k<=U;k++) above += bins[k];
+  root.querySelector('#es-pe').innerHTML = samples ? pct(above/samples) : '&ndash;';
+  root.querySelector('#es-pt').textContent = '(teori '+pct(pTheo)+')';
+}
+function draw(force){ drawGrid(); drawHist(); readout(force); }
+
+// ── hendelser ────────────────────────────────────────────────────────
+btn.addEventListener('click', ()=>{
+  if(!contact){ contact = true; hops = 0; u0 = uA(); }
+  running = !running;
+  prev = performance.now(); acc = 0;
+  updateBtn();
+  draw(true); updateP();
+});
+btnReset.addEventListener('click', reset);
+root.querySelectorAll('.es-seg button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    root.querySelectorAll('.es-seg button').forEach(o=>{
+      o.classList.remove('on'); o.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    const p = PRESET[+b.dataset.p];
+    cps = p[0]; rows = p[1]; COLS = 2*cps;
+    reset();
+  });
+});
+new ResizeObserver(()=>{ fit(); draw(true); }).observe(root);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ readColors(); draw(true); });
+new IntersectionObserver(e=>{ visible = e[0].isIntersecting; }, {threshold:0}).observe(root);
+
+// ── start ────────────────────────────────────────────────────────────
+readColors(); fit(); reset();
+(function loop(now){
+  const dt = Math.min((now - prev)/1000, 0.1);
+  prev = now;
+  if(running && visible){
+    acc += RATE*N*dt;
+    const k = Math.floor(acc); acc -= k;
+    for(let i=0;i<k;i++) step();
+    draw();
+    if(++tick % 15 === 0) updateP();
+  }
+  requestAnimationFrame(loop);
+})(performance.now());
+})();
+</script>
+<!-- ══ widget end ══════════════════════════════════════════════════════ -->
+
+</body>
+</html>

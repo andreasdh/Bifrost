@@ -1,0 +1,1706 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Partisjonsfunksjonen og molekylær energi &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/3_partisjonsfunksjonen';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven" href="4_gasser.html" />
+    <link rel="prev" title="Entropi, temperatur og Boltzmann-fordelingen" href="2_entropi_boltzmann.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/3_partisjonsfunksjonen.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Partisjonsfunksjonen og molekylær energi</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-gjelder-boltzmann-fordelingen">Når gjelder Boltzmann-fordelingen?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partisjonsfunksjonen">Partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#den-molekylaere-partisjonsfunksjonen">Den molekylære partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-ett-molekyl-til-n-molekyler">Fra ett molekyl til <span class="math notranslate nohighlight">\(N\)</span> molekyler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-flere-mikrotilstander-har-samme-energi">Når flere mikrotilstander har samme energi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indre-energi-fra-partisjonsfunksjonen">Indre energi fra partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropi-fra-partisjonsfunksjonen">Entropi fra partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekvipartisjon-og-varmekapasitet">Ekvipartisjon og varmekapasitet</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#translasjonell-kinetisk-energi">Translasjonell (kinetisk) energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotasjonell-energi">Rotasjonell energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vibrasjonell-energi">Vibrasjonell energi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekvipartisjon-for-polyatomaere-molekyler">Ekvipartisjon for polyatomære molekyler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-fungerer-ikke-den-klassiske-opptellingen">Når fungerer ikke den klassiske opptellingen?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videre-til-gasser">Videre til gasser</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="partisjonsfunksjonen-og-molekylaer-energi">
+<h1>Partisjonsfunksjonen og molekylær energi<a class="headerlink" href="#partisjonsfunksjonen-og-molekylaer-energi" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Læringsmål</p>
+<p>Etter å ha arbeidet med dette kapitlet skal du kunne:</p>
+<ul class="simple">
+<li><p>forklare hva partisjonsfunksjonen forteller oss</p></li>
+<li><p>sette opp og beregne partisjonsfunksjonen for enkle systemer med bestemte energinivåer</p></li>
+<li><p>forklare forskjellen mellom partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span> for et helt system og den molekylære partisjonsfunksjonen <span class="math notranslate nohighlight">\(q\)</span></p></li>
+<li><p>forklare hvorfor uavhengige energibidrag gjør at en molekylær partisjonsfunksjon kan faktoriseres</p></li>
+<li><p>forklare betydningen av skjelnbare og ikke-skjelnbare partikler i opptellingen av mikrotilstander</p></li>
+<li><p>forklare hvordan <span class="math notranslate nohighlight">\(U\)</span>, <span class="math notranslate nohighlight">\(S\)</span> og <span class="math notranslate nohighlight">\(C_V\)</span> kan beregnes fra partisjonsfunksjonen</p></li>
+</ul>
+</div>
+<p>I <a class="reference internal" href="#2_entropi_boltzmann.html"><span class="xref myst">forrige kapittel</span></a> kom vi fram til Boltzmann-fordelingen</p>
+<div class="math notranslate nohighlight">
+\[p_i=\frac{1}{Q}e^{-E_i/k_\mathrm{B}T}\]</div>
+<p>Fordelingen sier at én bestemt mikrotilstand med lav energi vanligvis er mer sannsynlig enn én bestemt mikrotilstand med høy energi. Figuren nedenfor viser hvordan sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for en mikrotilstand avhenger av energien <span class="math notranslate nohighlight">\(E_i\)</span>, ved fire forskjellige temperaturer. Hver prikk representerer én mikrotilstand i den enkle modellen. Linjene mellom prikkene er bare trukket for å gjøre utviklingen lettere å se.</p>
+<p>Energien er ikke oppgitt i joule, men i enheter av <span class="math notranslate nohighlight">\(\varepsilon\)</span>, som leses «epsilon». Her er <span class="math notranslate nohighlight">\(\varepsilon\)</span> energiforskjellen mellom to nabopunkter i modellen. At <span class="math notranslate nohighlight">\(E_i/\varepsilon=3\)</span> på den horisontale aksen, betyr derfor at mikrotilstanden har energien <span class="math notranslate nohighlight">\(E_i=3\varepsilon\)</span>. Symbolet <span class="math notranslate nohighlight">\(\varepsilon\)</span> er ikke en ny fysisk konstant, men bare en energienhet vi har valgt for denne modellen.</p>
+<p>Produktet <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span> har også enhet energi og gir en energiskala basert på temperatur. Kurvene sammenlikner denne energiskalaen med <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Når <span class="math notranslate nohighlight">\(k_\mathrm{B}T/\varepsilon\)</span> er liten, koster det relativt mye energi å gå opp til neste mikrotilstand. Sannsynligheten er derfor konsentrert om de laveste energiene.</p>
+<p>Når <span class="math notranslate nohighlight">\(k_\mathrm{B}T/\varepsilon\)</span> øker, blir energiforskjellen mellom nabotilstandene mindre viktig, og fordelingen blir flatere. Mikrotilstander med høyere energi får da større sannsynlighet. Når temperaturen endres, flyttes altså ikke energiene i modellen. Det er sannsynlighetene for de ulike mikrotilstandene som endres.</p>
+<div class="cell tag_hide-input docutils container">
+<details class="admonition hide above-input">
+<summary aria-label="Toggle hidden content">
+<p class="collapsed admonition-title">Show code cell source</p>
+<p class="expanded admonition-title">Hide code cell source</p>
+</summary>
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">i</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">11</span><span class="p">)</span>      <span class="c1"># kvantetall</span>
+<span class="n">E</span> <span class="o">=</span> <span class="n">i</span>                     <span class="c1"># energi i enheter av epsilon</span>
+
+<span class="k">for</span> <span class="n">kT</span> <span class="ow">in</span> <span class="p">[</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">]:</span>
+    <span class="n">weights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">E</span><span class="o">/</span><span class="n">kT</span><span class="p">)</span>
+    <span class="n">Q</span> <span class="o">=</span> <span class="n">weights</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+    <span class="n">p</span> <span class="o">=</span> <span class="n">weights</span><span class="o">/</span><span class="n">Q</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">E</span><span class="p">,</span> <span class="n">p</span><span class="p">,</span> <span class="s2">"o-"</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">f</span><span class="s2">"$k_BT = </span><span class="si">{</span><span class="n">kT</span><span class="si">}</span><span class="se">\\</span><span class="s2">varepsilon$"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$E_i / \varepsilon$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$p_i$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</details>
+<div class="cell_output docutils container">
+<img alt="../_images/30295631bde07e5c0db680937d66e1ad1250866b5ec6bcaf183a6882aacf60cc.png" src="../_images/30295631bde07e5c0db680937d66e1ad1250866b5ec6bcaf183a6882aacf60cc.png" />
+</div>
+</div>
+<p>Når vi bare sammenlikner to mikrotilstander, faller <span class="math notranslate nohighlight">\(Q\)</span> bort</p>
+<div class="math notranslate nohighlight">
+\[\frac{p_2}{p_1}=e^{-(E_2-E_1)/k_\mathrm{B}T}\]</div>
+<p>Vi trenger derfor ikke <span class="math notranslate nohighlight">\(Q\)</span> for å finne forholdet mellom to sannsynligheter. Skal vi finne selve sannsynlighetene, trenger vi derimot <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p>Partisjonsfunksjonen har to viktige oppgaver. Først gjør den Boltzmann-vektene om til sannsynligheter som summerer til 1. I tillegg samler den informasjon om energinivåene og temperaturen. Når vi kjenner <span class="math notranslate nohighlight">\(Q\)</span>, kan vi derfor beregne flere målbare egenskaper uten å følge hver enkelt mikrotilstand i detalj.</p>
+<div class="note admonition">
+<p class="admonition-title">Kapitlet i et nøtteskall</p>
+<p>Energiene til et system forteller hvilke mikrotilstander det kan ha. Temperaturen bestemmer hvor stor Boltzmann-vekt hver mikrotilstand får. Partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span> er summen av disse vektene. Når vi deler hver vekt på <span class="math notranslate nohighlight">\(Q\)</span>, får vi sannsynlighetene. Den samme partisjonsfunksjonen kan deretter brukes til å beregne indre energi, entropi og varmekapasitet.</p>
+</div>
+<section id="nar-gjelder-boltzmann-fordelingen">
+<span id="id1"></span><h2>Når gjelder Boltzmann-fordelingen?<a class="headerlink" href="#nar-gjelder-boltzmann-fordelingen" title="Link to this heading">#</a></h2>
+<p>Boltzmann-fordelingen beskriver et system som er i <strong>termisk likevekt</strong> med et stort varmereservoar. Systemet kan ta opp og avgi energi, mens temperaturen holdes konstant.</p>
+<p>For et system med konstant antall partikler <span class="math notranslate nohighlight">\(N\)</span>, volum <span class="math notranslate nohighlight">\(V\)</span> og temperatur <span class="math notranslate nohighlight">\(T\)</span>, men der energien kan variere, bruker vi det <strong>kanoniske ensemblet</strong>. Dette er den fysiske situasjonen Boltzmann-fordelingen beskriver:</p>
+<div class="math notranslate nohighlight">
+\[
+p_i=\frac{1}{Q}e^{-E_i/k_\mathrm{B}T}.
+\]</div>
+<p>For å regne på systemet kan vi forestille oss mange kopier med samme <span class="math notranslate nohighlight">\(N\)</span>, <span class="math notranslate nohighlight">\(V\)</span> og <span class="math notranslate nohighlight">\(T\)</span>, men med ulike øyeblikkelige energier. Hvis 20 prosent av kopiene befinner seg i mikrotilstand <span class="math notranslate nohighlight">\(i\)</span>, tolker vi dette som at sannsynligheten for mikrotilstanden er <span class="math notranslate nohighlight">\(p_i=0{,}20\)</span>. Du kan lese mer om <a class="reference internal" href="#A1_grunnleggende_begreper.html#ensembler"><span class="xref myst">ensembler</span></a>.</p>
+<div class="important admonition">
+<p class="admonition-title">Statistisk ensemble</p>
+<p>Et <strong>statistisk ensemble</strong> er en tenkt samling av mange identiske kopier av det samme systemet. Kopiene beskrives med de samme betingelsene, men kan befinne seg i ulike mikrotilstander.</p>
+<p>Ensemblet er et tanke- og regneverktøy. Vi lager ikke fysisk mange kopier av systemet; kopiene hjelper oss å tolke sannsynligheter og gjennomsnittsverdier.</p>
+</div>
+<p>Systemet kan være stort eller lite. Det kan for eksempel være en hel gassprøve, men det kan også være ett enkelt molekyl som kan utveksle energi med et reservoar. Kopiene representerer da det samme molekylet i ulike translasjonelle, rotasjonelle, vibrasjonelle eller elektroniske tilstander. Dette leder til den <strong>molekylære partisjonsfunksjonen</strong> <span class="math notranslate nohighlight">\(q\)</span>.</p>
+</section>
+<section id="partisjonsfunksjonen">
+<h2>Partisjonsfunksjonen<a class="headerlink" href="#partisjonsfunksjonen" title="Link to this heading">#</a></h2>
+<p>For å finne sannsynlighetene til de ulike mikrotilstandene må vi først <em>summere</em> Boltzmann-vektene til alle mikrotilstandene. Denne summen kalles <strong>partisjonsfunksjonen</strong>.</p>
+<div class="important admonition">
+<p class="admonition-title">Kanonisk partisjonsfunksjon</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_i e^{-E_i/k_\mathrm{B}T}\]</div>
+<p>Sannsynligheten for mikrotilstand <span class="math notranslate nohighlight">\(i\)</span> er</p>
+<div class="math notranslate nohighlight">
+\[p_i=\frac{e^{-E_i/k_\mathrm{B}T}}{Q}\]</div>
+</div>
+<p>Boltzmann-vektene <span class="math notranslate nohighlight">\(e^{-E_i/k_\mathrm{B}T}\)</span> summerer ikke nødvendigvis til 1. Derfor er de ikke sannsynligheter ennå. Når vi derimot deler hver vekt på summen <span class="math notranslate nohighlight">\(Q\)</span>, får vi sannsynligheter som til sammen er lik 1.</p>
+<p>Partisjonsfunksjonen er altså ikke selv en sannsynlighet, men en størrelse som normaliserer Boltzmann-vektene slik at vi deretter kan finne sannsynligheten for hver mikrotilstand.</p>
+<div class="note admonition">
+<p class="admonition-title">Hvilket system gjelder <span class="math notranslate nohighlight">\(Q\)</span> for?</p>
+<p>Energiene <span class="math notranslate nohighlight">\(E_i\)</span> og partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span> må beskrive det samme systemet. Hvis <span class="math notranslate nohighlight">\(E_i\)</span> er energiene til ett molekyl, gjelder sannsynlighetene og gjennomsnittsenergien dette molekylet. Hvis <span class="math notranslate nohighlight">\(E_i\)</span> er energiene til hele prøven, gjelder <span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(U\)</span> og <span class="math notranslate nohighlight">\(S\)</span> for hele prøven.</p>
+</div>
+</section>
+<section id="den-molekylaere-partisjonsfunksjonen">
+<h2>Den molekylære partisjonsfunksjonen<a class="headerlink" href="#den-molekylaere-partisjonsfunksjonen" title="Link to this heading">#</a></h2>
+<p>Det er ofte nyttig å starte med ett enkelt molekyl når vi skal beskrive partisjonsfunksjonen. Vi bruker da symbolet <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> for energien til molekylets mikrotilstand <span class="math notranslate nohighlight">\(i\)</span>, og skriver partisjonsfunksjonen med liten bokstav <span class="math notranslate nohighlight">\(q\)</span>.</p>
+<div class="important admonition">
+<p class="admonition-title">Molekylær partisjonsfunksjon</p>
+<p>Den <strong>molekylære partisjonsfunksjonen</strong> er partisjonsfunksjonen for ett molekyl:</p>
+<div class="math notranslate nohighlight">
+\[q=\sum_i e^{-\varepsilon_i/k_\mathrm{B}T}\]</div>
+<p>Summen går over de tilgjengelige mikrotilstandene til molekylet.</p>
+</div>
+<p>Energien til et molekyl kan bestå av flere bidrag. Når vi kan behandle disse bidragene som uavhengige, kan vi skrive</p>
+<div class="math notranslate nohighlight">
+\[\varepsilon=\varepsilon_\mathrm{trans}+\varepsilon_\mathrm{rot}+\varepsilon_\mathrm{vib}+\varepsilon_\mathrm{elec}\]</div>
+<p>Da faktoriserer også Boltzmann-faktoren:</p>
+<div class="math notranslate nohighlight">
+\[e^{-\varepsilon/k_\mathrm{B}T}
+=e^{-\varepsilon_\mathrm{trans}/k_\mathrm{B}T}
+ e^{-\varepsilon_\mathrm{rot}/k_\mathrm{B}T}
+ e^{-\varepsilon_\mathrm{vib}/k_\mathrm{B}T}
+ e^{-\varepsilon_\mathrm{elec}/k_\mathrm{B}T}\]</div>
+<p>Dermed kan den molekylære partisjonsfunksjonen skrives som et produkt</p>
+<div class="math notranslate nohighlight">
+\[q=q_\mathrm{trans}\,q_\mathrm{rot}\,q_\mathrm{vib}\,q_\mathrm{elec}\]</div>
+<p>Dette er nyttig fordi vi kan undersøke de ulike energiformene hver for seg og deretter sette bidragene sammen.</p>
+</section>
+<section id="fra-ett-molekyl-til-n-molekyler">
+<h2>Fra ett molekyl til <span class="math notranslate nohighlight">\(N\)</span> molekyler<a class="headerlink" href="#fra-ett-molekyl-til-n-molekyler" title="Link to this heading">#</a></h2>
+<p>La oss nå gå fra ett molekyl til en prøve med <span class="math notranslate nohighlight">\(N\)</span> molekyler. Vi antar først at molekylene ikke vekselvirker, slik at energien til hele systemet er summen av energiene til de enkelte molekylene:</p>
+<div class="math notranslate nohighlight">
+\[E_i=\varepsilon_{i_1}+\varepsilon_{i_2}+\cdots+\varepsilon_{i_N}\]</div>
+<p>Hvis de <span class="math notranslate nohighlight">\(N\)</span> delsystemene kan <strong>skilles fra hverandre</strong>, faktoriserer også partisjonsfunksjonen:</p>
+<div class="math notranslate nohighlight">
+\[Q=q^N\]</div>
+<p>For identiske molekyler i en gass må vi imidlertid være litt mer forsiktige med opptellingen.</p>
+<div class="important admonition">
+<p class="admonition-title">Skjelnbare og ikke-skjelnbare partikler</p>
+<p>Partikler er <strong>skjelnbare</strong> dersom vi i modellen kan holde rede på hvilken partikkel som er hvilken. Da gir en ombytting av to partikler en ny mikrotilstand.</p>
+<p>Identiske molekyler i en gass behandles derimot som <strong>ikke-skjelnbare</strong>: En ren ombytting av to identiske molekyler representerer ikke en ny fysisk tilstand.</p>
+</div>
+<p>Uttrykket <span class="math notranslate nohighlight">\(q^N\)</span> teller alle ombyttinger som om de var forskjellige. For <span class="math notranslate nohighlight">\(N\)</span> identiske molekyler finnes det <span class="math notranslate nohighlight">\(N!\)</span> slike permutasjoner, og vi ville derfor overtelle mikrotilstandene med en faktor <span class="math notranslate nohighlight">\(N!\)</span>. For en klassisk, fortynnet gass av identiske molekyler uten vekselvirkninger får vi derfor</p>
+<div class="math notranslate nohighlight">
+\[Q=\frac{q^N}{N!}\]</div>
+<p>Faktoren <span class="math notranslate nohighlight">\(N!\)</span> er altså ikke et ekstra energibidrag. Den korrigerer selve <strong>opptellingen av mikrotilstander</strong> når molekylene er identiske.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Et system har tre mikrotilstander med energiene <span class="math notranslate nohighlight">\(E_0=0\)</span>, <span class="math notranslate nohighlight">\(E_1=2{,}0\times10^{-21}\ \mathrm{J}\)</span> og <span class="math notranslate nohighlight">\(E_2=4{,}0\times10^{-21}\ \mathrm{J}\)</span>. Temperaturen er <span class="math notranslate nohighlight">\(T=300\ \mathrm{K}\)</span>, og <span class="math notranslate nohighlight">\(k_\mathrm{B}=1{,}381\times10^{-23}\ \mathrm{J/K}\)</span>.</p>
+<p><strong>a)</strong> Regn ut Boltzmann-faktoren <span class="math notranslate nohighlight">\(e^{-E_i/k_\mathrm{B}T}\)</span> for hver mikrotilstand.</p>
+<p><strong>b)</strong> Regn ut partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p><strong>c)</strong> Regn ut sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for hver mikrotilstand. Kontroller at sannsynlighetene summerer til 1, og forklar hvorfor grunntilstanden er mest sannsynlig.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Først beregner vi den termiske energiskalaen</p>
+<div class="math notranslate nohighlight">
+\[k_\mathrm{B}T=1{,}381\times10^{-23}\cdot300=4{,}14\times10^{-21}\ \mathrm{J}\]</div>
+<p class="sd-card-text"><strong>a)</strong> Boltzmann-faktorene blir</p>
+<div class="math notranslate nohighlight">
+\[e^{-E_0/k_\mathrm{B}T}=1{,}000\]</div>
+<div class="math notranslate nohighlight">
+\[e^{-E_1/k_\mathrm{B}T}=e^{-2{,}0/4{,}14}=0{,}617\]</div>
+<div class="math notranslate nohighlight">
+\[e^{-E_2/k_\mathrm{B}T}=e^{-4{,}0/4{,}14}=0{,}381\]</div>
+<p class="sd-card-text"><strong>b)</strong> Partisjonsfunksjonen er summen av vektene</p>
+<div class="math notranslate nohighlight">
+\[Q=1{,}000+0{,}617+0{,}381=1{,}998\]</div>
+<p class="sd-card-text"><strong>c)</strong> Sannsynlighetene er vektene delt på <span class="math notranslate nohighlight">\(Q\)</span></p>
+<div class="math notranslate nohighlight">
+\[p_0=0{,}500\qquad p_1=0{,}309\qquad p_2=0{,}191\]</div>
+<p class="sd-card-text">Summen er 1, som den må være fordi systemet befinner seg i én av de tre mikrotilstandene. Grunntilstanden er den mest sannsynlige enkeltmikrotilstanden fordi den har lavest energi og størst Boltzmann-faktor. Et helt energinivå med høyere energi kan likevel få stor samlet sannsynlighet dersom nivået består av mange mikrotilstander.</p>
+</div>
+</details><section id="nar-flere-mikrotilstander-har-samme-energi">
+<h3>Når flere mikrotilstander har samme energi<a class="headerlink" href="#nar-flere-mikrotilstander-har-samme-energi" title="Link to this heading">#</a></h3>
+<p>Som vi så i <a class="reference internal" href="#A1_grunnleggende_begreper.html#energitilstander-og-frihetsgrader"><span class="xref myst">introduksjonskapitlet</span></a>, kan flere mikrotilstander ha samme energi. Da sier vi at energinivået er <strong>degenerert</strong>.</p>
+<p>Hvis et energinivå med energi <span class="math notranslate nohighlight">\(E_j\)</span> består av <span class="math notranslate nohighlight">\(g_j\)</span> mikrotilstander, kalles <span class="math notranslate nohighlight">\(g_j\)</span> degenerasjonen til nivået. Alle de <span class="math notranslate nohighlight">\(g_j\)</span> mikrotilstandene har samme Boltzmann-vekt</p>
+<div class="math notranslate nohighlight">
+\[e^{-E_j/k_\mathrm{B}T}\]</div>
+<p>Det samlede bidraget fra energinivået blir derfor</p>
+<div class="math notranslate nohighlight">
+\[g_j e^{-E_j/k_\mathrm{B}T}\]</div>
+<p>Vi kan dermed summere over energinivåene i stedet for å skrive ett ledd for hver mikrotilstand</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_j g_j e^{-E_j/k_\mathrm{B}T}\]</div>
+<p>I den første formelen løper indeksen <span class="math notranslate nohighlight">\(i\)</span> over mikrotilstandene. I den siste formelen løper <span class="math notranslate nohighlight">\(j\)</span> over energinivåene.</p>
+<p>Energi og degenerasjon trekker i hver sin retning. Høy energi gir mindre Boltzmann-vekt. Stor degenerasjon betyr at mange mikrotilstander bidrar med den samme vekten. Først undersøker vi energigapet i en modell uten degenerasjon. Deretter bruker vi en enkel to-nivåmodell til å se hvordan degenerasjon påvirker den samlede sannsynligheten.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div id="tve3-root" style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 640px; margin: 1.5rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 10px; background: #fafafa;">
+
+  <div style="display:flex;align-items:center;gap:12px;margin:0 0 4px;">
+    <label for="tve3-ratio" style="font-size:14px;color:#555;white-space:nowrap;">&Delta;&epsilon; / k<sub>B</sub>T</label>
+    <input type="range" id="tve3-ratio" min="0.1" max="5" step="0.1" value="1" style="flex:1;" />
+    <span id="tve3-ratio-out" style="font-size:14px;font-weight:600;min-width:30px;text-align:right;color:#222;">1.0</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin:0 0 1.5rem;">
+    <span>Lite gap / høy temperatur</span>
+    <span>Stort gap / lav temperatur</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 200px;gap:20px;align-items:start;">
+
+    <div id="tve3-ladder" style="position:relative;height:280px;"></div>
+
+    <div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;margin-bottom:12px;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Tillatte energinivåer (t)</p>
+        <p style="font-size:24px;font-weight:600;margin:0;color:#222;">5</p>
+      </div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Sum av Boltzmann-vektene (Q)</p>
+        <p id="tve3-qval" style="font-size:24px;font-weight:600;margin:0;color:#2a78d6;">-</p>
+        <p id="tve3-qnote" style="font-size:12px;color:#888;margin:6px 0 0;min-height:16px;"></p>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+(function () {
+  const t = 5;
+  const box = document.getElementById('tve3-ladder');
+  const slider = document.getElementById('tve3-ratio');
+  const ratioOut = document.getElementById('tve3-ratio-out');
+  const qval = document.getElementById('tve3-qval');
+  const qnote = document.getElementById('tve3-qnote');
+  const baseY = 260;
+  const leftPx = 40;
+  const widthPct = 0.58;
+
+  for (let n = 0; n < t; n++) {
+    const bar = document.createElement('div');
+    bar.id = 'tve3-bar-' + n;
+    bar.style.cssText = 'position:absolute;left:' + leftPx + 'px;background:#378ADD;opacity:0.55;border-radius:3px 3px 0 0;';
+    box.appendChild(bar);
+
+    const line = document.createElement('div');
+    line.id = 'tve3-lvl-' + n;
+    line.style.cssText = 'position:absolute;left:' + leftPx + 'px;height:2.5px;background:#222;border-radius:1px;';
+    box.appendChild(line);
+
+    const lab = document.createElement('div');
+    lab.id = 'tve3-lab-' + n;
+    lab.style.cssText = 'position:absolute;font-size:12px;color:#555;';
+    lab.textContent = n + '\u0394\u03b5';
+    box.appendChild(lab);
+  }
+
+  function render() {
+    const x = parseFloat(slider.value);
+    ratioOut.textContent = x.toFixed(1);
+
+    const gapPx = 14 + x * 9;
+    const widthPx = box.clientWidth * widthPct;
+    const weights = [];
+    for (let n = 0; n < t; n++) weights.push(Math.exp(-n * x));
+    const Q = weights.reduce((a, b) => a + b, 0);
+
+    for (let n = 0; n < t; n++) {
+      const y = baseY - n * gapPx;
+      const line = document.getElementById('tve3-lvl-' + n);
+      line.style.top = y + 'px';
+      line.style.width = widthPx + 'px';
+
+      const h = Math.max(2, (gapPx - 6) * weights[n]);
+      const bar = document.getElementById('tve3-bar-' + n);
+      bar.style.width = widthPx + 'px';
+      bar.style.height = h + 'px';
+      bar.style.top = (y - h) + 'px';
+
+      const lab = document.getElementById('tve3-lab-' + n);
+      lab.style.left = (leftPx + widthPx + 12) + 'px';
+      lab.style.top = (y - 8) + 'px';
+    }
+
+    qval.textContent = Q.toFixed(2);
+    if (x <= 0.4) qnote.textContent = 'Q nærmer seg t = 5';
+    else if (x >= 4.5) qnote.textContent = 'Q nærmer seg 1';
+    else qnote.textContent = '';
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>
+</div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Prøv selv: hva forteller <span class="math notranslate nohighlight">\(Q\)</span>?</p>
+<ol class="arabic simple">
+<li><p>Gjør energigapet stort sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>. Hvilke energinivåer bidrar merkbart til <span class="math notranslate nohighlight">\(Q\)</span>?</p></li>
+<li><p>Gjør energigapet mindre. Hva skjer med Boltzmann-vektene og <span class="math notranslate nohighlight">\(Q\)</span>?</p></li>
+<li><p>Endres antallet tillatte energinivåer når temperaturen endres?</p></li>
+<li><p>Hvorfor kan <span class="math notranslate nohighlight">\(Q\)</span> øke selv om antallet energinivåer er uendret?</p></li>
+<li><p>Hva er forskjellen på en Boltzmann-vekt og en sannsynlighet?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Ved stort energigap bidrar hovedsakelig grunntilstanden. Når gapet blir mindre sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>, får de eksiterte nivåene større vekt, og <span class="math notranslate nohighlight">\(Q\)</span> øker. Temperaturen endrer ikke hvilke energinivåer som finnes. Den endrer bare vektene deres. En Boltzmann-vekt blir først en sannsynlighet når vi deler den på summen <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+</div>
+</details><div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel: et degenerert eksitert nivå</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Tenk deg et system med to energinivåer. Grunntilstanden har energi <span class="math notranslate nohighlight">\(0\)</span> og består av én mikrotilstand. Det eksiterte nivået ligger <span class="math notranslate nohighlight">\(\Delta\varepsilon\)</span> høyere i energi og består av tre mikrotilstander med samme energi, altså <span class="math notranslate nohighlight">\(g_1=3\)</span>.</p>
+<p class="sd-card-text">Partisjonsfunksjonen er</p>
+<div class="math notranslate nohighlight">
+\[Q=1+3e^{-\Delta\varepsilon/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Her bruker vi stor <span class="math notranslate nohighlight">\(P\)</span> for den samlede sannsynligheten til et energinivå. Symbolet <span class="math notranslate nohighlight">\(p_i\)</span> brukes om sannsynligheten for én bestemt mikrotilstand.</p>
+<p class="sd-card-text">Sannsynligheten for grunntilstanden er</p>
+<div class="math notranslate nohighlight">
+\[P_0=\frac{1}{Q}\]</div>
+<p class="sd-card-text">Den samlede sannsynligheten for det eksiterte nivået er</p>
+<div class="math notranslate nohighlight">
+\[P_1=\frac{3e^{-\Delta\varepsilon/k_\mathrm{B}T}}{Q}\]</div>
+<p class="sd-card-text">Ved lav temperatur dominerer grunntilstanden fordi den har lavest energi. Ved høy temperatur blir de fire mikrotilstandene omtrent like sannsynlige. Da går den samlede sannsynligheten for det eksiterte nivået mot <span class="math notranslate nohighlight">\(3/4\)</span>, mens sannsynligheten for grunntilstanden går mot <span class="math notranslate nohighlight">\(1/4\)</span>.</p>
+<p class="sd-card-text">Eksemplet viser hvordan energi og degenerasjon konkurrerer. Det eksiterte nivået ligger høyere i energi, men det kan realiseres gjennom flere mikrotilstander.</p>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<ol class="arabic simple">
+<li><p>Ved hvilken temperatur er den samlede sannsynligheten for det eksiterte nivået lik sannsynligheten for grunntilstanden?</p></li>
+<li><p>Hvorfor går ikke sannsynligheten for grunntilstanden mot null ved høy temperatur?</p></li>
+<li><p>Hva blir høytemperaturgrensen dersom det eksiterte nivået i stedet har degenerasjonen <span class="math notranslate nohighlight">\(g=5\)</span>?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">De to nivåene er like sannsynlige når</p>
+<p class="sd-card-text">Lik sannsynlighet betyr mer eksplisitt at den <strong>samlede</strong> sannsynligheten for det eksiterte nivået er lik sannsynligheten for grunntilstanden:</p>
+<div class="math notranslate nohighlight">
+\[\frac{3e^{-\Delta\varepsilon/k_\mathrm{B}T}}{Q}=\frac{1}{Q}\]</div>
+<p class="sd-card-text">Partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span> står på begge sider og kansellerer. Derfor er betingelsen ganske enkelt</p>
+<div class="math notranslate nohighlight">
+\[3e^{-\Delta\varepsilon/k_\mathrm{B}T}=1\]</div>
+<p class="sd-card-text">Dette gir</p>
+<div class="math notranslate nohighlight">
+\[T=\frac{\Delta\varepsilon}{k_\mathrm{B}\ln 3}\]</div>
+<p class="sd-card-text">På den dimensjonsløse temperaturaksen tilsvarer dette</p>
+<div class="math notranslate nohighlight">
+\[\frac{k_\mathrm{B}T}{\Delta\varepsilon}=\frac{1}{\ln 3}\approx0{,}91\]</div>
+<p class="sd-card-text">Grunntilstanden er fortsatt én av de fire mulige mikrotilstandene og får derfor sannsynligheten <span class="math notranslate nohighlight">\(1/4\)</span> ved høy temperatur. Med <span class="math notranslate nohighlight">\(g=5\)</span> går den samlede sannsynligheten for det eksiterte nivået mot <span class="math notranslate nohighlight">\(5/6\)</span>, mens sannsynligheten for grunntilstanden går mot <span class="math notranslate nohighlight">\(1/6\)</span>.</p>
+</div>
+</details></section>
+</section>
+<section id="indre-energi-fra-partisjonsfunksjonen">
+<h2>Indre energi fra partisjonsfunksjonen<a class="headerlink" href="#indre-energi-fra-partisjonsfunksjonen" title="Link to this heading">#</a></h2>
+<p>Så langt har vi brukt partisjonsfunksjonen til å finne sannsynlighetene for mikrotilstandene. Den samme partisjonsfunksjonen kan også brukes til å beregne målbare størrelser. Vi begynner med den indre energien.</p>
+<p>Systemet skifter stadig mellom mikrotilstander med forskjellige energier. Den indre energien <span class="math notranslate nohighlight">\(U\)</span> er derfor ikke energien til én bestemt mikrotilstand. Den er gjennomsnittet av energiene til alle mikrotilstandene.</p>
+<p>Mikrotilstander med stor sannsynlighet skal bidra mer til gjennomsnittet enn mikrotilstander med liten sannsynlighet. Derfor ganger vi hver energi <span class="math notranslate nohighlight">\(E_i\)</span> med sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span></p>
+<div class="math notranslate nohighlight">
+\[U=\langle E\rangle=\sum_i p_iE_i\]</div>
+<p>Energiene, sannsynlighetene og partisjonsfunksjonen må beskrive det samme systemet. Symbolet <span class="math notranslate nohighlight">\(\langle E\rangle\)</span> betyr gjennomsnittsverdien av energien. Du kan lese mer i <a class="reference internal" href="#matematikk/statistikk.html#forventningsverdi"><span class="xref myst">6.2 Forventningsverdi</span></a>.</p>
+<p>Setter vi inn Boltzmann-fordelingen</p>
+<div class="math notranslate nohighlight">
+\[p_i=\frac{e^{-E_i/k_\mathrm{B}T}}{Q}\]</div>
+<p>får vi</p>
+<div class="math notranslate nohighlight">
+\[U=\frac{1}{Q}\sum_i E_i e^{-E_i/k_\mathrm{B}T}\]</div>
+<p>Dette uttrykket kan brukes direkte. Det finnes også en annen nyttig måte å finne <span class="math notranslate nohighlight">\(U\)</span> på. Partisjonsfunksjonen endres med temperaturen, og denne endringen forteller hvordan gjennomsnittsenergien endres.</p>
+<p>Når energinivåene ikke selv avhenger av temperaturen, får vi</p>
+<div class="important admonition">
+<p class="admonition-title">Indre energi fra <span class="math notranslate nohighlight">\(Q\)</span></p>
+<div class="math notranslate nohighlight">
+\[U=k_\mathrm{B}T^2\left(\frac{\partial\ln Q}{\partial T}\right)_{V,N}\]</div>
+</div>
+<p>Den <a class="reference internal" href="#matematikk/kalkulus.html#definisjonen-av-den-deriverte"><span class="xref myst">deriverte</span></a> beskriver hvordan <span class="math notranslate nohighlight">\(\ln Q\)</span> endres når temperaturen endres, mens volumet og partikkeltallet holdes faste. Du trenger ikke følge utledningen for å forstå resten av kapitlet.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hvor kommer uttrykket for <span class="math notranslate nohighlight">\(U\)</span> fra?</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Vi starter med partisjonsfunksjonen</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_i e^{-E_i/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Når energiene <span class="math notranslate nohighlight">\(E_i\)</span> ikke avhenger av <span class="math notranslate nohighlight">\(T\)</span>, får vi ved derivasjon</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial Q}{\partial T}=\sum_i \frac{E_i}{k_\mathrm{B}T^2}e^{-E_i/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Vi trekker faktoren <span class="math notranslate nohighlight">\(1/(k_\mathrm{B}T^2)\)</span> utenfor summen</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial Q}{\partial T}=\frac{1}{k_\mathrm{B}T^2}\sum_i E_i e^{-E_i/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Fra uttrykket for den indre energien har vi</p>
+<div class="math notranslate nohighlight">
+\[U=\frac{1}{Q}\sum_i E_i e^{-E_i/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Dermed kan vi skrive</p>
+<div class="math notranslate nohighlight">
+\[U=\frac{k_\mathrm{B}T^2}{Q}\frac{\partial Q}{\partial T}\]</div>
+<p class="sd-card-text">Siden</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial\ln Q}{\partial T}=\frac{1}{Q}\frac{\partial Q}{\partial T}\]</div>
+<p class="sd-card-text">får vi</p>
+<div class="math notranslate nohighlight">
+\[U=k_\mathrm{B}T^2\left(\frac{\partial\ln Q}{\partial T}\right)_{V,N}\]</div>
+</div>
+</details><p>Simuleringen nedenfor viser hvordan sannsynlighetene bestemmer plasseringen av gjennomsnittsenergien <span class="math notranslate nohighlight">\(U\)</span>. Den viser også hvordan varmekapasiteten endres når energifordelingen endres.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><div id="ieug-root" style="font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;max-width:720px;margin:1.5rem auto;padding:1.5rem;border:1px solid #ddd;border-radius:10px;background:#fafafa;">
+  <h2 class="sr-only">Indre energi og varmekapasitet fra en Boltzmann-fordeling</h2>
+
+  <div style="display:flex;align-items:center;gap:12px;margin:0 0 4px;">
+    <label for="ieug-ratio" style="font-size:14px;color:#555;white-space:nowrap;">&Delta;&epsilon; / k<sub>B</sub>T</label>
+    <input type="range" id="ieug-ratio" min="0.1" max="5" step="0.1" value="1" style="flex:1;">
+    <span id="ieug-ratio-out" style="font-size:14px;font-weight:600;min-width:30px;text-align:right;color:#222;">1.0</span>
+  </div>
+  <div style="display:flex;justify-content:space-between;font-size:11px;color:#888;margin:0 0 1.25rem;">
+    <span>Lite gap / høy temperatur</span>
+    <span>Stort gap / lav temperatur</span>
+  </div>
+
+  <div style="display:grid;grid-template-columns:minmax(280px,1fr) 210px;gap:20px;align-items:start;">
+    <div>
+      <div id="ieug-ladder" style="position:relative;height:270px;"></div>
+      <p style="font-size:12px;color:#666;margin:8px 0 0;">Søylehøydene viser de normaliserte sannsynlighetene <em>p</em><sub>n</sub>. Den stiplede linjen viser gjennomsnittsenergien <em>U</em>.</p>
+    </div>
+
+    <div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;margin-bottom:12px;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Indre energi, U / &Delta;&epsilon;</p>
+        <p id="ieug-uval" style="font-size:24px;font-weight:600;margin:0;color:#2a78d6;">-</p>
+      </div>
+      <div style="background:#f0efe9;border-radius:10px;padding:1rem;">
+        <p style="font-size:13px;color:#555;margin:0 0 4px;">Varmekapasitet, C<sub>V</sub> / k<sub>B</sub></p>
+        <p id="ieug-cvval" style="font-size:24px;font-weight:600;margin:0;color:#0d7d6f;">-</p>
+        <p style="font-size:12px;color:#777;margin:6px 0 0;">Her er C<sub>V</sub> bestemt av hvor raskt U endres med T.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  const root = document.getElementById('ieug-root');
+  const t = 5;
+  const box = root.querySelector('#ieug-ladder');
+  const slider = root.querySelector('#ieug-ratio');
+  const ratioOut = root.querySelector('#ieug-ratio-out');
+  const uval = root.querySelector('#ieug-uval');
+  const cvval = root.querySelector('#ieug-cvval');
+  const baseY = 245;
+  const gapPx = 48;
+  const leftPx = 42;
+  const widthPct = 0.62;
+
+  for (let n = 0; n < t; n++) {
+    const bar = document.createElement('div');
+    bar.id = 'ieug-bar-' + n;
+    bar.style.cssText = 'position:absolute;left:' + leftPx + 'px;background:#378ADD;opacity:0.60;border-radius:3px 3px 0 0;';
+    box.appendChild(bar);
+
+    const line = document.createElement('div');
+    line.id = 'ieug-lvl-' + n;
+    line.style.cssText = 'position:absolute;left:' + leftPx + 'px;height:2.5px;background:#222;border-radius:1px;top:' + (baseY - n * gapPx) + 'px;';
+    box.appendChild(line);
+
+    const lab = document.createElement('div');
+    lab.style.cssText = 'position:absolute;font-size:12px;color:#555;top:' + (baseY - n * gapPx - 8) + 'px;';
+    lab.textContent = n + '\u0394\u03b5';
+    box.appendChild(lab);
+  }
+
+  const uline = document.createElement('div');
+  uline.style.cssText = 'position:absolute;left:' + leftPx + 'px;height:2px;border-top:2px dashed #D85A30;';
+  box.appendChild(uline);
+
+  const ulab = document.createElement('div');
+  ulab.style.cssText = 'position:absolute;font-size:12px;font-weight:600;color:#993C1D;';
+  ulab.textContent = 'U';
+  box.appendChild(ulab);
+
+  function render() {
+    const x = parseFloat(slider.value);
+    ratioOut.textContent = x.toFixed(1);
+    const widthPx = box.clientWidth * widthPct;
+
+    const weights = [];
+    for (let n = 0; n < t; n++) weights.push(Math.exp(-n * x));
+    const Q = weights.reduce((a, b) => a + b, 0);
+    const probabilities = weights.map(w => w / Q);
+
+    let meanN = 0;
+    let meanN2 = 0;
+    for (let n = 0; n < t; n++) {
+      const p = probabilities[n];
+      meanN += n * p;
+      meanN2 += n * n * p;
+
+      const h = Math.max(2, (gapPx - 6) * p);
+      const bar = root.querySelector('#ieug-bar-' + n);
+      bar.style.width = widthPx + 'px';
+      bar.style.height = h + 'px';
+      bar.style.top = (baseY - n * gapPx - h) + 'px';
+      root.querySelector('#ieug-lvl-' + n).style.width = widthPx + 'px';
+    }
+
+    const varianceN = Math.max(0, meanN2 - meanN * meanN);
+    const cvOverKb = x * x * varianceN;
+    const uY = baseY - meanN * gapPx;
+
+    uline.style.top = uY + 'px';
+    uline.style.width = widthPx + 'px';
+    ulab.style.top = (uY - 9) + 'px';
+    ulab.style.left = (leftPx + widthPx + 10) + 'px';
+
+    uval.textContent = meanN.toFixed(2);
+    cvval.textContent = cvOverKb.toFixed(2);
+  }
+
+  slider.addEventListener('input', render);
+  window.addEventListener('resize', render);
+  render();
+})();
+</script>
+</div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Prøv selv: indre energi og varmekapasitet</p>
+<ol class="arabic simple">
+<li><p>Gjør <span class="math notranslate nohighlight">\(\Delta\varepsilon/k_\mathrm{B}T\)</span> stor. Hvilken mikrotilstand dominerer, og hvor ligger <span class="math notranslate nohighlight">\(U\)</span>?</p></li>
+<li><p>Gjør <span class="math notranslate nohighlight">\(\Delta\varepsilon/k_\mathrm{B}T\)</span> mindre. Hva skjer med sannsynlighetene og <span class="math notranslate nohighlight">\(U/\Delta\varepsilon\)</span>?</p></li>
+<li><p>Finn omtrent hvor <span class="math notranslate nohighlight">\(C_V/k_\mathrm{B}\)</span> er størst. Hvorfor er varmekapasiteten liten i begge ender av glideren?</p></li>
+<li><p>Hvorfor kan <span class="math notranslate nohighlight">\(U\)</span> ligge mellom energinivåene når systemet alltid har én av de tillatte energiene?</p></li>
+<li><p>Hva er forskjellen på energien til én kopi og gjennomsnittsenergien til hele ensemblet?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Når energigapet er stort sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>, dominerer grunntilstanden, og <span class="math notranslate nohighlight">\(U\)</span> ligger nær null. Når gapet blir mindre, øker sannsynligheten for de eksiterte nivåene. Da øker også <span class="math notranslate nohighlight">\(U/\Delta\varepsilon\)</span>.</p>
+<p class="sd-card-text">Varmekapasiteten er størst når en temperaturendring flytter mye sannsynlighet mellom energinivåene. Ved svært lav temperatur er nesten bare grunntilstanden okkupert. Ved svært høy temperatur er de fem nivåene allerede nesten likt okkupert. I begge grensene endres <span class="math notranslate nohighlight">\(U\)</span> lite når temperaturen endres, og <span class="math notranslate nohighlight">\(C_V\)</span> blir liten.</p>
+<p class="sd-card-text">At <span class="math notranslate nohighlight">\(C_V\)</span> går mot null ved høy temperatur, skyldes at denne enkle modellen bare har fem energinivåer. Reelle molekyler har mange flere nivåer. Senere skal vi se at slike systemer kan nærme seg en klassisk, ikke-null verdi for varmekapasiteten.</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(U\)</span> er et gjennomsnitt og trenger ikke være en tillatt mikrotilstandsenergi. Én kopi har alltid én bestemt energi. Ensemblegjennomsnittet kan ligge mellom energinivåene.</p>
+</div>
+</details><details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Fordypning: energifluktuasjoner og varmekapasitet</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">I det kanoniske ensemblet kan varmekapasiteten også skrives ved spredningen i energien</p>
+<div class="math notranslate nohighlight">
+\[C_V=\frac{\langle E^2\rangle-\langle E\rangle^2}{k_\mathrm{B}T^2}\]</div>
+<p class="sd-card-text">Uttrykket i telleren er variansen til energien. Simuleringen beregner dette uttrykket for de fem energinivåene. Varmekapasiteten blir stor når flere energier har merkbar sannsynlighet og fordelingen endres tydelig med temperaturen.</p>
+</div>
+</details></section>
+<section id="entropi-fra-partisjonsfunksjonen">
+<h2>Entropi fra partisjonsfunksjonen<a class="headerlink" href="#entropi-fra-partisjonsfunksjonen" title="Link to this heading">#</a></h2>
+<p>Partisjonsfunksjonen bestemmer sannsynlighetene. Derfor inneholder den også informasjon om entropien. For det kanoniske ensemblet får vi</p>
+<div class="important admonition">
+<p class="admonition-title">Entropi fra <span class="math notranslate nohighlight">\(Q\)</span></p>
+<div class="math notranslate nohighlight">
+\[S=k_\mathrm{B}\ln Q+\frac{U}{T}\]</div>
+</div>
+<p>Dette er ikke en ny definisjon av entropi. Uttrykket kommer fram når vi setter Boltzmann-fordelingen inn i Gibbs-entropien. Størrelsene <span class="math notranslate nohighlight">\(Q\)</span>, <span class="math notranslate nohighlight">\(U\)</span> og <span class="math notranslate nohighlight">\(S\)</span> må beskrive det samme systemet.</p>
+<p>Resultatet viser at vi kan gå direkte fra energinivåene til termodynamiske størrelser: Energinivåene gir <span class="math notranslate nohighlight">\(Q\)</span>, og fra <span class="math notranslate nohighlight">\(Q\)</span> kan vi beregne både <span class="math notranslate nohighlight">\(U\)</span> og <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Utledning av uttrykket for <span class="math notranslate nohighlight">\(S\)</span></span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Vi starter med Boltzmann-fordelingen</p>
+<div class="math notranslate nohighlight">
+\[p_i=\frac{e^{-E_i/k_\mathrm{B}T}}{Q}\]</div>
+<p class="sd-card-text">Tar vi den <a class="reference internal" href="#matematikk/formler_og_enheter.html#eksponenter-logaritmer-og-rotter"><span class="xref myst">naturlige logaritmen</span></a>, får vi</p>
+<div class="math notranslate nohighlight">
+\[\ln p_i=-\frac{E_i}{k_\mathrm{B}T}-\ln Q\]</div>
+<p class="sd-card-text">Dette setter vi inn i Gibbs-entropien</p>
+<div class="math notranslate nohighlight">
+\[S=-k_\mathrm{B}\sum_i p_i\left(-\frac{E_i}{k_\mathrm{B}T}-\ln Q\right)\]</div>
+<p class="sd-card-text">Da får vi</p>
+<div class="math notranslate nohighlight">
+\[S=\frac{1}{T}\sum_i p_iE_i+k_\mathrm{B}\ln Q\sum_i p_i\]</div>
+<p class="sd-card-text">Vi kjenner igjen de to summene</p>
+<div class="math notranslate nohighlight">
+\[\sum_i p_iE_i=U\qquad\text{og}\qquad\sum_i p_i=1\]</div>
+<p class="sd-card-text">Dermed får vi</p>
+<div class="math notranslate nohighlight">
+\[S=k_\mathrm{B}\ln Q+\frac{U}{T}\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Test deg selv</p>
+<p>Et system har tre mikrotilstander med samme energi, <span class="math notranslate nohighlight">\(E_i=0\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Beregn partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q\)</span>.</p></li>
+<li><p>Beregn den indre energien <span class="math notranslate nohighlight">\(U\)</span>.</p></li>
+<li><p>Bruk</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[
+S=k_\mathrm{B}\ln Q+\frac{U}{T}
+\]</div>
+<p>til å finne <span class="math notranslate nohighlight">\(S/k_\mathrm{B}\)</span>.</p>
+<ol class="arabic simple" start="4">
+<li><p>Hvordan kan systemet ha entropi selv om den indre energien er null?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Siden alle tre mikrotilstandene har energi null, er alle Boltzmann-faktorene lik 1:</p>
+<div class="math notranslate nohighlight">
+\[
+Q=1+1+1=3
+\]</div>
+<p class="sd-card-text">Den indre energien er</p>
+<div class="math notranslate nohighlight">
+\[
+U=0
+\]</div>
+<p class="sd-card-text">og dermed</p>
+<div class="math notranslate nohighlight">
+\[
+\frac{S}{k_\mathrm{B}}=\ln 3\approx1{,}10.
+\]</div>
+<p class="sd-card-text">Entropien er ikke et mål på hvor stor energien er. Den beskriver hvordan sannsynligheten er fordelt mellom mulige mikrotilstander. Her finnes det tre like sannsynlige mikrotilstander, og derfor er entropien større enn null selv om vi har valgt energien til alle tre som null.</p>
+</div>
+</details></section>
+<section id="ekvipartisjon-og-varmekapasitet">
+<h2>Ekvipartisjon og varmekapasitet<a class="headerlink" href="#ekvipartisjon-og-varmekapasitet" title="Link to this heading">#</a></h2>
+<p>Vi har sett hvordan partisjonsfunksjonen gir den indre energien <span class="math notranslate nohighlight">\(U\)</span>. <strong>Varmekapasiteten</strong> forteller hvor mye den indre energien øker når temperaturen øker.</p>
+<p>Ved konstant volum er</p>
+<div class="math notranslate nohighlight">
+\[
+C_V=\left(\frac{\partial U}{\partial T}\right)_{V,N}.
+\]</div>
+<p>På molekylnivå handler varmekapasitet derfor om <strong>hvilke former for energi molekylene kan lagre når temperaturen øker</strong>. Energien kan blant annet fordeles på translasjon, rotasjon og vibrasjon.</p>
+<p>For systemer som kan beskrives med klassisk statistisk mekanikk gir <strong>ekvipartisjonsteoremet</strong> en enkel regel: Hvert uavhengige, kvadratiske energiledd bidrar i gjennomsnitt med</p>
+<div class="math notranslate nohighlight">
+\[
+\frac12k_\mathrm{B}T
+\]</div>
+<p>til den indre energien.</p>
+<p>Et kvadratisk energiledd er et energibidrag som avhenger av kvadratet av en variabel. Et eksempel er bevegelsesenergien i <span class="math notranslate nohighlight">\(x\)</span>-retning,</p>
+<div class="math notranslate nohighlight">
+\[
+E_x=\frac12mv_x^2.
+\]</div>
+<p>Vi skal nå se hvordan slike energiledd oppstår fra <strong>translasjon, rotasjon og vibrasjon</strong>, og hvordan de til sammen bestemmer varmekapasiteten.</p>
+<section id="translasjonell-kinetisk-energi">
+<h3>Translasjonell (kinetisk) energi<a class="headerlink" href="#translasjonell-kinetisk-energi" title="Link to this heading">#</a></h3>
+<p>Et eksempel er bevegelsesenergien i <span class="math notranslate nohighlight">\(x\)</span>-retning:</p>
+<div class="math notranslate nohighlight">
+\[
+E_x = \frac12 m v_x^2.
+\]</div>
+<p>Den translasjonelle (kinetiske) energien til en partikkel med masse <span class="math notranslate nohighlight">\(m\)</span> og fart <span class="math notranslate nohighlight">\(v\)</span> er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm kin} = \frac12 m v^2.
+\]</div>
+<p>I tre dimensjoner kan vi skrive:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm kin}
+=
+\frac12 m
+\left(
+  v_x^2 + v_y^2 + v_z^2
+\right),
+\]</div>
+<p>der hvert ledd er kvadratisk i en hastighetskomponent.</p>
+<p>Ifølge ekvipartisjonsteoremet bidrar hvert kvadratisk ledd med</p>
+<div class="math notranslate nohighlight">
+\[
+\frac12 k_B T,
+\]</div>
+<p>slik at den gjennomsnittlige kinetiske energien per partikkel blir</p>
+<div class="math notranslate nohighlight">
+\[
+\langle E_{\rm kin} \rangle
+=
+\frac32 k_B T
+\]</div>
+</section>
+<section id="rotasjonell-energi">
+<h3>Rotasjonell energi<a class="headerlink" href="#rotasjonell-energi" title="Link to this heading">#</a></h3>
+<p>For rotasjonsbevegelse er den kinetiske rotasjonsenergien til et stivt legeme gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm rot}
+=
+\frac12 I \omega^2,
+\]</div>
+<p>der <span class="math notranslate nohighlight">\(I\)</span> er treghetsmomentet og <span class="math notranslate nohighlight">\(\omega\)</span> er vinkelhastigheten.</p>
+<p>For et molekyl med flere rotasjonsfrihetsgrader, for eksempel et lineært molekyl med to rotasjonsakser, kan vi skrive</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm rot}
+=
+\frac12 I_1 \omega_1^2
++
+\frac12 I_2 \omega_2^2.
+\]</div>
+<p>Hvert kvadratisk rotasjonsledd bidrar også med <span class="math notranslate nohighlight">\(\frac12 k_B T\)</span> ifølge ekvipartisjonsteoremet. For et lineært molekyl (to rotasjonsfrihetsgrader) får vi dermed</p>
+<div class="math notranslate nohighlight">
+\[
+\langle E_{\rm rot} \rangle
+=
+k_B T
+\]</div>
+<p>mens et ikke-lineært molekyl (tre rotasjonsfrihetsgrader) får</p>
+<div class="math notranslate nohighlight">
+\[
+\langle E_{\rm rot} \rangle
+=\frac32 k_B T
+\]</div>
+</section>
+<section id="vibrasjonell-energi">
+<h3>Vibrasjonell energi<a class="headerlink" href="#vibrasjonell-energi" title="Link to this heading">#</a></h3>
+<p>Et annet eksempel på et kvadratisk energiledd er den vibrasjonelle energien. For en harmonisk vibrasjon er den potensielle energien gitt ved Hookes lov</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm pot} = \frac12 k x^2,
+\]</div>
+<p>der <span class="math notranslate nohighlight">\(k\)</span> er fjær- eller kraftkonstanten til bindingen og <span class="math notranslate nohighlight">\(x\)</span> er avviket fra likevektsposisjonen.</p>
+<p>Fra klassisk mekanikk vet vi at vibrasjonen også har en kinetisk energi</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm kin} = \frac12 m v^2.
+\]</div>
+<p>Den totale vibrasjonsenergien blir derfor</p>
+<div class="math notranslate nohighlight">
+\[
+E_{\rm vib} = \frac12 m v^2 + \frac12 k x^2.
+\]</div>
+<p>Begge leddene er kvadratiske og bidrar derfor med</p>
+<div class="math notranslate nohighlight">
+\[
+\frac12 k_B T
+\]</div>
+<p>ifølge ekvipartisjonsteoremet. En vibrasjonsmodus bidrar dermed totalt med</p>
+<div class="math notranslate nohighlight">
+\[
+\langle E_{\rm vib} \rangle = k_B T
+\]</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel: et diatomisk molekyl</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">For et ideelt, lineært diatomisk molekyl teller vi de kvadratiske energileddene:</p>
+<ul class="simple">
+<li><p class="sd-card-text">tre translasjonelle ledd gir til sammen <span class="math notranslate nohighlight">\(3k_\mathrm{B}T/2\)</span></p></li>
+<li><p class="sd-card-text">to rotasjonelle ledd gir til sammen <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span></p></li>
+<li><p class="sd-card-text">én vibrasjonsmodus har ett kinetisk og ett potensielt ledd og gir til sammen <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span></p></li>
+</ul>
+<p class="sd-card-text">Hvis alle disse energiformene oppfører seg klassisk, får vi per mol</p>
+<div class="math notranslate nohighlight">
+\[
+U_\mathrm{m}=\frac72RT
+\]</div>
+<p class="sd-card-text">og dermed</p>
+<div class="math notranslate nohighlight">
+\[
+C_{V,\mathrm{m}}=\frac72R.
+\]</div>
+<p class="sd-card-text">Her ser vi bort fra elektroniske eksitasjoner og fra en eventuell konstant nullpunktsenergi. Slike konstante energibidrag endrer ikke varmekapasiteten.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="ekvipartisjon-for-polyatomaere-molekyler">
+<h2>Ekvipartisjon for polyatomære molekyler<a class="headerlink" href="#ekvipartisjon-for-polyatomaere-molekyler" title="Link to this heading">#</a></h2>
+<p>Et molekyl med <span class="math notranslate nohighlight">\(N_{\rm atomer}\)</span> atomer har totalt</p>
+<div class="math notranslate nohighlight">
+\[
+3N_{\rm atomer}
+\]</div>
+<p>mekaniske frihetsgrader, siden hvert atom kan bevege seg i tre romlige retninger.</p>
+<p>Disse fordeles mellom translasjon, rotasjon og vibrasjon.</p>
+<ul class="simple">
+<li><p><strong>Translasjon:</strong> Alle molekyler har 3 translasjonsfrihetsgrader.</p></li>
+<li><p><strong>Rotasjon:</strong> Lineære molekyler har 2 rotasjonsfrihetsgrader, mens ikke-lineære molekyler har 3.</p></li>
+<li><p><strong>Vibrasjon:</strong> De resterende frihetsgradene beskriver vibrasjonsmoduser.</p></li>
+</ul>
+<p>For lineære molekyler er antallet vibrasjonsmoduser</p>
+<div class="math notranslate nohighlight">
+\[
+N_{\rm vib}=3N_{\rm atomer}-5,
+\]</div>
+<p>mens ikke-lineære molekyler har</p>
+<div class="math notranslate nohighlight">
+\[
+N_{\rm vib}=3N_{\rm atomer}-6.
+\]</div>
+<p>Når alle energiformene kan behandles klassisk, bidrar translasjon med <span class="math notranslate nohighlight">\(3k_\mathrm{B}T/2\)</span>, rotasjon med <span class="math notranslate nohighlight">\(f_{\rm rot}k_\mathrm{B}T/2\)</span>, og hver vibrasjonsmodus med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>.</p>
+<p>Den gjennomsnittlige energien per molekyl blir derfor</p>
+<div class="math notranslate nohighlight">
+\[
+\langle E\rangle
+=
+\frac32k_\mathrm{B}T
++
+\frac{f_{\rm rot}}{2}k_\mathrm{B}T
++
+N_{\rm vib}k_\mathrm{B}T.
+\]</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempler: diatomiske og ikke-lineære molekyler</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">For et lineært diatomisk molekyl, for eksempel <span class="math notranslate nohighlight">\(N_2\)</span>, får vi</p>
+<ul class="simple">
+<li><p class="sd-card-text">3 translasjonelle kvadratiske energiledd</p></li>
+<li><p class="sd-card-text">2 rotasjonelle kvadratiske energiledd</p></li>
+</ul>
+<p class="sd-card-text">Når vibrasjonen er utfrosset, bidrar dermed fem kvadratiske energiledd:</p>
+<div class="math notranslate nohighlight">
+\[
+U=\frac52 Nk_\mathrm{B}T.
+\]</div>
+<p class="sd-card-text">For et ikke-lineært molekyl som <span class="math notranslate nohighlight">\(H_2O\)</span> har vi</p>
+<ul class="simple">
+<li><p class="sd-card-text">3 translasjonelle kvadratiske energiledd</p></li>
+<li><p class="sd-card-text">3 rotasjonelle kvadratiske energiledd</p></li>
+<li><p class="sd-card-text">3 vibrasjonsmoduser, som hver gir to kvadratiske energiledd</p></li>
+</ul>
+<p class="sd-card-text">Hvis alle vibrasjonene også oppfører seg klassisk, får vi derfor totalt</p>
+<div class="math notranslate nohighlight">
+\[
+3+3+2\cdot3=12
+\]</div>
+<p class="sd-card-text">kvadratiske energiledd, og dermed</p>
+<div class="math notranslate nohighlight">
+\[
+U=6Nk_\mathrm{B}T.
+\]</div>
+</div>
+</div>
+<section id="nar-fungerer-ikke-den-klassiske-opptellingen">
+<span id="id2"></span><h3>Når fungerer ikke den klassiske opptellingen?<a class="headerlink" href="#nar-fungerer-ikke-den-klassiske-opptellingen" title="Link to this heading">#</a></h3>
+<p>På molekylnivå er energien kvantisert. Derfor er ikke alle energiformer nødvendigvis aktive ved en gitt temperatur. Det avgjørende er energigapet <span class="math notranslate nohighlight">\(\Delta\varepsilon\)</span> sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>:</p>
+<ul class="simple">
+<li><p>Hvis <span class="math notranslate nohighlight">\(\Delta\varepsilon\ll k_\mathrm{B}T\)</span>, blir mange energinivåer merkbart okkupert, og bidraget nærmer seg den klassiske verdien</p></li>
+<li><p>Hvis <span class="math notranslate nohighlight">\(\Delta\varepsilon\gg k_\mathrm{B}T\)</span>, er de eksiterte nivåene lite sannsynlige, og energiformen bidrar lite til varmekapasiteten</p></li>
+</ul>
+<p>Vi sier da at energiformen er <strong>utfrosset</strong>.</p>
+<p>Vibrasjonelle energigap er ofte mye større enn rotasjonelle energigap. For diatomiske idealgasser som <span class="math notranslate nohighlight">\(N_2\)</span> og <span class="math notranslate nohighlight">\(O_2\)</span> er vibrasjonsbidraget derfor i stor grad utfrosset ved romtemperatur. Når translasjon og rotasjon oppfører seg tilnærmet klassisk, får vi omtrent</p>
+<div class="math notranslate nohighlight">
+\[C_{V,\mathrm{m}}\approx\frac52R\]</div>
+<div class="tip admonition">
+<p class="admonition-title">Test deg selv</p>
+<p>Tenk på ett mol <span class="math notranslate nohighlight">\(N_2\)</span>-gass ved en temperatur der translasjon og rotasjon kan behandles klassisk, mens vibrasjonen er utfrosset. Bruk <span class="math notranslate nohighlight">\(R=8{,}314\ \mathrm{J\,mol^{-1}\,K^{-1}}\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Hvor mange kvadratiske energiledd bidrar til den indre energien?</p></li>
+<li><p>Finn den molare varmekapasiteten <span class="math notranslate nohighlight">\(C_{V,\mathrm{m}}\)</span>.</p></li>
+<li><p>Hva blir <span class="math notranslate nohighlight">\(C_{V,\mathrm{m}}\)</span> dersom vibrasjonen også blir klassisk?</p></li>
+<li><p>Hvorfor bidrar vibrasjonen lite ved lavere temperaturer?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Et lineært molekyl har tre translasjonelle og to rotasjonelle kvadratiske energiledd. Det gir totalt fem bidrag på <span class="math notranslate nohighlight">\(R/2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+C_{V,\mathrm{m}}=\frac52R
+\approx20{,}8\ \mathrm{J\,mol^{-1}\,K^{-1}}.
+\]</div>
+<p class="sd-card-text">Én vibrasjonsmodus har både et kinetisk og et potensielt kvadratisk energiledd. Når vibrasjonen også kan behandles klassisk, kommer derfor ytterligere to bidrag på <span class="math notranslate nohighlight">\(R/2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[
+C_{V,\mathrm{m}}=\frac72R
+\approx29{,}1\ \mathrm{J\,mol^{-1}\,K^{-1}}.
+\]</div>
+<p class="sd-card-text">Ved lavere temperaturer er energigapet mellom de vibrasjonelle nivåene stort sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>. De eksiterte vibrasjonstilstandene får derfor liten sannsynlighet, og vibrasjonen bidrar lite til varmekapasiteten.</p>
+</div>
+</details><p>I neste kapittel ser vi nærmere på hvordan translasjon, rotasjon og vibrasjon påvirker energien og varmekapasiteten til gasser.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><style>
+@keyframes jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-1px,2px)}75%{transform:translate(-2px,-1px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes vib1{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,0)}}
+@keyframes vib2{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,0)}}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+</style>
+<h2 class="sr-only">Interaktiv visning av hvordan translasjon, rotasjon og vibrasjon fryser ut ved lavere temperatur</h2>
+
+<div style="display:flex;align-items:center;gap:12px;margin:0 0 1.5rem;">
+<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">Temperatur</label>
+<input type="range" id="temp" min="0" max="100" step="1" value="50" style="flex:1;" oninput="update()">
+<span id="temp-out" style="font-size:14px;font-weight:500;min-width:30px;text-align:right;">50</span>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:center;">
+
+<div style="display:flex;justify-content:center;">
+<svg width="160" height="140" viewBox="0 0 160 140">
+<g id="mol-outer" style="transform-origin:80px 70px;">
+<line x1="55" y1="70" x2="105" y2="70" stroke="var(--t)" stroke-width="3"/>
+<g id="mol-a1" style="transform-origin:55px 70px;"><circle cx="55" cy="70" r="16" fill="#378ADD"/></g>
+<g id="mol-a2" style="transform-origin:105px 70px;"><circle cx="105" cy="70" r="16" fill="#D85A30"/></g>
+</g>
+</svg>
+</div>
+
+<div>
+<p style="font-size:13px;margin:0 0 10px;"><span class="dot" id="dot-trans" style="background:#639922;"></span>Translasjon</p>
+<p style="font-size:13px;margin:0 0 10px;"><span class="dot" id="dot-rot" style="background:#888780;"></span>Rotasjon</p>
+<p style="font-size:13px;margin:0 0 14px;"><span class="dot" id="dot-vib" style="background:#888780;"></span>Vibrasjon</p>
+<div style="background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;">
+<p style="font-size:12px;color:var(--text-secondary);margin:0 0 2px;">Bidrag til C<sub>V</sub></p>
+<p id="cv-val" style="font-size:18px;font-weight:500;margin:0;">3/2 R</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const outer = document.getElementById('mol-outer');
+const a1 = document.getElementById('mol-a1');
+const a2 = document.getElementById('mol-a2');
+const T_ROT = 20;
+const T_VIB = 65;
+
+function update(){
+  const T = parseFloat(document.getElementById('temp').value);
+  document.getElementById('temp-out').textContent = T;
+
+  outer.style.animation = 'jitter 0.8s ease-in-out infinite';
+
+  const rotOn = T >= T_ROT;
+  const vibOn = T >= T_VIB;
+
+  document.getElementById('dot-rot').style.background = rotOn ? '#3B6D11' : '#888780';
+  document.getElementById('dot-vib').style.background = vibOn ? '#993C1D' : '#888780';
+
+  if(rotOn){
+    outer.style.animation = 'spin 2.4s linear infinite';
+  } else {
+    outer.style.animation = 'jitter 0.8s ease-in-out infinite';
+  }
+
+  if(vibOn){
+    a1.style.animation = 'vib1 0.4s ease-in-out infinite';
+    a2.style.animation = 'vib2 0.4s ease-in-out infinite';
+  } else {
+    a1.style.animation = 'none';
+    a2.style.animation = 'none';
+  }
+
+  let cv = '3/2 R';
+  if(rotOn && vibOn) cv = '7/2 R';
+  else if(rotOn) cv = '5/2 R';
+  document.getElementById('cv-val').textContent = cv;
+}
+update();
+</script>
+</div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Prøv selv: utfrysning av energiformer</p>
+<ol class="arabic simple">
+<li><p>Senk temperaturen. Hvilket bidrag avtar først: vibrasjon, rotasjon eller translasjon?</p></li>
+<li><p>Forklar rekkefølgen ved hjelp av energigapene.</p></li>
+<li><p>Simuleringen viser tydelige trinn. Hvorfor endres en målt <span class="math notranslate nohighlight">\(C_V(T)\)</span> vanligvis mer gradvis?</p></li>
+<li><p>Sammenlikn en enatomig og en diatomisk gass ved romtemperatur. Hvilke energiformer bidrar?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Vibrasjonsbidraget avtar først fordi vibrasjonsnivåene vanligvis har størst energigap. Rotasjonsbidraget avtar ved lavere temperatur, mens translasjonsnivåene ligger svært tett. De virkelige sannsynlighetene endres kontinuerlig med temperaturen. Derfor er «på» og «av» bare en forenklet framstilling av grenseverdiene.</p>
+</div>
+</details></section>
+</section>
+<section id="oppgaver">
+<h2>Oppgaver<a class="headerlink" href="#oppgaver" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 1: Partisjonsfunksjon</p>
+<p>Et system har de faste, ikke degenererte energiene <span class="math notranslate nohighlight">\(E_0=0\)</span>, <span class="math notranslate nohighlight">\(E_1=\varepsilon\)</span> og <span class="math notranslate nohighlight">\(E_2=2\varepsilon\)</span>. Undersøk systemet ved en temperatur der <span class="math notranslate nohighlight">\(\varepsilon/k_\mathrm{B}T=1\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Beregn <span class="math notranslate nohighlight">\(Q\)</span></p></li>
+<li><p>Beregn <span class="math notranslate nohighlight">\(p_0\)</span>, <span class="math notranslate nohighlight">\(p_1\)</span> og <span class="math notranslate nohighlight">\(p_2\)</span></p></li>
+<li><p>Kontroller at sannsynlighetene summerer til 1</p></li>
+<li><p>Beregn <span class="math notranslate nohighlight">\(U/(k_\mathrm{B}T)\)</span></p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="math notranslate nohighlight">
+\[Q=1+e^{-1}+e^{-2}\approx1{,}503\]</div>
+<p class="sd-card-text">Sannsynlighetene er omtrent <span class="math notranslate nohighlight">\(0{,}665\)</span>, <span class="math notranslate nohighlight">\(0{,}245\)</span> og <span class="math notranslate nohighlight">\(0{,}090\)</span>. Gjennomsnittsenergien blir</p>
+<div class="math notranslate nohighlight">
+\[\frac{U}{k_\mathrm{B}T}=p_1+2p_2\approx0{,}425\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 2: Energi og degenerasjon</p>
+<p>Et grunntilstandsnivå har <span class="math notranslate nohighlight">\(E_0=0\)</span> og <span class="math notranslate nohighlight">\(g_0=1\)</span>. Et eksitert nivå har den faste energien <span class="math notranslate nohighlight">\(E_1=\Delta E\)</span> og degenerasjonen <span class="math notranslate nohighlight">\(g_1=4\)</span>. Undersøk systemet ved en temperatur der <span class="math notranslate nohighlight">\(\Delta E/k_\mathrm{B}T=2\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Sammenlikn én bestemt eksitert mikrotilstand med grunntilstanden</p></li>
+<li><p>Beregn <span class="math notranslate nohighlight">\(Q\)</span></p></li>
+<li><p>Beregn samlet sannsynlighet for det eksiterte nivået</p></li>
+<li><p>Forklar hvorfor degenerasjonen må tas med</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">For én bestemt mikrotilstand er forholdet</p>
+<div class="math notranslate nohighlight">
+\[\frac{p_\mathrm{eksitert}}{p_\mathrm{grunn}}=e^{-2}\approx0{,}135\]</div>
+<p class="sd-card-text">Partisjonsfunksjonen er</p>
+<div class="math notranslate nohighlight">
+\[Q=1+4e^{-2}\approx1{,}541\]</div>
+<p class="sd-card-text">Den samlede sannsynligheten for det eksiterte nivået er</p>
+<div class="math notranslate nohighlight">
+\[p_\mathrm{eksitert,tot}=\frac{4e^{-2}}{Q}\approx0{,}351\]</div>
+<p class="sd-card-text">Degenerasjonen må tas med fordi det eksiterte energinivået består av fire forskjellige mikrotilstander med samme energi.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 3: Gibbs-entropi</p>
+<p>Et system har sannsynlighetene <span class="math notranslate nohighlight">\(p=(1/2,1/4,1/4)\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Beregn <span class="math notranslate nohighlight">\(S/k_\mathrm{B}\)</span></p></li>
+<li><p>Sammenlikn med en jevn fordeling over tre mikrotilstander</p></li>
+<li><p>Hvilken fordeling har størst entropi, og hvorfor?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="math notranslate nohighlight">
+\[\frac{S}{k_\mathrm{B}}=-\left[\frac12\ln\frac12+2\left(\frac14\ln\frac14\right)\right]\approx1{,}040\]</div>
+<p class="sd-card-text">Den jevne fordelingen gir</p>
+<div class="math notranslate nohighlight">
+\[\frac{S}{k_\mathrm{B}}=\ln3\approx1{,}099\]</div>
+<p class="sd-card-text">Den jevne fordelingen har størst entropi fordi sannsynligheten er fordelt jevnere over mikrotilstandene.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 4: Fra <span class="math notranslate nohighlight">\(Q\)</span> til <span class="math notranslate nohighlight">\(U\)</span> og <span class="math notranslate nohighlight">\(S\)</span></p>
+<p>Et ikke degenerert to-nivåsystem har <span class="math notranslate nohighlight">\(E_0=0\)</span> og <span class="math notranslate nohighlight">\(E_1=\Delta E\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Sett opp <span class="math notranslate nohighlight">\(Q\)</span></p></li>
+<li><p>Finn <span class="math notranslate nohighlight">\(p_1\)</span> og <span class="math notranslate nohighlight">\(U\)</span></p></li>
+<li><p>Bruk <span class="math notranslate nohighlight">\(S=k_\mathrm{B}\ln Q+U/T\)</span> til å finne entropien</p></li>
+<li><p>Undersøk grensene <span class="math notranslate nohighlight">\(T\to0\)</span> og <span class="math notranslate nohighlight">\(T\to\infty\)</span></p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Systemet har to mikrotilstander, så partisjonsfunksjonen har to ledd</p>
+<div class="math notranslate nohighlight">
+\[Q=1+e^{-\Delta E/k_\mathrm{B}T}\]</div>
+<p class="sd-card-text">Sannsynligheten for den eksiterte tilstanden er Boltzmann-vekten delt på <span class="math notranslate nohighlight">\(Q\)</span></p>
+<div class="math notranslate nohighlight">
+\[p_1=\frac{e^{-\Delta E/k_\mathrm{B}T}}{1+e^{-\Delta E/k_\mathrm{B}T}}\]</div>
+<p class="sd-card-text">Grunntilstanden har energi null og bidrar derfor ikke til gjennomsnittsenergien. Den indre energien blir</p>
+<div class="math notranslate nohighlight">
+\[U=p_0\cdot0+p_1\Delta E=\frac{\Delta E}{e^{\Delta E/k_\mathrm{B}T}+1}\]</div>
+<p class="sd-card-text">Entropien finner vi ved å sette <span class="math notranslate nohighlight">\(Q\)</span> og <span class="math notranslate nohighlight">\(U\)</span> inn i uttrykket fra kapitlet</p>
+<div class="math notranslate nohighlight">
+\[S=k_\mathrm{B}\ln Q+\frac{U}{T}=k_\mathrm{B}\ln\left(1+e^{-\Delta E/k_\mathrm{B}T}\right)+\frac{\Delta E}{T}p_1\]</div>
+<p class="sd-card-text">Ved lav temperatur er <span class="math notranslate nohighlight">\(\Delta E/k_\mathrm{B}T\)</span> stor, og <span class="math notranslate nohighlight">\(e^{-\Delta E/k_\mathrm{B}T}\)</span> går mot null. Da går <span class="math notranslate nohighlight">\(Q\)</span> mot 1, slik at <span class="math notranslate nohighlight">\(\ln Q\)</span> går mot null. Samtidig går <span class="math notranslate nohighlight">\(p_1\)</span> mot null, og dermed også <span class="math notranslate nohighlight">\(U\)</span>. Eksponentialfunksjonen avtar raskere enn <span class="math notranslate nohighlight">\(1/T\)</span> vokser, så <span class="math notranslate nohighlight">\(U/T\)</span> går også mot null. Til sammen gir dette</p>
+<div class="math notranslate nohighlight">
+\[S\to0\qquad\text{når }T\to0\]</div>
+<p class="sd-card-text">Det er som forventet. Ved svært lav temperatur er systemet nesten alltid i grunntilstanden, og bare én mikrotilstand er tilgjengelig.</p>
+<p class="sd-card-text">Ved høy temperatur er <span class="math notranslate nohighlight">\(\Delta E\)</span> liten sammenliknet med <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>, og <span class="math notranslate nohighlight">\(e^{-\Delta E/k_\mathrm{B}T}\)</span> går mot 1. Da blir <span class="math notranslate nohighlight">\(Q\to2\)</span> og <span class="math notranslate nohighlight">\(p_0\to p_1\to1/2\)</span>. Den indre energien går mot <span class="math notranslate nohighlight">\(\Delta E/2\)</span>, som er en endelig verdi, så <span class="math notranslate nohighlight">\(U/T\)</span> går mot null. Dermed blir</p>
+<div class="math notranslate nohighlight">
+\[S\to k_\mathrm{B}\ln2\qquad\text{når }T\to\infty\]</div>
+<p class="sd-card-text">Dette stemmer med Gibbs-entropien for to like sannsynlige mikrotilstander</p>
+<div class="math notranslate nohighlight">
+\[S=-k_\mathrm{B}\left(2\cdot\tfrac12\ln\tfrac12\right)=k_\mathrm{B}\ln2\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 5: Varmekapasitet</p>
+<p>Sammenlikn helium og <span class="math notranslate nohighlight">\(N_2\)</span> som ideelle gasser.</p>
+<ol class="arabic simple">
+<li><p>Finn <span class="math notranslate nohighlight">\(C_{V,\mathrm m}\)</span> for helium</p></li>
+<li><p>Finn <span class="math notranslate nohighlight">\(C_{V,\mathrm m}\)</span> for <span class="math notranslate nohighlight">\(N_2\)</span> når rotasjon bidrar klassisk og vibrasjon er utfrosset</p></li>
+<li><p>Hva nærmer <span class="math notranslate nohighlight">\(C_{V,\mathrm m}\)</span> for <span class="math notranslate nohighlight">\(N_2\)</span> seg når vibrasjonen også blir klassisk?</p></li>
+<li><p>Forklar hvorfor overgangen er gradvis</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Helium har tre translasjonelle kvadratiske energiledd og får</p>
+<div class="math notranslate nohighlight">
+\[C_{V,\mathrm m}=\frac32R\]</div>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(N_2\)</span> bidrar også to rotasjonelle kvadratiske ledd, slik at</p>
+<div class="math notranslate nohighlight">
+\[C_{V,\mathrm m}=\frac52R\]</div>
+<p class="sd-card-text">Når den ene vibrasjonsmodens kinetiske og potensielle energiledd begge blir klassiske, nærmer verdien seg</p>
+<div class="math notranslate nohighlight">
+\[C_{V,\mathrm m}=\frac72R\]</div>
+<p class="sd-card-text">Overgangen er gradvis fordi Boltzmann-sannsynlighetene for de vibrasjonelle nivåene endres kontinuerlig med temperaturen.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 6: Et molekyl i et temperaturbad</p>
+<p>En lukket kyvette med en fortynnet løsning av fluorescerende molekyler står i et stort vannbad med konstant temperatur. Vi bruker løsningen i kyvetten som system.</p>
+<ol class="arabic simple">
+<li><p>Hva fungerer som system og varmereservoar?</p></li>
+<li><p>Hvilke størrelser holdes faste i den kanoniske modellen?</p></li>
+<li><p>Hvorfor kan molekylets energi variere selv om temperaturen er konstant?</p></li>
+<li><p>Hva representerer andelen molekyler i en bestemt mikrotilstand i et stort ensemble?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Løsningen i den lukkede kyvetten er systemet, mens vannbadet er varmereservoaret. I modellen er antallet molekyler <span class="math notranslate nohighlight">\(N\)</span>, volumet <span class="math notranslate nohighlight">\(V\)</span> og temperaturen <span class="math notranslate nohighlight">\(T\)</span> faste. Energien kan variere når løsningen utveksler energi med vannbadet. Andelen molekyler i en bestemt mikrotilstand tilsvarer sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for denne mikrotilstanden.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 7: Fra ett delsystem til mange</p>
+<p>Et idealisert system består av <span class="math notranslate nohighlight">\(N\)</span> uavhengige delsystemer. Hvert delsystem er knyttet til sin egen faste plass i et materiale og har partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q_1=1+3e^{-\Delta\varepsilon/k_\mathrm{B}T}\)</span>.</p>
+<ol class="arabic simple">
+<li><p>Sett opp partisjonsfunksjonen <span class="math notranslate nohighlight">\(Q_N\)</span> for hele systemet</p></li>
+<li><p>Forklar hvorfor partisjonsfunksjonene kan multipliseres</p></li>
+<li><p>Hvorfor er det viktig at delsystemene har faste plasser?</p></li>
+</ol>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">For uavhengige delsystemer på faste plasser er</p>
+<div class="math notranslate nohighlight">
+\[Q_N=Q_1^N\]</div>
+<p class="sd-card-text">Energien til hele systemet er summen av energiene til delsystemene. Derfor blir Boltzmann-faktoren for hele systemet produktet av Boltzmann-faktorene til delsystemene, og partisjonsfunksjonene multipliseres.</p>
+<p class="sd-card-text">De faste plassene gjør at delsystemene kan skilles fra hverandre. Da svarer hver kombinasjon av tilstander til én egen mikrotilstand, og opptellingen i <span class="math notranslate nohighlight">\(Q_1^N\)</span> blir riktig.</p>
+</div>
+</details></section>
+<section id="videre-til-gasser">
+<h2>Videre til gasser<a class="headerlink" href="#videre-til-gasser" title="Link to this heading">#</a></h2>
+<p>Vi har nå verktøyet som trengs for å gå fra kvantiserte energier til sannsynligheter og termodynamiske gjennomsnitt. I neste kapittel bruker vi dette på gasser: Først på fordelingen av molekylhastigheter og trykk, og deretter på molekylære frihetsgrader, varmekapasitet og avvik fra idealgassmodellen.</p>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="2_entropi_boltzmann.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Entropi, temperatur og Boltzmann-fordelingen</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="4_gasser.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-gjelder-boltzmann-fordelingen">Når gjelder Boltzmann-fordelingen?</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partisjonsfunksjonen">Partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#den-molekylaere-partisjonsfunksjonen">Den molekylære partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fra-ett-molekyl-til-n-molekyler">Fra ett molekyl til <span class="math notranslate nohighlight">\(N\)</span> molekyler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-flere-mikrotilstander-har-samme-energi">Når flere mikrotilstander har samme energi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#indre-energi-fra-partisjonsfunksjonen">Indre energi fra partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#entropi-fra-partisjonsfunksjonen">Entropi fra partisjonsfunksjonen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekvipartisjon-og-varmekapasitet">Ekvipartisjon og varmekapasitet</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#translasjonell-kinetisk-energi">Translasjonell (kinetisk) energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#rotasjonell-energi">Rotasjonell energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#vibrasjonell-energi">Vibrasjonell energi</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#ekvipartisjon-for-polyatomaere-molekyler">Ekvipartisjon for polyatomære molekyler</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#nar-fungerer-ikke-den-klassiske-opptellingen">Når fungerer ikke den klassiske opptellingen?</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#videre-til-gasser">Videre til gasser</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

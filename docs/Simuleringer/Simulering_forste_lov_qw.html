@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Første lov - varme og arbeid</title>
+<style>
+  #s4-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:10px; border-radius:12px; max-width:560px; margin:0 auto; }
+  #s4-root h2 { text-align:center; font-size:1.1em; margin:0 0 3px 0; font-weight:600; }
+  #s4-root .s4-sub { text-align:center; font-size:0.75em; color:#9aa5c0; margin-bottom:10px; line-height:1.4; }
+  #s4-root .s4-main { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  #s4-root .s4-col { display:flex; flex-direction:column; align-items:center; background:#161d2e; border-radius:8px; padding:8px; }
+  #s4-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s4-root .s4-caption { font-size:0.68em; color:#9aa5c0; margin-top:5px; text-align:center; max-width:220px; }
+  #s4-root .s4-panel-right { width:210px; }
+  #s4-root .s4-therm-row { display:flex; align-items:center; gap:10px; margin-top:4px; }
+  #s4-root .s4-therm-tube { width:22px; height:130px; background:#0a0e18; border-radius:11px; border:1px solid #3a4360; position:relative; overflow:hidden; }
+  #s4-root .s4-therm-fill { position:absolute; bottom:0; left:0; width:100%; background:linear-gradient(#ff5a5a,#5aa9ff); border-radius:0 0 11px 11px; transition:height 0.4s ease; }
+  #s4-root .s4-therm-label { font-size:0.75em; text-align:center; }
+  #s4-root .s4-accounting { font-size:0.72em; line-height:1.6; margin-top:8px; }
+  #s4-root .s4-accounting b { color:#ffb15a; }
+  #s4-root .s4-log { font-size:0.66em; color:#c7cfe6; margin-top:6px; max-height:90px; overflow-y:auto; background:#0a0e18; border-radius:6px; padding:5px 7px; width:100%; box-sizing:border-box; }
+  #s4-root .s4-log div { padding:1px 0; border-bottom:1px solid #1b2438; }
+  #s4-root .s4-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:10px; }
+  #s4-root select, #s4-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;
+  }
+  #s4-root button:hover, #s4-root select:hover { background:#3a4a70; }
+  #s4-root button.s4-primary { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s4-root .s4-slider-row { display:flex; align-items:center; gap:6px; font-size:0.78em; width:100%; justify-content:center; }
+  #s4-root input[type=range] { width:170px; }
+  #s4-root .s4-legend { font-size:0.66em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div id="s4-root">
+  <h2>Første lov: varme og arbeid endrer indre energi</h2>
+  <div class="s4-sub">En stiv, isolert beholder. En r&oslash;repinne kan gj&oslash;re arbeid p&aring; gassen, og et varmeelement kan tilf&oslash;re (eller fjerne) varme. Volumet er hele tiden konstant, s&aring; $dU = dq + dw$ gjelder direkte.</div>
+
+  <div class="s4-main">
+    <div class="s4-col">
+      <canvas id="s4-box" width="170" height="170"></canvas>
+      <div class="s4-caption">Molekylene beveger seg raskere jo h&oslash;yere T</div>
+    </div>
+    <div class="s4-col s4-panel-right">
+      <div class="s4-therm-row">
+        <div class="s4-therm-tube"><div class="s4-therm-fill" id="s4-therm-fill" style="height:20%;"></div></div>
+        <div>
+          <div class="s4-therm-label">T = <b id="s4-Tval">1.00</b></div>
+        </div>
+      </div>
+      <div class="s4-accounting">
+        q<sub>tot</sub> = <b id="s4-qtot">0.00</b><br>
+        w<sub>tot</sub> = <b id="s4-wtot">0.00</b><br>
+        &Delta;U<sub>tot</sub> = q<sub>tot</sub> + w<sub>tot</sub> = <b id="s4-Utot">0.00</b>
+      </div>
+      <div class="s4-log" id="s4-log">
+        <div>Ingen steg enn&aring;.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="s4-controls">
+    <label for="s4-cv">Gasstype:</label>
+    <select id="s4-cv">
+      <option value="1.5">Monoatomisk (C<sub>V</sub>=3/2 nR)</option>
+      <option value="2.5">Diatomisk (C<sub>V</sub>=5/2 nR)</option>
+    </select>
+  </div>
+  <div class="s4-controls">
+    <div class="s4-slider-row">
+      <label for="s4-dq">&Delta;q:</label>
+      <input type="range" id="s4-dq" min="-2" max="2" step="0.1" value="0">
+      <span id="s4-dqlabel">0.0</span>
+    </div>
+  </div>
+  <div class="s4-controls">
+    <div class="s4-slider-row">
+      <label for="s4-dw">&Delta;w:</label>
+      <input type="range" id="s4-dw" min="-2" max="2" step="0.1" value="0">
+      <span id="s4-dwlabel">0.0</span>
+    </div>
+  </div>
+  <div class="s4-controls">
+    <button id="s4-add" class="s4-primary">Legg til steg</button>
+    <button id="s4-reset">Reset</button>
+  </div>
+
+  <div class="s4-legend">
+    &Delta;w &gt; 0: r&oslash;repinnen gj&oslash;r arbeid p&aring; gassen (som &aring; r&oslash;re/piske). &Delta;w &lt; 0: gassen driver noe utenfor (f.eks. en liten generator).<br>
+    &Delta;q &gt; 0: varme tilf&oslash;res. &Delta;q &lt; 0: varme fjernes (avkj&oslash;ling).<br>
+    Reduserte enheter: nR = 1, T&#8320; = 1 ved start.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const T0 = 1;
+  let Cv = 1.5;
+  let qTotal = 0, wTotal = 0;
+  let UTotal = 0;
+  let T = T0;
+
+  const boxCv = document.getElementById('s4-box');
+  const bctx = boxCv.getContext('2d');
+
+  const thermFill = document.getElementById('s4-therm-fill');
+  const TvalEl = document.getElementById('s4-Tval');
+  const qtotEl = document.getElementById('s4-qtot');
+  const wtotEl = document.getElementById('s4-wtot');
+  const UtotEl = document.getElementById('s4-Utot');
+  const logEl = document.getElementById('s4-log');
+
+  const cvSel = document.getElementById('s4-cv');
+  const dqSlider = document.getElementById('s4-dq');
+  const dqLabel = document.getElementById('s4-dqlabel');
+  const dwSlider = document.getElementById('s4-dw');
+  const dwLabel = document.getElementById('s4-dwlabel');
+  const addBtn = document.getElementById('s4-add');
+  const resetBtn = document.getElementById('s4-reset');
+
+  // --- partikler (kun visuell temperatur-indikator, ingen kollisjonsfysikk) ---
+  const N = 40;
+  let particles = [];
+  function initParticles(){
+    particles = [];
+    for(let i=0;i<N;i++){
+      const ang = Math.random()*2*Math.PI;
+      particles.push({
+        x: 10+Math.random()*150, y: 10+Math.random()*150,
+        dx: Math.cos(ang), dy: Math.sin(ang)
+      });
+    }
+  }
+  initParticles();
+
+  // --- rørepinne-animasjon ---
+  let paddleAngle = 0;
+  let paddleSpin = 0; // gjenværende spinn-hastighet, dempes over tid
+  // --- varmeelement-glød ---
+  let heatGlow = 0; // -1..1 (negativ=kj\u00f8ling/bl\u00e5, positiv=varme/oransje), dempes mot 0
+
+  function log(msg){
+    if(logEl.firstChild && logEl.firstChild.textContent==='Ingen steg enn\u00e5.'){
+      logEl.innerHTML = '';
+    }
+    const div = document.createElement('div');
+    div.textContent = msg;
+    logEl.insertBefore(div, logEl.firstChild);
+    while(logEl.children.length>8) logEl.removeChild(logEl.lastChild);
+  }
+
+  function drawBox(){
+    const w = boxCv.width, h = boxCv.height;
+    bctx.clearRect(0,0,w,h);
+
+    const speed = 0.6*Math.sqrt(Math.max(T,0.05)/T0);
+    for(const p of particles){
+      p.x += p.dx*speed; p.y += p.dy*speed;
+      if(p.x<6||p.x>w-6){ p.dx=-p.dx; p.x=Math.max(6,Math.min(w-6,p.x)); }
+      if(p.y<6||p.y>h-6){ p.dy=-p.dy; p.y=Math.max(6,Math.min(h-6,p.y)); }
+    }
+    // fargetone fra T (blå=kaldt, rødlig=varmt)
+    const heat = Math.max(0, Math.min(1, (T-0.3)/3));
+    const col = `rgba(${Math.round(90+165*heat)},${Math.round(169-100*heat)},${Math.round(255-155*heat)},0.85)`;
+    bctx.fillStyle = col;
+    for(const p of particles){
+      bctx.beginPath(); bctx.arc(p.x,p.y,2.2,0,2*Math.PI); bctx.fill();
+    }
+    bctx.strokeStyle = '#2a3652';
+    bctx.strokeRect(0.5,0.5,w-1,h-1);
+
+    // rørepinne (midten)
+    const cx=w/2, cy=h/2, armLen=22;
+    bctx.save();
+    bctx.translate(cx,cy);
+    bctx.rotate(paddleAngle);
+    bctx.strokeStyle = '#c7cfe6'; bctx.lineWidth=3;
+    bctx.beginPath(); bctx.moveTo(-armLen,0); bctx.lineTo(armLen,0); bctx.stroke();
+    bctx.beginPath(); bctx.moveTo(0,-armLen); bctx.lineTo(0,armLen); bctx.stroke();
+    bctx.restore();
+    bctx.fillStyle='#c7cfe6';
+    bctx.beginPath(); bctx.arc(cx,cy,3,0,2*Math.PI); bctx.fill();
+
+    // varmeelement-glød nederst
+    if(Math.abs(heatGlow)>0.02){
+      const glowColor = heatGlow>0 ? `rgba(255,140,60,${Math.min(0.55,Math.abs(heatGlow))})` : `rgba(90,169,255,${Math.min(0.55,Math.abs(heatGlow))})`;
+      bctx.fillStyle = glowColor;
+      bctx.beginPath();
+      bctx.ellipse(w/2, h-6, 34, 10, 0, 0, 2*Math.PI);
+      bctx.fill();
+    }
+
+    paddleAngle += paddleSpin;
+    paddleSpin *= 0.94;
+    heatGlow *= 0.92;
+  }
+
+  function updateThermometer(){
+    const Tmax = 6;
+    const frac = Math.max(0, Math.min(1, T/Tmax));
+    thermFill.style.height = (frac*100).toFixed(0)+'%';
+    TvalEl.textContent = T.toFixed(2) + (T>Tmax ? ' (>'+Tmax+')' : '');
+  }
+
+  function updateStats(){
+    qtotEl.textContent = qTotal.toFixed(2);
+    wtotEl.textContent = wTotal.toFixed(2);
+    UtotEl.textContent = UTotal.toFixed(2);
+    updateThermometer();
+  }
+
+  function loop(){
+    drawBox();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  dqSlider.addEventListener('input', function(){
+    dqLabel.textContent = parseFloat(dqSlider.value).toFixed(1);
+  });
+  dwSlider.addEventListener('input', function(){
+    dwLabel.textContent = parseFloat(dwSlider.value).toFixed(1);
+  });
+
+  cvSel.addEventListener('change', function(){
+    Cv = parseFloat(cvSel.value);
+    // bytte gasstype midt i forløpet gir ikke fysisk mening - vi nullstiller
+    doReset();
+    log('Gasstype endret - nullstilt.');
+  });
+
+  addBtn.addEventListener('click', function(){
+    const dq = parseFloat(dqSlider.value);
+    const dw = parseFloat(dwSlider.value);
+    if(dq===0 && dw===0) return;
+    const dU = dq+dw;
+    qTotal += dq; wTotal += dw; UTotal += dU;
+    T = T0 + UTotal/Cv;
+    updateStats();
+
+    // animasjoner
+    if(dw>0) paddleSpin += dw*0.6;
+    if(dq!==0) heatGlow += (dq>0?1:-1)*Math.min(1,Math.abs(dq)/2+0.3);
+
+    log('\u0394q='+dq.toFixed(1)+', \u0394w='+dw.toFixed(1)+' \u2192 \u0394U='+dU.toFixed(1)+', T='+T.toFixed(2));
+
+    dqSlider.value = 0; dwSlider.value = 0;
+    dqLabel.textContent='0.0'; dwLabel.textContent='0.0';
+  });
+
+  function doReset(){
+    qTotal=0; wTotal=0; UTotal=0; T=T0;
+    dqSlider.value=0; dwSlider.value=0;
+    dqLabel.textContent='0.0'; dwLabel.textContent='0.0';
+    logEl.innerHTML = '<div>Ingen steg enn\u00e5.</div>';
+    initParticles();
+    updateStats();
+  }
+  resetBtn.addEventListener('click', function(){ doReset(); });
+
+  updateStats();
+})();
+</script>
+</body>
+</html>

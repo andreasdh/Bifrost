@@ -1,0 +1,170 @@
+<div style="padding: 0.5rem 0;">
+
+  <div style="display: flex; gap: 8px; margin-bottom: 0.75rem;">
+    <button id="btn-even" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:7px; border-radius:10px; cursor:pointer;">
+      <span style="font-size:13px; font-weight:500;">Jevn funksjon</span>
+      <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">f(x) = x²</span>
+    </button>
+    <button id="btn-odd" style="flex:1; display:flex; flex-direction:column; align-items:center; gap:2px; padding:7px; border-radius:10px; cursor:pointer;">
+      <span style="font-size:13px; font-weight:500;">Odde funksjon</span>
+      <span style="font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">f(x) = x³</span>
+    </button>
+  </div>
+
+  <div style="position:relative; width:100%;">
+    <canvas id="cv" style="width:100%; display:block;"></canvas>
+  </div>
+
+  <div style="display:flex; align-items:center; gap:10px; margin:0.75rem 0 0.6rem;">
+    <label style="font-size:13px; color:var(--text-secondary); min-width:14px;">x</label>
+    <input type="range" id="xslider" min="-2.4" max="2.4" step="0.01" value="1.2" style="flex:1;" />
+    <span id="xval" style="font-family:var(--font-mono); font-size:13px; font-weight:500; min-width:48px; text-align:right;">1.20</span>
+  </div>
+
+  <div style="display:flex; gap:8px; margin-bottom:0.6rem;">
+    <div style="flex:1; background:var(--surface-1); border-radius:var(--radius); padding:6px 10px; display:flex; align-items:center; justify-content:space-between;">
+      <span style="display:flex; align-items:center; gap:6px;">
+        <span style="width:10px; height:10px; border-radius:50%; background:#D85A30; display:inline-block;"></span>
+        <span id="lbl-pos" style="font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">f(x)</span>
+      </span>
+      <span id="val-pos" style="font-family:var(--font-mono); font-size:15px; font-weight:500;">1.44</span>
+    </div>
+    <div style="flex:1; background:var(--surface-1); border-radius:var(--radius); padding:6px 10px; display:flex; align-items:center; justify-content:space-between;">
+      <span style="display:flex; align-items:center; gap:6px;">
+        <span style="width:10px; height:10px; border-radius:50%; background:#1D9E75; display:inline-block;"></span>
+        <span id="lbl-neg" style="font-family:var(--font-mono); font-size:12px; color:var(--text-secondary);">f(−x)</span>
+      </span>
+      <span id="val-neg" style="font-family:var(--font-mono); font-size:15px; font-weight:500;">1.44</span>
+    </div>
+  </div>
+
+  <div id="rule" style="text-align:center; font-family:var(--font-mono); font-size:14px; padding:7px; border-radius:var(--radius); background:var(--bg-accent); color:var(--text-accent);">
+    f(−x) = f(x)
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var cv = document.getElementById('cv');
+  var ctx = cv.getContext('2d');
+  var slider = document.getElementById('xslider');
+  var state = 'even';
+
+  function cssvar(n){ return getComputedStyle(document.documentElement).getPropertyValue(n).trim(); }
+
+  var W, H, dpr;
+  function resize(){
+    dpr = window.devicePixelRatio || 1;
+    W = cv.clientWidth;
+    H = Math.round(W * 0.42);
+    cv.width = W * dpr;
+    cv.height = H * dpr;
+    cv.style.height = H + 'px';
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    draw();
+  }
+
+  var RANGE = 2.6;
+  function fx(x){ return state === 'even' ? x*x : x*x*x; }
+  function yspan(){ return state === 'even' ? 6.8 : 9.0; }
+
+  function toPx(x, y){
+    var px = W/2 + (x/RANGE)*(W/2 - 20);
+    var py = H/2 - (y/yspan())*(H/2 - 14);
+    return [px, py];
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    var grid = cssvar('--border') || '#e5e5e5';
+    var axis = cssvar('--border-strong') || '#888';
+    var txt = cssvar('--text-secondary') || '#666';
+    var curve = cssvar('--text-primary') || '#111';
+
+    var ox = toPx(0,0)[0];
+    var oy = toPx(0,0)[1];
+
+    ctx.strokeStyle = grid;
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.55;
+    for(var gx=-2; gx<=2; gx++){
+      if(gx===0) continue;
+      var px = toPx(gx,0)[0];
+      ctx.beginPath(); ctx.moveTo(px,0); ctx.lineTo(px,H); ctx.stroke();
+    }
+    var ymax = Math.floor(yspan());
+    for(var gy=-ymax; gy<=ymax; gy+=2){
+      if(gy===0) continue;
+      var py = toPx(0,gy)[1];
+      if(py<0||py>H) continue;
+      ctx.beginPath(); ctx.moveTo(0,py); ctx.lineTo(W,py); ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.strokeStyle = axis;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(0, oy); ctx.lineTo(W, oy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(ox, 0); ctx.lineTo(ox, H); ctx.stroke();
+
+    ctx.fillStyle = txt;
+    ctx.font = '11px ' + (cssvar('--font-mono')||'monospace');
+    ctx.fillText('x = 0', ox + 5, 12);
+    ctx.fillText('y = 0', W - 40, oy - 5);
+
+    ctx.strokeStyle = curve;
+    ctx.lineWidth = 2.5;
+    ctx.beginPath();
+    var started = false;
+    for(var i=0;i<=400;i++){
+      var x = -RANGE + (2*RANGE)*(i/400);
+      var p = toPx(x, fx(x));
+      if(!started){ ctx.moveTo(p[0],p[1]); started=true; } else { ctx.lineTo(p[0],p[1]); }
+    }
+    ctx.stroke();
+
+    var xv = parseFloat(slider.value);
+    drawPoint(xv, fx(xv), '#D85A30');
+    drawPoint(-xv, fx(-xv), '#1D9E75');
+  }
+
+  function drawPoint(x, y, color){
+    var p = toPx(x, y);
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(p[0], p[1], 5.5, 0, 2*Math.PI);
+    ctx.fill();
+    ctx.strokeStyle = cssvar('--surface-2') || '#fff';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  function update(){
+    var xv = parseFloat(slider.value);
+    document.getElementById('xval').textContent = xv.toFixed(2);
+    document.getElementById('val-pos').textContent = fx(xv).toFixed(2);
+    document.getElementById('val-neg').textContent = fx(-xv).toFixed(2);
+    draw();
+  }
+
+  function setState(s){
+    state = s;
+    var even = document.getElementById('btn-even');
+    var odd = document.getElementById('btn-odd');
+    var acc = cssvar('--border-accent') || '#378ADD';
+    var norm = cssvar('--border-strong') || '#aaa';
+    even.style.border = (s==='even'?'2px solid '+acc:'0.5px solid '+norm);
+    odd.style.border = (s==='odd'?'2px solid '+acc:'0.5px solid '+norm);
+    document.getElementById('rule').textContent = (s==='even') ? 'f(−x) = f(x)' : 'f(−x) = −f(x)';
+    update();
+  }
+
+  document.getElementById('btn-even').addEventListener('click', function(){ setState('even'); });
+  document.getElementById('btn-odd').addEventListener('click', function(){ setState('odd'); });
+  slider.addEventListener('input', update);
+  window.addEventListener('resize', resize);
+
+  setState('even');
+  resize();
+})();
+</script>

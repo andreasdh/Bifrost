@@ -1,0 +1,1288 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>2. Kombinatorikk &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/matematikk/kombinatorikk';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="3. Sannsynlighet" href="sannsynlighet.html" />
+    <link rel="prev" title="1. Formler, notasjon og enheter" href="formler_og_enheter.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/matematikk/kombinatorikk.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>2. Kombinatorikk</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#og-regelen-og-eller-regelen">2.1 OG-regelen og ELLER-regelen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fakultet">2.2 Fakultet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tellemetoder">2.3 Tellemetoder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stirlings-tilnaerming">2.4 Stirlings tilnærming</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="kombinatorikk">
+<h1>2. Kombinatorikk<a class="headerlink" href="#kombinatorikk" title="Link to this heading">#</a></h1>
+<p>Før vi giver løs på det sentrale tema sannsynlighet, skal vi se på ulike tellemåter for å si noe om antallet muligheter noe kan skje på. Dette er selve limet i statistisk termodynamikk: å telle antall mikrotilstander som gir samme makrotilstand (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">multiplisiteten <span class="math notranslate nohighlight">\(\Omega\)</span></a>) er nøyaktig et kombinatorikkproblem. Dette tallet dukker senere opp direkte i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">Boltzmanns entropiformel</a>, <span class="math notranslate nohighlight">\(S = k_B \ln \Omega\)</span> - så verktøyene du lærer her er ikke bare telleteknikker, de er selve grunnlaget for hvordan vi definerer entropi.</p>
+<section id="og-regelen-og-eller-regelen">
+<span id="id1"></span><h2>2.1 OG-regelen og ELLER-regelen<a class="headerlink" href="#og-regelen-og-eller-regelen" title="Link to this heading">#</a></h2>
+<p>OG- og ELLER-regelen er regler du mest sannsynlig har brukt før, enten bevisst eller ubevisst. De handler om å finne antall måter å organisere objekter på i to helt ulike situasjoner: OG-regelen brukes når vi gjør flere valg <em>etter hverandre</em>, mens ELLER-regelen brukes når vi velger <em>mellom</em> alternativer. Nøkkelen til å telle riktig er som regel å avgjøre hvilken av de to situasjonene man står i.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 2.1 - OG-regelen</p>
+<p>Anta at en hendelse <span class="math notranslate nohighlight">\(A\)</span> kan skje på <span class="math notranslate nohighlight">\(m\)</span> måter og at hendelse <span class="math notranslate nohighlight">\(B\)</span> kan skje uavhengig på <span class="math notranslate nohighlight">\(n\)</span> måter. Da er antallet måter <span class="math notranslate nohighlight">\(A\)</span> OG <span class="math notranslate nohighlight">\(B\)</span> kan skje lik</p>
+<p><span class="math notranslate nohighlight">\(m \cdot n\)</span>.</p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 2.2 - ELLER-regelen</p>
+<p>Anta at en hendelse <span class="math notranslate nohighlight">\(A\)</span> kan skje på <span class="math notranslate nohighlight">\(m\)</span> ulike måter, og hendelse <span class="math notranslate nohighlight">\(B\)</span> kan skje på <span class="math notranslate nohighlight">\(n\)</span> måter. Anta også at hendelsene er disjunkte. Da er antall måter hendelse <span class="math notranslate nohighlight">\(A\)</span> ELLER <span class="math notranslate nohighlight">\(B\)</span> skje på lik</p>
+<p><span class="math notranslate nohighlight">\(m + n\)</span></p>
+</div>
+<p>Legg merke til betingelsene i de to reglene. OG-regelen krever at valgene er uavhengige - antall muligheter for <span class="math notranslate nohighlight">\(B\)</span> må ikke endre seg ut fra hva vi valgte for <span class="math notranslate nohighlight">\(A\)</span>. ELLER-regelen krever at hendelsene er disjunkte, altså at ingen mulighet telles i begge.</p>
+<p>En grei huskeregel: skal du gjøre begge deler, ganger du. Skal du gjøre det ene eller det andre, legger du sammen.</p>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>OG-regelen er grunnen til at antall mikrotilstander vokser så voldsomt for store systemer. Har hver av <span class="math notranslate nohighlight">\(N\)</span> partikler <span class="math notranslate nohighlight">\(k\)</span> mulige tilstander, og partiklene er uavhengige, gir OG-regelen</p>
+<p><span class="math notranslate nohighlight">\(\Omega = k \cdot k \cdot \ldots \cdot k = k^N\)</span></p>
+<p>For ett mol partikler er <span class="math notranslate nohighlight">\(N \approx 6 \cdot 10^{23}\)</span>, og <span class="math notranslate nohighlight">\(\Omega\)</span> blir da et tall så stort at det er umulig å skrive ut. Nettopp derfor tar vi logaritmen i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">Boltzmanns entropiformel</a> <span class="math notranslate nohighlight">\(S = k_B \ln \Omega\)</span> - logaritmen gjør de enorme produktene om til håndterbare summer.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Et gassmolekyl kan innta 4 ulike vibrasjonstilstander og 3 ulike rotasjonstilstander, og disse frihetsgradene er uavhengige av hverandre.</p>
+<p class="sd-card-text">a) Hvor mange mikrotilstander der molekylet har en bestemt kombinasjon av vibrasjon og rotasjon finnes?</p>
+<p class="sd-card-text">Antall mikrotilstander der molekylet har en bestemt kombinasjon av vibrasjon OG rotasjon blir dermed</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(4 \cdot 3=12\)</span></p>
+<p class="sd-card-text">b) Hvor mange mikrotilstander der molekylet befinner seg i én bestemt virbasjonstilstand eller én bestemt rotasjonstilstand finnes?</p>
+<p class="sd-card-text">Antallet mikrotilstander der molekylet befinner seg i én bestemt vibrasjonstilstand ELLER én bestemt rotasjonstilstand (disjunkte tilstander) blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(4+3=7\)</span></p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">En kantine tilbyr <span class="math notranslate nohighlight">\(3\)</span> varmretter, <span class="math notranslate nohighlight">\(4\)</span> salater og <span class="math notranslate nohighlight">\(2\)</span> desserter.</p>
+<p class="sd-card-text">a) Hvor mange måter kan du sette sammen et måltid med én varmrett, én salat og én dessert?</p>
+<p class="sd-card-text">Her tar du ett valg fra hver kategori, altså varmrett OG salat OG dessert. Ved OG-regelen ganger vi:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(3 \cdot 4 \cdot 2 = 24\)</span></p>
+<p class="sd-card-text">b) Hvor mange måter kan du velge én enkelt rett, uansett kategori?</p>
+<p class="sd-card-text">Nå velger du enten en varmrett ELLER en salat ELLER en dessert. Ingen rett er i to kategorier, så hendelsene er disjunkte, og ved ELLER-regelen legger vi sammen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(3 + 4 + 2 = 9\)</span></p>
+<p class="sd-card-text">Legg merke til hvor mye større svaret i a) er. Det illustrerer hvorfor antall muligheter vokser så raskt når valg kombineres.</p>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 2.1</p>
+<p>a) En bil fås i <span class="math notranslate nohighlight">\(5\)</span> ulike farger og med <span class="math notranslate nohighlight">\(3\)</span> ulike motortyper. Hvor mange varianter finnes?</p>
+<p>b) Et molekyl kan befinne seg i <span class="math notranslate nohighlight">\(6\)</span> rotasjonstilstander eller <span class="math notranslate nohighlight">\(4\)</span> vibrasjonstilstander, og disse tilstandene er disjunkte. På hvor mange måter kan molekylet være i én av disse tilstandene?</p>
+<p>c) Du kaster en mynt tre ganger og noterer resultatet av hvert kast. Bruk OG-regelen til å finne antall mulige utfall.</p>
+<p>d) Et system har <span class="math notranslate nohighlight">\(3\)</span> partikler som hver kan ha <span class="math notranslate nohighlight">\(2\)</span> energinivåer. Hvor mange mikrotilstander har systemet?</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 2.1</p>
+<p>a) Du velger farge OG motortype, så vi bruker OG-regelen:</p>
+<p><span class="math notranslate nohighlight">\(5 \cdot 3 = 15\)</span> varianter.</p>
+<p>b) Tilstandene er disjunkte, og molekylet er i én av dem. Ved ELLER-regelen:</p>
+<p><span class="math notranslate nohighlight">\(6 + 4 = 10\)</span> måter.</p>
+<p>c) Hvert kast har <span class="math notranslate nohighlight">\(2\)</span> mulige utfall, og de tre kastene er uavhengige. Ved OG-regelen:</p>
+<p><span class="math notranslate nohighlight">\(2 \cdot 2 \cdot 2 = 2^3 = 8\)</span> mulige utfall.</p>
+<p>d) Hver partikkel har <span class="math notranslate nohighlight">\(2\)</span> muligheter, og partiklene velges uavhengig. Ved OG-regelen:</p>
+<p><span class="math notranslate nohighlight">\(2 \cdot 2 \cdot 2 = 2^3 = 8\)</span> mikrotilstander.</p>
+<p>Legg merke til at c) og d) er nøyaktig samme regnestykke. Et myntkast og en partikkel med to energinivåer er matematisk sett det samme problemet.</p>
+</div>
+</section>
+<section id="fakultet">
+<span id="id2"></span><h2>2.2 Fakultet<a class="headerlink" href="#fakultet" title="Link to this heading">#</a></h2>
+<p>Vi skal se at fakultet er svaret på et helt konkret spørsmål: på hvor mange måter kan vi stille opp <span class="math notranslate nohighlight">\(n\)</span> forskjellige objekter i rekkefølge? Dette dukker opp overalt - fra hvor mange måter man kan stokke en kortstokk, til hvor mange måter partikler kan fordeles på energinivåer. I tillegg dukker fakultet opp i andre tellemåter vi skal se i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#tellemetoder">2.3 Tellemetoder</a>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 2.1 - Fakultet</p>
+<p>For et ikke-negativt heltall <span class="math notranslate nohighlight">\(n\)</span>, er fakultet definert slik</p>
+<p><span class="math notranslate nohighlight">\(n! = n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 1\)</span></p>
+<p><span class="math notranslate nohighlight">\(0!\)</span> er ved definisjon lik <span class="math notranslate nohighlight">\(1\)</span>.</p>
+</div>
+<p>Vi har <span class="math notranslate nohighlight">\(n\)</span>-antall objekter som vi skal plassere i rekke - hvor mange ulike måter kan vi gjøre dette på? Første objekt har <span class="math notranslate nohighlight">\(n\)</span>-antall muligheter. Deretter har andre objekt <span class="math notranslate nohighlight">\(n-1\)</span>-antall muligheter. Slik følger det videre, helt til objekt <span class="math notranslate nohighlight">\(n\)</span> kun har én mulighet. Ved bruk av OG-regelen fra tidligere, multipliseres alle mulighetene og gir opphav til fakultet.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Fakultet&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --c1:#1f5f8b;--c2:#c0392b;--c3:#1a7a4c;--c4:#d68910;--c5:#8e44ad;--c6:#16867e;
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+
+  .calcbar{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;padding:14px 16px;
+    text-align:center;margin-bottom:14px;}
+  .calcline{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:17px;color:var(--ink);
+    letter-spacing:.02em;}
+  .calcline .step{display:inline-block;padding:2px 7px;border-radius:3px;margin:2px 1px;}
+  .calcline .eq{color:var(--muted);margin:0 6px;}
+  .calcline .res{color:var(--c2);font-size:20px;}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  .caption{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px;}
+  .perms{display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-height:280px;overflow-y:auto;padding:2px;}
+  .perm{display:inline-flex;gap:2px;padding:3px 5px;border:1px solid var(--grid);border-radius:3px;
+    background:#fbf9f3;}
+  .tile{width:19px;height:19px;border-radius:2px;color:#fff;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    font-size:11px;display:flex;align-items:center;justify-content:center;}
+  .toomany{text-align:center;color:var(--muted);font-size:14px;padding:26px 10px;line-height:1.6;}
+  .toomany b{color:var(--c2);font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:17px;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);}
+  .val.big{color:var(--c2);font-size:16px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--c4);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--c4);
+    border:2px solid var(--paper);cursor:pointer;}
+  svg{display:block;width:100%;height:auto;margin-top:6px;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--c4);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Fakultet&lt;/div&gt;
+  &lt;h1&gt;Hvor mange rekkefølger finnes?&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Med n forskjellige objekter kan vi stille dem opp i n! ulike rekkefølger. Her ser du alle sammen — helt til det blir for mange til å vise.&lt;/p&gt;
+
+  &lt;div class=&quot;calcbar&quot;&gt;
+    &lt;div class=&quot;calcline&quot; id=&quot;calcLine&quot;&gt;—&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;div class=&quot;caption&quot; id=&quot;permCap&quot;&gt;alle rekkefølger&lt;/div&gt;
+    &lt;div class=&quot;perms&quot; id=&quot;perms&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroll&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;antall objekter n &lt;b id=&quot;nLab&quot;&gt;4&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;nRange&quot; min=&quot;1&quot; max=&quot;12&quot; step=&quot;1&quot; value=&quot;4&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;n!&lt;/span&gt;&lt;span class=&quot;val big&quot; id=&quot;factVal&quot;&gt;24&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;ganger større enn (n−1)!&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;ratioVal&quot;&gt;4&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;tid å lese alle, 1 per sekund&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;timeVal&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Veksten&lt;/h2&gt;
+      &lt;svg id=&quot;chart&quot; viewBox=&quot;0 0 300 150&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+      &lt;div class=&quot;row&quot; style=&quot;margin-top:8px;&quot;&gt;&lt;span class=&quot;lab&quot;&gt;merk: loddrett akse er logaritmisk&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Legg merke til hvor fort det går. Hvert steg opp ganger antallet med det nye tallet, så kurven stiger langt raskere enn noen potensfunksjon. Det er derfor vi trenger Stirlings tilnærming når N er på størrelse med Avogadros tall.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const COLORS=[&#x27;var(--c1)&#x27;,&#x27;var(--c2)&#x27;,&#x27;var(--c3)&#x27;,&#x27;var(--c4)&#x27;,&#x27;var(--c5)&#x27;,&#x27;var(--c6)&#x27;,
+                &#x27;#7f8c8d&#x27;,&#x27;#2c3e50&#x27;,&#x27;#a0522d&#x27;,&#x27;#556b2f&#x27;,&#x27;#8b008b&#x27;,&#x27;#b8860b&#x27;];
+  const LETTERS=&#x27;ABCDEFGHIJKL&#x27;.split(&#x27;&#x27;);
+  const MAXSHOW=6;   // show every ordering up to 6! = 720
+  let n=4;
+
+  function fact(k){let r=1;for(let i=2;i&lt;=k;i++)r*=i;return r;}
+
+  function fmt(x){
+    if(x&lt;1e15) return x.toLocaleString(&#x27;no-NO&#x27;);
+    return x.toExponential(3).replace(&#x27;e+&#x27;,&#x27;·10^&#x27;);
+  }
+
+  function permutations(arr){
+    if(arr.length&lt;=1) return [arr];
+    const out=[];
+    for(let i=0;i&lt;arr.length;i++){
+      const rest=arr.slice(0,i).concat(arr.slice(i+1));
+      for(const p of permutations(rest)) out.push([arr[i]].concat(p));
+    }
+    return out;
+  }
+
+  function drawCalc(){
+    const parts=[];
+    for(let i=n;i&gt;=1;i--){
+      parts.push(`&lt;span class=&quot;step&quot; style=&quot;background:${COLORS[(n-i)%COLORS.length]};color:#fff&quot;&gt;${i}&lt;/span&gt;`);
+    }
+    const body = n===0? &#x27;1&#x27; : parts.join(&#x27;&lt;span class=&quot;eq&quot;&gt;×&lt;/span&gt;&#x27;);
+    document.getElementById(&#x27;calcLine&#x27;).innerHTML =
+      `&lt;b&gt;${n}!&lt;/b&gt; &lt;span class=&quot;eq&quot;&gt;=&lt;/span&gt; ${body} &lt;span class=&quot;eq&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;res&quot;&gt;${fmt(fact(n))}&lt;/span&gt;`;
+  }
+
+  function drawPerms(){
+    const box=document.getElementById(&#x27;perms&#x27;);
+    const cap=document.getElementById(&#x27;permCap&#x27;);
+    box.innerHTML=&#x27;&#x27;;
+    if(n&gt;MAXSHOW){
+      cap.textContent=&#x27;for mange til å vises&#x27;;
+      box.innerHTML=`&lt;div class=&quot;toomany&quot;&gt;Å tegne alle &lt;b&gt;${fmt(fact(n))}&lt;/b&gt; rekkefølger ville sprengt siden.&lt;br&gt;
+        Prøv n ≤ ${MAXSHOW} for å se dem alle.&lt;/div&gt;`;
+      return;
+    }
+    cap.textContent=&#x27;alle &#x27;+fact(n)+&#x27; rekkefølger&#x27;;
+    const items=LETTERS.slice(0,n);
+    const perms=permutations(items);
+    const frag=document.createDocumentFragment();
+    for(const p of perms){
+      const d=document.createElement(&#x27;div&#x27;);d.className=&#x27;perm&#x27;;
+      for(const ch of p){
+        const t=document.createElement(&#x27;span&#x27;);t.className=&#x27;tile&#x27;;
+        t.style.background=COLORS[LETTERS.indexOf(ch)%COLORS.length];
+        t.textContent=ch;d.appendChild(t);
+      }
+      frag.appendChild(d);
+    }
+    box.appendChild(frag);
+  }
+
+  function drawChart(){
+    const NS=&quot;http://www.w3.org/2000/svg&quot;;
+    const svg=document.getElementById(&#x27;chart&#x27;);
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const W=300,H=150,padL=30,padR=10,padT=10,padB=22;
+    const NMAX=12;
+    const maxLog=Math.log10(fact(NMAX));
+    const sx=k=&gt;padL+(k-1)/(NMAX-1)*(W-padL-padR);
+    const sy=v=&gt;(H-padB)-(Math.log10(v)/maxLog)*(H-padT-padB);
+
+    // axes
+    const line=(x1,y1,x2,y2,col,w)=&gt;{
+      const l=document.createElementNS(NS,&#x27;line&#x27;);
+      l.setAttribute(&#x27;x1&#x27;,x1);l.setAttribute(&#x27;y1&#x27;,y1);l.setAttribute(&#x27;x2&#x27;,x2);l.setAttribute(&#x27;y2&#x27;,y2);
+      l.setAttribute(&#x27;stroke&#x27;,col);l.setAttribute(&#x27;stroke-width&#x27;,w);svg.appendChild(l);
+    };
+    line(padL,padT,padL,H-padB,&#x27;var(--axis)&#x27;,1.2);
+    line(padL,H-padB,W-padR,H-padB,&#x27;var(--axis)&#x27;,1.2);
+
+    // curve
+    let d=&#x27;&#x27;;
+    for(let k=1;k&lt;=NMAX;k++){d+=(k===1?&#x27;M&#x27;:&#x27;L&#x27;)+sx(k).toFixed(1)+&#x27;,&#x27;+sy(fact(k)).toFixed(1)+&#x27; &#x27;;}
+    const p=document.createElementNS(NS,&#x27;path&#x27;);
+    p.setAttribute(&#x27;d&#x27;,d);p.setAttribute(&#x27;fill&#x27;,&#x27;none&#x27;);
+    p.setAttribute(&#x27;stroke&#x27;,&#x27;var(--c1)&#x27;);p.setAttribute(&#x27;stroke-width&#x27;,2);
+    svg.appendChild(p);
+
+    // points, current highlighted
+    for(let k=1;k&lt;=NMAX;k++){
+      const c=document.createElementNS(NS,&#x27;circle&#x27;);
+      c.setAttribute(&#x27;cx&#x27;,sx(k));c.setAttribute(&#x27;cy&#x27;,sy(fact(k)));
+      c.setAttribute(&#x27;r&#x27;,k===n?5:2.4);
+      c.setAttribute(&#x27;fill&#x27;,k===n?&#x27;var(--c2)&#x27;:&#x27;var(--c1)&#x27;);
+      if(k===n){c.setAttribute(&#x27;stroke&#x27;,&#x27;#fff&#x27;);c.setAttribute(&#x27;stroke-width&#x27;,1.5);}
+      svg.appendChild(c);
+    }
+    // x labels
+    for(const k of [1,4,8,12]){
+      const t=document.createElementNS(NS,&#x27;text&#x27;);
+      t.setAttribute(&#x27;x&#x27;,sx(k));t.setAttribute(&#x27;y&#x27;,H-8);t.setAttribute(&#x27;text-anchor&#x27;,&#x27;middle&#x27;);
+      t.setAttribute(&#x27;font-family&#x27;,&#x27;monospace&#x27;);t.setAttribute(&#x27;font-size&#x27;,&#x27;9&#x27;);
+      t.setAttribute(&#x27;fill&#x27;,&#x27;var(--muted)&#x27;);t.textContent=k;svg.appendChild(t);
+    }
+    // y labels (powers of ten)
+    for(const e of [0,3,6,9]){
+      const t=document.createElementNS(NS,&#x27;text&#x27;);
+      t.setAttribute(&#x27;x&#x27;,padL-4);t.setAttribute(&#x27;y&#x27;,sy(Math.pow(10,e))+3);
+      t.setAttribute(&#x27;text-anchor&#x27;,&#x27;end&#x27;);t.setAttribute(&#x27;font-family&#x27;,&#x27;monospace&#x27;);
+      t.setAttribute(&#x27;font-size&#x27;,&#x27;9&#x27;);t.setAttribute(&#x27;fill&#x27;,&#x27;var(--muted)&#x27;);
+      t.textContent=e===0?&#x27;1&#x27;:&#x27;10^&#x27;+e;svg.appendChild(t);
+    }
+  }
+
+  function timeText(v){
+    const s=v;
+    if(s&lt;90) return Math.round(s)+&#x27; sekunder&#x27;;
+    if(s&lt;5400) return (s/60).toFixed(1)+&#x27; minutter&#x27;;
+    if(s&lt;172800) return (s/3600).toFixed(1)+&#x27; timer&#x27;;
+    if(s&lt;3.15e7) return (s/86400).toFixed(1)+&#x27; dager&#x27;;
+    return (s/3.156e7).toExponential(2).replace(&#x27;e+&#x27;,&#x27;·10^&#x27;)+&#x27; år&#x27;;
+  }
+
+  function update(){
+    document.getElementById(&#x27;nLab&#x27;).textContent=n;
+    document.getElementById(&#x27;factVal&#x27;).textContent=fmt(fact(n));
+    document.getElementById(&#x27;ratioVal&#x27;).textContent=n&lt;=1?&#x27;—&#x27;:n;
+    document.getElementById(&#x27;timeVal&#x27;).textContent=timeText(fact(n));
+    drawCalc();drawPerms();drawChart();
+  }
+
+  document.getElementById(&#x27;nRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{n=+e.target.value;update();});
+  update();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>Fakultet av store tall kan ikke regnes ut direkte, verken for hånd eller på datamaskin. I statistisk termodynamikk, der vi opererer med <span class="math notranslate nohighlight">\(N \approx 10^{23}\)</span> partikler, trenger vi derfor tilnærminger - vi kommer tilbake til dette i kjemi-koblingen under.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Fire ulike molekyler skal plasseres på fire nummererte plasser i et krystallgitter, ett molekyl per plass.</p>
+<p class="sd-card-text">a) På hvor mange måter kan dette gjøres?</p>
+<p class="sd-card-text">Første plass kan fylles av hvilket som helst av de <span class="math notranslate nohighlight">\(4\)</span> molekylene. Når det er gjort, er det <span class="math notranslate nohighlight">\(3\)</span> igjen til andre plass, så <span class="math notranslate nohighlight">\(2\)</span> til tredje, og til slutt <span class="math notranslate nohighlight">\(1\)</span> molekyl til siste plass. Ved OG-regelen ganger vi mulighetene:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(4 \cdot 3 \cdot 2 \cdot 1 = 4! = 24\)</span></p>
+<p class="sd-card-text">Det finnes altså <span class="math notranslate nohighlight">\(24\)</span> ulike måter.</p>
+<p class="sd-card-text">b) Hva om ett av molekylene må stå på plass nummer 1?</p>
+<p class="sd-card-text">Da er den plassen låst, og vi står igjen med <span class="math notranslate nohighlight">\(3\)</span> molekyler som skal fordeles på <span class="math notranslate nohighlight">\(3\)</span> plasser:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(3! = 6\)</span> måter.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Fakultet er selve byggesteinen i uttrykket for antall mikrotilstander. Skal <span class="math notranslate nohighlight">\(N\)</span> partikler fordeles slik at <span class="math notranslate nohighlight">\(n_1\)</span> havner på energinivå <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(n_2\)</span> på nivå <span class="math notranslate nohighlight">\(2\)</span> og så videre, er antall måter dette kan skje på</p>
+<p><span class="math notranslate nohighlight">\(\Omega = \dfrac{N!}{n_1! \, n_2! \cdots}\)</span></p>
+<p>Dette er <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">multiplisiteten</a>, og den går rett inn i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">Boltzmanns entropiformel</a> <span class="math notranslate nohighlight">\(S=k_B \ln \Omega\)</span>. Ikke vær redd for om denne virker komplisert, den kommer vi nemlig tilbake til i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#tellemetoder">2.3 Tellemetoder</a>.</p>
+<p>Men her møter vi problemet fra avsnittet over: med <span class="math notranslate nohighlight">\(N \approx 10^{23}\)</span> er <span class="math notranslate nohighlight">\(N!\)</span> umulig å regne ut fordi tallet er så stort. Løsningen på problemet heter Stirlings tilnøærming og presenteres i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#stirlings-tilnaerming">2.4 Stirlings tilnærming</a>.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 2.2</p>
+<p>a) Regn ut <span class="math notranslate nohighlight">\(5!\)</span> og <span class="math notranslate nohighlight">\(6!\)</span>. Hvor mange ganger større er <span class="math notranslate nohighlight">\(6!\)</span> enn <span class="math notranslate nohighlight">\(5!\)</span>?</p>
+<p>b) Fem ulike molekyler skal plasseres på fem plasser i et gitter. På hvor mange måter kan det gjøres?</p>
+<p>c) Forklar hvorfor <span class="math notranslate nohighlight">\(\dfrac{8!}{6!} = 8 \cdot 7\)</span>, uten å regne ut hver fakultet for seg.</p>
+<p>d) Tre atomer skal plasseres i rekke, men to av dem er identiske. Blir antall synlig forskjellige rekkefølger flere eller færre enn <span class="math notranslate nohighlight">\(3!\)</span>? Begrunn.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 2.2</p>
+<p>a) <span class="math notranslate nohighlight">\(5!=120\)</span> og <span class="math notranslate nohighlight">\(6!=720\)</span>. Forholdet er <span class="math notranslate nohighlight">\(\frac{720}{120}=6\)</span>. Dette er ingen tilfeldighet: <span class="math notranslate nohighlight">\(6!=6 \cdot 5!\)</span>, så hvert steg opp ganger med det nye tallet.</p>
+<p>b) Dette er antall måter å ordne <span class="math notranslate nohighlight">\(5\)</span> ulike objekter i rekkefølge:</p>
+<p><span class="math notranslate nohighlight">\(5! = 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1 = 120\)</span> måter.</p>
+<p>c) Vi skriver ut telleren:</p>
+<p><span class="math notranslate nohighlight">\(\frac{8!}{6!}=\frac{8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}\)</span></p>
+<p>Alt fra <span class="math notranslate nohighlight">\(6\)</span> og nedover står i både teller og nevner, og forkortes bort. Igjen står <span class="math notranslate nohighlight">\(8 \cdot 7 = 56\)</span>. Dette trikset er verdt å merke seg - det er nettopp slik vi håndterer store fakulteter i praksis, og det brukes flittig i neste delkapittel.</p>
+<p>d) Færre. Med tre <em>ulike</em> atomer finnes <span class="math notranslate nohighlight">\(3!=6\)</span> rekkefølger. Er to av dem identiske, kan vi ikke se forskjell på de to rekkefølgene der de bytter plass med hverandre, så hver synlig rekkefølge telles dobbelt. Antallet blir da <span class="math notranslate nohighlight">\(\frac{3!}{2!}=\frac{6}{2}=3\)</span>.</p>
+<p>Dette er nøyaktig samme idé som nevnerne i formelen for <span class="math notranslate nohighlight">\(\Omega\)</span>: vi deler bort de omstokkingene vi ikke kan skille fra hverandre.</p>
+</div>
+</section>
+<section id="tellemetoder">
+<span id="id3"></span><h2>2.3 Tellemetoder<a class="headerlink" href="#tellemetoder" title="Link to this heading">#</a></h2>
+<p>Før vi begynner å telle antall muligheter må vi vite hva vi har med å gjøre. Det er spesielt to egenskaper ved objektene vi teller vi må vite noe om:</p>
+<p><strong>1) Gjentakelse</strong></p>
+<p>Kan hvert objekt/plass brukes én gang, eller flere ganger? Vi sier at vi enten teller <strong>med gjentakelse</strong> eller <strong>uten gjentakelse</strong>.</p>
+<p><strong>2) Rekkefølge</strong></p>
+<p>Har rekkefølgen til objektene noe å si (er de skjelnbare), eller ikke? Vi sier at utvalget enten er <strong>ordnet</strong> hvis rekkefølgen har noe å si, eller <strong>uordnet</strong> ved motsatt tilfelle.</p>
+<p>Alt i alt, gir dette fire ulike tellemåter!</p>
+<p>Det kan være vanskelig å forstå hva vi mener med gjentakelse og rekkefølge, men de er lettere forstått ved noen eksempler:</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Ordnet utvalg, med gjentakelse</strong></p>
+<p class="sd-card-text">Du har en kodelås med 4 sifferplasser og hvert 10 valg av tall for hver plass (0-9). Alle 10 tallene kan velges ved hver plass, og derfor er dette et utvalg med gjentakelse. Du kan for eksempel velge “0000”. Rekkefølgen betyr noe fordi koden “1234” er en annen enn “2314”, selv om samme tall er brukt i begge kodene. Derfor er dette et ordnet utvalg.</p>
+<p class="sd-card-text"><strong>Ordnet utvalg, uten gjentakelse</strong></p>
+<p class="sd-card-text">En klubb med 10 medlemmer skal velge leder, nestleder og økonomisjef. Et medlem kan maksimalt ha ett verv, så hvor mange muligheter har vi? Utvalget er uten gjentakelse, én person kan kun brukes én gang per verv. Rekkefølgen betyr noe fordi at Per er leder, Pål er nestleder og Askeladden er økonomisjef, er en annen ordning enn at Pål er leder, Askeladden er nestleder og Per er økonomisjef. Derfor er det et ordnet utvalg.</p>
+<p class="sd-card-text"><strong>Uordnet utvalg, uten gjentakelse</strong></p>
+<p class="sd-card-text">Du ser på antall måter å velge ut 3 ulike iskremsmaker av totalt 10 mulige. Siden du velger ulike smaker er utvalget uten gjentakelse - du kan ikke ha sjokolade, sjokolade og jordbær, eller sjokolade, sjokolade og sjokolade. Utvalget er uordnet fordi rekkefølgen på smakene ikke har noe å si. Når du skal telle antall muligheter er jordbær, sjokolade og vanlije, nøyaktig samme mulighet som sjokolade, vanilje og jordbær.</p>
+<p class="sd-card-text"><strong>Uordnet utvalg, med gjentakelse</strong></p>
+<p class="sd-card-text">Du skal kjøpe 6 boller fra et bakeri og de har 4 typer. Du kan velge flere av type. Hvor mange ulike måter kan du velge boller på? Utvalget er med gjentakelse fordi du kan velge en type bolle flere ganger. Rekkefølgen har ikke noe å si, bare totalen du har. For eksempel er sjokolade, vanilje, kanel og vanilje, nøyaktig samme mulighet som sjokolade, kanel, vanilje og vanilje. Derfor er utvalget uordnet.</p>
+</div>
+</div>
+<p>Nå har vi en oversikt over de ulike tellemåtene, så hvordan regner man ut? Vi bruker de samme eksemplene for å vise.</p>
+<p>Det kan være vanskelig å forstå hva vi mener med gjentakelse og rekkefølge, men de er lettere forstått ved noen eksempler:</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text"><strong>Ordnet utvalg, med gjentakelse</strong></p>
+<p class="sd-card-text">På sifferplass 1 har du 10 valg av tall, det har du også ved sifferplass 2, 3 og 4. Ved OG-regelen fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#og-regelen-og-eller-regelen">2.1 OG-regelen og ELLER-regelen</a> OG-reg får vi dermed:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(10 \cdot 10 \cdot 10 \cdot 10 = 10^4 = 10000 \text{ muligheter}\)</span></p>
+<p class="sd-card-text"><strong>Ordnet utvalg, uten gjentakelse</strong></p>
+<p class="sd-card-text">Du har 10 medlemmer og ser på hvordan man kan fylle 3 ulike plasser. Her kommer fakultet fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#fakultet">2.2 Fakultet</a> inn. På første plass har du <span class="math notranslate nohighlight">\(10\)</span> valg av medlemmer, på andre plass har du <span class="math notranslate nohighlight">\(9\)</span> valg av medlemmer siden ett har blitt valgt, og til slutt har du <span class="math notranslate nohighlight">\(8\)</span> valg av medlemmer. Dette gir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(10 \cdot 9 \cdot 8 = 720 \text{ muligheter}\)</span></p>
+<p class="sd-card-text">Merk at dette er det samme som</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{10 \cdot 9 \cdot 8 \cdot 7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1}{7 \cdot 6 \cdot 5 \cdot 4 \cdot 3 \cdot 2 \cdot 1} = \frac{10!}{7!}=\frac{10!}{(10-3)!}\)</span></p>
+<p class="sd-card-text">Dette blir viktig senere.</p>
+<p class="sd-card-text"><strong>Uordnet utvalg, uten gjentakelse</strong></p>
+<p class="sd-card-text">Du ser på antall måter å velge ut 3 ulike iskremsmaker av totalt 10 mulige. Siden du velger ulike smaker er utvalget uten gjentakelse - du kan ikke ha sjokolade, sjokolade og jordbær, eller sjokolade, sjokolade og sjokolade. Utvalget er uordnet fordi rekkefølgen på smakene ikke har noe å si. Når du skal telle antall muligheter er jordbær, sjokolade og vanlije, nøyaktig samme mulighet som sjokolade, vanilje og jordbær.</p>
+<p class="sd-card-text">Denne situasjonen skiller seg kun fra den forrige i det at vi ikke skal overtelle ulike kombinasjoner. Tidligere hadde rekkefølgen noe å si, det har den ikke nå lenger og vi må kompensere for det på noe måte.</p>
+<p class="sd-card-text">Som i forrige oppgave får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{10!}{(10-3)!} \text{ muligheter}\)</span></p>
+<p class="sd-card-text">hvis rekkefølgen har noe å si. Det har den ikke nå! Vi har flere muligheter av 3 smaker som vi ser på som identiske, for eksempel jordbær, sjokolade og vanlije, nøyaktig samme mulighet som sjokolade, vanilje og jordbær.</p>
+<p class="sd-card-text">Hvor mange muligheter gir samme identiske kombinasjon? For eksempel kan smakene jordbær, vanilje og sjokolade organiseres med</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(3 \cdot 2 \cdot 1 = 3! = 6 \text{ muligheter}\)</span></p>
+<p class="sd-card-text">Ved å dele på dette tallet i formelen som overteller, får vi det korrekte antallet, og dermed</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{10!}{3! \cdot (10-3)!} = 120 \text{ muligheter}\)</span></p>
+<p class="sd-card-text"><strong>Uordnet utvalg, med gjentakelse</strong></p>
+<p class="sd-card-text">Dette er det mest kompliserte av alle de fire problemene, og løses gjennom “stjerner og streker”-metoden. I vårt tilfelle er bollene stjerner, og vi har <span class="math notranslate nohighlight">\(4-1=3\)</span> vegger som tilsvarer til typene.</p>
+<p class="sd-card-text">Du skal kjøpe 6 boller fra et bakeri og de har 4 typer. Du kan velge flere av type. Hvor mange ulike måter kan du velge boller på? Utvalget er med gjentakelse fordi du kan velge en type bolle flere ganger. Rekkefølgen har ikke noe å si, bare totalen du har. For eksempel er sjokolade, vanilje, kanel og vanilje, nøyaktig samme mulighet som sjokolade, kanel, vanilje og vanilje. Derfor er utvalget uordnet.</p>
+<p class="sd-card-text">For eksempel betyr</p>
+<p class="sd-card-text">⋆⋆ ∣ ⋆ ∣   ∣ ⋆⋆⋆</p>
+<p class="sd-card-text">2 boller av sort 1, 1 bolle av sort 2, ingen boller av sort 3 og 3 boller av sort 3. Vi kan også ha</p>
+<p class="sd-card-text">⋆⋆⋆⋆⋆⋆ ∣   ∣   ∣</p>
+<p class="sd-card-text">som betyr 6 boller av sort 1, og ingen av sort 2, 3 eller 4.</p>
+<p class="sd-card-text">Hvor mange måter kan vi ordne disse stjernene blant veggene? Spørsmålet brenner ned til at vi har totalt <span class="math notranslate nohighlight">\(6+3=9\)</span> objekter (plasser), og skal velge 3 av de til stjernene. Dette blir nøyaktig det samme som vi gjorde i forrige oppgave, og vi får</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{9!}{6! \cdot (9-6)!} = \frac{(6+4-1)!}{6! \cdot ((6+4-1)-6)!}\)</span></p>
+</div>
+</div>
+<p>Vi skal nå generalisere dette og få noen ordentlige formler å jobbe med.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 2.2 - Permutasjon</p>
+<p>Antall måter å velge <span class="math notranslate nohighlight">\(k\)</span> elementer fra en mengde med <span class="math notranslate nohighlight">\(n\)</span> elementer, uten gjentakelse og der rekkefølgen betyr noe er</p>
+<p><span class="math notranslate nohighlight">\(P(n,k) = \frac{n!}{(n-k)!}\)</span></p>
+<p>Hver slik måte kalles en <strong>permutasjon</strong>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 2.3 - Kombinasjon</p>
+<p>Antall måter å velge <span class="math notranslate nohighlight">\(k\)</span> elementer fra en mengde med <span class="math notranslate nohighlight">\(n\)</span> elementer, uten gjentakelse og der rekkefølgen <em>ikke</em> betyr noe er</p>
+<p><span class="math notranslate nohighlight">\(\binom{n}{k} = \frac{n!}{k! \cdot (n-k)!}\)</span></p>
+<p>Hver slik måte kalles en <strong>kombinasjon</strong>, og tallet kalles <strong>binomialkoeffisienten</strong>.</p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 2.3 - Ordninger i et ordnet utvalg, med gjentakelse</p>
+<p>Antall måter å velge <span class="math notranslate nohighlight">\(k\)</span> elementer fra en mengde med <span class="math notranslate nohighlight">\(n\)</span> elementer, med gjentakelse og der rekkefølgen betyr noe er</p>
+<p><span class="math notranslate nohighlight">\(n^k\)</span></p>
+</div>
+<div class="note admonition">
+<p class="admonition-title">Teorem 2.4 - Ordninger i et uordnet utvalg, med gjentakelse</p>
+<p>Antall måter å velge <span class="math notranslate nohighlight">\(k\)</span> elementer fra en mengde med <span class="math notranslate nohighlight">\(n\)</span> elementer, med gjentakelse og der rekkefølgen <em>ikke</em> betyr noe er</p>
+<p><span class="math notranslate nohighlight">\(\binom{n+k-1}{k}\frac{(n+k-1)!}{k! \cdot (n-1)!}\)</span></p>
+</div>
+<p>Vi følger på med flere eksempler!</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempler</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Et tripeptid bygges av tre aminosyrer i rekkefølge, valgt blant de 20 vanlige. Samme aminosyre kan brukes flere ganger, og rekkefølgen betyr noe. Hvor mange ulike tripeptider finnes? Dette er et ordnet utvalg med gjentakelse, slik at vi får:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(n^k = 20^3 = 8000\)</span></p>
+<p class="sd-card-text">Fem ulike ligander skal binde seg til et metallion, men bare tre bindingsplasser er ledige, og rekkefølgen de bindes i gir ulike mellomprodukter. Hvor mange rekkefølger finnes? Her velger vi uten gjentakelse og rekkefølgen teller, slik at vi får:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(5,3)=\frac{5!}{(5-3)!}=\frac{5!}{2!}=\frac{120}{2}=60\)</span></p>
+<p class="sd-card-text">En benzenring har seks posisjoner, og vi skal sette to like substituenter på to av dem. Rekkefølgen er likegyldig - de to substituentene er identiske. Vi får:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\binom{6}{2}=\frac{6!}{2! \cdot 4!}=\frac{720}{2 \cdot 24}=15\)</span></p>
+<p class="sd-card-text">Fire like energikvanter skal fordeles på tre identiske oscillatorer. Kvantene kan ikke skilles fra hverandre (gjentakelse tillatt), og rekkefølgen betyr ingenting - bare hvor mange hver oscillator får. Vi får dermed:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\binom{n+k-1}{k}=\binom{3+4-1}{4}=\binom{6}{4}=15\)</span></p>
+</div>
+</div>
+<p>Kombinasjoner og permutasjoner dukker oftest opp i kjemien, sammenlignet med de to andre tellemåtene. Nedenfor kan du bygge på intuisjonen ved å prøve simulasjonen.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Permutasjoner og kombinasjoner&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --perm:#c0392b;--comb:#1a7a4c;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:16px;}
+
+  .pool{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;padding:12px 14px;margin-bottom:14px;}
+  .pool .cap{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:9px;text-align:center;}
+  .balls{display:flex;gap:9px;justify-content:center;flex-wrap:wrap;}
+  .ball{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    color:#fff;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:15px;
+    box-shadow:0 1px 3px rgba(0,0,0,.18);}
+
+  .ctlbar{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px;}
+  @media(max-width:620px){.ctlbar{grid-template-columns:1fr;}}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--pt);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;}
+
+  .cols{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  @media(max-width:620px){.cols{grid-template-columns:1fr;}}
+  .col{border:1px solid var(--grid);border-radius:4px;background:#fbf9f3;padding:12px;}
+  .col h2{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.14em;
+    text-transform:uppercase;font-weight:600;margin-bottom:2px;}
+  .col.p h2{color:var(--perm);}
+  .col.c h2{color:var(--comb);}
+  .col .rule{font-size:12.5px;color:var(--muted);margin-bottom:8px;min-height:32px;}
+  .count{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:22px;margin-bottom:2px;}
+  .col.p .count{color:var(--perm);}
+  .col.c .count{color:var(--comb);}
+  .formula{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11.5px;color:var(--muted);
+    margin-bottom:10px;}
+  .list{max-height:300px;overflow-y:auto;padding:2px;}
+  .grp{border:1px dashed var(--grid);border-radius:3px;padding:5px;margin-bottom:5px;background:var(--paper);}
+  .grp .glab{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:9.5px;color:var(--muted);
+    margin-bottom:4px;letter-spacing:.06em;}
+  .item{display:inline-flex;gap:2px;padding:3px 4px;margin:2px;border-radius:3px;background:#fbf9f3;
+    border:1px solid var(--grid);}
+  .mini{width:20px;height:20px;border-radius:50%;color:#fff;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:10px;
+    display:flex;align-items:center;justify-content:center;}
+  .mini.nolabel{font-size:0;}
+
+  .bridge{margin-top:14px;padding:11px 13px;border-radius:3px;background:rgba(214,137,16,.12);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:13px;color:var(--ink);text-align:center;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Kombinasjoner og permutasjoner&lt;/div&gt;
+  &lt;h1&gt;Betyr rekkefølgen noe?&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Vi plukker ut noen molekyler fra beholderen. Til venstre teller vi rekkefølgen som betydningsfull, til høyre ikke — og forskjellen mellom de to tallene er nøyaktig k!.&lt;/p&gt;
+
+  &lt;div class=&quot;pool&quot;&gt;
+    &lt;div class=&quot;cap&quot; id=&quot;poolCap&quot;&gt;beholderen: n molekyler&lt;/div&gt;
+    &lt;div class=&quot;balls&quot; id=&quot;pool&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;ctlbar&quot;&gt;
+    &lt;div class=&quot;ctl&quot;&gt;
+      &lt;label&gt;antall i beholderen, n &lt;b id=&quot;nLab&quot;&gt;5&lt;/b&gt;&lt;/label&gt;
+      &lt;input type=&quot;range&quot; id=&quot;nRange&quot; min=&quot;3&quot; max=&quot;8&quot; step=&quot;1&quot; value=&quot;5&quot;&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;ctl&quot;&gt;
+      &lt;label&gt;antall vi plukker ut, k &lt;b id=&quot;kLab&quot;&gt;3&lt;/b&gt;&lt;/label&gt;
+      &lt;input type=&quot;range&quot; id=&quot;kRange&quot; min=&quot;1&quot; max=&quot;3&quot; step=&quot;1&quot; value=&quot;3&quot;&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;cols&quot;&gt;
+    &lt;div class=&quot;col p&quot;&gt;
+      &lt;h2&gt;Permutasjoner&lt;/h2&gt;
+      &lt;div class=&quot;rule&quot;&gt;Rekkefølgen betyr noe. ABC og BAC er to forskjellige utvalg, så bokstavene teller.&lt;/div&gt;
+      &lt;div class=&quot;count&quot; id=&quot;pCount&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;formula&quot; id=&quot;pFormula&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;list&quot; id=&quot;pList&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;col c&quot;&gt;
+      &lt;h2&gt;Kombinasjoner&lt;/h2&gt;
+      &lt;div class=&quot;rule&quot;&gt;Rekkefølgen betyr ingenting. Bare hvilke farger som er med teller — derfor er bokstavene skjult.&lt;/div&gt;
+      &lt;div class=&quot;count&quot; id=&quot;cCount&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;formula&quot; id=&quot;cFormula&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;list&quot; id=&quot;cList&quot;&gt;&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;bridge&quot; id=&quot;bridge&quot;&gt;—&lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Legg merke til de stiplede rammene til venstre: hver ramme samler alle rekkefølgene av det samme utvalget. Én ramme til venstre svarer til én rad til høyre. Antall rekkefølger inni hver ramme er nettopp k!, og det er derfor vi deler på k! for å gå fra permutasjoner til kombinasjoner.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const COLORS=[&#x27;#1f5f8b&#x27;,&#x27;#c0392b&#x27;,&#x27;#1a7a4c&#x27;,&#x27;#d68910&#x27;,&#x27;#8e44ad&#x27;,&#x27;#16867e&#x27;,&#x27;#b8860b&#x27;,&#x27;#2c3e50&#x27;];
+  const LETTERS=&#x27;ABCDEFGH&#x27;.split(&#x27;&#x27;);
+  let n=5,k=3;
+
+  const fact=m=&gt;{let r=1;for(let i=2;i&lt;=m;i++)r*=i;return r;};
+  const P=(n,k)=&gt;{let r=1;for(let i=0;i&lt;k;i++)r*=(n-i);return r;};
+  const C=(n,k)=&gt;P(n,k)/fact(k);
+
+  function combinations(arr,k){
+    if(k===0)return [[]];
+    if(arr.length&lt;k)return [];
+    const [head,...tail]=arr;
+    return combinations(tail,k-1).map(c=&gt;[head,...c]).concat(combinations(tail,k));
+  }
+  function permutations(arr){
+    if(arr.length&lt;=1)return [arr];
+    const out=[];
+    for(let i=0;i&lt;arr.length;i++){
+      const rest=arr.slice(0,i).concat(arr.slice(i+1));
+      for(const p of permutations(rest))out.push([arr[i],...p]);
+    }
+    return out;
+  }
+
+  function ball(idx,size,showLabel){
+    const d=document.createElement(&#x27;span&#x27;);
+    d.className=&#x27;mini&#x27;+(showLabel?&#x27;&#x27;:&#x27; nolabel&#x27;);
+    d.style.background=COLORS[idx];
+    if(size){d.style.width=size+&#x27;px&#x27;;d.style.height=size+&#x27;px&#x27;;}
+    d.textContent=LETTERS[idx];
+    return d;
+  }
+
+  function drawPool(){
+    const el=document.getElementById(&#x27;pool&#x27;);el.innerHTML=&#x27;&#x27;;
+    for(let i=0;i&lt;n;i++){
+      const b=document.createElement(&#x27;div&#x27;);
+      b.className=&#x27;ball&#x27;;b.style.background=COLORS[i];b.textContent=LETTERS[i];
+      el.appendChild(b);
+    }
+    document.getElementById(&#x27;poolCap&#x27;).textContent=&#x27;beholderen: &#x27;+n+&#x27; molekyler&#x27;;
+  }
+
+  function draw(){
+    const idx=[...Array(n).keys()];
+    const combs=combinations(idx,k);
+
+    // ---- permutations, grouped by which combination they came from ----
+    const pList=document.getElementById(&#x27;pList&#x27;);pList.innerHTML=&#x27;&#x27;;
+    for(const cb of combs){
+      const grp=document.createElement(&#x27;div&#x27;);grp.className=&#x27;grp&#x27;;
+      const lab=document.createElement(&#x27;div&#x27;);lab.className=&#x27;glab&#x27;;
+      lab.textContent=&#x27;samme utvalg · &#x27;+fact(k)+&#x27; rekkefølger&#x27;;
+      grp.appendChild(lab);
+      for(const pm of permutations(cb)){
+        const it=document.createElement(&#x27;span&#x27;);it.className=&#x27;item&#x27;;
+        for(const i of pm) it.appendChild(ball(i,null,true));
+        grp.appendChild(it);
+      }
+      pList.appendChild(grp);
+    }
+
+    // ---- combinations: sorted by colour, no letters ----
+    const cList=document.getElementById(&#x27;cList&#x27;);cList.innerHTML=&#x27;&#x27;;
+    for(const cb of combs){
+      const it=document.createElement(&#x27;span&#x27;);it.className=&#x27;item&#x27;;
+      for(const i of [...cb].sort((a,b)=&gt;a-b)) it.appendChild(ball(i,null,false));
+      cList.appendChild(it);
+    }
+
+    // ---- numbers ----
+    const p=P(n,k), c=C(n,k);
+    document.getElementById(&#x27;pCount&#x27;).textContent=p;
+    document.getElementById(&#x27;cCount&#x27;).textContent=c;
+    document.getElementById(&#x27;pFormula&#x27;).textContent=`P(${n},${k}) = ${n}!/(${n}−${k})! = ${p}`;
+    document.getElementById(&#x27;cFormula&#x27;).textContent=`C(${n},${k}) = ${n}!/(${k}!·${n-k}!) = ${c}`;
+    document.getElementById(&#x27;bridge&#x27;).innerHTML=
+      `${p} &lt;span style=&quot;color:var(--muted)&quot;&gt;permutasjoner&lt;/span&gt; ÷ ${k}! = ${fact(k)} `+
+      `&lt;span style=&quot;color:var(--muted)&quot;&gt;rekkefølger per utvalg&lt;/span&gt; = ${c} `+
+      `&lt;span style=&quot;color:var(--muted)&quot;&gt;kombinasjoner&lt;/span&gt;`;
+
+    document.getElementById(&#x27;nLab&#x27;).textContent=n;
+    document.getElementById(&#x27;kLab&#x27;).textContent=k;
+  }
+
+  function update(){
+    const kR=document.getElementById(&#x27;kRange&#x27;);
+    kR.max=Math.min(3,n);            // keep the permutation list readable
+    if(k&gt;+kR.max){k=+kR.max;kR.value=k;}
+    drawPool();draw();
+  }
+
+  document.getElementById(&#x27;nRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{n=+e.target.value;update();});
+  document.getElementById(&#x27;kRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{k=+e.target.value;update();});
+  update();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 2.3</p>
+<p>a) Et elektron i hvert av fire orbitaler kan ha spinn opp eller ned. Spinnene velges med gjentakelse, og rekkefølgen (hvilket orbital som har hva) betyr noe. Hvor mange ulike spinnkonfigurasjoner finnes?</p>
+<p>b) Seks ulike ligander finnes tilgjengelig, men bare to skal bindes, én av gangen slik at rekkefølgen gir ulike mellomprodukter. Hvor mange rekkefølger finnes?</p>
+<p>c) Åtte ulike atomer er tilgjengelige, og vi skal velge tre av dem til en klynge der rekkefølgen ikke spiller noen rolle. Hvor mange utvalg finnes?</p>
+<p>d) Fem like energikvanter skal fordeles på tre tilstander, uten hensyn til rekkefølge og med gjentakelse tillatt. Hvor mange fordelinger finnes?</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 2.3</p>
+<p>a) Ordnet utvalg med gjentakelse, med <span class="math notranslate nohighlight">\(n=2\)</span> spinnvalg og <span class="math notranslate nohighlight">\(k=4\)</span> orbitaler:</p>
+<p><span class="math notranslate nohighlight">\(n^k = 2^4 = 16\)</span></p>
+<p>b) Permutasjon, <span class="math notranslate nohighlight">\(n=6\)</span> og <span class="math notranslate nohighlight">\(k=2\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(P(6,2)=\frac{6!}{(6-2)!}=\frac{6!}{4!}=\frac{720}{24}=30\)</span></p>
+<p>c) Kombinasjon, <span class="math notranslate nohighlight">\(n=8\)</span> og <span class="math notranslate nohighlight">\(k=3\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\binom{8}{3}=\frac{8!}{3! \cdot 5!}=\frac{40320}{6 \cdot 120}=56\)</span></p>
+<p>d) Uordnet utvalg med gjentakelse, <span class="math notranslate nohighlight">\(n=3\)</span> tilstander og <span class="math notranslate nohighlight">\(k=5\)</span> kvanter:</p>
+<p><span class="math notranslate nohighlight">\(\binom{n+k-1}{k}=\binom{3+5-1}{5}=\binom{7}{5}=21\)</span></p>
+</div>
+</section>
+<section id="stirlings-tilnaerming">
+<span id="id4"></span><h2>2.4 Stirlings tilnærming<a class="headerlink" href="#stirlings-tilnaerming" title="Link to this heading">#</a></h2>
+<p><strong>Stirlings tilnærming</strong> brukes til å estimere fakultet av svært store tall. Vi skal se på hvordan vi kan estimere den naturlige logaritmen til fakultetet av et stort tall <span class="math notranslate nohighlight">\(n\)</span>, <span class="math notranslate nohighlight">\(\ln{n!}\)</span>, som blir nyttig i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-multiplisitet-til-entropi">Boltzmanns entropiformel</a>.</p>
+<p>La <span class="math notranslate nohighlight">\(n\)</span> være et stort tall. Fra definisjonen av fakultet (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kombinatorikk.html#fakultet">Def. 2.1</a>) har vi</p>
+<p><span class="math notranslate nohighlight">\(n!=n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 1\)</span></p>
+<p>Vi kan ta den naturlige logartimen på begge sider, slik at vi får</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!}=\ln{\left( n \cdot (n-1) \cdot (n-2) \cdot \dots \cdot 1 \right)}\)</span></p>
+<p>Fra logaritmereglene fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/formler_og_enheter.html#eksponenter-logaritmer-og-rotter">1.5 Ekponenter, logaritmer og røtter</a> får vi</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!}=\ln{(n)}+\ln{(n-1)}+\ln{(n-2)}+\dots+\ln{(1)}=\sum_{x=1}^{n} \ln{(x)}\)</span></p>
+<p>Vi kan approksimere denne summen til integralet av <span class="math notranslate nohighlight">\(\ln{(x)}\)</span> fra <span class="math notranslate nohighlight">\(x=1\)</span> til <span class="math notranslate nohighlight">\(x=n\)</span>, slik at</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!}=\sum_{x=1}^{n} \ln{(x)}\approx \int_{1}^{n} \ln{(x)} \ dx\)</span></p>
+<p>Mellomregning:</p>
+<p><span class="math notranslate nohighlight">\(\int_{1}^{n} \ln{(x)} \ dx=\int_{1}^{n} 1 \cdot \ln{(x)} \ dx\)</span></p>
+<p>Vi bruker delvis integrasjon fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#integrasjonsregler">4.5.4 Integrasjonsregler</a> ved å la</p>
+<p><span class="math notranslate nohighlight">\(u=\ln{(x)}\)</span>, <span class="math notranslate nohighlight">\(v'=1\)</span> <span class="math notranslate nohighlight">\(\Rightarrow\)</span> <span class="math notranslate nohighlight">\(u'=\frac{1}{x}\)</span>, <span class="math notranslate nohighlight">\(v=x\)</span></p>
+<p>og får</p>
+<p><span class="math notranslate nohighlight">\(\int_{1}^{n} 1 \cdot \ln{(x)} \ dx = [x \ln{(x)}]_{1}^{n}-\int_{1}^{n} \left( \frac{1}{x} \cdot x \right) \  dx=[x \ln{(x)}]_{1}^{n}-\int_{1}^{n} \  dx=[x \ln{(x)} -x]_{1}^{n}\)</span></p>
+<p>Altså, har vi fått Stirlings tilnærming</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!}\approx [x \ln{(x)} -x]_{1}^{n}\)</span></p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 2.5 - Stirlings tilnærming</p>
+<p>For store <span class="math notranslate nohighlight">\(n\)</span> kan <span class="math notranslate nohighlight">\(\ln{n!}\)</span> tilnærmes ved å erstatte summen <span class="math notranslate nohighlight">\(\sum_{k=1}^{n}\ln{k}\)</span> med et integral:</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!}=\sum_{k=1}^{n}\ln{k} \approx \int_1^n \ln{x}\,dx = \big[x\ln{x}-x\big]_1^n = n\ln{n}-n+1\)</span></p>
+<p>Siden <span class="math notranslate nohighlight">\(1\)</span>-leddet er neglisjerbart for store <span class="math notranslate nohighlight">\(n\)</span>, skrives resultatet vanligvis som</p>
+<p><span class="math notranslate nohighlight">\(\ln{n!} \approx n\ln{n}-n\)</span></p>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Stirlings tilnærming er uunnværlig i statistisk termodynamikk. Antall mikrotilstander for et system er gitt ved uttrykk som</p>
+<p><span class="math notranslate nohighlight">\(\Omega = \frac{N!}{n_1!\,n_2!\cdots}\)</span></p>
+<p>og entropien er <span class="math notranslate nohighlight">\(S=k_B\ln{\Omega}\)</span>. For ett mol partikler er <span class="math notranslate nohighlight">\(N\approx 6\times 10^{23}\)</span>, og da er <span class="math notranslate nohighlight">\(N!\)</span> et tall så enormt at det er fullstendig uregnbart - verken for hånd eller på datamaskin.</p>
+<p>Men vi trenger aldri <span class="math notranslate nohighlight">\(N!\)</span> selv, bare <span class="math notranslate nohighlight">\(\ln{N!}\)</span>, fordi entropien inneholder en logaritme. Der kommer Stirling til unnsetning:</p>
+<p><span class="math notranslate nohighlight">\(\ln{\Omega}=\ln{N!}-\sum_i \ln{n_i!} \approx \left(N\ln{N}-N\right)-\sum_i\left(n_i\ln{n_i}-n_i\right)\)</span></p>
+<p>Dette gjør uttrykket både regnbart og deriverbart. Nettopp fordi <span class="math notranslate nohighlight">\(\ln{\Omega}\)</span> nå er en glatt funksjon, kan vi maksimere den med Lagranges multiplikatormetode - og det er dét som gir Boltzmann-fordelingen. Lagrange multiplikatorer kommer vi tilbake til i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/flervariabel_kalkulus.html#lagrange-multiplikatormetode">6.4 Lagrange multiplikatormetode</a>.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/matematikk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="formler_og_enheter.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">1. Formler, notasjon og enheter</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="sannsynlighet.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">3. Sannsynlighet</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#og-regelen-og-eller-regelen">2.1 OG-regelen og ELLER-regelen</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#fakultet">2.2 Fakultet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#tellemetoder">2.3 Tellemetoder</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#stirlings-tilnaerming">2.4 Stirlings tilnærming</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

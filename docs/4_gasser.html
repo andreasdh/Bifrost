@@ -1,0 +1,1346 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../_static/copybutton.js?v=f281be69"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/4_gasser';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Intermolekylære krefter og reelle gasser" href="5_intermolekyl%C3%A6re_krefter.html" />
+    <link rel="prev" title="Partisjonsfunksjonen og molekylær energi" href="3_partisjonsfunksjonen.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../_static/searchtools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1 current active"><a class="current reference internal" href="#">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../_sources/docs/4_gasser.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gasser-som-mangepartikkelsystem">Gasser som mangepartikkelsystem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvordan-er-molekylenes-hastighet-fordelt">Hvordan er molekylenes hastighet fordelt?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maxwellboltzmann-fordelingen">Maxwell–Boltzmann-fordelingen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-betyr-egentlig-f-v">Hva betyr egentlig <span class="math notranslate nohighlight">\(f(v)\)</span>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-pavirker-fordelingen">Hva påvirker fordelingen?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur">1. Temperatur</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#molekylmasse">2. Molekylmasse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-egentlig-temperatur">Hva er egentlig temperatur?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-og-molekylbevegelse">Temperatur og molekylbevegelse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-er-ikke-det-samme-som-energi">Temperatur er ikke det samme som energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tilbake-til-den-generelle-temperaturdefinisjonen">Tilbake til den generelle temperaturdefinisjonen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvor-kommer-trykk-fra">Hvor kommer trykk fra?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hvorfor-har-en-gass-trykk">Hvorfor har en gass trykk?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svaret-ligger-pa-molekylniva">Svaret ligger på molekylnivå</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utledning-av-den-ideelle-gassloven">Utledning av den ideelle gassloven</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ideelle-gasser">Ideelle gasser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#litt-om-bevegelsesmengde">Litt om bevegelsesmengde</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utledningen-trinn-for-trinn">Utledningen, trinn for trinn</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-1-ett-stot">Trinn 1: Ett støt</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-2-hvor-mange-molekyler-nar-veggen-i-lopet-av-delta-t">Trinn 2: Hvor mange molekyler når veggen i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span>?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-3-fra-antall-stot-til-kraft">Trinn 3: Fra antall støt til kraft</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-4-fra-v-x-til-den-totale-farten-v">Trinn 4: Fra <span class="math notranslate nohighlight">\(v_x\)</span> til den totale farten <span class="math notranslate nohighlight">\(v\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-5-fra-kraft-til-trykk">Trinn 5: Fra kraft til trykk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-6-temperaturen-kobles-pa">Trinn 6: Temperaturen kobles på</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#daltons-lov-om-partialtrykk">Daltons lov om partialtrykk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tre-viktige-innsikter-a-ta-med-videre">Tre viktige innsikter å ta med videre</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-trykk-og-likevekt-et-blikk-framover">Temperatur, trykk og likevekt – et blikk framover</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="gasser-i-bevegelse-kinetisk-teori-hastighetsfordelinger-og-den-ideelle-gassloven">
+<h1>Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven<a class="headerlink" href="#gasser-i-bevegelse-kinetisk-teori-hastighetsfordelinger-og-den-ideelle-gassloven" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Læringsmål</p>
+<p>Etter å ha arbeidet med dette kapitlet skal du kunne:</p>
+<ul class="simple">
+<li><p>forklare hvorfor en fortynnet gass er enklere å beskrive statistisk enn væsker</p></li>
+<li><p>beskrive Maxwell–Boltzmann-fordelingen og forklare hvordan temperatur og molekylmasse påvirker fartsfordelingen</p></li>
+<li><p>tolke <span class="math notranslate nohighlight">\(f(v)\)</span> som en sannsynlighetstetthet og bruke arealet under fordelingskurven til å beskrive sannsynligheter</p></li>
+<li><p>forklare sammenhengen mellom temperatur og gjennomsnittlig translasjonsenergi, og forklare forskjellen mellom temperatur og indre energi</p></li>
+<li><p>forklare det mikroskopiske opphavet til trykk og hovedtrinnene i utledningen av den ideelle gassloven</p></li>
+<li><p>bruke den ideelle gassloven og Daltons lov om partialtrykk i enkle beregninger</p></li>
+<li><p>forklare når idealgassmodellen er en god tilnærming, og hvorfor reelle gasser kan avvike fra den</p></li>
+</ul>
+</div>
+<p>I de foregående kapitlene har vi bygd opp et generelt statistisk rammeverk. Vi har sett hvordan mikrotilstander og sannsynligheter gir opphav til makroskopiske størrelser, og hvordan Boltzmann-fordelingen og partisjonsfunksjonen kobler molekylære energier til temperatur, indre energi og entropi.</p>
+<p>Nå skal vi bruke dette rammeverket på et konkret system: <strong>gasser</strong>. Gasser er den enkleste stofftilstanden å beskrive matematisk, og de gir derfor et naturlig sted å se hvordan den statistiske beskrivelsen faktisk gir opphav til målbare størrelser som temperatur og trykk.</p>
+<p>Målet er ikke å pugge formler, men å forstå hvor de kommer fra. Vi skal bygge opp teorien fra bevegelsen til ett enkelt molekyl, via enorme mengder molekyler i tilfeldig bevegelse, og frem til makroskopiske størrelser som temperatur, trykk og den ideelle gassloven. Underveis skal vi også se hvordan Maxwell–Boltzmann-fordelingen følger av ideene vi allerede har møtt om energi og sannsynlighet.</p>
+<section id="gasser-som-mangepartikkelsystem">
+<h2>Gasser som mangepartikkelsystem<a class="headerlink" href="#gasser-som-mangepartikkelsystem" title="Link to this heading">#</a></h2>
+<p>Hvorfor begynner vi anvendelsen av statistisk mekanikk med gasser?</p>
+<p>Svaret er ikke at gasser er de enkleste stoffene, men at de er enklest å beskrive matematisk. Dette skyldes måten molekylene er organisert på.</p>
+<p>Væsker og faste stoffer er kondenserte faser der molekylene ligger tett sammen og har en lokal orden. Hvert molekyl påvirkes hele tiden av nabomolekylene gjennom tiltrekkende og frastøtende krefter. Skal vi beskrive slike systemer, må vi derfor ta hensyn til et stort antall vekselvirkninger mellom partiklene.</p>
+<p>I en fortynnet gass er situasjonen annerledes. Molekylene befinner seg langt fra hverandre og beveger seg fritt gjennom mesteparten av volumet. De påvirker hverandre først og fremst når de kolliderer, og mellom kollisjonene beveger de seg tilnærmet uavhengig av hverandre. Nettopp dette gjør gasser til et godt system for å bruke ideene fra statistisk mekanikk.</p>
+<p><img alt="veksel" src="../_images/antall_veksel.svg" /></p>
+<p>Samtidig inneholder en gass et enormt antall molekyler. Selv en liten gassprøve ved romtemperatur kan inneholde omkring <span class="math notranslate nohighlight">\(10^{22}\)</span> molekyler. Det er umulig å følge bevegelsen til hvert enkelt molekyl, men det er heller ikke nødvendig. I praksis er vi sjelden interessert i hva ett bestemt molekyl gjør. Det vi ønsker å beskrive, er egenskapene til hele gassen.</p>
+<div class="important admonition">
+<p class="admonition-title">Kjerneidé</p>
+<p>I en fortynnet gass er avstanden mellom molekylene stor sammenliknet med størrelsen deres. Mellom kollisjonene beveger molekylene seg derfor tilnærmet uavhengig av hverandre, mens de mange kollisjonene gjør at retning og fart for det enkelte molekylet stadig endres. Det er derfor mest hensiktsmessig å beskrive gassen statistisk. Dette gjør gasser langt enklere å beskrive enn væsker og faste stoffer, der partiklene hele tiden påvirker hverandre.</p>
+</div>
+<p>Her ser vi igjen koblingen mellom mikrotilstander og makrotilstander. Hvert molekyl har sin egen posisjon og hastighet, og den samlede informasjonen om alle molekylene utgjør en mikrotilstand. I laboratoriet måler vi derimot makroskopiske størrelser som temperatur, trykk og volum. Oppgaven vår blir derfor å forstå hvordan de mikroskopiske bevegelsene til enorme mengder molekyler gir opphav til de makroskopiske egenskapene vi faktisk kan observere.</p>
+<p><img alt="partikkel_i_boks" src="../_images/partikkel_i_boks.svg" /></p>
+<p>Denne tankegangen er grunnlaget for <strong>kinetisk gassteori</strong>. I stedet for å beskrive hvert enkelt molekyl, beskriver vi de statistiske egenskapene til hele samlingen av molekyler. Det er denne overgangen fra enkeltpartikler til gjennomsnittlig oppførsel som gjør det mulig å forklare både temperatur, trykk og til slutt den ideelle gassloven.</p>
+</section>
+<section id="hvordan-er-molekylenes-hastighet-fordelt">
+<h2>Hvordan er molekylenes hastighet fordelt?<a class="headerlink" href="#hvordan-er-molekylenes-hastighet-fordelt" title="Link to this heading">#</a></h2>
+<p>Siden det er umulig å følge hvert enkelt molekyl, må vi bruke statistikk for å beskrive gassen som helhet. Et første spørsmål er: <strong>Har alle molekylene i en gass samme fart?</strong></p>
+<p>Det korte svaret er nei. Det er lett å se for seg at molekylene i en beholder suser av sted i et ganske jevnt tempo, men virkeligheten er langt mer kaotisk.</p>
+<p>Hvis vi kunne ta et øyeblikksbilde av gassen og måle farten til hvert enkelt molekyl, ville vi funnet store forskjeller. Noen beveger seg langsomt, andre svært raskt, mens de fleste ligger et sted imellom.</p>
+<p>Grunnen til dette spennet er at molekylene hele tiden kolliderer. Ved hvert støt utveksler de energi. Både fart og retning endrer seg derfor kontinuerlig for det enkelte molekylet.</p>
+<p>Likevel skjer det noe bemerkelsesverdig: Selv om enkeltmolekylene hele tiden bytter hastighet, er den samlede fordelingen av hastigheter stabil i statistisk forstand så lenge systemet er i likevekt og temperaturen holdes konstant. Dette er et godt eksempel på <strong>dynamisk likevekt</strong>: Det skjer hele tiden endringer på mikronivå, samtidig som fordelingen og de makroskopiske egenskapene er stabile.</p>
+<section id="maxwellboltzmann-fordelingen">
+<h3>Maxwell–Boltzmann-fordelingen<a class="headerlink" href="#maxwellboltzmann-fordelingen" title="Link to this heading">#</a></h3>
+<p>Her kan vi bygge direkte videre på <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#nar-gjelder-boltzmann-fordelingen">Boltzmann-fordelingen</a> fra forrige kapittel. Fra forrige kapittel vet vi at en mikrotilstand med energi E får en statistisk vekt som er proporsjonal med Boltzmann-faktoren:</p>
+<div class="math notranslate nohighlight">
+\[e^{-E/k_\mathrm{B}T}\]</div>
+<p>Jo høyere energien er sammenliknet med <span class="math notranslate nohighlight">\(k_BT\)</span>, desto mindre sannsynlig er mikrotilstanden.</p>
+<p>For translasjonsbevegelsen til ett molekyl er den kinetiske energien</p>
+<div class="math notranslate nohighlight">
+\[E=\frac12mv^2\]</div>
+<p>Boltzmann-faktoren blir derfor</p>
+<div class="math notranslate nohighlight">
+\[e^{-mv^2/2k_\mathrm{B}T}\]</div>
+<p>Men dette er ikke hele historien. En bestemt fart <span class="math notranslate nohighlight">\(v\)</span> kan realiseres av mange forskjellige hastighetsvektorer: Molekylet kan bevege seg i hvilken som helst retning. Antallet slike muligheter øker med <span class="math notranslate nohighlight">\(v^2\)</span>. Dette er den samme ideen vi tidligere møtte som <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/A1_grunnleggende_begreper.html#energitilstander-og-frihetsgrader">degenerasjon</a>: flere forskjellige mikrotilstander kan ha samme energi.</p>
+<p>Når vi kombinerer Boltzmann-vekten med antallet mulige hastighetsvektorer, får vi formen til <strong>Maxwell–Boltzmann-fordelingen</strong>. Figuren nedenfor viser denne fordelingen for nitrogengass ved ulike temperaturer.</p>
+<iframe src="Simuleringer/fartsfordeling.html" width="100%" height="720" style="border: 0;" loading="lazy"></iframe>
+<p>Fordelingen er ikke symmetrisk. Siden et molekyl ikke kan ha negativ fart, begynner kurven ved null. Mot høyre finnes ingen tilsvarende skarp grense, og kurven får derfor en hale mot høye hastigheter.</p>
+<p>For en tredimensjonal idealgass er Maxwell–Boltzmann-fordelingen</p>
+<div class="important admonition">
+<p class="admonition-title">Maxwell–Boltzmann-fordelingen</p>
+<div class="math notranslate nohighlight">
+\[f(v)=4\pi\left(\frac{m}{2\pi k_\mathrm{B}T}\right)^{3/2}v^2e^{-mv^2/2k_\mathrm{B}T}\]</div>
+<p>der <span class="math notranslate nohighlight">\(m\)</span> er massen til ett molekyl, <span class="math notranslate nohighlight">\(T\)</span> er temperaturen og <span class="math notranslate nohighlight">\(v\)</span> er farten.</p>
+</div>
+</section>
+<section id="hva-betyr-egentlig-f-v">
+<h3>Hva betyr egentlig <span class="math notranslate nohighlight">\(f(v)\)</span>?<a class="headerlink" href="#hva-betyr-egentlig-f-v" title="Link to this heading">#</a></h3>
+<p>Det er viktig å være presis: <span class="math notranslate nohighlight">\(f(v)\)</span> er ikke antallet molekyler med nøyaktig fart <span class="math notranslate nohighlight">\(v\)</span>. Det er derimot en <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/statistikk.html#sannsynlighetsfordelinger">kontinuerlig sannsynlighetstetthet</a>. Sannsynligheten for at et tilfeldig valgt molekyl har fart mellom <span class="math notranslate nohighlight">\(v\)</span> og <span class="math notranslate nohighlight">\(v+dv\)</span> er omtrent</p>
+<div class="math notranslate nohighlight">
+\[f(v)\,dv\]</div>
+<p>Tilsvarende finner vi sannsynligheten for at farten ligger mellom <span class="math notranslate nohighlight">\(v_1\)</span> og <span class="math notranslate nohighlight">\(v_2\)</span> som arealet under kurven mellom disse grensene:</p>
+<div class="math notranslate nohighlight">
+\[P(v_1&lt;v&lt;v_2)=\int_{v_1}^{v_2}f(v)\,dv\]</div>
+<p>Siden molekylet må ha en fart mellom null og uendelig, må hele fordelingen være normalisert:</p>
+<div class="math notranslate nohighlight">
+\[\int_0^\infty f(v)\,dv=1\]</div>
+<p>Hvis gassen inneholder <span class="math notranslate nohighlight">\(N\)</span> molekyler, er det forventede antallet molekyler i et lite fartsintervall <span class="math notranslate nohighlight">\(Nf(v)\,dv\)</span>. Formen på den normaliserte fordelingskurven avhenger derfor ikke av hvor mye gass vi har.</p>
+</section>
+<section id="hva-pavirker-fordelingen">
+<h3>Hva påvirker fordelingen?<a class="headerlink" href="#hva-pavirker-fordelingen" title="Link to this heading">#</a></h3>
+<p>Formen på kurven styres i hovedsak av to fysiske faktorer: <strong>temperatur</strong> og <strong>molekylmasse</strong>.</p>
+<section id="temperatur">
+<h4>1. Temperatur<a class="headerlink" href="#temperatur" title="Link to this heading">#</a></h4>
+<p>Når temperaturen øker, øker den gjennomsnittlige translasjonsenergien. Fordelingskurven blir bredere og forskyves mot høyere fart. Toppen blir samtidig lavere fordi det samme totale sannsynlighetsarealet på 1 fordeles over et større fartsområde.</p>
+</section>
+<section id="molekylmasse">
+<h4>2. Molekylmasse<a class="headerlink" href="#molekylmasse" title="Link to this heading">#</a></h4>
+<p>Ved samme temperatur har lette og tunge molekyler samme gjennomsnittlige <strong>translasjonelle kinetiske energi</strong>. Men siden kinetisk energi er gitt ved <span class="math notranslate nohighlight">\(E_k=\tfrac12mv^2\)</span>, må masse og fart balansere hverandre. Lette gasser som hydrogen eller helium har derfor en fartsfordeling som ligger ved høyere hastigheter enn tyngre gasser.</p>
+<p>Siden Maxwell–Boltzmann-fordelingen ikke er symmetrisk, finnes det flere naturlige måter å beskrive en «typisk» fart på. Vi skal bruke tre: den mest sannsynlige farten <span class="math notranslate nohighlight">\(v_\mathrm{mp}\)</span>, gjennomsnittsfarten <span class="math notranslate nohighlight">\(\bar v\)</span> og RMS-farten <span class="math notranslate nohighlight">\(v_\mathrm{rms}\)</span>. De er forskjellige, men hver av dem forteller noe nyttig om fordelingen:</p>
+<div class="math notranslate nohighlight">
+\[v_\mathrm{mp}=\sqrt{\frac{2k_\mathrm{B}T}{m}}\]</div>
+<div class="math notranslate nohighlight">
+\[\bar v=\sqrt{\frac{8k_\mathrm{B}T}{\pi m}}\]</div>
+<div class="math notranslate nohighlight">
+\[v_\mathrm{rms}=\sqrt{\frac{3k_\mathrm{B}T}{m}}\]</div>
+<p>Disse ulike målene for «typisk fart» følger alltid denne rekkefølgen:</p>
+<div class="math notranslate nohighlight">
+\[v_\mathrm{mp}&lt;\bar v&lt;v_\mathrm{rms}\]</div>
+<p>Alle tre skalerer som <span class="math notranslate nohighlight">\(\sqrt{T/m}\)</span>: høyere temperatur gir større fart, mens større molekylmasse gir mindre fart.</p>
+<div class="note admonition">
+<p class="admonition-title">Hint videre</p>
+<p>Maxwell–Boltzmann-fordelingen får betydning langt utover gasslovene. Den energirike halen av fordelingen er viktig i reaksjonskinetikk, fordi temperatur påvirker hvor stor andel av molekylene som har høy energi. Forskjellen i typiske molekylhastigheter er også viktig for blant annet effusjon og diffusjon. Vi kommer tilbake til disse anvendelsene senere.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Vi ser på oksygengass (O₂) ved temperatur <span class="math notranslate nohighlight">\(T\)</span>. Farten til molekylene følger Maxwell-Boltzmann-fordelingen</p>
+<p><span class="math notranslate nohighlight">\(f(v) = 4\pi\left(\frac{m}{2\pi k_B T}\right)^{3/2} v^2 e^{-mv^2/2k_BT}.\)</span></p>
+<p>Vi får bruk for Gauss-integralene <span class="math notranslate nohighlight">\(\int_0^\infty v^2 e^{-av^2}\,dv = \frac{1}{4}\sqrt{\frac{\pi}{a^3}}\)</span> og <span class="math notranslate nohighlight">\(\int_0^\infty v^3 e^{-av^2}\,dv = \frac{1}{2a^2}\)</span>, med <span class="math notranslate nohighlight">\(a = \frac{m}{2k_BT}\)</span>.</p>
+<p><strong>a)</strong> Gjennomsnittsfarten er <span class="math notranslate nohighlight">\(\bar v = \int_0^\infty v\, f(v)\, dv\)</span>. Regn ut dette integralet for hånd og vis at <span class="math notranslate nohighlight">\(\bar v = \sqrt{\frac{8k_BT}{\pi m}}\)</span>. Hva forteller denne størrelsen oss om gassen?</p>
+<p><strong>b)</strong> Uten å regne: hva skjer med formen på <span class="math notranslate nohighlight">\(f(v)\)</span> hvis temperaturen <span class="math notranslate nohighlight">\(T\)</span> øker? Blir kurven bredere eller smalere, og flytter toppen seg mot høyere eller lavere fart? Forklar kort hvorfor.</p>
+<p><strong>Utfordring:</strong> Integrer <span class="math notranslate nohighlight">\(f(v)\)</span> over hele fartsområdet, <span class="math notranslate nohighlight">\(\int_0^\infty f(v)\, dv\)</span>, for hånd og bekreft at resultatet blir <span class="math notranslate nohighlight">\(1\)</span>. Hvorfor må dette være tilfelle for en sannsynlighetsfordeling?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text"><strong>a)</strong> Vi setter inn <span class="math notranslate nohighlight">\(f(v)\)</span> i uttrykket for gjennomsnittsfarten:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\bar v = \int_0^\infty v\, f(v)\, dv = 4\pi\left(\frac{m}{2\pi k_BT}\right)^{3/2}\int_0^\infty v^3 e^{-av^2}\,dv.\)</span></p>
+<p class="sd-card-text">Vi bruker <span class="math notranslate nohighlight">\(\int_0^\infty v^3 e^{-av^2}\,dv = \frac{1}{2a^2}\)</span> med <span class="math notranslate nohighlight">\(a = \frac{m}{2k_BT}\)</span>, altså <span class="math notranslate nohighlight">\(\frac{1}{2a^2} = \frac{1}{2}\left(\frac{2k_BT}{m}\right)^2\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\bar v = 4\pi\left(\frac{m}{2\pi k_BT}\right)^{3/2}\cdot\frac{1}{2}\left(\frac{2k_BT}{m}\right)^2.\)</span></p>
+<p class="sd-card-text">Vi samler faktorene. Skriver vi <span class="math notranslate nohighlight">\(\left(\frac{m}{2\pi k_BT}\right)^{3/2} = \frac{1}{\pi^{3/2}}\left(\frac{m}{2k_BT}\right)^{3/2}\)</span>, blir produktet av potensene av <span class="math notranslate nohighlight">\(\frac{m}{2k_BT}\)</span> lik <span class="math notranslate nohighlight">\(\left(\frac{m}{2k_BT}\right)^{3/2}\left(\frac{2k_BT}{m}\right)^2 = \left(\frac{2k_BT}{m}\right)^{1/2}\)</span>. Da står vi igjen med</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\bar v = \frac{4\pi}{2\pi^{3/2}}\left(\frac{2k_BT}{m}\right)^{1/2} = \frac{2}{\sqrt{\pi}}\sqrt{\frac{2k_BT}{m}} = \sqrt{\frac{8k_BT}{\pi m}}.\)</span></p>
+<p class="sd-card-text">Gjennomsnittsfarten er den middelfarten molekylene har ved temperaturen <span class="math notranslate nohighlight">\(T\)</span>. Den øker med kvadratroten av temperaturen og synker med kvadratroten av massen - tunge molekyler beveger seg altså langsommere enn lette ved samme temperatur.</p>
+<p class="sd-card-text"><strong>b)</strong> Når <span class="math notranslate nohighlight">\(T\)</span> øker, blir kurven <strong>bredere og lavere</strong>, og toppen flytter seg mot <strong>høyere fart</strong>. Grunnen er at høyere temperatur gir molekylene mer termisk energi, så de beveger seg raskere i gjennomsnitt, og fartene sprer seg over et større område. Arealet under kurven holder seg <span class="math notranslate nohighlight">\(1\)</span>, så når kurven trekkes utover, må den samtidig bli lavere.</p>
+<p class="sd-card-text"><strong>Utfordring:</strong> Vi integrerer hele fordelingen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^\infty f(v)\, dv = 4\pi\left(\frac{m}{2\pi k_BT}\right)^{3/2}\int_0^\infty v^2 e^{-av^2}\,dv.\)</span></p>
+<p class="sd-card-text">Nå bruker vi <span class="math notranslate nohighlight">\(\int_0^\infty v^2 e^{-av^2}\,dv = \frac{1}{4}\sqrt{\frac{\pi}{a^3}}\)</span> med <span class="math notranslate nohighlight">\(a = \frac{m}{2k_BT}\)</span>, altså <span class="math notranslate nohighlight">\(\frac{1}{4}\sqrt{\pi\left(\frac{2k_BT}{m}\right)^3}\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^\infty f(v)\, dv = 4\pi\left(\frac{m}{2\pi k_BT}\right)^{3/2}\cdot\frac{1}{4}\sqrt{\pi\left(\frac{2k_BT}{m}\right)^3}.\)</span></p>
+<p class="sd-card-text">Potensene av <span class="math notranslate nohighlight">\(\frac{m}{2k_BT}\)</span> og <span class="math notranslate nohighlight">\(\frac{2k_BT}{m}\)</span> er inverse og kanselleres, og <span class="math notranslate nohighlight">\(\pi\)</span>-faktorene og 4-tallet går opp. Resultatet blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^\infty f(v)\, dv = 1.\)</span></p>
+<p class="sd-card-text">Det må være slik fordi <span class="math notranslate nohighlight">\(f(v)\)</span> er en sannsynlighetsfordeling: molekylet har med sikkerhet <em>en</em> fart et sted mellom <span class="math notranslate nohighlight">\(0\)</span> og uendelig, så arealet under hele kurven må være nøyaktig <span class="math notranslate nohighlight">\(1\)</span>.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Utforsk</p>
+<p>I simuleringen nedenfor kan du undersøke hvordan fartsfordelingen endres når du varierer temperatur og molekylmasse. Legg særlig merke til hvordan kurvens plassering, bredde og hale endres, og hvordan en fast energiterskel skjærer ulike deler av fordelingen.</p>
+</div>
+<iframe src="Simuleringer/MB_sim.html" width="100%" height="720" style="border: 0;" loading="lazy"></iframe>
+<p>I simuleringen er <span class="math notranslate nohighlight">\(v^*\)</span> en valgt terskelfart. Molekyler med fart større enn <span class="math notranslate nohighlight">\(v^*\)</span> har i denne forenklede modellen en translasjonsenergi over den valgte energibarrieren.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Velg H₂ og legg merke til hvor kurven ligger. Bytt så til CO₂ uten å røre temperaturen.</p>
+<p>Kurven flytter seg dramatisk. Men temperaturen er jo den samme.</p>
+<p>Hvis temperatur var det samme som «hvor fort molekylene beveger seg», hvordan kunne to gasser med samme temperatur ha så forskjellig fart?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Temperatur måler ikke fart alene. For translasjonsbevegelsen er det den gjennomsnittlige kinetiske energien som bestemmes av temperaturen, og denne er avhengig av både fart og masse ($0.5mv^2).</p>
+<p class="sd-card-text">Et CO₂-molekyl er omtrent 22 ganger tyngre enn et H₂-molekyl. Skal de ha samme gjennomsnittlige translasjonsenergi, må det lette molekylet bevege seg betydelig raskere.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Tenk deg at vi gjør boksen dobbelt så stor og putter inn dobbelt så mange <span class="math notranslate nohighlight">\(\mathrm{N_2}\)</span>-molekyler, men beholder temperaturen på <span class="math notranslate nohighlight">\(298\ \mathrm{K}\)</span>. Hvordan vil den normaliserte fordelingskurven <span class="math notranslate nohighlight">\(f(v)\)</span> endre seg? Vil toppen bli dobbelt så høy eller flytte på seg?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Den normaliserte kurven vil se <strong>nøyaktig lik ut</strong>. Maxwell–Boltzmann-fordelingen <span class="math notranslate nohighlight">\(f(v)\)</span> viser en sannsynlighetstetthet, ikke det totale antallet molekyler. Når temperaturen og molekylmassen er uendret, er formen på fordelingen den samme selv om vi endrer mengden gass.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Dra temperaturen oppover og se på toppen av kurven. Den blir ikke bare forskjøvet mot høyre, men også lavere.</p>
+<p>Molekylene forsvinner ikke når du varmer opp gassen. Hvorfor blir toppen likevel lavere?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Det totale arealet under sannsynlighetsfordelingen er alltid 1. Ved høyere temperatur blir fordelingen bredere og sannsynligheten fordeles over et større fartsområde. Når kurven blir bredere, må toppen derfor bli lavere.</p>
+</div>
+</details></section>
+</section>
+</section>
+<section id="hva-er-egentlig-temperatur">
+<h2>Hva er egentlig temperatur?<a class="headerlink" href="#hva-er-egentlig-temperatur" title="Link to this heading">#</a></h2>
+<p>Vi har allerede sett på den generelle, termodynamiske definisjonen av temperatur gjennom sammenhengen mellom entropi og energi. For en idealgass får temperatur i tillegg en særlig enkel molekylær tolkning.</p>
+<section id="temperatur-og-molekylbevegelse">
+<h3>Temperatur og molekylbevegelse<a class="headerlink" href="#temperatur-og-molekylbevegelse" title="Link to this heading">#</a></h3>
+<p>I en idealgass ser vi bort fra intermolekylære krefter mellom partiklene. For en <strong>monoatomisk</strong> idealgass betyr det at den indre kinetiske energien består av translasjonsenergi. For molekylære gasser kan den indre energien i tillegg inneholde rotasjons- og vibrasjonsbidrag, slik vi så i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#nar-gjelder-boltzmann-fordelingen">forrige kapittel</a>.</p>
+<p>Når energinivåene ligger så tett at forskjellene mellom dem er små sammenliknet med den termiske energien <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>, kan vi i praksis behandle energien som kontinuerlig. Da sier vi at systemet er i den <strong>klassiske grensen</strong>.</p>
+<p>I denne grensen gjelder <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#ekvipartisjon-og-varmekapasitet">ekvipartisjonsteoremet</a>: Hvert uavhengige energibidrag som avhenger kvadratisk av en bevegelsesvariabel, for eksempel <span class="math notranslate nohighlight">\(\frac12mv_x^2\)</span>, bidrar i gjennomsnitt med</p>
+<div class="math notranslate nohighlight">
+\[\frac12k_\mathrm{B}T\]</div>
+<p>til energien per molekyl.</p>
+<p>Dette betyr <strong>ikke</strong> at alle molekylene har nøyaktig denne energien. Maxwell–Boltzmann-fordelingen viser nettopp at energien er fordelt over et stort spenn. Uttrykket beskriver gjennomsnittet.</p>
+<p>For <span class="math notranslate nohighlight">\(n\)</span> mol blir den totale translasjonsenergien</p>
+<div class="math notranslate nohighlight">
+\[E_\mathrm{kin}=\frac32nRT\]</div>
+<div class="important admonition">
+<p class="admonition-title">Kjerneidé</p>
+<p>For en klassisk idealgass er den gjennomsnittlige translasjonsenergien per molekyl bestemt av temperaturen. Ved samme temperatur har derfor lette og tunge molekyler samme gjennomsnittlige translasjonsenergi, men forskjellige typiske farter.:::</p>
+<div class="error admonition">
+<p class="admonition-title">OBS: per molekyl eller per mol?</p>
+<p>Vi kan beskrive den samme fysikken enten for ett molekyl eller for ett <em>mol</em> molekyler.</p>
+<p>Når vi ser på ett molekyl, bruker vi Boltzmanns konstant <span class="math notranslate nohighlight">\(k_\mathrm{B}\)</span>. Den gjennomsnittlige translasjonsenergien er da</p>
+<div class="math notranslate nohighlight">
+\[\langle E_\mathrm{trans}\rangle=\frac32k_\mathrm{B}T\]</div>
+<p>Når vi i stedet regner per mol, bruker vi gasskonstanten <span class="math notranslate nohighlight">\(R\)</span>. Da blir den tilsvarende energiskalaen <span class="math notranslate nohighlight">\(RT\)</span>.</p>
+<p>Sammenhengen mellom de to nivåene er</p>
+<div class="math notranslate nohighlight">
+\[R=N_Ak_\mathrm{B}\]</div>
+<p>der <span class="math notranslate nohighlight">\(N_A\)</span> er Avogadros tall.</p>
+<p>Det samme gjelder massen: <span class="math notranslate nohighlight">\(m\)</span> er massen til ett molekyl, mens <span class="math notranslate nohighlight">\(M\)</span> er molar masse. De henger sammen gjennom</p>
+<div class="math notranslate nohighlight">
+\[M=N_Am\]</div>
+<p>Derfor må vi være konsekvente: bruker vi energi per molekyl, bruker vi <span class="math notranslate nohighlight">\(k_\mathrm{B}T\)</span>; bruker vi energi per mol, bruker vi <span class="math notranslate nohighlight">\(RT\)</span>.</p>
+</div>
+</div>
+</section>
+<section id="temperatur-er-ikke-det-samme-som-energi">
+<h3>Temperatur er ikke det samme som energi<a class="headerlink" href="#temperatur-er-ikke-det-samme-som-energi" title="Link to this heading">#</a></h3>
+<p>Vi minner om at temperatur ikke er det samme som energi, selv om de to størrelsene henger sammen. Det ser vi tydelig når et stoff skifter fase. Når is ved smeltepunktet tar opp energi, kan temperaturen holde seg konstant mens isen smelter. Energien går da til å endre den molekylære organiseringen og de intermolekylære vekselvirkningene, ikke bare til å øke molekylenes bevegelsesenergi. Vi skal se nærmere på faseendringer i senere kapitler.</p>
+<p>Temperaturen sier derfor ikke hvor mye total indre energi et system inneholder. Den forteller hvordan energi er fordelt og hvilken termisk tilstand systemet befinner seg i.</p>
+<p><img alt="shaved_ice" src="../_images/shaved_ice.svg" /></p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave🍧</p>
+<p>Du har <span class="math notranslate nohighlight">\(1\ \mathrm{mol}\)</span> heliumgass ved <span class="math notranslate nohighlight">\(0\ ^\circ\mathrm{C}\)</span> og en stor blokk med is ved <span class="math notranslate nohighlight">\(0\ ^\circ\mathrm{C}\)</span>. Begge har samme temperatur. Betyr det at de har samme indre energi per partikkel?</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Nei. Samme temperatur betyr at systemene er i samme termiske tilstand, men den indre energien avhenger også av hvilke frihetsgrader og intermolekylære vekselvirkninger som finnes. Heliumgassen og isen har derfor ikke samme indre energi per partikkel selv om temperaturen er den samme.</p>
+</div>
+</details></section>
+<section id="tilbake-til-den-generelle-temperaturdefinisjonen">
+<h3>Tilbake til den generelle temperaturdefinisjonen<a class="headerlink" href="#tilbake-til-den-generelle-temperaturdefinisjonen" title="Link to this heading">#</a></h3>
+<p>I <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#temperatur">entropikapitlet</a> definerte vi temperatur ved</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{T}=\left(\frac{\partial S}{\partial U}\right)_{V,N}\]</div>
+<p>Denne definisjonen er generell. Sammenhengen</p>
+<div class="math notranslate nohighlight">
+\[\langle E_\mathrm{trans}\rangle=\frac32k_\mathrm{B}T\]</div>
+<p>er derimot et resultat for klassisk translasjonsbevegelse. Gassmodellen gir oss dermed en konkret molekylær tolkning av et temperaturbegrep som gjelder langt mer generelt.</p>
+<p>Når temperaturen øker, blir Maxwell–Boltzmann-fordelingen bredere og forskyves mot høyere fart. Det får store konsekvenser i kjemien, fordi andelen molekyler i den energirike halen av fordelingen øker raskt. Vi kommer tilbake til dette når vi studerer reaksjonskinetikk.</p>
+</section>
+</section>
+<section id="hvor-kommer-trykk-fra">
+<h2>Hvor kommer trykk fra?<a class="headerlink" href="#hvor-kommer-trykk-fra" title="Link to this heading">#</a></h2>
+<p>Vi har nå knyttet temperatur til den statistiske fordelingen av molekylenes bevegelse. Nå skal vi gjøre noe som er selve kjernen i kinetisk gassteori: Vi skal utlede en makroskopisk, målbar størrelse fra molekylær mekanikk.</p>
+<p>Trykk er noe håndgripelig som du kan lese av på et manometer. Vi skal nå vise hvordan dette trykket følger av at gassen består av partikler som beveger seg og kolliderer med veggene i beholderen.</p>
+<section id="hvorfor-har-en-gass-trykk">
+<h3>Hvorfor har en gass trykk?<a class="headerlink" href="#hvorfor-har-en-gass-trykk" title="Link to this heading">#</a></h3>
+<p>Når du åpner en brusflaske, hører du det med én gang: et karakteristisk sus når gassen slipper ut. Før du åpnet flasken, trykket gassen inni mot glasset, mot væskeoverflaten og mot korken – jevnt, i alle retninger, og helt uten pause. Det samme skjer inni et bildekk, i en ballong og i lufta rundt deg akkurat nå.</p>
+<p><img alt="brus" src="../_images/brus.svg" /></p>
+<p>Men hva er egentlig dette trykket? Hva er det som faktisk dytter?</p>
+<div class="important admonition">
+<p class="admonition-title">Trykk</p>
+<p>Trykk er definert som kraft per areal:</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{F}{A}\]</div>
+<p>SI-enheten for trykk er pascal (<span class="math notranslate nohighlight">\(\mathrm{Pa}\)</span>), der <span class="math notranslate nohighlight">\(1\ \mathrm{Pa}=1\ \mathrm{N/m^2}\)</span>.</p>
+</div>
+</section>
+<section id="svaret-ligger-pa-molekylniva">
+<h3>Svaret ligger på molekylnivå<a class="headerlink" href="#svaret-ligger-pa-molekylniva" title="Link to this heading">#</a></h3>
+<div class="important admonition">
+<p class="admonition-title">Kjerneidé</p>
+<p>Trykk oppstår fordi et enormt antall molekyler kolliderer med veggene i beholderen og overfører bevegelsesmengde til dem.</p>
+</div>
+<p>Ett enkelt molekyl som treffer en vegg, gir et ekstremt lite dytt. Men en gass inneholder astronomiske mengder molekyler, og de kolliderer med veggene kontinuerlig. Når vi summerer alle disse små, tilfeldige støtene, får vi makroskopisk en jevn kraft mot veggen. Det er denne kraften per areal vi kaller trykk.</p>
+<p><img alt="vegg" src="../_images/vegg.svg" /></p>
+<p>Dette er et godt eksempel på hvordan en makroskopisk egenskap oppstår fra mikroskopiske hendelser. Trykk er ikke en egenskap ved ett bestemt molekyl, men en statistisk egenskap ved hele gassen.</p>
+</section>
+</section>
+<section id="utledning-av-den-ideelle-gassloven">
+<h2>Utledning av den ideelle gassloven<a class="headerlink" href="#utledning-av-den-ideelle-gassloven" title="Link to this heading">#</a></h2>
+<p>Fra generell kjemi kjenner du til den ideelle gassloven. Her skal vi utlede den ved hjelp av molekylære prinsipper.</p>
+<p>Før vi begynner, er det nyttig å vite hva vi prøver å gjøre. Vi skal først finne hvor mye bevegelsesmengde ett molekyl overfører i ett støt. Deretter teller vi hvor mange molekyler som kan nå veggen i løpet av et kort tidsintervall og summerer bidragene deres. Til slutt kobler vi molekylenes bevegelse til temperatur.</p>
+<section id="ideelle-gasser">
+<h3>Ideelle gasser<a class="headerlink" href="#ideelle-gasser" title="Link to this heading">#</a></h3>
+<p>Vi regner her med at gassen er ideell. Dette er en rimelig modell for mange gasser ved normale trykk- og temperaturtilstander. Det betyr at vi gjør to sentrale antakelser:</p>
+<ul class="simple">
+<li><p>Molekylene behandles som punkter uten eget volum.</p></li>
+<li><p>Det finnes ingen intermolekylære krefter mellom molekylene mellom kollisjonene.</p></li>
+</ul>
+<p>Vi antar i tillegg at kollisjonene er elastiske, slik at total kinetisk energi bevares i støtene.</p>
+</section>
+<section id="litt-om-bevegelsesmengde">
+<h3>Litt om bevegelsesmengde<a class="headerlink" href="#litt-om-bevegelsesmengde" title="Link to this heading">#</a></h3>
+<p>For å utlede gassloven trenger vi bare én sentral størrelse fra mekanikken.</p>
+<p><strong>Bevegelsesmengde</strong> er definert som <span class="math notranslate nohighlight">\(p=mv\)</span>. Kraft kan uttrykkes som endring i bevegelsesmengde per tid (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#gjennomsnittlig-endringsrate">mer om gjennomsnittlig endringsrate</a>):</p>
+<div class="math notranslate nohighlight">
+\[F=\frac{\Delta p}{\Delta t}\]</div>
+<p>Skal vi finne kraften gassen utøver på en vegg, trenger vi derfor å finne ut to ting: <em>hvor mye</em> bevegelsesmengde som overføres i hvert støt, og <em>hvor ofte</em> støtene skjer.</p>
+</section>
+<section id="utledningen-trinn-for-trinn">
+<h3>Utledningen, trinn for trinn<a class="headerlink" href="#utledningen-trinn-for-trinn" title="Link to this heading">#</a></h3>
+<p>Vi ser på en beholder med volum <span class="math notranslate nohighlight">\(V\)</span>. Veggen vi studerer har areal <span class="math notranslate nohighlight">\(A\)</span>, og beholderen inneholder <span class="math notranslate nohighlight">\(N\)</span> molekyler, hvert med masse <span class="math notranslate nohighlight">\(m\)</span>.</p>
+<section id="trinn-1-ett-stot">
+<h4>Trinn 1: Ett støt<a class="headerlink" href="#trinn-1-ett-stot" title="Link to this heading">#</a></h4>
+<p>Et molekyl treffer veggen med hastighetskomponenten <span class="math notranslate nohighlight">\(v_x\)</span>. Vi antar at støtet er elastisk. Molekylet spretter tilbake med samme fartskomponent, men i motsatt retning: <span class="math notranslate nohighlight">\(v_x\rightarrow-v_x\)</span>. Bevegelsen parallelt med veggen blir ikke påvirket.</p>
+<p>Før støtet har molekylet bevegelsesmengden <span class="math notranslate nohighlight">\(+mv_x\)</span> i <span class="math notranslate nohighlight">\(x\)</span>-retningen. Etter støtet beveger det seg motsatt vei og har bevegelsesmengden <span class="math notranslate nohighlight">\(-mv_x\)</span>. Endringen blir derfor</p>
+<div class="math notranslate nohighlight">
+\[\Delta p=(-mv_x)-(mv_x)=-2mv_x\]</div>
+<p>Vi er interessert i størrelsen på bevegelsesmengden som overføres til veggen:</p>
+<div class="math notranslate nohighlight">
+\[|\Delta p|=2m|v_x|\]</div>
+<p>Veggen mottar like stor bevegelsesmengde i motsatt retning.</p>
+</section>
+<section id="trinn-2-hvor-mange-molekyler-nar-veggen-i-lopet-av-delta-t">
+<h4>Trinn 2: Hvor mange molekyler når veggen i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span>?<a class="headerlink" href="#trinn-2-hvor-mange-molekyler-nar-veggen-i-lopet-av-delta-t" title="Link to this heading">#</a></h4>
+<p>I en virkelig gass kolliderer molekylene også med hverandre. Vi bør derfor ikke basere utledningen på at <strong>det samme molekylet</strong> nødvendigvis går helt til motsatt vegg og tilbake. I stedet teller vi hvor mange molekyler som kan nå veggen i løpet av et kort tidsintervall <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<div class="note admonition">
+<p class="admonition-title">Middelfri vei</p>
+<p>Den <strong>middelfrie veien</strong>, ofte skrevet <span class="math notranslate nohighlight">\(\lambda\)</span>, er den gjennomsnittlige avstanden et molekyl beveger seg mellom to kollisjoner med andre molekyler. I en vanlig gass kan <span class="math notranslate nohighlight">\(\lambda\)</span> være mye mindre enn avstanden mellom veggene i beholderen. Derfor er det mer generelt å telle strømmen av molekyler mot veggen enn å følge ett bestemt molekyl fra vegg til vegg.</p>
+</div>
+<p>Tenk på et molekyl som beveger seg mot veggen med en positiv hastighetskomponent <span class="math notranslate nohighlight">\(v_x\)</span>. I løpet av tiden <span class="math notranslate nohighlight">\(\Delta t\)</span> rekker det avstanden</p>
+<div class="math notranslate nohighlight">
+\[v_x\Delta t\]</div>
+<p>langs <span class="math notranslate nohighlight">\(x\)</span>-retningen. Bare molekyler som ved starten av tidsintervallet befinner seg i et tynt lag med denne tykkelsen, kan derfor nå veggen. Veggen har areal <span class="math notranslate nohighlight">\(A\)</span>, så laget har volum</p>
+<div class="math notranslate nohighlight">
+\[\Delta V=A v_x\Delta t\]</div>
+<p>og utgjør brøkdelen</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta V}{V}=\frac{A v_x\Delta t}{V}\]</div>
+<p>av hele gassvolumet. Ved likevekt er molekylene jevnt fordelt i volumet. Den samme brøkdelen angir derfor sannsynligheten for at et molekyl med denne <span class="math notranslate nohighlight">\(v_x\)</span> befinner seg nær nok veggen til å treffe den i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+</section>
+<section id="trinn-3-fra-antall-stot-til-kraft">
+<h4>Trinn 3: Fra antall støt til kraft<a class="headerlink" href="#trinn-3-fra-antall-stot-til-kraft" title="Link to this heading">#</a></h4>
+<p>Fra trinn 1 vet vi at et molekyl som treffer veggen, overfører bevegelsesmengden <span class="math notranslate nohighlight">\(2mv_x\)</span>. For molekyl <span class="math notranslate nohighlight">\(i\)</span> med <span class="math notranslate nohighlight">\(v_{x,i}&gt;0\)</span> blir det forventede bidraget til bevegelsesmengden i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span> derfor</p>
+<div class="math notranslate nohighlight">
+\[2mv_{x,i}\frac{A v_{x,i}\Delta t}{V}\]</div>
+<p>Når vi summerer over alle molekylene som beveger seg mot veggen, får vi</p>
+<div class="math notranslate nohighlight">
+\[\Delta p_\mathrm{vegg}=\frac{2mA\Delta t}{V}\sum_{v_{x,i}&gt;0}v_{x,i}^2\]</div>
+<p>Ved likevekt er bevegelsen isotrop: positive og negative <span class="math notranslate nohighlight">\(v_x\)</span> forekommer symmetrisk. Siden vi summerer <span class="math notranslate nohighlight">\(v_x^2\)</span>, gir de to retningene like store bidrag i gjennomsnitt. For et makroskopisk antall molekyler kan vi derfor skrive</p>
+<div class="math notranslate nohighlight">
+\[2\sum_{v_{x,i}&gt;0}v_{x,i}^2=\sum_{i=1}^{N}v_{x,i}^2\]</div>
+<p>og kraften på veggen blir</p>
+<div class="math notranslate nohighlight">
+\[F=\frac{\Delta p_\mathrm{vegg}}{\Delta t}
+=\frac{mA}{V}\sum_{i=1}^{N}v_{x,i}^2\]</div>
+<p>Vi innfører nå gjennomsnittet</p>
+<div class="math notranslate nohighlight">
+\[\langle v_x^2\rangle=\frac{1}{N}\sum_{i=1}^{N}v_{x,i}^2\]</div>
+<p>og får dermed</p>
+<div class="math notranslate nohighlight">
+\[F=\frac{NmA}{V}\langle v_x^2\rangle\]</div>
+<p>Her ser vi hvorfor hastighetskomponenten kommer inn i andre potens: Molekyler med stor <span class="math notranslate nohighlight">\(v_x\)</span> overfører mer bevegelsesmengde i hvert støt <strong>og</strong> kan nå veggen fra et større volum i løpet av samme tidsintervall.</p>
+</section>
+<section id="trinn-4-fra-v-x-til-den-totale-farten-v">
+<h4>Trinn 4: Fra <span class="math notranslate nohighlight">\(v_x\)</span> til den totale farten <span class="math notranslate nohighlight">\(v\)</span><a class="headerlink" href="#trinn-4-fra-v-x-til-den-totale-farten-v" title="Link to this heading">#</a></h4>
+<p>For ett molekyl er farten knyttet til de tre hastighetskomponentene ved</p>
+<div class="math notranslate nohighlight">
+\[v^2=v_x^2+v_y^2+v_z^2\]</div>
+<p>Det samme gjelder når vi tar gjennomsnittet over alle molekylene:</p>
+<div class="math notranslate nohighlight">
+\[\langle v^2\rangle=\langle v_x^2\rangle+\langle v_y^2\rangle+\langle v_z^2\rangle\]</div>
+<p>Ingen retning er foretrukket i en gass ved likevekt. Bevegelsen er derfor i gjennomsnitt fordelt likt mellom de tre romretningene:</p>
+<div class="math notranslate nohighlight">
+\[\langle v_x^2\rangle=\langle v_y^2\rangle=\langle v_z^2\rangle\]</div>
+<p>Dermed får vi</p>
+<div class="math notranslate nohighlight">
+\[\langle v_x^2\rangle=\frac13\langle v^2\rangle\]</div>
+</section>
+<section id="trinn-5-fra-kraft-til-trykk">
+<h4>Trinn 5: Fra kraft til trykk<a class="headerlink" href="#trinn-5-fra-kraft-til-trykk" title="Link to this heading">#</a></h4>
+<p>Nå går vi fra kraften på én vegg til trykket i gassen. Trykk er kraft per areal:</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{F}{A}\]</div>
+<p>Fra trinn 3 har vi</p>
+<div class="math notranslate nohighlight">
+\[F=\frac{NmA}{V}\langle v_x^2\rangle\]</div>
+<p>Når vi deler på veggens areal <span class="math notranslate nohighlight">\(A\)</span>, får vi derfor direkte</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{Nm}{V}\langle v_x^2\rangle\]</div>
+<p>Fra trinn 4 vet vi at</p>
+<div class="math notranslate nohighlight">
+\[\langle v_x^2\rangle=\frac13\langle v^2\rangle\]</div>
+<p>og dermed</p>
+<div class="math notranslate nohighlight">
+\[PV=\frac13Nm\langle v^2\rangle\]</div>
+<p>Dette er et rent mekanisk resultat. Vi har ennå ikke brukt temperaturbegrepet.</p>
+<p>Den gjennomsnittlige translasjonsenergien til ett molekyl er</p>
+<div class="math notranslate nohighlight">
+\[\langle E_\mathrm{trans}\rangle=\frac12m\langle v^2\rangle\]</div>
+<p>Dermed kan vi skrive</p>
+<div class="math notranslate nohighlight">
+\[PV=\frac23N\langle E_\mathrm{trans}\rangle\]</div>
+<p>Trykket bestemmes altså av hvor mange partikler vi har per volum, og hvor stor translasjonsenergi de i gjennomsnitt har.</p>
+</section>
+<section id="trinn-6-temperaturen-kobles-pa">
+<h4>Trinn 6: Temperaturen kobles på<a class="headerlink" href="#trinn-6-temperaturen-kobles-pa" title="Link to this heading">#</a></h4>
+<p>Nå trenger vi broa mellom molekylenes bevegelse og den makroskopiske temperaturen.</p>
+<p>Fra ekvipartisjonsteoremet i forrige kapittel vet vi at de tre translasjonelle frihetsgradene til sammen gir</p>
+<div class="math notranslate nohighlight">
+\[\langle E_\mathrm{trans}\rangle=\frac32k_\mathrm{B}T\]</div>
+<p>Setter vi dette inn i uttrykket over, får vi</p>
+<div class="math notranslate nohighlight">
+\[PV=\frac23N\left(\frac32k_\mathrm{B}T\right)\]</div>
+<p>og dermed</p>
+<div class="math notranslate nohighlight">
+\[PV=Nk_\mathrm{B}T\]</div>
+<p>Dette er idealgassloven skrevet på partikkelnivå. For å få den vanlige formen bruker vi</p>
+<div class="math notranslate nohighlight">
+\[N=nN_A\]</div>
+<p>og</p>
+<div class="math notranslate nohighlight">
+\[R=N_Ak_\mathrm{B}\]</div>
+<p>Da får vi til slutt</p>
+<div class="math notranslate nohighlight">
+\[PV=nRT\]</div>
+<p>Vi har dermed utledet idealgassloven ved å koble molekylenes bevegelse til statistiske gjennomsnittsverdier og temperatur.</p>
+<div class="important admonition">
+<p class="admonition-title">Tilstandslikningen for ideelle gasser</p>
+<div class="math notranslate nohighlight">
+\[PV=nRT\]</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>Den ideelle gassloven er <span class="math notranslate nohighlight">\(PV = nRT\)</span>, der <span class="math notranslate nohighlight">\(R = 8.314\ \text{J/(mol K)}\)</span>. Stoffmengden kan også skrives <span class="math notranslate nohighlight">\(n = \frac{m}{M}\)</span>, der <span class="math notranslate nohighlight">\(m\)</span> er massen og <span class="math notranslate nohighlight">\(M\)</span> molmassen.</p>
+<p><strong>a)</strong> En beholder på <span class="math notranslate nohighlight">\(5.0\ \text{L}\)</span> inneholder <span class="math notranslate nohighlight">\(2.0\ \text{mol}\)</span> gass ved <span class="math notranslate nohighlight">\(25\ \text{°C}\)</span>. Finn trykket i beholderen.</p>
+<p><strong>b)</strong> En kolbe på <span class="math notranslate nohighlight">\(2.0\ \text{L}\)</span> inneholder <span class="math notranslate nohighlight">\(8.0\ \text{g}\)</span> oksygengass (O₂, molmasse <span class="math notranslate nohighlight">\(32\ \text{g/mol}\)</span>) ved <span class="math notranslate nohighlight">\(25\ \text{°C}\)</span>. Finn trykket i kolben.</p>
+<p><strong>c)</strong> En gassbeholder på <span class="math notranslate nohighlight">\(10\ \text{L}\)</span> inneholder nitrogengass (N₂, molmasse <span class="math notranslate nohighlight">\(28\ \text{g/mol}\)</span>) ved et trykk på <span class="math notranslate nohighlight">\(1.5\ \text{bar}\)</span> og en temperatur på <span class="math notranslate nohighlight">\(27\ \text{°C}\)</span>. Finn massen av gassen i beholderen.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Gasskonstanten <span class="math notranslate nohighlight">\(R = 8.314\ \text{J/(mol K)}\)</span> krever SI-enheter: volum i <span class="math notranslate nohighlight">\(\text{m}^3\)</span>, trykk i <span class="math notranslate nohighlight">\(\text{Pa}\)</span>, temperatur i <span class="math notranslate nohighlight">\(\text{K}\)</span> og masse i <span class="math notranslate nohighlight">\(\text{kg}\)</span>. Vi må derfor gjøre om alle oppgitte størrelser først.</p>
+<p class="sd-card-text"><strong>a)</strong> Vi gjør om: <span class="math notranslate nohighlight">\(V = 5.0\ \text{L} = 5.0 \times 10^{-3}\ \text{m}^3\)</span> og <span class="math notranslate nohighlight">\(T = 25\ \text{°C} = 298\ \text{K}\)</span>. Løser for trykket:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P = \frac{nRT}{V} = \frac{2.0 \cdot 8.314 \cdot 298}{5.0 \times 10^{-3}} = 9.9 \times 10^5\ \text{Pa} \approx 9.9\ \text{bar}\)</span></p>
+<p class="sd-card-text"><strong>b)</strong> Vi gjør om: <span class="math notranslate nohighlight">\(V = 2.0\ \text{L} = 2.0 \times 10^{-3}\ \text{m}^3\)</span>, <span class="math notranslate nohighlight">\(T = 298\ \text{K}\)</span>, <span class="math notranslate nohighlight">\(m = 8.0\ \text{g} = 8.0 \times 10^{-3}\ \text{kg}\)</span> og <span class="math notranslate nohighlight">\(M = 32\ \text{g/mol} = 32 \times 10^{-3}\ \text{kg/mol}\)</span>. Først stoffmengden:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(n = \frac{m}{M} = \frac{8.0 \times 10^{-3}}{32 \times 10^{-3}} = 0.25\ \text{mol}\)</span></p>
+<p class="sd-card-text">Så trykket:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P = \frac{nRT}{V} = \frac{0.25 \cdot 8.314 \cdot 298}{2.0 \times 10^{-3}} = 3.1 \times 10^5\ \text{Pa} \approx 3.1\ \text{bar}\)</span></p>
+<p class="sd-card-text"><strong>c)</strong> Vi gjør om: <span class="math notranslate nohighlight">\(V = 10\ \text{L} = 10 \times 10^{-3}\ \text{m}^3\)</span>, <span class="math notranslate nohighlight">\(P = 1.5\ \text{bar} = 1.5 \times 10^5\ \text{Pa}\)</span>, <span class="math notranslate nohighlight">\(T = 27\ \text{°C} = 300\ \text{K}\)</span> og <span class="math notranslate nohighlight">\(M = 28\ \text{g/mol} = 28 \times 10^{-3}\ \text{kg/mol}\)</span>. Først stoffmengden:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(n = \frac{PV}{RT} = \frac{1.5 \times 10^5 \cdot 10 \times 10^{-3}}{8.314 \cdot 300} = 0.60\ \text{mol}\)</span></p>
+<p class="sd-card-text">Så massen fra <span class="math notranslate nohighlight">\(n = \frac{m}{M}\)</span>, altså <span class="math notranslate nohighlight">\(m = nM\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(m = 0.60 \cdot 28 \times 10^{-3}\ \text{kg} = 1.7 \times 10^{-2}\ \text{kg} = 17\ \text{g}\)</span></p>
+</div>
+</details><p>Du kan også utforske utledningen av idealgassloven ved hjelp av simuleringen nededenfor.</p>
+<iframe src="Simuleringer/idealgassloven-simulering.html" width="100%" height="780" style="border: 0;" loading="lazy"></iframe>
+</section>
+</section>
+<section id="daltons-lov-om-partialtrykk">
+<h3>Daltons lov om partialtrykk<a class="headerlink" href="#daltons-lov-om-partialtrykk" title="Link to this heading">#</a></h3>
+<p>Hva skjer når en gass består av flere ulike stoffer?</p>
+<p>Til nå har vi stort sett sett for oss en gass med bare én type molekyler. Men går vi tilbake til utledningen av den ideelle gassloven, ser vi at vi aldri brukte at alle molekylene måtte være like. Vi summerte bidraget fra hvert molekyl som traff veggen, og det fungerer like godt for en gassblanding.</p>
+<p>Vi kan derfor gruppere molekylene etter hvilken gass de tilhører. Anta at en beholder inneholder nitrogen (<span class="math notranslate nohighlight">\(\mathrm{N_2}\)</span>) og oksygen (<span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span>). Ved samme temperatur har begge komponentene samme gjennomsnittlige translasjonsenergi per molekyl, selv om de har ulike masser og typiske farter.</p>
+<p>Hver komponent kan derfor behandles som om den var alene i det samme volumet. For komponent <span class="math notranslate nohighlight">\(i\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[P_i=\frac{n_iRT}{V}\]</div>
+<p>Størrelsen <span class="math notranslate nohighlight">\(P_i\)</span> kalles <strong>partialtrykket</strong>. Det er trykket denne komponenten ville hatt dersom den alene fylte beholderen ved samme temperatur og volum.</p>
+<p>Fordi hver gass bidrar uavhengig, blir totaltrykket summen av partialtrykkene:</p>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{tot}=\sum_iP_i\]</div>
+<p>Dette er <strong>Daltons lov om partialtrykk</strong>.</p>
+<p>Det er ofte praktisk å bruke molfraksjonen, eller molbrøken,</p>
+<div class="math notranslate nohighlight">
+\[x_i=\frac{n_i}{n_\mathrm{tot}}\]</div>
+<p>Da får vi</p>
+<div class="math notranslate nohighlight">
+\[P_i=x_iP_\mathrm{tot}\]</div>
+<p>Utgjør nitrogen for eksempel 80 % av stoffmengden i en ideell gassblanding, står nitrogen også for 80 % av totaltrykket.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">En beholder inneholder</p>
+<ul class="simple">
+<li><p class="sd-card-text">1 mol <span class="math notranslate nohighlight">\(\mathrm{H_2}\)</span></p></li>
+<li><p class="sd-card-text">1 mol <span class="math notranslate nohighlight">\(\mathrm{CO_2}\)</span></p></li>
+</ul>
+<p class="sd-card-text">ved samme temperatur.</p>
+<p class="sd-card-text">Siden begge gassene har samme stoffmengde, får de like store partialtrykk:</p>
+<div class="math notranslate nohighlight">
+\[P_\mathrm{H_2}=P_\mathrm{CO_2}=\frac12P_\mathrm{tot}\]</div>
+<p class="sd-card-text">Dette kan virke overraskende, fordi et <span class="math notranslate nohighlight">\(\mathrm{CO_2}\)</span>-molekyl er omtrent 22 ganger tyngre enn et <span class="math notranslate nohighlight">\(\mathrm{H_2}\)</span>-molekyl.</p>
+<p class="sd-card-text"><img alt="dalton" src="../_images/Dalton.svg" /></p>
+<p class="sd-card-text">Nøkkelen er at de tunge molekylene beveger seg saktere. De overfører mer bevegelsesmengde i hvert typiske støt, men treffer veggen sjeldnere. De lette molekylene treffer oftere, men overfører mindre bevegelsesmengde per støt. Ved samme temperatur veier disse effektene opp for hverandre.</p>
+<p class="sd-card-text">For en ideell gass er det derfor antall molekyler, ikke molekylmassen i seg selv, som avgjør partialtrykket.</p>
+</div>
+</div>
+<hr class="docutils" />
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave</p>
+<p>I samme beholder gir 1 mol <span class="math notranslate nohighlight">\(\mathrm{H_2}\)</span> og 1 mol <span class="math notranslate nohighlight">\(\mathrm{CO_2}\)</span> like store partialtrykk, selv om molekylmassene er svært forskjellige. Forklar med egne ord hvorfor forskjellen i typisk fart ikke fører til forskjellige partialtrykk.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Partialtrykket er gitt ved <span class="math notranslate nohighlight">\(p = \frac{nRT}{V}\)</span>, og avhenger bare av stoffmengden, temperaturen og volumet - ikke av molekylmassen. Siden begge gassene har 1 mol i samme beholder ved samme temperatur, blir partialtrykkene like.</p>
+<p class="sd-card-text">At de typiske fartene er forskjellige, spiller ingen rolle: de lette <span class="math notranslate nohighlight">\(\mathrm{H_2}\)</span>-molekylene beveger seg raskt, men treffer veggen med liten kraft per støt, mens de tunge <span class="math notranslate nohighlight">\(\mathrm{CO_2}\)</span>-molekylene beveger seg sakte, men treffer hardere. De to effektene opphever hverandre nøyaktig, så hvert molekyl bidrar like mye til trykket i gjennomsnitt - uansett masse.</p>
+</div>
+</details><div class="important admonition">
+<p class="admonition-title">Oppsummering</p>
+<p>Den ideelle gassloven ble historisk oppdaget gjennom eksperimentelle målinger. Kinetisk gassteori viser hvorfor loven følger av molekylær bevegelse.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Mikroskopisk betydning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(P\)</span> (trykk)</strong></p></td>
+<td><p>Hvor mye bevegelsesmengde molekylene samlet overfører til veggene per tid og areal.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(V\)</span> (volum)</strong></p></td>
+<td><p>Hvor stort rom partiklene har å bevege seg i.</p></td>
+</tr>
+<tr class="row-even"><td><p><strong><span class="math notranslate nohighlight">\(N\)</span> (antall)</strong></p></td>
+<td><p>Hvor mange molekyler som bidrar.</p></td>
+</tr>
+<tr class="row-odd"><td><p><strong><span class="math notranslate nohighlight">\(T\)</span> (temperatur)</strong></p></td>
+<td><p>Bestemmer den gjennomsnittlige translasjonsenergien per molekyl.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</section>
+<section id="tre-viktige-innsikter-a-ta-med-videre">
+<h3>Tre viktige innsikter å ta med videre<a class="headerlink" href="#tre-viktige-innsikter-a-ta-med-videre" title="Link to this heading">#</a></h3>
+<ol class="arabic simple">
+<li><p><strong>Trykk er en statistisk størrelse.</strong> Ett enkelt molekyl har ikke et stabilt makroskopisk trykk. Trykk oppstår når vi midler over enorme mengder kollisjoner.</p></li>
+<li><p><strong>Trykk er en <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/A1_grunnleggende_begreper.html#intensive-og-ekstensive-storrelser">intensiv størrelse</a>.</strong> Hvis vi slår sammen to identiske beholdere med gass ved samme temperatur og trykk, dobles både volumet og antallet partikler, mens trykket forblir det samme.</p></li>
+<li><p><strong>Mønsteret i tankegangen er kjernen i statistisk mekanikk.</strong> Vi starter med en mikroskopisk modell, bruker sannsynligheter og gjennomsnittsverdier, og ender med en makroskopisk størrelse vi kan måle.</p></li>
+</ol>
+<div class="note admonition">
+<p class="admonition-title">Hint videre: et lite blikk på reelle gasser</p>
+<p>Utledningen ovenfor er elegant, men hviler på sterke forenklinger. I virkeligheten har molekyler et endelig volum, og de vekselvirker med hverandre.</p>
+<ul class="simple">
+<li><p><strong>Molekylenes eget volum:</strong> Ved høyt trykk opptar molekylene en ikke-neglisjerbar del av beholderen. Det tilgjengelige volumet blir mindre enn <span class="math notranslate nohighlight">\(V\)</span>, og dette kan gi et høyere trykk enn idealgassmodellen forutsier.</p></li>
+<li><p><strong>Intermolekylære tiltrekningskrefter:</strong> Tiltrekning mellom molekylene reduserer i gjennomsnitt overføringen av bevegelsesmengde til veggene og kan gi lavere trykk enn idealgassmodellen forutsier.</p></li>
+</ul>
+<p>Ved lav tetthet og tilstrekkelig høy temperatur er disse avvikene ofte små. Ved høyt trykk eller lav temperatur blir de stadig viktigere. I neste kapittel ser vi derfor nærmere på intermolekylære krefter og reelle gasser.</p>
+</div>
+</section>
+<section id="temperatur-trykk-og-likevekt-et-blikk-framover">
+<h3>Temperatur, trykk og likevekt – et blikk framover<a class="headerlink" href="#temperatur-trykk-og-likevekt-et-blikk-framover" title="Link to this heading">#</a></h3>
+<p>Så langt har vi brukt kinetisk gassteori til å forstå trykk, temperatur og den ideelle gassloven fra et molekylært perspektiv. De samme størrelsene, særlig temperatur og trykk, blir også viktige når vi senere skal studere kjemiske reaksjoner og likevekter.</p>
+<p>Her er det viktig å skille mellom to spørsmål: «Hvor raskt skjer en reaksjon?» og «Hvilken sammensetning gjelder for likevekten?».</p>
+<p>Når temperaturen øker, endres Maxwell–Boltzmann-fordelingen. En større andel av molekylene får da tilstrekkelig energi til å passere en aktiveringsbarriere, og reaksjonshastigheten kan øke kraftig. Dette handler om kinetikk.</p>
+<p>Temperaturen kan imidlertid også påvirke selve likevektsposisjonen. Dette er en termodynamisk effekt som vi senere skal knytte til Gibbs-energi og likevektskonstanten.</p>
+<p>Trykk blir særlig viktig for reaksjoner mellom gasser. Dersom antallet gassmolekyler er forskjellig på de to sidene av en reaksjon, kan en endring i trykk forskyve likevekten. Også dette er en termodynamisk effekt.</p>
+<div class="note admonition">
+<p class="admonition-title">Viktig skille</p>
+<p>Maxwell–Boltzmann-fordelingen og aktiveringsenergien hjelper oss å forstå reaksjonshastighet
+likevektsposisjonen bestemmes av termodynamikken
+en katalysator kan endre hvor raskt likevekten nås, men ikke hvor likevekten ligger</p>
+<p>Vi kommer tilbake til både kjemisk kinetikk og kjemisk likevekt senere i kurset.</p>
+</div>
+</section>
+</section>
+<section id="oppgaver">
+<h2>Oppgaver<a class="headerlink" href="#oppgaver" title="Link to this heading">#</a></h2>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 1: Hvorfor er gasser enkle å beskrive?</p>
+<p>En gass, en væske og et fast stoff kan alle bestå av nøyaktig de samme molekylene, men gassen er ofte mye enklere å beskrive statistisk.</p>
+<p>a) Forklar hvorfor en fortynnet gass er enklere å beskrive enn en væske eller et fast stoff.</p>
+<p>b) Hvilke to sentrale antakelser gjør vi om molekylene i en idealgass?</p>
+<p>c) Under hvilke forhold forventer du at en virkelig gass oppfører seg mest ideelt: ved høyt eller lavt trykk, og ved høy eller lav temperatur? Begrunn svaret på molekylnivå.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) I en fortynnet gass er molekylene langt fra hverandre og beveger seg tilnærmet uavhengig mellom kollisjonene. I væsker og faste stoffer ligger molekylene mye tettere, slik at intermolekylære krefter hele tiden påvirker bevegelsen deres. Vi må derfor ta hensyn til langt flere vekselvirkninger.</p>
+<p class="sd-card-text">b) I idealgassmodellen antar vi at</p>
+<ul class="simple">
+<li><p class="sd-card-text">molekylene kan behandles som punktpartikler uten eget volum</p></li>
+<li><p class="sd-card-text">det ikke virker intermolekylære krefter mellom molekylene mellom kollisjonene</p></li>
+</ul>
+<p class="sd-card-text">I tillegg antar vi elastiske kollisjoner.</p>
+<p class="sd-card-text">c) En virkelig gass oppfører seg mest ideelt ved <strong>lavt trykk og høy temperatur</strong>. Ved lavt trykk er avstanden mellom molekylene stor, slik at både molekylenes eget volum og intermolekylære krefter får liten betydning. Ved høy temperatur er molekylenes kinetiske energi stor sammenliknet med energien knyttet til tiltrekningen mellom dem.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 2: Maxwell–Boltzmann-fordelingen</p>
+<p>To beholdere inneholder henholdsvis <span class="math notranslate nohighlight">\(N_2\)</span> og <span class="math notranslate nohighlight">\(O_2\)</span> ved samme temperatur.</p>
+<p>a) Har alle molekylene i hver beholder samme fart? Forklar kort.</p>
+<p>b) Hva betyr det at <span class="math notranslate nohighlight">\(f(v)\)</span> er en <strong>sannsynlighetstetthet</strong> og ikke en sannsynlighet?</p>
+<p>c) Hva representerer arealet under Maxwell–Boltzmann-kurven mellom fartene <span class="math notranslate nohighlight">\(v_1\)</span> og <span class="math notranslate nohighlight">\(v_2\)</span>?</p>
+<p>d) Sammenlikn fartsfordelingen til <span class="math notranslate nohighlight">\(N_2\)</span> og <span class="math notranslate nohighlight">\(O_2\)</span>. Hvilken av gassene har størst typiske farter? Begrunn uten å regne.</p>
+<p>e) Temperaturen til begge gassene dobles. Hvordan påvirkes fordelingen?</p>
+<p>f) Sett de tre størrelsene i riktig rekkefølge:</p>
+<div class="math notranslate nohighlight">
+\[v_\mathrm{mp},\qquad \bar v,\qquad v_\mathrm{rms}\]</div>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) Nei. Molekylene kolliderer og utveksler energi, slik at de til enhver tid har en fordeling av forskjellige farter. Ved termisk likevekt er selve fordelingen stabil selv om farten til hvert enkelt molekyl hele tiden endrer seg.</p>
+<p class="sd-card-text">b) <span class="math notranslate nohighlight">\(f(v)\)</span> angir hvor tett sannsynligheten er fordelt omkring farten <span class="math notranslate nohighlight">\(v\)</span>. Verdien <span class="math notranslate nohighlight">\(f(v)\)</span> alene er derfor ikke sannsynligheten for at et molekyl har nøyaktig denne farten.</p>
+<p class="sd-card-text">For et lite intervall <span class="math notranslate nohighlight">\(dv\)</span> er sannsynligheten</p>
+<div class="math notranslate nohighlight">
+\[f(v)\,dv\]</div>
+<p class="sd-card-text">c) Arealet representerer sannsynligheten for at et tilfeldig valgt molekyl har en fart mellom <span class="math notranslate nohighlight">\(v_1\)</span> og <span class="math notranslate nohighlight">\(v_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[P(v_1&lt;v&lt;v_2)=\int_{v_1}^{v_2}f(v)\,dv\]</div>
+<p class="sd-card-text">Det totale arealet under hele kurven er 1.</p>
+<p class="sd-card-text">d) <span class="math notranslate nohighlight">\(N_2\)</span> har lavere molekylmasse enn <span class="math notranslate nohighlight">\(O_2\)</span> og får derfor større typiske farter ved samme temperatur. Begge gassene har imidlertid samme gjennomsnittlige translasjonsenergi per molekyl.</p>
+<p class="sd-card-text">e) Fordelingen forskyves mot større farter og blir bredere og lavere. Arealet under kurven er fortsatt 1.</p>
+<p class="sd-card-text">Alle de karakteristiske fartene er proporsjonale med <span class="math notranslate nohighlight">\(\sqrt{T}\)</span>, så en dobling av temperaturen øker dem med en faktor <span class="math notranslate nohighlight">\(\sqrt{2}\)</span>.</p>
+<p class="sd-card-text">f)</p>
+<div class="math notranslate nohighlight">
+\[v_\mathrm{mp}&lt;\bar v&lt;v_\mathrm{rms}\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 3: Temperatur og molekylær bevegelse</p>
+<p>Vi sammenlikner helium, nitrogen og karbondioksid ved samme temperatur.</p>
+<p>a) Hvilken av gassene har størst gjennomsnittlig translasjonsenergi per molekyl?</p>
+<p>b) Hvilken av gassene har størst typisk fart?</p>
+<p>c) Forklar hvorfor svarene på a) og b) ikke er i konflikt med hverandre.</p>
+<p>d) En gass varmes fra 300 K til 600 K. Hvor mye endres den gjennomsnittlige translasjonsenergien per molekyl?</p>
+<p>e) Betyr samme temperatur nødvendigvis at to stoffprøver har samme indre energi? Forklar.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) De har samme gjennomsnittlige translasjonsenergi. For en klassisk idealgass er</p>
+<div class="math notranslate nohighlight">
+\[\langle E_\mathrm{trans}\rangle=\frac32k_\mathrm{B}T\]</div>
+<p class="sd-card-text">Denne størrelsen avhenger av temperaturen, men ikke av molekylmassen.</p>
+<p class="sd-card-text">b) Helium har størst typisk fart fordi heliumatomene har minst masse.</p>
+<p class="sd-card-text">c) Den kinetiske energien er</p>
+<div class="math notranslate nohighlight">
+\[E_\mathrm{trans}=\frac12mv^2\]</div>
+<p class="sd-card-text">Et lett molekyl må derfor bevege seg raskere enn et tungt molekyl for å ha samme kinetiske energi.</p>
+<p class="sd-card-text">d) Den gjennomsnittlige translasjonsenergien er proporsjonal med <span class="math notranslate nohighlight">\(T\)</span>. Når temperaturen dobles fra 300 K til 600 K, dobles derfor også den gjennomsnittlige translasjonsenergien.</p>
+<p class="sd-card-text">e) Nei. Temperaturen bestemmer hvordan energi fordeles mellom tilgjengelige frihetsgrader, men den indre energien kan også inneholde rotasjonsenergi, vibrasjonsenergi og potensiell energi fra vekselvirkninger mellom molekylene. To systemer ved samme temperatur trenger derfor ikke ha samme indre energi.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 4: Fra molekylære støt til trykk</p>
+<p>En beholder med volum <span class="math notranslate nohighlight">\(V\)</span> inneholder <span class="math notranslate nohighlight">\(N\)</span> molekyler med masse <span class="math notranslate nohighlight">\(m\)</span>. Vi studerer en vegg med areal <span class="math notranslate nohighlight">\(A\)</span> og et kort tidsintervall <span class="math notranslate nohighlight">\(\Delta t\)</span>.</p>
+<p>a) Et molekyl beveger seg mot veggen med hastighetskomponenten <span class="math notranslate nohighlight">\(v_x&gt;0\)</span>. Forklar hvorfor det bare kan nå veggen i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span> dersom det i utgangspunktet befinner seg innenfor avstanden <span class="math notranslate nohighlight">\(v_x\Delta t\)</span> fra veggen.</p>
+<p>b) Vis at dette laget har volum <span class="math notranslate nohighlight">\(A v_x\Delta t\)</span>, og at det utgjør brøkdelen</p>
+<div class="math notranslate nohighlight">
+\[\frac{A v_x\Delta t}{V}\]</div>
+<p>av hele volumet.</p>
+<p>c) Ved et elastisk støt overfører molekylet bevegelsesmengden <span class="math notranslate nohighlight">\(2mv_x\)</span> til veggen. Forklar kvalitativt hvorfor bidraget fra molekyler med en bestemt <span class="math notranslate nohighlight">\(v_x\)</span> derfor blir proporsjonalt med <span class="math notranslate nohighlight">\(v_x^2\)</span>.</p>
+<p>d) Ved å summere over molekylene og bruke symmetrien mellom positive og negative <span class="math notranslate nohighlight">\(v_x\)</span>, får vi</p>
+<div class="math notranslate nohighlight">
+\[F=\frac{NmA}{V}\langle v_x^2\rangle\]</div>
+<p>Bruk dette til å vise at</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{Nm}{V}\langle v_x^2\rangle\]</div>
+<p>og deretter</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{Nm}{3V}\langle v^2\rangle\]</div>
+<p>for en isotrop gass.</p>
+<p>e) Bruk <span class="math notranslate nohighlight">\(\frac12m\langle v^2\rangle=\frac32k_\mathrm{B}T\)</span> til å vise at <span class="math notranslate nohighlight">\(PV=Nk_\mathrm{B}T\)</span>.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) I løpet av tiden <span class="math notranslate nohighlight">\(\Delta t\)</span> forflytter molekylet seg maksimalt <span class="math notranslate nohighlight">\(v_x\Delta t\)</span> i retning mot veggen. Molekyler som starter lenger unna, rekker derfor ikke fram i dette tidsintervallet.</p>
+<p class="sd-card-text">b) Laget har grunnflate <span class="math notranslate nohighlight">\(A\)</span> og tykkelse <span class="math notranslate nohighlight">\(v_x\Delta t\)</span>, så</p>
+<div class="math notranslate nohighlight">
+\[\Delta V=A v_x\Delta t\]</div>
+<p class="sd-card-text">og volumfraksjonen er <span class="math notranslate nohighlight">\(\Delta V/V=A v_x\Delta t/V\)</span>.</p>
+<p class="sd-card-text">c) Bevegelsesmengden per støt er proporsjonal med <span class="math notranslate nohighlight">\(v_x\)</span>. Samtidig er tykkelsen på laget som kan nå veggen i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span>, og dermed forventet antall treff, også proporsjonal med <span class="math notranslate nohighlight">\(v_x\)</span>. Produktet blir derfor proporsjonalt med <span class="math notranslate nohighlight">\(v_x^2\)</span>.</p>
+<p class="sd-card-text">d) Trykk er kraft per areal:</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{F}{A}=\frac{Nm}{V}\langle v_x^2\rangle\]</div>
+<p class="sd-card-text">I en isotrop gass er</p>
+<div class="math notranslate nohighlight">
+\[\langle v_x^2\rangle=\frac13\langle v^2\rangle\]</div>
+<p class="sd-card-text">slik at</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{Nm}{3V}\langle v^2\rangle\]</div>
+<p class="sd-card-text">e) Fra temperatur–energi-sammenhengen får vi</p>
+<div class="math notranslate nohighlight">
+\[m\langle v^2\rangle=3k_\mathrm{B}T\]</div>
+<p class="sd-card-text">og dermed</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{N}{3V}\,3k_\mathrm{B}T=\frac{Nk_\mathrm{B}T}{V}\]</div>
+<p class="sd-card-text">altså</p>
+<div class="math notranslate nohighlight">
+\[PV=Nk_\mathrm{B}T\]</div>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 5: Idealgassloven og partialtrykk</p>
+<p>En beholder med volum 2,50 L inneholder en idealgass ved 298 K og et totaltrykk på <span class="math notranslate nohighlight">\(1,00\cdot10^5\)</span> Pa.</p>
+<p>a) Hvor mange mol gass er det i beholderen?</p>
+<p>Gassen består av 75,0 mol-% <span class="math notranslate nohighlight">\(N_2\)</span> og 25,0 mol-% <span class="math notranslate nohighlight">\(CO_2\)</span>.</p>
+<p>b) Finn partialtrykket til hver av gassene.</p>
+<p>c) Vi tilfører mer <span class="math notranslate nohighlight">\(N_2\)</span> mens volum og temperatur holdes konstant. Forklar på molekylnivå hvorfor totaltrykket øker.</p>
+<p>d) Volumet dobles deretter mens temperatur og stoffmengde holdes konstant. Hva skjer med totaltrykket? Forklar både ved hjelp av idealgassloven og på molekylnivå.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) Vi bruker</p>
+<div class="math notranslate nohighlight">
+\[PV=nRT\]</div>
+<p class="sd-card-text">og løser med hensyn på <span class="math notranslate nohighlight">\(n\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[n=\frac{PV}{RT}\]</div>
+<p class="sd-card-text">Med <span class="math notranslate nohighlight">\(V=2,50\cdot10^{-3}\)</span> m<span class="math notranslate nohighlight">\(^3\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[n=\frac{(1,00\cdot10^5\ \mathrm{Pa})(2,50\cdot10^{-3}\ \mathrm{m^3})}{(8,314\ \mathrm{J\,mol^{-1}K^{-1}})(298\ \mathrm{K})}\]</div>
+<div class="math notranslate nohighlight">
+\[n\approx0,101\ \mathrm{mol}\]</div>
+<p class="sd-card-text">b) Fra Daltons lov har vi</p>
+<div class="math notranslate nohighlight">
+\[P_i=x_iP_\mathrm{tot}\]</div>
+<p class="sd-card-text">For nitrogen:</p>
+<div class="math notranslate nohighlight">
+\[P_{N_2}=0,750\cdot1,00\cdot10^5\ \mathrm{Pa}=7,50\cdot10^4\ \mathrm{Pa}\]</div>
+<p class="sd-card-text">For karbondioksid:</p>
+<div class="math notranslate nohighlight">
+\[P_{CO_2}=0,250\cdot1,00\cdot10^5\ \mathrm{Pa}=2,50\cdot10^4\ \mathrm{Pa}\]</div>
+<p class="sd-card-text">Summen er</p>
+<div class="math notranslate nohighlight">
+\[P_{N_2}+P_{CO_2}=1,00\cdot10^5\ \mathrm{Pa}\]</div>
+<p class="sd-card-text">c) Når vi tilfører flere <span class="math notranslate nohighlight">\(N_2\)</span>-molekyler ved samme volum og temperatur, øker antallet kollisjoner med veggene per tidsenhet. Den gjennomsnittlige translasjonsenergien per molekyl er uendret fordi temperaturen er den samme, men flere molekyler bidrar til trykket. Derfor øker totaltrykket.</p>
+<p class="sd-card-text">d) Fra idealgassloven:</p>
+<div class="math notranslate nohighlight">
+\[P=\frac{nRT}{V}\]</div>
+<p class="sd-card-text">Ved konstant <span class="math notranslate nohighlight">\(n\)</span> og <span class="math notranslate nohighlight">\(T\)</span> er trykket omvendt proporsjonalt med volumet. Når volumet dobles, halveres derfor trykket.</p>
+<p class="sd-card-text">På molekylnivå blir avstanden mellom veggene større. Molekylene bruker lengre tid mellom kollisjonene med en bestemt vegg, slik at det overføres mindre bevegelsesmengde til veggen per tidsenhet. Temperaturen og dermed den gjennomsnittlige translasjonsenergien er uendret.</p>
+</div>
+</details><div class="tip admonition">
+<p class="admonition-title">Oppgave 6: Når idealgassmodellen ikke holder</p>
+<p>To gassprøver har samme temperatur og stoffmengde. Den ene befinner seg ved lavt trykk, mens den andre er komprimert til svært høyt trykk.</p>
+<p>a) Hvorfor blir antakelsen om at molekylene ikke har eget volum dårligere ved høyt trykk?</p>
+<p>b) Tiltrekkende intermolekylære krefter kan føre til at trykket til en reell gass blir lavere enn idealgassloven forutsier. Forklar dette på molekylnivå.</p>
+<p>c) Frastøtning og molekylenes endelige størrelse kan på den andre siden føre til høyere trykk enn idealgassloven forutsier. Hvorfor?</p>
+<p>d) Oppsummer med egne ord hvorfor idealgassloven likevel fungerer svært godt for mange gasser under vanlige forhold.</p>
+</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Løsningsforslag</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) Ved høyt trykk presses molekylene nærmere hverandre. Da utgjør volumet som molekylene selv opptar, en større andel av det totale volumet, og antakelsen om punktpartikler blir mindre god.</p>
+<p class="sd-card-text">b) Når molekylene tiltrekker hverandre, kan et molekyl som nærmer seg veggen trekkes tilbake av andre molekyler. Det overfører da i gjennomsnitt mindre bevegelsesmengde til veggen enn i idealgassmodellen. Det målte trykket kan derfor bli lavere.</p>
+<p class="sd-card-text">c) Ved svært korte avstander blir frastøtningen mellom molekylene sterk. I tillegg er det tilgjengelige volumet for molekylenes bevegelse mindre enn beholderens totale volum fordi molekylene selv opptar plass. Begge effektene kan bidra til et høyere trykk enn idealgassmodellen forutsier.</p>
+<p class="sd-card-text">d) Ved moderate eller lave trykk er avstanden mellom molekylene stor sammenliknet med størrelsen deres. Intermolekylære krefter virker da bare svakt gjennom mesteparten av tiden, og molekylenes eget volum er lite sammenliknet med beholderens volum. Da blir idealgassmodellen en svært god tilnærming.</p>
+</div>
+</details></section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="3_partisjonsfunksjonen.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Partisjonsfunksjonen og molekylær energi</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="5_intermolekyl%C3%A6re_krefter.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Intermolekylære krefter og reelle gasser</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#gasser-som-mangepartikkelsystem">Gasser som mangepartikkelsystem</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvordan-er-molekylenes-hastighet-fordelt">Hvordan er molekylenes hastighet fordelt?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#maxwellboltzmann-fordelingen">Maxwell–Boltzmann-fordelingen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-betyr-egentlig-f-v">Hva betyr egentlig <span class="math notranslate nohighlight">\(f(v)\)</span>?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-pavirker-fordelingen">Hva påvirker fordelingen?</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur">1. Temperatur</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#molekylmasse">2. Molekylmasse</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hva-er-egentlig-temperatur">Hva er egentlig temperatur?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-og-molekylbevegelse">Temperatur og molekylbevegelse</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-er-ikke-det-samme-som-energi">Temperatur er ikke det samme som energi</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tilbake-til-den-generelle-temperaturdefinisjonen">Tilbake til den generelle temperaturdefinisjonen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#hvor-kommer-trykk-fra">Hvor kommer trykk fra?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#hvorfor-har-en-gass-trykk">Hvorfor har en gass trykk?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#svaret-ligger-pa-molekylniva">Svaret ligger på molekylnivå</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utledning-av-den-ideelle-gassloven">Utledning av den ideelle gassloven</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ideelle-gasser">Ideelle gasser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#litt-om-bevegelsesmengde">Litt om bevegelsesmengde</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#utledningen-trinn-for-trinn">Utledningen, trinn for trinn</a><ul class="nav section-nav flex-column">
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-1-ett-stot">Trinn 1: Ett støt</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-2-hvor-mange-molekyler-nar-veggen-i-lopet-av-delta-t">Trinn 2: Hvor mange molekyler når veggen i løpet av <span class="math notranslate nohighlight">\(\Delta t\)</span>?</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-3-fra-antall-stot-til-kraft">Trinn 3: Fra antall støt til kraft</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-4-fra-v-x-til-den-totale-farten-v">Trinn 4: Fra <span class="math notranslate nohighlight">\(v_x\)</span> til den totale farten <span class="math notranslate nohighlight">\(v\)</span></a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-5-fra-kraft-til-trykk">Trinn 5: Fra kraft til trykk</a></li>
+<li class="toc-h4 nav-item toc-entry"><a class="reference internal nav-link" href="#trinn-6-temperaturen-kobles-pa">Trinn 6: Temperaturen kobles på</a></li>
+</ul>
+</li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#daltons-lov-om-partialtrykk">Daltons lov om partialtrykk</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#tre-viktige-innsikter-a-ta-med-videre">Tre viktige innsikter å ta med videre</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#temperatur-trykk-og-likevekt-et-blikk-framover">Temperatur, trykk og likevekt – et blikk framover</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgaver">Oppgaver</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

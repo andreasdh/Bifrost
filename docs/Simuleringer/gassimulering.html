@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gass i to kamre</title>
+</head>
+<body style="margin:0">
+
+<!-- ══ widget start ══ alt mellom disse merkene er selvstendig ══════════ -->
+<div id="gassim">
+
+  <div class="gs-bar">
+    <span class="gs-n">N =</span>
+    <div class="gs-seg">
+      <button type="button" data-n="4" aria-pressed="false">4</button>
+      <button type="button" data-n="20" class="on" aria-pressed="true">20</button>
+      <button type="button" data-n="100" aria-pressed="false">100</button>
+      <button type="button" data-n="200" aria-pressed="false">200</button>
+    </div>
+    <span class="gs-n">Start i</span>
+    <div class="gs-seg gs-side">
+      <button type="button" data-s="A" class="on" aria-pressed="true">A</button>
+      <button type="button" data-s="B" aria-pressed="false">B</button>
+    </div>
+    <button type="button" id="gs-reset" class="gs-ghost">Start på nytt</button>
+    <button type="button" id="gs-main" class="gs-primary">Åpne ventilen</button>
+  </div>
+
+  <canvas id="gs-box"></canvas>
+
+  <div class="gs-data">
+    <span>&Omega;(n<sub>A</sub> = <b id="gs-na">20</b>) = <b id="gs-om">1</b></span>
+    <span>&Omega;<sub>maks</sub> = <b id="gs-omax">1</b></span>
+  </div>
+
+  <canvas id="gs-hist"></canvas>
+
+  <div class="gs-foot">
+    <span class="gs-key"><i class="sw-bar"></i>simulert<i class="sw-line"></i>teori</span>
+    <span class="gs-x">n<sub>A</sub></span>
+    <span></span>
+  </div>
+
+</div>
+
+<style>
+#gassim{
+  --ink:#1f2933; --muted:#6b7480; --line:#cdd5dd;
+  --acc:#2c6e9b; --acc2:#c07423;
+  --tintA:rgba(44,110,155,0.055); --tintB:rgba(44,110,155,0.02);
+  --chip:rgba(44,110,155,0.09);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  color:var(--ink); max-width:760px; margin:0 auto; padding:2px 0 4px;
+  -webkit-font-smoothing:antialiased;
+}
+#gassim canvas{display:block;width:100%;}
+
+#gassim .gs-bar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px;}
+#gassim .gs-n{font-size:13px;color:var(--muted);letter-spacing:0.03em;}
+#gassim .gs-seg{display:inline-flex;border:1px solid var(--line);border-radius:7px;overflow:hidden;}
+#gassim .gs-seg button{
+  font:inherit;font-size:13px;padding:5px 14px;border:0;background:none;color:var(--muted);
+  cursor:pointer;border-right:1px solid var(--line);transition:background .12s,color .12s;
+}
+#gassim .gs-seg button:last-child{border-right:0;}
+#gassim .gs-seg button:hover{background:var(--chip);color:var(--ink);}
+#gassim .gs-seg button.on{background:var(--acc);color:#fff;}
+#gassim .gs-ghost{
+  font:inherit;font-size:13px;padding:6px 14px;margin-left:auto;cursor:pointer;
+  border:1px solid var(--line);border-radius:7px;background:none;color:var(--muted);
+  transition:color .12s,border-color .12s;
+}
+#gassim .gs-ghost:hover{color:var(--ink);border-color:var(--muted);}
+#gassim .gs-primary{
+  font:inherit;font-size:13px;padding:6px 16px;cursor:pointer;
+  border:1px solid var(--acc);border-radius:7px;background:var(--acc);color:#fff;
+  transition:background .12s,border-color .12s,color .12s;
+}
+#gassim .gs-primary:hover{background:#255c82;border-color:#255c82;}
+#gassim button:focus-visible{outline:2px solid var(--acc2);outline-offset:2px;}
+
+#gassim .gs-data{
+  display:flex;gap:22px;flex-wrap:wrap;margin:7px 2px 12px;
+  font-size:12.5px;color:var(--muted);font-variant-numeric:tabular-nums;
+}
+#gassim .gs-data b{font-weight:600;color:var(--ink);}
+
+#gassim .gs-foot{
+  display:grid;grid-template-columns:1fr auto 1fr;align-items:center;
+  margin-top:1px;font-size:11.5px;color:var(--muted);
+}
+#gassim .gs-key{display:flex;align-items:center;gap:6px;}
+#gassim .gs-key i{display:inline-block;vertical-align:middle;}
+#gassim .sw-bar{width:11px;height:9px;border-radius:1px;background:var(--acc);opacity:.5;}
+#gassim .sw-line{width:15px;border-top:2px solid var(--acc2);margin-left:8px;}
+#gassim .gs-x{font-style:italic;}
+
+@media (prefers-color-scheme: dark){
+  #gassim{
+    --ink:#e4e7eb; --muted:#a9b3bd; --line:rgba(255,255,255,0.2);
+    --acc:#7ec4e6; --acc2:#e2a44f;
+    --tintA:rgba(126,196,230,0.07); --tintB:rgba(126,196,230,0.025);
+    --chip:rgba(126,196,230,0.12);
+  }
+  #gassim .gs-seg button.on,#gassim .gs-primary{color:#12181d;}
+  #gassim .gs-primary:hover{background:#9ad3ef;border-color:#9ad3ef;}
+}
+@media (max-width:420px){
+  #gassim .gs-ghost{margin-left:0;}
+}
+</style>
+
+<script>
+(function(){
+"use strict";
+const root = document.getElementById('gassim');
+const bc = root.querySelector('#gs-box'), bx = bc.getContext('2d');
+const hc = root.querySelector('#gs-hist'), hx = hc.getContext('2d');
+const btn = root.querySelector('#gs-main');
+const btnReset = root.querySelector('#gs-reset');
+
+// ── parametre ────────────────────────────────────────────────────────
+const LW = 480, LH = 192;   // logisk koordinatsystem for kammerboksen
+const HH = 148;             // histogramhøyde i css-piksler
+const SPEED = 300;          // fysikksteg per sekund
+const EQUIL = 130;          // steg etter ventilåpning før vi teller statistikk
+const WALL = LW/2, GAP = LH*0.66, EDGE = 5;
+
+let N = 20, mol = [], open = false, running = false, steps = 0, startB = false;
+let bins = [], samples = 0, scale = 1, visible = true, C = {};
+let prev = 0, acc = 0;
+
+// ── farger leses fra CSS, så mørk modus følger med ───────────────────
+function readColors(){
+  const s = getComputedStyle(root);
+  const g = k => s.getPropertyValue(k).trim();
+  C = {ink:g('--ink'), muted:g('--muted'), line:g('--line'),
+       acc:g('--acc'), acc2:g('--acc2'), tintA:g('--tintA'), tintB:g('--tintB')};
+}
+
+// ── kombinatorikk ────────────────────────────────────────────────────
+function lgamma(x){
+  const c=[0.99999999999980993,676.5203681218851,-1259.1392167224028,
+           771.32342877765313,-176.61502916214059,12.507343278686905,
+           -0.13857109526572012,9.9843695780195716e-6,1.5056327351493116e-7];
+  if(x<0.5) return Math.log(Math.PI/Math.sin(Math.PI*x))-lgamma(1-x);
+  x-=1; let a=c[0]; const t=x+7.5;
+  for(let i=1;i<9;i++) a+=c[i]/(x+i);
+  return 0.5*Math.log(2*Math.PI)+(x+0.5)*Math.log(t)-t+Math.log(a);
+}
+function lnBinom(n,k){
+  if(k<0||k>n) return -Infinity;
+  return lgamma(n+1)-lgamma(k+1)-lgamma(n-k+1);
+}
+function fmt(ln){
+  if(!isFinite(ln)) return '0';
+  const l10 = ln/Math.LN10;
+  if(l10 < 7) return Math.round(Math.exp(ln)).toLocaleString('nb-NO');
+  const e = Math.floor(l10);
+  return (Math.pow(10,l10-e)).toFixed(1).replace('.',',')+' &middot; 10<sup>'+e+'</sup>';
+}
+
+// ── oppsett ──────────────────────────────────────────────────────────
+function radius(){ return N<=4 ? 7 : N<=20 ? 5.2 : N<=100 ? 3.4 : 2.6; }
+function reset(){
+  const r = radius(), x0 = startB ? WALL+EDGE+r : EDGE+r;
+  mol = [];
+  for(let i=0;i<N;i++){
+    const a = Math.random()*Math.PI*2, v = 1.5;
+    mol.push({x: x0+Math.random()*(WALL-2*EDGE-2*r),
+              y: EDGE+r+Math.random()*(LH-2*EDGE-2*r),
+              vx: Math.cos(a)*v, vy: Math.sin(a)*v, r});
+  }
+  open = false; running = false; steps = 0; acc = 0;
+  bins = new Array(N+1).fill(0); samples = 0;
+  updateBtn();
+  draw(true);
+}
+function updateBtn(){
+  btn.textContent = !open ? 'Åpne ventilen' : (running ? 'Pause' : 'Fortsett');
+}
+function nA(){ let s=0; for(const m of mol) if(m.x<WALL) s++; return s; }
+
+// ── fysikk ───────────────────────────────────────────────────────────
+function step(sub){
+  for(let s=0;s<sub;s++){
+    for(const m of mol){
+      let x = m.x+m.vx, y = m.y+m.vy, hit = false;
+      if(x < EDGE+m.r){ x = EDGE+m.r; m.vx = Math.abs(m.vx); hit = true; }
+      if(x > LW-EDGE-m.r){ x = LW-EDGE-m.r; m.vx = -Math.abs(m.vx); hit = true; }
+      if(y < EDGE+m.r){ y = EDGE+m.r; m.vy = Math.abs(m.vy); hit = true; }
+      if(y > LH-EDGE-m.r){ y = LH-EDGE-m.r; m.vy = -Math.abs(m.vy); hit = true; }
+      // veggen har en temperatur: retningen forstyrres litt ved hvert støt.
+      // Uten dette blir banene periodiske, og n_A treffer ikke binomialfordelingen.
+      if(hit){
+        const a = (Math.random()-0.5)*0.7, c = Math.cos(a), k = Math.sin(a);
+        const vx = m.vx*c - m.vy*k;
+        m.vy = m.vx*k + m.vy*c; m.vx = vx;
+      }
+      if(!open || Math.abs(y-LH/2) > GAP/2){
+        if(m.x <= WALL && x > WALL-m.r){ x = WALL-m.r; m.vx = -Math.abs(m.vx); }
+        else if(m.x >= WALL && x < WALL+m.r){ x = WALL+m.r; m.vx = Math.abs(m.vx); }
+      }
+      m.x = x; m.y = y;
+    }
+    if(open){
+      steps++;
+      if(steps > EQUIL && steps % 2 === 0){ bins[nA()]++; samples++; }
+    }
+  }
+}
+
+// ── tegning ──────────────────────────────────────────────────────────
+function fit(){
+  const dpr = window.devicePixelRatio || 1;
+  const w = bc.clientWidth || root.clientWidth || 640;
+  scale = w/LW;
+  bc.width = Math.round(w*dpr);
+  bc.height = Math.round(LH*scale*dpr);
+  bc.style.height = (LH*scale)+'px';
+  bx.setTransform(dpr*scale,0,0,dpr*scale,0,0);
+  hc.width = Math.round((hc.clientWidth||w)*dpr);
+  hc.height = Math.round(HH*dpr);
+  hc.style.height = HH+'px';
+  hx.setTransform(dpr,0,0,dpr,0,0);
+}
+
+function drawBox(){
+  const n = nA();
+  bx.clearRect(0,0,LW,LH);
+  bx.fillStyle = C.tintA; bx.fillRect(0,0,WALL,LH);
+  bx.fillStyle = C.tintB; bx.fillRect(WALL,0,LW-WALL,LH);
+  bx.strokeStyle = C.line; bx.lineWidth = 1;
+  bx.strokeRect(0.5,0.5,LW-1,LH-1);
+
+  // skillevegg
+  bx.strokeStyle = open ? C.line : C.muted;
+  bx.lineWidth = 2;
+  bx.beginPath();
+  if(open){
+    bx.moveTo(WALL,0); bx.lineTo(WALL,LH/2-GAP/2);
+    bx.moveTo(WALL,LH/2+GAP/2); bx.lineTo(WALL,LH);
+  }else{
+    bx.moveTo(WALL,0); bx.lineTo(WALL,LH);
+  }
+  bx.stroke();
+
+  // molekyler
+  bx.fillStyle = C.acc;
+  for(const m of mol){
+    bx.beginPath(); bx.arc(m.x,m.y,m.r,0,6.2832); bx.fill();
+  }
+
+  // tellere
+  bx.font = '600 21px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  bx.fillStyle = C.ink; bx.textBaseline = 'top';
+  bx.textAlign = 'left';  bx.fillText(n, 14, 12);
+  bx.textAlign = 'right'; bx.fillText(N-n, LW-14, 12);
+  bx.font = '12px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  bx.fillStyle = C.muted;
+  bx.textAlign = 'left';  bx.fillText('A', 14, 36);
+  bx.textAlign = 'right'; bx.fillText('B', LW-14, 36);
+}
+
+function drawHist(){
+  const W = hc.clientWidth || 640;
+  hx.clearRect(0,0,W,HH);
+  const padL=10, padR=10, padT=8, padB=19;
+  const pW = W-padL-padR, pH = HH-padT-padB;
+  const bw = pW/(N+1);
+
+  let maxP = 0;
+  for(let k=0;k<=N;k++) maxP = Math.max(maxP, Math.exp(lnBinom(N,k)-N*Math.LN2));
+  if(samples) for(let k=0;k<=N;k++) maxP = Math.max(maxP, bins[k]/samples);
+  maxP *= 1.12;
+
+  // simulerte søyler
+  const barW = Math.min(Math.max(bw*0.76, 1.2), 44);
+  hx.fillStyle = C.acc; hx.globalAlpha = 0.5;
+  if(samples) for(let k=0;k<=N;k++){
+    const h = (bins[k]/samples/maxP)*pH;
+    if(h > 0.4) hx.fillRect(padL+k*bw+(bw-barW)/2, padT+pH-h, barW, h);
+  }
+  hx.globalAlpha = 1;
+
+  // teoretisk binomialfordeling
+  hx.strokeStyle = C.acc2; hx.lineWidth = 1.8;
+  hx.beginPath();
+  for(let k=0;k<=N;k++){
+    const x = padL+k*bw+bw/2;
+    const y = padT+pH-(Math.exp(lnBinom(N,k)-N*Math.LN2)/maxP)*pH;
+    k ? hx.lineTo(x,y) : hx.moveTo(x,y);
+  }
+  hx.stroke();
+  if(N <= 20){
+    hx.fillStyle = C.acc2;
+    for(let k=0;k<=N;k++){
+      const x = padL+k*bw+bw/2;
+      const y = padT+pH-(Math.exp(lnBinom(N,k)-N*Math.LN2)/maxP)*pH;
+      hx.beginPath(); hx.arc(x,y,2.2,0,6.2832); hx.fill();
+    }
+  }
+
+  // akse og merker
+  hx.strokeStyle = C.line; hx.lineWidth = 1;
+  hx.beginPath(); hx.moveTo(padL,padT+pH+0.5); hx.lineTo(padL+pW,padT+pH+0.5); hx.stroke();
+  hx.fillStyle = C.muted; hx.textAlign = 'center'; hx.textBaseline = 'top';
+  hx.font = '10.5px -apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif';
+  [0, N/2, N].forEach(k=>{
+    hx.fillText(Math.round(k), padL+k*bw+bw/2, padT+pH+5);
+  });
+}
+
+let lastRead = -1;
+function readout(force){
+  const n = nA();
+  if(n === lastRead && !force) return;
+  lastRead = n;
+  root.querySelector('#gs-na').textContent = n;
+  root.querySelector('#gs-om').innerHTML = fmt(lnBinom(N,n));
+  root.querySelector('#gs-omax').innerHTML = fmt(lnBinom(N,Math.round(N/2)));
+}
+function draw(force){ drawBox(); drawHist(); readout(force); }
+
+// ── hendelser ────────────────────────────────────────────────────────
+btn.addEventListener('click', ()=>{
+  if(!open){ open = true; steps = 0; }
+  running = !running;
+  prev = performance.now(); acc = 0;
+  updateBtn();
+  draw(true);
+});
+btnReset.addEventListener('click', reset);
+root.querySelectorAll('.gs-side button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    root.querySelectorAll('.gs-side button').forEach(o=>{
+      o.classList.remove('on'); o.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    startB = b.dataset.s === 'B';
+    reset();
+  });
+});
+root.querySelectorAll('.gs-seg:not(.gs-side) button').forEach(b=>{
+  b.addEventListener('click', ()=>{
+    root.querySelectorAll('.gs-seg:not(.gs-side) button').forEach(o=>{
+      o.classList.remove('on'); o.setAttribute('aria-pressed','false');
+    });
+    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    N = +b.dataset.n;
+    reset();
+  });
+});
+new ResizeObserver(()=>{ fit(); draw(true); }).observe(root);
+matchMedia('(prefers-color-scheme: dark)').addEventListener('change', ()=>{ readColors(); draw(true); });
+new IntersectionObserver(e=>{ visible = e[0].isIntersecting; }, {threshold:0}).observe(root);
+
+// ── start ────────────────────────────────────────────────────────────
+readColors(); fit(); reset();
+(function loop(now){
+  const dt = Math.min((now - prev)/1000, 0.1);
+  prev = now;
+  if(running && visible){
+    acc += SPEED*dt;
+    const k = Math.floor(acc); acc -= k;
+    if(k){ step(k); draw(); }
+  }
+  requestAnimationFrame(loop);
+})(performance.now());
+})();
+</script>
+<!-- ══ widget end ══════════════════════════════════════════════════════ -->
+
+</body>
+</html>

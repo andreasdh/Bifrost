@@ -1,0 +1,2044 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>5. Flervariabel kalkulus og optimering &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/matematikk/flervariabel_kalkulus';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="6. Sannsynlighetsfordelinger og statistikk" href="statistikk.html" />
+    <link rel="prev" title="4. Funksjoner, derivasjon og integrasjon" href="kalkulus.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/matematikk/flervariabel_kalkulus.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>5. Flervariabel kalkulus og optimering</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flervariable-funksjoner">5.1 Flervariable funksjoner</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjoner-av-n-variabler">5.1.1 Funksjoner av n-variabler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisering-av-funksjoner-av-to-variabler">5.1.2 Visualisering av funksjoner av to variabler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partiellderiverte">5.2 Partiellderiverte</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisjonen-av-de-partiellderiverte">5.2.1 Definisjonen av de partiellderiverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blandede-partiellderiverte">5.2.2 Blandede partiellderiverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradienten">5.2.3 Gradienten</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#den-totale-differensialen">5.2.4 Den totale differensialen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dobbel-og-trippelintegraler">5.3 Dobbel-og trippelintegraler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrange-multiplikatormetode">5.4 Lagrange multiplikatormetode</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="flervariabel-kalkulus-og-optimering">
+<h1>5. Flervariabel kalkulus og optimering<a class="headerlink" href="#flervariabel-kalkulus-og-optimering" title="Link to this heading">#</a></h1>
+<p>I dette kapittelet utvider vi <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a> til å handle om funksjoner av flere variable. Har du ikke hatt MAT1110 tidligere er det meste nytt stoff, men en naturlig og logisk fortsettelse av hva vi hra gjort tidligere.</p>
+<section id="flervariable-funksjoner">
+<h2>5.1 Flervariable funksjoner<a class="headerlink" href="#flervariable-funksjoner" title="Link to this heading">#</a></h2>
+<p>Så langt har alle funksjonene våre hatt én <span class="math notranslate nohighlight">\(x\)</span>, men det er mange eksempler hvor én størrelse avhenger av flere enn én annen størrelse. I kjemien avhenger de fleste størrelser av <em>flere</em> ting samtidig. Trykket i en gass avhenger både av volumet og temperaturen. Løseligheten til et stoff avhenger av både temperatur og trykk. Reaksjonshastigheten avhenger av konsentrasjonen til flere reaktanter på én gang. For å beskrive slike sammenhenger trenger vi funksjoner som tar inn flere variabler. Heldigvis er ikke ideen så forskjellig fra det vi allerede kan - vi utvider bare antallet <span class="math notranslate nohighlight">\(x\)</span>-er.</p>
+<section id="funksjoner-av-n-variabler">
+<h3>5.1.1 Funksjoner av n-variabler<a class="headerlink" href="#funksjoner-av-n-variabler" title="Link to this heading">#</a></h3>
+<p>Vi starter med å utvide selve funksjonsbegrepet. En <strong>funksjon av flere variabler</strong> fungerer akkurat som en funksjon av én variabel, bortsett fra at vi mater inn flere tall for å få ut ett tall.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.1 - Funksjon av flere variabler</p>
+<p>En <strong>funksjon av to variabler</strong> <span class="math notranslate nohighlight">\(f\)</span> er en regel som tildeler hvert tallpar <span class="math notranslate nohighlight">\((x_1,x_2)\)</span> nøyaktig ett tall <span class="math notranslate nohighlight">\(f(x_1,x_2)\)</span>. Vi skriver</p>
+<p><span class="math notranslate nohighlight">\(f:\mathbb{R}^2 \to \mathbb{R}\)</span></p>
+<p>Mer generelt tildeler en <strong>funksjon av <span class="math notranslate nohighlight">\(n\)</span> variabler</strong> hvert punkt <span class="math notranslate nohighlight">\((x_1, x_2, \ldots, x_n)\)</span> nøyaktig ett tall <span class="math notranslate nohighlight">\(f(x_1, x_2, \ldots, x_n)\)</span>, og vi skriver</p>
+<p><span class="math notranslate nohighlight">\(f:\mathbb{R}^n \to \mathbb{R}\)</span>.</p>
+</div>
+<p>Legg merke til at funksjonsverdien fortsatt er ett enkelt tall - det er bare inputen som består av flere tall. Kravet fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#funksjon-definisjonmengde-og-verdiomrade">Def. 4.1 - Funksjon av én variabel</a>, at hver input gir nøyaktig én output, er akkurat det samme. Vi setter inn verdier på nøyaktig samme måte som før, bare med flere tall om gangen.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(f(x,y)=x^2+3y\)</span>. Regn ut <span class="math notranslate nohighlight">\(f(2,1)\)</span> og <span class="math notranslate nohighlight">\(f(0,-4)\)</span>.</p>
+<p class="sd-card-text">Vi setter inn verdiene for <span class="math notranslate nohighlight">\(x\)</span> og <span class="math notranslate nohighlight">\(y\)</span>, i den rekkefølgen de står.</p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(f(2,1)\)</span> setter vi <span class="math notranslate nohighlight">\(x=2\)</span> og <span class="math notranslate nohighlight">\(y=1\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(2,1)=2^2+3\cdot 1=4+3=7\)</span></p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(f(0,-4)\)</span> setter vi <span class="math notranslate nohighlight">\(x=0\)</span> og <span class="math notranslate nohighlight">\(y=-4\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(f(0,-4)=0^2+3\cdot(-4)=0-12=-12\)</span></p>
+<p class="sd-card-text">Merk at rekkefølgen betyr noe: <span class="math notranslate nohighlight">\(f(2,1)\)</span> er ikke det samme som <span class="math notranslate nohighlight">\(f(1,2)\)</span>.</p>
+</div>
+</div>
+<p>Definisjonsmengden til en flervariabel funksjon er mengden av alle tallpar <span class="math notranslate nohighlight">\((x,y)\)</span> vi har lov til å sette inn - altså alle par der regneuttrykket gir mening. Prinsippet er det samme som i én variabel: vi må unngå å dele på null, ta kvadratrot av negative tall, eller ta logaritmen av noe som ikke er positivt.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Hva er definisjonsmengden til <span class="math notranslate nohighlight">\(f(x,y)=\dfrac{1}{x-y}\)</span>?</p>
+<p class="sd-card-text">Uttrykket gir mening for alle tallpar <span class="math notranslate nohighlight">\((x,y)\)</span> så lenge vi ikke deler på null. Nevneren blir null når <span class="math notranslate nohighlight">\(x-y=0\)</span>, altså når <span class="math notranslate nohighlight">\(x=y\)</span>.</p>
+<p class="sd-card-text">Definisjonsmengden er derfor alle tallpar <span class="math notranslate nohighlight">\((x,y)\)</span> der <span class="math notranslate nohighlight">\(x \neq y\)</span>. Geometrisk betyr det hele planet unntatt den rette linjen <span class="math notranslate nohighlight">\(y=x\)</span>.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Idealgassloven er et av de mest kjente eksemplene på en flervariabel funksjon i kjemien. Løser vi <span class="math notranslate nohighlight">\(PV=nRT\)</span> for trykket, får vi</p>
+<p><span class="math notranslate nohighlight">\(P(V,T)=\frac{nRT}{V}\)</span></p>
+<p>Her er trykket <span class="math notranslate nohighlight">\(P\)</span> en funksjon av <em>to</em> variabler: volumet <span class="math notranslate nohighlight">\(V\)</span> og temperaturen <span class="math notranslate nohighlight">\(T\)</span> (mens <span class="math notranslate nohighlight">\(n\)</span> og <span class="math notranslate nohighlight">\(R\)</span> er konstanter). Definisjonsmengden er fysisk begrenset: volumet må være positivt (<span class="math notranslate nohighlight">\(V&gt;0\)</span>, ellers deler vi på null), og temperaturen målt i Kelvin kan ikke være negativ (<span class="math notranslate nohighlight">\(T \geq 0\)</span>). Setter vi inn et bestemt volum og en bestemt temperatur, får vi ut nøyaktig ett trykk - helt i tråd med Def. 5.1.</p>
+</div>
+</section>
+<section id="visualisering-av-funksjoner-av-to-variabler">
+<h3>5.1.2 Visualisering av funksjoner av to variabler<a class="headerlink" href="#visualisering-av-funksjoner-av-to-variabler" title="Link to this heading">#</a></h3>
+<p>En funksjon <span class="math notranslate nohighlight">\(f(x)\)</span> av én variabel tegner vi som en kurve i planet: for hver <span class="math notranslate nohighlight">\(x\)</span> langs den vannrette aksen markerer vi høyden <span class="math notranslate nohighlight">\(f(x)\)</span>. En funksjon <span class="math notranslate nohighlight">\(f(x,y)\)</span> av to variabler trenger derimot to akser bare for inputen - én for <span class="math notranslate nohighlight">\(x\)</span> og én for <span class="math notranslate nohighlight">\(y\)</span> - og en tredje akse for outputen <span class="math notranslate nohighlight">\(f(x,y)\)</span>. Grafen blir derfor ikke en kurve, men en <strong>flate</strong> i det tredimensjonale rommet. Du kan tenke på den som et landskap: for hvert punkt <span class="math notranslate nohighlight">\((x,y)\)</span> på “bakken” forteller flaten hvor høyt over bakken funksjonen ligger.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Flate i tre dimensjoner&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;
+    --paper:#f5f2ea;
+    --grid:#d8d2c4;
+    --axis:#6b6252;
+    --curve:#1f5f8b;      /* deep teal-blue */
+    --accent:#c0392b;     /* clay red */
+    --hi:#1a7a4c;         /* green */
+    --pt:#d68910;         /* amber */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;
+    padding:22px;line-height:1.5;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{
+    font-family:&quot;SF Mono&quot;,ui-monospace,&quot;Cascadia Code&quot;,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{
+    background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:8px;
+    position:relative;
+  }
+  canvas{display:block;width:100%;height:auto;cursor:grab;touch-action:none;}
+  canvas.drag{cursor:grabbing;}
+  .hint{
+    position:absolute;top:14px;right:16px;font-size:11px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;pointer-events:none;opacity:.8;
+  }
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    color:var(--muted);font-weight:600;margin-bottom:10px;
+  }
+  .fdisp{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:16px;color:var(--curve);
+    margin:2px 0 10px;
+  }
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:15px;color:var(--ink);}
+  .seg{display:flex;gap:0;margin-top:2px;flex-wrap:wrap;}
+  .seg button{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    cursor:pointer;border-right-width:0;transition:background .15s,color .15s;
+  }
+  .seg button:first-child{border-radius:3px 0 0 3px;}
+  .seg button:last-child{border-radius:0 3px 3px 0;border-right-width:1px;}
+  .seg button:hover{background:var(--ink);color:var(--paper);}
+  .seg button.on{background:var(--curve);border-color:var(--curve);color:#fff;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .buttons button{
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em;
+    padding:7px 13px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;
+  }
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .buttons button.on{background:var(--hi);border-color:var(--hi);color:#fff;}
+  .note{
+    margin-top:16px;font-size:14px;color:var(--muted);
+    border-left:2px solid var(--pt);padding-left:12px;
+  }
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Flervariable funksjoner&lt;/div&gt;
+  &lt;h1&gt;En flate over xy-planet&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;En funksjon f(x, y) tegnes ikke som en kurve, men som en flate i rommet. Dra for å rotere, og se hvordan &quot;landskapet&quot; ligger over xy-planet.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;canvas id=&quot;cv&quot; width=&quot;600&quot; height=&quot;440&quot;&gt;&lt;/canvas&gt;
+    &lt;div class=&quot;hint&quot;&gt;dra for å rotere&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Funksjonen&lt;/h2&gt;
+      &lt;div class=&quot;fdisp&quot; id=&quot;fDisp&quot;&gt;f(x, y) = x² + y²&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot; id=&quot;descRow&quot;&gt;En skål (paraboloide) — bunnpunkt i origo.&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;f(1, 1)&lt;/span&gt;
+        &lt;span class=&quot;val&quot; id=&quot;sampleVal&quot;&gt;2.00&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Velg flate&lt;/h2&gt;
+      &lt;div class=&quot;seg&quot; id=&quot;surfSeg&quot;&gt;
+        &lt;button data-s=&quot;bowl&quot; class=&quot;on&quot;&gt;x² + y²&lt;/button&gt;
+        &lt;button data-s=&quot;saddle&quot;&gt;x² − y²&lt;/button&gt;
+        &lt;button data-s=&quot;plane&quot;&gt;x + y&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button id=&quot;spinBtn&quot;&gt;Roter automatisk&lt;/button&gt;
+        &lt;button id=&quot;resetBtn&quot;&gt;Nullstill&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Legg merke til at inputen (x, y) lever i det flate &quot;gulvet&quot;, mens funksjonsverdien er høyden over gulvet. Skålen er alltid positiv, salformen bøyer opp i én retning og ned i en annen, og planet er helt rett.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const cv=document.getElementById(&#x27;cv&#x27;), ctx=cv.getContext(&#x27;2d&#x27;);
+  const cssv=n=&gt;getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const COL={
+    grid:cssv(&#x27;--grid&#x27;), axis:cssv(&#x27;--axis&#x27;), curve:cssv(&#x27;--curve&#x27;),
+    accent:cssv(&#x27;--accent&#x27;), hi:cssv(&#x27;--hi&#x27;), pt:cssv(&#x27;--pt&#x27;), muted:cssv(&#x27;--muted&#x27;), paper:cssv(&#x27;--paper&#x27;)
+  };
+
+  const surfaces={
+    bowl:{f:(x,y)=&gt;x*x+y*y, disp:&#x27;f(x, y) = x² + y²&#x27;, desc:&#x27;En skål (paraboloide) — bunnpunkt i origo.&#x27;, zs:0.32},
+    saddle:{f:(x,y)=&gt;x*x-y*y, disp:&#x27;f(x, y) = x² − y²&#x27;, desc:&#x27;En salform — bøyer opp langs x, ned langs y.&#x27;, zs:0.32},
+    plane:{f:(x,y)=&gt;x+y, disp:&#x27;f(x, y) = x + y&#x27;, desc:&#x27;Et skråplan — helt rett flate.&#x27;, zs:0.5}
+  };
+
+  let state={surf:&#x27;bowl&#x27;, yaw:0.7, pitch:1.05, spin:false};
+  const N=18, RANGE=2.2;         // grid resolution &amp; domain half-width
+  let W=600,H=440,scale=64,cx=300,cy=250;
+
+  function setSize(){
+    const r=cv.getBoundingClientRect();
+    const dpr=window.devicePixelRatio||1;
+    cv.width=r.width*dpr; cv.height=(r.width*440/600)*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    W=r.width; H=r.width*440/600;
+    scale=W/600*64; cx=W/2; cy=H*0.56;
+    draw();
+  }
+
+  // rotate then orthographic project. returns {sx,sy,depth}
+  function project(x,y,z){
+    const cyaw=Math.cos(state.yaw), syaw=Math.sin(state.yaw);
+    let x1=x*cyaw - y*syaw, y1=x*syaw + y*cyaw, z1=z;
+    const cp=Math.cos(state.pitch), sp=Math.sin(state.pitch);
+    let y2=y1*cp - z1*sp, z2=y1*sp + z1*cp;
+    return {sx:cx + x1*scale, sy:cy - z2*scale, depth:y2};
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const S=surfaces[state.surf];
+    const zs=S.zs;
+
+    // build vertex grid
+    const step=(2*RANGE)/N;
+    const pts=[];
+    for(let i=0;i&lt;=N;i++){
+      pts[i]=[];
+      for(let j=0;j&lt;=N;j++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const z=S.f(x,y)*zs - 1.2; // shift down a bit so it sits over the floor
+        pts[i][j]=project(x,y,z);
+      }
+    }
+
+    // floor (xy-plane) grid at z where function ~ min, drawn faint first
+    const floorZ=-1.2;
+    ctx.strokeStyle=COL.grid; ctx.lineWidth=1;
+    for(let i=0;i&lt;=N;i+=3){
+      ctx.beginPath();
+      for(let j=0;j&lt;=N;j++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const p=project(x,y,floorZ);
+        j===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);
+      }
+      ctx.stroke();
+    }
+    for(let j=0;j&lt;=N;j+=3){
+      ctx.beginPath();
+      for(let i=0;i&lt;=N;i++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const p=project(x,y,floorZ);
+        i===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);
+      }
+      ctx.stroke();
+    }
+
+    // axes on the floor
+    const O=project(0,0,floorZ), AX=project(RANGE,0,floorZ), AY=project(0,RANGE,floorZ);
+    ctx.strokeStyle=COL.axis; ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AX.sx,AX.sy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AY.sx,AY.sy);ctx.stroke();
+    ctx.fillStyle=COL.axis;ctx.font=&#x27;italic 14px Georgia&#x27;;
+    ctx.fillText(&#x27;x&#x27;,AX.sx+4,AX.sy+4);
+    ctx.fillText(&#x27;y&#x27;,AY.sx+4,AY.sy+4);
+
+    // collect quads, sort back-to-front (painter&#x27;s algorithm)
+    const quads=[];
+    for(let i=0;i&lt;N;i++){
+      for(let j=0;j&lt;N;j++){
+        const a=pts[i][j],b=pts[i+1][j],c=pts[i+1][j+1],d=pts[i][j+1];
+        const depth=(a.depth+b.depth+c.depth+d.depth)/4;
+        // height for shading (use original z-level via j,i midpoint)
+        const x=-RANGE+(i+0.5)*step, y=-RANGE+(j+0.5)*step;
+        quads.push({a,b,c,d,depth,z:S.f(x,y)});
+      }
+    }
+    quads.sort((p,q)=&gt;p.depth-q.depth);
+
+    // shade by height: blend paper-&gt;curve
+    let zmin=Infinity,zmax=-Infinity;
+    for(const q of quads){zmin=Math.min(zmin,q.z);zmax=Math.max(zmax,q.z);}
+    const lerp=(a,b,t)=&gt;a+(b-a)*t;
+    const hex=h=&gt;{h=h.replace(&#x27;#&#x27;,&#x27;&#x27;);return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+    const c0=[173,202,222], c1=hex(COL.curve); // light blue -&gt; deep blue, so low quads stay visible
+
+    for(const q of quads){
+      const t=zmax&gt;zmin?(q.z-zmin)/(zmax-zmin):0.5;
+      const r=Math.round(lerp(c0[0],c1[0],t)), g=Math.round(lerp(c0[1],c1[1],t)), b=Math.round(lerp(c0[2],c1[2],t));
+      ctx.fillStyle=`rgba(${r},${g},${b},0.92)`;
+      ctx.strokeStyle=COL.curve; ctx.lineWidth=0.5; ctx.globalAlpha=0.9;
+      ctx.beginPath();
+      ctx.moveTo(q.a.sx,q.a.sy);ctx.lineTo(q.b.sx,q.b.sy);
+      ctx.lineTo(q.c.sx,q.c.sy);ctx.lineTo(q.d.sx,q.d.sy);ctx.closePath();
+      ctx.fill();ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+
+    // update side panel
+    document.getElementById(&#x27;fDisp&#x27;).textContent=S.disp;
+    document.getElementById(&#x27;descRow&#x27;).textContent=S.desc;
+    document.getElementById(&#x27;sampleVal&#x27;).textContent=S.f(1,1).toFixed(2);
+  }
+
+  // drag to rotate
+  let dragging=false,lastX=0,lastY=0;
+  function down(e){dragging=true;cv.classList.add(&#x27;drag&#x27;);const p=pt(e);lastX=p.x;lastY=p.y;state.spin=false;spinBtn.classList.remove(&#x27;on&#x27;);}
+  function move(e){
+    if(!dragging)return;
+    const p=pt(e);
+    state.yaw+=(p.x-lastX)*0.01;
+    state.pitch+=(p.y-lastY)*0.01;
+    state.pitch=Math.max(0.15,Math.min(1.5,state.pitch));
+    lastX=p.x;lastY=p.y;draw();
+  }
+  function up(){dragging=false;cv.classList.remove(&#x27;drag&#x27;);}
+  function pt(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return {x:t.clientX-r.left,y:t.clientY-r.top};}
+  cv.addEventListener(&#x27;mousedown&#x27;,down);window.addEventListener(&#x27;mousemove&#x27;,move);window.addEventListener(&#x27;mouseup&#x27;,up);
+  cv.addEventListener(&#x27;touchstart&#x27;,e=&gt;{down(e);e.preventDefault();},{passive:false});
+  cv.addEventListener(&#x27;touchmove&#x27;,e=&gt;{move(e);e.preventDefault();},{passive:false});
+  cv.addEventListener(&#x27;touchend&#x27;,up);
+
+  // surface selector
+  document.getElementById(&#x27;surfSeg&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{
+    const b=e.target.closest(&#x27;button&#x27;);if(!b)return;
+    state.surf=b.dataset.s;
+    [...document.querySelectorAll(&#x27;#surfSeg button&#x27;)].forEach(x=&gt;x.classList.toggle(&#x27;on&#x27;,x===b));
+    draw();
+  });
+
+  // auto-spin
+  const spinBtn=document.getElementById(&#x27;spinBtn&#x27;);
+  let raf=null;
+  function stopSpin(){if(raf){cancelAnimationFrame(raf);raf=null;}state.spin=false;spinBtn.classList.remove(&#x27;on&#x27;);spinBtn.textContent=&#x27;Roter automatisk&#x27;;}
+  spinBtn.addEventListener(&#x27;click&#x27;,()=&gt;{
+    if(state.spin){stopSpin();return;}
+    state.spin=true;spinBtn.classList.add(&#x27;on&#x27;);spinBtn.textContent=&#x27;Stopp&#x27;;
+    const loop=()=&gt;{if(!state.spin)return;state.yaw+=0.008;draw();raf=requestAnimationFrame(loop);};
+    raf=requestAnimationFrame(loop);
+  });
+  document.getElementById(&#x27;resetBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+    stopSpin();state.surf=&#x27;bowl&#x27;;state.yaw=0.7;state.pitch=1.05;
+    [...document.querySelectorAll(&#x27;#surfSeg button&#x27;)].forEach(x=&gt;x.classList.toggle(&#x27;on&#x27;,x.dataset.s===&#x27;bowl&#x27;));
+    draw();
+  });
+
+  window.addEventListener(&#x27;resize&#x27;,setSize);
+  setSize();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>Tredimensjonale flater er fine å se på, men vanskelige å tegne og lese av nøyaktig på et flatt ark. Derfor bruker kjemikere og matematikere ofte et triks som du kjenner igjen fra turkart: <strong>nivåkurver</strong>. I stedet for å tegne selve landskapet, tegner vi kurvene som forbinder alle punkter med samme høyde. På et turkart er dette høydekotene; for en funksjon <span class="math notranslate nohighlight">\(f(x,y)\)</span> er en nivåkurve alle punkter <span class="math notranslate nohighlight">\((x,y)\)</span> der funksjonen har én bestemt verdi.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Nivåkurver&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--accent:#c0392b;--hi:#1a7a4c;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:10px;
+    display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  @media(max-width:620px){.stage{grid-template-columns:1fr;}}
+  .vizbox{position:relative;}
+  .vizbox .cap{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;
+    letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:4px;}
+  canvas{display:block;width:100%;height:auto;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .fdisp{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:16px;color:var(--curve);margin:2px 0 10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:16px;color:var(--accent);}
+  .ctl{margin-bottom:14px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--pt);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;}
+  .seg{display:flex;gap:0;margin-top:2px;flex-wrap:wrap;}
+  .seg button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;padding:7px 10px;
+    border:1px solid var(--axis);background:transparent;color:var(--ink);cursor:pointer;border-right-width:0;
+    transition:background .15s,color .15s;}
+  .seg button:first-child{border-radius:3px 0 0 3px;}
+  .seg button:last-child{border-radius:0 3px 3px 0;border-right-width:1px;}
+  .seg button:hover{background:var(--ink);color:var(--paper);}
+  .seg button.on{background:var(--curve);border-color:var(--curve);color:#fff;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Flervariable funksjoner&lt;/div&gt;
+  &lt;h1&gt;Nivåkurver: flaten sett ovenfra&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;En nivåkurve samler alle punkter (x, y) der f har samme verdi c — som høydekotene på et turkart. Dra i nivået c og se den fremhevede kurven til venstre, og samme høyde markert på flaten til høyre.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;div class=&quot;vizbox&quot;&gt;
+      &lt;div class=&quot;cap&quot;&gt;Nivåkurver (sett ovenfra)&lt;/div&gt;
+      &lt;canvas id=&quot;contour&quot; width=&quot;300&quot; height=&quot;300&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+    &lt;div class=&quot;vizbox&quot;&gt;
+      &lt;div class=&quot;cap&quot;&gt;Flaten med snitt ved høyde c&lt;/div&gt;
+      &lt;canvas id=&quot;surf&quot; width=&quot;300&quot; height=&quot;300&quot;&gt;&lt;/canvas&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Nivået&lt;/h2&gt;
+      &lt;div class=&quot;fdisp&quot; id=&quot;fDisp&quot;&gt;f(x, y) = x² + y²&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;valgt nivå c&lt;/span&gt;
+        &lt;span class=&quot;val&quot; id=&quot;cVal&quot;&gt;4.0&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot; id=&quot;shapeRow&quot;&gt;Nivåkurven er en sirkel med radius √c = 2.00.&lt;/span&gt;&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;nivå c &lt;b id=&quot;cLab&quot;&gt;4.0&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;cRange&quot; min=&quot;0.2&quot; max=&quot;8&quot; step=&quot;0.1&quot; value=&quot;4&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;funksjon&lt;/label&gt;
+        &lt;div class=&quot;seg&quot; id=&quot;fSeg&quot;&gt;
+          &lt;button data-f=&quot;bowl&quot; class=&quot;on&quot;&gt;x² + y²&lt;/button&gt;
+          &lt;button data-f=&quot;saddle&quot;&gt;x² − y²&lt;/button&gt;
+          &lt;button data-f=&quot;plane&quot;&gt;x + y&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Tett mellom kurvene betyr at flaten stiger bratt; stor avstand betyr at den er slak. Dette er nøyaktig samme lesemåte som høydekoter på et kart.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const cssv=n=&gt;getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const COL={grid:cssv(&#x27;--grid&#x27;),axis:cssv(&#x27;--axis&#x27;),curve:cssv(&#x27;--curve&#x27;),
+    accent:cssv(&#x27;--accent&#x27;),hi:cssv(&#x27;--hi&#x27;),pt:cssv(&#x27;--pt&#x27;),muted:cssv(&#x27;--muted&#x27;),paper:cssv(&#x27;--paper&#x27;)};
+
+  const funcs={
+    bowl:{f:(x,y)=&gt;x*x+y*y, disp:&#x27;f(x, y) = x² + y²&#x27;},
+    saddle:{f:(x,y)=&gt;x*x-y*y, disp:&#x27;f(x, y) = x² − y²&#x27;},
+    plane:{f:(x,y)=&gt;x+y, disp:&#x27;f(x, y) = x + y&#x27;}
+  };
+  let state={f:&#x27;bowl&#x27;, c:4, yaw:0.7, pitch:1.02};
+  const RANGE=3;
+
+  // ---------- CONTOUR (top-down) via marching squares ----------
+  const cc=document.getElementById(&#x27;contour&#x27;), cx2=cc.getContext(&#x27;2d&#x27;);
+  let CW=300,CH=300;
+  function toPxC(x,y){return [ (x+RANGE)/(2*RANGE)*CW, CH-(y+RANGE)/(2*RANGE)*CH ];}
+
+  function marching(fn,level,G){
+    // sample grid GxG, draw segments where field crosses `level`
+    const segs=[];
+    const xs=[],ys=[],v=[];
+    for(let i=0;i&lt;=G;i++){xs[i]=-RANGE+2*RANGE*i/G;}
+    for(let j=0;j&lt;=G;j++){ys[j]=-RANGE+2*RANGE*j/G;}
+    for(let i=0;i&lt;=G;i++){v[i]=[];for(let j=0;j&lt;=G;j++)v[i][j]=fn(xs[i],ys[j])-level;}
+    const interp=(x1,x2,a,b)=&gt;x1+(x2-x1)*(0-a)/(b-a);
+    for(let i=0;i&lt;G;i++)for(let j=0;j&lt;G;j++){
+      const a=v[i][j],b=v[i+1][j],c=v[i+1][j+1],d=v[i][j+1];
+      let idx=(a&gt;0?1:0)|(b&gt;0?2:0)|(c&gt;0?4:0)|(d&gt;0?8:0);
+      if(idx===0||idx===15)continue;
+      const pL=()=&gt;[xs[i],interp(ys[j],ys[j+1],a,d)];
+      const pR=()=&gt;[xs[i+1],interp(ys[j],ys[j+1],b,c)];
+      const pB=()=&gt;[interp(xs[i],xs[i+1],a,b),ys[j]];
+      const pT=()=&gt;[interp(xs[i],xs[i+1],d,c),ys[j+1]];
+      const push=(p,q)=&gt;segs.push([p,q]);
+      switch(idx){
+        case 1:case 14:push(pL(),pB());break;
+        case 2:case 13:push(pB(),pR());break;
+        case 3:case 12:push(pL(),pR());break;
+        case 4:case 11:push(pR(),pT());break;
+        case 6:case 9:push(pB(),pT());break;
+        case 7:case 8:push(pL(),pT());break;
+        case 5:push(pL(),pB());push(pR(),pT());break;
+        case 10:push(pB(),pR());push(pL(),pT());break;
+      }
+    }
+    return segs;
+  }
+
+  function drawContour(){
+    const r=cc.getBoundingClientRect();const dpr=window.devicePixelRatio||1;
+    cc.width=r.width*dpr;cc.height=r.width*dpr;cx2.setTransform(dpr,0,0,dpr,0,0);
+    CW=r.width;CH=r.width;
+    cx2.clearRect(0,0,CW,CH);
+    const fn=funcs[state.f].f;
+
+    // frame + axes
+    cx2.strokeStyle=COL.grid;cx2.lineWidth=1;cx2.strokeRect(0.5,0.5,CW-1,CH-1);
+    const O=toPxC(0,0);
+    cx2.strokeStyle=COL.axis;cx2.lineWidth=1;
+    cx2.beginPath();cx2.moveTo(0,O[1]);cx2.lineTo(CW,O[1]);cx2.stroke();
+    cx2.beginPath();cx2.moveTo(O[0],0);cx2.lineTo(O[0],CH);cx2.stroke();
+
+    // background level curves (faint) at several levels
+    const bg=[0.5,1,2,3,4,5,6,7];
+    cx2.strokeStyle=COL.grid;cx2.lineWidth=1.2;
+    for(const L of bg){
+      const segs=marching(fn,L,80);
+      cx2.beginPath();
+      for(const s of segs){const p=toPxC(s[0][0],s[0][1]),q=toPxC(s[1][0],s[1][1]);cx2.moveTo(p[0],p[1]);cx2.lineTo(q[0],q[1]);}
+      cx2.stroke();
+    }
+    // highlighted level c
+    const segs=marching(fn,state.c,120);
+    cx2.strokeStyle=COL.accent;cx2.lineWidth=2.6;
+    cx2.beginPath();
+    for(const s of segs){const p=toPxC(s[0][0],s[0][1]),q=toPxC(s[1][0],s[1][1]);cx2.moveTo(p[0],p[1]);cx2.lineTo(q[0],q[1]);}
+    cx2.stroke();
+  }
+
+  // ---------- SURFACE with horizontal slice ----------
+  const sc=document.getElementById(&#x27;surf&#x27;), sx2=sc.getContext(&#x27;2d&#x27;);
+  let SW=300,SH=300,sScale=40,sCx=150,sCy=170;
+  function proj(x,y,z){
+    const cyaw=Math.cos(state.yaw),syaw=Math.sin(state.yaw);
+    let x1=x*cyaw-y*syaw,y1=x*syaw+y*cyaw,z1=z;
+    const cp=Math.cos(state.pitch),sp=Math.sin(state.pitch);
+    let y2=y1*cp-z1*sp,z2=y1*sp+z1*cp;
+    return {sx:sCx+x1*sScale,sy:sCy-z2*sScale,depth:y2};
+  }
+  function drawSurf(){
+    const r=sc.getBoundingClientRect();const dpr=window.devicePixelRatio||1;
+    sc.width=r.width*dpr;sc.height=r.width*dpr;sx2.setTransform(dpr,0,0,dpr,0,0);
+    SW=r.width;SH=r.width;sScale=SW/300*34;sCx=SW/2;sCy=SH*0.58;
+    sx2.clearRect(0,0,SW,SH);
+    const fn=funcs[state.f].f, zs=state.f===&#x27;plane&#x27;?0.28:0.22;
+    const N=16,step=(2*RANGE)/N;
+    const pts=[];
+    for(let i=0;i&lt;=N;i++){pts[i]=[];for(let j=0;j&lt;=N;j++){
+      const x=-RANGE+i*step,y=-RANGE+j*step;pts[i][j]=proj(x,y,fn(x,y)*zs-1.0);
+    }}
+    const quads=[];
+    for(let i=0;i&lt;N;i++)for(let j=0;j&lt;N;j++){
+      const a=pts[i][j],b=pts[i+1][j],c=pts[i+1][j+1],d=pts[i][j+1];
+      const x=-RANGE+(i+0.5)*step,y=-RANGE+(j+0.5)*step;
+      quads.push({a,b,c,d,depth:(a.depth+b.depth+c.depth+d.depth)/4,z:fn(x,y)});
+    }
+    quads.sort((p,q)=&gt;p.depth-q.depth);
+    let zmin=Infinity,zmax=-Infinity;for(const q of quads){zmin=Math.min(zmin,q.z);zmax=Math.max(zmax,q.z);}
+    const lerp=(a,b,t)=&gt;a+(b-a)*t;const c0=[173,202,222],c1=[31,95,139];
+    for(const q of quads){
+      const t=zmax&gt;zmin?(q.z-zmin)/(zmax-zmin):.5;
+      sx2.fillStyle=`rgba(${Math.round(lerp(c0[0],c1[0],t))},${Math.round(lerp(c0[1],c1[1],t))},${Math.round(lerp(c0[2],c1[2],t))},0.9)`;
+      sx2.strokeStyle=COL.curve;sx2.lineWidth=0.4;
+      sx2.beginPath();sx2.moveTo(q.a.sx,q.a.sy);sx2.lineTo(q.b.sx,q.b.sy);
+      sx2.lineTo(q.c.sx,q.c.sy);sx2.lineTo(q.d.sx,q.d.sy);sx2.closePath();sx2.fill();sx2.stroke();
+    }
+    // horizontal slice at height c: draw the level curve lifted to z=c
+    const segs=marching(fn,state.c,90);
+    sx2.strokeStyle=COL.accent;sx2.lineWidth=2.4;
+    sx2.beginPath();
+    for(const s of segs){
+      const p=proj(s[0][0],s[0][1],state.c*zs-1.0),q=proj(s[1][0],s[1][1],state.c*zs-1.0);
+      sx2.moveTo(p.sx,p.sy);sx2.lineTo(q.sx,q.sy);
+    }
+    sx2.stroke();
+  }
+
+  function updatePanel(){
+    document.getElementById(&#x27;fDisp&#x27;).textContent=funcs[state.f].disp;
+    document.getElementById(&#x27;cVal&#x27;).textContent=state.c.toFixed(1);
+    document.getElementById(&#x27;cLab&#x27;).textContent=state.c.toFixed(1);
+    let shape;
+    if(state.f===&#x27;bowl&#x27;) shape=`Nivåkurven er en sirkel med radius √c = ${Math.sqrt(state.c).toFixed(2)}.`;
+    else if(state.f===&#x27;saddle&#x27;) shape=&#x27;Nivåkurvene er hyperbler — de bøyer bort fra origo.&#x27;;
+    else shape=&#x27;Nivåkurvene er parallelle rette linjer x + y = c.&#x27;;
+    document.getElementById(&#x27;shapeRow&#x27;).textContent=shape;
+  }
+  function drawAll(){drawContour();drawSurf();updatePanel();}
+
+  document.getElementById(&#x27;cRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.c=parseFloat(e.target.value);drawAll();});
+  document.getElementById(&#x27;fSeg&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{
+    const b=e.target.closest(&#x27;button&#x27;);if(!b)return;state.f=b.dataset.f;
+    [...document.querySelectorAll(&#x27;#fSeg button&#x27;)].forEach(x=&gt;x.classList.toggle(&#x27;on&#x27;,x===b));drawAll();
+  });
+  window.addEventListener(&#x27;resize&#x27;,drawAll);
+  drawAll();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Beskriv nivåkurvene til <span class="math notranslate nohighlight">\(f(x,y)=x^2+y^2\)</span>.</p>
+<p class="sd-card-text">En nivåkurve består av alle punkter <span class="math notranslate nohighlight">\((x,y)\)</span> der funksjonen har én fast verdi <span class="math notranslate nohighlight">\(c\)</span>. Vi setter derfor <span class="math notranslate nohighlight">\(f(x,y)=c\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(x^2+y^2=c\)</span></p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(c&gt;0\)</span> kjenner vi igjen dette som ligningen for en sirkel med sentrum i origo og radius <span class="math notranslate nohighlight">\(\sqrt{c}\)</span>. Nivåkurvene er altså konsentriske sirkler: jo større verdi <span class="math notranslate nohighlight">\(c\)</span>, jo større sirkel. For <span class="math notranslate nohighlight">\(c=0\)</span> krymper sirkelen til det enkelte punktet <span class="math notranslate nohighlight">\((0,0)\)</span>, og for <span class="math notranslate nohighlight">\(c&lt;0\)</span> finnes det ingen punkter (en sum av kvadrater kan ikke bli negativ).</p>
+</div>
+</div>
+<p>Nå som vi kan beskrive funksjoner av flere variabler, dukker et naturlig spørsmål opp: hvordan deriverer vi dem? Hvis trykket avhenger av både volum og temperatur, hva mener vi da med “endringsraten”? Svaret er at vi må derivere med hensyn på én variabel om gangen, og holde de andre konstante. Dette leder oss til partiellderiverte i neste delkapittel.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 5.1</p>
+<p>La <span class="math notranslate nohighlight">\(f(x,y)=2x+y^2\)</span>.</p>
+<p>a) Regn ut <span class="math notranslate nohighlight">\(f(3,2)\)</span> og <span class="math notranslate nohighlight">\(f(-1,4)\)</span>.</p>
+<p>b) Er <span class="math notranslate nohighlight">\(f(1,2)\)</span> det samme som <span class="math notranslate nohighlight">\(f(2,1)\)</span>? Regn ut begge.</p>
+<p>c) Hva er definisjonsmengden til <span class="math notranslate nohighlight">\(g(x,y)=\dfrac{1}{\sqrt{x}}+y\)</span>?</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 5.1</p>
+<p>a) Vi setter inn verdiene i rekkefølge.</p>
+<p><span class="math notranslate nohighlight">\(f(3,2)=2\cdot 3+2^2=6+4=10\)</span></p>
+<p><span class="math notranslate nohighlight">\(f(-1,4)=2\cdot(-1)+4^2=-2+16=14\)</span></p>
+<p>b) Vi regner ut begge:</p>
+<p><span class="math notranslate nohighlight">\(f(1,2)=2\cdot 1+2^2=2+4=6\)</span></p>
+<p><span class="math notranslate nohighlight">\(f(2,1)=2\cdot 2+1^2=4+1=5\)</span></p>
+<p>Siden <span class="math notranslate nohighlight">\(6 \neq 5\)</span>, er <span class="math notranslate nohighlight">\(f(1,2)\)</span> <strong>ikke</strong> det samme som <span class="math notranslate nohighlight">\(f(2,1)\)</span>. Rekkefølgen på variablene betyr noe.</p>
+<p>c) For at <span class="math notranslate nohighlight">\(g(x,y)=\dfrac{1}{\sqrt{x}}+y\)</span> skal gi mening, må uttrykket under kvadratroten være positivt (vi kan verken ta rot av et negativt tall eller dele på null, og <span class="math notranslate nohighlight">\(\sqrt{0}=0\)</span> gir null i nevneren). Vi trenger derfor <span class="math notranslate nohighlight">\(x&gt;0\)</span>, mens <span class="math notranslate nohighlight">\(y\)</span> kan være hvilket som helst reelt tall. Definisjonsmengden er alle tallpar <span class="math notranslate nohighlight">\((x,y)\)</span> med <span class="math notranslate nohighlight">\(x&gt;0\)</span>.</p>
+</div>
+</section>
+</section>
+<section id="partiellderiverte">
+<h2>5.2 Partiellderiverte<a class="headerlink" href="#partiellderiverte" title="Link to this heading">#</a></h2>
+<p>I forrige delkapittel så vi at trykket i en gass kan avhenge av både volum og temperatur gjennom <span class="math notranslate nohighlight">\(P(V,T)\)</span>. Men da dukker et problem opp: hva mener vi egentlig med gjennomsnittlig endringsrate til en funksjon av flere variable? For en funksjon <span class="math notranslate nohighlight">\(f(x)\)</span> av én variabel var svaret entydig - den deriverte <span class="math notranslate nohighlight">\(f'(x)\)</span> målte hvor raskt <span class="math notranslate nohighlight">\(f\)</span> endret seg (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#gjennomsnittlig-endringsrate">4.4.1 Gjennomsnittlig endringsrate</a>). For <span class="math notranslate nohighlight">\(f(x,y)\)</span> er det ikke like klart: endrer vi <span class="math notranslate nohighlight">\(x\)</span>, eller <span class="math notranslate nohighlight">\(y\)</span>, eller begge samtidig? Løsningen er enkel og elegant: vi ser på én variabel om gangen, og holder de andre helt i ro. Dette kaller vi å <strong>derivere partielt</strong>.</p>
+<section id="definisjonen-av-de-partiellderiverte">
+<h3>5.2.1 Definisjonen av de partiellderiverte<a class="headerlink" href="#definisjonen-av-de-partiellderiverte" title="Link to this heading">#</a></h3>
+<p>Ideen er å velge én variabel å derivere med hensyn på, og late som om alle de andre variablene bare er konstanter. Deriverer vi med hensyn på <span class="math notranslate nohighlight">\(x\)</span>, behandler vi <span class="math notranslate nohighlight">\(y\)</span> som et fast tall - og bruker ellers akkurat de samme derivasjonsreglene som i (<a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#derivasjonsregler">4.4.5 De deriverte til kjente funksjoner</a>).</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.2 - Partiellderivert</p>
+<p>La <span class="math notranslate nohighlight">\(f(x,y)\)</span> være en funksjon av to variabler. Den <strong>partiellderiverte av <span class="math notranslate nohighlight">\(f\)</span> med hensyn på <span class="math notranslate nohighlight">\(x\)</span></strong> er</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x} = \lim_{h \to 0} \frac{f(x+h,\,y)-f(x,\,y)}{h}\)</span></p>
+<p>der vi holder <span class="math notranslate nohighlight">\(y\)</span> konstant. Tilsvarende er den <strong>partiellderiverte med hensyn på <span class="math notranslate nohighlight">\(y\)</span></strong></p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y} = \lim_{h \to 0} \frac{f(x,\,y+h)-f(x,\,y)}{h}\)</span></p>
+<p>der vi holder <span class="math notranslate nohighlight">\(x\)</span> konstant.</p>
+</div>
+<p>Legg merke til det krøllete symbolet <span class="math notranslate nohighlight">\(\partial\)</span> (“del” eller “partiell-d”). Vi bruker det i stedet for det vanlige <span class="math notranslate nohighlight">\(d\)</span> nettopp for å understreke at funksjonen har flere variabler, og at vi bare deriverer med hensyn på én av dem. Sammenlign gjerne med definisjonen av den vanlige deriverte i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#definisjonen-av-den-deriverte">Def. 4.9 - Den deriverte</a> - den eneste forskjellen er at den andre variabelen står fast som en tilskuer. Vi bruker også skrivemåtene <span class="math notranslate nohighlight">\(f_x\)</span> og <span class="math notranslate nohighlight">\(f_y\)</span> som kortform for <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}\)</span> og <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}\)</span>.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Finn begge de partiellderiverte til <span class="math notranslate nohighlight">\(f(x,y)=x^2 y + 3x y^3\)</span>.</p>
+<p class="sd-card-text"><strong>Med hensyn på <span class="math notranslate nohighlight">\(x\)</span></strong> behandler vi <span class="math notranslate nohighlight">\(y\)</span> som en konstant. Da er <span class="math notranslate nohighlight">\(x^2 y\)</span> et konstant-tall (<span class="math notranslate nohighlight">\(y\)</span>) ganget med <span class="math notranslate nohighlight">\(x^2\)</span>, og <span class="math notranslate nohighlight">\(3xy^3\)</span> er en konstant (<span class="math notranslate nohighlight">\(3y^3\)</span>) ganget med <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x} = 2x y + 3y^3\)</span></p>
+<p class="sd-card-text"><strong>Med hensyn på <span class="math notranslate nohighlight">\(y\)</span></strong> behandler vi <span class="math notranslate nohighlight">\(x\)</span> som en konstant. Nå er <span class="math notranslate nohighlight">\(x^2 y\)</span> en konstant (<span class="math notranslate nohighlight">\(x^2\)</span>) ganget med <span class="math notranslate nohighlight">\(y\)</span>, og <span class="math notranslate nohighlight">\(3xy^3\)</span> er en konstant (<span class="math notranslate nohighlight">\(3x\)</span>) ganget med <span class="math notranslate nohighlight">\(y^3\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y} = x^2 + 9x y^2\)</span></p>
+<p class="sd-card-text">Legg merke til at leddet <span class="math notranslate nohighlight">\(x^2 y\)</span> ga ulikt bidrag i de to tilfellene, alt etter hvilken variabel vi så på som konstant.</p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Finn de partiellderiverte til <span class="math notranslate nohighlight">\(g(x,y)=\sin{(xy)}\)</span>.</p>
+<p class="sd-card-text"><strong>Med hensyn på <span class="math notranslate nohighlight">\(x\)</span></strong> holder vi <span class="math notranslate nohighlight">\(y\)</span> konstant. Den indre funksjonen er <span class="math notranslate nohighlight">\(xy\)</span>, som deriveres til <span class="math notranslate nohighlight">\(y\)</span> (siden <span class="math notranslate nohighlight">\(y\)</span> er konstant). Ved kjerneregelen:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial g}{\partial x} = \cos{(xy)} \cdot y = y\cos{(xy)}\)</span></p>
+<p class="sd-card-text"><strong>Med hensyn på <span class="math notranslate nohighlight">\(y\)</span></strong> holder vi <span class="math notranslate nohighlight">\(x\)</span> konstant. Nå deriveres den indre funksjonen <span class="math notranslate nohighlight">\(xy\)</span> til <span class="math notranslate nohighlight">\(x\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial g}{\partial y} = \cos{(xy)} \cdot x = x\cos{(xy)}\)</span></p>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Partiellderiverte som tangentlinjer&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--tanx:#c0392b;--tany:#1a7a4c;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:8px;position:relative;}
+  canvas{display:block;width:100%;height:auto;cursor:grab;touch-action:none;}
+  canvas.drag{cursor:grabbing;}
+  .hint{position:absolute;top:14px;right:16px;font-size:11px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;pointer-events:none;opacity:.8;}
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;margin-top:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .fdisp{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:15px;color:var(--curve);margin:2px 0 10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:16px;}
+  .val.tx{color:var(--tanx);}
+  .val.ty{color:var(--tany);}
+  .ctl{margin-bottom:14px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--pt);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;}
+  .seg{display:flex;gap:0;margin-top:2px;flex-wrap:wrap;}
+  .seg button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;padding:7px 10px;
+    border:1px solid var(--axis);background:transparent;color:var(--ink);cursor:pointer;border-right-width:0;
+    transition:background .15s,color .15s;}
+  .seg button:first-child{border-radius:3px 0 0 3px;}
+  .seg button:last-child{border-radius:0 3px 3px 0;border-right-width:1px;}
+  .seg button:hover{background:var(--ink);color:var(--paper);}
+  .seg button.on{background:var(--curve);border-color:var(--curve);color:#fff;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Partiellderiverte&lt;/div&gt;
+  &lt;h1&gt;To stigninger i samme punkt&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Fra ett punkt på flaten kan vi måle stigningen i to retninger. Den røde tangenten følger x-retningen (y holdes fast) og har stigning ∂f/∂x. Den grønne følger y-retningen (x holdes fast) og har stigning ∂f/∂y.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;canvas id=&quot;cv&quot; width=&quot;600&quot; height=&quot;440&quot;&gt;&lt;/canvas&gt;
+    &lt;div class=&quot;hint&quot;&gt;dra for å rotere&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--tanx)&quot;&gt;&lt;/i&gt; tangent i x-retning (∂f/∂x)&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--tany)&quot;&gt;&lt;/i&gt; tangent i y-retning (∂f/∂y)&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--pt);height:11px;width:11px;border-radius:50%&quot;&gt;&lt;/i&gt; punkt (x, y)&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;I punktet&lt;/h2&gt;
+      &lt;div class=&quot;fdisp&quot; id=&quot;fDisp&quot;&gt;f(x, y) = x² + y²&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;punkt (x, y)&lt;/span&gt;
+        &lt;span class=&quot;val&quot; id=&quot;ptVal&quot;&gt;(1.0, −0.5)&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;∂f/∂x (hold y fast)&lt;/span&gt;
+        &lt;span class=&quot;val tx&quot; id=&quot;pxVal&quot;&gt;2.00&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;∂f/∂y (hold x fast)&lt;/span&gt;
+        &lt;span class=&quot;val ty&quot; id=&quot;pyVal&quot;&gt;−1.00&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;x &lt;b id=&quot;xLab&quot;&gt;1.0&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;xRange&quot; min=&quot;-2&quot; max=&quot;2&quot; step=&quot;0.05&quot; value=&quot;1&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;y &lt;b id=&quot;yLab&quot;&gt;−0.5&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;yRange&quot; min=&quot;-2&quot; max=&quot;2&quot; step=&quot;0.05&quot; value=&quot;-0.5&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;funksjon&lt;/label&gt;
+        &lt;div class=&quot;seg&quot; id=&quot;fSeg&quot;&gt;
+          &lt;button data-f=&quot;bowl&quot; class=&quot;on&quot;&gt;x² + y²&lt;/button&gt;
+          &lt;button data-f=&quot;saddle&quot;&gt;x² − y²&lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Flytt punktet og se hvordan de to stigningene endrer seg uavhengig av hverandre. Det er nettopp derfor vi trenger to partiellderiverte: én stigning per retning.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const cv=document.getElementById(&#x27;cv&#x27;),ctx=cv.getContext(&#x27;2d&#x27;);
+  const cssv=n=&gt;getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const COL={grid:cssv(&#x27;--grid&#x27;),axis:cssv(&#x27;--axis&#x27;),curve:cssv(&#x27;--curve&#x27;),
+    tanx:cssv(&#x27;--tanx&#x27;),tany:cssv(&#x27;--tany&#x27;),pt:cssv(&#x27;--pt&#x27;),muted:cssv(&#x27;--muted&#x27;)};
+
+  const funcs={
+    bowl:{f:(x,y)=&gt;x*x+y*y, fx:(x,y)=&gt;2*x, fy:(x,y)=&gt;2*y, disp:&#x27;f(x, y) = x² + y²&#x27;},
+    saddle:{f:(x,y)=&gt;x*x-y*y, fx:(x,y)=&gt;2*x, fy:(x,y)=&gt;-2*y, disp:&#x27;f(x, y) = x² − y²&#x27;}
+  };
+  let state={f:&#x27;bowl&#x27;, x0:1, y0:-0.5, yaw:0.7, pitch:1.0};
+  const RANGE=2.2, ZS=0.34, ZSHIFT=-1.2;
+  let W=600,H=440,scale=64,cx=300,cy=250;
+
+  function setSize(){
+    const r=cv.getBoundingClientRect();const dpr=window.devicePixelRatio||1;
+    cv.width=r.width*dpr;cv.height=(r.width*440/600)*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    W=r.width;H=r.width*440/600;scale=W/600*60;cx=W/2;cy=H*0.56;draw();
+  }
+  function project(x,y,z){
+    const cyaw=Math.cos(state.yaw),syaw=Math.sin(state.yaw);
+    let x1=x*cyaw-y*syaw,y1=x*syaw+y*cyaw,z1=z;
+    const cp=Math.cos(state.pitch),sp=Math.sin(state.pitch);
+    let y2=y1*cp-z1*sp,z2=y1*sp+z1*cp;
+    return {sx:cx+x1*scale,sy:cy-z2*scale,depth:y2};
+  }
+  const Z=(fn,x,y)=&gt;fn(x,y)*ZS+ZSHIFT;
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const S=funcs[state.f], fn=S.f;
+    const floorZ=ZSHIFT-0.05;
+
+    // floor grid
+    const N=18,step=(2*RANGE)/N;
+    ctx.strokeStyle=COL.grid;ctx.lineWidth=1;
+    for(let i=0;i&lt;=N;i+=3){ctx.beginPath();for(let j=0;j&lt;=N;j++){const p=project(-RANGE+i*step,-RANGE+j*step,floorZ);j===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);}ctx.stroke();}
+    for(let j=0;j&lt;=N;j+=3){ctx.beginPath();for(let i=0;i&lt;=N;i++){const p=project(-RANGE+i*step,-RANGE+j*step,floorZ);i===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);}ctx.stroke();}
+    // axes
+    const O=project(0,0,floorZ),AX=project(RANGE,0,floorZ),AY=project(0,RANGE,floorZ);
+    ctx.strokeStyle=COL.axis;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AX.sx,AX.sy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AY.sx,AY.sy);ctx.stroke();
+    ctx.fillStyle=COL.axis;ctx.font=&#x27;italic 14px Georgia&#x27;;ctx.fillText(&#x27;x&#x27;,AX.sx+4,AX.sy+4);ctx.fillText(&#x27;y&#x27;,AY.sx+4,AY.sy+4);
+
+    // surface quads
+    const pts=[];
+    for(let i=0;i&lt;=N;i++){pts[i]=[];for(let j=0;j&lt;=N;j++){const x=-RANGE+i*step,y=-RANGE+j*step;pts[i][j]=project(x,y,Z(fn,x,y));}}
+    const quads=[];
+    for(let i=0;i&lt;N;i++)for(let j=0;j&lt;N;j++){
+      const a=pts[i][j],b=pts[i+1][j],c=pts[i+1][j+1],d=pts[i][j+1];
+      const x=-RANGE+(i+0.5)*step,y=-RANGE+(j+0.5)*step;
+      quads.push({a,b,c,d,depth:(a.depth+b.depth+c.depth+d.depth)/4,z:fn(x,y)});
+    }
+    quads.sort((p,q)=&gt;p.depth-q.depth);
+    let zmin=Infinity,zmax=-Infinity;for(const q of quads){zmin=Math.min(zmin,q.z);zmax=Math.max(zmax,q.z);}
+    const lerp=(a,b,t)=&gt;a+(b-a)*t,c0=[173,202,222],c1=[31,95,139];
+    for(const q of quads){
+      const t=zmax&gt;zmin?(q.z-zmin)/(zmax-zmin):.5;
+      ctx.fillStyle=`rgba(${Math.round(lerp(c0[0],c1[0],t))},${Math.round(lerp(c0[1],c1[1],t))},${Math.round(lerp(c0[2],c1[2],t))},0.82)`;
+      ctx.strokeStyle=COL.curve;ctx.lineWidth=0.4;
+      ctx.beginPath();ctx.moveTo(q.a.sx,q.a.sy);ctx.lineTo(q.b.sx,q.b.sy);ctx.lineTo(q.c.sx,q.c.sy);ctx.lineTo(q.d.sx,q.d.sy);ctx.closePath();ctx.fill();ctx.stroke();
+    }
+
+    // the point and two tangent lines
+    const x0=state.x0,y0=state.y0,z0=fn(x0,y0);
+    const px0=Z(fn,x0,y0);
+    const sx=S.fx(x0,y0), sy=S.fy(x0,y0);
+    const L=1.1;
+    // tangent in x-direction: y fixed, z = z0 + sx*(x-x0)
+    const ax1=project(x0-L,y0,(z0+sx*(-L))*ZS+ZSHIFT);
+    const ax2=project(x0+L,y0,(z0+sx*(L))*ZS+ZSHIFT);
+    ctx.strokeStyle=COL.tanx;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(ax1.sx,ax1.sy);ctx.lineTo(ax2.sx,ax2.sy);ctx.stroke();
+    // tangent in y-direction: x fixed
+    const ay1=project(x0,y0-L,(z0+sy*(-L))*ZS+ZSHIFT);
+    const ay2=project(x0,y0+L,(z0+sy*(L))*ZS+ZSHIFT);
+    ctx.strokeStyle=COL.tany;ctx.lineWidth=3;
+    ctx.beginPath();ctx.moveTo(ay1.sx,ay1.sy);ctx.lineTo(ay2.sx,ay2.sy);ctx.stroke();
+
+    // drop line from point to floor
+    const P=project(x0,y0,px0), Pf=project(x0,y0,floorZ);
+    ctx.strokeStyle=COL.muted;ctx.lineWidth=1;ctx.setLineDash([3,3]);
+    ctx.beginPath();ctx.moveTo(P.sx,P.sy);ctx.lineTo(Pf.sx,Pf.sy);ctx.stroke();ctx.setLineDash([]);
+
+    // point marker
+    ctx.fillStyle=COL.pt;ctx.strokeStyle=&#x27;#fff&#x27;;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(P.sx,P.sy,6,0,7);ctx.fill();ctx.stroke();
+
+    // panel
+    document.getElementById(&#x27;fDisp&#x27;).textContent=S.disp;
+    const fmt=v=&gt;(v&lt;0?&#x27;−&#x27;:&#x27;&#x27;)+Math.abs(v).toFixed(2);
+    document.getElementById(&#x27;ptVal&#x27;).textContent=&#x27;(&#x27;+fmt(x0)+&#x27;, &#x27;+fmt(y0)+&#x27;)&#x27;;
+    document.getElementById(&#x27;pxVal&#x27;).textContent=fmt(sx);
+    document.getElementById(&#x27;pyVal&#x27;).textContent=fmt(sy);
+    document.getElementById(&#x27;xLab&#x27;).textContent=fmt(x0);
+    document.getElementById(&#x27;yLab&#x27;).textContent=fmt(y0);
+  }
+
+  // sliders
+  document.getElementById(&#x27;xRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.x0=parseFloat(e.target.value);draw();});
+  document.getElementById(&#x27;yRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.y0=parseFloat(e.target.value);draw();});
+  document.getElementById(&#x27;fSeg&#x27;).addEventListener(&#x27;click&#x27;,e=&gt;{
+    const b=e.target.closest(&#x27;button&#x27;);if(!b)return;state.f=b.dataset.f;
+    [...document.querySelectorAll(&#x27;#fSeg button&#x27;)].forEach(x=&gt;x.classList.toggle(&#x27;on&#x27;,x===b));draw();
+  });
+
+  // drag to rotate
+  let dragging=false,lastX=0,lastY=0;
+  const pt=e=&gt;{const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return{x:t.clientX-r.left,y:t.clientY-r.top};};
+  cv.addEventListener(&#x27;mousedown&#x27;,e=&gt;{dragging=true;cv.classList.add(&#x27;drag&#x27;);const p=pt(e);lastX=p.x;lastY=p.y;});
+  window.addEventListener(&#x27;mousemove&#x27;,e=&gt;{if(!dragging)return;const p=pt(e);state.yaw+=(p.x-lastX)*0.01;state.pitch=Math.max(0.15,Math.min(1.5,state.pitch+(p.y-lastY)*0.01));lastX=p.x;lastY=p.y;draw();});
+  window.addEventListener(&#x27;mouseup&#x27;,()=&gt;{dragging=false;cv.classList.remove(&#x27;drag&#x27;);});
+  cv.addEventListener(&#x27;touchstart&#x27;,e=&gt;{dragging=true;const p=pt(e);lastX=p.x;lastY=p.y;e.preventDefault();},{passive:false});
+  cv.addEventListener(&#x27;touchmove&#x27;,e=&gt;{if(!dragging)return;const p=pt(e);state.yaw+=(p.x-lastX)*0.01;state.pitch=Math.max(0.15,Math.min(1.5,state.pitch+(p.y-lastY)*0.01));lastX=p.x;lastY=p.y;draw();e.preventDefault();},{passive:false});
+  cv.addEventListener(&#x27;touchend&#x27;,()=&gt;{dragging=false;});
+
+  window.addEventListener(&#x27;resize&#x27;,setSize);
+  setSize();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+</section>
+<section id="blandede-partiellderiverte">
+<span id="id1"></span><h3>5.2.2 Blandede partiellderiverte<a class="headerlink" href="#blandede-partiellderiverte" title="Link to this heading">#</a></h3>
+<p>Akkurat som vi kunne derivere flere ganger i én variabel i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#hoyere-ordens-deriverte">4.4.4 Høyere-ordens deriverte</a>, kan vi derivere partielt flere ganger. Nå får vi flere muligheter: vi kan derivere to ganger med hensyn på <span class="math notranslate nohighlight">\(x\)</span>, to ganger med hensyn på <span class="math notranslate nohighlight">\(y\)</span>, eller én gang med hver. De to siste kalles <strong>blandede partiellderiverte</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.3 - Andreordens partiellderiverte</p>
+<p>De <strong>andreordens partiellderiverte</strong> til <span class="math notranslate nohighlight">\(f(x,y)\)</span> er</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x^2} = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial x}\right), \qquad \frac{\partial^2 f}{\partial y^2} = \frac{\partial}{\partial y}\left(\frac{\partial f}{\partial y}\right)\)</span></p>
+<p>De <strong>blandede partiellderiverte</strong> er</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x\, \partial y} = \frac{\partial}{\partial x}\left(\frac{\partial f}{\partial y}\right), \qquad \frac{\partial^2 f}{\partial y\, \partial x} = \frac{\partial}{\partial y}\left(\frac{\partial f}{\partial x}\right)\)</span></p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(f(x,y)=x^2 y + 3x y^3\)</span> fant vi <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=2xy+3y^3\)</span> og <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}=x^2+9xy^2\)</span>. Finn de to blandede partiellderiverte.</p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x\, \partial y}\)</span> deriverer vi <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}=x^2+9xy^2\)</span> med hensyn på <span class="math notranslate nohighlight">\(x\)</span> (hold <span class="math notranslate nohighlight">\(y\)</span> konstant):</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial x\, \partial y} = 2x + 9y^2\)</span></p>
+<p class="sd-card-text">For <span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial y\, \partial x}\)</span> deriverer vi <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=2xy+3y^3\)</span> med hensyn på <span class="math notranslate nohighlight">\(y\)</span> (hold <span class="math notranslate nohighlight">\(x\)</span> konstant):</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial^2 f}{\partial y\, \partial x} = 2x + 9y^2\)</span></p>
+<p class="sd-card-text">Merk at de to blandede ble like! Dette er ingen tilfeldighet.</p>
+</div>
+</div>
+<p>At de blandede partiellderiverte ble like i eksempelet over, er et generelt resultat: for de aller fleste funksjoner vi møter i praksis, spiller rekkefølgen vi deriverer i ingen rolle, så lenge de blandede partiellderiverte er kontinuerlige. For oss betyr det en grei sjekk: regner du ut begge blandede og får ulikt svar, har du sannsynligvis gjort en regnefeil.</p>
+</section>
+<section id="gradienten">
+<span id="id2"></span><h3>5.2.3 Gradienten<a class="headerlink" href="#gradienten" title="Link to this heading">#</a></h3>
+<p>De to partiellderiverte forteller hver for seg hvor bratt flaten heller i <span class="math notranslate nohighlight">\(x\)</span>-retningen og i <span class="math notranslate nohighlight">\(y\)</span>-retningen. Ofte er det nyttig å samle dem i ett objekt. Vi setter dem sammen til en vektor, som vi kaller <strong>gradienten</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.4 - Gradienten</p>
+<p><strong>Gradienten</strong> til en funksjon <span class="math notranslate nohighlight">\(f(x,y)\)</span> er vektoren av de partiellderiverte,</p>
+<p><span class="math notranslate nohighlight">\(\nabla f = \left( \frac{\partial f}{\partial x}, \; \frac{\partial f}{\partial y} \right)\)</span></p>
+<p>Symbolet <span class="math notranslate nohighlight">\(\nabla\)</span> leses “nabla”. For en funksjon av <span class="math notranslate nohighlight">\(n\)</span> variabler har gradienten tilsvarende én komponent per variabel.</p>
+</div>
+<p>Gradienten har en vakker geometrisk tolkning: i et gitt punkt peker <span class="math notranslate nohighlight">\(\nabla f\)</span> i den retningen der funksjonen vokser raskest, og lengden av vektoren forteller hvor bratt den vokser. Står du i fjellandskapet fra introduksjonsspørsmålene, peker gradienten rett oppover den bratteste stigningen. Et beslektet poeng, som er nyttig i kjemien: gradienten står alltid vinkelrett på nivåkurvene.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Finn gradienten til <span class="math notranslate nohighlight">\(f(x,y)=x^2+y^2\)</span>, og regn den ut i punktet <span class="math notranslate nohighlight">\((1,2)\)</span>.</p>
+<p class="sd-card-text">Vi finner først de to partiellderiverte:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x} = 2x, \qquad \frac{\partial f}{\partial y} = 2y\)</span></p>
+<p class="sd-card-text">Gradienten er dermed</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\nabla f = (2x, \; 2y)\)</span></p>
+<p class="sd-card-text">I punktet <span class="math notranslate nohighlight">\((1,2)\)</span> blir den</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\nabla f(1,2) = (2\cdot 1, \; 2\cdot 2) = (2, \; 4)\)</span></p>
+<p class="sd-card-text">Denne vektoren peker i retningen der <span class="math notranslate nohighlight">\(f\)</span> vokser raskest fra punktet <span class="math notranslate nohighlight">\((1,2)\)</span> - altså rett bort fra origo, som stemmer med at nivåkurvene her er sirkler om origo.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Partiellderiverte er selve språket i termodynamikken, men kjemikere skriver dem litt annerledes enn matematikere. Siden en størrelse kan avhenge av mange variabler, er det avgjørende å presisere <em>hvilke</em> variabler som holdes konstante. Derfor skriver man den konstante variabelen som en senket indeks utenfor en parentes.</p>
+<p>For idealgassen <span class="math notranslate nohighlight">\(P(V,T)=\dfrac{nRT}{V}\)</span> blir de to partiellderiverte</p>
+<p><span class="math notranslate nohighlight">\(\left(\frac{\partial P}{\partial T}\right)_V = \frac{nR}{V} \qquad \text{og} \qquad \left(\frac{\partial P}{\partial V}\right)_T = -\frac{nRT}{V^2}\)</span></p>
+<p>Notasjonen <span class="math notranslate nohighlight">\(\left(\frac{\partial P}{\partial T}\right)_V\)</span> leses “den partiellderiverte av <span class="math notranslate nohighlight">\(P\)</span> med hensyn på <span class="math notranslate nohighlight">\(T\)</span>, med <span class="math notranslate nohighlight">\(V\)</span> holdt konstant”. Indeksen <span class="math notranslate nohighlight">\(V\)</span> er bare en eksplisitt påminnelse om hva som er konstant. Slike uttrykk dukker opp overalt i termodynamikken, for eksempel i sammenhengen mellom varmekapasitet og indre energi, <span class="math notranslate nohighlight">\(C_V=\left(\frac{\partial U}{\partial T}\right)_V\)</span>.</p>
+</div>
+</section>
+<section id="den-totale-differensialen">
+<span id="id3"></span><h3>5.2.4 Den totale differensialen<a class="headerlink" href="#den-totale-differensialen" title="Link to this heading">#</a></h3>
+<p>Den deriverte <span class="math notranslate nohighlight">\(df\)</span> til en funksjon av én variabel er en enkel sak, den avhenger jo bare av endringen i <span class="math notranslate nohighlight">\(dx\)</span>. Noe vi skal bruke mye i termodynamikken er <strong>den totale differensialen</strong> <span class="math notranslate nohighlight">\(df\)</span> til en funksjon av <span class="math notranslate nohighlight">\(n\)</span>-variabler, <span class="math notranslate nohighlight">\(f(x_1, \dots, x_n)\)</span>. Her avhenger nemlig endringen i <span class="math notranslate nohighlight">\(f\)</span> seg av <em>hvor mye</em> hver variabel <span class="math notranslate nohighlight">\(x_i\)</span> har endret seg, altså <span class="math notranslate nohighlight">\(dx_i\)</span>, i tillegg til hvor mye <span class="math notranslate nohighlight">\(f\)</span> endrer seg når <span class="math notranslate nohighlight">\(x_i\)</span> endrer seg litt, og alt annet er konstant, <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x_i}\)</span>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.5 - Den totale differensialen</p>
+<p><strong>Den totale differensialen</strong> til en funksjon <span class="math notranslate nohighlight">\(f(x_1, \dots, x_n)\)</span> er</p>
+<p><span class="math notranslate nohighlight">\(df = \frac{\partial f}{\partial x_1} \ dx_1 + \dots + \frac{\partial f}{\partial x_n} \ dx_n = \sum_{i=1}^n \ \frac{\partial f}{\partial x_i} \ dx_i\)</span></p>
+<p>Symbolet <span class="math notranslate nohighlight">\(\nabla\)</span> leses “nabla”. For en funksjon av <span class="math notranslate nohighlight">\(n\)</span> variabler har gradienten tilsvarende én komponent per variabel.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du selger is på sommeren og følger med på fortjenesten din <span class="math notranslate nohighlight">\(f\)</span> som utelukkende er en funksjon av to variabler: prisen på isen <span class="math notranslate nohighlight">\(p\)</span> og temperaturen ute <span class="math notranslate nohighlight">\(T\)</span>. For eksempel kan det tenkes at når det blir varmere (<span class="math notranslate nohighlight">\(T\)</span> øker), så øker fortjenesten <span class="math notranslate nohighlight">\(f\)</span>. Hvordan kan vi beskrive endringen i fortjenesten, <span class="math notranslate nohighlight">\(df\)</span>?</p>
+<p class="sd-card-text">Først og fremst har vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial T}\)</span>: ved konstant pris <span class="math notranslate nohighlight">\(p\)</span>, hvor mye øker fortjenesten per grad det blir varmere</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial p}\)</span>: ved konstant temperatur <span class="math notranslate nohighlight">\(T\)</span>, hvor mye øker fortjenesten per krone dyrere isen blir</p>
+<p class="sd-card-text">For eksempel kan det tenkes at kundene dine er veldig sensitive for temperatur og bare kjøper is ved høy <span class="math notranslate nohighlight">\(T\)</span>, og da er <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial T}\)</span> stor og positiv.</p>
+<p class="sd-card-text">I tillegg må vi vite hvor mye <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(p\)</span> endrer seg, henholdvis <span class="math notranslate nohighlight">\(dT\)</span> og <span class="math notranslate nohighlight">\(dp\)</span>. Vi får et bidrag for temperatur og ett for pris, og legger de sammen for å se hvordan <span class="math notranslate nohighlight">\(df\)</span> endrer seg totalt:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(df = \frac{\partial f}{\partial T} \ dT + \frac{\partial f}{\partial p} \ dp\)</span></p>
+<p class="sd-card-text">Vi bruker ofte litt annen notasjon i kjemien, slik som denne</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(df = \left( \frac{\partial f}{\partial T} \right)_p \ dT + \left( \frac{\partial f}{\partial p} \right)_T \ dp\)</span></p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Gibbs-fri energi er en funksjon av temperatur <span class="math notranslate nohighlight">\(T\)</span> og trykk <span class="math notranslate nohighlight">\(P\)</span>, samt <span class="math notranslate nohighlight">\(n_1, \dots, n_m\)</span> som er stoffmengdene i systemet, når man antar at disse kan endres. Altså får vi</p>
+<p><span class="math notranslate nohighlight">\(G(T,P,n_1,\dots,n_m)\)</span></p>
+<p>Vi kan derfor skrive den totale differensialen som summen av bidraget fra hver variabel:</p>
+<p><span class="math notranslate nohighlight">\(dG = \left(\frac{\partial G}{\partial T}\right)_{P,n_i}dT + \left(\frac{\partial G}{\partial P}\right)_{T,n_i}dP + \sum_{i=1}^{m}\left(\frac{\partial G}{\partial n_i}\right)_{T,P,n_{j\neq i}}dn_i\)</span></p>
+<p>der hvert ledd forteller hvor mye <span class="math notranslate nohighlight">\(G\)</span> endrer seg når den ene variabelen endres, mens de andre holdes konstant.</p>
+<p>Anta at vi har konstant <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(P\)</span>, slik at <span class="math notranslate nohighlight">\(dT = dP = 0\)</span>, og vi får</p>
+<p><span class="math notranslate nohighlight">\(dG = \sum_{i=1}^{m}\left(\frac{\partial G}{\partial n_i}\right)_{T,P,n_{j\neq i}}dn_i\)</span></p>
+<p>Kjemisk potensial <span class="math notranslate nohighlight">\(\mu_i\)</span> er definert som</p>
+<p><span class="math notranslate nohighlight">\(\mu_i = \left(\frac{\partial G}{\partial n_i}\right)_{T,P,n_{j\neq i}}\)</span></p>
+<p>og vi har</p>
+<p><span class="math notranslate nohighlight">\(dG = \sum_{i=1}^{m} \mu_i dn_i\)</span></p>
+</div>
+<p>Med partiellderiverte og gradienten på plass har vi verktøyene for å studere hvordan flervariable funksjoner endrer seg. Et naturlig neste spørsmål er hvordan vi finner topp- og bunnpunkter for slike funksjoner - særlig når de i tillegg er underlagt en betingelse, slik som å minimere energi under bevaring av masse. Det leder oss til <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/flervariabel_kalkulus.html#lagrange-multiplikatormetode">5.4 Lagrange multiplikatormetode</a>, men først skal vi se på integraler for funksjoner av to og tre variabler i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/flervariabel_kalkulus.html#dobbel-og-trippelintegraler">5.3 Dobbel- og trippelintegraler</a>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 5.2</p>
+<p>La <span class="math notranslate nohighlight">\(f(x,y)=x^3 y - 2x y^2\)</span>.</p>
+<p>a) Finn <span class="math notranslate nohighlight">\(\dfrac{\partial f}{\partial x}\)</span> og <span class="math notranslate nohighlight">\(\dfrac{\partial f}{\partial y}\)</span>.</p>
+<p>b) Finn den blandede partiellderiverte <span class="math notranslate nohighlight">\(\dfrac{\partial^2 f}{\partial x\, \partial y}\)</span>.</p>
+<p>c) Skriv opp gradienten <span class="math notranslate nohighlight">\(\nabla f\)</span>, og regn den ut i punktet <span class="math notranslate nohighlight">\((1,1)\)</span>.</p>
+<p>d) For idealgassen <span class="math notranslate nohighlight">\(P(V,T)=\dfrac{nRT}{V}\)</span>: regn ut <span class="math notranslate nohighlight">\(\left(\dfrac{\partial P}{\partial V}\right)_T\)</span> og forklar hvorfor svaret er negativt.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 5.2</p>
+<p>a) Med hensyn på <span class="math notranslate nohighlight">\(x\)</span> (hold <span class="math notranslate nohighlight">\(y\)</span> konstant): <span class="math notranslate nohighlight">\(\dfrac{\partial f}{\partial x} = 3x^2 y - 2y^2\)</span>. Med hensyn på <span class="math notranslate nohighlight">\(y\)</span> (hold <span class="math notranslate nohighlight">\(x\)</span> konstant): <span class="math notranslate nohighlight">\(\dfrac{\partial f}{\partial y} = x^3 - 4xy\)</span>.</p>
+<p>b) Vi deriverer <span class="math notranslate nohighlight">\(\dfrac{\partial f}{\partial y}=x^3-4xy\)</span> med hensyn på <span class="math notranslate nohighlight">\(x\)</span>: <span class="math notranslate nohighlight">\(\dfrac{\partial^2 f}{\partial x\, \partial y} = 3x^2 - 4y\)</span>.</p>
+<p>c) Gradienten er <span class="math notranslate nohighlight">\(\nabla f = \left(3x^2 y - 2y^2, \; x^3 - 4xy\right)\)</span>. I punktet <span class="math notranslate nohighlight">\((1,1)\)</span>: <span class="math notranslate nohighlight">\(\nabla f(1,1) = (3\cdot 1 - 2, \; 1 - 4) = (1, \; -3)\)</span>.</p>
+<p>d) Vi deriverer <span class="math notranslate nohighlight">\(P=\dfrac{nRT}{V}=nRT \cdot V^{-1}\)</span> med hensyn på <span class="math notranslate nohighlight">\(V\)</span> (hold <span class="math notranslate nohighlight">\(T\)</span> konstant): <span class="math notranslate nohighlight">\(\left(\dfrac{\partial P}{\partial V}\right)_T = -nRT \cdot V^{-2} = -\dfrac{nRT}{V^2}\)</span>. Svaret er negativt fordi trykket <em>synker</em> når volumet øker ved konstant temperatur - akkurat som Boyles lov sier. En positiv <span class="math notranslate nohighlight">\(V\)</span> i nevneren opphøyd i andre gjør hele uttrykket negativt.</p>
+</div>
+</section>
+</section>
+<section id="dobbel-og-trippelintegraler">
+<span id="id4"></span><h2>5.3 Dobbel-og trippelintegraler<a class="headerlink" href="#dobbel-og-trippelintegraler" title="Link to this heading">#</a></h2>
+<p>I <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#det-bestemte-integralet-og-riemann-summer">4.5.4 Det bestemte integralet og Riemann-summer</a> så vi at det bestemte integralet <span class="math notranslate nohighlight">\(\int_a^b f(x)\,dx\)</span> måler arealet under grafen til en funksjon av én variabel. Men nå kan vi funksjoner av flere variabler og et naturlig spørsmål melder seg: hva blir integralet aven funksjon av to variabler, <span class="math notranslate nohighlight">\(f(x,y)\)</span>? Der enkeltintegralet summerte opp arealet av uendelig mange tynne striper, skal vi nå summere opp volumet av uendelig mange tynne søyler - og resultatet blir volumet under en flate. Utvider vi til tre variabler, kan vi regne ut ting som massen eller ladningen fordelt i et romområde.</p>
+<p>Vi starter med to variabler. Akkurat som vi delte intervallet <span class="math notranslate nohighlight">\([a,b]\)</span> i tynne striper, deler vi nå et område i <span class="math notranslate nohighlight">\(xy\)</span>-planet inn i et rutenett av små rektangler, hvert med areal <span class="math notranslate nohighlight">\(\Delta A = \Delta x\,\Delta y\)</span>. Over hver rute reiser vi en søyle med høyde <span class="math notranslate nohighlight">\(f(x,y)\)</span>, altså volum <span class="math notranslate nohighlight">\(f(x,y)\,\Delta A\)</span>. Legger vi sammen alle søylene og lar rutene bli uendelig små, får vi <strong>dobbeltintegralet</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.6 - Dobbeltintegralet</p>
+<p><strong>Dobbeltintegralet</strong> av <span class="math notranslate nohighlight">\(f(x,y)\)</span> over et område <span class="math notranslate nohighlight">\(D\)</span> i <span class="math notranslate nohighlight">\(xy\)</span>-planet er grenseverdien av søylesummene når rutene blir uendelig små:</p>
+<p><span class="math notranslate nohighlight">\(\iint_D f(x,y)\,dA = \lim_{\Delta A \to 0} \sum_i f(x_i,y_i)\,\Delta A\)</span></p>
+<p>Når <span class="math notranslate nohighlight">\(f(x,y)\geq 0\)</span>, er dobbeltintegralet <strong>volumet</strong> mellom flaten <span class="math notranslate nohighlight">\(z=f(x,y)\)</span> og området <span class="math notranslate nohighlight">\(D\)</span> i <span class="math notranslate nohighlight">\(xy\)</span>-planet.</p>
+</div>
+<p>Definisjonen er fin å forstå, men vi vil ikke summere uendelig mange søyler for hånd. Heldigvis finnes det en enkel oppskrift, helt analog til <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#det-bestemte-integralet-og-riemann-summer">Analysens fundamentalteorem</a>: vi integrerer én variabel om gangen. Dette kalles et <strong>iterert integral</strong>. Vi holder den ene variabelen konstant (akkurat som ved partiellderivasjon), integrerer med hensyn på den andre, og integrerer så resultatet med hensyn på den første.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 5.1 - Fubinis teorem</p>
+<p>La <span class="math notranslate nohighlight">\(f(x,y)\)</span> være kontinuerlig på rektangelet <span class="math notranslate nohighlight">\(D=[a,b]\times[c,d]\)</span>. Da kan dobbeltintegralet regnes ut som et iterert integral, og rekkefølgen spiller ingen rolle:</p>
+<p><span class="math notranslate nohighlight">\(\iint_D f(x,y)\,dA = \int_a^b \left( \int_c^d f(x,y)\,dy \right) dx = \int_c^d \left( \int_a^b f(x,y)\,dx \right) dy\)</span></p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Regn ut <span class="math notranslate nohighlight">\(\iint_D xy \, dA\)</span> over rektangelet <span class="math notranslate nohighlight">\(D=[0,2]\times[0,1]\)</span>.</p>
+<p class="sd-card-text">Vi regner det som et iterert integral, og starter innenfra med hensyn på <span class="math notranslate nohighlight">\(x\)</span> (mens <span class="math notranslate nohighlight">\(y\)</span> holdes konstant):</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^2 xy \, dx = y\int_0^2 x \, dx = y\Big[\frac{x^2}{2}\Big]_0^2 = y \cdot 2 = 2y\)</span></p>
+<p class="sd-card-text">Så integrerer vi resultatet med hensyn på <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^1 2y \, dy = \Big[y^2\Big]_0^1 = 1\)</span></p>
+<p class="sd-card-text">Altså er <span class="math notranslate nohighlight">\(\iint_D xy \, dA = 1\)</span>. Ifølge Fubini hadde vi fått samme svar om vi integrerte i motsatt rekkefølge - prøv gjerne selv.</p>
+</div>
+</div>
+<p>Steget videre til tre variabler er nå kort. I stedet for å dele opp et flatt område i ruter, deler vi opp et romområde <span class="math notranslate nohighlight">\(E\)</span> i små bokser med volum <span class="math notranslate nohighlight">\(\Delta V = \Delta x\,\Delta y\,\Delta z\)</span>. Vi summerer <span class="math notranslate nohighlight">\(f(x,y,z)\,\Delta V\)</span> over alle boksene og lar dem bli uendelig små.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.7 - Trippelintegralet</p>
+<p><strong>Trippelintegralet</strong> av <span class="math notranslate nohighlight">\(f(x,y,z)\)</span> over et romområde <span class="math notranslate nohighlight">\(E\)</span> er</p>
+<p><span class="math notranslate nohighlight">\(\iiint_E f(x,y,z)\,dV = \lim_{\Delta V \to 0} \sum_i f(x_i,y_i,z_i)\,\Delta V\)</span></p>
+<p>Setter vi <span class="math notranslate nohighlight">\(f=1\)</span>, gir integralet <strong>volumet</strong> av <span class="math notranslate nohighlight">\(E\)</span>. Er <span class="math notranslate nohighlight">\(f\)</span> en tetthet (masse per volum), gir integralet den totale <strong>massen</strong>.</p>
+</div>
+<p>Fubinis teorem gjelder også her: vi integrerer én variabel om gangen, tre ganger. Over en boks <span class="math notranslate nohighlight">\([a_1,b_1]\times[a_2,b_2]\times[a_3,b_3]\)</span> blir det tre nøstede integraler. Men mange av de viktigste anvendelsene i kjemien handler ikke om bokser - de handler om <em>kuler</em>, som når vi ser på et atom. Da lønner det seg å bytte koordinatsystem.</p>
+<p>Et hydrogenatom er kulesymmetrisk, ikke boksformet. Å beskrive det med <span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> og <span class="math notranslate nohighlight">\(z\)</span> blir tungvint. I stedet bruker vi <strong>sfæriske koordinater</strong>, der vi angir et punkt ved hvor langt det er fra origo og i hvilken retning: avstanden <span class="math notranslate nohighlight">\(r\)</span> fra origo, vinkelen <span class="math notranslate nohighlight">\(\theta\)</span> ned fra <span class="math notranslate nohighlight">\(z\)</span>-aksen (polarvinkelen), og vinkelen <span class="math notranslate nohighlight">\(\phi\)</span> rundt <span class="math notranslate nohighlight">\(z\)</span>-aksen (asimutvinkelen).</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.8 - Sfæriske koordinater</p>
+<p>Et punkt <span class="math notranslate nohighlight">\((x,y,z)\)</span> kan beskrives ved sfæriske koordinater <span class="math notranslate nohighlight">\((r,\theta,\phi)\)</span> gjennom</p>
+<p><span class="math notranslate nohighlight">\(x = r\sin{\theta}\cos{\phi}, \qquad y = r\sin{\theta}\sin{\phi}, \qquad z = r\cos{\theta}\)</span></p>
+<p>der <span class="math notranslate nohighlight">\(r \geq 0\)</span> er avstanden fra origo, <span class="math notranslate nohighlight">\(0 \leq \theta \leq \pi\)</span> er vinkelen fra den positive <span class="math notranslate nohighlight">\(z\)</span>-aksen, og <span class="math notranslate nohighlight">\(0 \leq \phi &lt; 2\pi\)</span> er vinkelen i <span class="math notranslate nohighlight">\(xy\)</span>-planet.</p>
+</div>
+<p>Når vi bytter koordinater, kan vi ikke bare bytte ut <span class="math notranslate nohighlight">\(dV = dx\,dy\,dz\)</span> med <span class="math notranslate nohighlight">\(dr\,d\theta\,d\phi\)</span> - det ville gitt feil svar. Grunnen er at en liten “boks” i sfæriske koordinater ikke har sidene <span class="math notranslate nohighlight">\(dr\)</span>, <span class="math notranslate nohighlight">\(d\theta\)</span> og <span class="math notranslate nohighlight">\(d\phi\)</span> i lengde. Bare <span class="math notranslate nohighlight">\(dr\)</span> er en ekte lengde. De to vinklene må ganges opp med en radius for å bli lengder: en liten endring <span class="math notranslate nohighlight">\(d\theta\)</span> svarer til en bue av lengde <span class="math notranslate nohighlight">\(r\,d\theta\)</span>, og en liten endring <span class="math notranslate nohighlight">\(d\phi\)</span> svarer til en bue av lengde <span class="math notranslate nohighlight">\(r\sin{\theta}\,d\phi\)</span> (faktoren <span class="math notranslate nohighlight">\(\sin\theta\)</span> kommer av at sirklene rundt <span class="math notranslate nohighlight">\(z\)</span>-aksen er mindre nær polene enn ved ekvator). Volumet av den lille boksen blir derfor produktet av de tre lengdene.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 5.9- Volumelementet i sfæriske koordinater</p>
+<p>I sfæriske koordinater er volumelementet</p>
+<p><span class="math notranslate nohighlight">\(dV = r^2 \sin{\theta} \, dr \, d\theta \, d\phi\)</span></p>
+<p>Faktoren <span class="math notranslate nohighlight">\(r^2\sin{\theta}\)</span> kalles Jacobideterminanten for overgangen, og retter opp for at vinkelkoordinatene ikke er lengder.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Bruk sfæriske koordinater til å regne ut volumet av en kule med radius <span class="math notranslate nohighlight">\(R\)</span>.</p>
+<p class="sd-card-text">Volumet er trippelintegralet av <span class="math notranslate nohighlight">\(f=1\)</span> over hele kula. I sfæriske koordinater dekker vi kula ved å la <span class="math notranslate nohighlight">\(r\)</span> gå fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(R\)</span>, <span class="math notranslate nohighlight">\(\theta\)</span> fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(\pi\)</span>, og <span class="math notranslate nohighlight">\(\phi\)</span> fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(2\pi\)</span>. Vi bruker <span class="math notranslate nohighlight">\(dV=r^2\sin{\theta}\,dr\,d\theta\,d\phi\)</span>:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(V = \int_0^{2\pi}\int_0^{\pi}\int_0^{R} r^2\sin{\theta}\,dr\,d\theta\,d\phi\)</span></p>
+<p class="sd-card-text">De tre integralene kan skilles fra hverandre siden faktorene er uavhengige:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(V = \left(\int_0^{R} r^2\,dr\right)\left(\int_0^{\pi}\sin{\theta}\,d\theta\right)\left(\int_0^{2\pi}d\phi\right)\)</span></p>
+<p class="sd-card-text">Vi regner ut hver for seg:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\int_0^{R} r^2\,dr = \frac{R^3}{3}, \qquad \int_0^{\pi}\sin{\theta}\,d\theta = \Big[-\cos{\theta}\Big]_0^{\pi} = 2, \qquad \int_0^{2\pi}d\phi = 2\pi\)</span></p>
+<p class="sd-card-text">Til sammen: <span class="math notranslate nohighlight">\(V = \dfrac{R^3}{3}\cdot 2 \cdot 2\pi = \dfrac{4}{3}\pi R^3\)</span>, som er den velkjente formelen for kulevolumet.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Her kommer selve grunnen til at kjemistudenter trenger trippelintegraler i sfæriske koordinater: <strong>normalisering av orbitaler</strong>. En orbital <span class="math notranslate nohighlight">\(\psi\)</span> er en bølgefunksjon, og <span class="math notranslate nohighlight">\(|\psi|^2\)</span> er sannsynlighetstettheten for å finne elektronet. Siden elektronet må være <em>et eller annet sted</em>, må sannsynligheten summert over hele rommet bli nøyaktig <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\iiint_{\text{hele rommet}} |\psi|^2 \, dV = 1\)</span></p>
+<p>Ta hydrogenets 1s-orbital, som er kulesymmetrisk og bare avhenger av <span class="math notranslate nohighlight">\(r\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\psi_{1s} = \frac{1}{\sqrt{\pi a_0^3}}\, e^{-r/a_0}\)</span></p>
+<p>der <span class="math notranslate nohighlight">\(a_0\)</span> er Bohr-radien. Vi sjekker normaliseringen i sfæriske koordinater. Siden <span class="math notranslate nohighlight">\(|\psi|^2\)</span> ikke avhenger av vinklene, skiller integralene seg pent fra hverandre:</p>
+<p><span class="math notranslate nohighlight">\(\iiint |\psi_{1s}|^2 \, dV = \frac{1}{\pi a_0^3}\left(\int_0^{\infty} e^{-2r/a_0}\,r^2\,dr\right)\left(\int_0^{\pi}\sin{\theta}\,d\theta\right)\left(\int_0^{2\pi}d\phi\right)\)</span></p>
+<p>Vinkelintegralene kjenner vi igjen fra kule-eksempelet: de gir <span class="math notranslate nohighlight">\(2\)</span> og <span class="math notranslate nohighlight">\(2\pi\)</span>. Radialintegralet er et standardintegral (som kan løses med delvis integrasjon fra 4.5, brukt to ganger):</p>
+<p><span class="math notranslate nohighlight">\(\int_0^{\infty} r^2 e^{-2r/a_0}\,dr = \frac{a_0^3}{4}\)</span></p>
+<p>Setter vi alt sammen:</p>
+<p><span class="math notranslate nohighlight">\(\frac{1}{\pi a_0^3}\cdot \frac{a_0^3}{4}\cdot 2 \cdot 2\pi = \frac{1}{\pi a_0^3}\cdot \pi a_0^3 = 1\)</span></p>
+<p>Integralet blir nøyaktig <span class="math notranslate nohighlight">\(1\)</span> - orbitalen er riktig normalisert. Legg merke til hvor avgjørende faktoren <span class="math notranslate nohighlight">\(r^2\)</span> fra volumelementet var: uten den ville integralet ikke gått opp. Nettopp derfor er <span class="math notranslate nohighlight">\(r^2\sin\theta\)</span> ikke en teknisk detalj, men helt sentralt i kvantekjemien.</p>
+</div>
+<p>Med dobbel- og trippelintegraler, og sfæriske koordinater, har vi fått verktøyene til å integrere over flater og romområder - og til å normalisere orbitaler, som er uunnværlig i kvantekjemien. Dette runder av kalkulusdelen: fra funksjoner og grenser, via derivasjon og integrasjon i én variabel, til flervariabel derivasjon og integrasjon.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 5.3</p>
+<p>a) Regn ut dobbeltintegralet <span class="math notranslate nohighlight">\(\iint_D (x+2y)\,dA\)</span> over rektangelet <span class="math notranslate nohighlight">\(D=[0,1]\times[0,3]\)</span>.</p>
+<p>b) Bruk et trippelintegral til å finne volumet av boksen <span class="math notranslate nohighlight">\([0,2]\times[0,3]\times[0,1]\)</span>.</p>
+<p>c) I sfæriske koordinater: skriv opp (men du trenger ikke regne ut) trippelintegralet for volumet av en kuleskall mellom radius <span class="math notranslate nohighlight">\(r=1\)</span> og <span class="math notranslate nohighlight">\(r=2\)</span>. Regn det så ut.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 5.3</p>
+<p>a) Vi integrerer innenfra med hensyn på <span class="math notranslate nohighlight">\(x\)</span> (hold <span class="math notranslate nohighlight">\(y\)</span> konstant):</p>
+<p><span class="math notranslate nohighlight">\(\int_0^1 (x+2y)\,dx = \Big[\frac{x^2}{2}+2yx\Big]_0^1 = \frac{1}{2}+2y\)</span></p>
+<p>Så med hensyn på <span class="math notranslate nohighlight">\(y\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\int_0^3 \left(\frac{1}{2}+2y\right)dy = \Big[\frac{1}{2}y+y^2\Big]_0^3 = \frac{3}{2}+9 = \frac{21}{2}\)</span></p>
+<p>b) Volumet er <span class="math notranslate nohighlight">\(\iiint_E 1 \, dV\)</span> over boksen:</p>
+<p><span class="math notranslate nohighlight">\(\int_0^2\int_0^3\int_0^1 1\,dz\,dy\,dx = \left(\int_0^2 dx\right)\left(\int_0^3 dy\right)\left(\int_0^1 dz\right) = 2\cdot 3\cdot 1 = 6\)</span></p>
+<p>c) Kuleskallet dekkes ved å la <span class="math notranslate nohighlight">\(r\)</span> gå fra <span class="math notranslate nohighlight">\(1\)</span> til <span class="math notranslate nohighlight">\(2\)</span>, mens vinklene dekker hele kuleflaten som før:</p>
+<p><span class="math notranslate nohighlight">\(V = \int_0^{2\pi}\int_0^{\pi}\int_1^{2} r^2\sin{\theta}\,dr\,d\theta\,d\phi = \left(\int_1^2 r^2\,dr\right)\cdot 2 \cdot 2\pi\)</span></p>
+<p>Radialintegralet er <span class="math notranslate nohighlight">\(\int_1^2 r^2\,dr = \Big[\frac{r^3}{3}\Big]_1^2 = \frac{8}{3}-\frac{1}{3}=\frac{7}{3}\)</span>, slik at <span class="math notranslate nohighlight">\(V = \frac{7}{3}\cdot 4\pi = \frac{28\pi}{3}\)</span>. (Dette stemmer med <span class="math notranslate nohighlight">\(\frac{4}{3}\pi(2^3-1^3)=\frac{4}{3}\pi\cdot 7=\frac{28\pi}{3}\)</span>.)</p>
+</div>
+</section>
+<section id="lagrange-multiplikatormetode">
+<span id="id5"></span><h2>5.4 Lagrange multiplikatormetode<a class="headerlink" href="#lagrange-multiplikatormetode" title="Link to this heading">#</a></h2>
+<p>I <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/kalkulus.html#ekstremalpunkter">4.4.3 Ekstremalpunkter</a> så vi på topp-og bunnpunkter i funksjoner av én variabel, som for eksempel å maksimere et utbytte, minimere en energi. Vi skal fortsette å finne minimum og/eller maksimum i dette delkapittelet, men her er det to ting som er annerledes enn tidligere:</p>
+<ol class="arabic simple">
+<li><p>Funksjonen vår er av flere variabler</p></li>
+<li><p>Vi optimerer under én eller flere betingelser</p></li>
+</ol>
+<p>Det første er kanskje opplagt siden i i hele kapittelet har sett på funksjoner av flere variabler, men punkt nummer 2 er nytt. I praksis er vi sjelden helt frie: vi optimerer under en <strong>betingelse</strong>. En kjemiker vil kanskje maksimere entropien, men bare blant tilstander som har en gitt total energi. Vi søker altså ekstremalverdien til en funksjon <span class="math notranslate nohighlight">\(f(x,y)\)</span>, men bare blant de punktene <span class="math notranslate nohighlight">\((x,y)\)</span> som oppfyller en betingelse på formen <span class="math notranslate nohighlight">\(g(x,y)=c\)</span>. <strong>Lagranges multiplikatormetode</strong> er et elegant verktøy for nettopp dette, og bygger direkte på gradienten fra delkapittel 4.7.</p>
+<p>La oss tenke geometrisk. Betingelsen <span class="math notranslate nohighlight">\(g(x,y)=c\)</span> beskriver en kurve i planet - den tillatte “stien” vi kan bevege oss langs. Funksjonen <span class="math notranslate nohighlight">\(f\)</span> har sine egne nivåkurver, én for hver verdi <span class="math notranslate nohighlight">\(f\)</span> kan ta. Når vi går langs betingelseskurven, krysser vi stadig nye nivåkurver for <span class="math notranslate nohighlight">\(f\)</span>, og verdien til <span class="math notranslate nohighlight">\(f\)</span> endrer seg. Så lenge betingelseskurven <em>krysser</em> en nivåkurve, kan vi fortsette å gå og finne en enda høyere (eller lavere) verdi. Ekstremalverdien inntreffer først i det øyeblikket betingelseskurven bare <em>tangerer</em> en nivåkurve - da har vi presset <span class="math notranslate nohighlight">\(f\)</span> så langt vi kan uten å forlate stien.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Lagranges multiplikatormetode&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--cons:#c0392b;--gf:#1a7a4c;--gg:#8e44ad;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:8px;}
+  canvas{display:block;width:100%;height:auto;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;margin-top:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:16px;color:var(--ink);}
+  .val.f{color:var(--cons);}
+  .val.gfv{color:var(--gf);}
+  .val.ggv{color:var(--gg);}
+  .status{margin-top:10px;padding:8px 10px;border-radius:3px;font-size:13px;
+    background:#f0ece1;color:var(--muted);font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .status.hit{background:rgba(26,122,76,.12);color:var(--gf);}
+  .ctl{margin-bottom:14px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--pt);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  .buttons button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em;
+    padding:7px 13px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Optimering under betingelse&lt;/div&gt;
+  &lt;h1&gt;Når gradientene blir parallelle&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Vi maksimerer f(x, y) = xy langs betingelsen x + y = 10. Flytt punktet langs den røde linjen og se på de to gradientpilene: i optimum peker de samme vei.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;canvas id=&quot;cv&quot; width=&quot;600&quot; height=&quot;440&quot;&gt;&lt;/canvas&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--grid)&quot;&gt;&lt;/i&gt; nivåkurver for f&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--cons)&quot;&gt;&lt;/i&gt; betingelse x + y = 10&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--gf)&quot;&gt;&lt;/i&gt; ∇f&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;swatch&quot; style=&quot;background:var(--gg)&quot;&gt;&lt;/i&gt; ∇g&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;I punktet&lt;/h2&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;punkt (x, y)&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;ptVal&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;f(x, y) = xy&lt;/span&gt;&lt;span class=&quot;val f&quot; id=&quot;fVal&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;∇f = (y, x)&lt;/span&gt;&lt;span class=&quot;val gfv&quot; id=&quot;gfVal&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;∇g = (1, 1)&lt;/span&gt;&lt;span class=&quot;val ggv&quot; id=&quot;ggVal&quot;&gt;(1, 1)&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;status&quot; id=&quot;statusBox&quot;&gt;Pilene peker ulike veier — ikke i optimum ennå.&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;
+        &lt;label&gt;x langs betingelsen &lt;b id=&quot;xLab&quot;&gt;2.0&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;xRange&quot; min=&quot;0.6&quot; max=&quot;9.4&quot; step=&quot;0.05&quot; value=&quot;2&quot;&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button id=&quot;animBtn&quot;&gt;Kjør mot optimum&lt;/button&gt;
+        &lt;button id=&quot;resetBtn&quot;&gt;Nullstill&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Nivåkurvene til f = xy er hyperbler. Så lenge betingelseslinjen &lt;b&gt;krysser&lt;/b&gt; en nivåkurve, kan du gå videre og finne en høyere verdi. Først når linjen bare &lt;b&gt;tangerer&lt;/b&gt; en nivåkurve — i (5, 5) — er f presset så langt den kan.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const cv=document.getElementById(&#x27;cv&#x27;),ctx=cv.getContext(&#x27;2d&#x27;);
+  const cssv=n=&gt;getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const COL={grid:cssv(&#x27;--grid&#x27;),axis:cssv(&#x27;--axis&#x27;),curve:cssv(&#x27;--curve&#x27;),
+    cons:cssv(&#x27;--cons&#x27;),gf:cssv(&#x27;--gf&#x27;),gg:cssv(&#x27;--gg&#x27;),pt:cssv(&#x27;--pt&#x27;),muted:cssv(&#x27;--muted&#x27;)};
+
+  const XMIN=0,XMAX=11,YMIN=0,YMAX=11;
+  let W=600,H=440,padL=48,padR=18,padT=18,padB=40;
+  let state={x:2};
+
+  const sx=v=&gt;padL+(v-XMIN)/(XMAX-XMIN)*(W-padL-padR);
+  const sy=v=&gt;(H-padB)-(v-YMIN)/(YMAX-YMIN)*(H-padT-padB);
+
+  function setSize(){
+    const r=cv.getBoundingClientRect();const dpr=window.devicePixelRatio||1;
+    cv.width=r.width*dpr;cv.height=(r.width*440/600)*dpr;ctx.setTransform(dpr,0,0,dpr,0,0);
+    W=r.width;H=r.width*440/600;draw();
+  }
+
+  // hyperbola level curve xy=k  -&gt;  y=k/x
+  function levelCurve(k){
+    ctx.beginPath();let started=false;
+    for(let i=0;i&lt;=300;i++){
+      const x=XMIN+0.05+(XMAX-XMIN)*i/300;
+      const y=k/x;
+      if(y&lt;YMIN||y&gt;YMAX){started=false;continue;}
+      const px=sx(x),py=sy(y);
+      started?ctx.lineTo(px,py):ctx.moveTo(px,py);started=true;
+    }
+    ctx.stroke();
+  }
+
+  function arrow(x0,y0,dx,dy,color,label){
+    // draw arrow in data space, scaled to a fixed screen length
+    const len=Math.hypot(dx,dy)||1;
+    const L=52; // px
+    const ax=sx(x0),ay=sy(y0);
+    const ux=dx/len,uy=dy/len;
+    const bx=ax+ux*L, by=ay-uy*L; // minus because screen y is flipped
+    ctx.strokeStyle=color;ctx.lineWidth=2.6;
+    ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+    // head
+    const ang=Math.atan2(by-ay,bx-ax);
+    ctx.fillStyle=color;ctx.beginPath();
+    ctx.moveTo(bx,by);
+    ctx.lineTo(bx-9*Math.cos(ang-0.4),by-9*Math.sin(ang-0.4));
+    ctx.lineTo(bx-9*Math.cos(ang+0.4),by-9*Math.sin(ang+0.4));
+    ctx.closePath();ctx.fill();
+    if(label){ctx.fillStyle=color;ctx.font=&#x27;italic 13px Georgia&#x27;;ctx.fillText(label,bx+6,by-2);}
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+
+    // grid
+    ctx.strokeStyle=COL.grid;ctx.lineWidth=0.6;
+    for(let g=0;g&lt;=10;g+=2){
+      ctx.beginPath();ctx.moveTo(sx(g),sy(YMIN));ctx.lineTo(sx(g),sy(YMAX));ctx.stroke();
+      ctx.beginPath();ctx.moveTo(sx(XMIN),sy(g));ctx.lineTo(sx(XMAX),sy(g));ctx.stroke();
+    }
+    // axes
+    ctx.strokeStyle=COL.axis;ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(sx(0),sy(YMIN));ctx.lineTo(sx(0),sy(YMAX));ctx.stroke();
+    ctx.beginPath();ctx.moveTo(sx(XMIN),sy(0));ctx.lineTo(sx(XMAX),sy(0));ctx.stroke();
+    ctx.fillStyle=COL.muted;ctx.font=&#x27;12px monospace&#x27;;
+    for(let g=2;g&lt;=10;g+=2){
+      ctx.fillText(String(g),sx(g)-4,sy(0)+16);
+      ctx.fillText(String(g),sx(0)-22,sy(g)+4);
+    }
+    ctx.fillStyle=COL.axis;ctx.font=&#x27;italic 14px Georgia&#x27;;
+    ctx.fillText(&#x27;x&#x27;,sx(XMAX)-10,sy(0)+18);ctx.fillText(&#x27;y&#x27;,sx(0)-24,sy(YMAX)+6);
+
+    const x0=state.x, y0=10-x0, k=x0*y0;
+
+    // background level curves
+    ctx.strokeStyle=COL.grid;ctx.lineWidth=1.3;
+    for(const kk of [4,9,16,21,25,30]) levelCurve(kk);
+    // current level curve through the point (highlight)
+    ctx.strokeStyle=COL.curve;ctx.lineWidth=2.4;
+    levelCurve(k);
+    // optimum level curve xy=25 faint marker when not there
+    // constraint line x+y=10
+    ctx.strokeStyle=COL.cons;ctx.lineWidth=2.8;
+    ctx.beginPath();ctx.moveTo(sx(0),sy(10));ctx.lineTo(sx(10),sy(0));ctx.stroke();
+    ctx.fillStyle=COL.cons;ctx.font=&#x27;italic 13px Georgia&#x27;;
+    ctx.fillText(&#x27;x + y = 10&#x27;,sx(6.6),sy(4.2));
+
+    // gradients at the point: ∇f=(y,x), ∇g=(1,1)
+    arrow(x0,y0,1,1,COL.gg,&#x27;∇g&#x27;);
+    arrow(x0,y0,y0,x0,COL.gf,&#x27;∇f&#x27;);
+
+    // point
+    ctx.fillStyle=COL.pt;ctx.strokeStyle=&#x27;#fff&#x27;;ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(sx(x0),sy(y0),6.5,0,7);ctx.fill();ctx.stroke();
+
+    // readouts
+    const f2=v=&gt;v.toFixed(2);
+    document.getElementById(&#x27;ptVal&#x27;).textContent=&#x27;(&#x27;+f2(x0)+&#x27;, &#x27;+f2(y0)+&#x27;)&#x27;;
+    document.getElementById(&#x27;fVal&#x27;).textContent=f2(k);
+    document.getElementById(&#x27;gfVal&#x27;).textContent=&#x27;(&#x27;+f2(y0)+&#x27;, &#x27;+f2(x0)+&#x27;)&#x27;;
+    document.getElementById(&#x27;xLab&#x27;).textContent=f2(x0);
+    // parallel check: cross product of ∇f and ∇g
+    const cross=y0*1-x0*1;
+    const box=document.getElementById(&#x27;statusBox&#x27;);
+    if(Math.abs(cross)&lt;0.12){
+      box.className=&#x27;status hit&#x27;;
+      box.textContent=&#x27;∇f = λ∇g med λ = &#x27;+f2(y0)+&#x27;  →  optimum! f = &#x27;+f2(k);
+    }else{
+      box.className=&#x27;status&#x27;;
+      box.textContent=&#x27;Pilene peker ulike veier — ikke i optimum ennå.&#x27;;
+    }
+  }
+
+  document.getElementById(&#x27;xRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.x=parseFloat(e.target.value);draw();});
+
+  let raf=null;
+  const animBtn=document.getElementById(&#x27;animBtn&#x27;);
+  function stop(){if(raf){cancelAnimationFrame(raf);raf=null;}animBtn.textContent=&#x27;Kjør mot optimum&#x27;;}
+  animBtn.addEventListener(&#x27;click&#x27;,()=&gt;{
+    if(raf){stop();return;}
+    animBtn.textContent=&#x27;Stopp&#x27;;
+    const step=()=&gt;{
+      const d=5-state.x;
+      if(Math.abs(d)&lt;0.02){state.x=5;document.getElementById(&#x27;xRange&#x27;).value=5;draw();stop();return;}
+      state.x+=d*0.06;document.getElementById(&#x27;xRange&#x27;).value=state.x;draw();
+      raf=requestAnimationFrame(step);
+    };
+    raf=requestAnimationFrame(step);
+  });
+  document.getElementById(&#x27;resetBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{
+    stop();state.x=2;document.getElementById(&#x27;xRange&#x27;).value=2;draw();
+  });
+
+  window.addEventListener(&#x27;resize&#x27;,setSize);
+  setSize();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<p>I dette tangeringspunktet peker de to kurvenes normaler i samme retning. Fra <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/flervariabel_kalkulus.html#gradienten">5.2.3 Gradienten</a> vet vi at gradienten står vinkelrett på nivåkurvene. Både <span class="math notranslate nohighlight">\(\nabla f\)</span> (normal på <span class="math notranslate nohighlight">\(f\)</span> sin nivåkurve) og <span class="math notranslate nohighlight">\(\nabla g\)</span> (normal på betingelseskurven) må derfor peke langs samme linje - de er parallelle. To vektorer er parallelle nøyaktig når den ene er et tall ganget med den andre, og det er hele kjernen i metoden.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 5.2 - Lagranges multiplikatormetode</p>
+<p>La <span class="math notranslate nohighlight">\(f(x,y)\)</span> og <span class="math notranslate nohighlight">\(g(x,y)\)</span> være deriverbare funksjoner. Dersom <span class="math notranslate nohighlight">\(f\)</span> har en ekstremalverdi i et punkt <span class="math notranslate nohighlight">\((x,y)\)</span> under betingelsen <span class="math notranslate nohighlight">\(g(x,y)=c\)</span>, så finnes det et tall <span class="math notranslate nohighlight">\(\lambda\)</span> slik at</p>
+<p><span class="math notranslate nohighlight">\(\nabla f = \lambda \nabla g\)</span></p>
+<p>Tallet <span class="math notranslate nohighlight">\(\lambda\)</span> kalles en <strong>Lagrange-multiplikator</strong>.</p>
+</div>
+<p>Skriver vi ut vektorligningen <span class="math notranslate nohighlight">\(\nabla f = \lambda \nabla g\)</span> komponent for komponent, og tar med selve betingelsen, får vi et system på tre ligninger med tre ukjente (<span class="math notranslate nohighlight">\(x\)</span>, <span class="math notranslate nohighlight">\(y\)</span> og <span class="math notranslate nohighlight">\(\lambda\)</span>):</p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x} = \lambda \frac{\partial g}{\partial x}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y} = \lambda \frac{\partial g}{\partial y}\)</span></p>
+<p><span class="math notranslate nohighlight">\(g(x,y) = c\)</span></p>
+<p>Oppskriften blir dermed: regn ut de fire partiellderiverte, sett opp de tre ligningene, og løs systemet. Punktene vi finner er kandidatene til ekstremalverdi. Multiplikatoren <span class="math notranslate nohighlight">\(\lambda\)</span> er som regel bare et mellomledd vi ikke bryr oss om til slutt - men i fysikk og kjemi viser den seg ofte å ha en dyp betydning helt selv.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Finn det største mulige produktet <span class="math notranslate nohighlight">\(f(x,y)=xy\)</span> når <span class="math notranslate nohighlight">\(x+y=10\)</span>.</p>
+<p class="sd-card-text">Her er betingelsen <span class="math notranslate nohighlight">\(g(x,y)=x+y\)</span> med <span class="math notranslate nohighlight">\(c=10\)</span>. Vi regner ut de partiellderiverte:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=y, \quad \frac{\partial f}{\partial y}=x, \quad \frac{\partial g}{\partial x}=1, \quad \frac{\partial g}{\partial y}=1\)</span></p>
+<p class="sd-card-text">Ligningssystemet <span class="math notranslate nohighlight">\(\nabla f = \lambda \nabla g\)</span> sammen med betingelsen blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y = \lambda \cdot 1\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(x = \lambda \cdot 1\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(x+y=10\)</span></p>
+<p class="sd-card-text">Fra de to første ligningene ser vi at <span class="math notranslate nohighlight">\(x=\lambda\)</span> og <span class="math notranslate nohighlight">\(y=\lambda\)</span>, altså <span class="math notranslate nohighlight">\(x=y\)</span>. Setter vi dette inn i betingelsen, får vi <span class="math notranslate nohighlight">\(x+x=10\)</span>, så <span class="math notranslate nohighlight">\(x=5\)</span> og dermed <span class="math notranslate nohighlight">\(y=5\)</span>.</p>
+<p class="sd-card-text">Det største produktet er derfor <span class="math notranslate nohighlight">\(f(5,5)=5 \cdot 5 = 25\)</span>.</p>
+</div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Et rektangel skal ha omkrets <span class="math notranslate nohighlight">\(20\)</span> cm. Hvilke sidelengder gir størst areal?</p>
+<p class="sd-card-text">La sidene være <span class="math notranslate nohighlight">\(x\)</span> og <span class="math notranslate nohighlight">\(y\)</span>. Vi maksimerer arealet <span class="math notranslate nohighlight">\(f(x,y)=xy\)</span> under betingelsen <span class="math notranslate nohighlight">\(g(x,y)=2x+2y=20\)</span>.</p>
+<p class="sd-card-text">De partiellderiverte er</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=y, \quad \frac{\partial f}{\partial y}=x, \quad \frac{\partial g}{\partial x}=2, \quad \frac{\partial g}{\partial y}=2\)</span></p>
+<p class="sd-card-text">Ligningssystemet blir</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(y = 2\lambda\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(x = 2\lambda\)</span></p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(2x+2y=20\)</span></p>
+<p class="sd-card-text">De to første gir <span class="math notranslate nohighlight">\(x=y\)</span>. Setter vi inn i betingelsen: <span class="math notranslate nohighlight">\(2x+2x=20\)</span>, altså <span class="math notranslate nohighlight">\(x=5\)</span> og <span class="math notranslate nohighlight">\(y=5\)</span>.</p>
+<p class="sd-card-text">Rektangelet med størst areal er altså et <strong>kvadrat</strong> med sider <span class="math notranslate nohighlight">\(5\)</span> cm og areal <span class="math notranslate nohighlight">\(25\)</span> cm². Dette bekrefter intuisjonen fra introduksjonsspørsmålet - det jevneste valget er det beste.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Lagranges metode er ikke bare et regnetriks - den er selve fundamentet for <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-entropimaksimum-til-boltzmann-fordelingen">Boltzmann-fordelingen</a>.</p>
+<p>Tenk deg et system med partikler fordelt på energinivåer <span class="math notranslate nohighlight">\(\varepsilon_1, \varepsilon_2, \ldots\)</span>, med <span class="math notranslate nohighlight">\(n_i\)</span> partikler på nivå <span class="math notranslate nohighlight">\(i\)</span>. Antall mikrotilstander som gir en bestemt fordeling er <span class="math notranslate nohighlight">\(W=\dfrac{N!}{n_1!\,n_2!\cdots}\)</span>. Naturen søker den fordelingen som maksimerer <span class="math notranslate nohighlight">\(W\)</span> - eller, mer bekvemt, <span class="math notranslate nohighlight">\(\ln{W}\)</span>. Men vi kan ikke maksimere fritt: to betingelser må holdes fast.</p>
+<p><span class="math notranslate nohighlight">\(\sum_i n_i = N \qquad \text{(partikkeltallet er bevart)}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\sum_i n_i \varepsilon_i = E \qquad \text{(den totale energien er bevart)}\)</span></p>
+<p>Dette er nøyaktig et Lagrange-problem, bare med <em>to</em> betingelser i stedet for én - da trenger vi to multiplikatorer, som vi kaller <span class="math notranslate nohighlight">\(\alpha\)</span> og <span class="math notranslate nohighlight">\(\beta\)</span>. Vi maksimerer altså</p>
+<p><span class="math notranslate nohighlight">\(\ln{W} - \alpha\left(\sum_i n_i - N\right) - \beta\left(\sum_i n_i \varepsilon_i - E\right)\)</span></p>
+<p>Deriverer vi med hensyn på hver <span class="math notranslate nohighlight">\(n_i\)</span> og setter lik null (samme prinsipp som <span class="math notranslate nohighlight">\(\nabla f = \lambda \nabla g\)</span>), faller det ut at</p>
+<p><span class="math notranslate nohighlight">\(n_i \propto e^{-\beta \varepsilon_i}\)</span></p>
+<p>Dette er Boltzmann-fordelingen, og multiplikatoren <span class="math notranslate nohighlight">\(\beta\)</span> - det “uinteressante mellomleddet” - viser seg å være <span class="math notranslate nohighlight">\(\beta=\dfrac{1}{k_B T}\)</span>. Slik dukker temperaturen opp helt av seg selv, som en Lagrange-multiplikator knyttet til energibevaring. Metoden du nettopp lærte på <span class="math notranslate nohighlight">\(f=xy\)</span> er altså den samme som gir oss fordelingen bak all statistisk termodynamikk.</p>
+</div>
+<p>Med Lagranges multiplikatormetode har vi rundet av kalkulusdelen. Vi har gått fra funksjoner av én variabel, via grenser, derivasjon og integrasjon, til funksjoner av flere variabler, partiellderiverte, flerdimensjonal integrasjon og til slutt optimering under betingelser. Underveis har vi sett hvordan hvert verktøy har en direkte anvendelse i kjemien - fra termodynamisk arbeid og normalisering av orbitaler til selve Boltzmann-fordelingen som styrer hvordan naturen fordeler energi.</p>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 5.4</p>
+<p>a) Finn punktet på den rette linjen <span class="math notranslate nohighlight">\(x+2y=5\)</span> som ligger nærmest origo, ved å minimere <span class="math notranslate nohighlight">\(f(x,y)=x^2+y^2\)</span> under betingelsen <span class="math notranslate nohighlight">\(g(x,y)=x+2y=5\)</span>.</p>
+<p>b) Finn den største og minste verdien av <span class="math notranslate nohighlight">\(f(x,y)=2x+3y\)</span> på sirkelen <span class="math notranslate nohighlight">\(x^2+y^2=13\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 5.4</p>
+<p>a) Vi regner ut de partiellderiverte: <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=2x\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}=2y\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial g}{\partial x}=1\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial g}{\partial y}=2\)</span>. Ligningssystemet blir</p>
+<p><span class="math notranslate nohighlight">\(2x = \lambda \cdot 1\)</span></p>
+<p><span class="math notranslate nohighlight">\(2y = \lambda \cdot 2\)</span></p>
+<p><span class="math notranslate nohighlight">\(x+2y=5\)</span></p>
+<p>Fra første ligning: <span class="math notranslate nohighlight">\(x=\frac{\lambda}{2}\)</span>. Fra andre: <span class="math notranslate nohighlight">\(y=\lambda\)</span>. Altså er <span class="math notranslate nohighlight">\(y=2x\)</span>. Setter vi inn i betingelsen: <span class="math notranslate nohighlight">\(x+2(2x)=5\)</span>, så <span class="math notranslate nohighlight">\(5x=5\)</span>, altså <span class="math notranslate nohighlight">\(x=1\)</span> og <span class="math notranslate nohighlight">\(y=2\)</span>. Punktet er <span class="math notranslate nohighlight">\((1,2)\)</span>.</p>
+<p>Den minste verdien er <span class="math notranslate nohighlight">\(f(1,2)=1+4=5\)</span>, så den korteste avstanden til origo er <span class="math notranslate nohighlight">\(\sqrt{5}\)</span>. Geometrisk er <span class="math notranslate nohighlight">\((1,2)\)</span> fotpunktet for normalen fra origo ned på linjen.</p>
+<p>b) Her er <span class="math notranslate nohighlight">\(f(x,y)=2x+3y\)</span> og <span class="math notranslate nohighlight">\(g(x,y)=x^2+y^2=13\)</span>. De partiellderiverte er <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial x}=2\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial f}{\partial y}=3\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial g}{\partial x}=2x\)</span>, <span class="math notranslate nohighlight">\(\frac{\partial g}{\partial y}=2y\)</span>. Ligningssystemet blir</p>
+<p><span class="math notranslate nohighlight">\(2 = 2\lambda x\)</span></p>
+<p><span class="math notranslate nohighlight">\(3 = 2\lambda y\)</span></p>
+<p><span class="math notranslate nohighlight">\(x^2+y^2=13\)</span></p>
+<p>Fra de to første: <span class="math notranslate nohighlight">\(x=\frac{1}{\lambda}\)</span> og <span class="math notranslate nohighlight">\(y=\frac{3}{2\lambda}\)</span>. Setter vi inn i betingelsen:</p>
+<p><span class="math notranslate nohighlight">\(\frac{1}{\lambda^2}+\frac{9}{4\lambda^2}=13 \quad \Rightarrow \quad \frac{13}{4\lambda^2}=13 \quad \Rightarrow \quad \lambda^2=\frac{1}{4}\)</span></p>
+<p>Altså er <span class="math notranslate nohighlight">\(\lambda = \pm\frac{1}{2}\)</span>. For <span class="math notranslate nohighlight">\(\lambda=\frac{1}{2}\)</span> får vi <span class="math notranslate nohighlight">\((x,y)=(2,3)\)</span> med <span class="math notranslate nohighlight">\(f=2\cdot 2+3\cdot 3=13\)</span>. For <span class="math notranslate nohighlight">\(\lambda=-\frac{1}{2}\)</span> får vi <span class="math notranslate nohighlight">\((x,y)=(-2,-3)\)</span> med <span class="math notranslate nohighlight">\(f=-13\)</span>.</p>
+<p>Største verdi er altså <span class="math notranslate nohighlight">\(13\)</span> i punktet <span class="math notranslate nohighlight">\((2,3)\)</span>, og minste verdi er <span class="math notranslate nohighlight">\(-13\)</span> i punktet <span class="math notranslate nohighlight">\((-2,-3)\)</span>.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/matematikk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="kalkulus.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">4. Funksjoner, derivasjon og integrasjon</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="statistikk.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">6. Sannsynlighetsfordelinger og statistikk</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#flervariable-funksjoner">5.1 Flervariable funksjoner</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#funksjoner-av-n-variabler">5.1.1 Funksjoner av n-variabler</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#visualisering-av-funksjoner-av-to-variabler">5.1.2 Visualisering av funksjoner av to variabler</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#partiellderiverte">5.2 Partiellderiverte</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#definisjonen-av-de-partiellderiverte">5.2.1 Definisjonen av de partiellderiverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#blandede-partiellderiverte">5.2.2 Blandede partiellderiverte</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#gradienten">5.2.3 Gradienten</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#den-totale-differensialen">5.2.4 Den totale differensialen</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dobbel-og-trippelintegraler">5.3 Dobbel-og trippelintegraler</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#lagrange-multiplikatormetode">5.4 Lagrange multiplikatormetode</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

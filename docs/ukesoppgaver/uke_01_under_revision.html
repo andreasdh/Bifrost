@@ -1,0 +1,732 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_01_under_revision';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen" href="uke_02_under_revision.html" />
+    <link rel="prev" title="Ukesoppgaver" href="../ukesoppgaver.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_01_under_revision.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9-ekstra-utfordring">Oppgave 9 – Ekstra utfordring</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-1-statistisk-mekanikk-og-mikromakro-sammenhengen">
+<h1>Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen<a class="headerlink" href="#uke-1-statistisk-mekanikk-og-mikromakro-sammenhengen" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Læringsutbytte</p>
+<p>Etter å ha jobbet med dette temaet skal du kunne:</p>
+<ul class="simple">
+<li><p>forklare forskjellen mellom en mikrotilstand og en makrotilstand</p></li>
+<li><p>forklare hvorfor statistiske beskrivelser er nødvendige for systemer som består av svært mange partikler</p></li>
+<li><p>beskrive energi som en egenskap ved mikrotilstander og som en størrelse som kan fordeles mellom molekyler på mange ulike måter</p></li>
+<li><p>bruke Boltzmanns entropidefinisjon til å knytte entropi til antallet mikrotilstander som er forenlige med en gitt makrotilstand</p></li>
+<li><p>forklare hvorfor makrotilstander med mange mikrotilstander er mer sannsynlige enn makrotilstander med få mikrotilstander</p></li>
+</ul>
+</div>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hva er forskjellen mellom en mikrotilstand og en makrotilstand? Gi et eksempel.</p>
+<p><strong>b)</strong> Hva legger vi i begrepet multiplisitet?</p>
+<p><strong>c)</strong> Hvordan henger multiplisitet og sannsynlighet sammen?</p>
+<p><strong>d)</strong> Når vi teller mikrotilstander, må vi skille mellom det man på engelsk kaller <strong>distinguishable</strong> og <strong>indistinguishable</strong> partikler. Forklar forskjellen, og prøv å oversette begrepene til norsk. Hvordan påvirkes opptellingen av mikrotilstander av om det å bytte om to partikler gir en ny mikrotilstand?</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2 <span class="math notranslate nohighlight">\(^*\)</span><a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Vi ser for oss <span class="math notranslate nohighlight">\(N\)</span> gasspartikler som kan fordele seg mellom <span class="math notranslate nohighlight">\(M\)</span> bokser. Hver boks representerer en mulig posisjon.</p>
+<p>I denne oppgaven skal vi komme frem til en statistisk forklaring på hvorfor en gass sprer seg og utøver et <em>trykk</em> på omgivelsene. Trykket har samtidig en mekanisk forklaring: Partiklene kolliderer med veggene og overfører bevegelsesmengde.</p>
+<p>Figuren viser et forenklet system med <span class="math notranslate nohighlight">\(N=3\)</span> partikler og henholdsvis <span class="math notranslate nohighlight">\(M=3\)</span>, <span class="math notranslate nohighlight">\(M=4\)</span> og <span class="math notranslate nohighlight">\(M=5\)</span> bokser.</p>
+<ol class="arabic simple">
+<li><p>Hvor mange mikrotilstander finnes i hvert av de tre tilfellene dersom hver partikkel kan plasseres uavhengig i en hvilken som helst boks?</p></li>
+<li><p>Bruk svarene over til å forklare gasstrykk.</p></li>
+<li><p>Hvordan henger de statistiske og mekaniske forklaringene på trykk sammen?</p></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/Diskusjon_2p2.png"><img alt="Tre partikler fordelt mellom tre, fire og fem bokser" class="align-center" src="../../_images/Diskusjon_2p2.png" style="width: 50%;" />
+</a>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3 <span class="math notranslate nohighlight">\(^*\)</span><a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Luften rundt oss er en blanding av ulike molekyler. Dersom det slippes ut helium i ett område av et rom, vil heliumatomene etter hvert spre seg og blandes med luften.</p>
+<p>Vi bruker et forenklet gitter med en permeabel skillevegg. Denne gangen har partiklene to ulike farger, og begge typene kan bevege seg mellom de to sidene. Det er fire bokser på hver side av veggen. Makrotilstanden beskrives av hvor mange oransje og grå partikler som befinner seg på hver side.</p>
+<ol class="arabic simple">
+<li><p>Se på de tre tilfellene i figuren. Hvilken fordeling av partiklene forventer du å observere oftest?</p></li>
+<li><p>Bruk multiplisitet og sannsynlighet til å begrunne svaret.</p></li>
+<li><p>Hva skjer med de relative fluktuasjonene dersom modellen skaleres opp fra noen få partikler til for eksempel 10 000?</p></li>
+<li><p>Fakulteter blir raskt svært store. Hvordan kan vi regne med slike tall uten å beregne fakultetene direkte?</p></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/Diskusjon_2p3.png"><img alt="To typer partikler på hver side av en permeabel skillevegg" class="align-center" src="../../_images/Diskusjon_2p3.png" style="width: 50%;" />
+</a>
+<p>Er 10 000 molekyler egentlig et stort fysisk system? Estimer volumet som 10 000 vannmolekyler opptar i flytende vann (bruk <span class="math notranslate nohighlight">\(V_\mathrm{m}=18{,}0\ \mathrm{mL\,mol^{-1}}\)</span>).</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4 <span class="math notranslate nohighlight">\(^*\)</span><a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Når en gummistrikk strekkes, trekker den seg tilbake når vi slipper den. En viktig del av forklaringen er at polymerkjeder kan danne langt flere foldede enn fullt utstrakte konformasjoner.</p>
+<p>Vi bruker en enkel modell av en polymer som består av fire kuler bundet sammen. Figuren viser den fullt utstrakte konformasjonen. Størrelsen <span class="math notranslate nohighlight">\(l\)</span> angir polymerens utstrekning.</p>
+<p>Finn multiplisiteten til de ulike tillatte lengdene polymeren kan ha (ulik verdi av <em>l</em>) og bruk denne til å forklare hvorfor polymeren har en tilbaketrekkende tendens når den strekkes.</p>
+<p><strong>Merk:</strong> Den første kulen er festet til veggen og kan ikke endre posisjon.</p>
+<a class="reference internal image-reference" href="../../_images/Diskusjon_2p4.png"><img alt="Forenklet modell av en polymer festet til en vegg" class="align-center" src="../../_images/Diskusjon_2p4.png" style="width: 50%;" />
+</a>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5 <span class="math notranslate nohighlight">\(^*\)</span><a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>I oppgave 3 så vi på omfordeling av partikler i et gitt system, men vi vet også at energi kan overføres mellom systemer.</p>
+<p>Vi ser på to delsystemer, A og B, med ti partikler hver. Hver partikkel kan befinne seg i grunntilstanden med energi <span class="math notranslate nohighlight">\(0\)</span> eller i en eksitert tilstand med energi <span class="math notranslate nohighlight">\(\varepsilon\)</span>. Hvis <span class="math notranslate nohighlight">\(n_A\)</span> og <span class="math notranslate nohighlight">\(n_B\)</span> er antallet eksiterte partikler, er energiene <span class="math notranslate nohighlight">\(U_A=n_A\varepsilon\)</span> og <span class="math notranslate nohighlight">\(U_B=n_B\varepsilon\)</span>.</p>
+<p>Til å begynne med er <span class="math notranslate nohighlight">\(U_A=2\varepsilon\)</span> og <span class="math notranslate nohighlight">\(U_B=4\varepsilon\)</span>. Når delsystemene settes i termisk kontakt, kan energien fordeles på nytt, mens totalenergien er bevart.</p>
+<div class="math notranslate nohighlight">
+\[U_\mathrm{tot}=U_A+U_B=6\varepsilon\]</div>
+<ol class="arabic simple">
+<li><p>Beregn multiplisiteten for situasjonen hvor <span class="math notranslate nohighlight">\(U_A=2\varepsilon\)</span> og <span class="math notranslate nohighlight">\(U_B=4\varepsilon\)</span>.</p></li>
+<li><p>Hvordan forventer du at energien er fordelt etter at systemet har oppnådd termisk likevekt?</p></li>
+<li><p>Siden energien er bevart har vi alltid at <span class="math notranslate nohighlight">\(n_B=6-n_A\)</span>. Beregn den samlede multiplisiteten for energifordelingene til den mest sannsynlige makrotilstanden (hvor systemet befinner seg i termisk likevekt).</p></li>
+<li><p>Betyr termisk likevekt at energien alltid må være fordelt helt likt mellom små delsystemer? Begrunn svaret.</p></li>
+</ol>
+<a class="reference internal image-reference" href="../../_images/Diskusjon_3p9.png"><img alt="Energiutveksling mellom to delsystemer" class="align-center" src="../../_images/Diskusjon_3p9.png" style="width: 80%;" />
+</a>
+<p><span class="math notranslate nohighlight">\(^*\)</span> Oppgavene er inspirert av eksempler fra Dill, K. A., Bromberg, S., &amp; Stigter, D. (2010). <em>Molecular Driving Forces</em>. Garland Science. https://doi.org/10.4324/9780203809075</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>Vi har et system med <span class="math notranslate nohighlight">\(N=5\)</span> partikler og to bokser, A og B. Hver partikkel kan befinne seg i én av boksene, og de to boksene er like sannsynlige.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(n_A\)</span></p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+<th class="head"><p>4</p></th>
+<th class="head"><p>5</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\Omega(n_A)\)</span></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>a)</strong> Finn multiplisiteten <span class="math notranslate nohighlight">\(\Omega(n_A)\)</span> for 0, 1 og 2 partikler i boks A, og fyll inn verdiene i tabellen.</p>
+<p><strong>b)</strong> Resten av tabellen kan fylles ut uten nye beregninger. Hvorfor?</p>
+<p><strong>c)</strong> Anta at alle mikrotilstandene er like sannsynlige. Beregn sannsynligheten for at alle fem partiklene er i boks A, og sannsynligheten for at tre er i A og to i B.</p>
+<p><strong>d)</strong> For en binomisk fordeling er sannsynligheten for <span class="math notranslate nohighlight">\(n_A\)</span> partikler i A gitt ved</p>
+<div class="math notranslate nohighlight">
+\[P(n_A)=\binom{N}{n_A}p^{n_A}(1-p)^{N-n_A}\]</div>
+<p>Hva betyr <span class="math notranslate nohighlight">\(p\)</span> i denne modellen, og hvilken verdi har den når boksene er like sannsynlige?</p>
+<p><strong>e)</strong> Bruk formelen til å beregne <span class="math notranslate nohighlight">\(P(n_A=3)\)</span> og kontroller at svaret stemmer med resultatet i oppgave c.</p>
+<p><strong>f)</strong> Hva tror du skjer med formen på fordelingen når <span class="math notranslate nohighlight">\(N\)</span> øker fra 5 til for eksempel 50 eller 500? Du trenger ikke regne, men begrunn svaret.</p>
+<p><strong>g)</strong> Hvorfor er dette relevant for et termodynamisk system med omtrent <span class="math notranslate nohighlight">\(10^{23}\)</span> partikler?</p>
+</section>
+<section id="oppgave-7">
+<h3>Oppgave 7<a class="headerlink" href="#oppgave-7" title="Link to this heading">#</a></h3>
+<p>I diskusjonsoppgave 5 så du hvordan energiutveksling mellom to delsystemer fører til den mest sannsynlige energifordelingen (likevekt). Vi ser på de samme delsystemene A og B, men lar nå den samlede energien være</p>
+<div class="math notranslate nohighlight">
+\[U_\mathrm{tot}=U_A+U_B=4\varepsilon\]</div>
+<ol class="arabic simple">
+<li><p>Skriv opp alle mulige fordelinger av de fire eksitasjonene mellom A og B (f.eks. 4 eksiterte partikler i A, 0 i B).</p></li>
+<li><p>Beregn den samlede multiplisiteten for hver fordeling.</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Omega_\mathrm{tot}(n_A)=\binom{10}{n_A}\binom{10}{4-n_A}\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Hvilken energifordeling har størst multiplisitet og er derfor mest sannsynlig?</p></li>
+<li><p>Forklar hvorfor svaret er rimelig når de to delsystemene er like store og bygd opp på samme måte.</p></li>
+</ol>
+</section>
+<section id="oppgave-8">
+<h3>Oppgave 8<a class="headerlink" href="#oppgave-8" title="Link to this heading">#</a></h3>
+<iframe src="../Simuleringer/gassimulering.html" width="100%" height="720" style="border: 0;" loading="lazy"></iframe><p><strong>a)</strong> Bruk simuleringen over, og se på tilfellet for 4 partikler. Sett opp et uttrykk for sannsynligheten for antall partikler i A. Hvor ofte forventer vi at alle partiklene befinner seg i boks A?</p>
+<p><strong>b)</strong> Utvid til 100 partikler. Hva blir sannsynligheten for at alle partiklene befinner seg i boks A nå?</p>
+<p><strong>c)</strong> Hva er sannsynligheten for at partiklene er likt fordelt mellom A og B?</p>
+<p><strong>d)</strong> Hva viser den oransje linjen i simuleringen?</p>
+<ol class="arabic simple">
+<li><p>I forelesningene forrige uke så dere på ulike fordelingsfunksjoner - hvilken er brukt her?</p></li>
+<li><p>Ekstra utfordring: plott funksjonsuttrykket for fordelingen du kom frem til i 1. og sjekk at svaret stemmer med simuleringen.</p></li>
+</ol>
+<p><strong>e)</strong> Øk størrelsen på systemet/antallet partikler. Hvordan stemmer søylediagrammet og fordelingsfunksjonen overens nå?</p>
+<p><strong>f)</strong> Bruk simuleringen. Hvordan ser du at systemet har nådd likevekt?</p>
+</section>
+<section id="oppgave-9-ekstra-utfordring">
+<h3>Oppgave 9 – Ekstra utfordring<a class="headerlink" href="#oppgave-9-ekstra-utfordring" title="Link to this heading">#</a></h3>
+<p>Vi skal nå bruke en enkel modell til å knytte sammen multiplisitet, sannsynlighet og entropi.</p>
+<p>Tenk deg overflaten til et fast stoff med <span class="math notranslate nohighlight">\(N\)</span> faste, identifiserbare bindingsplasser for gassmolekyler. Slike bindingsplasser kalles adsorpsjonsplasser. Hver plass kan være tom eller inneholde ett molekyl, og nøyaktig <span class="math notranslate nohighlight">\(k\)</span> av plassene er opptatt. Vi skiller ikke mellom molekylene, men ulike mønstre av opptatte og tomme plasser teller som ulike mikrotilstander. Multiplisiteten er derfor</p>
+<div class="math notranslate nohighlight">
+\[\Omega(k,N)=\binom{N}{k}=\frac{N!}{k!(N-k)!}\]</div>
+<p><strong>a)</strong> Forklar hvorfor binomialkoeffisienten teller antallet mikrotilstander. Hvis du velger én tilfeldig plass, hva er sannsynligheten <span class="math notranslate nohighlight">\(p\)</span> for at den er opptatt? Hva er sannsynligheten for at den er tom?</p>
+<p>For store verdier av <span class="math notranslate nohighlight">\(N\)</span> er det upraktisk å beregne fakultetene direkte. Vi bruker derfor Stirlings tilnærming</p>
+<div class="math notranslate nohighlight">
+\[\ln n!\approx n\ln n-n\]</div>
+<p>som også kan skrives som</p>
+<div class="math notranslate nohighlight">
+\[n! \approx (n/e)^n\]</div>
+<p><strong>b)</strong> Bruk Stirlings tilnærming til å vise at</p>
+<div class="math notranslate nohighlight">
+\[\Omega\approx\frac{1}{p^k(1-p)^{N-k}}\]</div>
+<p>**ekstra:**Vi kan nå utlede <span class="math notranslate nohighlight">\(\frac{S}{k_B}=-\Sigma p_i\ln{p_i}\)</span>. For et system med mer enn to mulige tilstander har vi at <span class="math notranslate nohighlight">\(\Omega=\frac{N!}{n_1! n_2! ... n_t!}\)</span>. Bruk Stirlings tilnærming og det nevnte uttrykket for multiplisiteten til å utlede <span class="math notranslate nohighlight">\(\frac{S}{k_B}\)</span>.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="../ukesoppgaver.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Ukesoppgaver</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uke_02_under_revision.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5 <span class="math notranslate nohighlight">\(^*\)</span></a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9-ekstra-utfordring">Oppgave 9 – Ekstra utfordring</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,1559 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>3. Sannsynlighet &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/matematikk/sannsynlighet';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="4. Funksjoner, derivasjon og integrasjon" href="kalkulus.html" />
+    <link rel="prev" title="2. Kombinatorikk" href="kombinatorikk.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/matematikk/sannsynlighet.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>3. Sannsynlighet</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utfall-utfallsrom-og-hendelser">3.1 Utfall, utfallsrom og hendelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komplement-snitt-og-union">3.2 Komplement, snitt og union</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disjunkte-og-uavhengige-hendelser">3.2 Disjunkte og uavhengige hendelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aksiomene-i-sannsynlighet">3.4 Aksiomene i sannsynlighet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#betinget-sannsynlighet">3.5 Betinget sannsynlighet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuerlige-utfallsrom">3.6 Kontinuerlige utfallsrom</a></li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="sannsynlighet">
+<h1>3. Sannsynlighet<a class="headerlink" href="#sannsynlighet" title="Link to this heading">#</a></h1>
+<p>Sannsynlighet handler om å prøve å forutsi. Vi vet ikke hva en terning viser før den lander, eller hvilke molekyler som reagerer først i et system - men vi kan si noe presist om hvor ofte de ulike utfallene inntreffer i det lange løp. Det er verdt å legge merke til hva slags kunnskap dette er. Vi gir ikke opp og sier at noe er tilfeldig og dermed uten struktur. Tvert imot: tilfeldighet har sine egne lover, og de er like eksakte som alt annet i matematikken. Vi begynner derfor helt fra bunnen, med å beskrive nøyaktig hva som kan skje, før vi går videre til hvor sannsynlig hvert utfall er.</p>
+<p>For en kjemiker er dette mer enn terningkast og kortstokker. Et gram vann inneholder rundt <span class="math notranslate nohighlight">\(10^{22}\)</span> molekyler, og vi kan umulig følge hvert enkelt av dem. Vi kan heller ikke forutsi når et bestemt radioaktivt atom henfaller, eller nøyaktig hvilken energi ett molekyl har i neste øyeblikk.  Løsningen er å beskrive systemet med sannsynligheter i stedet. Det er nettopp dette som gjør statistisk termodynamikk mulig: vi gir opp å følge enkeltmolekyler, og regner i stedet på fordelinger. Underveis skal vi se at begreper du møter i kjemien - mikrotilstander, makrotilstander og Boltzmann-fordelingen - er sannsynlighetsteori i forkledning.</p>
+<section id="utfall-utfallsrom-og-hendelser">
+<h2>3.1 Utfall, utfallsrom og hendelser<a class="headerlink" href="#utfall-utfallsrom-og-hendelser" title="Link to this heading">#</a></h2>
+<p>Du triller en terning, og teller antall øyne terningen viser. Dette er et av mange eksempler på et statistisk eksperiment. For å kunne snakke om sannsynlighet og eksperimenter trenger vi noen definisjoner. Vi starter med de mest grunnleggende: <strong>utfall</strong>, <strong>utfallsrom</strong> og <strong>hendelser</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.1 - Utfall</p>
+<p>Et <strong>utfall</strong> <span class="math notranslate nohighlight">\(i\)</span> er et mulig resultat i et eksperiment.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.2 - Utfallsrom</p>
+<p><strong>Utfallsrommet</strong> <span class="math notranslate nohighlight">\(S\)</span> er mengden av alle mulige utfall i et eksperiment.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.3 - Hendelse</p>
+<p>En <strong>hendelse</strong> <span class="math notranslate nohighlight">\(A\)</span> er delmengde av utfallsrommet, altså ett eller flere utfall vi er interessert i.</p>
+<p>Merk at hele <span class="math notranslate nohighlight">\(S\)</span> er en hendelse (den som alltid skjer), og den tomme mengden <span class="math notranslate nohighlight">\(\{\}\)</span> også er en hendelse (den som aldri skjer).</p>
+</div>
+<div class="error admonition">
+<p class="admonition-title">Husk!</p>
+<p>Mengder og delmengder er definert i delkapittel <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/formler_og_enheter.html#mengdelaere">1.2 Mengdelære</a>.</p>
+</div>
+<div class="error admonition">
+<p class="admonition-title">OBS</p>
+<p>Legg merke til at en hendelse alltid må være en delmengde av utfallsrommet! Tenk deg at du trekker ett kort fra en kortstokk, og kun ser på symbolet til kortet. Utfallsrommet er da <span class="math notranslate nohighlight">\(S=\{\text{kløver},\text{ruter},\text{spar},\text{hjerter}\}\)</span>. Nå er ikke “trekke et bildekort (dame, knekt, konge eller ess)” en hendelse - den informasjonen finnes rett og slett ikke i utfallsrommet vårt.</p>
+</div>
+<p>Før vi går videre trenger vi å si noe om hva <strong>sannsynligheten til et utfall</strong> faktisk betyr.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.4 - Den klassiske sannsynlighetsdefinisjonen</p>
+<p>I et eksperiment der alle utfall er <strong>like sannsynlige</strong>, som et kast med en likevektet terning, er sannsynligheten for hendelse <span class="math notranslate nohighlight">\(A\)</span> gitt ved</p>
+<p><span class="math notranslate nohighlight">\(P(A) = \frac{\text{antall utfall i } A}{\text{antall utfall i } S}\)</span></p>
+</div>
+<p>Def. 3.4 krever at alle utfall er like sannsynlige, men slik er det sjelden i virkeligheten. I <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/sannsynlighet.html#aksiomene-i-sannsynlighet">3.4 Aksiomene i sannsynlighet</a> generaliserer vi slik at vi også kan jobbe med slike sannsynligheter.</p>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>I <em>Grunnleggende begreper</em> defineres <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/1_introduksjon.html#mikrotilstander-og-makrotilstander">mikrotilstander og makrotilstander</a>. Mikrotilstander kan sammenlignes med utfall, altså én bestemt fordeling av energi/posisjon over alle partiklene i systemet. Utfallsrommet <span class="math notranslate nohighlight">\(S\)</span> blir da mengden av <em>alle</em> mikrotilstander systemet kan befinne seg i, og en hendelse <span class="math notranslate nohighlight">\(A\)</span> tilsvarer en <strong>makrotilstand</strong> (f.eks. en gitt total energi, temperatur eller trykk) - altså alle mikrotilstander som gir samme makroskopiske observasjon.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du triller en sekssidet terning.</p>
+<p class="sd-card-text">a) Hva er utfallsrommet <span class="math notranslate nohighlight">\(S\)</span> til eksperimentet?</p>
+<p class="sd-card-text">Du kan enten få <span class="math notranslate nohighlight">\(1,2,3,4,5\)</span> eller <span class="math notranslate nohighlight">\(6\)</span>, som betyr at utfallsrommet er <span class="math notranslate nohighlight">\(S=\{1,2,3,4,5,6\}\)</span>.</p>
+<p class="sd-card-text">b) Hva er et eksempel på en hendelse i dette eksperimentet?</p>
+<p class="sd-card-text">Et eksempel på en hendelse i dette eksperimentet er å trille et partall. La oss betegne denne hendelsen ved <span class="math notranslate nohighlight">\(A\)</span>, og da har vi at <span class="math notranslate nohighlight">\(A=\{2,4,6\}\)</span>. Et annet eksempel er å trille <span class="math notranslate nohighlight">\(1,2,3,4,5\)</span> eller <span class="math notranslate nohighlight">\(6\)</span>, altså <span class="math notranslate nohighlight">\(S\)</span>, og denne hendelsen er garantert.</p>
+<p class="sd-card-text">c) Hva er sannsynligheten for å trille partall?</p>
+<p class="sd-card-text">Hendelsen er <span class="math notranslate nohighlight">\(A=\{2,4,6\}\)</span>, som inneholder <span class="math notranslate nohighlight">\(3\)</span> utfall. Utfallsrommet <span class="math notranslate nohighlight">\(S=\{1,2,3,4,5,6\}\)</span> inneholder <span class="math notranslate nohighlight">\(6\)</span> utfall. Siden terningen er likevektet, er alle utfall like sannsynlige, og vi kan telle:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A) = \frac{\text{antall utfall i } A}{\text{antall utfall i } S} = \frac{3}{6} = \frac{1}{2}\)</span></p>
+<p class="sd-card-text">Sannsynligheten for å trille et partall er altså <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span>.</p>
+</div>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Utfallsrom og hendelser&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--ev:#c0392b;--ok:#1a7a4c;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:16px 14px 12px;}
+  .slabel{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;}
+  .dice{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .die{
+    width:74px;height:74px;border:2px solid var(--grid);border-radius:10px;background:#fbf9f3;
+    cursor:pointer;position:relative;transition:border-color .15s,background .15s,transform .1s;
+  }
+  .die:hover{transform:translateY(-2px);}
+  .die.on{border-color:var(--ev);background:rgba(192,57,43,.10);}
+  .die .tag{
+    position:absolute;top:-9px;right:-7px;background:var(--ev);color:#fff;border-radius:10px;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:10px;padding:1px 6px;
+    opacity:0;transition:opacity .15s;
+  }
+  .die.on .tag{opacity:1;}
+  .pip{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--ink);}
+  .die.on .pip{background:var(--ev);}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0;gap:10px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:15px;color:var(--ink);text-align:right;}
+  .val.ev{color:var(--ev);}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:14px;color:var(--ev);vertical-align:middle;}
+  .frac .num{padding:0 6px 2px;}
+  .frac .den{padding:2px 6px 0;border-top:1.5px solid var(--ev);align-self:stretch;text-align:center;}
+  .note-box{margin-top:10px;padding:8px 10px;border-radius:3px;font-size:13px;
+    background:#f0ece1;color:var(--muted);font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .note-box.special{background:rgba(26,122,76,.12);color:var(--ok);}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;}
+  .buttons button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.03em;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Utfall, utfallsrom og hendelser&lt;/div&gt;
+  &lt;h1&gt;En hendelse er en delmengde av S&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Alle seks terningsidene utgjør utfallsrommet S. Klikk på sidene for å velge ut de utfallene du er interessert i — det du velger, er en hendelse.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;div class=&quot;slabel&quot;&gt;S = utfallsrommet (alle mulige utfall)&lt;/div&gt;
+    &lt;div class=&quot;dice&quot; id=&quot;dice&quot;&gt;&lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Hendelsen din&lt;/h2&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;A =&lt;/span&gt;&lt;span class=&quot;val ev&quot; id=&quot;setVal&quot;&gt;{ }&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;antall utfall i A&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;nVal&quot;&gt;0&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;antall utfall i S&lt;/span&gt;&lt;span class=&quot;val&quot;&gt;6&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;P(A)&lt;/span&gt;
+        &lt;span class=&quot;val ev&quot; id=&quot;pVal&quot;&gt;0&lt;/span&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;note-box&quot; id=&quot;noteBox&quot;&gt;Klikk på terningsidene for å bygge en hendelse.&lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Prøv disse&lt;/h2&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button data-set=&quot;2,4,6&quot;&gt;partall&lt;/button&gt;
+        &lt;button data-set=&quot;1,3,5&quot;&gt;oddetall&lt;/button&gt;
+        &lt;button data-set=&quot;5,6&quot;&gt;5 eller høyere&lt;/button&gt;
+        &lt;button data-set=&quot;1,2,3,4,5,6&quot;&gt;hele S&lt;/button&gt;
+        &lt;button data-set=&quot;&quot;&gt;tom mengde&lt;/button&gt;
+        &lt;button id=&quot;clearBtn&quot;&gt;nullstill&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;note-box&quot; style=&quot;margin-top:14px;&quot;&gt;
+        P(A) = antall utfall i A / antall utfall i S — gyldig fordi terningen er likevektet.
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Legg merke til de to ytterpunktene: velger du ingen sider, får du den tomme mengden med P = 0. Velger du alle seks, får du hele S med P = 1. Begge er gyldige hendelser.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const PIPS={
+    1:[[.5,.5]],
+    2:[[.28,.28],[.72,.72]],
+    3:[[.26,.26],[.5,.5],[.74,.74]],
+    4:[[.28,.28],[.72,.28],[.28,.72],[.72,.72]],
+    5:[[.26,.26],[.74,.26],[.5,.5],[.26,.74],[.74,.74]],
+    6:[[.28,.22],[.72,.22],[.28,.5],[.72,.5],[.28,.78],[.72,.78]]
+  };
+  const chosen=new Set();
+  const holder=document.getElementById(&#x27;dice&#x27;);
+
+  for(let n=1;n&lt;=6;n++){
+    const d=document.createElement(&#x27;div&#x27;);
+    d.className=&#x27;die&#x27;;d.dataset.n=n;
+    const tag=document.createElement(&#x27;span&#x27;);tag.className=&#x27;tag&#x27;;tag.textContent=&#x27;i A&#x27;;
+    d.appendChild(tag);
+    for(const [px,py] of PIPS[n]){
+      const p=document.createElement(&#x27;span&#x27;);p.className=&#x27;pip&#x27;;
+      p.style.left=(px*74-5.5)+&#x27;px&#x27;;p.style.top=(py*74-5.5)+&#x27;px&#x27;;
+      d.appendChild(p);
+    }
+    d.addEventListener(&#x27;click&#x27;,()=&gt;{
+      const k=Number(d.dataset.n);
+      chosen.has(k)?chosen.delete(k):chosen.add(k);
+      update();
+    });
+    holder.appendChild(d);
+  }
+
+  function gcd(a,b){return b?gcd(b,a%b):a;}
+
+  function update(){
+    document.querySelectorAll(&#x27;.die&#x27;).forEach(d=&gt;{
+      d.classList.toggle(&#x27;on&#x27;,chosen.has(Number(d.dataset.n)));
+    });
+    const arr=[...chosen].sort((a,b)=&gt;a-b);
+    const n=arr.length;
+    document.getElementById(&#x27;setVal&#x27;).textContent = n? &#x27;{&#x27;+arr.join(&#x27;, &#x27;)+&#x27;}&#x27; : &#x27;{ }&#x27;;
+    document.getElementById(&#x27;nVal&#x27;).textContent = n;
+
+    // probability as reduced fraction
+    let ptxt;
+    if(n===0) ptxt=&#x27;0&#x27;;
+    else if(n===6) ptxt=&#x27;1&#x27;;
+    else {const g=gcd(n,6);ptxt=(n/g)+&#x27;/&#x27;+(6/g);}
+    document.getElementById(&#x27;pVal&#x27;).textContent=ptxt+&#x27;  (&#x27;+(n/6).toFixed(3)+&#x27;)&#x27;;
+
+    const box=document.getElementById(&#x27;noteBox&#x27;);
+    if(n===0){box.className=&#x27;note-box special&#x27;;box.textContent=&#x27;Den tomme mengden — hendelsen som aldri skjer.&#x27;;}
+    else if(n===6){box.className=&#x27;note-box special&#x27;;box.textContent=&#x27;Hele S — hendelsen som alltid skjer.&#x27;;}
+    else{box.className=&#x27;note-box&#x27;;box.textContent=n+&#x27; av 6 utfall er med i A.&#x27;;}
+  }
+
+  document.querySelectorAll(&#x27;button[data-set]&#x27;).forEach(b=&gt;{
+    b.addEventListener(&#x27;click&#x27;,()=&gt;{
+      chosen.clear();
+      const s=b.dataset.set;
+      if(s) s.split(&#x27;,&#x27;).forEach(v=&gt;chosen.add(Number(v)));
+      update();
+    });
+  });
+  document.getElementById(&#x27;clearBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{chosen.clear();update();});
+
+  update();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 3.1</p>
+<p>Du trekker ett kort fra en ordinær kortstokk med totalt 52 kort, og ser på kortets symbol (spar, hjerter, ruter eller kløver).</p>
+<p>a) Hva er utfallsrommet <span class="math notranslate nohighlight">\(S\)</span> til eksperimentet?</p>
+<p>b) Hva er sannsynligheten for hvert av utfallene i utfallsrommet?</p>
+<p>c) Gi eksempel på en mulig hendelse av dette eksperimentet.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.1</p>
+<p>a) De mulige symbolene er spar, hjerter, ruter eller kløver, og dermed er utfallsrommet <span class="math notranslate nohighlight">\(S=\{\text{spar, hjerter, ruter, kløver}\}\)</span>.</p>
+<p>b) Det er <span class="math notranslate nohighlight">\(13\)</span> kort av hver symboltype og vi antar det er lik sannsynlighet for å trekke alle kortene i bunken. Da blir sannsynligheten for hvert av utfallene</p>
+<p><span class="math notranslate nohighlight">\(\frac{13}{52}=\frac{1}{4}\)</span>.</p>
+<p>c) To eksempler på hendelser i dette eksperimentet er å trekke rødt kort (<span class="math notranslate nohighlight">\(\{\text{ruter, hjerter}\}\)</span>) eller å trekke svart kort (<span class="math notranslate nohighlight">\(\{\text{spar, kløver}\}\)</span>). Merk at hendelser som å for eksempel trekke bildekort (<span class="math notranslate nohighlight">\(\text{konge, dame, knekt, ess}\)</span>) <strong>ikke</strong> er hendelser i dette eksperimentet, nettopp fordi det ikke er en delmengde av utfallsrommet <span class="math notranslate nohighlight">\(S\)</span>.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 3.2</p>
+<p>Du kaster en mynt to ganger og noterer resultatet etter hvert av kastene (K for kron, M for mynt).</p>
+<p>a) Skriv opp utfallsrommet <span class="math notranslate nohighlight">\(S\)</span>.</p>
+<p>b) La <span class="math notranslate nohighlight">\(A\)</span> være hendelsen “minst én kron”. Skriv opp <span class="math notranslate nohighlight">\(A\)</span> som en mengde, og finn <span class="math notranslate nohighlight">\(P(A)\)</span>.</p>
+<p>c) La <span class="math notranslate nohighlight">\(B\)</span> være hendelsen “begge kastene gir samme resultat”. Skriv opp <span class="math notranslate nohighlight">\(B\)</span>, og finn <span class="math notranslate nohighlight">\(P(B)\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.2</p>
+<p>a) Hvert kast kan gi K eller M, og vi noterer rekkefølgen. Utfallsrommet er derfor <span class="math notranslate nohighlight">\(S=\{KK, KM, MK, MM\}\)</span>, med til sammen <span class="math notranslate nohighlight">\(4\)</span> utfall.</p>
+<p>b) Hendelsen “minst én kron” består av alle utfall som inneholder minst én K, altså <span class="math notranslate nohighlight">\(A=\{KK, KM, MK\}\)</span>. Dette er <span class="math notranslate nohighlight">\(3\)</span> av <span class="math notranslate nohighlight">\(4\)</span> utfall, så</p>
+<p><span class="math notranslate nohighlight">\(P(A)=\frac{3}{4}\)</span></p>
+<p>c) Hendelsen “begge kastene gir samme resultat” er <span class="math notranslate nohighlight">\(B=\{KK, MM\}\)</span>, altså <span class="math notranslate nohighlight">\(2\)</span> av <span class="math notranslate nohighlight">\(4\)</span> utfall:</p>
+<p><span class="math notranslate nohighlight">\(P(B)=\frac{2}{4}=\frac{1}{2}\)</span></p>
+<p>Merk at <span class="math notranslate nohighlight">\(KM\)</span> og <span class="math notranslate nohighlight">\(MK\)</span> regnes som to <em>forskjellige</em> utfall, siden vi noterer rekkefølgen.</p>
+</div>
+</section>
+<section id="komplement-snitt-og-union">
+<span id="id1"></span><h2>3.2 Komplement, snitt og union<a class="headerlink" href="#komplement-snitt-og-union" title="Link to this heading">#</a></h2>
+<p>La oss nå se på hva som skjer utenfor en hendelse <span class="math notranslate nohighlight">\(A\)</span>, og hvordan vi kan kombinere to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> til nye hendelser. Vi ser først på <strong>komplementet</strong> til en hendelse, og deretter <strong>snitt</strong> og <strong>union</strong>.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.5 - Komplement</p>
+<p>**Komplementet **til en hendelse <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(A'\)</span>, er mengden av alle utfall i <span class="math notranslate nohighlight">\(S\)</span> som ikke er i <span class="math notranslate nohighlight">\(A\)</span>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.6 - Snitt</p>
+<p><strong>Snittet</strong> av to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>, <span class="math notranslate nohighlight">\(A \cap B\)</span>, er hendelsen som består av alle utfall som både er i <span class="math notranslate nohighlight">\(A\)</span> og i <span class="math notranslate nohighlight">\(B\)</span>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.7 - Union</p>
+<p><strong>Unionen</strong> av to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>, <span class="math notranslate nohighlight">\(A \cup B\)</span>, er hendelsen som består av alle utfall som er i <span class="math notranslate nohighlight">\(A\)</span> eller i <span class="math notranslate nohighlight">\(B\)</span>.</p>
+</div>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Komplement, snitt og union&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --setA:#1f5f8b;--setB:#c0392b;--fill:#d68910;--ok:#1a7a4c;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:10px;}
+  svg{display:block;width:100%;height:auto;}
+  .region{cursor:pointer;transition:fill-opacity .12s;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .expr{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:20px;color:var(--fill);
+    margin:4px 0 8px;min-height:26px;}
+  .desc{font-size:14px;color:var(--muted);min-height:40px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0;gap:10px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);text-align:right;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;}
+  .buttons button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.03em;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .hintline{margin-top:12px;padding:8px 10px;border-radius:3px;font-size:12.5px;
+    background:#f0ece1;color:var(--muted);font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--fill);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Komplement, snitt og union&lt;/div&gt;
+  &lt;h1&gt;Prøv deg fram med mengdeuttrykk&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Venn-diagrammet er delt i fire områder. Klikk på ett eller flere for å farge dem, og se hvilket mengdeuttrykk som beskriver akkurat det du har valgt.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;svg id=&quot;venn&quot; viewBox=&quot;0 0 560 300&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;
+      &lt;defs&gt;
+        &lt;clipPath id=&quot;clipA&quot;&gt;&lt;circle cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot;/&gt;&lt;/clipPath&gt;
+        &lt;clipPath id=&quot;clipB&quot;&gt;&lt;circle cx=&quot;330&quot; cy=&quot;150&quot; r=&quot;95&quot;/&gt;&lt;/clipPath&gt;
+        &lt;clipPath id=&quot;clipBox&quot;&gt;&lt;rect x=&quot;40&quot; y=&quot;30&quot; width=&quot;480&quot; height=&quot;240&quot;/&gt;&lt;/clipPath&gt;
+        &lt;!-- masks to carve out the other circle, giving disjoint &quot;only&quot; regions --&gt;
+        &lt;mask id=&quot;notB&quot;&gt;
+          &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;560&quot; height=&quot;300&quot; fill=&quot;#fff&quot;/&gt;
+          &lt;circle cx=&quot;330&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;#000&quot;/&gt;
+        &lt;/mask&gt;
+        &lt;mask id=&quot;notA&quot;&gt;
+          &lt;rect x=&quot;0&quot; y=&quot;0&quot; width=&quot;560&quot; height=&quot;300&quot; fill=&quot;#fff&quot;/&gt;
+          &lt;circle cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;#000&quot;/&gt;
+        &lt;/mask&gt;
+        &lt;mask id=&quot;outsideBoth&quot;&gt;
+          &lt;rect x=&quot;40&quot; y=&quot;30&quot; width=&quot;480&quot; height=&quot;240&quot; fill=&quot;#fff&quot;/&gt;
+          &lt;circle cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;#000&quot;/&gt;
+          &lt;circle cx=&quot;330&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;#000&quot;/&gt;
+        &lt;/mask&gt;
+      &lt;/defs&gt;
+
+      &lt;!-- outside region: box with both circles carved out --&gt;
+      &lt;rect id=&quot;r-out&quot; class=&quot;region&quot; x=&quot;40&quot; y=&quot;30&quot; width=&quot;480&quot; height=&quot;240&quot;
+            fill=&quot;var(--fill)&quot; fill-opacity=&quot;0&quot; stroke=&quot;none&quot; mask=&quot;url(#outsideBoth)&quot;/&gt;
+
+      &lt;!-- A only: circle A with B carved out --&gt;
+      &lt;circle id=&quot;r-a&quot; class=&quot;region&quot; cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot;
+              fill=&quot;var(--fill)&quot; fill-opacity=&quot;0&quot; mask=&quot;url(#notB)&quot;/&gt;
+      &lt;!-- B only: circle B with A carved out --&gt;
+      &lt;circle id=&quot;r-b&quot; class=&quot;region&quot; cx=&quot;330&quot; cy=&quot;150&quot; r=&quot;95&quot;
+              fill=&quot;var(--fill)&quot; fill-opacity=&quot;0&quot; mask=&quot;url(#notA)&quot;/&gt;
+      &lt;!-- overlap: circle A clipped to B --&gt;
+      &lt;g clip-path=&quot;url(#clipB)&quot;&gt;
+        &lt;circle id=&quot;r-ab&quot; class=&quot;region&quot; cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;var(--fill)&quot; fill-opacity=&quot;0&quot;/&gt;
+      &lt;/g&gt;
+
+      &lt;!-- outlines on top --&gt;
+      &lt;rect x=&quot;40&quot; y=&quot;30&quot; width=&quot;480&quot; height=&quot;240&quot; fill=&quot;none&quot; stroke=&quot;var(--axis)&quot; stroke-width=&quot;1.6&quot;/&gt;
+      &lt;circle cx=&quot;230&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;none&quot; stroke=&quot;var(--setA)&quot; stroke-width=&quot;2.4&quot;/&gt;
+      &lt;circle cx=&quot;330&quot; cy=&quot;150&quot; r=&quot;95&quot; fill=&quot;none&quot; stroke=&quot;var(--setB)&quot; stroke-width=&quot;2.4&quot;/&gt;
+
+      &lt;text x=&quot;152&quot; y=&quot;70&quot; font-family=&quot;Georgia&quot; font-style=&quot;italic&quot; font-size=&quot;20&quot; fill=&quot;var(--setA)&quot;&gt;A&lt;/text&gt;
+      &lt;text x=&quot;398&quot; y=&quot;70&quot; font-family=&quot;Georgia&quot; font-style=&quot;italic&quot; font-size=&quot;20&quot; fill=&quot;var(--setB)&quot;&gt;B&lt;/text&gt;
+      &lt;text x=&quot;52&quot; y=&quot;50&quot; font-family=&quot;Georgia&quot; font-style=&quot;italic&quot; font-size=&quot;16&quot; fill=&quot;var(--axis)&quot;&gt;S&lt;/text&gt;
+    &lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Valgt område&lt;/h2&gt;
+      &lt;div class=&quot;expr&quot; id=&quot;exprVal&quot;&gt;—&lt;/div&gt;
+      &lt;div class=&quot;desc&quot; id=&quot;descVal&quot;&gt;Klikk på et område i diagrammet.&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;
+        &lt;span class=&quot;lab&quot;&gt;med A = {1,2,3}, B = {3,4}&lt;/span&gt;
+        &lt;span class=&quot;val&quot; id=&quot;setVal&quot;&gt;—&lt;/span&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Vis meg&lt;/h2&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button data-r=&quot;a,ab&quot;&gt;A&lt;/button&gt;
+        &lt;button data-r=&quot;b,ab&quot;&gt;B&lt;/button&gt;
+        &lt;button data-r=&quot;ab&quot;&gt;A ∩ B&lt;/button&gt;
+        &lt;button data-r=&quot;a,ab,b&quot;&gt;A ∪ B&lt;/button&gt;
+        &lt;button data-r=&quot;b,out&quot;&gt;A′&lt;/button&gt;
+        &lt;button data-r=&quot;out&quot;&gt;(A ∪ B)′&lt;/button&gt;
+        &lt;button data-r=&quot;a&quot;&gt;bare A&lt;/button&gt;
+        &lt;button id=&quot;clearBtn&quot;&gt;nullstill&lt;/button&gt;
+      &lt;/div&gt;
+      &lt;div class=&quot;hintline&quot;&gt;Snitt = overlappen. Union = alt som er med i minst én. Komplement = alt utenfor.&lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Legg merke til at unionen bare teller overlappen én gang. Det er nettopp derfor vi må trekke fra P(A ∩ B) når vi regner ut P(A ∪ B) senere.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const S=[1,2,3,4,5,6], A=[1,2,3], B=[3,4];
+  const inA=x=&gt;A.includes(x), inB=x=&gt;B.includes(x);
+  const REGION_SETS={
+    a:   S.filter(x=&gt; inA(x) &amp;&amp; !inB(x)),
+    ab:  S.filter(x=&gt; inA(x) &amp;&amp;  inB(x)),
+    b:   S.filter(x=&gt;!inA(x) &amp;&amp;  inB(x)),
+    out: S.filter(x=&gt;!inA(x) &amp;&amp; !inB(x))
+  };
+
+  // canonical expressions keyed by sorted region combination
+  const NAMES={
+    &quot;&quot;:            [&quot;—&quot;,&quot;Klikk på et område i diagrammet.&quot;],
+    &quot;a&quot;:           [&quot;A ∩ B′&quot;,&quot;Utfall som er i A, men ikke i B.&quot;],
+    &quot;ab&quot;:          [&quot;A ∩ B&quot;,&quot;Snittet — utfall som er i både A og B.&quot;],
+    &quot;b&quot;:           [&quot;A′ ∩ B&quot;,&quot;Utfall som er i B, men ikke i A.&quot;],
+    &quot;out&quot;:         [&quot;(A ∪ B)′&quot;,&quot;Komplementet til unionen — verken i A eller B.&quot;],
+    &quot;a,ab&quot;:        [&quot;A&quot;,&quot;Hele hendelsen A.&quot;],
+    &quot;ab,b&quot;:        [&quot;B&quot;,&quot;Hele hendelsen B.&quot;],
+    &quot;a,b&quot;:         [&quot;(A ∩ B)′ ∩ (A ∪ B)&quot;,&quot;I nøyaktig én av dem — det symmetriske differansen.&quot;],
+    &quot;a,out&quot;:       [&quot;B′&quot;,&quot;Komplementet til B — alt som ikke er i B.&quot;],
+    &quot;ab,out&quot;:      [&quot;(A ∩ B) ∪ (A ∪ B)′&quot;,&quot;Enten i begge, eller i ingen av dem.&quot;],
+    &quot;b,out&quot;:       [&quot;A′&quot;,&quot;Komplementet til A — alt som ikke er i A.&quot;],
+    &quot;a,ab,b&quot;:      [&quot;A ∪ B&quot;,&quot;Unionen — utfall som er i minst én av A og B.&quot;],
+    &quot;a,ab,out&quot;:    [&quot;B′ ∪ (A ∩ B)&quot;,&quot;Alt som ikke er i B, pluss overlappen.&quot;],
+    &quot;a,b,out&quot;:     [&quot;(A ∩ B)′&quot;,&quot;Komplementet til snittet — alt utenom overlappen.&quot;],
+    &quot;ab,b,out&quot;:    [&quot;A′ ∪ (A ∩ B)&quot;,&quot;Alt som ikke er i A, pluss overlappen.&quot;],
+    &quot;a,ab,b,out&quot;:  [&quot;S&quot;,&quot;Hele utfallsrommet.&quot;]
+  };
+  const ORDER=[&quot;a&quot;,&quot;ab&quot;,&quot;b&quot;,&quot;out&quot;];
+  const sel=new Set();
+
+  function key(){return ORDER.filter(r=&gt;sel.has(r)).join(&quot;,&quot;);}
+
+  function update(){
+    ORDER.forEach(r=&gt;{
+      const el=document.getElementById(&#x27;r-&#x27;+r);
+      el.setAttribute(&#x27;fill-opacity&#x27;, sel.has(r)?0.55:0);
+    });
+    const k=key();
+    const [expr,desc]=NAMES[k]||[&quot;—&quot;,&quot;&quot;];
+    document.getElementById(&#x27;exprVal&#x27;).textContent=expr;
+    document.getElementById(&#x27;descVal&#x27;).textContent=desc;
+    const vals=[...sel].flatMap(r=&gt;REGION_SETS[r]).sort((x,y)=&gt;x-y);
+    document.getElementById(&#x27;setVal&#x27;).textContent = k? (vals.length?&#x27;{&#x27;+vals.join(&#x27;, &#x27;)+&#x27;}&#x27;:&#x27;{ }&#x27;) : &#x27;—&#x27;;
+  }
+
+  // Geometric hit-testing: decide the region from click coordinates.
+  // This is robust regardless of how the browser handles masked fill areas.
+  const svg=document.getElementById(&#x27;venn&#x27;);
+  svg.addEventListener(&#x27;click&#x27;,e=&gt;{
+    const p=svg.createSVGPoint();
+    p.x=e.clientX;p.y=e.clientY;
+    const loc=p.matrixTransform(svg.getScreenCTM().inverse());
+    // outside the S box entirely -&gt; ignore
+    if(loc.x&lt;40||loc.x&gt;520||loc.y&lt;30||loc.y&gt;270) return;
+    const dA=Math.hypot(loc.x-230,loc.y-150)&lt;=95;
+    const dB=Math.hypot(loc.x-330,loc.y-150)&lt;=95;
+    let r;
+    if(dA&amp;&amp;dB) r=&#x27;ab&#x27;; else if(dA) r=&#x27;a&#x27;; else if(dB) r=&#x27;b&#x27;; else r=&#x27;out&#x27;;
+    sel.has(r)?sel.delete(r):sel.add(r);
+    update();
+  });
+
+  document.querySelectorAll(&#x27;button[data-r]&#x27;).forEach(b=&gt;{
+    b.addEventListener(&#x27;click&#x27;,()=&gt;{
+      sel.clear();
+      b.dataset.r.split(&#x27;,&#x27;).forEach(r=&gt;sel.add(r));
+      update();
+    });
+  });
+  document.getElementById(&#x27;clearBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;{sel.clear();update();});
+
+  update();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du triller igjen en sekssidet terning. Vi er interessert i å trille <span class="math notranslate nohighlight">\(2\)</span> eller lavere, som kan beskrives ved hendelsen <span class="math notranslate nohighlight">\(A=\{1,2\}\)</span>. Vi er også interessert i å trille <span class="math notranslate nohighlight">\(5\)</span> eller høyere, som kan beskrives ved hendelsen <span class="math notranslate nohighlight">\(B=\{5,6\}\)</span>.</p>
+<p class="sd-card-text">a) Hva er komplementet til <span class="math notranslate nohighlight">\(A\)</span>?</p>
+<p class="sd-card-text">Komplementet til <span class="math notranslate nohighlight">\(A\)</span> er alle utfallene som er i <span class="math notranslate nohighlight">\(S\)</span> men ikke <span class="math notranslate nohighlight">\(A\)</span>, som tilsvarer å trille 3 eller høyere. Altså er <span class="math notranslate nohighlight">\(A'=\{3,4,5,6\}\)</span>.</p>
+<p class="sd-card-text">b) Hva er snittet av <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>?</p>
+<p class="sd-card-text">Snittet mellom <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> blir den tomme mengden <span class="math notranslate nohighlight">\(\{\}\)</span>, nettopp fordi det er ingen utfall som er i både <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>.</p>
+<p class="sd-card-text">c) Hva er unionen av <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>?</p>
+<p class="sd-card-text">Unionen mellom <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> blir <span class="math notranslate nohighlight">\(A \cup B = \{1,2,5,6\}\)</span>, altså mengden alle utfallene i <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> samlet.</p>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 3.3</p>
+<p>Du triller en sekssidet terning. La <span class="math notranslate nohighlight">\(A=\{1,2,3\}\)</span> være hendelsen “tre eller lavere”, og <span class="math notranslate nohighlight">\(B=\{3,4\}\)</span> hendelsen “tre eller fire”.</p>
+<p>a) Finn <span class="math notranslate nohighlight">\(A'\)</span>.</p>
+<p>b) Finn <span class="math notranslate nohighlight">\(A \cap B\)</span>.</p>
+<p>c) Finn <span class="math notranslate nohighlight">\(A \cup B\)</span>.</p>
+<p>d) Finn <span class="math notranslate nohighlight">\((A \cup B)'\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.3</p>
+<p>a) Komplementet er alle utfall i <span class="math notranslate nohighlight">\(S\)</span> som ikke er i <span class="math notranslate nohighlight">\(A\)</span>, altså <span class="math notranslate nohighlight">\(A'=\{4,5,6\}\)</span>.</p>
+<p>b) Snittet er utfallene som er i både <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span>. Bare <span class="math notranslate nohighlight">\(3\)</span> er med i begge, så <span class="math notranslate nohighlight">\(A \cap B = \{3\}\)</span>.</p>
+<p>c) Unionen er alle utfall som er i minst én av mengdene, altså <span class="math notranslate nohighlight">\(A \cup B = \{1,2,3,4\}\)</span>.</p>
+<p>d) Vi tar komplementet til svaret i c): <span class="math notranslate nohighlight">\((A \cup B)' = \{5,6\}\)</span>.</p>
+</div>
+</section>
+<section id="disjunkte-og-uavhengige-hendelser">
+<h2>3.2 Disjunkte og uavhengige hendelser<a class="headerlink" href="#disjunkte-og-uavhengige-hendelser" title="Link to this heading">#</a></h2>
+<p>Med de ulike operasjonene på plass kan vi beskrive to viktige egenskaper et par hendelser kan ha. Den første, <strong>disjunkthet</strong>, handler bare om utfallene: hendelsene overlapper ikke. Den andre, <strong>uavhengighet</strong>, handler om sannsynlighet: den ene hendelsen sier ingenting om den andre. Det er lett å blande dem sammen, men de betyr noe helt forskjellig - vi skal se at uavhengighet blir svært sentralt i statistisk termodynamikk.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.8 - Disjunkte hendelser</p>
+<p>To hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> kalles <strong>disjunkte</strong> dersom de ikke har noen felles utfall. Matematisk, <span class="math notranslate nohighlight">\(A \cap B = \{\}\)</span>.</p>
+</div>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.9 - Uavhengige hendelser</p>
+<p>To hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> kalles <strong>uavhengige</strong> dersom</p>
+<p><span class="math notranslate nohighlight">\(P(A \cap B) = P(A) \cdot P(B)\)</span></p>
+</div>
+<p>Forskjellen er verdt å dvele ved. Disjunkte hendelser kan <em>aldri</em> skje samtidig - triller du en terning, kan du ikke få både <span class="math notranslate nohighlight">\(1\)</span> og <span class="math notranslate nohighlight">\(6\)</span> i samme kast. Uavhengige hendelser kan derimot godt skje samtidig; poenget er at den ene ikke påvirker sannsynligheten for den andre.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du triller en terning to ganger etter hverandre og noterer resultatet for hvert kast. La <span class="math notranslate nohighlight">\(A\)</span> være hendelsen “første terning viser <span class="math notranslate nohighlight">\(6\)</span>”, og <span class="math notranslate nohighlight">\(B\)</span> hendelsen “andre terning viser <span class="math notranslate nohighlight">\(6\)</span>”. Er <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> uavhengige?</p>
+<p class="sd-card-text">Hver terning har <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span> sannsynlighet for å vise <span class="math notranslate nohighlight">\(6\)</span>, så <span class="math notranslate nohighlight">\(P(A)=P(B)=\frac{1}{6}\)</span>.</p>
+<p class="sd-card-text">For at begge skal vise <span class="math notranslate nohighlight">\(6\)</span>, må vi få utfallet <span class="math notranslate nohighlight">\((6,6)\)</span>. Til sammen finnes det <span class="math notranslate nohighlight">\(6 \cdot 6 = 36\)</span> mulige utfall for to terninger, og bare ett av dem er <span class="math notranslate nohighlight">\((6,6)\)</span>. Altså er <span class="math notranslate nohighlight">\(P(A \cap B)=\frac{1}{36}\)</span>.</p>
+<p class="sd-card-text">Vi sjekker kravet fra Def. 3.8:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A) \cdot P(B) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36} = P(A \cap B)\)</span></p>
+<p class="sd-card-text">Kravet er oppfylt, så hendelsene er uavhengige - som forventet, siden den første terningen umulig kan påvirke den andre.</p>
+</div>
+</div>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Uavhengighet er sentralt når vi skal beskrive et molekyls bevegelse: translasjon, rotasjon og vibrasjon regnes vanligvis som uavhengige av hverandre. Det er nettopp derfor vi senere kan bruke <span class="math notranslate nohighlight">\(P(A \cap B)=P(A)\cdot P(B)\)</span> til å si at <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#partisjonsfunksjonen">partisjonsfunksjonen</a> faktoriserer, <span class="math notranslate nohighlight">\(Q_{tot}=Q_{trans}\cdot Q_{rot}\cdot Q_{vib}\)</span>.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Oppgave 3.4</p>
+<p>Du triller en sekssidet terning. La <span class="math notranslate nohighlight">\(A=\{1,2\}\)</span>, <span class="math notranslate nohighlight">\(B=\{5,6\}\)</span> og <span class="math notranslate nohighlight">\(C=\{2,4,6\}\)</span>.</p>
+<p>a) Er <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> disjunkte? Begrunn.</p>
+<p>b) Er <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(C\)</span> disjunkte? Begrunn.</p>
+<p>c) Undersøk om <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(C\)</span> er uavhengige.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.4</p>
+<p>a) <span class="math notranslate nohighlight">\(A \cap B = \{\}\)</span>, siden ingen utfall er med i begge. Hendelsene er derfor disjunkte.</p>
+<p>b) <span class="math notranslate nohighlight">\(A \cap C = \{2\}\)</span>, som ikke er tom. Hendelsene er altså <strong>ikke</strong> disjunkte.</p>
+<p>c) Vi regner ut hver sannsynlighet ved opptelling. <span class="math notranslate nohighlight">\(A\)</span> har <span class="math notranslate nohighlight">\(2\)</span> av <span class="math notranslate nohighlight">\(6\)</span> utfall, så <span class="math notranslate nohighlight">\(P(A)=\frac{2}{6}=\frac{1}{3}\)</span>. <span class="math notranslate nohighlight">\(C\)</span> har <span class="math notranslate nohighlight">\(3\)</span> av <span class="math notranslate nohighlight">\(6\)</span> utfall, så <span class="math notranslate nohighlight">\(P(C)=\frac{3}{6}=\frac{1}{2}\)</span>. Snittet <span class="math notranslate nohighlight">\(A \cap C = \{2\}\)</span> har ett utfall, så <span class="math notranslate nohighlight">\(P(A \cap C)=\frac{1}{6}\)</span>.</p>
+<p>Vi sjekker kravet:</p>
+<p><span class="math notranslate nohighlight">\(P(A) \cdot P(C) = \frac{1}{3} \cdot \frac{1}{2} = \frac{1}{6} = P(A \cap C)\)</span></p>
+<p>Kravet er oppfylt, så <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(C\)</span> er uavhengige. Legg merke til at dette skjer selv om begge hendelsene gjelder <em>samme</em> terningkast - uavhengighet krever ikke separate eksperimenter, men sier heller at sannsynligheten for den ene hendelsen ikke påvirker sannsynligheten for den andre.</p>
+</div>
+</section>
+<section id="aksiomene-i-sannsynlighet">
+<span id="id2"></span><h2>3.4 Aksiomene i sannsynlighet<a class="headerlink" href="#aksiomene-i-sannsynlighet" title="Link to this heading">#</a></h2>
+<p>Enten du spiller sjakk eller ikke, vet du at spillet har visse regler, som at hver brikke kan flyttes på en spesiell måte, at hvit starter osv. Disse reglene er ikke noe som er <em>bevist</em>, men de er fastsatt som et utgangspunkt for spillet. Alt annet du kan si om sjakk, for eksempel hvordan man vinner, taper eller om en åpning er god eller dårlig, er utledet fra disse reglene.</p>
+<p>Sånn er også matematikken! Som reglene i sjakk, har matematikken grunnleggende byggesteiner som kalles <strong>aksiomer</strong>. Teoremer og andre utledninger er bygget logisk fra aksiomene. Kolmogorov presenterte aksiomene i sannsynlighetsteori, og til tross for at disse kan virke åpenbare, er de utgangspunktet til alt vi skal se på - også flere utledninger i statistisk termodynamikk.</p>
+<div class="warning admonition">
+<p class="admonition-title">Aksiomer 3.1 - Kolmogorovs sannsynlighetsaksiomer</p>
+<p>For et eksperiment med utfallsrom <span class="math notranslate nohighlight">\(S\)</span> har vi</p>
+<p><strong>Ikke-negativitet</strong></p>
+<p>Sannsynligheten for enhver hendelse <span class="math notranslate nohighlight">\(A\)</span> er ikke-negativ</p>
+<ol class="arabic simple">
+<li><p><span class="math notranslate nohighlight">\(P(A) \ge 0\)</span></p></li>
+</ol>
+<p><strong>Normering</strong></p>
+<p>Sannsynligheten for <span class="math notranslate nohighlight">\(S\)</span> er lik <span class="math notranslate nohighlight">\(1\)</span>, altså</p>
+<ol class="arabic simple" start="2">
+<li><p><span class="math notranslate nohighlight">\(P(S)=1\)</span></p></li>
+</ol>
+<p><strong>Additivitet</strong></p>
+<p>Sannsynligheten for unionen av flere disjunkte hendelser <span class="math notranslate nohighlight">\(A_1, A_2,\dots\)</span> er summen av sannsynligheten for hver av hendelsene</p>
+<ol class="arabic simple" start="3">
+<li><p><span class="math notranslate nohighlight">\(P(A_1 \cup A_2 \cup \dots)=P(A_1)+P(A_2)+\dots\)</span></p></li>
+</ol>
+</div>
+<p>Legg merke til at aksiomene ikke sier noe om <em>hvor stor</em> sannsynligheten for et bestemt utfall er - de sier bare hvilke regler sannsynlighetene må følge. Det er nettopp derfor de også gjelder for vektede terninger og for mikrotilstander i et fysisk system, ikke bare for rettferdige spill. Et viktig følge av aksiom 2 og 3 er følgende:</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 3.1 - Summen av alle utfalls sannsynligheter</p>
+<p>For et vilkårlig eksperiment med utfallsrom <span class="math notranslate nohighlight">\(S\)</span> har vi</p>
+<p><span class="math notranslate nohighlight">\(\sum_{i}P(i)=1\)</span></p>
+<p>for alle utfall <span class="math notranslate nohighlight">\(i \in S\)</span>.</p>
+</div>
+<p>Utledningen er kort: de enkelte utfallene er disjunkte hendelser - du kan ikke få både <span class="math notranslate nohighlight">\(3\)</span> og <span class="math notranslate nohighlight">\(5\)</span> i samme terningkast - og til sammen utgjør de hele utfallsrommet. Ved aksiom 3 kan vi da summere sannsynlighetene deres, og ved aksiom 2 må summen bli <span class="math notranslate nohighlight">\(P(S)=1\)</span>.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 3.2 - Komplementregelen</p>
+<p>For enhver hendelse <span class="math notranslate nohighlight">\(A\)</span> gjelder</p>
+<p><span class="math notranslate nohighlight">\(P(A') = 1 - P(A)\)</span></p>
+</div>
+<p>Også denne følger av aksiomene. En hendelse <span class="math notranslate nohighlight">\(A\)</span> og komplementet <span class="math notranslate nohighlight">\(A'\)</span> er disjunkte etter Def. 1.4, og sammen dekker de hele <span class="math notranslate nohighlight">\(S\)</span>. Aksiom 3 gir da <span class="math notranslate nohighlight">\(P(A)+P(A')=P(S)\)</span>, og aksiom 2 sier at <span class="math notranslate nohighlight">\(P(S)=1\)</span>. Flytter vi <span class="math notranslate nohighlight">\(P(A)\)</span> over, får vi resultatet.</p>
+<p>Regelen er ofte det raskeste verktøyet i praksis: skal du finne sannsynligheten for “minst én”, er det som regel lettere å regne ut sannsynligheten for “ingen” og trekke fra <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Aksiomene over gjelder for <em>ethvert</em> utfallsrom, også for mikrotilstandene til et termodynamisk system. Sannsynligheten for at et system i termisk likevekt ved temperatur <span class="math notranslate nohighlight">\(T\)</span> befinner seg i mikrotilstand <span class="math notranslate nohighlight">\(i\)</span> med energi <span class="math notranslate nohighlight">\(E_i\)</span> er gitt ved <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-entropimaksimum-til-boltzmann-fordelingen">Boltzmann-fordelingen</a></p>
+<p><span class="math notranslate nohighlight">\(P(i) = \dfrac{e^{-E_i/k_BT}}{Q}\)</span></p>
+<p>der <span class="math notranslate nohighlight">\(k_B\)</span> er Boltzmanns konstant og <span class="math notranslate nohighlight">\(Q=\sum_i e^{-E_i/k_BT}\)</span> er <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/3_partisjonsfunksjonen.html#partisjonsfunksjonen">partisjonsfunksjonen</a>. Merk at <span class="math notranslate nohighlight">\(Q\)</span> er akkurat den normeringskonstanten som gjør at <span class="math notranslate nohighlight">\(\sum_i P(i)=1\)</span>, i tråd med Teorem 2.1 over.</p>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Et lite system med 2 partikler som hver kan ha energi <span class="math notranslate nohighlight">\(0\)</span> eller <span class="math notranslate nohighlight">\(\varepsilon\)</span> har mikrotilstandene <span class="math notranslate nohighlight">\(S=\{(0,0),(0,\varepsilon),(\varepsilon,0),(\varepsilon,\varepsilon)\}\)</span> - helt analogt til å kaste to mynter. Makrotilstanden “total energi <span class="math notranslate nohighlight">\(=\varepsilon\)</span>” er hendelsen <span class="math notranslate nohighlight">\(A=\{(0,\varepsilon),(\varepsilon,0)\}\)</span>. Er alle mikrotilstander like sannsynlige (høy temperatur), blir <span class="math notranslate nohighlight">\(P(A)=2/4=1/2\)</span>, akkurat som å få én kron og ett mynt.</p>
+</div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 3.5</p>
+<p>a) Vis at Teorem 3.1 stemmer for eksempelet om terningkast av en sekssidet terning.</p>
+<p>b) En vektet terning har <span class="math notranslate nohighlight">\(P(\{6\})=\frac{1}{2}\)</span>, mens de fem andre utfallene er like sannsynlige. Finn sannsynligheten for hvert av de andre utfallene.</p>
+<p>c) Bruk komplementregelen til å finne sannsynligheten for å trille minst én sekser i to kast med en vanlig terning.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Hint</p>
+<p>a) Vis at summen av sannsynlighetene for alle utfallene er lik <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p>b) Bruk Teorem 3.1: de seks sannsynlighetene må til sammen bli <span class="math notranslate nohighlight">\(1\)</span>.</p>
+<p>c) Hva er komplementet til “minst én sekser”?</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.5</p>
+<p>a) Utfallsrommet er <span class="math notranslate nohighlight">\(S=\{1,2,3,4,5,6\}\)</span>. Sannsynligheten for hvert av utfallene er <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>, slik at</p>
+<p><span class="math notranslate nohighlight">\(\sum_{i}P(i)=P(\{1\})+P(\{2\})+P(\{3\})+P(\{4\})+P(\{5\})+P(\{6\})=\frac{1}{6}+\frac{1}{6}+\frac{1}{6}+\frac{1}{6}+\frac{1}{6}+\frac{1}{6}=1\)</span></p>
+<p>b) La <span class="math notranslate nohighlight">\(p\)</span> være sannsynligheten for hvert av de fem andre utfallene. Ved Teorem 3.1 må alle seks summere til <span class="math notranslate nohighlight">\(1\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(5p + \frac{1}{2} = 1\)</span></p>
+<p>Altså er <span class="math notranslate nohighlight">\(5p=\frac{1}{2}\)</span>, som gir <span class="math notranslate nohighlight">\(p=\frac{1}{10}\)</span>. Hvert av utfallene <span class="math notranslate nohighlight">\(1\)</span> til <span class="math notranslate nohighlight">\(5\)</span> har sannsynlighet <span class="math notranslate nohighlight">\(\frac{1}{10}\)</span>. Legg merke til at aksiomene fortsatt holder selv om terningen ikke er rettferdig.</p>
+<p>c) Komplementet til “minst én sekser” er “ingen seksere”, altså at begge kastene gir noe annet enn <span class="math notranslate nohighlight">\(6\)</span>. Sannsynligheten for å unngå sekser i ett kast er <span class="math notranslate nohighlight">\(\frac{5}{6}\)</span>, og siden kastene er uavhengige (Def. 3.8), er</p>
+<p><span class="math notranslate nohighlight">\(P(\text{ingen seksere}) = \frac{5}{6} \cdot \frac{5}{6} = \frac{25}{36}\)</span></p>
+<p>Ved komplementregelen (Teorem 3.2) blir svaret</p>
+<p><span class="math notranslate nohighlight">\(P(\text{minst én sekser}) = 1 - \frac{25}{36} = \frac{11}{36}\)</span></p>
+</div>
+</section>
+<section id="betinget-sannsynlighet">
+<h2>3.5 Betinget sannsynlighet<a class="headerlink" href="#betinget-sannsynlighet" title="Link to this heading">#</a></h2>
+<p>Så langt har vi sett på sannsynligheten for hendelser hver for seg. I mange situasjoner sitter vi imidlertid med *delvis informasjon: vi vet allerede at noe har skjedd, og spør hva det gjør med sannsynligheten for noe annet. Trekker du et kort og får vite at det er rødt, endrer det sannsynligheten for at det er hjerter. Slike spørsmål besvares av betinget sannsynlighet.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.10 - Betinget sannsynlighet</p>
+<p>Sannsynligheten for at hendelse <span class="math notranslate nohighlight">\(A\)</span> skjer, gitt at hendelse <span class="math notranslate nohighlight">\(B\)</span> allerede har skjedd, er</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \dfrac{P(A \cap B)}{P(B)}\)</span></p>
+<p>forutsatt at <span class="math notranslate nohighlight">\(P(B)&gt;0\)</span>.</p>
+</div>
+<p>Formelen gir mening om du tenker på den som en innsnevring av utfallsrommet. Når vi vet at <span class="math notranslate nohighlight">\(B\)</span> har skjedd, er alle utfall utenfor <span class="math notranslate nohighlight">\(B\)</span> ikke lenger aktuelle - <span class="math notranslate nohighlight">\(B\)</span> har i praksis blitt vårt nye utfallsrom. Telleren <span class="math notranslate nohighlight">\(P(A \cap B)\)</span> er den delen av <span class="math notranslate nohighlight">\(A\)</span> som fortsatt er mulig, og vi deler på <span class="math notranslate nohighlight">\(P(B)\)</span> for å normere, slik at det nye utfallsrommet igjen har total sannsynlighet <span class="math notranslate nohighlight">\(1\)</span>, i tråd med aksiom 2.</p>
+<p>Legg merke til sammenhengen med uavhengighet fra Def. 3.8. Er <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> uavhengige, er <span class="math notranslate nohighlight">\(P(A \cap B)=P(A)\cdot P(B)\)</span>, og da blir</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \frac{P(A)\cdot P(B)}{P(B)} = P(A)\)</span></p>
+<p>Å vite at <span class="math notranslate nohighlight">\(B\)</span> har skjedd endrer altså ingenting - som er nøyaktig det uavhengighet betyr.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du trekker ett kort fra en vanlig kortstokk. La <span class="math notranslate nohighlight">\(A\)</span> være hendelsen “kortet er hjerter” og <span class="math notranslate nohighlight">\(B\)</span> hendelsen “kortet er rødt”. Hva er <span class="math notranslate nohighlight">\(P(A|B)\)</span>?</p>
+<p class="sd-card-text">Det er <span class="math notranslate nohighlight">\(13\)</span> hjerterkort, så <span class="math notranslate nohighlight">\(P(A)=\frac{13}{52}=\frac{1}{4}\)</span>. De røde kortene er hjerter og ruter, til sammen <span class="math notranslate nohighlight">\(26\)</span> kort, så <span class="math notranslate nohighlight">\(P(B)=\frac{26}{52}=\frac{1}{2}\)</span>.</p>
+<p class="sd-card-text">Alle hjerterkort er røde, så snittet <span class="math notranslate nohighlight">\(A \cap B\)</span> er rett og slett alle hjerterkort: <span class="math notranslate nohighlight">\(P(A \cap B)=\frac{13}{52}=\frac{1}{4}\)</span>.</p>
+<p class="sd-card-text">Ved Def. 3.9 får vi</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A|B)=\frac{P(A \cap B)}{P(B)}=\frac{1/4}{1/2}=\frac{1}{2}\)</span></p>
+<p class="sd-card-text">Vet vi at kortet er rødt, er sannsynligheten for hjerter altså <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> - opp fra <span class="math notranslate nohighlight">\(\frac{1}{4}\)</span> uten den informasjonen. Det stemmer med intuisjonen: blant de <span class="math notranslate nohighlight">\(26\)</span> røde kortene er <span class="math notranslate nohighlight">\(13\)</span> hjerter.</p>
+</div>
+</div>
+<p>Ganger vi opp med <span class="math notranslate nohighlight">\(P(B)\)</span> på begge sider av definisjonen, får vi en nyttig omskriving som lar oss regne ut sannsynligheten for at <em>begge</em> hendelsene skjer.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 3.3 - Produktregelen</p>
+<p>For to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> gjelder</p>
+<p><span class="math notranslate nohighlight">\(P(A \cap B) = P(A|B) \cdot P(B)\)</span></p>
+<p>Dersom <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> er uavhengige, forenkles dette til <span class="math notranslate nohighlight">\(P(A \cap B)=P(A)\cdot P(B)\)</span>, som i Def. 3.8.</p>
+</div>
+<p>Snittet <span class="math notranslate nohighlight">\(A \cap B\)</span> er det samme som <span class="math notranslate nohighlight">\(B \cap A\)</span>, så vi kan skrive produktregelen på to måter: <span class="math notranslate nohighlight">\(P(A|B)P(B)\)</span> og <span class="math notranslate nohighlight">\(P(B|A)P(A)\)</span>. Setter vi disse lik hverandre og løser for <span class="math notranslate nohighlight">\(P(A|B)\)</span>, får vi et av de mest brukte resultatene i all sannsynlighetsregning.</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 3.4 - Bayes’ teorem</p>
+<p>For to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> med <span class="math notranslate nohighlight">\(P(B)&gt;0\)</span> gjelder</p>
+<p><span class="math notranslate nohighlight">\(P(A|B) = \dfrac{P(B|A) \, P(A)}{P(B)}\)</span></p>
+</div>
+<p>Bayes’ teorem lar oss snu en betingelse. Ofte kjenner vi <span class="math notranslate nohighlight">\(P(B|A)\)</span>, men ønsker egentlig <span class="math notranslate nohighlight">\(P(A|B)\)</span>. Et typisk eksempel er medisinsk testing: vi vet hvor ofte en test slår ut når pasienten faktisk er syk, <span class="math notranslate nohighlight">\(P(\text{positiv}|\text{syk})\)</span>, men det pasienten lurer på er det motsatte - hvor sannsynlig det er at hun er syk gitt at testen var positiv, <span class="math notranslate nohighlight">\(P(\text{syk}|\text{positiv})\)</span>. Disse to er ikke det samme, og forskjellen kan være dramatisk når sykdommen er sjelden.</p>
+<div class="cell tag_remove-input docutils container">
+<div class="cell_output docutils container">
+<div class="output text_html"><iframe srcdoc="&lt;!DOCTYPE html&gt;
+&lt;html lang=&quot;nb&quot;&gt;
+&lt;head&gt;
+&lt;meta charset=&quot;utf-8&quot;&gt;
+&lt;meta name=&quot;viewport&quot; content=&quot;width=device-width, initial-scale=1&quot;&gt;
+&lt;title&gt;Bayes&#x27; teorem&lt;/title&gt;
+&lt;style&gt;
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --tp:#c0392b;--fp:#d68910;--sick:#8e44ad;--well:#e8e3d6;--ok:#1a7a4c;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:&quot;Iowan Old Style&quot;,&quot;Palatino Linotype&quot;,Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:14px 12px 10px;}
+  .caption{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:11px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);text-align:center;margin-bottom:10px;}
+  svg{display:block;width:100%;height:auto;}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;margin-top:10px;justify-content:center;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .sw{width:12px;height:12px;border-radius:2px;display:inline-block;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);}
+  .val.tp{color:var(--tp);}
+  .val.fp{color:var(--fp);}
+  .answer{margin-top:12px;padding:11px 12px;border-radius:3px;background:rgba(26,122,76,.12);}
+  .answer .q{font-size:12px;color:var(--muted);font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;
+    letter-spacing:.05em;margin-bottom:4px;}
+  .answer .a{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:24px;color:var(--ok);}
+  .ctl{margin-bottom:13px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;}
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;background:var(--fp);border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:var(--fp);
+    border:2px solid var(--paper);cursor:pointer;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  .buttons button{font-family:&quot;SF Mono&quot;,ui-monospace,Menlo,monospace;font-size:12px;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--fp);padding-left:12px;}
+&lt;/style&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;div class=&quot;wrap&quot;&gt;
+  &lt;div class=&quot;eyebrow&quot;&gt;Betinget sannsynlighet&lt;/div&gt;
+  &lt;h1&gt;Se hvordan Bayes&#x27; teorem virker&lt;/h1&gt;
+  &lt;p class=&quot;sub&quot;&gt;Her er 1000 personer. Noen få er syke, resten er friske. Alle tar testen — og vi ser hvem som får positivt svar.&lt;/p&gt;
+
+  &lt;div class=&quot;stage&quot;&gt;
+    &lt;div class=&quot;caption&quot;&gt;1000 personer · hver rute er én person&lt;/div&gt;
+    &lt;svg id=&quot;grid&quot; viewBox=&quot;0 0 500 209&quot; xmlns=&quot;http://www.w3.org/2000/svg&quot;&gt;&lt;/svg&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;legend&quot;&gt;
+    &lt;span&gt;&lt;i class=&quot;sw&quot; style=&quot;background:var(--tp)&quot;&gt;&lt;/i&gt; syk, positiv test&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;sw&quot; style=&quot;background:var(--fp)&quot;&gt;&lt;/i&gt; frisk, positiv test&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;sw&quot; style=&quot;background:var(--sick)&quot;&gt;&lt;/i&gt; syk, negativ test&lt;/span&gt;
+    &lt;span&gt;&lt;i class=&quot;sw&quot; style=&quot;background:var(--well)&quot;&gt;&lt;/i&gt; frisk, negativ test&lt;/span&gt;
+  &lt;/div&gt;
+
+  &lt;div class=&quot;panel&quot;&gt;
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Blant de positive&lt;/h2&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;syke i alt&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;nSick&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;positive i alt&lt;/span&gt;&lt;span class=&quot;val&quot; id=&quot;nPos&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;…av dem faktisk syke&lt;/span&gt;&lt;span class=&quot;val tp&quot; id=&quot;nTP&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;row&quot;&gt;&lt;span class=&quot;lab&quot;&gt;…av dem friske (falske alarmer)&lt;/span&gt;&lt;span class=&quot;val fp&quot; id=&quot;nFP&quot;&gt;—&lt;/span&gt;&lt;/div&gt;
+      &lt;div class=&quot;answer&quot;&gt;
+        &lt;div class=&quot;q&quot;&gt;P(syk | positiv test)&lt;/div&gt;
+        &lt;div class=&quot;a&quot; id=&quot;ppv&quot;&gt;—&lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;card&quot;&gt;
+      &lt;h2&gt;Kontroller&lt;/h2&gt;
+      &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;P(syk) &lt;b id=&quot;prevLab&quot;&gt;0.001&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;prevRange&quot; min=&quot;1&quot; max=&quot;300&quot; step=&quot;1&quot; value=&quot;1&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;P(positiv | syk) &lt;b id=&quot;sensLab&quot;&gt;0.99&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;sensRange&quot; min=&quot;50&quot; max=&quot;100&quot; step=&quot;1&quot; value=&quot;99&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;ctl&quot;&gt;&lt;label&gt;P(positiv | frisk) &lt;b id=&quot;fprLab&quot;&gt;0.05&lt;/b&gt;&lt;/label&gt;
+        &lt;input type=&quot;range&quot; id=&quot;fprRange&quot; min=&quot;0&quot; max=&quot;30&quot; step=&quot;1&quot; value=&quot;5&quot;&gt;&lt;/div&gt;
+      &lt;div class=&quot;buttons&quot;&gt;
+        &lt;button id=&quot;exBtn&quot;&gt;eksempelet i teksten&lt;/button&gt;
+        &lt;button id=&quot;commonBtn&quot;&gt;vanlig sykdom&lt;/button&gt;
+      &lt;/div&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+
+  &lt;p class=&quot;note&quot;&gt;Dra &lt;b&gt;P(syk)&lt;/b&gt; opp og ned. Er sykdommen sjelden, drukner de få røde rutene i et hav av gule falske alarmer — selv om testen er svært treffsikker. Det er hele poenget med Bayes&#x27; teorem: svaret avhenger like mye av hvor vanlig sykdommen er som av hvor god testen er.&lt;/p&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+(function(){
+  const NS=&quot;http://www.w3.org/2000/svg&quot;;
+  const svg=document.getElementById(&#x27;grid&#x27;);
+  const N=1000, COLS=50, ROWS=20;
+  const CELL=8.308, GAP=1.4, X0=8, Y0=8;
+
+  let state={prev:1, sens:99, fpr:5};
+
+  function counts(){
+    const sick=state.prev;                       // whole people
+    const healthy=N-sick;
+    const tp=Math.round(sick*state.sens/100);    // sick &amp; positive
+    const fn=sick-tp;
+    const fp=Math.round(healthy*state.fpr/100);  // healthy &amp; positive
+    const tn=healthy-fp;
+    return {sick,healthy,tp,fn,fp,tn};
+  }
+
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+    const c=counts();
+    // order: TP, FN, FP, TN  -&gt; keeps sick people grouped at the start
+    const seq=[];
+    for(let i=0;i&lt;c.tp;i++)seq.push(&#x27;tp&#x27;);
+    for(let i=0;i&lt;c.fn;i++)seq.push(&#x27;fn&#x27;);
+    for(let i=0;i&lt;c.fp;i++)seq.push(&#x27;fp&#x27;);
+    while(seq.length&lt;N)seq.push(&#x27;tn&#x27;);
+
+    const COL={tp:&#x27;var(--tp)&#x27;,fn:&#x27;var(--sick)&#x27;,fp:&#x27;var(--fp)&#x27;,tn:&#x27;var(--well)&#x27;};
+    for(let i=0;i&lt;N;i++){
+      const r=Math.floor(i/COLS), col=i%COLS;
+      const rect=document.createElementNS(NS,&#x27;rect&#x27;);
+      rect.setAttribute(&#x27;x&#x27;,X0+col*(CELL+GAP));
+      rect.setAttribute(&#x27;y&#x27;,Y0+r*(CELL+GAP));
+      rect.setAttribute(&#x27;width&#x27;,CELL);rect.setAttribute(&#x27;height&#x27;,CELL);
+      rect.setAttribute(&#x27;rx&#x27;,1.6);
+      rect.setAttribute(&#x27;fill&#x27;,COL[seq[i]]);
+      svg.appendChild(rect);
+    }
+    return c;
+  }
+
+  function update(){
+    const c=draw();
+    const pos=c.tp+c.fp;
+    document.getElementById(&#x27;nSick&#x27;).textContent=c.sick+&#x27; av 1000&#x27;;
+    document.getElementById(&#x27;nPos&#x27;).textContent=pos+&#x27; av 1000&#x27;;
+    document.getElementById(&#x27;nTP&#x27;).textContent=c.tp;
+    document.getElementById(&#x27;nFP&#x27;).textContent=c.fp;
+    const ppv = pos&gt;0 ? c.tp/pos : 0;
+    document.getElementById(&#x27;ppv&#x27;).textContent=(ppv*100).toFixed(1)+&#x27; %&#x27;;
+
+    document.getElementById(&#x27;prevLab&#x27;).textContent=(state.prev/N).toFixed(3)+&#x27;  (&#x27;+state.prev+&#x27; av 1000)&#x27;;
+    document.getElementById(&#x27;sensLab&#x27;).textContent=(state.sens/100).toFixed(2);
+    document.getElementById(&#x27;fprLab&#x27;).textContent=(state.fpr/100).toFixed(2);
+  }
+
+  document.getElementById(&#x27;prevRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.prev=+e.target.value;update();});
+  document.getElementById(&#x27;sensRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.sens=+e.target.value;update();});
+  document.getElementById(&#x27;fprRange&#x27;).addEventListener(&#x27;input&#x27;,e=&gt;{state.fpr=+e.target.value;update();});
+
+  function setAll(p,s,f){
+    state.prev=p;state.sens=s;state.fpr=f;
+    document.getElementById(&#x27;prevRange&#x27;).value=p;
+    document.getElementById(&#x27;sensRange&#x27;).value=s;
+    document.getElementById(&#x27;fprRange&#x27;).value=f;
+    update();
+  }
+  document.getElementById(&#x27;exBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;setAll(1,99,5));
+  document.getElementById(&#x27;commonBtn&#x27;).addEventListener(&#x27;click&#x27;,()=&gt;setAll(200,99,5));
+
+  update();
+})();
+&lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+" width="100%" height="200" scrolling="no" style="border:none;display:block;" onload="this.style.height=this.contentWindow.document.body.scrollHeight+'px'"></iframe></div></div>
+</div>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">En sjelden sykdom rammer <span class="math notranslate nohighlight">\(1\)</span> av <span class="math notranslate nohighlight">\(1000\)</span> personer. En test gir positivt utslag hos <span class="math notranslate nohighlight">\(99\%\)</span> av de syke, men gir også falskt positivt hos <span class="math notranslate nohighlight">\(5\%\)</span> av de friske. Du tester positivt - hva er sannsynligheten for at du faktisk er syk?</p>
+<p class="sd-card-text">La <span class="math notranslate nohighlight">\(A\)</span> være “syk” og <span class="math notranslate nohighlight">\(B\)</span> “positiv test”. Vi kjenner</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A)=0{,}001, \qquad P(B|A)=0{,}99, \qquad P(B|A')=0{,}05\)</span></p>
+<p class="sd-card-text">Først finner vi <span class="math notranslate nohighlight">\(P(B)\)</span>, altså hvor ofte testen slår ut i det hele tatt. En positiv test kan komme fra en syk eller en frisk person:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(B)=P(B|A)P(A)+P(B|A')P(A')=0{,}99 \cdot 0{,}001 + 0{,}05 \cdot 0{,}999 = 0{,}00099+0{,}04995=0{,}05094\)</span></p>
+<p class="sd-card-text">Ved Bayes’ teorem er</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A|B)=\frac{P(B|A)P(A)}{P(B)}=\frac{0{,}99 \cdot 0{,}001}{0{,}05094} \approx 0{,}019\)</span></p>
+<p class="sd-card-text">Sannsynligheten for å være syk er altså bare rundt <span class="math notranslate nohighlight">\(2\%\)</span>, til tross for en test som er <span class="math notranslate nohighlight">\(99\%\)</span> treffsikker på syke. Grunnen er at sykdommen er så sjelden at de falske positive blant de mange friske langt overgår de ekte positive.</p>
+</div>
+</div>
+<p>Til slutt tar vi med en regel for unioner. Aksiom 3 lot oss summere sannsynligheter for disjunkte hendelser, men hva om hendelsene overlapper?</p>
+<div class="note admonition">
+<p class="admonition-title">Teorem 3.5 - Additiv lov</p>
+<p>For to hendelser <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> som ikke nødvendigvis er disjunkte, gjelder</p>
+<p><span class="math notranslate nohighlight">\(P(A \cup B) = P(A) + P(B) - P(A \cap B)\)</span></p>
+<p>Dersom <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> er disjunkte er <span class="math notranslate nohighlight">\(P(A \cap B)=0\)</span>, og uttrykket blir <span class="math notranslate nohighlight">\(P(A \cup B)=P(A)+P(B)\)</span>, som i aksiom 3.</p>
+</div>
+<p>Grunnen til at vi trekker fra <span class="math notranslate nohighlight">\(P(A \cap B)\)</span> er at utfallene i snittet ellers ville blitt talt to ganger - én gang i <span class="math notranslate nohighlight">\(P(A)\)</span> og én gang i <span class="math notranslate nohighlight">\(P(B)\)</span>. Se gjerne tilbake på Venn-diagrammet i <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/matematikk/sannsynlighet.html#komplement-snitt-og-union">3.2 Komplement, snitt og union</a>: overlappen skal bare telles én gang.</p>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Betinget sannsynlighet dukker opp så snart vi har delvis informasjon om et system. Vet vi at et molekyl befinner seg i en bestemt elektronisk tilstand, endrer det sannsynlighetsfordelingen over vibrasjonsnivåene - vi regner da på <span class="math notranslate nohighlight">\(P(\text{vibrasjonsnivå} \mid \text{elektronisk tilstand})\)</span>.</p>
+<p>Produktregelen i Teorem 3.3 er også grunnen til at <a class="reference external" href="https://andreasdh.github.io/Bifrost/docs/2_entropi_boltzmann.html#fra-entropimaksimum-til-boltzmann-fordelingen">Boltzmann-fordelingen</a> kan faktoriseres når frihetsgradene er uavhengige. Er translasjon, rotasjon og vibrasjon uavhengige, er den betingede sannsynligheten lik den ubetingede, og sannsynlighetene kan ganges sammen direkte - noe som gir <span class="math notranslate nohighlight">\(Q_{tot}=Q_{trans}\cdot Q_{rot}\cdot Q_{vib}\)</span> fra delkapittel 3.3.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 3.6</p>
+<p>Du triller én sekssidet terning. La <span class="math notranslate nohighlight">\(A=\{2,4,6\}\)</span> være hendelsen “partall” og <span class="math notranslate nohighlight">\(B=\{4,5,6\}\)</span> hendelsen “fire eller høyere”.</p>
+<p>a) Finn <span class="math notranslate nohighlight">\(P(A)\)</span>, <span class="math notranslate nohighlight">\(P(B)\)</span> og <span class="math notranslate nohighlight">\(P(A \cap B)\)</span>.</p>
+<p>b) Finn <span class="math notranslate nohighlight">\(P(A|B)\)</span>, og forklar svaret med ord.</p>
+<p>c) Er <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> uavhengige?</p>
+<p>d) Bruk additiv lov til å finne <span class="math notranslate nohighlight">\(P(A \cup B)\)</span>.</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.6</p>
+<p>a) <span class="math notranslate nohighlight">\(A\)</span> har <span class="math notranslate nohighlight">\(3\)</span> av <span class="math notranslate nohighlight">\(6\)</span> utfall, så <span class="math notranslate nohighlight">\(P(A)=\frac{1}{2}\)</span>. <span class="math notranslate nohighlight">\(B\)</span> har <span class="math notranslate nohighlight">\(3\)</span> av <span class="math notranslate nohighlight">\(6\)</span> utfall, så <span class="math notranslate nohighlight">\(P(B)=\frac{1}{2}\)</span>. Snittet er <span class="math notranslate nohighlight">\(A \cap B=\{4,6\}\)</span> med <span class="math notranslate nohighlight">\(2\)</span> utfall, så <span class="math notranslate nohighlight">\(P(A \cap B)=\frac{2}{6}=\frac{1}{3}\)</span>.</p>
+<p>b) Ved Def. 2.9:</p>
+<p><span class="math notranslate nohighlight">\(P(A|B)=\frac{P(A \cap B)}{P(B)}=\frac{1/3}{1/2}=\frac{2}{3}\)</span></p>
+<p>Med ord: vet vi at terningen viser <span class="math notranslate nohighlight">\(4\)</span>, <span class="math notranslate nohighlight">\(5\)</span> eller <span class="math notranslate nohighlight">\(6\)</span>, er to av disse tre utfallene partall. Sannsynligheten for partall stiger derfor fra <span class="math notranslate nohighlight">\(\frac{1}{2}\)</span> til <span class="math notranslate nohighlight">\(\frac{2}{3}\)</span>.</p>
+<p>c) Vi sjekker kravet:</p>
+<p><span class="math notranslate nohighlight">\(P(A)\cdot P(B)=\frac{1}{2}\cdot\frac{1}{2}=\frac{1}{4} \neq \frac{1}{3}=P(A \cap B)\)</span></p>
+<p>Kravet er ikke oppfylt, så <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> er <strong>ikke</strong> uavhengige. Det stemmer med b): informasjon om <span class="math notranslate nohighlight">\(B\)</span> endret sannsynligheten for <span class="math notranslate nohighlight">\(A\)</span>.</p>
+<p>d) Ved Teorem 3.5:</p>
+<p><span class="math notranslate nohighlight">\(P(A \cup B)=P(A)+P(B)-P(A \cap B)=\frac{1}{2}+\frac{1}{2}-\frac{1}{3}=\frac{2}{3}\)</span></p>
+<p>Vi kan sjekke ved opptelling: <span class="math notranslate nohighlight">\(A \cup B=\{2,4,5,6\}\)</span>, altså <span class="math notranslate nohighlight">\(4\)</span> av <span class="math notranslate nohighlight">\(6\)</span> utfall, som gir <span class="math notranslate nohighlight">\(\frac{4}{6}=\frac{2}{3}\)</span>.</p>
+</div>
+</section>
+<section id="kontinuerlige-utfallsrom">
+<span id="id3"></span><h2>3.6 Kontinuerlige utfallsrom<a class="headerlink" href="#kontinuerlige-utfallsrom" title="Link to this heading">#</a></h2>
+<p>Så langt har alle utfallsrommene våre vært <strong>diskrete</strong>: terningkast, kortstokk, myntkast. Felles for dem er at vi kan liste opp utfallene ett etter ett, og at hvert utfall har sin egen sannsynlighet. I fysikalsk kjemi er mange størrelser derimot <strong>kontinuerlige</strong>. Farten til et gassmolekyl kan være hvilken som helst verdi over null, og energien til en partikkel kan ligge hvor som helst i et intervall. Slike utfallsrom kan vi ikke telle oss gjennom.</p>
+<div class="warning admonition">
+<p class="admonition-title">Def. 3.11 - Kontinuerlig utfallsrom</p>
+<p>Et utfallsrom <span class="math notranslate nohighlight">\(S\)</span> kalles <strong>kontinuerlig</strong> dersom utfallene utgjør et sammenhengende intervall av tall, slik at de ikke kan listes opp enkeltvis.</p>
+</div>
+<p>Overgangen til kontinuerlige utfallsrom har en konsekvens som er verdt å stoppe ved. I et diskret utfallsrom hadde hvert enkelt utfall en positiv sannsynlighet - hver side på terningen hadde <span class="math notranslate nohighlight">\(\frac{1}{6}\)</span>. I et kontinuerlig utfallsrom er det umulig. Det finnes uendelig mange verdier i et intervall, og skulle hver av dem hatt en positiv sannsynlighet, ville summen sprengt <span class="math notranslate nohighlight">\(1\)</span> og brutt aksiom 2.</p>
+<p>Løsningen er at hvert <strong>enkeltutfall</strong> har sannsynlighet <span class="math notranslate nohighlight">\(0\)</span>. Sannsynligheten for at et molekyl har farten nøyaktig <span class="math notranslate nohighlight">\(400\)</span> m/s, uten noe avvik overhodet, er null. Dette betyr ikke at utfallet er umulig - molekylet har tross alt en fart - men at det er én verdi blant uendelig mange.</p>
+<div class="sd-container-fluid sd-sphinx-override sd-mb-4 docutils">
+<div class="sd-row sd-g-2 sd-g-xs-2 sd-g-sm-2 sd-g-md-2 sd-g-lg-2 docutils">
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Diskret</div>
+<p class="sd-card-text"><em>Utfallene kan listes én og én</em></p>
+<ul class="simple">
+<li><p class="sd-card-text">Terningkast</p></li>
+<li><p class="sd-card-text">Trekke kort fra en kortstokk</p></li>
+<li><p class="sd-card-text">Elektroniske energinivåer</p></li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sd-col sd-d-flex-row docutils">
+<div class="sd-card sd-sphinx-override sd-w-100 sd-shadow-sm docutils">
+<div class="sd-card-body docutils">
+<div class="sd-card-title sd-font-weight-bold docutils">
+Kontinuerlig</div>
+<p class="sd-card-text"><em>Utfallene utgjør et sammenhengdene intervall av tall</em></p>
+<ul class="simple">
+<li><p class="sd-card-text">Høyden til en tilfeldig person</p></li>
+<li><p class="sd-card-text">Hvor på en dartskive pilen treffer</p></li>
+<li><p class="sd-card-text">Tiden en reaksjon tar</p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Hendelser fungerer fortsatt som før: de er delmengder av <span class="math notranslate nohighlight">\(S\)</span>, helt i tråd med Def. 3.3. Forskjellen er at de meningsfulle hendelsene nå er <strong>intervaller</strong> i stedet for enkeltutfall. Vi spør ikke “hva er sannsynligheten for at farten er nøyaktig <span class="math notranslate nohighlight">\(400\)</span> m/s?”, men “hva er sannsynligheten for at farten ligger mellom <span class="math notranslate nohighlight">\(400\)</span> og <span class="math notranslate nohighlight">\(500\)</span> m/s?”.</p>
+<p>En følge av at enkeltutfall har sannsynlighet <span class="math notranslate nohighlight">\(0\)</span> er at endepunktene ikke spiller noen rolle. Hendelsene <span class="math notranslate nohighlight">\(400 \leq v \leq 500\)</span> og <span class="math notranslate nohighlight">\(400 &lt; v &lt; 500\)</span> har nøyaktig samme sannsynlighet, siden de to endepunktene hver bidrar med <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<div class="sd-card sd-sphinx-override sd-mb-3 sd-shadow-sm docutils">
+<div class="sd-card-header docutils">
+<p class="sd-card-text"><strong>Eksempel</strong></p>
+</div>
+<div class="sd-card-body docutils">
+<p class="sd-card-text">Du snurrer en viser på en sirkulær skive, og noterer vinkelen <span class="math notranslate nohighlight">\(\theta\)</span> visesen stopper på, målt i grader.</p>
+<p class="sd-card-text">a) Hva er utfallsrommet?</p>
+<p class="sd-card-text">Viseren kan stoppe på hvilken som helst vinkel fra <span class="math notranslate nohighlight">\(0\)</span> til <span class="math notranslate nohighlight">\(360\)</span> grader, så utfallsrommet er det kontinuerlige intervallet <span class="math notranslate nohighlight">\(S=[0,360)\)</span>.</p>
+<p class="sd-card-text">b) Hva er sannsynligheten for at viseren stopper på nøyaktig <span class="math notranslate nohighlight">\(90\)</span> grader?</p>
+<p class="sd-card-text">Siden <span class="math notranslate nohighlight">\(S\)</span> er kontinuerlig, har hvert enkeltutfall sannsynlighet <span class="math notranslate nohighlight">\(0\)</span>. Altså er <span class="math notranslate nohighlight">\(P(\theta = 90)=0\)</span>. Det finnes uendelig mange vinkler viseren kan stoppe på, og nøyaktig <span class="math notranslate nohighlight">\(90{,}000\ldots\)</span> grader er bare én av dem.</p>
+<p class="sd-card-text">c) Hva er sannsynligheten for at viseren stopper i første kvadrant, altså mellom <span class="math notranslate nohighlight">\(0\)</span> og <span class="math notranslate nohighlight">\(90\)</span> grader?</p>
+<p class="sd-card-text">Dette er en hendelse på intervallform, <span class="math notranslate nohighlight">\(A=[0,90]\)</span>. Er skiven jevnt balansert, er ingen del av sirkelen favorisert, og sannsynligheten svarer til hvor stor andel av sirkelen intervallet dekker:</p>
+<p class="sd-card-text"><span class="math notranslate nohighlight">\(P(A)=\frac{90}{360}=\frac{1}{4}\)</span></p>
+</div>
+</div>
+<p>Legg merke til hva vi gjorde i c). I det diskrete tilfellet fant vi sannsynlighet ved å telle utfall og dele på antallet i <span class="math notranslate nohighlight">\(S\)</span>. Her kunne vi ikke telle, men vi kunne måle: vi sammenliknet <strong>lengden</strong> av intervallet med lengden av hele utfallsrommet. Så lenge ingen del av utfallsrommet er favorisert, er dette den kontinuerlige parallellen til opptelling.</p>
+<p>De fleste kontinuerlige størrelser i kjemien er imidlertid <em>ikke</em> jevnt fordelt. Molekylfarter i en gass er tettere samlet rundt noen verdier enn andre, og da holder det ikke å sammenlikne lengder. For å håndtere slike tilfeller trenger vi et nytt verktøy, som vi kommer tilbake til.</p>
+<div class="important admonition">
+<p class="admonition-title">Kobling til fysikalsk kjemi</p>
+<p>Skillet mellom diskrete og kontinuerlige utfallsrom går rett inn i kvantefysikkens kjerne. Energinivåene til et elektron i et atom er <strong>diskrete</strong> - elektronet kan bare ha bestemte energier, og utfallsrommet kan listes opp. Det er nettopp derfor vi ser skarpe linjer i et atomspektrum.</p>
+<p>Translasjonsenergien til et molekyl i en gassbeholder er derimot i praksis <strong>kontinuerlig</strong>. Nivåene er strengt tatt kvantiserte også her, men de ligger så tett at vi behandler dem som et sammenhengende intervall. Denne tilnærmingen er helt sentral i statistisk termodynamikk, og er grunnen til at vi senere kan erstatte summer med integraler når vi regner på translasjonsbidraget til partisjonsfunksjonen.</p>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Underveisoppgave 3.7</p>
+<p>En buss kommer til holdeplassen på et tilfeldig tidspunkt mellom klokken <span class="math notranslate nohighlight">\(10{:}00\)</span> og <span class="math notranslate nohighlight">\(10{:}30\)</span>, uten at noen tidspunkter er mer sannsynlige enn andre.</p>
+<p>a) Skriv opp utfallsrommet, målt i minutter etter <span class="math notranslate nohighlight">\(10{:}00\)</span>.</p>
+<p>b) Er utfallsrommet diskret eller kontinuerlig? Begrunn.</p>
+<p>c) Hva er sannsynligheten for at bussen kommer nøyaktig klokken <span class="math notranslate nohighlight">\(10{:}15\)</span>?</p>
+<p>d) Hva er sannsynligheten for at bussen kommer i løpet av de første ti minuttene?</p>
+<p>e) Hva er sannsynligheten for at bussen kommer etter <span class="math notranslate nohighlight">\(10{:}20\)</span>?</p>
+</div>
+<div class="tip dropdown admonition">
+<p class="admonition-title">Løsning 3.7</p>
+<p>a) Bussen kan komme når som helst i løpet av de <span class="math notranslate nohighlight">\(30\)</span> minuttene, så <span class="math notranslate nohighlight">\(S=[0,30]\)</span>.</p>
+<p>b) Utfallsrommet er kontinuerlig. Tidspunktet kan anta hvilken som helst verdi i intervallet, og utfallene kan derfor ikke listes opp enkeltvis.</p>
+<p>c) Klokken <span class="math notranslate nohighlight">\(10{:}15\)</span> svarer til utfallet <span class="math notranslate nohighlight">\(15\)</span>, altså ett enkelt utfall i et kontinuerlig utfallsrom. Sannsynligheten er <span class="math notranslate nohighlight">\(0\)</span>.</p>
+<p>d) Dette er hendelsen <span class="math notranslate nohighlight">\(A=[0,10]\)</span>. Siden ingen tidspunkter er favorisert, sammenlikner vi lengdene:</p>
+<p><span class="math notranslate nohighlight">\(P(A)=\frac{10}{30}=\frac{1}{3}\)</span></p>
+<p>e) Dette er hendelsen <span class="math notranslate nohighlight">\(B=(20,30]\)</span>, som har lengde <span class="math notranslate nohighlight">\(10\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(P(B)=\frac{10}{30}=\frac{1}{3}\)</span></p>
+<p>Alternativt kunne vi brukt komplementregelen (Teorem 3.2). Komplementet er “bussen kommer innen <span class="math notranslate nohighlight">\(10{:}20\)</span>”, altså intervallet <span class="math notranslate nohighlight">\([0,20]\)</span> med sannsynlighet <span class="math notranslate nohighlight">\(\frac{20}{30}=\frac{2}{3}\)</span>, slik at <span class="math notranslate nohighlight">\(P(B)=1-\frac{2}{3}=\frac{1}{3}\)</span>.</p>
+</div>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/matematikk"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="kombinatorikk.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">2. Kombinatorikk</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="kalkulus.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">4. Funksjoner, derivasjon og integrasjon</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#utfall-utfallsrom-og-hendelser">3.1 Utfall, utfallsrom og hendelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#komplement-snitt-og-union">3.2 Komplement, snitt og union</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#disjunkte-og-uavhengige-hendelser">3.2 Disjunkte og uavhengige hendelser</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#aksiomene-i-sannsynlighet">3.4 Aksiomene i sannsynlighet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#betinget-sannsynlighet">3.5 Betinget sannsynlighet</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#kontinuerlige-utfallsrom">3.6 Kontinuerlige utfallsrom</a></li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
