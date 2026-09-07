@@ -47,7 +47,7 @@ parts:
     sections:
     - file: docs/ukesoppgaver/uke_01_under_revision
     - file: docs/ukesoppgaver/uke_02_under_revision
-    # - file: docs/ukesoppgaver/uke_03
+    - file: docs/ukesoppgaver/uke_03_under_revision
     # - file: docs/ukesoppgaver/uke_04
     # - file: docs/ukesoppgaver/uke_05
     # - file: docs/ukesoppgaver/uke_06
