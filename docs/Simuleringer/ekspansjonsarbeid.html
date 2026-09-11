@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ekspansjonsarbeid — gass i sylinder med stempel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#12171b;
+    --panel:#1b2229;
+    --panel-2:#212a32;
+    --panel-3:#171e24;
+    --line:#2c3640;
+    --brass:#b98f56;
+    --brass-light:#e0bd85;
+    --copper:#c1613f;
+    --copper-light:#e08d6c;
+    --teal:#6fa88f;
+    --teal-light:#9fd8c1;
+    --ink:#e9e4d8;
+    --ink-dim:#9aa0a3;
+    --ink-faint:#5f676c;
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(ellipse at 20% -10%, rgba(185,143,86,0.08), transparent 55%),
+      radial-gradient(ellipse at 90% 10%, rgba(111,168,143,0.06), transparent 50%),
+      var(--bg);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    min-height:100vh;
+    padding:28px 20px 60px;
+  }
+  .wrap{max-width:1240px;margin:0 auto;}
+
+  header{margin-bottom:28px;border-bottom:1px solid var(--line);padding-bottom:20px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11.5px;
+    letter-spacing:0.16em;
+    text-transform:uppercase;
+    color:var(--brass-light);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;background:var(--brass);
+    display:inline-block;
+  }
+  h1{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    font-size:clamp(26px,4vw,38px);
+    margin:10px 0 6px;
+    letter-spacing:-0.01em;
+  }
+  header p{
+    color:var(--ink-dim);
+    font-size:14.5px;
+    max-width:680px;
+    line-height:1.55;
+    margin:0;
+  }
+
+  .layout{
+    display:grid;
+    grid-template-columns: 400px 1fr;
+    gap:22px;
+    align-items:start;
+  }
+  @media (max-width:920px){
+    .layout{grid-template-columns:1fr;}
+  }
+
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:10px;
+    padding:20px;
+  }
+  .card + .card{margin-top:22px;}
+  .card-title{
+    font-family:'Fraunces', serif;
+    font-size:16px;
+    font-weight:500;
+    margin:0 0 14px;
+    display:flex;
+    align-items:center;
+    gap:8px;
+    color:var(--ink);
+  }
+  .card-title .tag{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:10px;
+    letter-spacing:0.08em;
+    color:var(--panel);
+    background:var(--brass-light);
+    padding:2px 7px;
+    border-radius:20px;
+    text-transform:uppercase;
+  }
+
+  /* ---------- Apparatus ---------- */
+  .apparatus-row{
+    display:flex;
+    gap:14px;
+    align-items:flex-start;
+  }
+  #cylinderSvg{width:62%;height:auto;}
+  .gauge-col{width:38%;display:flex;flex-direction:column;align-items:center;gap:10px;}
+  #gaugeSvg{width:100%;max-width:150px;height:auto;}
+  .gauge-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);text-align:center;}
+
+  .readout-strip{
+    margin-top:16px;
+    background:var(--panel-3);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:12px 14px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px 16px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .readout{display:flex;flex-direction:column;gap:2px;}
+  .readout .k{font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink-faint);}
+  .readout .v{font-size:16px;color:var(--teal-light);font-weight:500;}
+  .readout .v.copper{color:var(--copper-light);}
+  .readout .v.brass{color:var(--brass-light);}
+
+  .caption{font-size:11.5px;color:var(--ink-faint);margin-top:10px;line-height:1.5;}
+
+  /* ---------- Controls ---------- */
+  .field{margin-bottom:16px;}
+  .field:last-child{margin-bottom:0;}
+  .field label{
+    display:flex;
+    justify-content:space-between;
+    font-size:12.5px;
+    color:var(--ink-dim);
+    margin-bottom:7px;
+  }
+  .field label .val{
+    font-family:'IBM Plex Mono',monospace;
+    color:var(--ink);
+    font-weight:500;
+  }
+  input[type=range]{
+    -webkit-appearance:none;
+    width:100%;
+    height:4px;
+    border-radius:3px;
+    background:linear-gradient(90deg,var(--brass) 0%, var(--line) 0%);
+    outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;
+    width:16px;height:16px;
+    border-radius:50%;
+    background:var(--brass-light);
+    border:2px solid var(--panel);
+    box-shadow:0 0 0 1px var(--brass);
+    cursor:pointer;
+    margin-top:-6px;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:16px;height:16px;border-radius:50%;
+    background:var(--brass-light);border:2px solid var(--panel);
+    box-shadow:0 0 0 1px var(--brass);cursor:pointer;
+  }
+  input[type=range]::-moz-range-track{height:4px;border-radius:3px;background:var(--line);}
+  #V.slider-expand::-webkit-slider-thumb{background:var(--teal-light);box-shadow:0 0 0 1px var(--teal);}
+
+  .btn-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  button{
+    font-family:'IBM Plex Sans',sans-serif;
+    font-size:12.5px;
+    font-weight:500;
+    color:var(--ink);
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:6px;
+    padding:8px 12px;
+    cursor:pointer;
+    transition:border-color .15s ease, color .15s ease;
+  }
+  button:hover{border-color:var(--brass);color:var(--brass-light);}
+  button.primary{
+    background:linear-gradient(180deg, var(--copper), #a54f34);
+    border-color:#8f4529;
+    color:#fff3ea;
+  }
+  button.primary:hover{border-color:var(--copper-light);color:#fff;}
+  button:disabled{opacity:0.45;cursor:not-allowed;}
+  button.ghost{background:transparent;}
+  .preset-row{display:flex;gap:6px;flex-wrap:wrap;}
+  .preset-row button{padding:5px 10px;font-size:11.5px;}
+
+  hr.sep{border:none;border-top:1px solid var(--line);margin:18px 0;}
+
+  /* ---------- Diagram ---------- */
+  #pvCanvas{width:100%;height:auto;display:block;border-radius:6px;}
+  .legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:10px;font-size:12px;color:var(--ink-dim);}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:12px;height:12px;border-radius:3px;display:inline-block;}
+
+  /* ---------- Formula panel ---------- */
+  .formula-block{
+    background:var(--panel-3);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:14px 16px;
+    margin-bottom:12px;
+  }
+  .formula-block:last-child{margin-bottom:0;}
+  .formula-block .flabel{
+    font-size:11px;letter-spacing:0.06em;text-transform:uppercase;
+    color:var(--ink-faint);margin-bottom:8px;
+  }
+  .formula-main{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:16px;
+    color:var(--brass-light);
+    margin-bottom:6px;
+  }
+  .formula-sub{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:var(--ink-dim);
+    line-height:1.7;
+  }
+  .formula-result{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:15px;
+    color:var(--teal-light);
+    margin-top:4px;
+  }
+  .formula-result.copper{color:var(--copper-light);}
+  .pct-bar-wrap{margin-top:10px;}
+  .pct-bar-track{
+    height:8px;background:var(--panel-2);border-radius:5px;overflow:hidden;
+    border:1px solid var(--line);
+  }
+  .pct-bar-fill{
+    height:100%;
+    background:linear-gradient(90deg,var(--copper),var(--teal));
+    width:0%;
+    transition:width .25s ease;
+  }
+  .pct-label{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--ink-dim);margin-top:6px;}
+
+  sub{font-size:0.72em;}
+  sup{font-size:0.72em;}
+  em.var{font-style:italic;color:var(--ink);}
+
+  footer{
+    margin-top:34px;
+    padding-top:16px;
+    border-top:1px solid var(--line);
+    font-size:11.5px;
+    color:var(--ink-faint);
+    line-height:1.6;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Fysikalsk Kjemi I · UiO</div>
+    <h1>Ekspansjonsarbeid — gass i sylinder med stempel</h1>
+    <p>Flytt stempelet med glidebryteren og se hvordan trykk, volum og arbeid henger sammen.
+       Bruk antall trinn til å gå fra ett irreversibelt sprang til en kvasi-reversibel prosess
+       med uendelig mange, uendelig små inkrementer.</p>
+  </header>
+
+  <div class="layout">
+
+    <!-- LEFT COLUMN -->
+    <div class="left-col">
+
+      <div class="card">
+        <div class="card-title">Apparatur <span class="tag">Live</span></div>
+        <div class="apparatus-row">
+          <svg id="cylinderSvg" viewBox="0 0 300 420" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="gasGradient" x1="0" y1="1" x2="0" y2="0">
+                <stop offset="0%" stop-color="#3f5a56"/>
+                <stop offset="100%" stop-color="#7fb8ab"/>
+              </linearGradient>
+              <linearGradient id="brassGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e0bd85"/>
+                <stop offset="50%" stop-color="#b98f56"/>
+                <stop offset="100%" stop-color="#8c6a3e"/>
+              </linearGradient>
+              <linearGradient id="glassGrad" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stop-color="#0000"/>
+                <stop offset="12%" stop-color="#ffffff22"/>
+                <stop offset="20%" stop-color="#0000"/>
+              </linearGradient>
+            </defs>
+
+            <!-- base plate -->
+            <rect x="50" y="378" width="200" height="14" rx="3" fill="url(#brassGrad)"/>
+            <!-- cylinder glass walls -->
+            <rect x="70" y="40" width="160" height="340" fill="#1a2126" stroke="#3a4652" stroke-width="2"/>
+            <rect x="70" y="40" width="160" height="340" fill="url(#glassGrad)"/>
+
+            <!-- gas region -->
+            <clipPath id="gasClip"><rect x="72" y="42" width="156" height="336"/></clipPath>
+            <g clip-path="url(#gasClip)">
+              <rect id="gasRect" x="72" y="300" width="156" height="78" fill="url(#gasGradient)" opacity="0.55"/>
+              <g id="gasDotsGroup"></g>
+            </g>
+
+            <!-- cylinder rim -->
+            <rect x="66" y="36" width="168" height="8" rx="2" fill="#3a4652"/>
+
+            <!-- weights stack -->
+            <g id="weightsGroup"></g>
+
+            <!-- piston -->
+            <g id="pistonGroup">
+              <rect x="72" y="0" width="156" height="18" rx="2" fill="url(#brassGrad)" stroke="#6e5230" stroke-width="1.5"/>
+              <rect x="130" y="-10" width="40" height="12" rx="2" fill="#8c6a3e"/>
+            </g>
+          </svg>
+
+          <div class="gauge-col">
+            <svg id="gaugeSvg" viewBox="0 0 150 130" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="75" cy="80" r="58" fill="#171e24" stroke="#3a4652" stroke-width="3"/>
+              <circle cx="75" cy="80" r="58" fill="none" stroke="url(#brassGrad)" stroke-width="2" opacity="0.6"/>
+              <g id="gaugeTicks" stroke="#5f676c" stroke-width="2"></g>
+              <text x="75" y="102" text-anchor="middle" font-family="IBM Plex Mono" font-size="9" fill="#9aa0a3">bar</text>
+              <line id="gaugeNeedle" x1="75" y1="80" x2="75" y2="34" stroke="#c1613f" stroke-width="3" stroke-linecap="round"/>
+              <circle cx="75" cy="80" r="6" fill="url(#brassGrad)"/>
+            </svg>
+            <div class="gauge-label">Trykk p&nbsp;=&nbsp;<span id="gaugeReadout">—</span> bar</div>
+          </div>
+        </div>
+
+        <div class="readout-strip">
+          <div class="readout"><span class="k">Volum V</span><span class="v" id="roV">—</span></div>
+          <div class="readout"><span class="k">Trykk P</span><span class="v" id="roP">—</span></div>
+          <div class="readout"><span class="k">Temperatur T</span><span class="v brass" id="roT">—</span></div>
+          <div class="readout"><span class="k">Mengde n</span><span class="v brass" id="roN">—</span></div>
+          <div class="readout"><span class="k">Startvolum V<sub>i</sub></span><span class="v" id="roVi">—</span></div>
+          <div class="readout"><span class="k">Arbeid på omgivelser</span><span class="v copper" id="roW">—</span></div>
+        </div>
+        <p class="caption">Vektene på stempelet illustrerer det ytre trykket p<sub>ext</sub> gassen jobber mot. Prikkene representerer gassmolekyler — tettheten faller når volumet øker.</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Kontroller</div>
+
+        <div class="field">
+          <label>Mengde gass, <em class="var">n</em> <span class="val" id="nVal">1.0 mol</span></label>
+          <input type="range" id="n" min="0.3" max="2.0" step="0.1" value="1.0">
+        </div>
+        <div class="field">
+          <label>Temperatur, <em class="var">T</em> <span class="val" id="TVal">298 K</span></label>
+          <input type="range" id="T" min="250" max="400" step="5" value="298">
+        </div>
+
+        <hr class="sep">
+
+        <div class="field">
+          <label>Stempelposisjon / volum, <em class="var">V</em> <span class="val" id="VVal">4.0 L</span></label>
+          <input type="range" id="V" class="slider-expand" min="2" max="12" step="0.1" value="4">
+        </div>
+        <div class="btn-row">
+          <button id="setViBtn">Sett dette som startvolum V<sub>i</sub></button>
+          <button id="resetBtn" class="ghost">Nullstill</button>
+        </div>
+
+        <hr class="sep">
+
+        <div class="field">
+          <label>Antall trinn, <em class="var">N</em> <span class="val" id="NVal">1 (irreversibelt)</span></label>
+          <input type="range" id="Nsteps" min="1" max="60" step="1" value="1">
+        </div>
+        <div class="preset-row">
+          <button data-n="1">N = 1</button>
+          <button data-n="4">N = 4</button>
+          <button data-n="15">N = 15</button>
+          <button data-n="60">N = 60 (≈ reversibel)</button>
+        </div>
+        <div class="btn-row" style="margin-top:12px;">
+          <button id="animateBtn" class="primary">▶ Animer ekspansjon i N trinn</button>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- RIGHT COLUMN -->
+    <div class="right-col">
+
+      <div class="card">
+        <div class="card-title">P–V-diagram <span class="tag">Isoterm</span></div>
+        <canvas id="pvCanvas" width="820" height="440"></canvas>
+        <div class="legend">
+          <span><span class="swatch" style="background:#6fa88f;"></span> Reversibelt arbeid (areal under kurven)</span>
+          <span><span class="swatch" style="background:#c1613f;"></span> Beregnet arbeid ved N trinn</span>
+          <span><span class="swatch" style="background:#e0bd85;border-radius:50%;"></span> V<sub>i</sub> → V (nåværende)</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">Arbeidsuttrykk</div>
+
+        <div class="formula-block">
+          <div class="flabel">Ideell gasslov</div>
+          <div class="formula-main">P = nRT / V &nbsp;&nbsp;(R = 0.08314 L·bar·mol⁻¹·K⁻¹)</div>
+          <div class="formula-sub" id="idealSub">—</div>
+        </div>
+
+        <div class="formula-block">
+          <div class="flabel">Trinnvis (irreversibelt for N &gt; 1) arbeid gjort <em class="var">på omgivelsene</em></div>
+          <div class="formula-main">w<sub>omg</sub> = Σ<sub>i=1</sub><sup>N</sup> p<sub>ext,i</sub> · ΔV<sub>i</sub>,&nbsp; ΔV<sub>i</sub> = (V − V<sub>i</sub>)/N</div>
+          <div class="formula-sub" id="stairsSub">—</div>
+          <div class="formula-result copper" id="stairsResult">—</div>
+        </div>
+
+        <div class="formula-block">
+          <div class="flabel">Grensen N → ∞: reversibel, isoterm ekspansjon</div>
+          <div class="formula-main">w<sub>omg</sub> = ∫<sub>Vi</sub><sup>V</sup> P dV = nRT · ln(V / V<sub>i</sub>)</div>
+          <div class="formula-sub" id="revSub">—</div>
+          <div class="formula-result" id="revResult">—</div>
+        </div>
+
+        <div class="formula-block">
+          <div class="flabel">Hvor nær reversibel grense er du?</div>
+          <div class="pct-bar-wrap">
+            <div class="pct-bar-track"><div class="pct-bar-fill" id="pctFill"></div></div>
+            <div class="pct-label" id="pctLabel">—</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    Konvensjon: w (arbeid utført <em>på</em> systemet) = −∫p<sub>ext</sub>dV (IUPAC/Atkins). Denne simuleringen viser
+    w<sub>omg</sub> = −w, altså arbeidet gassen utfører <em>på omgivelsene</em> — positivt ved ekspansjon, negativt ved kompresjon.
+    Ved N = 1 forutsettes at p<sub>ext</sub> holdes konstant lik sluttrykket for det trinnet; for N → ∞ nærmer summen seg
+    integralet, og prosessen blir reversibel.
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  const R = 0.08314; // L·bar / (mol·K)
+
+  const state = {
+    n: 1.0,
+    T: 298,
+    Vi: 4.0,
+    V: 4.0,
+    N: 1,
+    animating: false
+  };
+
+  const el = {
+    n: document.getElementById('n'),
+    T: document.getElementById('T'),
+    V: document.getElementById('V'),
+    N: document.getElementById('Nsteps'),
+    nVal: document.getElementById('nVal'),
+    TVal: document.getElementById('TVal'),
+    VVal: document.getElementById('VVal'),
+    NVal: document.getElementById('NVal'),
+    setViBtn: document.getElementById('setViBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+    animateBtn: document.getElementById('animateBtn'),
+    roV: document.getElementById('roV'),
+    roP: document.getElementById('roP'),
+    roT: document.getElementById('roT'),
+    roN: document.getElementById('roN'),
+    roVi: document.getElementById('roVi'),
+    roW: document.getElementById('roW'),
+    gaugeReadout: document.getElementById('gaugeReadout'),
+    gaugeNeedle: document.getElementById('gaugeNeedle'),
+    pistonGroup: document.getElementById('pistonGroup'),
+    weightsGroup: document.getElementById('weightsGroup'),
+    gasRect: document.getElementById('gasRect'),
+    gasDotsGroup: document.getElementById('gasDotsGroup'),
+    idealSub: document.getElementById('idealSub'),
+    stairsSub: document.getElementById('stairsSub'),
+    stairsResult: document.getElementById('stairsResult'),
+    revSub: document.getElementById('revSub'),
+    revResult: document.getElementById('revResult'),
+    pctFill: document.getElementById('pctFill'),
+    pctLabel: document.getElementById('pctLabel'),
+    canvas: document.getElementById('pvCanvas')
+  };
+  const ctx = el.canvas.getContext('2d');
+
+  // ---------- geometry constants ----------
+  const VMIN = 2, VMAX = 12;
+  const Y_BOTTOM = 378, Y_TOP_LIMIT = 60; // piston travel bounds in SVG coords
+  const H_MIN = 30, H_MAX = 300; // gas column height range (px)
+  const GAUGE_PMAX = 35; // bar, fixed scale for the analog gauge
+
+  function pressure(n, T, V){ return n * R * T / V; }
+
+  function volToPistonY(V){
+    const frac = (V - VMIN) / (VMAX - VMIN);
+    const h = H_MIN + frac * (H_MAX - H_MIN);
+    return Y_BOTTOM - h;
+  }
+
+  // ---------- gas dots ----------
+  const N_DOTS = 34;
+  const dotSeeds = [];
+  for(let i=0;i<N_DOTS;i++){
+    dotSeeds.push({
+      fx: 0.08 + Math.random()*0.84,
+      fy: Math.random(),
+      r: 1.6 + Math.random()*1.6,
+      phase: Math.random()*Math.PI*2,
+      amp: 2 + Math.random()*3
+    });
+    const c = document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('r', dotSeeds[i].r);
+    c.setAttribute('fill', '#d7ece4');
+    c.setAttribute('opacity', '0.85');
+    el.gasDotsGroup.appendChild(c);
+  }
+  let tGlobal = 0;
+
+  function layoutGasDots(pistonY){
+    const gasTop = pistonY + 14;
+    const gasBottom = Y_BOTTOM - 4;
+    const dots = el.gasDotsGroup.children;
+    for(let i=0;i<N_DOTS;i++){
+      const s = dotSeeds[i];
+      const x = 72 + s.fx*156 + Math.sin(tGlobal*0.001 + s.phase)*s.amp;
+      const y = gasTop + s.fy*(gasBottom - gasTop) + Math.cos(tGlobal*0.0013 + s.phase)*s.amp;
+      dots[i].setAttribute('cx', x.toFixed(1));
+      dots[i].setAttribute('cy', Math.max(gasTop+2, Math.min(gasBottom-2,y)).toFixed(1));
+    }
+  }
+
+  function animateDots(){
+    tGlobal += 16;
+    layoutGasDots(currentPistonY);
+    requestAnimationFrame(animateDots);
+  }
+
+  // ---------- weights ----------
+  function drawWeights(P, pistonY){
+    el.weightsGroup.innerHTML = '';
+    const count = Math.max(1, Math.min(8, Math.round(1 + (P/GAUGE_PMAX)*10)));
+    const blockH = 14, blockGap = 3, blockW = 118;
+    for(let i=0;i<count;i++){
+      const y = pistonY - 4 - (i+1)*(blockH+blockGap);
+      const rect = document.createElementNS('http://www.w3.org/2000/svg','rect');
+      rect.setAttribute('x', 91);
+      rect.setAttribute('y', y);
+      rect.setAttribute('width', blockW);
+      rect.setAttribute('height', blockH);
+      rect.setAttribute('rx', 2);
+      rect.setAttribute('fill', i%2===0 ? '#5f676c' : '#4a5158');
+      rect.setAttribute('stroke', '#2c3640');
+      el.weightsGroup.appendChild(rect);
+    }
+  }
+
+  // ---------- gauge ----------
+  function initGaugeTicks(){
+    const ticks = document.getElementById('gaugeTicks');
+    const cx=75, cy=80, rOuter=54, rInner=46;
+    const startAngle = -210, endAngle = 30; // degrees, matches needle mapping below
+    const steps = 7;
+    for(let i=0;i<=steps;i++){
+      const a = (startAngle + (endAngle-startAngle)*i/steps) * Math.PI/180;
+      const x1 = cx + rInner*Math.cos(a), y1 = cy + rInner*Math.sin(a);
+      const x2 = cx + rOuter*Math.cos(a), y2 = cy + rOuter*Math.sin(a);
+      const line = document.createElementNS('http://www.w3.org/2000/svg','line');
+      line.setAttribute('x1',x1);line.setAttribute('y1',y1);
+      line.setAttribute('x2',x2);line.setAttribute('y2',y2);
+      ticks.appendChild(line);
+    }
+  }
+  initGaugeTicks();
+
+  function setGauge(P){
+    const clamped = Math.max(0, Math.min(GAUGE_PMAX, P));
+    const startAngle = -210, endAngle = 30;
+    const a = (startAngle + (endAngle-startAngle)*(clamped/GAUGE_PMAX)) * Math.PI/180;
+    const cx=75, cy=80, len=44;
+    el.gaugeNeedle.setAttribute('x2', (cx+len*Math.cos(a)).toFixed(1));
+    el.gaugeNeedle.setAttribute('y2', (cy+len*Math.sin(a)).toFixed(1));
+    el.gaugeReadout.textContent = P.toFixed(2);
+  }
+
+  // ---------- staircase / reversible work ----------
+  function stairsWork(n,T,Vi,Vf,N){
+    const dV = (Vf - Vi)/N;
+    let w = 0;
+    const steps = [];
+    let vStart = Vi;
+    for(let i=1;i<=N;i++){
+      const vEnd = Vi + i*dV;
+      const pext = pressure(n,T,vEnd);
+      w += pext*dV;
+      steps.push({vStart, vEnd, p: pext});
+      vStart = vEnd;
+    }
+    return {w, steps};
+  }
+  function reversibleWork(n,T,Vi,Vf){
+    return n*R*T*Math.log(Vf/Vi);
+  }
+
+  // ---------- canvas P-V diagram ----------
+  function drawPV(n,T,Vi,Vf,stepsData){
+    const W = el.canvas.width, H = el.canvas.height;
+    ctx.clearRect(0,0,W,H);
+    const padL=64,padR=24,padT=24,padB=48;
+    const plotW = W-padL-padR, plotH = H-padT-padB;
+
+    const vAxisMin = VMIN, vAxisMax = VMAX;
+    const pAtVmin = pressure(n,T,vAxisMin);
+    const pAxisMax = pAtVmin*1.08;
+
+    function xOf(v){ return padL + (v-vAxisMin)/(vAxisMax-vAxisMin)*plotW; }
+    function yOf(p){ return padT + plotH - (p/pAxisMax)*plotH; }
+
+    // grid
+    ctx.strokeStyle = '#2c3640'; ctx.lineWidth=1; ctx.font='11px IBM Plex Mono';
+    ctx.fillStyle = '#7d848a';
+    const vTicks = 6, pTicks = 6;
+    for(let i=0;i<=vTicks;i++){
+      const v = vAxisMin + (vAxisMax-vAxisMin)*i/vTicks;
+      const x = xOf(v);
+      ctx.beginPath();ctx.moveTo(x,padT);ctx.lineTo(x,padT+plotH);ctx.stroke();
+      ctx.fillText(v.toFixed(1), x-10, padT+plotH+18);
+    }
+    for(let i=0;i<=pTicks;i++){
+      const p = pAxisMax*i/pTicks;
+      const y = yOf(p);
+      ctx.beginPath();ctx.moveTo(padL,y);ctx.lineTo(padL+plotW,y);ctx.stroke();
+      ctx.fillText(p.toFixed(1), 12, y+4);
+    }
+    ctx.fillStyle = '#9aa0a3';
+    ctx.fillText('V (L)', padL+plotW/2-14, H-10);
+    ctx.save();
+    ctx.translate(16, padT+plotH/2+20);
+    ctx.rotate(-Math.PI/2);
+    ctx.fillText('P (bar)', 0,0);
+    ctx.restore();
+
+    // reversible shaded area between Vi and Vf under the true curve
+    const vLo = Math.min(Vi,Vf), vHi = Math.max(Vi,Vf);
+    ctx.beginPath();
+    ctx.moveTo(xOf(vLo), yOf(0));
+    const N_curve = 60;
+    for(let i=0;i<=N_curve;i++){
+      const v = vLo + (vHi-vLo)*i/N_curve;
+      ctx.lineTo(xOf(v), yOf(pressure(n,T,v)));
+    }
+    ctx.lineTo(xOf(vHi), yOf(0));
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(111,168,143,0.28)';
+    ctx.fill();
+
+    // staircase rectangles
+    if(stepsData && stepsData.length){
+      ctx.fillStyle = 'rgba(193,97,63,0.55)';
+      ctx.strokeStyle = 'rgba(193,97,63,0.9)';
+      stepsData.forEach(s=>{
+        const x1 = xOf(Math.min(s.vStart,s.vEnd));
+        const x2 = xOf(Math.max(s.vStart,s.vEnd));
+        const y0 = yOf(0);
+        const y1 = yOf(s.p);
+        ctx.fillRect(x1, y1, x2-x1, y0-y1);
+        ctx.strokeRect(x1, y1, x2-x1, y0-y1);
+      });
+    }
+
+    // full isotherm curve
+    ctx.beginPath();
+    for(let i=0;i<=200;i++){
+      const v = vAxisMin + (vAxisMax-vAxisMin)*i/200;
+      const x = xOf(v), y = yOf(pressure(n,T,v));
+      if(i===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = '#e0bd85';
+    ctx.lineWidth = 2.2;
+    ctx.stroke();
+
+    // markers
+    function marker(v, color){
+      const x = xOf(v), y = yOf(pressure(n,T,v));
+      ctx.beginPath();
+      ctx.arc(x,y,5,0,Math.PI*2);
+      ctx.fillStyle = color;
+      ctx.fill();
+      ctx.strokeStyle = '#12171b';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    marker(Vi, '#e0bd85');
+    marker(Vf, '#9fd8c1');
+  }
+
+  // ---------- main render ----------
+  let currentPistonY = volToPistonY(state.V);
+
+  function fmt(x, d=2){ return Number(x).toFixed(d); }
+
+  function render(){
+    const {n,T,Vi,V,N} = state;
+    const P = pressure(n,T,V);
+    const Pi = pressure(n,T,Vi);
+
+    currentPistonY = volToPistonY(V);
+    el.pistonGroup.setAttribute('transform', `translate(0, ${currentPistonY})`);
+    const gasTop = currentPistonY+18;
+    el.gasRect.setAttribute('y', gasTop);
+    el.gasRect.setAttribute('height', Math.max(4, Y_BOTTOM - gasTop));
+    layoutGasDots(currentPistonY);
+    drawWeights(P, currentPistonY);
+    setGauge(P);
+
+    el.roV.textContent = fmt(V,1)+' L';
+    el.roP.textContent = fmt(P,2)+' bar';
+    el.roT.textContent = fmt(T,0)+' K';
+    el.roN.textContent = fmt(n,1)+' mol';
+    el.roVi.textContent = fmt(Vi,1)+' L';
+
+    const {w:wStairs, steps} = stairsWork(n,T,Vi,V,N);
+    const wRev = (Math.abs(V-Vi) < 1e-9) ? 0 : reversibleWork(n,T,Vi,V);
+
+    el.roW.textContent = fmt(wStairs*100,1)+' J';
+
+    el.idealSub.innerHTML = `P = (${fmt(n,1)} mol × 0.08314 × ${fmt(T,0)} K) / ${fmt(V,1)} L = <b style="color:#e0bd85">${fmt(P,2)} bar</b>`;
+
+    el.stairsSub.innerHTML = `V<sub>i</sub> = ${fmt(Vi,1)} L &nbsp;→&nbsp; V = ${fmt(V,1)} L, &nbsp;N = ${N} trinn, &nbsp;ΔV = ${fmt((V-Vi)/N,2)} L per trinn`;
+    el.stairsResult.textContent = `w_omg (N=${N}) = ${fmt(wStairs,3)} bar·L = ${fmt(wStairs*100,1)} J`;
+
+    el.revSub.innerHTML = `w<sub>omg</sub> = ${fmt(n,1)} mol × 0.08314 × ${fmt(T,0)} K × ln(${fmt(V,1)}/${fmt(Vi,1)})`;
+    el.revResult.textContent = `w_omg (reversibel) = ${fmt(wRev,3)} bar·L = ${fmt(wRev*100,1)} J`;
+
+    let pct = 0;
+    if(Math.abs(wRev) > 1e-9){ pct = Math.max(0, Math.min(100, (wStairs/wRev)*100)); }
+    else { pct = 100; }
+    el.pctFill.style.width = pct.toFixed(0)+'%';
+    el.pctLabel.textContent = `Trinnvis arbeid utgjør ${pct.toFixed(0)} % av det reversible (maksimale) arbeidet.`;
+
+    drawPV(n,T,Vi,V,steps);
+  }
+
+  // ---------- wire up controls ----------
+  function syncLabels(){
+    el.nVal.textContent = fmt(state.n,1)+' mol';
+    el.TVal.textContent = fmt(state.T,0)+' K';
+    el.VVal.textContent = fmt(state.V,1)+' L';
+    el.NVal.textContent = state.N + (state.N===1 ? ' (irreversibelt)' : (state.N>=40 ? ' (≈ reversibelt)' : ''));
+  }
+
+  el.n.addEventListener('input', ()=>{ state.n=parseFloat(el.n.value); syncLabels(); render(); });
+  el.T.addEventListener('input', ()=>{ state.T=parseFloat(el.T.value); syncLabels(); render(); });
+  el.V.addEventListener('input', ()=>{ state.V=parseFloat(el.V.value); syncLabels(); render(); });
+  el.N.addEventListener('input', ()=>{ state.N=parseInt(el.N.value,10); syncLabels(); render(); });
+
+  document.querySelectorAll('.preset-row button').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      state.N = parseInt(btn.dataset.n,10);
+      el.N.value = state.N;
+      syncLabels(); render();
+    });
+  });
+
+  el.setViBtn.addEventListener('click', ()=>{
+    state.Vi = state.V;
+    syncLabels(); render();
+  });
+
+  el.resetBtn.addEventListener('click', ()=>{
+    state.n=1.0; state.T=298; state.Vi=4.0; state.V=4.0; state.N=1;
+    el.n.value=1.0; el.T.value=298; el.V.value=4.0; el.N.value=1;
+    syncLabels(); render();
+  });
+
+  el.animateBtn.addEventListener('click', ()=>{
+    if(state.animating) return;
+    const {n,T,Vi,V,N} = state;
+    if(Math.abs(V-Vi) < 1e-6){ return; }
+    state.animating = true;
+    el.animateBtn.disabled = true;
+    el.V.disabled = true;
+
+    const dV = (V-Vi)/N;
+    let i = 0;
+    const stepsAccum = [];
+    const totalDuration = Math.min(4200, Math.max(900, N*70));
+    const perStep = totalDuration / N;
+
+    function step(){
+      i++;
+      const vEnd = Vi + i*dV;
+      const pext = pressure(n,T,vEnd);
+      stepsAccum.push({vStart: Vi+(i-1)*dV, vEnd, p: pext});
+
+      const py = volToPistonY(vEnd);
+      el.pistonGroup.setAttribute('transform', `translate(0, ${py})`);
+      const gasTop = py+18;
+      el.gasRect.setAttribute('y', gasTop);
+      el.gasRect.setAttribute('height', Math.max(4, Y_BOTTOM - gasTop));
+      layoutGasDots(py);
+      drawWeights(pext, py);
+      setGauge(pext);
+
+      const wSoFar = stepsAccum.reduce((s,st)=> s + st.p*dV, 0);
+      el.roW.textContent = fmt(wSoFar*100,1)+' J';
+      el.roV.textContent = fmt(vEnd,1)+' L';
+      el.roP.textContent = fmt(pext,2)+' bar';
+      drawPV(n,T,Vi,vEnd,stepsAccum);
+
+      if(i<N){
+        setTimeout(step, perStep);
+      }else{
+        state.animating = false;
+        el.animateBtn.disabled = false;
+        el.V.disabled = false;
+        render();
+      }
+    }
+    step();
+  });
+
+  syncLabels();
+  render();
+  requestAnimationFrame(animateDots);
+})();
+</script>
+</body>
+</html>

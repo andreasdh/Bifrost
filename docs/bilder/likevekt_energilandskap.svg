@@ -1,0 +1,96 @@
+<svg viewBox="0 0 920 405" xmlns="http://www.w3.org/2000/svg" font-family="Arial, Helvetica, sans-serif">
+  <defs>
+    <marker id="arw" markerWidth="9" markerHeight="9" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <rect width="920" height="405" fill="#ffffff"/>
+
+  <!-- =================== PANEL 1: ΔE = 0 =================== -->
+  <g transform="translate(15,8)">
+    <text x="232" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">Like energiniv&#229;er (&#916;E = 0)</text>
+    <text x="232" y="46" text-anchor="middle" font-size="14" fill="#666">&#8594; likevekt &#8776; 50/50</text>
+
+    <!-- axes -->
+    <line x1="50" y1="60" x2="50" y2="320" stroke="#333" stroke-width="1.5"/>
+    <line x1="50" y1="320" x2="415" y2="320" stroke="#333" stroke-width="1.5"/>
+    <text x="24" y="195" text-anchor="middle" font-size="13" fill="#555" transform="rotate(-90 24 195)">Energi</text>
+    <text x="232" y="346" text-anchor="middle" font-size="13" fill="#555">Reaksjonskoordinat &#8594;</text>
+
+    <!-- guide lines -->
+    <line x1="60" y1="235" x2="410" y2="235" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 4"/>
+    <line x1="140" y1="100" x2="230" y2="100" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 4"/>
+
+    <!-- energy curve -->
+    <path d="M60,222 C85,222 90,235 112,235 C162,235 196,110 230,100 C264,110 298,235 348,235 C372,235 396,222 414,222"
+          fill="none" stroke="#1a1a1a" stroke-width="3"/>
+    <!-- transition-state marker -->
+    <text x="230" y="90" text-anchor="middle" font-size="15" fill="#555">&#8225;</text>
+
+    <!-- E_a arrow -->
+    <line x1="140" y1="235" x2="140" y2="100" stroke="#444" stroke-width="1.6" marker-start="url(#arw)" marker-end="url(#arw)"/>
+    <text x="150" y="172" font-size="14" fill="#444" font-style="italic">E&#8336;</text>
+
+    <!-- delta E note -->
+    <text x="360" y="226" text-anchor="middle" font-size="13" fill="#2b7a4b" font-weight="bold">&#916;E = 0</text>
+
+    <!-- well labels -->
+    <text x="112" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#3b6fb0">A</text>
+    <text x="348" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#d98a2b">B</text>
+
+    <!-- molecules: 3 in A, 3 in B -->
+    <circle cx="96" cy="228" r="6" fill="#3b6fb0"/>
+    <circle cx="112" cy="230" r="6" fill="#3b6fb0"/>
+    <circle cx="128" cy="228" r="6" fill="#3b6fb0"/>
+    <circle cx="332" cy="228" r="6" fill="#d98a2b"/>
+    <circle cx="348" cy="230" r="6" fill="#d98a2b"/>
+    <circle cx="364" cy="228" r="6" fill="#d98a2b"/>
+  </g>
+
+  <!-- =================== PANEL 2: ΔE < 0 =================== -->
+  <g transform="translate(475,8)">
+    <text x="232" y="26" text-anchor="middle" font-size="18" font-weight="bold" fill="#1a1a1a">B lavere enn A (&#916;E &lt; 0)</text>
+    <text x="232" y="46" text-anchor="middle" font-size="14" fill="#666">&#8594; overskudd av B</text>
+
+    <!-- axes -->
+    <line x1="50" y1="60" x2="50" y2="320" stroke="#333" stroke-width="1.5"/>
+    <line x1="50" y1="320" x2="415" y2="320" stroke="#333" stroke-width="1.5"/>
+    <text x="24" y="195" text-anchor="middle" font-size="13" fill="#555" transform="rotate(-90 24 195)">Energi</text>
+    <text x="232" y="346" text-anchor="middle" font-size="13" fill="#555">Reaksjonskoordinat &#8594;</text>
+
+    <!-- guide lines -->
+    <line x1="60" y1="235" x2="410" y2="235" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 4"/>
+    <line x1="250" y1="285" x2="410" y2="285" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 4"/>
+    <line x1="140" y1="100" x2="230" y2="100" stroke="#c9c9c9" stroke-width="1" stroke-dasharray="4 4"/>
+
+    <!-- energy curve -->
+    <path d="M60,222 C85,222 90,235 112,235 C162,235 196,110 230,100 C266,112 306,285 350,285 C376,285 400,283 416,283"
+          fill="none" stroke="#1a1a1a" stroke-width="3"/>
+    <text x="230" y="90" text-anchor="middle" font-size="15" fill="#555">&#8225;</text>
+
+    <!-- E_a arrow -->
+    <line x1="140" y1="235" x2="140" y2="100" stroke="#444" stroke-width="1.6" marker-start="url(#arw)" marker-end="url(#arw)"/>
+    <text x="150" y="172" font-size="14" fill="#444" font-style="italic">E&#8336;</text>
+
+    <!-- delta E arrow -->
+    <line x1="392" y1="235" x2="392" y2="285" stroke="#444" stroke-width="1.6" marker-start="url(#arw)" marker-end="url(#arw)"/>
+    <text x="384" y="264" text-anchor="end" font-size="13" fill="#2b7a4b" font-weight="bold">&#916;E</text>
+
+    <!-- well labels -->
+    <text x="112" y="262" text-anchor="middle" font-size="15" font-weight="bold" fill="#3b6fb0">A</text>
+    <text x="350" y="312" text-anchor="middle" font-size="15" font-weight="bold" fill="#d98a2b">B</text>
+
+    <!-- molecules: 2 in A, 5 in B -->
+    <circle cx="102" cy="228" r="6" fill="#3b6fb0"/>
+    <circle cx="122" cy="228" r="6" fill="#3b6fb0"/>
+    <circle cx="322" cy="278" r="6" fill="#d98a2b"/>
+    <circle cx="338" cy="279" r="6" fill="#d98a2b"/>
+    <circle cx="354" cy="279" r="6" fill="#d98a2b"/>
+    <circle cx="370" cy="278" r="6" fill="#d98a2b"/>
+    <circle cx="346" cy="266" r="6" fill="#d98a2b"/>
+  </g>
+
+  <!-- shared bottom caption -->
+  <text x="460" y="396" text-anchor="middle" font-size="13" fill="#333">Aktiveringsbarrieren E&#8336; styrer <tspan font-style="italic">farten</tspan>; energiforskjellen &#916;E i faktoren e<tspan font-size="10" dy="-5">&#8722;&#916;E/RT</tspan><tspan dy="5"> styrer </tspan><tspan font-style="italic">hvor likevekten havner</tspan>.</text>
+</svg>

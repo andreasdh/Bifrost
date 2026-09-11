@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Oppvarmingskurve med faseoverganger</title>
+<style>
+  #s7-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:12px; border-radius:12px; max-width:560px; margin:0 auto; }
+  #s7-root h2 { text-align:center; font-size:1.1em; margin:0 0 3px 0; font-weight:600; }
+  #s7-root .s7-sub { text-align:center; font-size:0.76em; color:#9aa5c0; margin-bottom:10px; line-height:1.4; }
+  #s7-root .s7-main { display:flex; flex-direction:row; align-items:flex-start; gap:8px; background:#161d2e; border-radius:8px; padding:8px; }
+  #s7-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s7-root .s7-cpcol { display:flex; flex-direction:column; align-items:center; }
+  #s7-root .s7-cplabel { font-size:0.68em; color:#9aa5c0; text-align:center; margin-top:4px; }
+  #s7-root .s7-cpval { font-size:0.75em; color:#ff8a8a; text-align:center; margin-top:2px; font-weight:600; }
+  #s7-root .s7-statsrow { display:flex; gap:16px; justify-content:center; margin-top:8px; font-size:0.85em; align-items:center; }
+  #s7-root .s7-statsrow b { color:#ffb15a; }
+  #s7-root .s7-icon { font-size:1.6em; }
+  #s7-root .s7-controls { display:flex; flex-wrap:wrap; gap:8px; justify-content:center; align-items:center; margin-top:10px; }
+  #s7-root select, #s7-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;
+  }
+  #s7-root button:hover, #s7-root select:hover { background:#3a4a70; }
+  #s7-root button.s7-primary { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s7-root label.s7-checklabel { font-size:0.78em; display:flex; align-items:center; gap:5px; cursor:pointer; }
+  #s7-root .s7-legend { font-size:0.66em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+  #s7-root .s7-swatch { display:inline-block; width:16px; height:2px; margin-right:4px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div id="s7-root">
+  <h2>Oppvarmingskurve: temperatur mot tilført varme</h2>
+  <div class="s7-sub">Vann varmes jevnt opp fra &ndash;40&deg;C til 140&deg;C (1 mol, reelle verdier). Se hvor mye varme som "forsvinner" i platåene ved smelting og koking.</div>
+
+  <div class="s7-main">
+    <canvas id="s7-graph" width="400" height="260"></canvas>
+    <div class="s7-cpcol">
+      <canvas id="s7-cpbar" width="70" height="260"></canvas>
+      <div class="s7-cplabel">C<sub>p</sub> (varme&shy;kapasitet)</div>
+      <div class="s7-cpval" id="s7-cpval">37.7 J/(mol&middot;K)</div>
+    </div>
+  </div>
+
+  <div class="s7-statsrow">
+    <span class="s7-icon" id="s7-icon">&#129714;</span>
+    <span>T = <b id="s7-T">-40.0</b> &deg;C</span>
+    <span>q = <b id="s7-Q">0.0</b> kJ/mol</span>
+    <span id="s7-phase">Fast stoff</span>
+  </div>
+
+  <div class="s7-controls">
+    <button id="s7-run" class="s7-primary">Start oppvarming</button>
+    <button id="s7-reset">Reset</button>
+    <button id="s7-speed">Fart: 1x</button>
+  </div>
+  <div class="s7-controls">
+    <label class="s7-checklabel">
+      <input type="checkbox" id="s7-compare">
+      Vis alternativ: hva om smeltingen var andreordens i stedet?
+    </label>
+  </div>
+
+  <div class="s7-legend">
+    <span class="s7-swatch" style="background:#5aa9ff;"></span>faktisk oppvarming (f&oslash;rsteordens overganger, med plat&aring;er)&nbsp;&nbsp;
+    <span class="s7-swatch" style="background:#ffb15a;"></span>hypotetisk andreordens smelting (til sammenligning)<br>
+    Den r&oslash;de s&oslash;ylen viser &oslash;yeblikkelig varmekapasitet C<sub>p</sub> = dq/dT &ndash; den skyter mot uendelig n&oslash;yaktig i plat&aring;ene, siden T ikke endrer seg der selv om varme tilf&oslash;res.<br>
+    Data (1 mol vann): C<sub>p,is</sub>=37.7, C<sub>p,vann</sub>=75.3, C<sub>p,damp</sub>=33.6 J/(mol&middot;K). &Delta;H<sub>fus</sub>=6.01, &Delta;H<sub>vap</sub>=40.7 kJ/mol.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  // --- fysiske konstanter (1 mol vann, reelle verdier) ---
+  const Cs = 0.0377, Cl = 0.0753, Cg = 0.0336; // kJ/(mol K)
+  const Lf = 6.01, Lv = 40.7; // kJ/mol
+  const Tstart = -40, Tm = 0, Tb = 100, Tend = 140;
+
+  // breakpoints for hovedkurven (førsteordens, "virkelig")
+  const Q0 = 0;
+  const Q1 = Q0 + Cs*(Tm-Tstart);
+  const Q2 = Q1 + Lf;
+  const Q3 = Q2 + Cl*(Tb-Tm);
+  const Q4 = Q3 + Lv;
+  const Q5 = Q4 + Cg*(Tend-Tb);
+
+  // breakpoints for sammenligningskurven (smelting = andreordens: ingen platå der)
+  const Q1c = Q1;
+  const Q2c = Q1c; // ingen platå
+  const Q3c = Q2c + Cl*(Tb-Tm);
+  const Q4c = Q3c + Lv; // koking beholdes førsteordens, til kontrast
+  const Q5c = Q4c + Cg*(Tend-Tb);
+
+  function TofQ(Q){
+    if(Q<=Q1) return Tstart + Q/Cs;
+    if(Q<=Q2) return Tm;
+    if(Q<=Q3) return Tm + (Q-Q2)/Cl;
+    if(Q<=Q4) return Tb;
+    if(Q<=Q5) return Tb + (Q-Q4)/Cg;
+    return Tend;
+  }
+  function TofQ_compare(Q){
+    if(Q<=Q1c) return Tstart + Q/Cs;
+    if(Q<=Q3c) return Tm + (Q-Q2c)/Cl; // rett kink, ingen platå
+    if(Q<=Q4c) return Tb;
+    if(Q<=Q5c) return Tb + (Q-Q4c)/Cg;
+    return Tend;
+  }
+
+  function CpOfQ(Q){
+    if(Q<=Q1) return Cs*1000;         // J/(mol K)
+    if(Q<=Q2) return Infinity;        // smelteplatå
+    if(Q<=Q3) return Cl*1000;
+    if(Q<=Q4) return Infinity;        // kokeplatå
+    return Cg*1000;
+  }
+
+  const graphCv = document.getElementById('s7-graph');
+  const gctx = graphCv.getContext('2d');
+  const cpCv = document.getElementById('s7-cpbar');
+  const cpctx = cpCv.getContext('2d');
+  const cpValEl = document.getElementById('s7-cpval');
+  const TEl = document.getElementById('s7-T');
+  const QEl = document.getElementById('s7-Q');
+  const phaseEl = document.getElementById('s7-phase');
+  const iconEl = document.getElementById('s7-icon');
+  const runBtn = document.getElementById('s7-run');
+  const resetBtn = document.getElementById('s7-reset');
+  const speedBtn = document.getElementById('s7-speed');
+  const compareChk = document.getElementById('s7-compare');
+
+  let Qdisplay = 0;
+  let playing = false;
+  let elapsed = 0;   // ms akkumulert spilletid
+  let lastTs = null;
+  let speedMult = 1;
+  const animDurationBase = 20000; // 20 sekunder ved 1x - sakte nok til å følge med
+
+  function phaseInfo(Q){
+    if(Q<=Q1) return {name:'Fast stoff', icon:'\u{1F9CA}'};
+    if(Q<=Q2) return {name:'Smelter (fast + v\u00e6ske)', icon:'\u{1F9CA}\u2192\u{1F4A7}'};
+    if(Q<=Q3) return {name:'V\u00e6ske', icon:'\u{1F4A7}'};
+    if(Q<=Q4) return {name:'Koker (v\u00e6ske + gass)', icon:'\u{1F4A7}\u2192\u{1F4A8}'};
+    return {name:'Gass (damp)', icon:'\u{1F4A8}'};
+  }
+
+  const margin = {l:42, r:14, t:14, b:30};
+  function X(Q){ return margin.l + (Q/Q5)*(graphCv.width-margin.l-margin.r); }
+  function Y(T){ return margin.t + (1-(T-Tstart)/(Tend-Tstart))*(graphCv.height-margin.t-margin.b); }
+
+  function drawAxes(){
+    const w=graphCv.width, h=graphCv.height;
+    gctx.strokeStyle='#3a4360'; gctx.lineWidth=1;
+    gctx.beginPath();
+    gctx.moveTo(margin.l, margin.t); gctx.lineTo(margin.l, h-margin.b); gctx.lineTo(w-margin.r, h-margin.b);
+    gctx.stroke();
+    gctx.fillStyle='#9aa5c0'; gctx.font='11px Times New Roman'; gctx.textAlign='center';
+    gctx.fillText('q (kJ/mol tilf\u00f8rt)', margin.l+(w-margin.l-margin.r)/2, h-6);
+    gctx.save(); gctx.translate(12, margin.t+(h-margin.t-margin.b)/2); gctx.rotate(-Math.PI/2);
+    gctx.fillText('T (\u00b0C)', 0,0); gctx.restore();
+
+    // referanselinjer for Tm og Tb
+    gctx.strokeStyle='#2a3652'; gctx.setLineDash([3,3]);
+    [Tm,Tb].forEach(function(T){
+      gctx.beginPath(); gctx.moveTo(margin.l, Y(T)); gctx.lineTo(w-margin.r, Y(T)); gctx.stroke();
+    });
+    gctx.setLineDash([]);
+    gctx.fillStyle='#7a8399'; gctx.font='10px Times New Roman'; gctx.textAlign='left';
+    gctx.fillText('0\u00b0C', margin.l+4, Y(Tm)-3);
+    gctx.fillText('100\u00b0C', margin.l+4, Y(Tb)-3);
+  }
+
+  function drawCurve(fn, Qmax, Qlimit, color, width, dashed){
+    gctx.strokeStyle=color; gctx.lineWidth=width;
+    gctx.setLineDash(dashed?[4,3]:[]);
+    gctx.beginPath();
+    const steps=150;
+    let started=false;
+    for(let i=0;i<=steps;i++){
+      const Q = (Qmax*i)/steps;
+      if(Q>Qlimit+1e-6) break;
+      const T = fn(Q);
+      const x=X(Q), y=Y(T);
+      if(!started){ gctx.moveTo(x,y); started=true; } else gctx.lineTo(x,y);
+    }
+    gctx.stroke();
+    gctx.setLineDash([]);
+  }
+
+  function drawCpBar(Q){
+    const w = cpCv.width, h = cpCv.height;
+    cpctx.clearRect(0,0,w,h);
+    const cpMax = 100; // J/(mol K), skala for søylen (Cl=75.3 er høyeste endelige verdi)
+    const barW = 34, barX = (w-barW)/2;
+    const baseY = h-20, topY = 10;
+    const fullH = baseY-topY;
+
+    // bakgrunnsspor
+    cpctx.strokeStyle = '#2a3652'; cpctx.lineWidth=1.5;
+    cpctx.strokeRect(barX, topY, barW, fullH);
+
+    const Cp = CpOfQ(Q);
+    let barH, infinite=false;
+    if(!isFinite(Cp)){
+      barH = fullH; infinite = true;
+    } else {
+      barH = Math.min(1, Cp/cpMax)*fullH;
+    }
+
+    if(infinite){
+      // skravert/pulserende rødt for å vise divergens
+      cpctx.fillStyle = 'rgba(255,90,90,0.85)';
+      cpctx.fillRect(barX, baseY-barH, barW, barH);
+      cpctx.fillStyle = '#ffffff';
+      cpctx.font = 'bold 13px Times New Roman';
+      cpctx.textAlign = 'center';
+      cpctx.fillText('\u2192\u221e', barX+barW/2, topY+16);
+    } else {
+      cpctx.fillStyle = '#ff8a8a';
+      cpctx.fillRect(barX, baseY-barH, barW, barH);
+    }
+
+    cpctx.strokeStyle = '#5a6a8a'; cpctx.lineWidth=1;
+    cpctx.beginPath(); cpctx.moveTo(barX-4, baseY); cpctx.lineTo(barX+barW+4, baseY); cpctx.stroke();
+
+    cpValEl.textContent = infinite ? '\u2192 \u221e (faseovergang)' : Cp.toFixed(1)+' J/(mol\u00b7K)';
+  }
+
+  function render(){
+    gctx.clearRect(0,0,graphCv.width,graphCv.height);
+    drawAxes();
+
+    // full referansekurve, svakt, som "kart" over hele forløpet
+    drawCurve(TofQ, Q5, Q5, '#2a3652', 1.5, false);
+
+    if(compareChk.checked){
+      drawCurve(TofQ_compare, Q5c, Q5c, '#ffb15a', 2, true);
+    }
+
+    // faktisk kurve opp til Qdisplay (det som har "skjedd")
+    drawCurve(TofQ, Q5, Qdisplay, '#5aa9ff', 2.5, false);
+
+    // markør
+    const Tnow = TofQ(Qdisplay);
+    gctx.beginPath();
+    gctx.arc(X(Qdisplay), Y(Tnow), 4, 0, 2*Math.PI);
+    gctx.fillStyle = '#ffffff';
+    gctx.fill();
+
+    const info = phaseInfo(Qdisplay);
+    TEl.textContent = Tnow.toFixed(1);
+    QEl.textContent = Qdisplay.toFixed(1);
+    phaseEl.textContent = info.name;
+    iconEl.textContent = info.icon;
+
+    drawCpBar(Qdisplay);
+  }
+
+  function loop(ts){
+    if(playing){
+      if(lastTs===null) lastTs = ts;
+      const dt = ts-lastTs;
+      lastTs = ts;
+      elapsed += dt*speedMult;
+      const frac = Math.min(1, elapsed/animDurationBase);
+      Qdisplay = frac*Q5;
+      if(frac>=1){
+        playing = false;
+        runBtn.textContent = 'Ferdig (trykk Reset)';
+        runBtn.disabled = true;
+      }
+    } else {
+      lastTs = null;
+    }
+    render();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  runBtn.addEventListener('click', function(){
+    playing = !playing;
+    runBtn.textContent = playing ? 'Pause' : 'Fortsett oppvarming';
+  });
+  resetBtn.addEventListener('click', function(){
+    playing = false;
+    lastTs = null;
+    elapsed = 0;
+    Qdisplay = 0;
+    runBtn.disabled = false;
+    runBtn.textContent = 'Start oppvarming';
+    render();
+  });
+  speedBtn.addEventListener('click', function(){
+    speedMult = speedMult===1 ? 2 : (speedMult===2 ? 0.5 : 1);
+    speedBtn.textContent = 'Fart: '+speedMult+'x';
+  });
+  compareChk.addEventListener('change', render);
+
+  render();
+})();
+</script>
+</body>
+</html>

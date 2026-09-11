@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ideell vs. reell gass</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#FCFBF9; --card:#FFFFFF; --sunk:#F4F2EE;
+  --ink:#21201C; --ink-2:#5F5E5A; --ink-3:#93918A;
+  --line:#E3E0D9; --line-2:#CFCCC3;
+  --teal:#12946A; --violet:#5B4FD6; --coral:#D85A30;
+  --chamber:#F7F6F2; --wall:#8A8880;
+}
+@media (prefers-color-scheme: dark){
+  :root{
+    --paper:#17171A; --card:#1E1E22; --sunk:#26262B;
+    --ink:#EDEBE5; --ink-2:#A5A39C; --ink-3:#75736D;
+    --line:#33333A; --line-2:#45454D;
+    --teal:#4ECFA0; --violet:#A79EF5; --coral:#F0997B;
+    --chamber:#212126; --wall:#6E6D67;
+  }
+}
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  font-size:16px; line-height:1.6; -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:880px; margin:0 auto; padding:44px 22px 72px}
+h1{font-family:"Space Grotesk",sans-serif; font-weight:500; font-size:33px; letter-spacing:-.01em; margin:0}
+h2{font-family:"Space Grotesk",sans-serif; font-weight:500; font-size:18px; margin:0 0 10px}
+.lede{color:var(--ink-2); margin:10px 0 0; max-width:58ch}
+.num{font-family:"IBM Plex Mono",ui-monospace,Menlo,monospace; font-variant-numeric:tabular-nums}
+
+.same{
+  display:flex; justify-content:center; gap:26px; flex-wrap:wrap;
+  margin:26px 0 14px; padding:10px 16px; border-radius:9px;
+  background:var(--sunk); font-size:13px; color:var(--ink-2);
+}
+.same b{color:var(--ink); font-weight:500}
+
+.chambers{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+.chamber{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:13px}
+.chamber h3{margin:0 0 3px; font-size:15px; font-weight:500; display:flex; align-items:center; gap:8px; font-family:"Space Grotesk",sans-serif}
+.chamber .sub{margin:0 0 10px; font-size:12.5px; color:var(--ink-3); line-height:1.4}
+.dot{width:10px; height:10px; border-radius:50%; flex:none}
+.dot.i{background:var(--teal)} .dot.r{background:var(--violet)}
+canvas{width:100%; display:block; border-radius:8px}
+
+.gauge{margin-top:13px}
+.gauge .top{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:5px}
+.gauge .lbl{font-size:11.5px; letter-spacing:.04em; text-transform:uppercase; color:var(--ink-3)}
+.gauge .val{font-size:22px; font-weight:500}
+.track{position:relative; height:16px; background:var(--sunk); border-radius:4px; overflow:hidden}
+.fill{position:absolute; left:0; top:0; bottom:0; width:0; border-radius:4px; transition:width .12s linear}
+.fill.i{background:var(--teal)} .fill.r{background:var(--violet)}
+.tick{position:absolute; top:0; bottom:0; width:1px; background:var(--paper); opacity:.7}
+
+.controls{display:grid; grid-template-columns:repeat(auto-fit,minmax(310px,1fr)); gap:0 30px; margin-top:26px}
+.ctl{display:flex; align-items:center; gap:12px; padding:5px 0}
+.ctl label{font-size:13.5px; color:var(--ink-2); min-width:136px}
+.ctl output{font-size:13px; min-width:42px; text-align:right}
+input[type=range]{-webkit-appearance:none; appearance:none; flex:1; height:20px; background:transparent; cursor:pointer}
+input[type=range]::-webkit-slider-runnable-track{height:3px; background:var(--line-2); border-radius:2px}
+input[type=range]::-moz-range-track{height:3px; background:var(--line-2); border-radius:2px}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none; width:16px; height:16px; margin-top:-6.5px; border-radius:50%; background:var(--ink); border:0}
+input[type=range]::-moz-range-thumb{width:16px; height:16px; border-radius:50%; background:var(--ink); border:0}
+input[type=range]:focus-visible{outline:2px solid var(--violet); outline-offset:4px; border-radius:4px}
+input[type=checkbox]{width:16px; height:16px; accent-color:var(--violet)}
+.buttons{display:flex; gap:8px; flex-wrap:wrap; margin-top:20px}
+button{font:inherit; font-size:13.5px; padding:8px 16px; border-radius:8px; border:1px solid var(--line-2);
+  background:transparent; color:var(--ink); cursor:pointer; transition:background .15s}
+button:hover{background:var(--sunk)}
+button:active{transform:scale(.985)}
+button:focus-visible{outline:2px solid var(--violet); outline-offset:2px}
+
+hr{height:1px; background:var(--line); border:0; margin:38px 0}
+.look{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:22px; margin-top:16px}
+.look p{margin:0; font-size:14.5px; color:var(--ink-2); line-height:1.6}
+.look strong{display:block; color:var(--ink); font-weight:500; margin-bottom:3px; font-family:"Space Grotesk",sans-serif; font-size:14.5px}
+.legend{display:flex; flex-wrap:wrap; gap:8px 20px; margin-top:18px; font-size:12.5px; color:var(--ink-2)}
+.legend span{display:flex; align-items:center; gap:7px}
+.sw{width:13px; height:13px; border-radius:50%; flex:none}
+@media (max-width:660px){ .chambers{grid-template-columns:1fr} h1{font-size:26px} .wrap{padding:30px 16px 56px} }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Ideell vs. reell gass</h1>
+<p class="lede">Begge beholderne har nøyaktig samme antall molekyler, samme volum og samme temperatur. Etter den ideelle gassloven skulle de da hatt nøyaktig samme trykk. Se på trykkmålerne.</p>
+
+<div class="same">
+  <span>Samme antall molekyler: <b class="num" id="sameN">100</b></span>
+  <span>Samme volum: <b class="num" id="sameV">100 %</b></span>
+  <span>Samme temperatur: <b class="num" id="sameT">0,6</b></span>
+</div>
+
+<div class="chambers">
+  <div class="chamber">
+    <h3><span class="dot i"></span>Ideell gass</h3>
+    <p class="sub">Molekyler er punkter uten størrelse, og de merker ikke hverandre i det hele tatt.</p>
+    <canvas id="cA" width="640" height="520" aria-label="Ideell gass: punktmolekyler som spretter fritt"></canvas>
+    <div class="gauge">
+      <div class="top"><span class="lbl">Trykk</span><span class="val num" id="pA">–</span></div>
+      <div class="track"><div class="fill i" id="fA"></div>
+        <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div></div>
+    </div>
+  </div>
+  <div class="chamber">
+    <h3><span class="dot r"></span>Reell gass</h3>
+    <p class="sub">Molekyler har en egen størrelse, og de trekker på hverandre når de kommer nær.</p>
+    <canvas id="cB" width="640" height="520" aria-label="Reell gass: molekyler med størrelse som klumper seg sammen"></canvas>
+    <div class="gauge">
+      <div class="top"><span class="lbl">Trykk</span><span class="val num" id="pB">–</span></div>
+      <div class="track"><div class="fill r" id="fB"></div>
+        <div class="tick" style="left:25%"></div><div class="tick" style="left:50%"></div><div class="tick" style="left:75%"></div></div>
+    </div>
+  </div>
+</div>
+
+<div class="controls">
+  <div class="ctl"><label for="sT">Temperatur</label><input type="range" id="sT" min="4" max="24" step="1" value="6"><output class="num" id="oT">0,6</output></div>
+  <div class="ctl"><label for="sV">Volum (stempel)</label><input type="range" id="sV" min="120" max="240" step="5" value="240"><output class="num" id="oV">100 %</output></div>
+  <div class="ctl"><label for="sN">Antall molekyler</label><input type="range" id="sN" min="20" max="150" step="5" value="100"><output class="num" id="oN">100</output></div>
+  <div class="ctl"><label for="sA">Tiltrekning</label><input type="range" id="sA" min="0" max="150" step="5" value="100"><output class="num" id="oA">1,00</output></div>
+  <div class="ctl"><label for="sB">Molekylstørrelse</label><input type="range" id="sB" min="40" max="160" step="5" value="100"><output class="num" id="oB">1,00</output></div>
+  <div class="ctl"><label for="sF">Vis krefter</label><input type="checkbox" id="sF" checked></div>
+</div>
+
+<div class="buttons">
+  <button id="p1">Lavt trykk: nesten ideell</button>
+  <button id="p0">Tilbakestill</button>
+</div>
+
+<div class="legend">
+  <span><span class="sw" style="background:var(--teal)"></span>punktmolekyl</span>
+  <span><span class="sw" style="background:var(--violet)"></span>molekyl med egen størrelse</span>
+  <span><span class="sw" style="background:var(--coral)"></span>tiltrekning mellom molekyler</span>
+  <span><span class="sw" style="background:var(--ink-3);border-radius:2px"></span>lysglimt = molekyl treffer veggen</span>
+</div>
+
+<hr>
+
+<h2>Hva du skal se etter</h2>
+<div class="look">
+  <p><strong>Trykket er lavere til høyre</strong>Samme molekyler, samme plass, samme temperatur — men lavere trykk. Det er hele forskjellen mellom en ideell og en reell gass, i én måling.</p>
+  <p><strong>Molekylene klumper seg</strong>Til venstre flyr alle for seg selv. Til høyre henger de sammen i klumper som stadig løsner og dannes på nytt. Det er tiltrekningen du ser.</p>
+  <p><strong>Veggtreffene er svakere</strong>Et molekyl på vei mot veggen har bare naboer bak seg. De drar det tilbake, så det treffer mykere. Svakere glimt = lavere trykk.</p>
+  <p><strong>Skru kreftene av</strong>Sett tiltrekningen til 0 og størrelsen til minimum. Da blir de to beholderne like — den ideelle gassloven er grensetilfellet der molekylene verken har størrelse eller kjenner hverandre.</p>
+</div>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+var LY=19.5, LXMAX=24, SC=640/LXMAX, CH=Math.round(LY*SC);
+var DT=0.006, SUB=12, RCUT=2.5, RMIN2=Math.pow(2,1/3);
+
+var cfg={ N:100, LX:24, T:0.6, lam:1.00, sig:1.00 };
+
+function mkSim(id, ideal){
+  var cv=document.getElementById(id);
+  cv.height=CH;
+  return { cx:cv.getContext('2d'), ideal:ideal, ps:[], imp:0, P:0, flash:[] };
+}
+var A=mkSim('cA',true), B=mkSim('cB',false);
+
+var css=getComputedStyle(document.documentElement), C={};
+function readColors(){
+  ['teal','violet','coral','wall','chamber','line-2','ink-3'].forEach(function(k){
+    C[k]=css.getPropertyValue('--'+k).trim();
+  });
+}
+readColors();
+if(window.matchMedia){
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');
+  if(mq.addEventListener) mq.addEventListener('change',readColors);
+}
+
+function build(S){
+  var N=cfg.N, LX=cfg.LX, T=cfg.T, ps=[];
+  var cols=Math.ceil(Math.sqrt(N*LX/LY)), rows=Math.ceil(N/cols);
+  for(var i=0;i<N;i++){
+    var c=i%cols, r=Math.floor(i/cols);
+    ps.push({ x:(c+0.5)*LX/cols+(Math.random()-0.5)*0.15,
+              y:(r+0.5)*LY/rows+(Math.random()-0.5)*0.15,
+              vx:(Math.random()-0.5)*2*Math.sqrt(T), vy:(Math.random()-0.5)*2*Math.sqrt(T),
+              fx:0, fy:0 });
+  }
+  S.ps=ps; S.imp=0; S.P=0; S.flash.length=0;
+  forces(S);
+}
+function reset(){ build(A); build(B); }
+
+function forces(S){
+  var ps=S.ps, i, j;
+  for(i=0;i<ps.length;i++){ ps[i].fx=0; ps[i].fy=0; }
+  if(S.ideal) return;
+  var sig=cfg.sig, lam=cfg.lam;
+  var s2=sig*sig, rc2=RCUT*RCUT*s2, rmin2=RMIN2*s2;
+  for(i=0;i<ps.length;i++){
+    var a=ps[i];
+    for(j=i+1;j<ps.length;j++){
+      var b=ps[j];
+      var dx=a.x-b.x, dy=a.y-b.y, r2=dx*dx+dy*dy;
+      if(r2>rc2 || r2<1e-8) continue;
+      var sr2=s2/r2, sr6=sr2*sr2*sr2, sr12=sr6*sr6;
+      var fmag=24*(2*sr12-sr6)/r2;
+      if(r2>=rmin2) fmag*=lam;
+      if(fmag>3000) fmag=3000; else if(fmag<-3000) fmag=-3000;
+      var fx=fmag*dx, fy=fmag*dy;
+      a.fx+=fx; a.fy+=fy; b.fx-=fx; b.fy-=fy;
+    }
+  }
+}
+
+function step(S){
+  var ps=S.ps, LX=cfg.LX, i;
+  var R = S.ideal ? 0 : 0.5*cfg.sig;
+  for(i=0;i<ps.length;i++){
+    var p=ps[i];
+    p.vx+=0.5*DT*p.fx; p.vy+=0.5*DT*p.fy;
+    p.x+=DT*p.vx;      p.y+=DT*p.vy;
+  }
+  forces(S);
+  var vref=2*Math.sqrt(2*cfg.T);
+  for(i=0;i<ps.length;i++){
+    var q=ps[i];
+    q.vx+=0.5*DT*q.fx; q.vy+=0.5*DT*q.fy;
+    var hit=0, hx=0, hy=0, vert=false;
+    if(q.x<R){ q.x=R; hit=Math.abs(q.vx); q.vx=hit; S.imp+=2*hit; hx=0; hy=q.y; vert=true; }
+    else if(q.x>LX-R){ q.x=LX-R; hit=Math.abs(q.vx); q.vx=-hit; S.imp+=2*hit; hx=LX; hy=q.y; vert=true; }
+    if(q.y<R){ q.y=R; hit=Math.abs(q.vy); q.vy=hit; S.imp+=2*hit; hx=q.x; hy=0; vert=false; }
+    else if(q.y>LY-R){ q.y=LY-R; hit=Math.abs(q.vy); q.vy=-hit; S.imp+=2*hit; hx=q.x; hy=LY; vert=false; }
+    if(hit>0 && S.flash.length<160){
+      S.flash.push({x:hx, y:hy, v:vert, s:Math.min(1,hit/vref), life:1});
+    }
+  }
+}
+
+function temp(S){
+  var s2=0, ps=S.ps;
+  for(var i=0;i<ps.length;i++) s2+=ps[i].vx*ps[i].vx+ps[i].vy*ps[i].vy;
+  return 0.5*s2/ps.length;
+}
+function thermostat(S){
+  var Tc=temp(S);
+  if(Tc<1e-9) return;
+  var l=Math.sqrt(1+(1/60)*(cfg.T/Tc-1));
+  if(!isFinite(l)) return;
+  l=Math.max(0.6,Math.min(1.4,l));
+  for(var i=0;i<S.ps.length;i++){ S.ps[i].vx*=l; S.ps[i].vy*=l; }
+}
+
+function hexA(hex,a){
+  hex=hex.replace('#','');
+  if(hex.length===3) hex=hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  var n=parseInt(hex,16);
+  return 'rgba('+((n>>16)&255)+','+((n>>8)&255)+','+(n&255)+','+a+')';
+}
+
+function draw(S){
+  var c=S.cx, ps=S.ps, i, j;
+  var LX=cfg.LX, W=LX*SC;
+  c.clearRect(0,0,640,CH);
+  c.fillStyle=C.chamber; c.fillRect(0,0,W,CH);
+  c.fillStyle=C.wall; c.globalAlpha=0.45; c.fillRect(W,0,640-W,CH); c.globalAlpha=1;
+
+  var base = S.ideal ? C.teal : C.violet;
+
+  for(i=S.flash.length-1;i>=0;i--){
+    var f=S.flash[i];
+    f.life-=0.06;
+    if(f.life<=0){ S.flash.splice(i,1); continue; }
+    var a=f.life*f.s;
+    c.strokeStyle=hexA(base,Math.min(0.95,a*1.1));
+    c.lineWidth=1+5*f.s;
+    c.beginPath();
+    if(f.v){ c.moveTo(f.x*SC, f.y*SC-13); c.lineTo(f.x*SC, f.y*SC+13); }
+    else   { c.moveTo(f.x*SC-13, f.y*SC); c.lineTo(f.x*SC+13, f.y*SC); }
+    c.stroke();
+  }
+
+  c.strokeStyle=C['line-2']; c.lineWidth=1; c.strokeRect(0.5,0.5,W-1,CH-1);
+
+  if(!S.ideal && showF){
+    var sig=cfg.sig, rc=RCUT*sig, rmin=Math.pow(2,1/6)*sig;
+    for(i=0;i<ps.length;i++) for(j=i+1;j<ps.length;j++){
+      var dx=ps[j].x-ps[i].x, dy=ps[j].y-ps[i].y, r2=dx*dx+dy*dy;
+      if(r2>rc*rc || r2<rmin*rmin) continue;
+      var w=1-(Math.sqrt(r2)-rmin)/(rc-rmin);
+      c.strokeStyle=hexA(C.coral, w*0.6*Math.min(1,cfg.lam));
+      c.lineWidth=0.6+w*2.2;
+      c.beginPath(); c.moveTo(ps[i].x*SC, ps[i].y*SC); c.lineTo(ps[j].x*SC, ps[j].y*SC); c.stroke();
+    }
+  }
+
+  var R = S.ideal ? 3.5 : 0.5*cfg.sig*SC;
+  c.fillStyle=base;
+  for(i=0;i<ps.length;i++){
+    c.beginPath(); c.arc(ps[i].x*SC, ps[i].y*SC, R, 0, 6.2832); c.fill();
+  }
+  if(!S.ideal){
+    c.strokeStyle=hexA(C.chamber,0.55); c.lineWidth=1;
+    for(i=0;i<ps.length;i++){
+      c.beginPath(); c.arc(ps[i].x*SC, ps[i].y*SC, R, 0, 6.2832); c.stroke();
+    }
+  }
+}
+
+var showF=true;
+var pA=document.getElementById('pA'), pB=document.getElementById('pB');
+var fA=document.getElementById('fA'), fB=document.getElementById('fB');
+var scale=0.2, tick=0;
+
+function loop(){
+  for(var k=0;k<SUB;k++){ step(A); step(B); }
+  thermostat(A); thermostat(B);
+  var per=SUB*DT*2*(cfg.LX+LY);
+  A.P=A.P*0.94+(A.imp/per)*0.06; A.imp=0;
+  B.P=B.P*0.94+(B.imp/per)*0.06; B.imp=0;
+  draw(A); draw(B);
+  if(++tick%5===0){
+    var top=Math.max(A.P,B.P)*1.18+0.001;
+    scale += (top-scale)*(top>scale?0.15:0.02);
+    pA.textContent=(A.P*100).toFixed(1);
+    pB.textContent=(B.P*100).toFixed(1);
+    fA.style.width=Math.min(100,A.P/scale*100).toFixed(1)+'%';
+    fB.style.width=Math.min(100,B.P/scale*100).toFixed(1)+'%';
+  }
+  requestAnimationFrame(loop);
+}
+
+var sameN=document.getElementById('sameN'), sameV=document.getElementById('sameV'), sameT=document.getElementById('sameT');
+function no(x,d){ return x.toFixed(d).replace('.',','); }
+function syncTop(){
+  sameN.textContent=cfg.N;
+  sameV.textContent=Math.round(cfg.LX/LXMAX*100)+' %';
+  sameT.textContent=no(cfg.T,1);
+}
+
+function bind(id,out,fn,fmt){
+  var el=document.getElementById(id), o=document.getElementById(out);
+  el.addEventListener('input',function(){
+    var v=+el.value; fn(v); o.textContent=fmt(v); syncTop();
+  });
+}
+bind('sT','oT',function(v){ cfg.T=v/10; }, function(v){ return no(v/10,1); });
+bind('sV','oV',function(v){
+  cfg.LX=v/10;
+  [A,B].forEach(function(S){
+    var R=S.ideal?0:0.5*cfg.sig;
+    for(var i=0;i<S.ps.length;i++){
+      if(S.ps[i].x>cfg.LX-R) S.ps[i].x=cfg.LX-R;
+      if(S.ps[i].x<R) S.ps[i].x=R;
+    }
+    forces(S);
+  });
+}, function(v){ return Math.round(v/10/LXMAX*100)+' %'; });
+bind('sN','oN',function(v){ cfg.N=v; reset(); }, function(v){ return String(v); });
+bind('sA','oA',function(v){ cfg.lam=v/100; forces(B); }, function(v){ return no(v/100,2); });
+bind('sB','oB',function(v){ cfg.sig=v/100; forces(B); }, function(v){ return no(v/100,2); });
+document.getElementById('sF').addEventListener('change',function(e){ showF=e.target.checked; });
+
+function apply(T,V,N,a,b){
+  var set=function(id,val){ var e=document.getElementById(id); e.value=val; e.dispatchEvent(new Event('input')); };
+  set('sT',T); set('sV',V); set('sN',N); set('sA',a); set('sB',b);
+  scale=0.2;
+}
+document.getElementById('p1').onclick=function(){ apply(20,240,20,100,60); };
+document.getElementById('p0').onclick=function(){ apply(6,240,100,100,100); };
+
+reset(); syncTop(); loop();
+})();
+</script>
+</body>
+</html>

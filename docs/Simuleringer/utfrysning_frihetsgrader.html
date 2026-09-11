@@ -1,0 +1,79 @@
+<style>
+@keyframes jitter{0%,100%{transform:translate(0,0)}25%{transform:translate(2px,-1px)}50%{transform:translate(-1px,2px)}75%{transform:translate(-2px,-1px)}}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes vib1{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,0)}}
+@keyframes vib2{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,0)}}
+.dot{width:8px;height:8px;border-radius:50%;display:inline-block;margin-right:6px;}
+</style>
+<h2 class="sr-only">Interaktiv visning av hvordan translasjon, rotasjon og vibrasjon fryser ut ved lavere temperatur</h2>
+
+<div style="display:flex;align-items:center;gap:12px;margin:0 0 1.5rem;">
+<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">Temperatur</label>
+<input type="range" id="temp" min="0" max="100" step="1" value="50" style="flex:1;" oninput="update()">
+<span id="temp-out" style="font-size:14px;font-weight:500;min-width:30px;text-align:right;">50</span>
+</div>
+
+<div style="display:grid;grid-template-columns:1fr 220px;gap:24px;align-items:center;">
+
+<div style="display:flex;justify-content:center;">
+<svg width="160" height="140" viewBox="0 0 160 140">
+<g id="mol-outer" style="transform-origin:80px 70px;">
+<line x1="55" y1="70" x2="105" y2="70" stroke="var(--t)" stroke-width="3"/>
+<g id="mol-a1" style="transform-origin:55px 70px;"><circle cx="55" cy="70" r="16" fill="#378ADD"/></g>
+<g id="mol-a2" style="transform-origin:105px 70px;"><circle cx="105" cy="70" r="16" fill="#D85A30"/></g>
+</g>
+</svg>
+</div>
+
+<div>
+<p style="font-size:13px;margin:0 0 10px;"><span class="dot" id="dot-trans" style="background:#639922;"></span>Translasjon</p>
+<p style="font-size:13px;margin:0 0 10px;"><span class="dot" id="dot-rot" style="background:#888780;"></span>Rotasjon</p>
+<p style="font-size:13px;margin:0 0 14px;"><span class="dot" id="dot-vib" style="background:#888780;"></span>Vibrasjon</p>
+<div style="background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;">
+<p style="font-size:12px;color:var(--text-secondary);margin:0 0 2px;">Bidrag til C<sub>V</sub></p>
+<p id="cv-val" style="font-size:18px;font-weight:500;margin:0;">3/2 R</p>
+</div>
+</div>
+
+</div>
+
+<script>
+const outer = document.getElementById('mol-outer');
+const a1 = document.getElementById('mol-a1');
+const a2 = document.getElementById('mol-a2');
+const T_ROT = 20;
+const T_VIB = 65;
+
+function update(){
+  const T = parseFloat(document.getElementById('temp').value);
+  document.getElementById('temp-out').textContent = T;
+
+  outer.style.animation = 'jitter 0.8s ease-in-out infinite';
+
+  const rotOn = T >= T_ROT;
+  const vibOn = T >= T_VIB;
+
+  document.getElementById('dot-rot').style.background = rotOn ? '#3B6D11' : '#888780';
+  document.getElementById('dot-vib').style.background = vibOn ? '#993C1D' : '#888780';
+
+  if(rotOn){
+    outer.style.animation = 'spin 2.4s linear infinite';
+  } else {
+    outer.style.animation = 'jitter 0.8s ease-in-out infinite';
+  }
+
+  if(vibOn){
+    a1.style.animation = 'vib1 0.4s ease-in-out infinite';
+    a2.style.animation = 'vib2 0.4s ease-in-out infinite';
+  } else {
+    a1.style.animation = 'none';
+    a2.style.animation = 'none';
+  }
+
+  let cv = '3/2 R';
+  if(rotOn && vibOn) cv = '7/2 R';
+  else if(rotOn) cv = '5/2 R';
+  document.getElementById('cv-val').textContent = cv;
+}
+update();
+</script>

@@ -1,0 +1,1094 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_02_under_revision_LF';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen" href="uke_01_under_revision_LF.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_02_under_revision_LF.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-hva-er-sannsynligheten-for-a-finne-en-partikkel-i-et-gitt-niva-nar-entropien-er-maksimert-og-vi-har-en-konstant-totalenergi">Oppgave 2: Hva er sannsynligheten for å finne en partikkel i et gitt nivå når entropien er maksimert OG vi har en konstant totalenergi?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-litt-om-partisjonsfunksjonen">Oppgave 3: Litt om partisjonsfunksjonen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-fra-partisjonfunsjon-til-termodynamiske-storrelser">Oppgave 4: Fra partisjonfunsjon til termodynamiske størrelser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5-ekstra-utfordring-idealgassloven-fra-en-enkel-gittermodell">Oppgave 5 (Ekstra utfordring): Idealgassloven fra en enkel gittermodell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraoppgave">Ekstraoppgave</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-2-statistisk-mekanikk-boltzmann-fordelingen-og-partisjonsfunskjonen">
+<h1>Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen<a class="headerlink" href="#uke-2-statistisk-mekanikk-boltzmann-fordelingen-og-partisjonsfunskjonen" title="Link to this heading">#</a></h1>
+<div class="note admonition">
+<p class="admonition-title">Læringsutbytte</p>
+<p>Etter å ha jobbet med dette temaet skal du kunne:</p>
+<ul class="simple">
+<li><p>Forklare hva Boltzmann fordelingen betyr, og hvor den kommer fra</p></li>
+<li><p>Forklare hva partisjonsfunsjonen <span class="math notranslate nohighlight">\(Q\)</span> er og hvordan den henger sammen med <span class="math notranslate nohighlight">\(q\)</span> for ulike type partikler</p></li>
+<li><p>Bruke q for enkle modeller til å bestemme termodynamiske størrelser som varmekapasitet</p></li>
+</ul>
+</div>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<p>Tema for denne ukas oppgaver er Boltzmann-fordelingen og den relaterte partisjonsfunsjonen. I forrige uke så vi at systemer drives mot maksimering av entropi, og som Boltzman viste er entropien, <span class="math notranslate nohighlight">\(S\)</span>, direkte knyttet til multiplisiteten, <span class="math notranslate nohighlight">\(\Omega\)</span>, av mikrotilstander som hver makrotilstand kan ha gjennom:</p>
+<div class="math notranslate nohighlight">
+\[ S=k_{B} \ln(\Omega). \]</div>
+<p>Kun ved å se på hvilken tilstand som hadde høyest multiplisitet, og ved å anta at alle mikrotilstander er like sannsynlige, kunne vi bruke enkle modeller til å forklare hvorfor en gass vil fylle rommet den er i, hvorfor polymerer trekker seg sammen, hvorfor vesker blandes, og hvorfor energi utjevnes når to stoffer settes i termisk kontakt. (Diskusjonsoppgaver 2-5 i uke 1).</p>
+<p>Nå skal vi se på hva som skjer dersom det er begrensinger på hvilke mikrotilstander et system kan være i.</p>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Litt repetisjon: Hva er multiplisitet?</p>
+<p><strong>Svar</strong> Multiplisiteten er <strong>antallet</strong> måter en gitt tilstand eller hendelse kan realiseres på, for N skillbare partikler fortelt på 2 kategorier A og B der vi <strong>ikke</strong> bryr oss om rekkefølgen er multiplisiteten for å ha <span class="math notranslate nohighlight">\(n_A\)</span> partikler i A gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ \Omega (n_A)=\frac{N!}{n_A!(N-n_A)!}\]</div>
+<p><strong>b)</strong> Hva er sammenhengen mellom entropi og likevekt, hva med den deriverte av entropien?</p>
+<p><strong>Svar</strong> Ved likevekt er entropien <strong>maksimert</strong> og den deriverte av entropien vil da være 0.</p>
+<p><strong>c)</strong> Hvis vi har et 2 nivå-system (f.eks. 2 bokser A og B, to energinivåer 1 og 2, to mulige konformasjoner av en et protein), og N partikler. Hvilken fordeling av de N partiklene på de 2 tilstandene vil ha størst multiplisitet?</p>
+<p><strong>Svar</strong> Vi får størst multiplisitet når det er like mange partikler i hver kategori. Altså når <span class="math notranslate nohighlight">\(n_A=N/2\)</span></p>
+<p><strong>d)</strong> Gitt at partiklene er fordelt slik at entropien er maksimert, hva er <em>sannsynligheten</em> for å finne en partikkel i nivå 1 og nivå 2?</p>
+<p><strong>Svar</strong> Siden det er N/2 partikler i hvert nivå som maksimerer multiplisiteten og dermed også entropien, vil det være like sansynlig å finne en partikkel i hver av de to nivåene: <span class="math notranslate nohighlight">\(p=1/2\)</span></p>
+<p><strong>e)</strong> Hva om vi hadde t-nivåer, der N partikler kan fordeles på nivå 1, 2, 3, …, t. Hvilken fordeling gir størst multiplisitet? Gitt at entropien er maksimert, hva er sannsynligheten for å finne en partikkel i et gitt nivå?</p>
+<p><strong>Svar</strong> Uten noen annen begrensing får vi den største multiplisiteten når det er like mange partikler i hver tilstand:</p>
+<div class="math notranslate nohighlight">
+\[ \Omega=\frac{N!}{n_1!\cdot n_2! \cdot ... \cdot n_t!} \]</div>
+<div class="math notranslate nohighlight">
+\[ \Omega_{max}=\frac{N!}{n!\cdot n! \cdot ... \cdot n!}, n=N/t \]</div>
+<p>Dermed er sannsynligheten for å finn en partikkel ved et gitt nivå 1/t</p>
+<p><strong>f)</strong> I oppgavene over har sett på sammenhengen mellom multiplisitet og sannsynligheten for å finne en partikkel i et gitt nivå, men vi er ikke de første til å gjøre det. Vi har allerede sett at entropi kan utrykkes med <span class="math notranslate nohighlight">\( S=k_{b} \ln(\Omega)\)</span>, men entropi kan også utrykkes med sannsynligheter, hvordan ser det utrykket ut?</p>
+<p><strong>Svar</strong> Her skal vi fram til Gibbs’ definisjon av entropi:</p>
+<div class="math notranslate nohighlight">
+\[ S_{tot}(p)=-Nk_B\cdot\sum_{i=1}^t p_i \cdot \ln{p_i} \]</div>
+<p>eller per partikkel</p>
+<div class="math notranslate nohighlight">
+\[S(p)=-k_B\cdot\sum_{i=1}^t p_i \cdot \ln{p_i} \]</div>
+<p>hvor <span class="math notranslate nohighlight">\(p_i\)</span> er sannsynligheten for å finne en partikkel i nivå <span class="math notranslate nohighlight">\(i\)</span>.</p>
+</section>
+<section id="oppgave-2-hva-er-sannsynligheten-for-a-finne-en-partikkel-i-et-gitt-niva-nar-entropien-er-maksimert-og-vi-har-en-konstant-totalenergi">
+<h3>Oppgave 2: Hva er sannsynligheten for å finne en partikkel i et gitt nivå når entropien er maksimert OG vi har en konstant totalenergi?<a class="headerlink" href="#oppgave-2-hva-er-sannsynligheten-for-a-finne-en-partikkel-i-et-gitt-niva-nar-entropien-er-maksimert-og-vi-har-en-konstant-totalenergi" title="Link to this heading">#</a></h3>
+<p>Vi ser igjen på et fler-nivå system med N partikler, hvor hver av disse kan være i ett av <span class="math notranslate nohighlight">\(t\)</span> energinivåer, med energier <span class="math notranslate nohighlight">\(\varepsilon_1\)</span> ,<span class="math notranslate nohighlight">\(\varepsilon_2\)</span>, … , <span class="math notranslate nohighlight">\(\varepsilon_t\)</span>. De N partiklene er fordelt slik at det er <span class="math notranslate nohighlight">\(n_1\)</span> partikler i energi nivå 1, <span class="math notranslate nohighlight">\(n_2\)</span> partikler i energinivå 2 og så videre. Altså er det “n_i” partikler i energi-nivå <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p><strong>a)</strong> Gitt at vi har <span class="math notranslate nohighlight">\(n_i\)</span> av N partikler i enrginivå <span class="math notranslate nohighlight">\(i\)</span>. Hva er <em>sannsynligheten</em>, <span class="math notranslate nohighlight">\(p_i\)</span>, for at en tilfeldig valgt partikkel er i energinivå <span class="math notranslate nohighlight">\(i\)</span>? Hva vet vi om <span class="math notranslate nohighlight">\(\sum_{i=1}^t p_i\)</span>?</p>
+<p><strong>Svar</strong> Sannsynligheten er:</p>
+<div class="math notranslate nohighlight">
+\[ p_i = n_i/N \]</div>
+<p>Som er Antall ønskelige delt på antall mulige hendelser. Vi vet også at summen av sannsynlighetene må bli en, altså at:</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i=1}^t p_i = 1 \]</div>
+<p><strong>b)</strong> Vi antar at den totale energien i systemet er begrenset til en konstant verdi <span class="math notranslate nohighlight">\(E\)</span>. Hvordan kan totalenergien utrykkes når vi vet at vi har <span class="math notranslate nohighlight">\(n_i\)</span> partikler, hver med energi <span class="math notranslate nohighlight">\(\varepsilon_i\)</span>?</p>
+<p><strong>Svar</strong> Totalenergien er gitt ved antallet partikler i energinivået ganget med energien til det nivået, summert over alle de t energinivåene:</p>
+<div class="math notranslate nohighlight">
+\[ E= \sum_{i=1}^t n_i \cdot \varepsilon_i \]</div>
+<p><strong>c)</strong> Hvis vi antar et konstant antall partikler N, og en konstant total energi <span class="math notranslate nohighlight">\(E\)</span>, hva kan vi si om gjennomsnittsenergien <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span> per partikkel? Bruk den statistiske definisjonen av gjennomsnitt til å finne et utrykk for <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span></p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Gjennomsnittsverdien, også kalt forventningsverdien, av en variabel <span class="math notranslate nohighlight">\(k_i\)</span> som kan ha en av <span class="math notranslate nohighlight">\(i=1,2,...,t\)</span> verdier med hver sin sannsynlighet <span class="math notranslate nohighlight">\(p_i\)</span> kan defineres som:</p>
+<div class="math notranslate nohighlight">
+\[\langle k \rangle = \sum_{i=1}^t k_i \cdot p_i \]</div>
+</div>
+</details><p><strong>Svar</strong></p>
+<p>Den gennomsnittlige energien er gitt ved utrykket:</p>
+<div class="math notranslate nohighlight">
+\[\langle \varepsilon \rangle = \frac{E}{N} = \frac{1}{N}\sum_{i=1}^t \varepsilon_i \cdot n_i=\sum_{i=1}^t \varepsilon_i \cdot \frac{n_i}{N} = \sum_{i=1}^t \varepsilon_i \cdot p_i \]</div>
+<p>Den siste likheten følger direkte fra svaret i oppgave a) og er identisk med definisjonen av gjennomsnitt fra statisktikken.</p>
+<p><strong>d)</strong> Vi ønsker nå å finne sannsynlighetene, <span class="math notranslate nohighlight">\(p_i\)</span> for hvert nivå som gir den maksimale entropien, altså den mest sannsynlige fordelingen av partikler når systemet er i likevekt. Dette kan vi gjøre ved bruke Gibbs definisjon av entropi per partikkel:</p>
+<div class="math notranslate nohighlight">
+\[ S(p)=-k_B\cdot\sum_{i=1}^t p_i \cdot \ln{p_i} \]</div>
+<p>Merk at dette er en flervariabel funksjon, som avhenger <span class="math notranslate nohighlight">\(p_1,p_2,p_3,...,p_t\)</span>. Hva er den totalderiverte, dS, av denne funksjonen? Og hvordan bruker vi denne til å finne maksimum entropi?</p>
+<p>For å gjøre matten litt enklere kan heller se på entropien delt på <span class="math notranslate nohighlight">\(k_B\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ S_{k_B}=\frac{S(p)}{k_B}=-\sum_{i=1}^t p_i \cdot \ln{p_i} \]</div>
+<p>Dette går fint fordi k_B er en konstant som vil bli normalisert bort i maksimeringen av entropien.</p>
+<p><strong>Svar</strong> S er en flervariabel funskjon av <span class="math notranslate nohighlight">\(p_1, p_2, ... p_t\)</span> dermed vil den totalderiverte være gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ dS = \left(\frac{\partial S}{\partial p_1}\right) dp_1 + \left(\frac{\partial S}{\partial p_2}\right) dp_2 + ... + \left(\frac{\partial S}{\partial p_t}\right) dp_t \]</div>
+<p>eller mer generelt kan vi skrive:</p>
+<div class="math notranslate nohighlight">
+\[ dS =\sum_{i=1}^t \left(\frac{\partial S}{\partial p_i}\right) dp_i \]</div>
+<p>For å finne maksimumsentropien må den totalderiverte være 0, som vi får når alle partiellderiverte er lik null. altså at</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial S}{\partial p_i}\right) = 0 \]</div>
+<p>for hver <span class="math notranslate nohighlight">\(i\)</span>.</p>
+<p><strong>e)</strong> Fra deloppgave a) og c) har vi fått to betingelser, som vi videre kaller for g(p) og h(p), knyttet til sannsynligheten, den første handler om summen av sannsynlighetene <span class="math notranslate nohighlight">\(p_i\)</span> og den andre om gjennomsnittsenergien per partikkel. Vi antar nå at dere har funnet disse i henholdsvis deloppgave a) og deloppgave c), men dere kan dobbeltsjekke svarene under før dere går videre:</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Delsvar:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">a) Summen av alle sannsynlihetene <span class="math notranslate nohighlight">\(p_i\)</span> må være lik 1</p>
+<div class="math notranslate nohighlight">
+\[ g(p) = \sum_{i=1}^t p_i = 1 \]</div>
+<p class="sd-card-text">c) Gjennomsnittsenergien per partikkel er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ h(p) = \langle \varepsilon \rangle = \frac{E}{N} = \sum_{i=1}^t \varepsilon_i \cdot p_i \]</div>
+</div>
+</details><p>For å finne sannsynlighetsfordelingen <span class="math notranslate nohighlight">\(p=[p_1,p_2,...,p_t]\)</span> som maksimerer entropien <span class="math notranslate nohighlight">\(S(p)\)</span> under disse betingelsene som vi kaller <span class="math notranslate nohighlight">\(g(p)\)</span> og <span class="math notranslate nohighlight">\(h(p)\)</span>, kan vi bruke Lagrange multiplikatorer. Dette gir oss et sett av likninger på formen:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial S(p)}{\partial p_i} - \alpha \cdot \frac{\partial g(p)}{\partial p_i} -\beta \cdot \frac{\partial h(p)}{\partial p_i} = 0\]</div>
+<p>hvor <span class="math notranslate nohighlight">\(\alpha\)</span> og <span class="math notranslate nohighlight">\(\beta\)</span> er Lagrange multiplikatorene. Vi har egentlig én ligning per verdi av <span class="math notranslate nohighlight">\(i\)</span>, men formen på disse ligningene og multiplikatorene er de samme. Dermed trenger vi bare å løse en av de med hensyn på en generell variabel <span class="math notranslate nohighlight">\(p_i\)</span>.</p>
+<p><strong>Finn hver av de tre partiellderiverte i ligningen over.</strong></p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial S(p)}{\partial p_i}= \frac{\partial (\sum_{i=1}^t p_i \cdot \ln{p_i})}{\partial p_i}=-1-\ln{p_i}\]</div>
+<p>Her har vi brukt reglene for partiellderiverte, siden vi kun deriverer med hensyn på én <span class="math notranslate nohighlight">\(p_i\)</span> behandler vi alle andre <span class="math notranslate nohighlight">\(p_j\ \mathrm{for}\ j\neq i\)</span> som konstanter. Dermed blir utrykket ekvivalent med <span class="math notranslate nohighlight">\(\frac{\partial (x \cdot \ln{x})}{\partial x}\)</span> som vi kan bruke kjærneregelen på.</p>
+<p>Samme tankegang gjelder for:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial g(p)}{\partial p_i}=\frac{\partial (\sum_{i=1}^t p_i)}{\partial p_i}=1\]</div>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial h(p)}{\partial p_i}=\frac{\partial (\sum_{i=1}^t \varepsilon_i\cdot p_i)}{\partial p_i}=\varepsilon_i\]</div>
+<p><strong>f)</strong> Sett inn de partiellderiverte dere fant i likningen over og løs med hensyn på <span class="math notranslate nohighlight">\(p_i\)</span>. Hint: <span class="math notranslate nohighlight">\(\alpha\)</span> og <span class="math notranslate nohighlight">\(\beta\)</span> skal inngå i svaret.</p>
+<p><strong>Svar</strong> Fra forrige oppgave har vi utrykkene for de partiellderiverte vi setter disse inn i likningen for maksimering av entropi med Lagrangemultiplikatorer:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{\partial S(p)}{\partial p_i} - \alpha \cdot \frac{\partial g(p)}{\partial p_i} -\beta \cdot \frac{\partial h(p)}{\partial p_i} = 0\]</div>
+<div class="math notranslate nohighlight">
+\[ -1-\ln{pi} - \alpha \cdot 1 -\beta \cdot \varepsilon_i = 0\]</div>
+<p>Vi kan nå løse med hensyn på <span class="math notranslate nohighlight">\(p_i\)</span> ved å flytte over:</p>
+<div class="math notranslate nohighlight">
+\[ \ln(p_i)=-1-\alpha -\beta \varepsilon_i\]</div>
+<p>og ta eksponentialen på begge sider:</p>
+<div class="math notranslate nohighlight">
+\[ e^{\ln{p_i}}=e^{-1-\alpha -\beta \varepsilon_i}\]</div>
+<div class="math notranslate nohighlight">
+\[ p_i=e^{-1-\alpha -\beta \varepsilon_i}\]</div>
+<p><strong>g)</strong> Vi husker på at <span class="math notranslate nohighlight">\(\sum_{i=1}^t p_i = 1\)</span> og dermed kan vi dele utrykket for <span class="math notranslate nohighlight">\(p_i\)</span> på <span class="math notranslate nohighlight">\(\sum_{i=1}^t p_i\)</span>, bruk dette til å bli kvitt <span class="math notranslate nohighlight">\(\alpha\)</span> og forenkle utrykket mest mulig. I hintet under får du se hvordan det endelige utrykke skal se ut til slutt.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="math notranslate nohighlight">
+\[ p_i = \frac{e^{-\beta\varepsilon_i}}{\sum_{i=1}^t e^{-\beta\varepsilon_i}} \]</div>
+</div>
+</details><p><strong>Svar</strong> Siden summen av sansynligetene må være 1 så har vi:</p>
+<div class="math notranslate nohighlight">
+\[ \sum_{i=1}^t p_i= \sum_{i=1}^t e^{-1-\alpha-\beta\varepsilon_i}=1 \]</div>
+<p>dermed kan vi dele utrykket for <span class="math notranslate nohighlight">\(p_i\)</span> fra forrige deloppgave på <span class="math notranslate nohighlight">\(\sum_{i=1}^t e^{-1-\alpha-\beta\varepsilon_i}\)</span> for det er det samme som å dele på 1:</p>
+<div class="math notranslate nohighlight">
+\[ p_i= \frac{e^{-1-\alpha-\beta\varepsilon_i}}{\sum_{i=1}^t e^{-1-\alpha-\beta\varepsilon_i}} \]</div>
+<p>siden hverken “1” eller <span class="math notranslate nohighlight">\(\alpha&quot; avhenger av \)</span>i$ kan disse faktoriseres ut av summen:</p>
+<div class="math notranslate nohighlight">
+\[ p_i= \frac{e^{-1-\alpha}\cdot e^{-\beta\varepsilon_i}}{e^{-1-\alpha}\cdot\sum_{i=1}^t e^{-\beta\varepsilon_i}}=\frac{e^{-\beta\varepsilon_i}}{\sum_{i=1}^t e^{-\beta\varepsilon_i}} \]</div>
+<p><strong>h)</strong> Gratulerer dere har nå kommet fram til Boltzmann fordelingen! Den forteller oss hvordan partiklene er fordelt på de ulike energinivåene gitt en begrenset totalenergi og maksimal entropi.</p>
+<p>Det kan vises at Lagrangemultiplikatoren <span class="math notranslate nohighlight">\(\beta\)</span> er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ \beta = \frac{1}{k_bT} \]</div>
+<p>Sett inn dette utrykket for <span class="math notranslate nohighlight">\(\beta\)</span> inn i utrykket for <span class="math notranslate nohighlight">\(p_i\)</span>.</p>
+<p>Hvordan fordeles de <span class="math notranslate nohighlight">\(N\)</span> partiklene seg på de <span class="math notranslate nohighlight">\(t\)</span> energinivåene når temperaturen <span class="math notranslate nohighlight">\(T\)</span> blir veldig veldig høy, les <span class="math notranslate nohighlight">\(T \rightarrow \infty \)</span> ?</p>
+<p>Hva med når temperaturen blir veldig lav og går mot absolutt null, <span class="math notranslate nohighlight">\(T \rightarrow 0 \)</span>. ?</p>
+<p>Hva kan vi si om entropien i disse to ekstremtilfellene?</p>
+<p><strong>Svar</strong></p>
+<p>Når vi setter inn for <span class="math notranslate nohighlight">\(\beta\)</span> for vi:</p>
+<div class="math notranslate nohighlight">
+\[ p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{\sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}} \]</div>
+<p>Når T blir veldig stor (går mot uendelig), går <span class="math notranslate nohighlight">\(e^{-\frac{\varepsilon_i}{k_BT}}\)</span> mot <span class="math notranslate nohighlight">\(e^0=1\)</span>. Da får vi:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{T \rightarrow \infty}p_i=\lim_{T \rightarrow \infty}\frac{e^{-\frac{\varepsilon_i}{k_BT}}}{\sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}}=\frac{1}{\sum_{i=1}^t 1}=\frac{1}{t}  \]</div>
+<p>Dette betyr at alle energinivåene blir like sansynlige med sansynlighet <span class="math notranslate nohighlight">\(p_i=1/t\)</span> og vi kan forventa at partiklene er likt fordelt på de t energinivåene. Dette tilsvarer maksimum entropi.</p>
+<p>Hvis T går mot null, så vil alle energitiltander over grunntilstanden som er definert med <span class="math notranslate nohighlight">\(\varepsilon_1=0\)</span> være tomme ettersom at:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{T \rightarrow 0}{e^{-\frac{\varepsilon_i}{k_BT}}}=0\ \mathrm{for}\ \varepsilon_i\neq0 \]</div>
+<p>Altså vil alle partiklene være i grunntilstanden, og entropien er per definisjon 0.</p>
+</section>
+<section id="oppgave-3-litt-om-partisjonsfunksjonen">
+<h3>Oppgave 3: Litt om partisjonsfunksjonen<a class="headerlink" href="#oppgave-3-litt-om-partisjonsfunksjonen" title="Link to this heading">#</a></h3>
+<p>Som vi så i oppgaven over er gir Boltzmann fordelingen sannsynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for å finne én partikkel i energinivå <span class="math notranslate nohighlight">\(e_i\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{\sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}} \]</div>
+<p>Nevneren i dette utrykket kalles for den <em>molekylære partisjonsfunksjonen</em> <span class="math notranslate nohighlight">\(q\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ q = \sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}\]</div>
+<p>Da kan vi skrive:</p>
+<div class="math notranslate nohighlight">
+\[ p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{q} \]</div>
+<p><strong>a)</strong> Hvilken “funksjon” har det rent matematisk å dele på <span class="math notranslate nohighlight">\(q\)</span>?</p>
+<p><strong>Svar</strong> Dette sørger for at sansynlikhetene blir normalisert riktig, slik at de summerer til 1.</p>
+<p><strong>b)</strong> Fra forelesning har dere kanskje hørt at vi kan tenke på partisjonsfunksjonen som et mål på hvor mange av energitilstandene er tilgjengelige ved en gitt temperatur. Hva menes med dette, og hvordan kan vi se det?</p>
+<p>Hint: Skriv ut et par ledd av <span class="math notranslate nohighlight">\(q\)</span> og tenk på hvilken av variablene som er bestemt av systemet og som vi dermed ikke kan endre, og hvilke vi kan styre.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[ q = \sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}=e^{-\frac{\varepsilon_1}{k_BT}}+e^{-\frac{\varepsilon_2}{k_BT}}+e^{-\frac{\varepsilon_3}{k_BT}}...\]</div>
+<p>Energinivåene <span class="math notranslate nohighlight">\(\varepsilon_1,\varepsilon_2,\varepsilon_3,...\)</span> bestemmes av modellen vi bruker og er vanlighvis ikke noe vi kan styre. <span class="math notranslate nohighlight">\(k_B\)</span> er en konstant og dermed også gitt. Det eneste vi har eksperimentell kontroll over er temperaturen T. Når den temperaturen er høy nok til at den termiske energien <span class="math notranslate nohighlight">\(k_bT\)</span> er på størrelse med en gitt <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> vil mange partikler være i det energinivået. Men dersom <span class="math notranslate nohighlight">\(\varepsilon &gt;&gt; k_BT\)</span> vil det være svært få partikler i det energinivået.</p>
+<p><strong>c)</strong> Vi bruker symbolet <span class="math notranslate nohighlight">\(q\)</span> når vi snakker om partisjonsfunksjonen for én partikkel, dette kan vi tenke på som sannsynlighetsfordelingen for at den partikkelen er i et gitt energinivå. Om vi har N partikler som er <strong>uavhengige</strong> og <strong>skillbare</strong> er den totale partisjonsfunksjonen gitt ved å multiplisere sammen partisjonsfunksjonene for hver partikkel:</p>
+<div class="math notranslate nohighlight">
+\[ Q=q_1 \cdot q_2 \cdot q_3 \cdot ... \cdot q_N = q^N \]</div>
+<p>Hva er den totale partisjonsfunsjonen <span class="math notranslate nohighlight">\(Q\)</span> dersom partiklene er <strong>uavhengige</strong>, men <strong>uskillbare</strong>? Hvorfor er dette slik?</p>
+<p><strong>Svar</strong> For <strong>uavhengige</strong>, men <strong>uskillbare</strong> partikler er:</p>
+<div class="math notranslate nohighlight">
+\[ Q= \frac{q^N}{N!} \]</div>
+<p>Når vi kan <strong>skille</strong> mellom partiklene så vil det være to forkjellige tilstander om partikkel A er i energivinå <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> og partikkel B er i energinivå <span class="math notranslate nohighlight">\(\varepsilon_j\)</span>, eller motsatt. Dermed kan partisjonsfunskonene ganges sammen som i utrykket over. Men når vi <strong>ikke kan skille</strong> mellom A og B så er det det samme det er partikkel A som er energinivå <span class="math notranslate nohighlight">\(\varepsilon_j\)</span> og partikkel B som er energinivå <span class="math notranslate nohighlight">\(\varepsilon_i\)</span> eller motsatt, for vi ser ikke forskjell. Derfor er det feil å telle disse som to ulike tilstander og en god tilnærming for hvor mye vi overteller er N!, som vi deler på for å kompansere for overtellingen.</p>
+</section>
+<section id="oppgave-4-fra-partisjonfunsjon-til-termodynamiske-storrelser">
+<h3>Oppgave 4: Fra partisjonfunsjon til termodynamiske størrelser<a class="headerlink" href="#oppgave-4-fra-partisjonfunsjon-til-termodynamiske-storrelser" title="Link to this heading">#</a></h3>
+<p>Partisjonsfunksjonen kan være svært nyttig ettersom at vi kan bruke den til å bestemme veldig mange makroskopiske termodynamiske størrelser for et system, slik som indre energi, entropi og varmekapasitet for å nevne noen. Her skal vi begynne med et eksempel fra vår kjente 2-nivå model, som i dette tilfelle også kalles for <strong>Schottky-modellen</strong>.</p>
+<p>Vi har N partikler som er uavhengige og skillbare, hver partikkel kan enten være i grunntilstand med energi <span class="math notranslate nohighlight">\(\varepsilon_1=0\)</span> eller i en eksitert tilstand med energi <span class="math notranslate nohighlight">\(\varepsilon_2=\varepsilon\)</span>.</p>
+<p><strong>a)</strong> Hva er den molekylære partisjonsfunksjonen <span class="math notranslate nohighlight">\(q\)</span> for dette systemet?</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[q=\sum_{i=1}^2 e^{-\frac{\varepsilon_i}{k_BT}}=e^{-\frac{0}{k_BT}}+e^{-\frac{\varepsilon}{k_BT}}=1+e^{-\frac{\varepsilon}{k_BT}}\]</div>
+<p><strong>b)</strong> Hva er den gjennomsnittlige energien per partikkel <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span> utrykket med <span class="math notranslate nohighlight">\(\varepsilon\)</span> og <span class="math notranslate nohighlight">\(k_BT\)</span>? Hvilken verdi går <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span> mot når <span class="math notranslate nohighlight">\(T \rightarrow \infty \)</span>?</p>
+<p><strong>Svar</strong> Gjennomsnittsenergien er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ \langle \varepsilon \rangle = \sum_{i=1}^t \varepsilon_i \cdot p_i \]</div>
+<p>fra partisjonsfunksjonen vet vi at:</p>
+<div class="math notranslate nohighlight">
+\[p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{q}\ \implies p_1=\frac{1}{q},\  p_2= \frac{e^{-\frac{\varepsilon}{k_BT}}}{q}\]</div>
+<p>dermed er gjennomsnittsenergien:</p>
+<div class="math notranslate nohighlight">
+\[\langle \varepsilon \rangle = \sum_{i=1}^t \varepsilon_i \cdot p_i = \varepsilon_0 \cdot \frac{1}{q} + \varepsilon_1 \cdot \frac{e^{-\frac{\varepsilon}{k_BT}}}{q} = 0 + \frac{\varepsilon\cdot e^{-\frac{\varepsilon}{k_BT}}}{1+e^{-\frac{\varepsilon}{k_BT}}} = \frac{\varepsilon\cdot e^{-\frac{\varepsilon}{k_BT}}}{1+e^{-\frac{\varepsilon}{k_BT}}} \]</div>
+<p>Når <span class="math notranslate nohighlight">\(T \rightarrow \infty \)</span> vil  <span class="math notranslate nohighlight">\(e^{-\frac{\varepsilon}{k_BT}} \rightarrow 0\)</span>. Dermed får vi:</p>
+<div class="math notranslate nohighlight">
+\[\lim_{T \rightarrow 0}\langle \varepsilon \rangle=\lim_{T \rightarrow 0}\frac{\varepsilon\cdot e^{-\frac{\varepsilon}{k_BT}}}{1+e^{-\frac{\varepsilon}{k_BT}}} = \frac{\varepsilon}{2} \]</div>
+<p>At gjennomsnittsenergien er halparten av <span class="math notranslate nohighlight">\(\varepsilon\)</span> er en annen måte å si at halvparten av partiklene vil være i grunntilstanden og halvparten vil være i eksitert tilstand.</p>
+<p><strong>c)</strong> Hva er den totale indre energien <span class="math notranslate nohighlight">\(U\)</span> i systemet, utrykt med <span class="math notranslate nohighlight">\(N\)</span> og <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span></p>
+<p><strong>Svar</strong> Den indre energien blir da:</p>
+<div class="math notranslate nohighlight">
+\[ U=N\cdot \langle \varepsilon \rangle\]</div>
+<p><strong>d)</strong> Bruk utrykket for <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span> fra b), <span class="math notranslate nohighlight">\(U\)</span> fra oppgave c) og definisjonen av varmekapasitet:</p>
+<div class="math notranslate nohighlight">
+\[ C_v= \left( \frac{\partial U}{\partial T}  \right)_{N,V} \]</div>
+<p>til å finne varmekapasiteten for dette systemet.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint for derivasjonen:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<div class="math notranslate nohighlight">
+\[C_v= \left( \frac{\partial U}{\partial T}  \right)_{N,V} = N \left( \frac{\partial \langle \varepsilon \rangle}{\partial T}  \right) = N \left( \frac{\partial \langle \varepsilon \rangle}{\partial \beta} \right)\left( \frac{\partial \beta}{\partial T} \right) \]</div>
+<p class="sd-card-text">der <span class="math notranslate nohighlight">\(\beta = 1/k_BT\)</span> og partisjonsfunksjonen utrykkes med <span class="math notranslate nohighlight">\(\beta\)</span></p>
+<p class="sd-card-text">bruk da derivasjonsregelen:</p>
+<div class="math notranslate nohighlight">
+\[ f(x)=\frac{u(x)}{v(x)} \implies f'(x)=\frac{u'\cdot v - v'\cdot u}{v^2} \]</div>
+</div>
+</details><p><strong>Svar</strong> Vi bruker hintet og gjør et variabelskifte <span class="math notranslate nohighlight">\(\beta = 1/k_BT\)</span> slik at vi utrykker de to partielderiverte som:</p>
+<div class="math notranslate nohighlight">
+\[C_v= \left( \frac{\partial U}{\partial T}  \right)_{N,V} = N \left( \frac{\partial \langle \varepsilon \rangle}{\partial \beta} \right)\left( \frac{\partial \beta}{\partial T} \right) \]</div>
+<div class="math notranslate nohighlight">
+\[\left( \frac{\partial \beta}{\partial T} \right)= -\frac{1}{k_bT^2}\]</div>
+<div class="math notranslate nohighlight">
+\[ \left( \frac{\partial \langle \varepsilon \rangle}{\partial \beta} \right)= \frac{\partial(\frac{\varepsilon\cdot e^{-\beta\varepsilon}}{1+e^{-\beta\varepsilon}})}{\partial \beta}\]</div>
+<p>Vi bruker derivasjonsregelen med <span class="math notranslate nohighlight">\(u=\varepsilon\cdot e^{-\beta\varepsilon}\)</span> og <span class="math notranslate nohighlight">\(v={1+e^{-\beta\varepsilon}}\)</span></p>
+<p>slik at:</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial u}{\partial \beta}= -\varepsilon^2\cdot e^{-\beta \varepsilon}\]</div>
+<p>og</p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial v}{\partial \beta}= -\varepsilon\cdot e^{-\beta \varepsilon}\]</div>
+<p>dermed:</p>
+<div class="math notranslate nohighlight">
+\[ \left( \frac{\partial \langle \varepsilon \rangle}{\partial \beta} \right)= \frac{(-\varepsilon^2\cdot e^{-\beta \varepsilon})\cdot (1+e^{-\beta\varepsilon}) - (\varepsilon\cdot e^{-\beta\varepsilon})(-\varepsilon\cdot e^{-\beta \varepsilon}) }{({1+e^{-\beta\varepsilon}})^2}=\frac{-\varepsilon^2e^{-\beta \varepsilon}}{({1+e^{-\beta\varepsilon}})^2} \]</div>
+<p>Varmekapasiteten blir da:</p>
+<div class="math notranslate nohighlight">
+\[C_v=  N \left( \frac{\partial \langle \varepsilon \rangle}{\partial \beta} \right)\left( \frac{\partial \beta}{\partial T} \right) = \frac{N}{k_BT^2}\cdot\frac{\varepsilon^2e^{-\frac{\varepsilon}{k_bT}}}{({1+e^{-\frac{\varepsilon}{k_bT}}})^2} \]</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Schottky specific heat C_v(T) for a two-level system</span>
+<span class="c1"># C_v = (N / (k_B T^2)) * [ - ε^2 exp(-ε / (k_B T)) / (1 + exp(-ε / (k_B T)))^2 ]</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Physical parameters (choose convenient units)</span>
+<span class="n">k_B</span> <span class="o">=</span> <span class="mf">1.0</span>        <span class="c1"># Boltzmann constant (set to 1 in chosen units)</span>
+<span class="n">epsilon</span> <span class="o">=</span> <span class="mf">1.0</span>    <span class="c1"># Level spacing ε (also set to 1 in same units)</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mf">1.0</span>          <span class="c1"># Number of particles (just a prefactor here)</span>
+
+<span class="c1"># Temperature range: from small fraction of ε/k_B up to several times ε/k_B</span>
+<span class="n">T_min</span> <span class="o">=</span> <span class="mf">0.05</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">k_B</span>
+<span class="n">T_max</span> <span class="o">=</span> <span class="mf">5.0</span> <span class="o">*</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="n">k_B</span>
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">T_min</span><span class="p">,</span> <span class="n">T_max</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+
+<span class="c1"># Define C_v(T) according to the given formula</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">epsilon</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span><span class="p">)</span>
+<span class="n">Cv</span> <span class="o">=</span> <span class="n">N</span> <span class="o">*</span> <span class="p">(</span><span class="n">epsilon</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">)</span> <span class="o">/</span> <span class="p">(</span><span class="mf">1.0</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="n">x</span><span class="p">))</span><span class="o">**</span><span class="mi">2</span>
+
+<span class="c1"># Plot</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">Cv</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"$C_v(T)$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Temperature $T$  (in units of $\epsilon/k_B$)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$C_v$  (arbitrary units)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"Schottky Specific Heat for a Two-Level System"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/03683b30b65148e32019451fed84f5a1dd1ca4e0af74c30a2b83e74174d8ec9a.png" src="../../_images/03683b30b65148e32019451fed84f5a1dd1ca4e0af74c30a2b83e74174d8ec9a.png" />
+</div>
+</div>
+</section>
+<section id="oppgave-5-ekstra-utfordring-idealgassloven-fra-en-enkel-gittermodell">
+<h3>Oppgave 5 (Ekstra utfordring): Idealgassloven fra en enkel gittermodell<a class="headerlink" href="#oppgave-5-ekstra-utfordring-idealgassloven-fra-en-enkel-gittermodell" title="Link to this heading">#</a></h3>
+<p>Vi har en enkel gittermodell hvor du har <span class="math notranslate nohighlight">\(N\)</span> atomer og <span class="math notranslate nohighlight">\(M\)</span> hvor plasser disse atomene kan være. I forrige uke så vi i diskusjonsoppgave 2 at denne modellen kan brukes til å forklare hvorfor en gass vil fylle rommet den er i. Denne samme modellen kan vi nå bruke til å utlede idealgassloven. Ettersom at denne loven gjelder for gass-molekyler som ikke interagerer med hverandre er den mest riktig for tynne gass-blandinger der <span class="math notranslate nohighlight">\(M &gt;&gt; N\)</span></p>
+<p><strong>a)</strong> Hva er multiplisiteten for <span class="math notranslate nohighlight">\(N\)</span> atomer i <span class="math notranslate nohighlight">\(M\)</span> bokser, og hva er entropien?</p>
+<p><strong>b)</strong> Vi skal bruke sammenhengen mellom entropi, <span class="math notranslate nohighlight">\(S\)</span>, og trykk <span class="math notranslate nohighlight">\(p\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[ \frac{p}{T}=\left(\frac{\partial S}{\partial V} \right)_N. \]</div>
+<p>Legg merke til at vi ikke har volumet <span class="math notranslate nohighlight">\(V\)</span>, men vi har antall bokser <span class="math notranslate nohighlight">\(M\)</span>, og vi kan anta hver boks har volum <span class="math notranslate nohighlight">\(v_0\)</span>.</p>
+<p>Bruk kjerneregelen til å utrykke ligningen over med hensyn på <span class="math notranslate nohighlight">\(\frac{\partial S}{\partial M}\)</span></p>
+<p><strong>c)</strong> Deriver utrykket for entropi fra a) med hensyn på <span class="math notranslate nohighlight">\(M\)</span>.</p>
+<p><strong>d)</strong> Bruk utrykkene dere fant i de tidligere deloppgavene a) b) og c) og Taylor tilnærmingen med to ledd:</p>
+<div class="math notranslate nohighlight">
+\[ \ln(1-x) \approx -x -\frac{1}{2}x^2 \]</div>
+<p>til å utlede den idealgassloven:</p>
+<div class="math notranslate nohighlight">
+\[ p=\frac{Nk_BT}{V} \]</div>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>Vi ser på et system med <span class="math notranslate nohighlight">\(N=12\)</span> partikler og <span class="math notranslate nohighlight">\(4\)</span> energinivåer hvor energien er hhv. <span class="math notranslate nohighlight">\(0\)</span>, <span class="math notranslate nohighlight">\(1\)</span>, <span class="math notranslate nohighlight">\(2\)</span> og <span class="math notranslate nohighlight">\(3\)</span>.</p>
+<p><strong>a)</strong> Hvilken fordeling av partiklene vil maksimere multilplisiteten, <span class="math notranslate nohighlight">\(\Omega\)</span>? Regn ut <span class="math notranslate nohighlight">\(\Omega\)</span> og total energi <span class="math notranslate nohighlight">\(E\)</span>.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Multiplisiteten for et fler-nivå system kan vi finne ved <span class="math notranslate nohighlight">\(\frac{N!}{n_1!n_2!...n_t!}\)</span></p>
+</div>
+</details><p><strong>Svar</strong></p>
+<p>Multiplisiteten til flernivåsystemet er gitt ved</p>
+<div class="math notranslate nohighlight">
+\[\frac{N!}{n_1!n_2!...n_t!}\]</div>
+<p>Multiplisiteten blir størst når partiklene er gjevt fordelt, så for 4 nivåer og 12 partikler har vi at:</p>
+<div class="math notranslate nohighlight">
+\[\Omega_{max}=\frac{12!}{3!\cdot 3!\cdot3!\cdot3!}= 369600 \]</div>
+<p>Den totale energien får vi ved å summere antall partikler per energinivå multiplisert med energien til det nivået:</p>
+<div class="math notranslate nohighlight">
+\[ E=\sum_{i=1}^4 n_i\cdot \epsilon_i = 3\cdot0 + 3\cdot1 + 3\cdot2+ 3\cdot3 = 18\]</div>
+<p><strong>b)</strong> Ved en gitt temperatur er den totale energien kun <span class="math notranslate nohighlight">\(E=10.96\)</span>, og fordelingen du kom frem til i oppgave <strong>a</strong> er ikke lenger mulig. Hvilken fordelingsfunksjon vil nå beskrive fordelingen av partiklene?</p>
+<p>Den mest sannsynlige fordelingen av partikler i <span class="math notranslate nohighlight">\(t\)</span> energinivåer når totalenergien er begrenset er gitt av Boltzmann-fordelingen, som gir sansynligheten <span class="math notranslate nohighlight">\(p_i\)</span> for at en partikkel er i nivå <span class="math notranslate nohighlight">\(i\)</span> :</p>
+<div class="math notranslate nohighlight">
+\[ p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{\sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}}\]</div>
+<p><strong>c)</strong> Regn ut summen av Boltzmann-leddene <span class="math notranslate nohighlight">\(\sum{_i=1}^4 {e^{-\frac{\varepsilon_i}{k_BT}}}\)</span> når vi antar at <span class="math notranslate nohighlight">\(k_BT = 2\)</span> ved den gitte temperaturen.</p>
+<div class="math notranslate nohighlight">
+\[\sum{_i}{e^{-\frac{\varepsilon_i}{k_BT}}}= e^{-\frac{0}{2}}+e^{-\frac{1}{2}}+e^{-\frac{2}{2}} + e^{-\frac{3}{2}} = 1+0.6065+0.3678+0.223+0.135=2.332 \]</div>
+<p><strong>d)</strong> Finn sannsynlighetene <span class="math notranslate nohighlight">\(p_i\)</span> for hvert energinivå. Hvor mange partikler forventer du nå å finne i de ulike energinivåene?</p>
+<p>Sannsynlighetene er gitt fra Boltzmann:
+$<span class="math notranslate nohighlight">\( p_i = \frac{e^{-\frac{\varepsilon_i}{k_BT}}}{\sum_{i=1}^t e^{-\frac{\varepsilon_i}{k_BT}}}\)</span>$</p>
+<div class="math notranslate nohighlight">
+\[p_1=e^{-\frac{0}{2}}/2.332=1/2.332=0.455\]</div>
+<div class="math notranslate nohighlight">
+\[p_2=e^{-\frac{1}{2}}/2.332=0.276\]</div>
+<div class="math notranslate nohighlight">
+\[p_3=e^{-\frac{2}{2}}/2.332=0.167\]</div>
+<div class="math notranslate nohighlight">
+\[p_4=e^{-\frac{3}{2}}/2.332=0.101\]</div>
+<p>Circa antall partikler per energinivå er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ n_i=N\cdot p_i\]</div>
+<div class="math notranslate nohighlight">
+\[ n_1=12\cdot 0.455=5.46\]</div>
+<div class="math notranslate nohighlight">
+\[ n_2=12\cdot 0.276= 3.31\]</div>
+<div class="math notranslate nohighlight">
+\[ n_3=12\cdot 0.167=2.00\]</div>
+<div class="math notranslate nohighlight">
+\[ n_4=12\cdot 0.101=1.22\]</div>
+<p>Dette er antallet partikkler vi forventer å ha i hver skall, og med N=12 så blir dette desimaler. Partikler kommer selvølgelig bare i heltall og til enhver tid vil vi ha et heltall antall partikler i hvert energinivå, og verdiene vi fant kan vi se på som antall partikler hvert nivå har i gjennomsitt.</p>
+<p><strong>e)</strong> Regn ut gjennomsnittsenergien per partikkel.</p>
+<div class="math notranslate nohighlight">
+\[\langle \varepsilon \rangle = \sum_{i=1}^4 p_i\cdot \varepsilon_i = 0.455 \cdot 0 + 0.276 \cdot 1 + 0.167 \cdot 2 + 0.101 \cdot 3 = 0.913\]</div>
+</section>
+<section id="oppgave-7">
+<h3>Oppgave 7<a class="headerlink" href="#oppgave-7" title="Link to this heading">#</a></h3>
+<p>I Boltzmanns lov,</p>
+<div class="math notranslate nohighlight">
+\[p_j^* = \frac{e^{-E_j/k_BT}}{Q}\]</div>
+<p>kan vi se på partisjonsfunksjonen, <span class="math notranslate nohighlight">\(Q\)</span>, som det <em>effektive</em> antallet tilstander som er tilgjengelige for et system.</p>
+<p><strong>a)</strong> Hvordan tolker du grenseverdiene <span class="math notranslate nohighlight">\(E_j \rightarrow 0\)</span> og <span class="math notranslate nohighlight">\(T \rightarrow \infty\)</span>?</p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(E_j \rightarrow 0\)</span> betyr at energien til tilstand <em>j</em> mot 0, og i vårt tilfelle kan vi se på det som at forskjellen i energinivåene til systemet er lave.
+<span class="math notranslate nohighlight">\(T \rightarrow \infty\)</span> betyr at temperaturen er meget høy, noe som gjør flere energitilstander tilgjengelige.</p>
+<p><strong>b)</strong> Bruk grenseverdiene for energi og temperatur, <span class="math notranslate nohighlight">\(E_j \rightarrow 0\)</span> eller <span class="math notranslate nohighlight">\(T \rightarrow \infty\)</span>, til å vise at for et system med <em>t</em> tilstander vil alle tilstander være like befolkede når temperaturen er høy eller energien veldig lav.</p>
+<p><strong>Svar</strong> Når <span class="math notranslate nohighlight">\(E_j \rightarrow 0\)</span> (energien til tilstand <em>j</em> mot 0), eller når <span class="math notranslate nohighlight">\(T \rightarrow \infty\)</span> (temperaturen er høy) blir alle tilstander like befolket, og vi får at</p>
+<div class="math notranslate nohighlight">
+\[E_j/k_BT \rightarrow 0\]</div>
+<p>Skriver vi opp <span class="math notranslate nohighlight">\(Q\)</span> på formen</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_{j=1}^{t}{e^{-E_i/k_BT}}\rightarrow Q = \sum_{j=1}^{t}{e^{0}}\]</div>
+<p>Og dermed får vi at <span class="math notranslate nohighlight">\(Q\rightarrow t\)</span></p>
+<div class="math notranslate nohighlight">
+\[p_j^* = \frac{e^{-E_j/k_BT}}{Q} \approx \frac{e^0}{Q}=\frac{1}{t}\]</div>
+<p>Dette viser oss at når temperaturen er høy eller forskjellen i energi er lav, vil alle tilstander være like sannsynlige (like befolkede).</p>
+<p><strong>c)</strong> Hva skjer i det motsatte tilfellet, hvor  <span class="math notranslate nohighlight">\(E_{j\neq 1} \rightarrow \infty\)</span> eller <span class="math notranslate nohighlight">\(T \rightarrow 0\)</span>.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[E_{j\neq 1} \rightarrow \infty \text{,} T \rightarrow 0 \implies E_j/k_BT \rightarrow \infty \implies p^*_j \rightarrow 0\]</div>
+<p>Siden vi antar at grunntilstanden fortsatt har energi 0, har vi at <span class="math notranslate nohighlight">\(p_1=1 \implies Q\rightarrow 1\)</span>.</p>
+<p>Når temperaturen er lav eller energien til de eksiterte tilstandene svært høy, vil kun grunntilstanden være den effektivt befolkede tilstanden.</p>
+</section>
+<section id="oppgave-8">
+<h3>Oppgave 8<a class="headerlink" href="#oppgave-8" title="Link to this heading">#</a></h3>
+<p>Vi ser nå på et degenerert to-nivå system hvor grunntilstanden er gitt ved <span class="math notranslate nohighlight">\(E_0=0\)</span>, og <span class="math notranslate nohighlight">\(g_0\)</span>=1, og <span class="math notranslate nohighlight">\(E_1\approx k_BT \approx 4\cdot 10^{-21} J\)</span> og <span class="math notranslate nohighlight">\(g_1=3\)</span>. Temperaturen er <span class="math notranslate nohighlight">\(298\)</span>K, og Boltzmanns konstant er <span class="math notranslate nohighlight">\(k_B=1.380649\cdot 10^{-23}\)</span>.</p>
+<p><strong>a)</strong> Finn partisjonsfunksjonen, <span class="math notranslate nohighlight">\(Q\)</span>.</p>
+<p><strong>Svar</strong> $<span class="math notranslate nohighlight">\(Q=\sum_{j=1}^{t}{e^{-E_i/k_BT}} =g_0e^{-E_0/k_BT}+g_1e^{-E_1/k_BT} = 1+3e^{-E_1/k_BT}\)</span>$</p>
+<p>Siden <span class="math notranslate nohighlight">\(E_1\approx k_BT\)</span> får vi at</p>
+<div class="math notranslate nohighlight">
+\[Q=1+3e^{-1}\approx 2.104\]</div>
+<p><strong>b)</strong> Bruk svaret ditt fra oppgave <strong>a</strong> til å finne den indre energien, <span class="math notranslate nohighlight">\(U\)</span>.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Hint</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Finn først <span class="math notranslate nohighlight">\(\frac{\partial Q}{\partial \beta}\)</span>, og bruk deretter <span class="math notranslate nohighlight">\(U = -\frac{1}{Q}\frac{\partial Q}{\partial \beta}\)</span></p>
+<p class="sd-card-text"><strong>Svar</strong> Vi ønsker å bruke at den indre energien er gitt ved <span class="math notranslate nohighlight">\(U = -\frac{1}{Q}\frac{\partial Q}{\partial \beta}\)</span>, og derfor finner vi først <span class="math notranslate nohighlight">\(\frac{\partial Q}{\partial \beta}\)</span>, der <span class="math notranslate nohighlight">\(\beta = 1/k_BT\)</span></p>
+<div class="math notranslate nohighlight">
+\[\frac{\partial Q}{\partial \beta} = \frac{\partial (1+3e^{-E_1\beta})}{\partial \beta}= \frac{\partial 1}{\partial \beta} + 3\frac{\partial (e^{-E_1\beta})}{\partial \beta}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{\partial Q}{\partial \beta}=3(-E_1)e^{-E_1\beta}\]</div>
+<p class="sd-card-text">Bruker igjen at <span class="math notranslate nohighlight">\(E_1\approx k_BT\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[U = -\frac{1}{Q}\frac{\partial Q}{\partial \beta} = -\frac{1}{1+3e^{-1}}-3E_1e^{-1} = E_1\frac{3e^{-1}}{1+3e^{-1}}\]</div>
+</div>
+</details><p><strong>c)</strong> Bruk $<span class="math notranslate nohighlight">\(S = k_B\ln{Q}+k_B(\frac{U}{T})\)</span>$ til å finne entropien.</p>
+</section>
+<section id="oppgave-9">
+<h3>Oppgave 9<a class="headerlink" href="#oppgave-9" title="Link to this heading">#</a></h3>
+<p>I forrige ukes diskusjonsoppgaver skulle dere finne en oversettelse for “distinguishable” og “indistinguishable” partikler, og i oppgave 3 denne uken så dere at dette hadde en betydning for hvordan vi uttrykker den totale partisjonsfunksjonen.</p>
+<p>For skillbare partikler er <span class="math notranslate nohighlight">\(Q=q^N\)</span>, mens for uskillbare partikler kan vi tilnærme partisjonsfunksjonen med <span class="math notranslate nohighlight">\(Q=\frac{q^N}{N!}\)</span>. ´Merk at denne tilnærmingen kun er god dersom partiklene ikke har en høy grad av degenerasjon/okkupasjon av samme tilstander.</p>
+<p>En praktisk konsekvens av de ulike partisjonsfunksjonene finner vi når vi sammenlikner entropien mellom et system med skillbare partikler og et system med uskillbare partikler. Vi ser nå på et system med <span class="math notranslate nohighlight">\(T=298 K\)</span>, <span class="math notranslate nohighlight">\(q=1\cdot 10^{30}\)</span> og <span class="math notranslate nohighlight">\(U_m= 3700 \text{J/mol}\)</span>. Her kommer du også til å få bruk for gasskonstanten <span class="math notranslate nohighlight">\(R=8.31446 \text{J/(Kmol)}\)</span>.</p>
+<p><strong>a)</strong> Finn den molare entropien når partiklene er skillbare.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[S=k_B\ln{Q}+\frac{U}{T}\]</div>
+<p>når partiklene er skillbare har vi at <span class="math notranslate nohighlight">\(Q=q^N\)</span>, og vi kan skrive</p>
+<div class="math notranslate nohighlight">
+\[S = k_B\ln{q^N}+\frac{U}{T} = N\ln{q}+\frac{U}{T}\]</div>
+<p>Vi skal her finne den molare entropien, og antar derfor at <span class="math notranslate nohighlight">\(N=N_A\)</span>, og vi kan derfor bruke gasskonstanten (<span class="math notranslate nohighlight">\(R = k_B/N_A\)</span>) altså:</p>
+<div class="math notranslate nohighlight">
+\[S_m = \frac{S}{N_A} =R\ln{q}+\frac{U_m}{T}\]</div>
+<p>Setter inn verdiene gitt i oppgaven, og får at</p>
+<div class="math notranslate nohighlight">
+\[S_m = \frac{S}{N_A} = 8.31446 \text{J/(Kmol)}\cdot\ln{1\cdot 10^{30}}+\frac{3700 \text{J/mol}}{298K} = 586.76 \text{J/(Kmol)}\]</div>
+<p><strong>b)</strong> Finn den molare entropien når partiklene er uskillbare.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[S=k_B\ln{Q}+\frac{U}{T}\]</div>
+<p>når partiklene er uskillbare tilnærmer vi partisjonsfunksjonen med <span class="math notranslate nohighlight">\(Q=\frac{q^N}{N!}\)</span>, og entropien blir da</p>
+<div class="math notranslate nohighlight">
+\[S = k_B\ln{\frac{q^N}{N!}}+\frac{U}{T}\]</div>
+<p>Vi ser nærmere på</p>
+<div class="math notranslate nohighlight">
+\[\ln{\frac{q^N}{N!}}=\ln{q^N}-\ln{N!}=N\ln{q}-\ln{N!}\]</div>
+<p>Vi bruker nå Stirlings tilnærming, <span class="math notranslate nohighlight">\(\ln{N!} \approx N\ln{N}-N\)</span>, og får at</p>
+<div class="math notranslate nohighlight">
+\[S=k_B(N\ln{q}-N\ln{N}-N)+\frac{U}{T}\]</div>
+<p>med <span class="math notranslate nohighlight">\(N=N_A\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[S= k_B(N_A\ln{q}-N_A\ln{N_A}-N_A)+\frac{U}{T}\]</div>
+<p>Deler på <span class="math notranslate nohighlight">\(N_A\)</span></p>
+<div class="math notranslate nohighlight">
+\[\frac{S}{N_A}= S_m = R(\ln{q}-ln{N_A}-1)+\frac{U_m}{T} = 8.31446 \text{J/(Kmol)}\cdot (\ln{1\cdot 10^{30}}-\ln{6.022\cdot 10^{23}}-1)+\frac{3700 \text{J/mol}}{298K} = 123.2 \text{J/(Kmol)}\]</div>
+</section>
+<section id="ekstraoppgave">
+<h3>Ekstraoppgave<a class="headerlink" href="#ekstraoppgave" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Forklar forskjellen på skjelnbare og uskjelnbare partikler. Hvorfor skiller vi mellom dem og hvorfor er dette viktig å være klar over når vi setter opp partisjonsfunksjonen?</p>
+<p><strong>Svar</strong> Dette er repetisjon fra forrige uke, hvor vi så at “skjelnbare” partikler er partikler vi kan vite nøyaktig posisjon til - og dermed unikt identifisere hver partikkel (distinguishable), mens det er umulig å skille mellom “uskjelnbare” partikler, de kan ikke spores individuelt.</p>
+<p><strong>b)</strong> Hva er partisjonsfunksjonen og hva brukes den til?</p>
+<p><strong>Svar</strong> Partisjonsfunksjonen er</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_i e^{-E_i/k_BT}\]</div>
+<p>Siden summen går over alle mikrotilstander trenger vi <span class="math notranslate nohighlight">\(Q\)</span> for å normaliserer Boltzmann-vektene slik at sannsynlighetene summerer til 1:</p>
+<div class="math notranslate nohighlight">
+\[p_i=\frac{e^{-E_i/k_BT}}{Q}\]</div>
+<p>Partisjonsfunksjonen kan, som vi kommer tilbake til, sees på som et mål på det <em>effektive</em> antallet tilstander som er tilgjengelige i et system, og brukes til å beregne makroskopiske størrelser som indre energi og entropi.</p>
+<p><strong>c)</strong> I praksis måler vi som regel <em>energiendringer</em> i et system, ikke absolutte energier. Tenk deg at vi har målt energiendringen <span class="math notranslate nohighlight">\(\Delta E\)</span> til et lite system (for eksempel en liten mengde gass i en beholder) relativt til grunntilstanden, flere ganger, og funnet fire mulige verdier. Multiplisiteten <span class="math notranslate nohighlight">\(\Omega(\Delta E)\)</span> for hver av dem er gitt i tabellen under:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p><span class="math notranslate nohighlight">\(\Delta E\)</span> (i enheter av <span class="math notranslate nohighlight">\(\Delta\epsilon\)</span>)</p></th>
+<th class="head"><p>0</p></th>
+<th class="head"><p>1</p></th>
+<th class="head"><p>2</p></th>
+<th class="head"><p>3</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\Omega(\Delta E)\)</span></p></td>
+<td><p>1</p></td>
+<td><p>4</p></td>
+<td><p>6</p></td>
+<td><p>4</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<ul class="simple">
+<li><p>Sett <span class="math notranslate nohighlight">\(\Delta\epsilon/k_BT=1\)</span>, og bruk tabellen til å sette opp <span class="math notranslate nohighlight">\(Q\)</span> uttrykt ved energidifferanser, altså på formen <span class="math notranslate nohighlight">\(Q=\Omega(0)+\Omega(\Delta E_1)e^{-\Delta E_1\Delta\epsilon/k_BT}+\cdots\)</span>, og regn den ut.</p></li>
+<li><p>Bruk resultatet til å finne forholdet <span class="math notranslate nohighlight">\(p(\Delta E{=}1\Delta\epsilon)/p(\Delta E{=}0)\)</span>. (Husk at <span class="math notranslate nohighlight">\(p(\Delta E)=\Omega(\Delta E)e^{-\Delta E\Delta\epsilon/k_BT}/Q\)</span>, multiplisiteten skal være med.)</p></li>
+<li><p>Forklar hvordan <span class="math notranslate nohighlight">\(Q\)</span> oppfører seg i de to ekstremtilfellene: hva blir <span class="math notranslate nohighlight">\(Q\)</span> dersom <span class="math notranslate nohighlight">\(\Delta\epsilon/k_BT\to0\)</span>, og hva blir <span class="math notranslate nohighlight">\(Q\)</span> dersom <span class="math notranslate nohighlight">\(\Delta\epsilon/k_BT\to\infty\)</span>? Bruk tabellen til å begrunne svaret ditt.</p></li>
+<li><p>Regn ut indre energi <span class="math notranslate nohighlight">\(U=\sum_{\Delta E}\Omega(\Delta E)\,\Delta E\,e^{-\Delta E\Delta\epsilon/k_BT}/Q\)</span> (i enheter av <span class="math notranslate nohighlight">\(\Delta\epsilon\)</span>), og deretter entropien <span class="math notranslate nohighlight">\(S=k_B\ln Q+U/T\)</span> (skriv svaret som <span class="math notranslate nohighlight">\(S/k_B\)</span>).</p></li>
+</ul>
+<p><strong>Svar</strong> Når flere mikrotilstander har samme energi, kaller vi de degenererte, og vi kan gruppere dem. Her er <span class="math notranslate nohighlight">\(\Omega(\Delta E_j)\)</span> antallet mikrotilstander med energien <span class="math notranslate nohighlight">\(\Delta E_j\)</span>, altså degenerasjonen til energinivået. Dermed får vi</p>
+<div class="math notranslate nohighlight">
+\[Q=\sum_j\Omega(\Delta E_j)e^{-\Delta E_j/k_BT}\]</div>
+<p>Bruker verdiene gitt i tabellen:</p>
+<div class="math notranslate nohighlight">
+\[Q=1+4e^{-\Delta\varepsilon/k_BT}+6e^{-2\Delta\varepsilon/k_BT}+4e^{-3\Delta\varepsilon/k_BT}\]</div>
+<p>Ved <span class="math notranslate nohighlight">\(\Delta\varepsilon/(k_BT)=1\)</span> får vi</p>
+<div class="math notranslate nohighlight">
+\[Q=1+4e^{-1}+6e^{-2}+4e^{-3}\approx3.48\]</div>
+<p>Sannsynligheten for et helt <strong>energinivå</strong> er</p>
+<div class="math notranslate nohighlight">
+\[P(\Delta E_j)=\frac{\Omega(\Delta E_j)e^{-\Delta E_j/k_BT}}{Q}\]</div>
+<p>Derfor er</p>
+<div class="math notranslate nohighlight">
+\[\frac{P(\Delta E=\Delta\varepsilon)}{P(\Delta E=0)}=4e^{-1}\approx1.47\]</div>
+<p>Selv om hver enkelt mikrotilstand ved <span class="math notranslate nohighlight">\(\Delta E=\Delta\varepsilon\)</span> har lavere Boltzmann-vekt enn grunntilstanden, finnes det fire slike mikrotilstander. Hele energinivået blir derfor mer sannsynlig i dette eksempelet.</p>
+<p>Når <span class="math notranslate nohighlight">\(\Delta\varepsilon/(k_BT)\to0\)</span>, går alle Boltzmann-faktorene mot 1, slik at</p>
+<div class="math notranslate nohighlight">
+\[Q\to1+4+6+4=15\]</div>
+<p>Når <span class="math notranslate nohighlight">\(\Delta\varepsilon/(k_BT)\to\infty\)</span>, går Boltzmann-faktorene for alle eksiterte energier mot 0, slik at</p>
+<div class="math notranslate nohighlight">
+\[Q\to1\]</div>
+<p>Den indre energien er</p>
+<div class="math notranslate nohighlight">
+\[U=\frac{1}{Q}\sum_j\Omega(\Delta E_j)\Delta E_j e^{-\Delta E_j/k_BT}\]</div>
+<p>Ved <span class="math notranslate nohighlight">\(\Delta\varepsilon/(k_BT)=1\)</span> blir</p>
+<div class="math notranslate nohighlight">
+\[U=\frac{4e^{-1}+12e^{-2}+12e^{-3}}{3.48}\Delta\varepsilon\approx1.06\Delta\varepsilon\]</div>
+<p>Til slutt</p>
+<div class="math notranslate nohighlight">
+\[\frac{S}{k_B}=\ln Q+\frac{U}{k_BT}\]</div>
+<p>Siden <span class="math notranslate nohighlight">\(k_BT=\Delta\varepsilon\)</span> i dette tilfellet, får vi</p>
+<div class="math notranslate nohighlight">
+\[\frac{S}{k_B}=\ln(3.48)+1.06\approx2.31\]</div>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_01_under_revision_LF.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-hva-er-sannsynligheten-for-a-finne-en-partikkel-i-et-gitt-niva-nar-entropien-er-maksimert-og-vi-har-en-konstant-totalenergi">Oppgave 2: Hva er sannsynligheten for å finne en partikkel i et gitt nivå når entropien er maksimert OG vi har en konstant totalenergi?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-litt-om-partisjonsfunksjonen">Oppgave 3: Litt om partisjonsfunksjonen</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-fra-partisjonfunsjon-til-termodynamiske-storrelser">Oppgave 4: Fra partisjonfunsjon til termodynamiske størrelser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5-ekstra-utfordring-idealgassloven-fra-en-enkel-gittermodell">Oppgave 5 (Ekstra utfordring): Idealgassloven fra en enkel gittermodell</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#ekstraoppgave">Ekstraoppgave</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

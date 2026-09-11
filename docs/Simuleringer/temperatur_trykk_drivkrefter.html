@@ -1,0 +1,146 @@
+<h2 class="sr-only">Interaktiv simulering: temperatur som drivkraft ved konstant volum, og trykk som drivkraft ved konstant entropi. To grafer viser indre energi U som funksjon av entropi S (venstre) og volum V (høyre), med glidebrytere og tangentlinjer som viser de partiellderiverte T og -p.</h2>
+
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+
+  <div>
+    <p style="font-size: 14px; font-weight: 500; color: var(--text-primary); margin: 0 0 4px;">Konstant volum: U(S)</p>
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 10px;">Helningstallet til tangenten er temperaturen T</p>
+    <svg id="svg1" viewBox="0 0 300 200" style="width: 100%; height: auto;" role="img" aria-label="Graf av indre energi som funksjon av entropi ved konstant volum">
+      <line x1="40" y1="165" x2="285" y2="165" stroke="var(--border-strong)" stroke-width="1"/>
+      <line x1="40" y1="15" x2="40" y2="165" stroke="var(--border-strong)" stroke-width="1"/>
+      <text x="285" y="180" text-anchor="end" font-size="12" fill="var(--text-muted)">S (entropi)</text>
+      <text x="15" y="20" text-anchor="start" font-size="12" fill="var(--text-muted)">U</text>
+      <path id="curve1" fill="none" stroke="#D85A30" stroke-width="2"/>
+      <line id="tangent1" stroke="#0C447C" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <circle id="point1" r="5" fill="#D85A30"/>
+    </svg>
+    <div style="display: flex; align-items: center; gap: 12px; margin: 12px 0 8px;">
+      <label for="slider1" style="font-size: 13px; color: var(--text-secondary); min-width: 50px;">Entropi S</label>
+      <input type="range" id="slider1" min="0.5" max="10" step="0.1" value="5" style="flex: 1;"/>
+      <span id="s-out" style="font-size: 13px; font-weight: 500; min-width: 32px; text-align: right;">5.0</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div style="background: var(--surface-1); border-radius: var(--radius); padding: 0.6rem 0.8rem;">
+        <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">U(S)</p>
+        <p style="font-size: 18px; font-weight: 500; margin: 0;" id="u1-out">–</p>
+      </div>
+      <div style="background: var(--surface-1); border-radius: var(--radius); padding: 0.6rem 0.8rem;">
+        <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">T = (dU/dS)<sub>V</sub></p>
+        <p style="font-size: 18px; font-weight: 500; margin: 0; color: #0C447C;" id="t-out">–</p>
+      </div>
+    </div>
+  </div>
+
+  <div>
+    <p style="font-size: 14px; font-weight: 500; color: var(--text-primary); margin: 0 0 4px;">Konstant entropi: U(V)</p>
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 10px;">Helningstallet til tangenten er minus trykket, -p</p>
+    <svg id="svg2" viewBox="0 0 300 200" style="width: 100%; height: auto;" role="img" aria-label="Graf av indre energi som funksjon av volum ved konstant entropi">
+      <line x1="40" y1="165" x2="285" y2="165" stroke="var(--border-strong)" stroke-width="1"/>
+      <line x1="40" y1="15" x2="40" y2="165" stroke="var(--border-strong)" stroke-width="1"/>
+      <text x="285" y="180" text-anchor="end" font-size="12" fill="var(--text-muted)">V (volum)</text>
+      <text x="15" y="20" text-anchor="start" font-size="12" fill="var(--text-muted)">U</text>
+      <path id="curve2" fill="none" stroke="#0F6E56" stroke-width="2"/>
+      <line id="tangent2" stroke="#854F0B" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <circle id="point2" r="5" fill="#0F6E56"/>
+    </svg>
+    <div style="display: flex; align-items: center; gap: 12px; margin: 12px 0 8px;">
+      <label for="slider2" style="font-size: 13px; color: var(--text-secondary); min-width: 50px;">Volum V</label>
+      <input type="range" id="slider2" min="1" max="10" step="0.1" value="4" style="flex: 1;"/>
+      <span id="v-out" style="font-size: 13px; font-weight: 500; min-width: 32px; text-align: right;">4.0</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px;">
+      <div style="background: var(--surface-1); border-radius: var(--radius); padding: 0.6rem 0.8rem;">
+        <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">U(V)</p>
+        <p style="font-size: 18px; font-weight: 500; margin: 0;" id="u2-out">–</p>
+      </div>
+      <div style="background: var(--surface-1); border-radius: var(--radius); padding: 0.6rem 0.8rem;">
+        <p style="font-size: 12px; color: var(--text-secondary); margin: 0;">p = -(dU/dV)<sub>S</sub></p>
+        <p style="font-size: 18px; font-weight: 500; margin: 0; color: #854F0B;" id="p-out">–</p>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  var PLX0 = 40, PLX1 = 285, PLY0 = 15, PLY1 = 165;
+
+  function makeMapper(domX, domY) {
+    return {
+      x: function(x) { return PLX0 + (x - domX[0]) / (domX[1] - domX[0]) * (PLX1 - PLX0); },
+      y: function(y) { return PLY1 - (y - domY[0]) / (domY[1] - domY[0]) * (PLY1 - PLY0); }
+    };
+  }
+
+  function buildPath(mapper, domX, fn, n) {
+    var pts = [];
+    for (var i = 0; i <= n; i++) {
+      var x = domX[0] + (domX[1] - domX[0]) * i / n;
+      var y = fn(x);
+      pts.push((i === 0 ? "M" : "L") + mapper.x(x).toFixed(1) + "," + mapper.y(y).toFixed(1));
+    }
+    return pts.join(" ");
+  }
+
+  var k = 4;
+  var U1 = function(S) { return k * (Math.exp(S / k) - 1); };
+  var T1 = function(S) { return Math.exp(S / k); };
+  var dom1X = [0, 10], dom1Y = [0, U1(10) * 1.08];
+  var map1 = makeMapper(dom1X, dom1Y);
+  document.getElementById("curve1").setAttribute("d", buildPath(map1, dom1X, U1, 60));
+
+  var D = 10, n = 0.4;
+  var U2 = function(V) { return D * Math.pow(V, -n); };
+  var P2 = function(V) { return n * D * Math.pow(V, -n - 1); };
+  var dom2X = [1, 10], dom2Y = [0, U2(1) * 1.08];
+  var map2 = makeMapper(dom2X, dom2Y);
+  document.getElementById("curve2").setAttribute("d", buildPath(map2, dom2X, U2, 60));
+
+  function updateTangent(mapper, dom, x0, y0, slope, lineEl) {
+    var halfSpan = (dom[1] - dom[0]) * 0.18;
+    var xa = Math.max(dom[0], x0 - halfSpan);
+    var xb = Math.min(dom[1], x0 + halfSpan);
+    var ya = y0 + slope * (xa - x0);
+    var yb = y0 + slope * (xb - x0);
+    lineEl.setAttribute("x1", mapper.x(xa).toFixed(1));
+    lineEl.setAttribute("y1", mapper.y(ya).toFixed(1));
+    lineEl.setAttribute("x2", mapper.x(xb).toFixed(1));
+    lineEl.setAttribute("y2", mapper.y(yb).toFixed(1));
+  }
+
+  var slider1 = document.getElementById("slider1");
+  var point1 = document.getElementById("point1");
+  var tangent1 = document.getElementById("tangent1");
+
+  function update1() {
+    var S = parseFloat(slider1.value);
+    var u = U1(S), t = T1(S);
+    document.getElementById("s-out").textContent = S.toFixed(1);
+    document.getElementById("u1-out").textContent = u.toFixed(1);
+    document.getElementById("t-out").textContent = t.toFixed(2);
+    point1.setAttribute("cx", map1.x(S).toFixed(1));
+    point1.setAttribute("cy", map1.y(u).toFixed(1));
+    updateTangent(map1, dom1X, S, u, t, tangent1);
+  }
+  slider1.addEventListener("input", update1);
+  update1();
+
+  var slider2 = document.getElementById("slider2");
+  var point2 = document.getElementById("point2");
+  var tangent2 = document.getElementById("tangent2");
+
+  function update2() {
+    var V = parseFloat(slider2.value);
+    var u = U2(V), p = P2(V);
+    document.getElementById("v-out").textContent = V.toFixed(1);
+    document.getElementById("u2-out").textContent = u.toFixed(2);
+    document.getElementById("p-out").textContent = p.toFixed(2);
+    point2.setAttribute("cx", map2.x(V).toFixed(1));
+    point2.setAttribute("cy", map2.y(u).toFixed(1));
+    updateTangent(map2, dom2X, V, u, -p, tangent2);
+  }
+  slider2.addEventListener("input", update2);
+  update2();
+})();
+</script>

@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maxwell-Boltzmann-fordelingen</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--fill:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:14px;}
+
+  .formula{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;padding:13px 14px;
+    text-align:center;font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;
+    color:var(--ink);margin-bottom:14px;}
+  .formula .m{color:var(--fill);}
+  .formula .t{color:var(--curve);}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  svg{display:block;width:100%;height:auto;cursor:crosshair;touch-action:none;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .ctl{margin-bottom:13px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:"SF Mono",ui-monospace,Menlo,monospace;}
+  .ctl label b{font-weight:600;}
+  .ctl.t label b{color:var(--curve);}
+  .ctl.m label b{color:var(--fill);}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  #tRange::-webkit-slider-thumb{background:var(--curve);}
+  #mRange::-webkit-slider-thumb{background:var(--fill);}
+  #tRange::-moz-range-thumb{background:var(--curve);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  #mRange::-moz-range-thumb{background:var(--fill);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  .gases{display:flex;gap:6px;flex-wrap:wrap;margin-top:4px;}
+  .gases button{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:11px;
+    padding:5px 9px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;}
+  .gases button:hover{background:var(--ink);color:var(--paper);}
+  .gases button.on{background:var(--fill);border-color:var(--fill);color:#fff;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:6px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;}
+  .val.area{color:var(--fill);font-size:17px;}
+  .hint{margin-top:8px;font-size:12px;color:var(--muted);font-style:italic;min-height:34px;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--fill);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Maxwell-Boltzmann-fordelingen</div>
+  <h1>Fartsfordelingen i en gass</h1>
+  <p class="sub">Aksene står fast, så du ser hvordan fordelingen blir bredere eller smalere når du endrer temperatur og masse. Dra over grafen for å markere et fartsintervall.</p>
+
+  <div class="formula">
+    f(v) = 4π ( <span class="m">m</span> / 2πk<sub>B</sub><span class="t">T</span> )<sup>3/2</sup> · v² · e<sup>−<span class="m">m</span>v²/2k<sub>B</sub><span class="t">T</span></sup>
+  </div>
+
+  <div class="stage">
+    <svg id="viz" viewBox="0 0 640 320" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Parametere</h2>
+      <div class="ctl t">
+        <label>temperatur T <b id="tLab">300 K</b></label>
+        <input type="range" id="tRange" min="50" max="600" step="5" value="300">
+      </div>
+      <div class="ctl m">
+        <label>masse per molekyl <b id="mLab">28.01 u</b></label>
+        <input type="range" id="mRange" min="16" max="140" step="0.5" value="28">
+      </div>
+      <div class="gases" id="gases"></div>
+    </div>
+
+    <div class="card">
+      <h2>Markert intervall</h2>
+      <div class="row"><span class="lab">andel av molekylene</span><span class="val area" id="areaVal">—</span></div>
+      <div class="row"><span class="lab">totalt areal under kurven</span><span class="val" id="totVal">1.000</span></div>
+      <div class="hint" id="hint">Dra over grafen for å markere et intervall.</div>
+    </div>
+  </div>
+
+  <p class="note">Prøv å skru temperaturen opp: kurven blir bredere og lavere, siden arealet alltid må være 1. Øker du massen i stedet, skjer det motsatte — tunge molekyler beveger seg langsommere og samler seg i en smal, høy topp.</p>
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById('viz');
+  const kB=1.380649e-23, NA=6.02214076e23;
+
+  // masses in u (= g/mol numerically)
+  const GASES=[['CH₄',16.04],['Ne',20.18],['N₂',28.01],['O₂',32.00],
+               ['Ar',39.95],['CO₂',44.01],['Kr',83.80],['Xe',131.3]];
+
+  let T=300, Mu=28.01;      // Mu in u
+  let sel=null;
+
+  const mkg=()=>Mu/1000/NA;                       // kg per molecule
+  const f=v=>{
+    const m=mkg();
+    return 4*Math.PI*Math.pow(m/(2*Math.PI*kB*T),1.5)*v*v*Math.exp(-m*v*v/(2*kB*T));
+  };
+  function integ(a,b){
+    if(b<=a)return 0;
+    const n=800,h=(b-a)/n;let s=f(a)+f(b);
+    for(let i=1;i<n;i++)s+=f(a+i*h)*(i%2?4:2);
+    return s*h/3;
+  }
+
+  // FIXED axes
+  const VMAX=2000, YMAX=1.15e-2;
+  const W=640,H=320,padL=58,padR=22,base=248,top=26;
+  const sx=v=>padL+(v/VMAX)*(W-padL-padR);
+  const sy=y=>base-(y/YMAX)*(base-top);
+  const xInv=px=>Math.max(0,Math.min(VMAX,(px-padL)/(W-padL-padR)*VMAX));
+
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  function txt(x,y,s,o={}){
+    const t=el('text',{x,y,'text-anchor':o.anchor||'middle',
+      'font-family':o.fam||'SF Mono, monospace','font-size':o.size||11,fill:o.fill||'var(--muted)'});
+    t.textContent=s;svg.appendChild(t);
+  }
+
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+    // faint horizontal gridlines (fixed, so scale is visibly constant)
+    for(let i=1;i<=4;i++){
+      const y=sy(YMAX*i/5);
+      svg.appendChild(el('line',{x1:padL,y1:y,x2:W-padR,y2:y,
+        stroke:'var(--grid)','stroke-width':0.8}));
+    }
+
+    // shaded selection
+    if(sel && sel.b>sel.a){
+      let d=`M ${sx(sel.a)} ${base} `;
+      for(let i=0;i<=140;i++){
+        const v=sel.a+(sel.b-sel.a)*i/140;
+        d+=`L ${sx(v).toFixed(2)} ${sy(f(v)).toFixed(2)} `;
+      }
+      d+=`L ${sx(sel.b)} ${base} Z`;
+      svg.appendChild(el('path',{d,fill:'var(--fill)','fill-opacity':.40}));
+    }
+
+    // axes
+    svg.appendChild(el('line',{x1:padL-10,y1:base,x2:W-padR,y2:base,stroke:'var(--axis)','stroke-width':1.5}));
+    svg.appendChild(el('line',{x1:padL,y1:base,x2:padL,y2:top-6,stroke:'var(--axis)','stroke-width':1.5}));
+    for(let v=0;v<=VMAX;v+=250){
+      svg.appendChild(el('line',{x1:sx(v),y1:base,x2:sx(v),y2:base+5,stroke:'var(--axis)','stroke-width':1}));
+      txt(sx(v),base+19,String(v),{size:11,fam:'Georgia'});
+    }
+    txt((padL+W-padR)/2,base+40,'fart v  (m/s)',{size:12,fam:'Georgia',fill:'var(--ink)'});
+    txt(padL-48,top+4,'f(v)',{anchor:'start',size:11});
+
+    // curve
+    let d='';
+    for(let i=0;i<=500;i++){
+      const v=VMAX*i/500;
+      d+=(i===0?'M':'L')+sx(v).toFixed(2)+','+sy(f(v)).toFixed(2)+' ';
+    }
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--curve)','stroke-width':2.8}));
+
+    // readouts
+    const areaEl=document.getElementById('areaVal');
+    const hintEl=document.getElementById('hint');
+    if(sel && sel.b>sel.a){
+      const p=integ(sel.a,sel.b);
+      areaEl.textContent=(p*100).toFixed(1)+' %';
+      hintEl.textContent=`${sel.a.toFixed(0)}–${sel.b.toFixed(0)} m/s inneholder ${(p*100).toFixed(1)} % av molekylene.`;
+    }else{
+      areaEl.textContent='—';
+      hintEl.textContent='Dra over grafen for å markere et intervall.';
+    }
+    document.getElementById('totVal').textContent=integ(0,6000).toFixed(3);
+  }
+
+  // drag to select
+  let dragging=false,x0=0;
+  const locX=e=>{const r=svg.getBoundingClientRect();const t=e.touches?e.touches[0]:e;
+    return (t.clientX-r.left)/r.width*W;};
+  const down=e=>{dragging=true;x0=locX(e);sel={a:xInv(x0),b:xInv(x0)};draw();e.preventDefault();};
+  const move=e=>{if(!dragging)return;const x1=locX(e);
+    sel={a:Math.min(xInv(x0),xInv(x1)),b:Math.max(xInv(x0),xInv(x1))};draw();e.preventDefault();};
+  const up=()=>{dragging=false;};
+  svg.addEventListener('mousedown',down);
+  window.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',up);
+  svg.addEventListener('touchstart',down,{passive:false});
+  svg.addEventListener('touchmove',move,{passive:false});
+  svg.addEventListener('touchend',up);
+
+  // controls
+  document.getElementById('tRange').addEventListener('input',e=>{
+    T=+e.target.value;document.getElementById('tLab').textContent=T+' K';draw();});
+  document.getElementById('mRange').addEventListener('input',e=>{
+    Mu=+e.target.value;document.getElementById('mLab').textContent=Mu.toFixed(2)+' u';
+    document.querySelectorAll('#gases button').forEach(b=>b.classList.remove('on'));draw();});
+
+  const gbox=document.getElementById('gases');
+  for(const [name,mm] of GASES){
+    const b=document.createElement('button');
+    b.textContent=name;
+    if(Math.abs(mm-Mu)<0.01)b.classList.add('on');
+    b.addEventListener('click',()=>{
+      Mu=mm;document.getElementById('mRange').value=mm;
+      document.getElementById('mLab').textContent=mm.toFixed(2)+' u';
+      document.querySelectorAll('#gases button').forEach(x=>x.classList.toggle('on',x===b));
+      draw();
+    });
+    gbox.appendChild(b);
+  }
+
+  draw();
+})();
+</script>
+</body>
+</html>

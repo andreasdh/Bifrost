@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Gibbs-energi og likevekt</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--eq:#1a7a4c;--fwd:#c0392b;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:16px;}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  svg{display:block;width:100%;height:auto;touch-action:none;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;gap:8px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;}
+  .verdict{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;font-weight:600;
+    padding:8px 10px;border-radius:4px;margin-top:4px;text-align:center;transition:all .2s;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .buttons button{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;
+    padding:8px 12px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .hint{margin-top:10px;font-size:12.5px;color:var(--muted);font-style:italic;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--eq);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Likevekt</div>
+  <h1>Gibbs-energi langs reaksjonsforløpet</h1>
+  <p class="sub">Dra den blå kulen langs kurven, eller trykk «Slipp kulen» og se den rulle mot likevekt. Legg merke til at reaksjonsretningen alltid følger stigningstallet ∂G/∂ξ.</p>
+
+  <div class="stage">
+    <svg id="viz" viewBox="0 0 700 400" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Der kulen står nå</h2>
+      <div class="row"><span class="lab">ekstent ξ</span><span class="val" id="xiVal">—</span></div>
+      <div class="row"><span class="lab">stigningstall ∂G/∂ξ = Δ<sub>r</sub>G</span><span class="val" id="slopeVal">—</span></div>
+      <div class="verdict" id="verdict">—</div>
+    </div>
+    <div class="card">
+      <h2>Utforsk</h2>
+      <div class="buttons">
+        <button id="dropBtn">Slipp kulen</button>
+        <button data-xi="0.06">Start i rent A</button>
+        <button data-xi="0.94">Start i rent B</button>
+        <button data-xi="0.60">Gå til likevekt</button>
+      </div>
+      <p class="hint">Kulen ruller alltid «nedover» i Gibbs-energi, akkurat som en ball i en skål. Den stopper i bunnen – der er reaksjonen i likevekt.</p>
+    </div>
+  </div>
+
+  <p class="note">Stigningstallet til kurven <em>er</em> reaksjonens Gibbs-energi Δ<sub>r</sub>G. Er kurven på vei ned (Δ<sub>r</sub>G &lt; 0), går reaksjonen forover; er den på vei opp (Δ<sub>r</sub>G &gt; 0), går den bakover. I bunnen er stigningstallet null, og reaksjonen er i likevekt.</p>
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById('viz');
+  const XI_EQ=0.60;
+
+  // normalized G(t) and slope
+  const G  = t => t<XI_EQ ? (t-XI_EQ)**2/(XI_EQ**2) : (t-XI_EQ)**2/((1-XI_EQ)**2);
+  const dG = t => t<XI_EQ ? 2*(t-XI_EQ)/(XI_EQ**2) : 2*(t-XI_EQ)/((1-XI_EQ)**2);
+
+  // screen mapping
+  const W=700,H=400, x0=90,x1=610, yTop=90,yMin=340;
+  const sx = t => x0 + t*(x1-x0);
+  const sy = g => yMin - g*(yMin-yTop);            // g in [0,1]
+
+  let xi=0.06, dragging=false, rolling=false, raf=null;
+
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  function txt(x,y,s,o={}){
+    const t=el('text',{x,y,'text-anchor':o.anchor||'middle',
+      'font-family':o.fam||'SF Mono, monospace','font-size':o.size||11,fill:o.fill||'var(--muted)'});
+    if(o.weight)t.setAttribute('font-weight',o.weight);
+    if(o.italic)t.setAttribute('font-style','italic');
+    t.textContent=s;svg.appendChild(t);
+  }
+
+  // precompute curve path
+  let curveD='';
+  for(let i=0;i<=200;i++){const t=i/200;curveD+=(i===0?'M':'L')+sx(t).toFixed(1)+','+sy(G(t)).toFixed(1)+' ';}
+
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+    // defs (arrow markers)
+    const defs=el('defs',{});
+    const mk=(id,fill)=>{const m=el('marker',{id,markerWidth:9,markerHeight:9,refX:6.5,refY:3,orient:'auto',markerUnits:'userSpaceOnUse'});
+      m.appendChild(el('path',{d:'M 0 0 L 7 3 L 0 6 z',fill}));return m;};
+    defs.appendChild(mk('axA','#6b6252'));
+    defs.appendChild(mk('redA','#c0392b'));
+    svg.appendChild(defs);
+
+    // axes
+    svg.appendChild(el('line',{x1:x0,y1:yMin+40,x2:x1+30,y2:yMin+40,stroke:'var(--axis)','stroke-width':1.6,'marker-end':'url(#axA)'}));
+    svg.appendChild(el('line',{x1:x0,y1:yMin+40,x2:x0,y2:yTop-24,stroke:'var(--axis)','stroke-width':1.6,'marker-end':'url(#axA)'}));
+    txt(365,yMin+66,'ξ (ekstent av reaksjon)',{size:14,fam:'Georgia',fill:'var(--ink)',italic:true});
+    txt(x0-16,yTop-16,'G',{size:15,fam:'Georgia',fill:'var(--ink)',italic:true});
+    txt(x0,yMin+58,'rent A',{size:12,fill:'var(--muted)'});
+    txt(x1+8,yMin+58,'rent B',{size:12,fill:'var(--muted)',anchor:'end'});
+
+    // equilibrium guide
+    svg.appendChild(el('line',{x1:sx(XI_EQ),y1:sy(0),x2:sx(XI_EQ),y2:yMin+40,
+      stroke:'var(--eq)','stroke-width':1.1,'stroke-dasharray':'5 4','stroke-opacity':0.7}));
+    txt(sx(XI_EQ),yMin+58,'likevekt',{size:11,fill:'var(--eq)'});
+
+    // the curve
+    svg.appendChild(el('path',{d:curveD,fill:'none',stroke:'var(--curve)','stroke-width':2.8}));
+
+    // tangent line at current point (slope in screen space)
+    const g=G(xi), slope=dG(xi);
+    const px=sx(xi), py=sy(g);
+    // screen slope: dY/dX = -(yMin-yTop)*dG/dt / (x1-x0)
+    const mScreen = -(yMin-yTop)*slope/(x1-x0);
+    const L=70;
+    const dx=L/Math.sqrt(1+mScreen*mScreen);
+    const dy=mScreen*dx;
+    const tangCol = Math.abs(slope)<0.05 ? 'var(--eq)' : 'var(--fwd)';
+    svg.appendChild(el('line',{x1:px-dx,y1:py-dy,x2:px+dx,y2:py+dy,
+      stroke:tangCol,'stroke-width':2.4}));
+
+    // direction arrow along the curve (only if not at equilibrium)
+    if(Math.abs(slope)>0.05){
+      const dir = slope<0 ? +1 : -1;   // forward if downhill
+      const t2 = Math.min(1,Math.max(0,xi+dir*0.06));
+      svg.appendChild(el('line',{x1:px,y1:py,x2:sx(t2),y2:sy(G(t2)),
+        stroke:'var(--fwd)','stroke-width':2.4,'marker-end':'url(#redA)'}));
+    }
+
+    // the ball
+    svg.appendChild(el('circle',{cx:px,cy:py,r:9,fill:'var(--curve)',stroke:'var(--paper)','stroke-width':2.5}));
+
+    // readouts
+    document.getElementById('xiVal').textContent=xi.toFixed(2);
+    document.getElementById('slopeVal').textContent=(slope).toFixed(2);
+    const v=document.getElementById('verdict');
+    if(Math.abs(slope)<0.05){
+      v.textContent='Δ'+'\u1D63'+'G = 0 · LIKEVEKT';
+      v.style.background='rgba(26,122,76,.15)'; v.style.color='var(--eq)';
+    }else if(slope<0){
+      v.textContent='Δ'+'\u1D63'+'G < 0 · går forover (A → B)';
+      v.style.background='rgba(192,57,43,.12)'; v.style.color='var(--fwd)';
+    }else{
+      v.textContent='Δ'+'\u1D63'+'G > 0 · går bakover (B → A)';
+      v.style.background='rgba(192,57,43,.12)'; v.style.color='var(--fwd)';
+    }
+  }
+
+  // ---- interaction ----
+  const clientToXi = e=>{
+    const r=svg.getBoundingClientRect();
+    const t=e.touches?e.touches[0]:e;
+    const px=(t.clientX-r.left)/r.width*W;
+    return Math.min(1,Math.max(0,(px-x0)/(x1-x0)));
+  };
+  const down=e=>{rolling=false;dragging=true;xi=clientToXi(e);draw();e.preventDefault();};
+  const move=e=>{if(!dragging)return;xi=clientToXi(e);draw();e.preventDefault();};
+  const up=()=>{dragging=false;};
+  svg.addEventListener('mousedown',down);
+  window.addEventListener('mousemove',move);
+  window.addEventListener('mouseup',up);
+  svg.addEventListener('touchstart',down,{passive:false});
+  svg.addEventListener('touchmove',move,{passive:false});
+  svg.addEventListener('touchend',up);
+
+  // roll toward minimum (gradient descent)
+  function roll(){
+    if(!rolling)return;
+    const slope=dG(xi);
+    if(Math.abs(slope)<0.01){rolling=false;xi=XI_EQ;draw();return;}
+    xi -= 0.012*slope;                 // step downhill
+    xi=Math.min(1,Math.max(0,xi));
+    draw();
+    raf=requestAnimationFrame(roll);
+  }
+  document.getElementById('dropBtn').addEventListener('click',()=>{
+    rolling=true; cancelAnimationFrame(raf); roll();
+  });
+  document.querySelectorAll('button[data-xi]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      rolling=false; cancelAnimationFrame(raf);
+      const target=+b.dataset.xi;
+      if(Math.abs(target-XI_EQ)<0.001){ // animate to equilibrium
+        rolling=true; roll();
+      }else{ xi=target; draw(); }
+    });
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>

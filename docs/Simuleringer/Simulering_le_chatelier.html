@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Le Chateliers prinsipp</title>
+<style>
+  #s10-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:12px; border-radius:12px; max-width:580px; margin:0 auto; }
+  #s10-root h2 { text-align:center; font-size:1.05em; margin:0 0 3px 0; font-weight:600; }
+  #s10-root .s10-sub { text-align:center; font-size:0.75em; color:#9aa5c0; margin-bottom:10px; line-height:1.4; }
+  #s10-root .s10-main { display:flex; gap:8px; flex-wrap:nowrap; justify-content:center; }
+  #s10-root .s10-col { display:flex; flex-direction:column; align-items:center; background:#161d2e; border-radius:8px; padding:7px; box-sizing:border-box; }
+  #s10-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s10-root .s10-caption { font-size:0.66em; color:#9aa5c0; margin-top:4px; text-align:center; }
+  #s10-root .s10-statsrow { display:flex; gap:10px; justify-content:center; margin-top:8px; font-size:0.76em; flex-wrap:wrap; }
+  #s10-root .s10-statsrow b { color:#ffb15a; }
+  #s10-root .s10-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:8px; }
+  #s10-root select, #s10-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 11px; border-radius:6px; cursor:pointer; font-size:0.78em;
+  }
+  #s10-root button:hover, #s10-root select:hover { background:#3a4a70; }
+  #s10-root button.s10-active { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s10-root button.s10-cat-on { background:#7fe0a8; color:#0a0e18; font-weight:600; }
+  #s10-root .s10-slider-row { display:flex; align-items:center; gap:6px; font-size:0.76em; width:100%; justify-content:center; }
+  #s10-root input[type=range] { width:190px; }
+  #s10-root .s10-eq-row { text-align:center; margin-top:10px; }
+  #s10-root .s10-eq-text { font-size:1.15em; font-weight:600; }
+  #s10-root .s10-eq-arrow { font-size:1.5em; margin-top:2px; font-weight:bold; }
+  #s10-root .s10-eq-label { font-size:0.65em; color:#9aa5c0; margin-top:1px; }
+  #s10-root .s10-legend { font-size:0.64em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div id="s10-root">
+  <h2>Le Chateliers prinsipp</h2>
+  <div class="s10-sub">Forstyrr likevekten - endre T, trykk (volum), konsentrasjon, eller legg til katalysator - og se hvordan systemet reagerer.</div>
+
+  <div class="s10-main">
+    <div class="s10-col" style="width:420px;">
+      <canvas id="s10-graph" width="404" height="180"></canvas>
+      <div class="s10-caption">[A] (bl&aring;) og [B] (oransje) over tid</div>
+    </div>
+  </div>
+
+  <div class="s10-statsrow">
+    <span>Q = <b id="s10-Q">...</b></span>
+    <span>K = <b id="s10-K">...</b></span>
+    <span>T = <b id="s10-Tval">2.5</b></span>
+    <span>V = <b id="s10-Vval">1.0</b></span>
+  </div>
+
+  <div class="s10-eq-row">
+    <div class="s10-eq-text">A (g) &#8652; 2 B (g)</div>
+    <div class="s10-eq-arrow" id="s10-shiftArrow">&#8652;</div>
+    <div class="s10-eq-label" id="s10-shiftLabel">likevekt (Q &asymp; K)</div>
+  </div>
+
+  <div class="s10-controls">
+    <button id="s10-endo" class="s10-active">Endoterm</button>
+    <button id="s10-exo">Eksoterm</button>
+    <button id="s10-cat">Legg til katalysator</button>
+  </div>
+  <div class="s10-controls">
+    <div class="s10-slider-row">
+      <label for="s10-T">T:</label>
+      <input type="range" id="s10-T" min="1.5" max="4" step="0.1" value="2.5">
+    </div>
+  </div>
+  <div class="s10-controls">
+    <div class="s10-slider-row">
+      <label for="s10-V">Volum (trykk):</label>
+      <input type="range" id="s10-V" min="0.5" max="3" step="0.05" value="1">
+    </div>
+  </div>
+  <div class="s10-controls">
+    <button id="s10-addA">+ A</button>
+    <button id="s10-subA">&minus; A</button>
+    <button id="s10-addB">+ B</button>
+    <button id="s10-subB">&minus; B</button>
+    <button id="s10-reset">Reset</button>
+  </div>
+
+  <div class="s10-legend">
+    Forenklet modell: hastighetslover r<sub>frem</sub>=k<sub>f</sub>[A], r<sub>tilbake</sub>=k<sub>r</sub>[B]&sup2;, med k=A&middot;e<sup>&minus;E<sub>a</sub>/T</sub> (reduserte enheter). Endoterm: E<sub>a,frem</sub>&gt;E<sub>a,tilbake</sub>. Eksoterm: omvendt. Katalysator &oslash;ker k<sub>f</sub> og k<sub>r</sub> likt (K uendret, raskere likevekt).
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const Af = 0.06, Ar = 0.06;
+  let reactionType = 'endo'; // 'endo' eller 'exo'
+  let catalyst = false;
+  const catFactor = 8;
+
+  let T = 2.5;
+  let V = 1.0;
+  let nA = 1.0, nB = 0.2; // mol (vilkårlige enheter)
+
+  let history = []; // {t, cA, cB}
+  let simTime = 0;
+  const dt = 0.02;
+  const stepsPerFrame = 6;
+  const maxHistory = 900;
+
+  const graphCv = document.getElementById('s10-graph');
+  const gctx = graphCv.getContext('2d');
+
+  const QEl = document.getElementById('s10-Q');
+  const KEl = document.getElementById('s10-K');
+  const TvalEl = document.getElementById('s10-Tval');
+  const VvalEl = document.getElementById('s10-Vval');
+
+  const endoBtn = document.getElementById('s10-endo');
+  const exoBtn = document.getElementById('s10-exo');
+  const catBtn = document.getElementById('s10-cat');
+  const Tslider = document.getElementById('s10-T');
+  const Vslider = document.getElementById('s10-V');
+  const addABtn = document.getElementById('s10-addA');
+  const subABtn = document.getElementById('s10-subA');
+  const addBBtn = document.getElementById('s10-addB');
+  const subBBtn = document.getElementById('s10-subB');
+  const resetBtn = document.getElementById('s10-reset');
+
+  function getEas(){
+    return reactionType==='endo' ? {Eaf:3, Ear:1} : {Eaf:1, Ear:3};
+  }
+
+  function rateConstants(){
+    const {Eaf, Ear} = getEas();
+    let kf = Af*Math.exp(-Eaf/T);
+    let kr = Ar*Math.exp(-Ear/T);
+    if(catalyst){ kf *= catFactor; kr *= catFactor; }
+    return {kf, kr};
+  }
+
+  function stepChem(){
+    const {kf, kr} = rateConstants();
+    for(let s=0;s<stepsPerFrame;s++){
+      const cA = nA/V, cB = nB/V;
+      const rf = kf*cA;
+      const rr = kr*cB*cB;
+      const dnA = (-rf+rr)*V*dt;
+      nA = Math.max(0, nA+dnA);
+      nB = Math.max(0, nB-2*dnA);
+      simTime += dt;
+    }
+    history.push({t:simTime, cA:nA/V, cB:nB/V});
+    if(history.length>maxHistory) history.shift();
+  }
+
+  function drawGraph(){
+    const w=graphCv.width, h=graphCv.height;
+    gctx.clearRect(0,0,w,h);
+    const margin={l:28,r:8,t:8,b:18};
+    const pw=w-margin.l-margin.r, ph=h-margin.t-margin.b;
+
+    if(history.length<2) return;
+    const tMin = history[0].t, tMax = history[history.length-1].t;
+    const tSpan = Math.max(tMax-tMin, 1e-6);
+    let cMax = 0.1;
+    for(const p of history){ cMax = Math.max(cMax, p.cA, p.cB); }
+    cMax *= 1.15;
+
+    function X(t){ return margin.l + ((t-tMin)/tSpan)*pw; }
+    function Y(c){ return margin.t + ph*(1-c/cMax); }
+
+    gctx.strokeStyle='#3a4360'; gctx.lineWidth=1;
+    gctx.beginPath(); gctx.moveTo(margin.l,margin.t); gctx.lineTo(margin.l,margin.t+ph); gctx.lineTo(margin.l+pw,margin.t+ph); gctx.stroke();
+    gctx.fillStyle='#9aa5c0'; gctx.font='9px Times New Roman'; gctx.textAlign='center';
+    gctx.fillText('t', margin.l+pw/2, h-4);
+
+    function drawLine(key,color){
+      gctx.strokeStyle=color; gctx.lineWidth=2;
+      gctx.beginPath();
+      history.forEach((p,i)=>{
+        const x=X(p.t), y=Y(p[key]);
+        if(i===0) gctx.moveTo(x,y); else gctx.lineTo(x,y);
+      });
+      gctx.stroke();
+    }
+    drawLine('cA','#5aa9ff');
+    drawLine('cB','#ffb15a');
+  }
+
+  function updateStats(){
+    const cA=nA/V, cB=nB/V;
+    const Q = cA>1e-9 ? (cB*cB/cA) : 0;
+    const {Eaf,Ear} = getEas();
+    const K = Math.exp(-(Eaf-Ear)/T); // = kf/kr uten katalysatorfaktor (kansellerer)
+    QEl.textContent = Q.toFixed(2);
+    KEl.textContent = K.toFixed(2);
+    TvalEl.textContent = T.toFixed(2);
+    VvalEl.textContent = V.toFixed(2);
+
+    const ratio = K>1e-9 ? Q/K : 1;
+    const shiftEl = document.getElementById('s10-shiftArrow');
+    const labelEl = document.getElementById('s10-shiftLabel');
+    if(ratio < 0.95){
+      shiftEl.textContent = '\u2192';
+      shiftEl.style.color = '#ffb15a';
+      labelEl.textContent = 'skifter mot B (Q < K)';
+    } else if(ratio > 1.05){
+      shiftEl.textContent = '\u2190';
+      shiftEl.style.color = '#5aa9ff';
+      labelEl.textContent = 'skifter mot A (Q > K)';
+    } else {
+      shiftEl.textContent = '\u21cc';
+      shiftEl.style.color = '#7fe0a8';
+      labelEl.textContent = 'likevekt (Q \u2248 K)';
+    }
+  }
+
+  function loop(){
+    stepChem();
+    drawGraph();
+    updateStats();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  endoBtn.addEventListener('click', function(){
+    reactionType='endo'; endoBtn.classList.add('s10-active'); exoBtn.classList.remove('s10-active');
+  });
+  exoBtn.addEventListener('click', function(){
+    reactionType='exo'; exoBtn.classList.add('s10-active'); endoBtn.classList.remove('s10-active');
+  });
+  catBtn.addEventListener('click', function(){
+    catalyst = !catalyst;
+    catBtn.textContent = catalyst ? 'Fjern katalysator' : 'Legg til katalysator';
+    catBtn.classList.toggle('s10-cat-on', catalyst);
+  });
+  Tslider.addEventListener('input', function(){ T = parseFloat(Tslider.value); });
+  Vslider.addEventListener('input', function(){ V = parseFloat(Vslider.value); });
+
+  addABtn.addEventListener('click', function(){ nA += 0.4; });
+  subABtn.addEventListener('click', function(){ nA = Math.max(0.05, nA-0.4); });
+  addBBtn.addEventListener('click', function(){ nB += 0.4; });
+  subBBtn.addEventListener('click', function(){ nB = Math.max(0, nB-0.4); });
+
+  resetBtn.addEventListener('click', function(){
+    nA=1.0; nB=0.2; T=2.5; V=1.0; catalyst=false; reactionType='endo';
+    Tslider.value=2.5; Vslider.value=1.0;
+    endoBtn.classList.add('s10-active'); exoBtn.classList.remove('s10-active');
+    catBtn.textContent='Legg til katalysator'; catBtn.classList.remove('s10-cat-on');
+    history=[]; simTime=0;
+  });
+
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,793 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 3 – Kinetisk gassteori &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_03_under_revision';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Løsningsforslag" href="../l%C3%B8sningsforslag.html" />
+    <link rel="prev" title="Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen" href="uke_02_under_revision.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 3 – Kinetisk gassteori</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_03_under_revision.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 3 – Kinetisk gassteori</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-idealgasser">Oppgave 1: Idealgasser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-fartsfordelingen-til-gasser">Oppgave 2: Fartsfordelingen til gasser.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-molekylaere-gasser-har-flere-frihetsgrader">Oppgave 3: Molekylære gasser har flere frihetsgrader.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#opggave-4-ekvipartisjonsteoremet">Opggave 4: Ekvipartisjonsteoremet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5-reelle-gasser">Oppgave 5: Reelle gasser</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-3-kinetisk-gassteori">
+<h1>Uke 3 – Kinetisk gassteori<a class="headerlink" href="#uke-3-kinetisk-gassteori" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<p>Tema for denne uken er gasser, og vi begynner med idealgasser som vi kan behandle som klinkekuler hvor den eneste frihetsgraden er farten til atomene. Forrige uke så vi at energier til partiklene i et system er fordelt i henhold til Boltzmann fordelingen. Denne uken skal vi se på hva dette betyr for bevegelsen av atomer i gasser, og hvordan det gjør oss i stand til å forutsi hva som skjer når vi endrer parametre som temperatur, stoffmengde og kjemisk sammensetning.</p>
+<section id="oppgave-1-idealgasser">
+<h3>Oppgave 1: Idealgasser<a class="headerlink" href="#oppgave-1-idealgasser" title="Link to this heading">#</a></h3>
+<p>Idealgasser er et godt utgangspunkt for å forstå den molekylære oppførselen til stoffer, men det er viktig å være klar over antagelsene vi gjør når vi antar idealgass-oppførsel og begrensningene på hva en slik enkel modell kan beskrive.</p>
+<p><strong>a)</strong> Hvilke egenskaper er sentrale for gasser, både fra et mikro og makro perspektiv. Hva skiller de fra væsker og faste stoffer?</p>
+<p><strong>b)</strong> Idealgasser er en forenklet beskrivelse, hvor vi ser bort i fra flere egenskaper som virkelige gasser har. Hvilke egenskaper ser man bortifra når man snakker om idealgasser?</p>
+<p><strong>c)</strong> Ranger gassene <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span>, <span class="math notranslate nohighlight">\(\mathrm{NH_3}\)</span>, <span class="math notranslate nohighlight">\(\mathrm{Ne}\)</span> etter hvor godt de blir beskrevet av idealgassloven, og begrunn svaret.</p>
+<p><strong>d)</strong> Vil idealgassloven være en bedre beskrivelse av en gass ved lav eller høy temperatur? Hva med trykk, begrunn svaret?</p>
+<p><strong>e)</strong> Under en destillasjon av et volatilt produkt, kondenseres til slut produktet fra gass tilbake til en væske. Er dette en prosess vi kan beskrive med idealgassloven, hvorfor, hvorfor ikke?</p>
+</section>
+<section id="oppgave-2-fartsfordelingen-til-gasser">
+<h3>Oppgave 2: Fartsfordelingen til gasser.<a class="headerlink" href="#oppgave-2-fartsfordelingen-til-gasser" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> I forelesning kom dere fram til Maxwell-Boltzmann farts-fordelingen:</p>
+<div class="math notranslate nohighlight">
+\[ f(v) = 4\pi \left( \frac{m}{2\pi k_B T}  \right)^{3/2} v^2 e^{-\frac{mv^2}{2k_B T}},\]</div>
+<p>Hva er dette en fordeling over, og hva er <span class="math notranslate nohighlight">\(m\)</span>, <span class="math notranslate nohighlight">\(k_B\)</span> og <span class="math notranslate nohighlight">\(T\)</span>?</p>
+<p><strong>b)</strong> Denne fordelingen følger direkte av Boltzmann fordelingen vi så på forige ute, i tillegg til noen viktige antagelser om gassen og tilstanden til systemet. Hvilken antagelse måtte vi gjøre for å komme fram til denne fordelingen, tenk på hva vi antar om energien til en gasspartikkel, retningen gasspartiklene kan bevege seg i, og er systemet nærme eller langt unna likevekt?</p>
+<p><strong>c)</strong> Plot Maxwell-Boltzmann fordelingen, bruk:</p>
+<div class="math notranslate nohighlight">
+\[k_B=1.380649\cdot10^{-23} J/K\]</div>
+<div class="math notranslate nohighlight">
+\[T=300 K\]</div>
+<p>og massen til et <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span> molekyl</p>
+<div class="math notranslate nohighlight">
+\[m=5.31\cdot10^{-26} kg\]</div>
+<p>Plottingen kan greit gjøres i Python og dere finner forslag til en kodesnutt under, men husk at dere må definere selve fordelingen:</p>
+<p>Bruk plottet til å svare på følgende:</p>
+<p>Kan man forvente at den mest sannsynlige hastigheten er det samme som gjennomsnittshastigheten? Hvorfor, hvorfor ikke?</p>
+<p>Hva gjør at sannsynligheten for en gitt hastighet først øker, og så synker?<br />
+Hint: Tenk på hvordan antallet mulige måter en partikkel kan ha en gitt hastighet ved høyere og høyere hastigheter, og hva vi vet fra Boltzmann, om fordelingen av energier når totalenergien er begrenset.</p>
+<p><strong>d)</strong> I tillegg til plottet dere lagde i oppg <em>c</em>, plot i samme graf en fordeling der dere setter <span class="math notranslate nohighlight">\(T=600\)</span>K og en fordeling der dere setter <span class="math notranslate nohighlight">\(m=6.646\cdot10^{−27}\)</span> som er omtrentlig massen til et Helium atom. Det skal altså være 3 fordelinger i samme plot. Bruk dette til å svare på hvordan temperatur og masse påvirker fartsfordelingen, og forklar hvorfor?</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### Forslag til kode for å plotte Maxwell-Boltzmann fordelingen for hastigheter ###</span>
+
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># --- Konstanter -------------------------------------------------</span>
+<span class="n">kb</span> <span class="o">=</span> <span class="mf">1.380649e-23</span>          <span class="c1"># J·K⁻¹</span>
+<span class="n">T</span>  <span class="o">=</span> <span class="mf">300.0</span>                 <span class="c1"># K</span>
+<span class="n">m</span>  <span class="o">=</span> <span class="mf">5.31e-26</span>              <span class="c1"># kg  (≈ O₂ molecule)</span>
+
+<span class="c1"># --- Maxwell–Boltzmann fordeling (Må FYLLES UT!) -------------------------------</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">MB_fordeling</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kb</span><span class="p">,</span> <span class="n">T</span><span class="p">):</span>
+    <span class="n">f_v</span><span class="o">=....</span>
+    <span class="k">return</span> <span class="n">f_v</span>
+
+<span class="c1"># --- Hastigeter vi skal plotte -----------------------------------------------                 </span>
+<span class="n">v</span>     <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3000</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span> <span class="c1">#fra 0 til 3000 m/s, med 1000 punkter imellom.</span>
+
+<span class="c1"># Regn ut Maxwell-Boltzmann fordelingen for disse hastighetene</span>
+<span class="n">f_v</span> <span class="o">=</span> <span class="n">MB_fordeling</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">m</span><span class="p">,</span> <span class="n">kb</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span>
+
+<span class="c1"># --- plot ---------------------------------------------------------------</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span><span class="mi">4</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">f_v</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Maxwell‑Boltzmann'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'speed $v$ (m s$^{-1}$)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">'probability density $P(v)$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Maxwell‑Boltzmann speed distribution, $T=300\,$K'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+<section id="oppgave-3-molekylaere-gasser-har-flere-frihetsgrader">
+<h3>Oppgave 3: Molekylære gasser har flere frihetsgrader.<a class="headerlink" href="#oppgave-3-molekylaere-gasser-har-flere-frihetsgrader" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> De aller fleste gasser består av mer enn ett atom under vanglie betingelser, men hvile gasser består typisk av kun ett atom, altså monoatomere gasser?</p>
+<p><strong>b)</strong> Nevn et par eksempler på vanlige diatomere, triatomere og tetraatomere gasser?</p>
+<p><strong>c)</strong> Hvilke type klassiske frihetsgrader er det for henholsvis monoatomere og fler-atomere gasser? Hvorfor gir det mening å skille mellom lineære og ikke lineære molekyler??</p>
+<p><strong>d)</strong> Et fleratomært molekyl har totalt <span class="math notranslate nohighlight">\(3N\)</span> frihetsgrader, hvor mange er det for henholsvis translasjon og rotasjon, hva er resten?</p>
+<p><strong>e)</strong> Hva er frihetsgradene til <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span>, <span class="math notranslate nohighlight">\(\mathrm{NH_3}\)</span>, <span class="math notranslate nohighlight">\(\mathrm{Ne}\)</span>?</p>
+</section>
+<section id="opggave-4-ekvipartisjonsteoremet">
+<h3>Opggave 4: Ekvipartisjonsteoremet<a class="headerlink" href="#opggave-4-ekvipartisjonsteoremet" title="Link to this heading">#</a></h3>
+<p>Fra ekvipartisjonsteoremet har vi at hver frihetsgrad som bidrar med et kvadratisk energiledd, bidrar med <span class="math notranslate nohighlight">\(\frac{1}{2}k_BT\)</span> til den gjennomsnittlige energien per partikkel:</p>
+<div class="math notranslate nohighlight">
+\[\langle \varepsilon \rangle =\frac{f}{2}k_BT\]</div>
+<p>der f er antallet kvadratiske frihetsgrader.</p>
+<p><strong>a)</strong> Hva mener vi med kvadratiske frihetsgrader? Hvor mange kvadratiske frihetsgrader er det for hver translasjonell, rotasjonell og vibrasjonell frihetsgrad?</p>
+<p><strong>b)</strong> Hvis <span class="math notranslate nohighlight">\(\langle \varepsilon \rangle\)</span> er gjennomsnittsenergien per partikkel, hva er totalenergien energien for systemet? Hvordan ser dette ut utrykket ved antal mol, istedenfor antal partikler?</p>
+<p><strong>c)</strong> Gitt at den totale varmekapasiteten <span class="math notranslate nohighlight">\(C_V\)</span> er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[C_V=\left(\frac{\partial E}{\partial T}\right)_{N,V} \]</div>
+<p>Bruk ekvipartisjonsteoremet til å finne et utrykk for den totale varmekapasiteten <span class="math notranslate nohighlight">\(C_V\)</span>, hva med den molare varmekapasiteten, altså varmekapasiteten per mol.</p>
+<p><strong>d)</strong> Fra svaret i <em>c</em>, hva er varmekapasiteten til <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span>?</p>
+<p><strong>e)</strong> Eksperimentelt så viser det seg at ved romtemperatur er varmekapasiteten til <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span> bedre, men ikke helt korrekt beskrevet med:</p>
+<div class="math notranslate nohighlight">
+\[C_V=\frac{5}{2}R\]</div>
+<p>Hva er forskjellen fra det du fant i oppgave <em>d</em> og hvor kommer denne forskjellen fra?</p>
+</section>
+<section id="oppgave-5-reelle-gasser">
+<h3>Oppgave 5: Reelle gasser<a class="headerlink" href="#oppgave-5-reelle-gasser" title="Link to this heading">#</a></h3>
+<p>Vi kan få en bedre beskrivelse av reelle gasser, der molekylene ikke er punktmasser og intermolekylære krefter spiller en rolle ved å bruke Van der Waals korreksjonene for idealgessloven:</p>
+<div class="math notranslate nohighlight">
+\[p=\frac{nRT}{V-nb}-a\frac{n^2}{V^2}\]</div>
+<p><strong>a)</strong> Hvordan kan vi begrunne at volumet reduseres med <span class="math notranslate nohighlight">\(nb\)</span>, og hva er b?</p>
+<p><strong>b)</strong> Trykket p reduseres med <span class="math notranslate nohighlight">\(a\frac{n^2}{V^2}\)</span> hva er begrunnelsen for dette?</p>
+<p><strong>c)</strong> Uten å slå opp i tabeller, hvordan forventer konstantene a og b konstantene er for <span class="math notranslate nohighlight">\(\mathrm{He}\)</span>, sammenlignet med <span class="math notranslate nohighlight">\(\mathrm{O_2}\)</span>, hvorfor?</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>I forelesning uke 35 brukte dere kinetisk gassteori til å vise at temperaturen til en gass er koblet til den gjennomsnittlige kinetiske energien <span class="math notranslate nohighlight">\(\langle E \rangle = \frac{3}{2}nRT\)</span>, ved å betrakte gassmolekylene som “klinkekuler” og se på deres bevegelser. Men i ekte molekyler er det ikke bare translasjon som bidrar til den indre energien.</p>
+<p><strong>a)</strong> For molekyler med 2 eller flere atomer, hvilke andre bevegelser enn translasjon bidrar til energien?</p>
+<p>Gitt at vi er ved termisk likevekt vil hver frihetsgrad <em>f</em> i gjennomsnitt bidra med et energibidrag på <span class="math notranslate nohighlight">\(\frac{1}{2}nRT\)</span> til den gjennomsnittlige energien, bortsett fra vibrasjonelle moder som bidrar med <span class="math notranslate nohighlight">\(1nRT\)</span>.</p>
+<p><strong>b)</strong> Finn antall frihetsgrader og et uttrykk for <span class="math notranslate nohighlight">\(\langle E \rangle\)</span> for et lineært molekyl med <em>N</em> atomer (f.eks. <span class="math notranslate nohighlight">\(O_2\)</span>).</p>
+<p><strong>c)</strong> Finn antall frihetsgrader og et uttrykk for <span class="math notranslate nohighlight">\(\langle E \rangle\)</span> for et ikke-lineært molekyl med <em>N</em> atomer (f.eks. <span class="math notranslate nohighlight">\(H_2O\)</span>).</p>
+</section>
+<section id="oppgave-7">
+<h3>Oppgave 7<a class="headerlink" href="#oppgave-7" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Basert på teoretiske frihetsgrader for diatomære molekyler, hva er varmekapasitetene til <span class="math notranslate nohighlight">\(O_2\)</span> og <span class="math notranslate nohighlight">\(N_2\)</span> (g) ved konstant volum? Estimer også <span class="math notranslate nohighlight">\(C_p\)</span> ved bruk av sammenhengen <span class="math notranslate nohighlight">\(C_p=C_V+R\)</span>.</p>
+<p>Tabellen under viser eksperimentelle verdier for de molare varmekapasitetene ved konstant trykk (<span class="math notranslate nohighlight">\(C_p\)</span>):</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>T [K]</p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(C_p [\text{J/molK}]\)</span> for <span class="math notranslate nohighlight">\(O_2\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(C_p [\text{J/molK}]\)</span> for <span class="math notranslate nohighlight">\(N_2\)</span></p></th>
+<th class="head"><p><span class="math notranslate nohighlight">\(C_p [\text{J/molK}]\)</span> for <span class="math notranslate nohighlight">\(I_2\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>100</p></td>
+<td><p><span class="math notranslate nohighlight">\(29.10\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(29.10\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(45.65\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>300</p></td>
+<td><p><span class="math notranslate nohighlight">\(29.39\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(29.12\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(54.49\)</span>, <span class="math notranslate nohighlight">\(36.89\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>500</p></td>
+<td><p><span class="math notranslate nohighlight">\(31.08\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(29.55\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(37.47\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>700</p></td>
+<td><p><span class="math notranslate nohighlight">\(32.98\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(32.66\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(37.77\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>De ulike bevegelsene som bidrar til frihetsgradene har ulike temperaturer hvor de “aktiveres”:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Bevegelse</p></th>
+<th class="head"><p>Aktiveringstemperatur [K] for <span class="math notranslate nohighlight">\(O_2\)</span></p></th>
+<th class="head"><p>Aktiveringstemperatur [K] for <span class="math notranslate nohighlight">\(N_2\)</span></p></th>
+<th class="head"><p>Aktiveringstemperatur [K] for <span class="math notranslate nohighlight">\(I_2\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Translasjon</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 0\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 0\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p>Rotasjon</p></td>
+<td><p><span class="math notranslate nohighlight">\(&lt;3\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(&lt;3\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(&lt;0.1\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p>Vibrasjon</p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 2156\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 3521\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(\approx 308.6\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>b)</strong> I diskusjonsoppgavene så dere at den molare varmekapasiteten ved konstant volum til oksygen ligger nær <span class="math notranslate nohighlight">\(\frac{5}{2}R\)</span> ved romtemperatur, noe som gir <span class="math notranslate nohighlight">\(C_p \approx 29.1 \text{J/molK}\)</span>. Bruk aktiveringstemperaturen for vibrasjon til å forklare hvorfor den spesifikke varmekapasiteten til <span class="math notranslate nohighlight">\(C_V(O_2)\)</span> er nærmere <span class="math notranslate nohighlight">\(\frac{5}{2}R\)</span> enn <span class="math notranslate nohighlight">\(\frac{7}{2}R\)</span> ved romtemperatur.</p>
+<p><strong>c)</strong> Hvorfor er <span class="math notranslate nohighlight">\(C_V=\frac{7}{2}R\)</span> et grovt overestimat, mens <span class="math notranslate nohighlight">\(\frac{5}{2}R\)</span> er et underestimat av varmekapasiteten for <span class="math notranslate nohighlight">\(O_2\)</span>?</p>
+<p><strong>d)</strong> Sammenlikn <span class="math notranslate nohighlight">\(C_p\)</span> ved <span class="math notranslate nohighlight">\(300\)</span> K for <span class="math notranslate nohighlight">\(N_2\)</span> og <span class="math notranslate nohighlight">\(O_2\)</span>. For hvilken av de to gassene passer estimatet <span class="math notranslate nohighlight">\(C_V=\frac{5}{2}R\)</span> best? Hvorfor?</p>
+<p><strong>e)</strong> I tabellen ser vi at <span class="math notranslate nohighlight">\(C_p\)</span> for <span class="math notranslate nohighlight">\(I_2\)</span> er veldig høy ved lave temperaturer, og at det ved romtemperatur er oppgitt to ulike verdier for varmekapasiteten. Hva skyldes dette?</p>
+<p><strong>f)</strong> Hvilken tilnærming av <span class="math notranslate nohighlight">\(C_V\)</span> passer best for <span class="math notranslate nohighlight">\(I_2\)</span> (g) ved <span class="math notranslate nohighlight">\(300\)</span> K (<span class="math notranslate nohighlight">\(C_V=\frac{5}{2}R\)</span> eller <span class="math notranslate nohighlight">\(C_V=\frac{7}{2}R\)</span>)? Hvorfor?</p>
+</section>
+<section id="oppgave-8">
+<h3>Oppgave 8<a class="headerlink" href="#oppgave-8" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> To kubiske beholdere med dimensjoner henholdsvis 30cm x 30cm x 30cm og 10cm x 10cm x 10cm inneholder hver 3 mol av gassen <span class="math notranslate nohighlight">\(CO_2\)</span>. Beregn trykket i beholderne ved temperaturene 25 °C og 200 °C, først ved hjelp av tilstandsligningen for en ideell gass, deretter ved hjelp av Van der Waals ligningen. Svarene skal oppgis i både Pa og atm. Bruk følgende Van der Waals-koeffisienter for <span class="math notranslate nohighlight">\(CO_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[a=3.96\cdot 10^{-1} \text{Pa}\text{m}^6\text{mol}^{-2}\]</div>
+<div class="math notranslate nohighlight">
+\[b=42.7\cdot 10^{-6}\text{m}^3\text{mol}^{-1}\]</div>
+<p><strong>b)</strong>	Hvilke konklusjoner kan du trekke fra de to svarene? Reflekter her både over hvilke egenskaper <span class="math notranslate nohighlight">\(CO_2\)</span> har som gass, og hva slags effekt temperatur har på trykket til en gass. Når det er rimelig å bruke ideell gasslikning og når man bør bruke Van der Waals likningen?</p>
+<p>Gå inn på https://courses.lumenlearning.com/boundless-chemistry/chapter/deviation-of-gas-from-ideal-behavior/ (kopier og lim direkte inn i nettleser hvis lenke ikke fungerer) og besvar følgende spørsmål:</p>
+<p><strong>c)</strong> Hva skjer med interaksjonene når temperaturen i en gass øker?</p>
+<p>Forrige uke brukte vi Boltzmann-fordelingen til å se på sannsynligheter for å finne partikler i gitte tilstander. Anta nå at gassmolekylene kan være enten i en “bundet tilstand” med energi <span class="math notranslate nohighlight">\(E_b\)</span>, eller i en “ubundet” tilstand med energi <span class="math notranslate nohighlight">\(E_u\)</span>, vi har at <span class="math notranslate nohighlight">\(E_b&lt;E_u\)</span>.</p>
+<p><strong>d)</strong> Hvorfor gir det mening å anta <span class="math notranslate nohighlight">\(E_b&lt;E_u\)</span>?</p>
+<p><strong>e)</strong> Skriv opp forholdet mellom sannsynligheten for bundet og ubundet tilstand ved temperatur <span class="math notranslate nohighlight">\(T\)</span> (bruk Boltzmann-fordelingen), og diskuter hvordan dette forholdet endres når temperaturen øker.</p>
+<p><strong>f)</strong> Hva skjer når de intermolekylære kreftene i gassen øker eller minker?</p>
+</section>
+<section id="oppgave-9">
+<h3>Oppgave 9<a class="headerlink" href="#oppgave-9" title="Link to this heading">#</a></h3>
+<p>I oppgave 8 brukte dere Van der Waals likningen til å ta hensyn til intermolekylære krefter i en gass. Dette er en makroskopisk beskrivelse, men vi kan også se på tiltrekning og frastøtning mikroskopisk ved bruk av Lennard-Jones potensialet:</p>
+<div class="math notranslate nohighlight">
+\[V(r) = 4\varepsilon \left[ (\frac{\sigma}{r})^{12} - (\frac{\sigma}{r})^6 \right]\]</div>
+<p>hvor <span class="math notranslate nohighlight">\(r\)</span> er avstanden mellom partiklenes sentrum.</p>
+<p><strong>a)</strong> Tegn en kvalitativ skisse av potensialet, og forklar hva <span class="math notranslate nohighlight">\(\sigma\)</span> og <span class="math notranslate nohighlight">\(\varepsilon\)</span> er.</p>
+<p><strong>b)</strong> Forklar hvordan Lennard–Jones-potensialet beskriver frastøtning ved korte avstander og tiltrekning ved større avstander.</p>
+<p><strong>c)</strong> Hva betyr det at dette er en <em>fenomenologisk</em> likning?</p>
+<p><strong>d)</strong> Beregn det intermolekylære potensialet mellom to Argon (Ar) atomer separert med en avstand <span class="math notranslate nohighlight">\(4.0\)</span> Ångström. Bruk følgende verdier:</p>
+<div class="math notranslate nohighlight">
+\[\varepsilon = 0.997\text{kJ/mol}\]</div>
+<div class="math notranslate nohighlight">
+\[\sigma = 3.40 \text{Å}\]</div>
+<p>Gitt at Krypton har <span class="math notranslate nohighlight">\(\varepsilon_{Kr}&gt;\varepsilon_{Ar}\)</span>, og <span class="math notranslate nohighlight">\(\sigma_{Kr}&gt;\sigma_{Ar}\)</span>.</p>
+<p><strong>e)</strong> Hvilken gass forventer du har høyest kokepunkt?</p>
+<p><strong>f)</strong> Hvilken av gassene tror du har størst effektiv molekylstørrelse?</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_02_under_revision.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../l%C3%B8sningsforslag.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Løsningsforslag</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-idealgasser">Oppgave 1: Idealgasser</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-fartsfordelingen-til-gasser">Oppgave 2: Fartsfordelingen til gasser.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-molekylaere-gasser-har-flere-frihetsgrader">Oppgave 3: Molekylære gasser har flere frihetsgrader.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#opggave-4-ekvipartisjonsteoremet">Opggave 4: Ekvipartisjonsteoremet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5-reelle-gasser">Oppgave 5: Reelle gasser</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-7">Oppgave 7</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-8">Oppgave 8</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-9">Oppgave 9</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
