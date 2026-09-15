@@ -1,0 +1,122 @@
+<h2 class="sr-only">Interaktiv visualisering av jevn og odde funksjoner med en parabel og en kubisk funksjon, hvor x=0 og y=0 er markert i hvitt</h2>
+
+<div style="display: flex; gap: 8px; margin: 0 0 1rem;">
+  <button id="btn-even" style="flex:1; font-weight: 500;">JEVN FUNKSJON - f(x)=x²-2</button>
+  <button id="btn-odd" style="flex:1; font-weight: 500;">ODDE FUNKSJON - f(x)=x³</button>
+</div>
+
+<div style="display: flex; align-items: center; gap: 12px; margin: 0 0 1rem;">
+  <label style="font-size: 14px; color: var(--text-secondary); min-width: 20px;">x</label>
+  <input type="range" min="-2" max="2" step="0.02" value="1" id="xslider" style="flex: 1;" />
+  <span style="font-size: 14px; font-weight: 500; min-width: 50px; text-align: right;" id="x-out">1.00</span>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 0 0 1.5rem;">
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;" id="lbl-fx">f(x)</p>
+    <p style="font-size: 18px; font-weight: 500; margin: 0;" id="val-fx">1.000</p>
+  </div>
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;" id="lbl-fnegx">f(-x)</p>
+    <p style="font-size: 18px; font-weight: 500; margin: 0;" id="val-fnegx">-1.000</p>
+  </div>
+</div>
+
+<p style="font-size: 14px; text-align: center; margin: 0 0 1rem; color: var(--text-secondary);" id="relation">f(-x) = -f(x) → odde funksjon</p>
+
+<div style="position: relative; height: 260px;">
+  <canvas id="chart" role="img" aria-label="Graf av en parabel eller en kubisk funksjon, med x=0 og y=0 markert i hvitt, og punkter ved x og -x som følger kurven">Graf som viser symmetri for jevne og odde funksjoner.</canvas>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let mode = 'odd';
+
+function f(x) { return mode === 'odd' ? Math.pow(x, 3) : x * x - 2; }
+function yRange() { return mode === 'odd' ? { min: -8, max: 8 } : { min: -2.5, max: 2.5 }; }
+
+function zeroLineColor(ctx) {
+  return ctx.tick.value === 0 ? '#ffffff' : 'rgba(255,255,255,0.1)';
+}
+function zeroLineWidth(ctx) {
+  return ctx.tick.value === 0 ? 2 : 1;
+}
+
+const ctx = document.getElementById('chart');
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    datasets: [
+      { label: 'f(x)', data: [], borderColor: '#2a78d6', backgroundColor: 'rgba(42,120,214,0.06)', borderWidth: 2, pointRadius: 0, fill: false, tension: 0.3 },
+      { label: 'x', data: [], borderColor: '#d95926', backgroundColor: '#d95926', pointRadius: 6, pointHoverRadius: 7, showLine: false },
+      { label: '-x', data: [], borderColor: '#1baf7a', backgroundColor: '#1baf7a', pointRadius: 6, pointHoverRadius: 7, showLine: false }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    animation: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        type: 'linear', min: -2, max: 2,
+        title: { display: true, text: 'x', color: '#ffffff' },
+        grid: { color: zeroLineColor, lineWidth: zeroLineWidth },
+        ticks: { color: '#ffffff' }
+      },
+      y: {
+        min: -8, max: 8,
+        title: { display: true, text: 'f(x)', color: '#ffffff' },
+        grid: { color: zeroLineColor, lineWidth: zeroLineWidth },
+        ticks: { color: '#ffffff' }
+      }
+    }
+  }
+});
+
+const slider = document.getElementById('xslider');
+const xOut = document.getElementById('x-out');
+const lblFx = document.getElementById('lbl-fx');
+const lblFnegx = document.getElementById('lbl-fnegx');
+const valFx = document.getElementById('val-fx');
+const valFnegx = document.getElementById('val-fnegx');
+const relation = document.getElementById('relation');
+const btnOdd = document.getElementById('btn-odd');
+const btnEven = document.getElementById('btn-even');
+
+function recomputeCurve() {
+  const pts = [];
+  for (let x = -2; x <= 2; x += 0.02) {
+    pts.push({ x: parseFloat(x.toFixed(2)), y: f(x) });
+  }
+  chart.data.datasets[0].data = pts;
+  chart.data.datasets[0].label = mode === 'odd' ? 'x³' : 'x² − 2';
+  const r = yRange();
+  chart.options.scales.y.min = r.min;
+  chart.options.scales.y.max = r.max;
+}
+
+function update() {
+  const x = parseFloat(slider.value);
+  const fx = f(x);
+  const fnegx = f(-x);
+  xOut.textContent = x.toFixed(2);
+  lblFx.textContent = 'f(' + x.toFixed(2) + ')';
+  lblFnegx.textContent = 'f(-' + x.toFixed(2) + ')';
+  valFx.textContent = fx.toFixed(3);
+  valFnegx.textContent = fnegx.toFixed(3);
+  relation.textContent = mode === 'odd'
+    ? 'f(-x) = -f(x)  →  odde funksjon (punktsymmetrisk om origo)'
+    : 'f(-x) = f(x)  →  jevn funksjon (symmetrisk om y-aksen)';
+
+  chart.data.datasets[1].data = [{ x: x, y: fx }];
+  chart.data.datasets[2].data = [{ x: -x, y: fnegx }];
+  chart.update();
+}
+
+btnOdd.addEventListener('click', () => { mode = 'odd'; recomputeCurve(); update(); });
+btnEven.addEventListener('click', () => { mode = 'even'; recomputeCurve(); update(); });
+slider.addEventListener('input', update);
+recomputeCurve();
+update();
+</script>
