@@ -8,8 +8,12 @@ Vi skal bruke fysikkens lover, matematikkens presisjon og kjemiens nysgjerrighet
 
 ![Hemidall](docs/bilder/heimdall.png)
 
-Boksene på denne nettsiden brukes som følgende:
+## Bidragsytere
+Denne boka er et samarbeidsprosjekt mellom undervisere og studenter. Følgende personer har bidratt til innholdet i boka:
+Andreas Haraldsrud (red.), Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat, Reidar Lund, Vladimir Rosenov Koynarev, Kari Kristine Almåsvold.
 
+## Strukturen i boka 
+Boksene på denne nettsiden brukes som følgende:
 :::{admonition} Innhold / Hint videre / Til ettertanke
 :class: note
 ...
