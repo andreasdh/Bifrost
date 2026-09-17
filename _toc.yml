@@ -60,7 +60,7 @@ parts:
     sections:
       - file: docs/losningsforslag/uke_01_under_revision_LF.ipynb
       - file: docs/losningsforslag/uke_02_under_revision_LF.ipynb
-  #   - file: docs/losningsforslag/uke_03
+      - file: docs/losningsforslag/uke_03_under_revision_LF.ipynb
   #   - file: docs/losningsforslag/uke_04
   #   - file: docs/losningsforslag/uke_05
   #   - file: docs/losningsforslag/uke_06
