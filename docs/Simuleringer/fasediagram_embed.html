@@ -1,0 +1,207 @@
+<div id="phase-widget" style="
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  padding: 2rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  max-width: 620px;
+  margin: 0 auto;
+  box-sizing: border-box;
+">
+
+<style>
+@keyframes pulseWarn { 0% { transform: scale(1); opacity: 0.55; } 100% { transform: scale(2.4); opacity: 0; } }
+.pulse-warn { animation: pulseWarn 0.85s ease-out infinite; transform-origin: center; transform-box: fill-box; }
+</style>
+
+<p style="text-align:center; font-size: 13px; color: #666; margin: 0 0 1rem;">
+Velg et punkt, og prøv så å endre bare temperaturen (uten å endre trykket). Se hvordan status endrer seg.
+</p>
+
+<svg id="phase-svg" width="100%" viewBox="0 0 600 500" style="display:block; margin-bottom: 1rem;"></svg>
+
+<div style="display: flex; justify-content: center; gap: 10px; margin-bottom: 1.25rem; flex-wrap: wrap;">
+  <button data-pt="a" class="pt-btn" style="font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Gå til a</button>
+  <button data-pt="b" class="pt-btn" style="font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Gå til b</button>
+  <button data-pt="c" class="pt-btn" style="font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Gå til c</button>
+  <button data-pt="d" class="pt-btn" style="font-size: 14px; font-weight: 600; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Gå til d</button>
+</div>
+
+<div style="display:flex; flex-direction:column; gap:14px; background:#f4f4f4; border-radius:8px; padding:1rem 1.25rem; margin-bottom:1rem;">
+  <div>
+    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;">
+      <span>Temperatur</span><span id="t-out">28</span>
+    </div>
+    <input type="range" id="t-slider" min="0" max="100" value="28" style="width:100%;">
+  </div>
+  <div>
+    <div style="display:flex; justify-content:space-between; font-size:14px; font-weight:700; margin-bottom:4px;">
+      <span>Trykk</span><span id="p-out">55</span>
+    </div>
+    <input type="range" id="p-slider" min="0" max="100" value="55" style="width:100%;">
+  </div>
+</div>
+
+<div id="status-box" style="background:#f4f4f4; border-radius:8px; padding:1rem; text-align:center; border: 2px solid transparent; transition: background 0.2s, border-color 0.2s;">
+  <p style="font-size:13px; color:#666; margin:0 0 4px;" id="status-text">Én fase (åpent område)</p>
+  <p style="font-size:20px; font-weight:700; margin:0;" id="status-nums">Faser = 1, F = 2</p>
+</div>
+
+</div>
+
+<script>
+(function() {
+  const svg = document.getElementById('phase-svg');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  const COL_CURVE = '#E63946';
+  const COL_BLUE = '#0B72E7';
+  const COL_RED = '#E63946';
+  const COL_GRAY = '#5F5E5A';
+  const COL_WARN = '#FF7A1A';
+
+  function bezier(t, P0, P1, P2) {
+    const mt = 1 - t;
+    return {
+      x: mt*mt*P0[0] + 2*mt*t*P1[0] + t*t*P2[0],
+      y: mt*mt*P0[1] + 2*mt*t*P1[1] + t*t*P2[1]
+    };
+  }
+
+  const CT = [280, 300];
+  const curves = [
+    { p0: CT, p1: [300,180], p2: [340,80] },
+    { p0: CT, p1: [150,250], p2: [60,140] },
+    { p0: CT, p1: [340,380], p2: [480,440] }
+  ];
+  const samples = curves.map(c => {
+    const pts = [];
+    for (let i = 0; i <= 60; i++) pts.push(bezier(i/60, c.p0, c.p1, c.p2));
+    return pts;
+  });
+
+  curves.forEach(c => {
+    const d = 'M ' + c.p0[0] + ',' + c.p0[1] + ' Q ' + c.p1[0] + ',' + c.p1[1] + ' ' + c.p2[0] + ',' + c.p2[1];
+    const path = document.createElementNS(NS, 'path');
+    path.setAttribute('d', d);
+    path.setAttribute('fill', 'none');
+    path.setAttribute('stroke', COL_CURVE);
+    path.setAttribute('stroke-width', '2.5');
+    svg.appendChild(path);
+  });
+
+  const axis = document.createElementNS(NS, 'g');
+  axis.innerHTML =
+    '<line x1="60" y1="60" x2="60" y2="440" stroke="#222" stroke-width="1.5"/>' +
+    '<line x1="60" y1="440" x2="560" y2="440" stroke="#222" stroke-width="1.5"/>' +
+    '<text x="30" y="250" font-size="15" font-weight="700" fill="#222" transform="rotate(-90 30 250)" text-anchor="middle">Trykk</text>' +
+    '<text x="310" y="478" font-size="15" font-weight="700" fill="#222" text-anchor="middle">Temperatur</text>';
+  svg.appendChild(axis);
+
+  const refPoints = { a: [200,230], b: [305,185], c: CT, d: [350,368] };
+  Object.keys(refPoints).forEach(k => {
+    const x = refPoints[k][0], y = refPoints[k][1];
+    const g = document.createElementNS(NS, 'g');
+    g.innerHTML =
+      '<circle cx="'+x+'" cy="'+y+'" r="4" fill="#999" stroke="#666" stroke-width="0.5"/>' +
+      '<text x="'+(x+10)+'" y="'+(y-8)+'" font-size="14" font-weight="700" fill="#555">'+k+'</text>';
+    svg.appendChild(g);
+  });
+
+  const halo = document.createElementNS(NS, 'circle');
+  halo.setAttribute('r', '9');
+  halo.style.display = 'none';
+  svg.appendChild(halo);
+
+  const marker = document.createElementNS(NS, 'circle');
+  marker.setAttribute('r', '9');
+  marker.setAttribute('stroke', '#222');
+  marker.setAttribute('stroke-width', '1.5');
+  svg.appendChild(marker);
+
+  const presets = { a: [28,55], b: [49,67], c: [44,37], d: [58,19] };
+  const expectedPhases = { a: 1, b: 2, c: 3, d: 2 };
+  let selectedPoint = null;
+
+  const tSlider = document.getElementById('t-slider');
+  const pSlider = document.getElementById('p-slider');
+  const tOut = document.getElementById('t-out');
+  const pOut = document.getElementById('p-out');
+  const statusText = document.getElementById('status-text');
+  const statusNums = document.getElementById('status-nums');
+  const statusBox = document.getElementById('status-box');
+
+  function toXY(tp, pp) {
+    return { x: 60 + (tp/100)*500, y: 440 - (pp/100)*380 };
+  }
+  function dist(a, b) {
+    return Math.hypot(a.x - b.x, a.y - b.y);
+  }
+
+  function render() {
+    const tp = parseFloat(tSlider.value);
+    const pp = parseFloat(pSlider.value);
+    tOut.textContent = Math.round(tp);
+    pOut.textContent = Math.round(pp);
+    const pos = toXY(tp, pp);
+    marker.setAttribute('cx', pos.x);
+    marker.setAttribute('cy', pos.y);
+    halo.setAttribute('cx', pos.x);
+    halo.setAttribute('cy', pos.y);
+
+    const dTriple = dist(pos, { x: CT[0], y: CT[1] });
+    let dCurve = Infinity;
+    samples.forEach(arr => arr.forEach(p => { dCurve = Math.min(dCurve, dist(pos, p)); }));
+
+    let phases, statusMsg, color;
+    if (dTriple < 10) {
+      phases = 3; statusMsg = 'Trippelpunkt: tre faser i likevekt'; color = COL_RED;
+    } else if (dCurve < 9) {
+      phases = 2; statusMsg = 'To faser i likevekt langs linja'; color = COL_BLUE;
+    } else {
+      phases = 1; statusMsg = 'Én fase (åpent område)'; color = COL_GRAY;
+    }
+    const F = 3 - phases;
+
+    const offTrack = selectedPoint !== null && phases < expectedPhases[selectedPoint];
+
+    if (offTrack) {
+      marker.setAttribute('fill', COL_WARN);
+      halo.setAttribute('fill', COL_WARN);
+      halo.style.display = 'block';
+      halo.classList.add('pulse-warn');
+      statusText.textContent = 'Du har forlatt likevekten fra punkt ' + selectedPoint + '!';
+      statusText.style.color = '#B34700';
+      statusText.style.fontWeight = '700';
+      statusBox.style.background = '#FFEEDD';
+      statusBox.style.borderColor = COL_WARN;
+    } else {
+      marker.setAttribute('fill', color);
+      halo.classList.remove('pulse-warn');
+      halo.style.display = 'none';
+      statusText.textContent = statusMsg;
+      statusText.style.color = '#666';
+      statusText.style.fontWeight = '400';
+      statusBox.style.background = '#f4f4f4';
+      statusBox.style.borderColor = 'transparent';
+    }
+    statusNums.textContent = 'Faser = ' + phases + ', F = ' + F;
+  }
+
+  tSlider.addEventListener('input', render);
+  pSlider.addEventListener('input', render);
+
+  document.querySelectorAll('.pt-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      selectedPoint = btn.dataset.pt;
+      const preset = presets[selectedPoint];
+      tSlider.value = preset[0];
+      pSlider.value = preset[1];
+      render();
+    });
+  });
+
+  render();
+})();
+</script>

@@ -1,0 +1,124 @@
+<div id="gitter-widget" style="
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  max-width: 640px;
+  margin: 0 auto;
+  box-sizing: border-box;
+">
+
+  <div id="gitter-grid" style="
+    display: grid;
+    grid-template-columns: repeat(4, 64px);
+    grid-template-rows: repeat(4, 64px);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  "></div>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 1.5rem;">
+    <button id="gitter-reset" style="
+      font-size: 14px; padding: 8px 16px; border-radius: 6px;
+      border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;
+    ">Nullstill</button>
+    <button id="gitter-random" style="
+      font-size: 14px; padding: 8px 16px; border-radius: 6px;
+      border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;
+    ">Tilfeldig fordeling</button>
+  </div>
+
+  <div style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; max-width: 560px; width: 100%;">
+    <div style="background: #f4f4f4; border-radius: 8px; padding: 1rem; text-align: center;">
+      <p style="font-size: 13px; color: #666; margin: 0 0 4px;">N</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 0;" id="gitter-stat-n">16</p>
+    </div>
+    <div style="background: #f4f4f4; border-radius: 8px; padding: 1rem; text-align: center;">
+      <p style="font-size: 13px; color: #666; margin: 0 0 4px;">N<sub>A</sub> (rød)</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 0; color: #A32D2D;" id="gitter-stat-na">0</p>
+    </div>
+    <div style="background: #f4f4f4; border-radius: 8px; padding: 1rem; text-align: center;">
+      <p style="font-size: 13px; color: #666; margin: 0 0 4px;">N<sub>B</sub> (blå)</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 0; color: #185FA5;" id="gitter-stat-nb">16</p>
+    </div>
+    <div style="background: #f4f4f4; border-radius: 8px; padding: 1rem; text-align: center;">
+      <p style="font-size: 13px; color: #666; margin: 0 0 4px;">W</p>
+      <p style="font-size: 22px; font-weight: 600; margin: 0;" id="gitter-stat-w">1</p>
+    </div>
+  </div>
+
+  <p id="gitter-formula" style="text-align: center; font-size: 14px; color: #666; margin-top: 1rem;">
+    W = 16! / (0! · 16!) = 1
+  </p>
+</div>
+
+<script>
+(function() {
+  const N = 16;
+  let cells = new Array(N).fill('B');
+
+  function lnFactorial(n) {
+    let s = 0;
+    for (let i = 2; i <= n; i++) s += Math.log(i);
+    return s;
+  }
+  function computeW(nA, nB) {
+    const lnW = lnFactorial(N) - lnFactorial(nA) - lnFactorial(nB);
+    return Math.round(Math.exp(lnW));
+  }
+
+  const grid = document.getElementById('gitter-grid');
+  for (let i = 0; i < N; i++) {
+    const cell = document.createElement('div');
+    cell.style.cssText = 'width:64px;height:64px;border-radius:50%;cursor:pointer;border:1px solid #d0d0d0;background:#378ADD;';
+    cell.dataset.idx = i;
+    grid.appendChild(cell);
+  }
+
+  function render() {
+    const nA = cells.filter(c => c === 'A').length;
+    const nB = N - nA;
+    Array.from(grid.children).forEach((cell, i) => {
+      cell.style.background = cells[i] === 'A' ? '#E24B4A' : '#378ADD';
+    });
+    document.getElementById('gitter-stat-na').textContent = nA;
+    document.getElementById('gitter-stat-nb').textContent = nB;
+    const w = computeW(nA, nB);
+    document.getElementById('gitter-stat-w').textContent = w.toLocaleString('nb-NO');
+    document.getElementById('gitter-formula').textContent =
+      'W = 16! / (' + nA + '! · ' + nB + '!) = ' + w.toLocaleString('nb-NO');
+  }
+
+  grid.addEventListener('click', (e) => {
+    const cell = e.target.closest('div');
+    if (!cell || !grid.contains(cell)) return;
+    const i = parseInt(cell.dataset.idx);
+    if (isNaN(i)) return;
+    cells[i] = cells[i] === 'A' ? 'B' : 'A';
+    render();
+  });
+
+  document.getElementById('gitter-reset').addEventListener('click', () => {
+    cells = new Array(N).fill('B');
+    render();
+  });
+
+  document.getElementById('gitter-random').addEventListener('click', () => {
+    const nA = Math.floor(Math.random() * (N + 1));
+    cells = new Array(N).fill('B');
+    const indices = Array.from({length: N}, (_, i) => i);
+    for (let i = indices.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]];
+    }
+    for (let i = 0; i < nA; i++) cells[indices[i]] = 'A';
+    render();
+  });
+
+  render();
+})();
+</script>

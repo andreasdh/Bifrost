@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 380" font-family="Arial, sans-serif">
+  <rect x="0" y="0" width="960" height="380" fill="white"/>
+
+  <!-- ============ PANEL 1: Kontinuerlig ============ -->
+  <g>
+    <!-- axes -->
+    <line x1="40" y1="90" x2="40" y2="300" stroke="#333" stroke-width="2"/>
+    <line x1="40" y1="300" x2="300" y2="300" stroke="#333" stroke-width="2"/>
+    <polygon points="40,84 35,96 45,96" fill="#333"/>
+    <polygon points="306,300 294,295 294,305" fill="#333"/>
+    <text x="52" y="96" font-size="14" fill="#333" font-style="italic">y</text>
+    <text x="296" y="292" font-size="14" fill="#333" font-style="italic">x</text>
+
+    <!-- dashed line at x=c (c -> x=170) -->
+    <line x1="170" y1="120" x2="170" y2="300" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="166" y="318" font-size="14" fill="#333" text-anchor="middle" font-style="italic">c</text>
+
+    <!-- smooth continuous curve passing through (170,180) -->
+    <path d="M 55 250 Q 130 130 170 180 Q 215 240 285 140" stroke="#1565c0" stroke-width="3" fill="none"/>
+    <!-- filled point at c on the curve -->
+    <circle cx="170" cy="180" r="5.5" fill="#1565c0"/>
+
+    <text x="170" y="70" font-size="16" fill="#333" text-anchor="middle"><tspan font-style="italic">f</tspan> er kontinuerlig i <tspan font-style="italic">c</tspan></text>
+  </g>
+
+  <!-- ============ PANEL 2: Grenseverdien eksisterer, men f diskontinuerlig (punktdiskontinuitet) ============ -->
+  <g transform="translate(330,0)">
+    <line x1="40" y1="90" x2="40" y2="300" stroke="#333" stroke-width="2"/>
+    <line x1="40" y1="300" x2="300" y2="300" stroke="#333" stroke-width="2"/>
+    <polygon points="40,84 35,96 45,96" fill="#333"/>
+    <polygon points="306,300 294,295 294,305" fill="#333"/>
+    <text x="52" y="96" font-size="14" fill="#333" font-style="italic">y</text>
+    <text x="296" y="292" font-size="14" fill="#333" font-style="italic">x</text>
+
+    <line x1="170" y1="120" x2="170" y2="300" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="166" y="318" font-size="14" fill="#333" text-anchor="middle" font-style="italic">c</text>
+
+    <!-- smooth curve; limit at c is y=200, but curve has a hole there -->
+    <path d="M 55 250 Q 130 150 166 202" stroke="#1565c0" stroke-width="3" fill="none"/>
+    <path d="M 174 198 Q 215 170 285 130" stroke="#1565c0" stroke-width="3" fill="none"/>
+    <!-- open circle: limit value (not the function value) -->
+    <circle cx="170" cy="200" r="5.5" fill="white" stroke="#1565c0" stroke-width="3"/>
+    <!-- filled point above: f(c) defined elsewhere -->
+    <circle cx="170" cy="140" r="5.5" fill="#1565c0"/>
+
+    <text x="170" y="70" font-size="16" fill="#333" text-anchor="middle"><tspan font-style="normal">lim</tspan><tspan font-size="10" dy="4"> x&#8594;c</tspan><tspan dy="-4"> </tspan><tspan font-style="italic">f</tspan>(<tspan font-style="italic">x</tspan>) &#8800; <tspan font-style="italic">f</tspan>(<tspan font-style="italic">c</tspan>)</text>
+  </g>
+
+  <!-- ============ PANEL 3: Hoppdiskontinuitet (grense eksisterer ikke) ============ -->
+  <g transform="translate(660,0)">
+    <line x1="40" y1="90" x2="40" y2="300" stroke="#333" stroke-width="2"/>
+    <line x1="40" y1="300" x2="300" y2="300" stroke="#333" stroke-width="2"/>
+    <polygon points="40,84 35,96 45,96" fill="#333"/>
+    <polygon points="306,300 294,295 294,305" fill="#333"/>
+    <text x="52" y="96" font-size="14" fill="#333" font-style="italic">y</text>
+    <text x="296" y="292" font-size="14" fill="#333" font-style="italic">x</text>
+
+    <line x1="170" y1="120" x2="170" y2="300" stroke="#bbb" stroke-width="1.5" stroke-dasharray="5 4"/>
+    <text x="166" y="318" font-size="14" fill="#333" text-anchor="middle" font-style="italic">c</text>
+
+    <!-- left branch approaching y=240 (lower) ; right branch from y=160 (upper) -->
+    <path d="M 55 265 Q 120 250 166 242" stroke="#1565c0" stroke-width="3" fill="none"/>
+    <path d="M 174 160 Q 220 145 285 128" stroke="#1565c0" stroke-width="3" fill="none"/>
+    <!-- f(c) on lower branch: filled ; upper branch endpoint: open -->
+    <circle cx="170" cy="240" r="5.5" fill="#1565c0"/>
+    <circle cx="170" cy="160" r="5.5" fill="white" stroke="#1565c0" stroke-width="3"/>
+
+    <text x="170" y="70" font-size="16" fill="#333" text-anchor="middle"><tspan font-style="normal">lim</tspan><tspan font-size="10" dy="4"> x&#8594;c</tspan><tspan dy="-4"> </tspan><tspan font-style="italic">f</tspan>(<tspan font-style="italic">x</tspan>) eksisterer ikke</text>
+  </g>
+</svg>

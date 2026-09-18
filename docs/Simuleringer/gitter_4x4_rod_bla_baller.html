@@ -1,0 +1,101 @@
+<div style="padding: 1rem 0;">
+<h2 class="sr-only">Interaktivt 4x4 gitter der du kan klikke ruter for å veksle mellom rød og blå ball, og se antall mikrotilstander W beregnes live.</h2>
+
+<div id="grid" style="display: grid; grid-template-columns: repeat(4, 64px); grid-template-rows: repeat(4, 64px); gap: 8px; justify-content: center; margin-bottom: 1.5rem;"></div>
+
+<div style="display: flex; justify-content: center; gap: 12px; margin-bottom: 1.5rem;">
+  <button id="reset" style="font-size: 14px;">Nullstill</button>
+  <button id="random" style="font-size: 14px;">Tilfeldig fordeling</button>
+</div>
+
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; max-width: 560px; margin: 0 auto;">
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">N</p>
+    <p style="font-size: 22px; font-weight: 500; margin: 0;" id="stat-n">16</p>
+  </div>
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">N<sub>A</sub> (rød)</p>
+    <p style="font-size: 22px; font-weight: 500; margin: 0; color: var(--text-danger);" id="stat-na">0</p>
+  </div>
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">N<sub>B</sub> (blå)</p>
+    <p style="font-size: 22px; font-weight: 500; margin: 0; color: var(--text-accent);" id="stat-nb">16</p>
+  </div>
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">W</p>
+    <p style="font-size: 22px; font-weight: 500; margin: 0;" id="stat-w">1</p>
+  </div>
+</div>
+
+<p style="text-align: center; font-size: 13px; color: var(--text-muted); margin-top: 1rem;" id="formula">W = 16! / (0! · 16!) = 1</p>
+</div>
+
+<script>
+const N = 16;
+let cells = new Array(N).fill('B');
+
+function lnFactorial(n) {
+  let s = 0;
+  for (let i = 2; i <= n; i++) s += Math.log(i);
+  return s;
+}
+function factorialStr(n) {
+  let r = 1n;
+  for (let i = 2; i <= n; i++) r *= BigInt(i);
+  return r.toString();
+}
+function computeW(nA, nB) {
+  const lnW = lnFactorial(N) - lnFactorial(nA) - lnFactorial(nB);
+  return Math.round(Math.exp(lnW));
+}
+
+const grid = document.getElementById('grid');
+for (let i = 0; i < N; i++) {
+  const cell = document.createElement('div');
+  cell.style.cssText = 'width:64px;height:64px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;border:0.5px solid var(--border);transition:none;';
+  cell.dataset.idx = i;
+  grid.appendChild(cell);
+}
+
+function render() {
+  const nA = cells.filter(c => c === 'A').length;
+  const nB = N - nA;
+  document.querySelectorAll('#grid > div').forEach((cell, i) => {
+    const isA = cells[i] === 'A';
+    cell.style.background = isA ? 'var(--fill-danger)' : 'var(--fill-accent)';
+  });
+  document.getElementById('stat-na').textContent = nA;
+  document.getElementById('stat-nb').textContent = nB;
+  const w = computeW(nA, nB);
+  document.getElementById('stat-w').textContent = w.toLocaleString('nb-NO');
+  document.getElementById('formula').textContent =
+    'W = 16! / (' + nA + '! · ' + nB + '!) = ' + w.toLocaleString('nb-NO');
+}
+
+grid.addEventListener('click', (e) => {
+  const cell = e.target.closest('[data-idx]');
+  if (!cell) return;
+  const i = parseInt(cell.dataset.idx);
+  cells[i] = cells[i] === 'A' ? 'B' : 'A';
+  render();
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  cells = new Array(N).fill('B');
+  render();
+});
+
+document.getElementById('random').addEventListener('click', () => {
+  const nA = Math.floor(Math.random() * (N + 1));
+  cells = new Array(N).fill('B');
+  const indices = Array.from({length: N}, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  for (let i = 0; i < nA; i++) cells[indices[i]] = 'A';
+  render();
+});
+
+render();
+</script>
