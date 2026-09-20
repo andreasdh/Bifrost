@@ -61,7 +61,7 @@ parts:
       - file: docs/losningsforslag/uke_01_under_revision_LF.ipynb
       - file: docs/losningsforslag/uke_02_under_revision_LF.ipynb
       - file: docs/losningsforslag/uke_03_under_revision_LF.ipynb
-      - file: docs/losningsforslag/uke_04_under_revision_LF.ipynb
+      - file: docs/losningsforslag/uke_04_under_revision_VK.ipynb
   #   - file: docs/losningsforslag/uke_05
   #   - file: docs/losningsforslag/uke_06
   #   - file: docs/losningsforslag/uke_07
