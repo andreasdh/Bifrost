@@ -1,0 +1,324 @@
+<!-- Simulering: Ensemblegjennomsnitt over identiske systemer -->
+<!-- Alle id/klasser er prefikset med "tkea-" (TilstandsEnsembleAverage) og all JS kjører -->
+<!-- i en isolert IIFE med scoped querySelector, slik at denne widgeten kan ligge i samme -->
+<!-- notebook som andre simuleringer (inkl. tidsgjennomsnitt-simuleringen) uten kollisjon. -->
+<div class="tkea-wrap" data-tkea-instance>
+  <style>
+    .tkea-wrap {
+      --tkea-bg: #f2ead9;
+      --tkea-panel: #ece1cb;
+      --tkea-panel-alt: #e3d5b8;
+      --tkea-border: #cdbb96;
+      --tkea-text: #33291c;
+      --tkea-muted: #8a7a5c;
+      --tkea-ground: #3457a0;
+      --tkea-excited: #c9752f;
+      --tkea-mean: #0d7d6f;
+
+      box-sizing: border-box;
+      background: var(--tkea-bg);
+      border: 1px solid var(--tkea-border);
+      border-radius: 10px;
+      padding: 20px;
+      color: var(--tkea-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      max-width: 900px;
+      margin: 1.5em auto;
+    }
+    .tkea-wrap *, .tkea-wrap *::before, .tkea-wrap *::after { box-sizing: border-box; }
+
+    .tkea-title { font-size: 15px; font-weight: 700; letter-spacing: 0.01em; margin-bottom: 4px; }
+    .tkea-subtitle { font-size: 12.5px; color: var(--tkea-muted); margin-bottom: 16px; }
+
+    .tkea-grid-row { display: grid; grid-template-columns: 1.1fr 1fr; gap: 18px; align-items: stretch; }
+    @media (max-width: 680px) { .tkea-grid-row { grid-template-columns: 1fr; } }
+
+    .tkea-panel { background: var(--tkea-panel); border: 1px solid var(--tkea-border); border-radius: 8px; padding: 12px; }
+    .tkea-panel-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tkea-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+
+    .tkea-ensemble-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(14px, 1fr));
+      gap: 3px;
+      min-height: 168px;
+      align-content: flex-start;
+    }
+    .tkea-replica {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 2.5px;
+      background: var(--tkea-ground);
+    }
+
+    .tkea-legend { font-size: 10.5px; text-transform: none; letter-spacing: normal; display: flex; gap: 12px; }
+    .tkea-legend span { display: inline-flex; align-items: center; gap: 4px; }
+    .tkea-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    canvas.tkea-canvas { width: 100%; height: 180px; display: block; border-radius: 6px; background: var(--tkea-panel-alt); }
+
+    .tkea-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+    @media (max-width: 680px) { .tkea-stats { grid-template-columns: repeat(2, 1fr); } }
+    .tkea-stat { background: var(--tkea-panel); border: 1px solid var(--tkea-border); border-radius: 8px; padding: 8px 10px; }
+    .tkea-stat-label { font-size: 10.5px; color: var(--tkea-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .tkea-stat-value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 16px; margin-top: 2px; }
+    .tkea-stat-value.tkea-accent { color: var(--tkea-mean); }
+
+    .tkea-controls { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 14px; align-items: end; }
+    @media (max-width: 680px) { .tkea-controls { grid-template-columns: 1fr 1fr; } }
+    .tkea-control label { font-size: 11.5px; color: var(--tkea-muted); display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .tkea-control input[type="range"] { width: 100%; accent-color: var(--tkea-mean); }
+    .tkea-btn {
+      background: var(--tkea-mean); color: #f2ead9; border: 1px solid var(--tkea-mean);
+      border-radius: 7px; padding: 9px 14px; font-size: 13px; cursor: pointer; font-weight: 600;
+      transition: filter 120ms ease;
+    }
+    .tkea-btn:hover { filter: brightness(1.08); }
+
+    .tkea-toggle-row { margin-top: 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--tkea-muted); }
+    .tkea-toggle-row input { accent-color: var(--tkea-mean); }
+  </style>
+
+  <div class="tkea-title">Ensemblegjennomsnitt over identiske systemer</div>
+  <div class="tkea-subtitle">Hver rute i venstre panel er en egen kopi av samme system, hver i sin tilfeldige mikrotilstand akkurat nå. Ensemblegjennomsnittet er gjennomsnittet over alle kopiene.</div>
+
+  <div class="tkea-grid-row">
+    <div class="tkea-panel">
+      <div class="tkea-panel-label">
+        <span>Ensemblet: M kopier av systemet</span>
+        <span class="tkea-legend">
+          <span><span class="tkea-dot" style="background:var(--tkea-ground)"></span>lav n</span>
+          <span><span class="tkea-dot" style="background:var(--tkea-excited)"></span>høy n</span>
+        </span>
+      </div>
+      <div class="tkea-ensemble-grid" data-tkea="ensemble"></div>
+    </div>
+    <div class="tkea-panel">
+      <div class="tkea-panel-label">
+        <span>Fordeling av antall eksiterte, n, per kopi</span>
+        <span class="tkea-legend">
+          <span><span class="tkea-dot" style="background:var(--tkea-mean)"></span>gjennomsnitt</span>
+        </span>
+      </div>
+      <canvas class="tkea-canvas" data-tkea="canvas"></canvas>
+    </div>
+  </div>
+
+  <div class="tkea-stats">
+    <div class="tkea-stat">
+      <div class="tkea-stat-label">Antall kopier, M</div>
+      <div class="tkea-stat-value" data-tkea="m-readout">–</div>
+    </div>
+    <div class="tkea-stat">
+      <div class="tkea-stat-label">Partikler per kopi, N</div>
+      <div class="tkea-stat-value" data-tkea="n-readout">–</div>
+    </div>
+    <div class="tkea-stat">
+      <div class="tkea-stat-label">Ensemblegjennomsnitt ⟨n/N⟩</div>
+      <div class="tkea-stat-value tkea-accent" data-tkea="mean">–</div>
+    </div>
+    <div class="tkea-stat">
+      <div class="tkea-stat-label">Standardavvik (n/N)</div>
+      <div class="tkea-stat-value" data-tkea="std">–</div>
+    </div>
+  </div>
+
+  <div class="tkea-controls">
+    <div class="tkea-control">
+      <label><span>Partikler per kopi, N</span><span data-tkea="n-value">10</span></label>
+      <input type="range" min="2" max="60" step="1" value="10" data-tkea="n-slider">
+    </div>
+    <div class="tkea-control">
+      <label><span>Antall kopier, M</span><span data-tkea="m-value">80</span></label>
+      <input type="range" min="4" max="400" step="1" value="80" data-tkea="m-slider">
+    </div>
+    <div class="tkea-control">
+      <label><span>Sannsynlighet p for eksitasjon</span><span data-tkea="p-value">0.30</span></label>
+      <input type="range" min="0.05" max="0.95" step="0.01" value="0.30" data-tkea="p-slider">
+    </div>
+    <button class="tkea-btn" data-tkea="resample">Trekk nytt ensemble</button>
+  </div>
+
+  <div class="tkea-toggle-row">
+    <input type="checkbox" data-tkea="auto-toggle" id="tkea-auto-checkbox">
+    <label for="tkea-auto-checkbox">Trekk automatisk på nytt hvert sekund</label>
+  </div>
+</div>
+
+<script>
+(function () {
+  var roots = document.querySelectorAll('[data-tkea-instance]:not([data-tkea-initialized])');
+  roots.forEach(function (root) {
+    root.setAttribute('data-tkea-initialized', 'true');
+    initTkea(root);
+  });
+
+  function initTkea(root) {
+    var q = function (sel) { return root.querySelector('[data-tkea="' + sel + '"]'); };
+
+    var ensembleEl = q('ensemble');
+    var canvas = q('canvas');
+    var ctx = canvas.getContext('2d');
+
+    var nSlider = q('n-slider');
+    var mSlider = q('m-slider');
+    var pSlider = q('p-slider');
+    var nValueEl = q('n-value');
+    var mValueEl = q('m-value');
+    var pValueEl = q('p-value');
+    var resampleBtn = q('resample');
+    var autoToggle = q('auto-toggle');
+
+    var mReadout = q('m-readout');
+    var nReadout = q('n-readout');
+    var meanEl = q('mean');
+    var stdEl = q('std');
+
+    var N = parseInt(nSlider.value, 10);
+    var M = parseInt(mSlider.value, 10);
+    var p = parseFloat(pSlider.value);
+    var autoTimer = null;
+
+    function excitedColor(fraction) {
+      // Interpolate between ground (blue) and excited (amber) based on fraction n/N.
+      var ground = [52, 87, 160];
+      var excited = [201, 117, 47];
+      var r = Math.round(ground[0] + (excited[0] - ground[0]) * fraction);
+      var g = Math.round(ground[1] + (excited[1] - ground[1]) * fraction);
+      var b = Math.round(ground[2] + (excited[2] - ground[2]) * fraction);
+      return 'rgb(' + r + ',' + g + ',' + b + ')';
+    }
+
+    function resizeCanvas() {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(180 * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function drawHistogram(counts, mean) {
+      var w = canvas.getBoundingClientRect().width;
+      var h = 180;
+      ctx.clearRect(0, 0, w, h);
+
+      var padTop = 8, padBottom = 18, padLeft = 24, padRight = 8;
+      var plotW = w - padLeft - padRight;
+      var plotH = h - padTop - padBottom;
+
+      var maxCount = Math.max.apply(null, counts.concat([1]));
+      var barW = plotW / counts.length;
+
+      // Baseline
+      ctx.strokeStyle = 'rgba(51,41,28,0.22)';
+      ctx.beginPath();
+      ctx.moveTo(padLeft, padTop + plotH);
+      ctx.lineTo(padLeft + plotW, padTop + plotH);
+      ctx.stroke();
+
+      for (var i = 0; i < counts.length; i++) {
+        var barH = (counts[i] / maxCount) * (plotH - 4);
+        var x = padLeft + i * barW;
+        var y = padTop + plotH - barH;
+        var fraction = i / (counts.length - 1 || 1);
+        ctx.fillStyle = excitedColor(fraction);
+        ctx.globalAlpha = 0.85;
+        ctx.fillRect(x + 1, y, Math.max(1, barW - 2), barH);
+      }
+      ctx.globalAlpha = 1;
+
+      // x-axis ticks at 0, mid, N
+      ctx.fillStyle = 'rgba(51,41,28,0.6)';
+      ctx.font = '9px ui-monospace, monospace';
+      ctx.fillText('0', padLeft, padTop + plotH + 12);
+      ctx.fillText(String(counts.length - 1), padLeft + plotW - 12, padTop + plotH + 12);
+
+      // Mean marker
+      var meanX = padLeft + (mean) * barW + barW / 2;
+      ctx.strokeStyle = '#0d7d6f';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(meanX, padTop);
+      ctx.lineTo(meanX, padTop + plotH);
+      ctx.stroke();
+    }
+
+    function drawEnsembleGrid(fractions) {
+      ensembleEl.innerHTML = '';
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < fractions.length; i++) {
+        var d = document.createElement('div');
+        d.className = 'tkea-replica';
+        d.style.background = excitedColor(fractions[i]);
+        frag.appendChild(d);
+      }
+      ensembleEl.appendChild(frag);
+    }
+
+    function sampleEnsemble() {
+      var counts = new Array(N + 1).fill(0);
+      var fractions = new Array(M);
+      var sum = 0;
+      var sumSq = 0;
+
+      for (var i = 0; i < M; i++) {
+        var nExcited = 0;
+        for (var j = 0; j < N; j++) {
+          if (Math.random() < p) nExcited++;
+        }
+        counts[nExcited]++;
+        var frac = nExcited / N;
+        fractions[i] = frac;
+        sum += frac;
+        sumSq += frac * frac;
+      }
+
+      var mean = sum / M;
+      var variance = Math.max(0, sumSq / M - mean * mean);
+      var std = Math.sqrt(variance);
+
+      drawEnsembleGrid(fractions);
+      drawHistogram(counts, mean * N);
+
+      mReadout.textContent = M;
+      nReadout.textContent = N;
+      meanEl.textContent = mean.toFixed(3);
+      stdEl.textContent = std.toFixed(3);
+    }
+
+    function resizeAndRedraw() {
+      resizeCanvas();
+      sampleEnsemble();
+    }
+
+    nSlider.addEventListener('input', function () {
+      N = parseInt(nSlider.value, 10);
+      nValueEl.textContent = N;
+      sampleEnsemble();
+    });
+    mSlider.addEventListener('input', function () {
+      M = parseInt(mSlider.value, 10);
+      mValueEl.textContent = M;
+      sampleEnsemble();
+    });
+    pSlider.addEventListener('input', function () {
+      p = parseFloat(pSlider.value);
+      pValueEl.textContent = p.toFixed(2);
+      sampleEnsemble();
+    });
+    resampleBtn.addEventListener('click', sampleEnsemble);
+
+    autoToggle.addEventListener('change', function () {
+      if (autoToggle.checked) {
+        autoTimer = setInterval(sampleEnsemble, 1000);
+      } else {
+        clearInterval(autoTimer);
+        autoTimer = null;
+      }
+    });
+
+    window.addEventListener('resize', resizeAndRedraw);
+
+    resizeCanvas();
+    sampleEnsemble();
+  }
+})();
+</script>

@@ -1,0 +1,313 @@
+<div id="sim-2niva-multiplisitet-a1c9"></div>
+<style>
+  #sim-2niva-multiplisitet-a1c9 {
+    --s2lm-bg: #fbfaf7;
+    --s2lm-panel: #ffffff;
+    --s2lm-ink: #1f2937;
+    --s2lm-muted: #6b7280;
+    --s2lm-line: #e5e2da;
+    --s2lm-ground: #334155;
+    --s2lm-excited: #d97706;
+    --s2lm-accent: #0ea5e9;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--s2lm-ink);
+    background: var(--s2lm-bg);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 10px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    max-width: 780px;
+    margin: 1.5rem auto;
+    box-sizing: border-box;
+  }
+  #sim-2niva-multiplisitet-a1c9 * { box-sizing: border-box; }
+  #sim-2niva-multiplisitet-a1c9 .tns-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom: .25rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-title { font-size: 1.05rem; font-weight: 600; margin:0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-sub { color: var(--s2lm-muted); font-size: .85rem; margin: 0 0 1.1rem; }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-controls { display:flex; flex-wrap:wrap; gap:1.25rem; align-items:center; margin-bottom: 1.1rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap { display:flex; align-items:center; gap:.6rem; font-size:.9rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap label { color: var(--s2lm-muted); white-space:nowrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap input[type=range] { accent-color: var(--s2lm-accent); width: 140px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-n-val { font-variant-numeric: tabular-nums; font-weight:600; min-width: 1.4em; display:inline-block; text-align:center;}
+
+  #sim-2niva-multiplisitet-a1c9 .tns-buttons { display:flex; gap:.5rem; flex-wrap:wrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn {
+    border: 1px solid var(--s2lm-line);
+    background: var(--s2lm-panel);
+    color: var(--s2lm-ink);
+    padding: .45rem .8rem;
+    border-radius: 7px;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:hover { border-color: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:active { transform: scale(0.97); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-particles {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    padding: 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+    margin-bottom: 1.1rem;
+    min-height: 92px;
+    align-content: flex-start;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle {
+    position: relative;
+    width: 30px;
+    height: 66px;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-line { position:absolute; left:0; right:0; height:2px; background:#cbd5e1; }
+  #sim-2niva-multiplisitet-a1c9 .tns-line.top { top: 8px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-line.bottom { bottom: 8px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-lvl-label { position:absolute; right:100%; margin-right:4px; font-size:.6rem; color:var(--s2lm-muted); transform: translateY(-50%); }
+  #sim-2niva-multiplisitet-a1c9 .tns-lvl-label.top { top: 8px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-lvl-label.bottom { bottom: 8px; transform: translateY(50%); }
+  #sim-2niva-multiplisitet-a1c9 .tns-dot {
+    position:absolute;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    top: 58px;
+    background: var(--s2lm-ground);
+    box-shadow: 0 0 0 3px rgba(51,65,85,0.12);
+    transition: top .35s cubic-bezier(.4,0,.2,1), background .35s;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle.excited .tns-dot {
+    top: 8px;
+    background: var(--s2lm-excited);
+    box-shadow: 0 0 0 3px rgba(217,119,6,0.15);
+  }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-readout {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1.6rem;
+    font-size: .92rem;
+    margin-bottom: 1.3rem;
+    padding: .8rem 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-metric { display:flex; flex-direction:column; gap: .1rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-label { color: var(--s2lm-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-value { font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 600; }
+  #sim-2niva-multiplisitet-a1c9 .tns-value.tns-omega { color: var(--s2lm-accent); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-title { font-size: .85rem; color: var(--s2lm-muted); margin: 0 0 .5rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom {
+    display:inline-flex;
+    align-items:center;
+    font-variant-numeric: tabular-nums;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-paren {
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: 1;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-col {
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    line-height: 1.15;
+    padding: 0 .2rem;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-wrap { display:flex; gap: .4rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-yaxis-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    align-self: stretch;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space: nowrap;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-col { flex: 1; min-width: 0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart {
+    display:flex;
+    align-items:flex-end;
+    gap: 4px;
+    height: 120px;
+    padding: .5rem .5rem 0;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px 8px 0 0;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-col { display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; gap:3px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar { width: 100%; max-width: 26px; background: #cbd5e1; border-radius: 3px 3px 0 0; transition: height .35s ease, background .25s; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar.tns-current { background: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-n { font-size: .65rem; color: var(--s2lm-muted); }
+  #sim-2niva-multiplisitet-a1c9 .tns-xaxis-label {
+    text-align: center;
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    padding: .35rem .5rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+
+  @media (max-width: 480px) {
+    #sim-2niva-multiplisitet-a1c9 .tns-particles { padding: .75rem; }
+    #sim-2niva-multiplisitet-a1c9 .tns-readout { gap: 1rem; }
+  }
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById('sim-2niva-multiplisitet-a1c9');
+  if (!root) return;
+
+  root.innerHTML = `
+    <div class="tns-head">
+      <p class="tns-title">To-nivå-system: mikrotilstander og multiplisitet</p>
+    </div>
+    <p class="tns-sub">Hver partikkel kan være i grunntilstanden (energi 0) eller den eksiterte tilstanden (energi ε). Klikk på en partikkel for å eksitere/de-eksitere den.</p>
+
+    <div class="tns-controls">
+      <div class="tns-slider-wrap">
+        <label>Antall partikler N</label>
+        <input type="range" class="tns-N" min="2" max="16" value="8" step="1">
+        <span class="tns-n-val">8</span>
+      </div>
+      <div class="tns-buttons">
+        <button class="tns-btn tns-shuffle-fixed">Ny mikrotilstand (samme energi)</button>
+        <button class="tns-btn tns-shuffle-random">Helt tilfeldig</button>
+        <button class="tns-btn tns-reset">Nullstill</button>
+      </div>
+    </div>
+
+    <div class="tns-particles"></div>
+
+    <div class="tns-readout">
+      <div class="tns-metric">
+        <span class="tns-label">Mikrotilstand</span>
+        <span class="tns-value tns-micro">–</span>
+      </div>
+      <div class="tns-metric">
+        <span class="tns-label">Makrotilstand (energi)</span>
+        <span class="tns-value tns-macro">E = 0</span>
+      </div>
+      <div class="tns-metric">
+        <span class="tns-label">Multiplisitet Ω(n)</span>
+        <span class="tns-value tns-omega">Ω = 1</span>
+      </div>
+    </div>
+
+    <p class="tns-chart-title">Multiplisitet Ω(n) for hver mulig makrotilstand</p>
+    <div class="tns-chart-wrap">
+      <span class="tns-yaxis-label">Multiplisitet, Ω(n)</span>
+      <div class="tns-chart-col">
+        <div class="tns-chart"></div>
+        <div class="tns-xaxis-label">Antall eksiterte partikler, n</div>
+      </div>
+    </div>
+  `;
+
+  let N = 8;
+  let state = [];
+
+  function binomCoeffs(n) {
+    const row = [1];
+    for (let k = 1; k <= n; k++) {
+      row.push(Math.round(row[k - 1] * (n - k + 1) / k));
+    }
+    return row;
+  }
+
+  function resetState(fillFalse = true) {
+    state = new Array(N).fill(false);
+    if (!fillFalse) {
+      for (let i = 0; i < N; i++) state[i] = Math.random() < 0.5;
+    }
+  }
+
+  function shuffleKeepingN() {
+    const n = state.filter(Boolean).length;
+    const arr = new Array(N).fill(false);
+    const idx = [...Array(N).keys()];
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    for (let i = 0; i < n; i++) arr[idx[i]] = true;
+    state = arr;
+  }
+
+  function render() {
+    const n = state.filter(Boolean).length;
+    const coeffs = binomCoeffs(N);
+    const omega = coeffs[n];
+
+    // particles
+    const pcont = root.querySelector('.tns-particles');
+    pcont.innerHTML = state.map((excited, i) => `
+      <div class="tns-particle${excited ? ' excited' : ''}" data-i="${i}" title="Partikkel ${i + 1}">
+        <span class="tns-lvl-label top">ε</span>
+        <span class="tns-lvl-label bottom">0</span>
+        <div class="tns-line top"></div>
+        <div class="tns-line bottom"></div>
+        <div class="tns-dot"></div>
+      </div>
+    `).join('');
+    pcont.querySelectorAll('.tns-particle').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = +el.dataset.i;
+        state[i] = !state[i];
+        render();
+      });
+    });
+
+    // readouts
+    root.querySelector('.tns-micro').textContent =
+      state.map(e => e ? '↑' : '↓').join(' ');
+    root.querySelector('.tns-macro').textContent = `E = ${n}ε  (${n} av ${N} eksitert)`;
+    root.querySelector('.tns-omega').innerHTML =
+      `Ω(${n}) = <span class="tns-binom"><span class="tns-binom-paren">(</span><span class="tns-binom-col"><span>${N}</span><span>${n}</span></span><span class="tns-binom-paren">)</span></span> = ${omega}`;
+
+    // chart
+    const maxOmega = Math.max(...coeffs);
+    const chart = root.querySelector('.tns-chart');
+    chart.innerHTML = coeffs.map((c, k) => `
+      <div class="tns-bar-col">
+        <div class="tns-bar${k === n ? ' tns-current' : ''}" style="height:${Math.max(3, (c / maxOmega) * 100)}%"></div>
+        <span class="tns-bar-n">${k}</span>
+      </div>
+    `).join('');
+  }
+
+  root.querySelector('.tns-N').addEventListener('input', (e) => {
+    N = +e.target.value;
+    root.querySelector('.tns-n-val').textContent = N;
+    resetState(true);
+    render();
+  });
+  root.querySelector('.tns-shuffle-fixed').addEventListener('click', () => {
+    shuffleKeepingN();
+    render();
+  });
+  root.querySelector('.tns-shuffle-random').addEventListener('click', () => {
+    resetState(false);
+    render();
+  });
+  root.querySelector('.tns-reset').addEventListener('click', () => {
+    resetState(true);
+    render();
+  });
+
+  resetState(true);
+  render();
+})();
+</script>

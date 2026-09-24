@@ -1,0 +1,703 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 5 – Varme, Arbeid, Entropi og Effektivitet &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_05_under_revision';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Løsningsforslag" href="../l%C3%B8sningsforslag.html" />
+    <link rel="prev" title="Uke 4 – Makroskopisk termodynamikk" href="uke_04_under_revision.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_05_under_revision.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 5 – Varme, Arbeid, Entropi og Effektivitet</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">Oppgave 1: Prosesser hvor vi holder en variabel konstant.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-clausius-ulikhet">Oppgave 3: Clausius ulikhet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet">Oppgave 4: Carnot maskiner og maksimal effektivitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-5-varme-arbeid-entropi-og-effektivitet">
+<h1>Uke 5 – Varme, Arbeid, Entropi og Effektivitet<a class="headerlink" href="#uke-5-varme-arbeid-entropi-og-effektivitet" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">
+<h3>Oppgave 1: Prosesser hvor vi holder en variabel konstant.<a class="headerlink" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Forklar kort hva som kjennetegner henholdsvis en <em>isoterm</em>, <em>isokor</em>, <em>isobar</em> og <em>adiabatisk</em> prosess.</p>
+<p><strong>b)</strong> Skisser følgende prosesser i samme PV-diagram, anta idealgass i alle trinn:</p>
+<ol class="arabic simple">
+<li><p>Isobar ekspansjon ved et trykk <span class="math notranslate nohighlight">\(P_1\)</span> fra volum <span class="math notranslate nohighlight">\(V_1\)</span> til <span class="math notranslate nohighlight">\(V_2\)</span></p></li>
+<li><p>Isokor nedkjøling ved <span class="math notranslate nohighlight">\(V_2\)</span> av gassen til et trykk <span class="math notranslate nohighlight">\(P_2\)</span></p></li>
+<li><p>Isoterm kompresjon av gassen fra (<span class="math notranslate nohighlight">\(P_2, V_2\)</span>) til (<span class="math notranslate nohighlight">\(P_1\)</span>,<span class="math notranslate nohighlight">\(V_1\)</span>)</p></li>
+</ol>
+<p><strong>c)</strong> I diagrammet fra oppgave <em>b</em>, skisser visuelt hva arbeidet utført av denne syklusen blir</p>
+<p><strong>d)</strong> Anta at hvert steg gjøres uendelig langsomt (kvasi-statisk) slik at likevekt alltid er opprettet, og null friksjon.</p>
+<p>Finn uttrykk for hvor mye <em>arbeid</em> gjøres av systemet på omgivelsene i hvert trinn 1-3?</p>
+<p>Bruk <span class="math notranslate nohighlight">\(V_1=1.0\ \mathrm{dm^3}\)</span>,  <span class="math notranslate nohighlight">\(V_2=3.0\ \mathrm{dm^3}\)</span>, <span class="math notranslate nohighlight">\(P_1=4.0\ \mathrm{atm}\)</span>, <span class="math notranslate nohighlight">\(T_1=300\ \mathrm{K}\)</span>
+Finn først <span class="math notranslate nohighlight">\(P_2\)</span> (husk idealgass, og isoterm prosess), og bruk så dette til å finne totale arbeidet utført av syklusen?</p>
+<p><strong>e)</strong> Hva er entropiendringen til gassen for den isoterme kompresjonen (steg 3), og hva er gassens entropiendring totalt?</p>
+</section>
+<section id="oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">
+<h3>Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?<a class="headerlink" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> En idealgass utvides adiabatisk fra et volum <span class="math notranslate nohighlight">\(V_1\)</span> til et høyere volum <span class="math notranslate nohighlight">\(V_2\)</span>. Diskuter hva dere tror vil skje med temperaturen til gassen.</p>
+<p><strong>La oss se nå på et konkret irreversibelt eksempel hvor vi har en idealgass i et termisk isolert stempel ved <span class="math notranslate nohighlight">\(V_1=0.8\ \mathrm{dm^3}\)</span>, <span class="math notranslate nohighlight">\(P_1=5\ \mathrm{atm}\)</span> og <span class="math notranslate nohighlight">\(T_1=350\ \mathrm{K}\)</span></strong></p>
+<p><strong>b)</strong> Gassen utvides irreversibelt og adiabatisk mot et konstant ytre trykk <span class="math notranslate nohighlight">\(P_{ext}=1.5\ \mathrm{atm}\)</span> til den når likevekt ved et volum <span class="math notranslate nohighlight">\(V_2\)</span> der trykket av gassen er likt med det ytre trykket, <span class="math notranslate nohighlight">\(P_2=P_{ext}\)</span>.
+Uten å regne på spesifikke tall diskuter følgende:</p>
+<ol class="arabic simple">
+<li><p>Hvor mye varme, <span class="math notranslate nohighlight">\(q\)</span>, utveksles med omgivelsene?</p></li>
+<li><p>Hva er da endringen i indre energi?</p></li>
+<li><p>Sett opp et uttrykk for arbeidet <span class="math notranslate nohighlight">\(w\)</span>.</p></li>
+</ol>
+<p><strong>c)</strong> Legg merke til at vi ikke vet hva det endelige volumet <span class="math notranslate nohighlight">\(V_2\)</span> er etter ekspansjonen. Vi vet bare at når volumet <span class="math notranslate nohighlight">\(V_2\)</span> er gassen i likevekt slik at <span class="math notranslate nohighlight">\(P_2=P_{ext}\)</span>.</p>
+<p>Bruk disse hintene (1-4) og finn en verdi for <span class="math notranslate nohighlight">\(V_2\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Fra første lov vet vi at <span class="math notranslate nohighlight">\(\Delta U = q + w\)</span></p></li>
+<li><p>For en gass med konstant molar varmekapasitet <span class="math notranslate nohighlight">\(C_{V,m}\)</span> kan endring i indre energi uttrykkes som: <span class="math notranslate nohighlight">\(\Delta U = nC_{V,m}(T_2-T_1)\)</span></p></li>
+<li><p>For idealgass så er <span class="math notranslate nohighlight">\(C_{V,m}=\frac{3}{2}R\)</span></p></li>
+<li><p>Husk at dere fant uttrykket for arbeidet i oppgave <em>b</em></p></li>
+</ol>
+<p><strong>d)</strong> Hvor mye arbeid gjorde gassen i løpet av ekspansjonen, og hva er temperaturen til gassen (<span class="math notranslate nohighlight">\(T_2\)</span>) etter denne utvidelsen?</p>
+<p>Diskuter om dette stemmer med det vi forventet. Uten å regne på det, hva om prosessen hadde blitt gjort reversibelt?</p>
+<p><strong>e)</strong> Vi vil nå komprimere gassen tilbake til sitt opprinnelige volum <span class="math notranslate nohighlight">\(V_1\)</span>, dette gjør vi nå helt reversibelt, og fremdeles adiabatisk.</p>
+<p>Diskuter, tror dere at dette vil returnere gassen til sin opprinnelige tilstand, hvorfor, hvorfor ikke?</p>
+<p>For en adiabatisk og reversibel prosess så kan vi vise at <span class="math notranslate nohighlight">\(PV^{\gamma}\)</span> er konstant. Her er <span class="math notranslate nohighlight">\(\gamma=\frac{C_p}{C_v}\)</span>, og som for en idealgass blir <span class="math notranslate nohighlight">\(\gamma=\frac{C_p}{C_v}=\frac{5}{3}\)</span>.</p>
+<p>Bruk dette til å finne det nye trykket som gassen får når vi har komprimert den tilbake til det opprinnelige volumet <span class="math notranslate nohighlight">\(V_1\)</span>.</p>
+<p>Hva er nå temperaturen i gassen?</p>
+<p><strong>f)</strong> Diskuter følgende:</p>
+<p>Hvorfor øker temperaturen til gassen, og hvor kommer den «ekstra» energien fra?</p>
+<p>Kan vi forstå dette fra et mikroskopisk perspektiv?</p>
+<p>Hva hadde skjedd med slutttemperaturen om begge stegene (både ekspansjon og kompresjon) ble gjort reversibelt?</p>
+<p>Hint: tenk på entropien!</p>
+</section>
+<section id="oppgave-3-clausius-ulikhet">
+<h3>Oppgave 3: Clausius ulikhet<a class="headerlink" href="#oppgave-3-clausius-ulikhet" title="Link to this heading">#</a></h3>
+<p>La oss se litt mer på systemet i forrige oppgave.</p>
+<p><strong>a)</strong> Hva er endringen i gassens entropi når systemet er tilbake til <span class="math notranslate nohighlight">\(V_1\)</span>? Bruk at:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta S_{\mathrm{gass}}
+=
+n C_{V,m} \ln\left(\frac{T_2}{T_1}\right)
++
+n R \ln\left(\frac{V_2}{V_1}\right)
+\]</div>
+<p><strong>b)</strong> Hva er entropiendringen til omgivelsene?</p>
+<p><strong>c)</strong> Fra Clausius ulikhet har vi at:</p>
+<div class="math notranslate nohighlight">
+\[ dS\geq \frac{dq}{T} \]</div>
+<p>For prosessen i oppgave 2, hva blir <span class="math notranslate nohighlight">\(\frac{dq}{T}\)</span>?</p>
+<p>Og er det da <span class="math notranslate nohighlight">\(dS= \frac{dq}{T} \)</span> eller <span class="math notranslate nohighlight">\(dS&gt; \frac{dq}{T}\)</span> som gjelder?</p>
+<p>Hva må til for at <span class="math notranslate nohighlight">\(dS= \frac{dq}{T}\)</span>?</p>
+</section>
+<section id="oppgave-4-carnot-maskiner-og-maksimal-effektivitet">
+<h3>Oppgave 4: Carnot maskiner og maksimal effektivitet<a class="headerlink" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet" title="Link to this heading">#</a></h3>
+<p>En Carnot maskin er en tenkt idealisert syklus som består av 4 reversible trinn gjort på en idealgass:</p>
+<ol class="arabic simple">
+<li><p>Isoterm ekspansjon der systemet er knyttet til et varmt reservoar med temperatur <span class="math notranslate nohighlight">\(T_{h}\)</span>, fra tilstand A(<span class="math notranslate nohighlight">\(P_1\)</span>, <span class="math notranslate nohighlight">\(V_1\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>) til en tilstand B(<span class="math notranslate nohighlight">\(P_2\)</span>, <span class="math notranslate nohighlight">\(V_2\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>)</p></li>
+<li><p>Adiabatisk ekspansjon fra tilstand B(<span class="math notranslate nohighlight">\(P_2\)</span>, <span class="math notranslate nohighlight">\(V_2\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>) til en tilstand C(<span class="math notranslate nohighlight">\(P_3\)</span>, <span class="math notranslate nohighlight">\(V_3\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>) ved en lavere temperatur <span class="math notranslate nohighlight">\(T_c\)</span>.</p></li>
+<li><p>Isoterm kompresjon der systemet er knyttet til et kaldt reservoar med temp <span class="math notranslate nohighlight">\(T_c\)</span>, fra tilstand C(<span class="math notranslate nohighlight">\(P_3\)</span>, <span class="math notranslate nohighlight">\(V_3\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>) til tilstand D(<span class="math notranslate nohighlight">\(P_4\)</span>, <span class="math notranslate nohighlight">\(V_4\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>).</p></li>
+<li><p>Adiabatisk kompresjon tilbake til starttilstanden A(<span class="math notranslate nohighlight">\(P_1\)</span>, <span class="math notranslate nohighlight">\(V_1\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>)</p></li>
+</ol>
+<p>Dette er altså en syklus som transporterer varme fra det varme reservoaret til det kalde reservoaret, og bruker dette til å gjøre arbeid. Ettersom at syklusen består kun av reversible steg, gir den det størst mulige arbeidet ved en gitt temperaturforskjell mellom reservoarene og er den mest effektive maskinen vi kan tenke oss. Men hvor god er effekten egentlig?</p>
+<p><strong>a)</strong> Siden dette er en syklus, hva er da <span class="math notranslate nohighlight">\(\Delta U\)</span> for hele prosessen? Hva med <span class="math notranslate nohighlight">\(\Delta S\)</span> for både gassen og omgivelsene?</p>
+<p><strong>b)</strong> Hvor mye varme utveksles i hver av de 4 trinnene, og i hvilken retning går denne varmen?</p>
+<p><strong>c)</strong> Diskuter hvorfor arbeidet som gjøres av syklusen er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[w=q_h-q_c\]</div>
+<p><strong>d)</strong> Vi kan definere effektiviteten som arbeidet vi får ut, delt på varmen som kommer inn fra det varme reservoaret. Sett opp et uttrykk for effektiviteten med <span class="math notranslate nohighlight">\(q_h\)</span> og <span class="math notranslate nohighlight">\(q_c\)</span>.</p>
+<p><strong>e)</strong> For en idealisert reversibel prosess som den vi har her kan vi vise at:</p>
+<div class="math notranslate nohighlight">
+\[\frac{q_c}{q_h}=\frac{T_c}{T_h}\]</div>
+<p>Bruk dette til å uttrykke effektiviteten med <span class="math notranslate nohighlight">\(\frac{T_c}{T_h}\)</span>, og diskuter hva må til for å få 100% effektivitet.</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p>En jernbit blir plassert i kontakt med en aluminiumskloss. Begge har et volum på <span class="math notranslate nohighlight">\(50 cm^3\)</span>. Temperaturen til jernbiten har er <span class="math notranslate nohighlight">\(0^{\circ}C\)</span> og aluminiumsklossen <span class="math notranslate nohighlight">\(100^{\circ}C\)</span>. De to klossene settes inntil hverandre slik at de er i termisk kontakt, og likevekt innstiller seg. Anta at systemet er termisk isolert.</p>
+<p><span class="math notranslate nohighlight">\(C_{p,m}= 25.10 J K^{-1} mol^{-1}\)</span> for jern og <span class="math notranslate nohighlight">\(C_{p,m}= 24.4 J K^{-1} mol^{-1}\)</span> for aluminium. Tetthetene er henholdsvis <span class="math notranslate nohighlight">\(2.698 g cm^{-3}\)</span> og <span class="math notranslate nohighlight">\(7.874 g cm^{-3}\)</span> for aluminium og jern.</p>
+<p><strong>a)</strong> Finn slutt-temperaturen når termisk likevekt er nådd.</p>
+<p><strong>b)</strong> Beregn <span class="math notranslate nohighlight">\(\Delta S\)</span> for hver av de to klossene, og for de to klossene til sammen.</p>
+<p><strong>c)</strong> Kommenter kort fortegnene til de tre entropi-endringene som er beregnet.</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Beregn endringen i molar entropi når en prøve argongass komprimeres fra <span class="math notranslate nohighlight">\(2 dm^3\)</span> til <span class="math notranslate nohighlight">\(0.5 dm^3\)</span>, samtidig som den varmes opp fra <span class="math notranslate nohighlight">\(300K\)</span> til <span class="math notranslate nohighlight">\(400K\)</span>.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Beregn den absolutte entropien for <span class="math notranslate nohighlight">\(SO_2\)</span>(g) ved 300,0 K og 1,00 bar gitt følgende
+informasjon:</p>
+<p><span class="math notranslate nohighlight">\(S_{m}^\circ(15,0 K) = 1,26 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(C_{p,m}(s) = 32,65 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(T_m = 197,64 K\)</span>,
+<span class="math notranslate nohighlight">\(\Delta_{fus}H_{m}^\circ = 7402 J mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(C_{p,m}(l) = 87,20 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(T_b = 263,08 K\)</span>, <span class="math notranslate nohighlight">\(\Delta_{fus}H_{m}^\circ = 24937 J mol^{-1}\)</span>,
+<span class="math notranslate nohighlight">\(C_{p,m}(g) = 39,88 JK^{-1}mol^{-1}\)</span>.</p>
+<p>Kommenter også på hvilket trinn entropien øker mest i og hvorfor.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Joule Thomson effekten utnyttes til å</p>
+<p>Vi ser på et adiabatisk system hvor en gass strupes gjennom en ventil eller porøs plugg (throttle) og endrer temperatur. Vi skal bruke simuleringen gitt i lenken under, hvor man kan vløege 4 ulike gasser og justere temperatur og trykk på “inn-siden” samt trykk på “ut-siden”. Merk at den porøse ventilen er tykkere jo større trykkfallet skal være.</p>
+<p>https://learncheme.com/simulations/thermodynamics/thermo-1/joule-thomson-expansion/</p>
+<p><strong>a)</strong> Siden gassen kun gjør et arbeid på seg selv, og det ikke er noen varmeutveksling med omgivelsene er <span class="math notranslate nohighlight">\(\Delta H = 0\)</span> for prosessen. Siden entalpi er en funksjon av trykk og temperatur kan vi skrive <span class="math notranslate nohighlight">\(dH = (\frac{\partial H}{\partial T})_pdT + (\frac{\partial H}{\partial p})_Tdp\)</span>. Bruk Joule-Thomson koeffisienten: <span class="math notranslate nohighlight">\(\mu_{JT}=\left(\frac{\partial T}{\partial p}\right)_H\)</span>, vis at vi kan skrive sluttemperaturen som</p>
+<div class="math notranslate nohighlight">
+\[T_{out} = T_{in} + \int_{p_{in}}^{p_{out}}{\mu_{JT}(T,p)dp}\]</div>
+<p><strong>b)</strong> Beskriv hvordan Joule-Thomson koeffisienten: <span class="math notranslate nohighlight">\(\mu_{JT}=\left(\frac{\partial T}{\partial p}\right)_H\)</span> og inverteringstemperaturen henger sammen med intermolekylære krefter.</p>
+<p><strong>c)</strong> Se først på <span class="math notranslate nohighlight">\(NH_3\)</span> gass. Velg <span class="math notranslate nohighlight">\(p_{in} = 4 MPa\)</span>, <span class="math notranslate nohighlight">\(T_{in} = 645 K\)</span> og <span class="math notranslate nohighlight">\(p_{out} = 0.1 MPa\)</span>. Stemmer <span class="math notranslate nohighlight">\(T_{out}\)</span> i simuleringen med hva du får ved bruk av svaret ditt i oppgave <strong>a</strong>?</p>
+<p><strong>d)</strong> Se nå på <span class="math notranslate nohighlight">\(N_2\)</span> gass. Sammenlikn <span class="math notranslate nohighlight">\(\Delta T\)</span> nå med det du så for <span class="math notranslate nohighlight">\(NH_3\)</span>. Hva har skjedd?</p>
+<p><strong>e)</strong> Til slutt skal vi se på <span class="math notranslate nohighlight">\(H_2\)</span>. Velg først <span class="math notranslate nohighlight">\(p_{in} = 5 MPa\)</span>, <span class="math notranslate nohighlight">\(T_{in} = 55 K\)</span> og <span class="math notranslate nohighlight">\(p_{out} = 0.1 MPa\)</span>. Hva skjer når du setter <span class="math notranslate nohighlight">\(T_{in} &gt; 180K\)</span>?</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_04_under_revision.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 4 – Makroskopisk termodynamikk</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../l%C3%B8sningsforslag.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Løsningsforslag</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">Oppgave 1: Prosesser hvor vi holder en variabel konstant.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-clausius-ulikhet">Oppgave 3: Clausius ulikhet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet">Oppgave 4: Carnot maskiner og maksimal effektivitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Lennard-Jones · energien mellom to atomer</title>
+<!--
+  Interaktiv studieressurs · intermolekylære interaksjoner
+  Læringsutbytte 1 (parpotensial; hvorfor Coulomb alene ikke holder)
+  og 3 (skisser LJ; hva ε og σ er). Frittstående – ingen avhengigheter.
+-->
+<style>
+  :root{
+    --paper:#eef2f6; --panel:#fff; --ink:#152230; --ink2:#5b6b7b; --line:#d6dee6;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;background:#dfe6ee;padding:24px 14px;
+    font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;color:var(--ink);}
+  .lj-root{max-width:860px;margin:0 auto;background:var(--paper);border-radius:16px;
+    padding:22px 22px 26px;box-shadow:0 1px 3px rgba(21,34,48,.08),0 8px 30px rgba(21,34,48,.06);}
+  .serif{font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;}
+  .mono{font-family:ui-monospace,"SF Mono",Menlo,Consolas,monospace;}
+  .eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink2);font-weight:600;}
+  h1{font-size:25px;line-height:1.15;margin:4px 0 4px;font-weight:600;}
+  .sub{color:var(--ink2);font-size:14.5px;margin:0 0 16px;max-width:60ch;}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:12px;}
+  svg.stage,svg.graph{display:block;width:100%;height:auto;}
+  .hint{position:absolute;top:12px;left:14px;z-index:2;display:inline-block;font-size:12.5px;
+    font-weight:600;color:#fff;padding:4px 10px;border-radius:999px;}
+  .readout{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border-radius:12px;overflow:hidden;margin:14px 0;}
+  .cell{background:var(--panel);padding:11px 12px;}
+  .cell .k{font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink2);font-weight:600;}
+  .cell .v{font-size:20px;margin-top:3px;}
+  .chips{display:flex;gap:8px;margin:2px 0 12px;flex-wrap:wrap;}
+  .chip{font-size:12.5px;font-weight:600;padding:6px 12px;border-radius:999px;
+    border:1.5px solid var(--line);color:var(--ink2);background:var(--panel);}
+  .blurb{font-size:15px;line-height:1.55;padding:15px 17px;border-radius:12px;border-left:4px solid;}
+  .controls{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  .ctl label{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;font-weight:600;margin-bottom:7px;}
+  .ctl .val{font-size:15px;}
+  .ctl .cap{font-weight:400;color:var(--ink2);font-size:12px;margin-top:6px;display:block;line-height:1.4;}
+  input[type=range]{width:100%;accent-color:var(--ink);height:22px;cursor:pointer;}
+  .row{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:16px;flex-wrap:wrap;}
+  .toggle{display:flex;align-items:center;gap:8px;font-size:13.5px;cursor:pointer;}
+  button.reset{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:var(--panel);
+    border:1.5px solid var(--line);border-radius:8px;padding:8px 16px;cursor:pointer;}
+  button.reset:hover{border-color:var(--ink2);}
+  .foot{margin-top:20px;padding-top:16px;border-top:1px solid var(--line);font-size:13px;line-height:1.6;color:var(--ink2);}
+  .foot b{color:var(--ink);font-weight:600;}
+  .grip{cursor:grab;} .grip:active{cursor:grabbing;}
+  .grip:focus{outline:none;}
+  @media(max-width:560px){.controls{grid-template-columns:1fr;}.readout{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="lj-root">
+  <div class="eyebrow">Intermolekylære interaksjoner · utbytte 1 &amp; 3</div>
+  <h1 class="serif">Energien mellom to atomer</h1>
+  <p class="sub">Dra det høyre atomet. Kurven under er parpotensialet u(r) — energien som er lagret
+    når de to atomene står i avstand r fra hverandre. Følg med på hvor du havner på kurven, og hvilken
+    vei kraften dytter.</p>
+
+  <!-- STAGE -->
+  <div class="panel" style="padding:6px 6px 0;position:relative">
+    <span class="hint" id="hint">dra det høyre atomet →</span>
+    <svg class="stage" id="stage" viewBox="0 0 680 200" role="group"
+         aria-label="To atomer; dra det høyre atomet for å endre avstanden">
+      <line x1="40" y1="116" x2="650" y2="116" stroke="var(--line)" stroke-width="2"/>
+      <line id="eqLine" stroke="#1f9d63" stroke-width="1.5" stroke-dasharray="4 4" opacity="0.55"/>
+      <text id="eqLabel" text-anchor="middle" font-size="11" fill="#1f9d63" class="mono">r_min</text>
+      <line id="sepLine" stroke="var(--ink2)" stroke-width="1"/>
+      <text id="sepText" text-anchor="middle" font-size="12" fill="var(--ink2)" class="mono"></text>
+      <g id="arrowL"><line stroke-width="3" stroke-linecap="round"/><polygon/></g>
+      <g id="arrowR"><line stroke-width="3" stroke-linecap="round"/><polygon/></g>
+      <circle id="atomFixed" cy="116" r="33" fill="#3d4d60"/>
+      <circle id="atomFixedHi" cy="106" r="9" fill="#fff" opacity="0.22"/>
+      <g id="atomMov" class="grip" tabindex="0" aria-label="Bevegelig atom">
+        <circle id="movGlow" cy="116" fill="#1f9d63" opacity="0.14"/>
+        <circle id="movMain" cy="116" fill="#465a70" stroke="#1f9d63" stroke-width="2.5"/>
+        <circle id="movHi" cy="106" r="9" fill="#fff" opacity="0.22"/>
+      </g>
+    </svg>
+  </div>
+
+  <!-- READOUT -->
+  <div class="readout">
+    <div class="cell"><div class="k">avstand r</div><div class="v mono" id="rOut">1,12</div></div>
+    <div class="cell"><div class="k">energi u(r)</div><div class="v mono" id="uOut">–1,00</div></div>
+    <div class="cell"><div class="k">kraft F(r)</div><div class="v mono" id="fOut">0,00</div></div>
+    <div class="cell"><div class="k">tilstand</div><div class="v" id="stateOut" style="font-size:16px;font-weight:600;margin-top:6px">i balanse</div></div>
+  </div>
+
+  <!-- GRAPH -->
+  <div class="panel" style="padding:4px">
+    <svg class="graph" id="graph" viewBox="0 0 680 380" role="img"
+         aria-label="Lennard-Jones potensialenergikurve mot avstand"></svg>
+  </div>
+  <p style="font-size:12.5px;color:var(--ink2);margin:8px 2px 0;line-height:1.5">
+    Les kurven fra venstre mot høyre: en nesten loddrett <b style="color:var(--ink)">vegg</b> (frastøtning),
+    et <b style="color:#1f9d63">søkk</b> med dybde ε ved r_min (binding), så en grunn
+    <b style="color:#2b7fb3">hale</b> som stiger tilbake mot null (tiltrekning som avtar med avstanden).
+  </p>
+
+  <!-- REGIME -->
+  <div style="margin-top:18px">
+    <div class="chips">
+      <span class="chip" data-reg="repulsion">Frastøtning</span>
+      <span class="chip" data-reg="equilibrium">Likevekt</span>
+      <span class="chip" data-reg="attraction">Tiltrekning</span>
+    </div>
+    <div class="blurb" id="blurb"></div>
+  </div>
+
+  <!-- CONTROLS -->
+  <div class="controls">
+    <div class="ctl">
+      <label>ε — brønndybde <span class="val mono" id="epsVal">1,00</span></label>
+      <input type="range" id="eps" min="0.3" max="2" step="0.05" value="1" aria-label="epsilon, brønndybde"/>
+      <span class="cap">Hvor sterkt atomene bindes — dybden på søkket. Større ε, dypere brønn.</span>
+    </div>
+    <div class="ctl">
+      <label>σ — atomstørrelse <span class="val mono" id="sigVal">1,00</span></label>
+      <input type="range" id="sig" min="0.6" max="1.2" step="0.02" value="1" aria-label="sigma, atomstørrelse"/>
+      <span class="cap">Der u(r) krysser null — starten på den harde kjernen. Større σ flytter alt utover.</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <label class="toggle"><input type="checkbox" id="relax" checked/>
+      Slipp løs mot likevekt (la atomet rulle ned i brønnen)</label>
+    <button class="reset" id="reset">Nullstill</button>
+  </div>
+
+  <div class="foot">
+    <p style="margin-top:0">
+      <b>Hvorfor ikke bare Coulombs lov?</b> Begge atomene er elektrisk nøytrale, så den gjennomsnittlige
+      ladningsvekselvirkningen er null — Coulomb alene gir ingen tiltrekning i det hele tatt. Draget kommer
+      fra <b>synkroniserte kvantefluktuasjoner</b> i de to elektronskyene (flyktige, korrelerte dipoler).
+      Lennard-Jones utleder ikke dette; det er et kompakt <i>sammendrag</i> av det — et mykt
+      −(σ/r)⁶-drag pluss en hard (σ/r)¹²-vegg.
+    </p>
+    <p style="margin-bottom:0">
+      Enhetene her er relative. For ekte argon: σ ≈ 0,34 nm og ε ≈ 1,7 × 10⁻²¹ J (≈ 120 K i
+      temperaturenheter). Hold øye med ε og σ — de samme to tallene kommer tilbake som
+      <b>a</b>- og <b>b</b>-leddene i van der Waals-gassen.
+    </p>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  // ── fysikk ────────────────────────────────────────────────
+  var RMIN = Math.pow(2, 1/6);           // r_min = 2^(1/6) σ ≈ 1,122 σ
+  function clamp(x,lo,hi){ return Math.max(lo, Math.min(hi, x)); }
+  function uLJ(r,e,s){ var sr6=Math.pow(s/r,6); return 4*e*(sr6*sr6 - sr6); }
+  function fLJ(r,e,s){ var sr6=Math.pow(s/r,6), sr12=sr6*sr6; return (24*e/r)*(2*sr12 - sr6); }
+  function nb(x,d){ return x.toFixed(d).replace('.', ','); }   // norsk desimalkomma
+
+  // ── domener og geometri ───────────────────────────────────
+  var R_LO=0.25, R_HI=3.0, U_LO=-2.5, U_HI=1.5, DRAG_LO=0.55, DRAG_HI=2.9;
+  var GW=680, GH=380, mL=58, mR=24, mT=24, mB=46, PW=GW-mL-mR, PH=GH-mT-mB;
+  function xG(r){ return mL + (r-R_LO)/(R_HI-R_LO)*PW; }
+  function yG(u){ return mT + (U_HI-clamp(u,U_LO,U_HI))/(U_HI-U_LO)*PH; }
+  var STAGE_Y=116, ATOM_L_X=95, STAGE_SCALE=175;
+  function xStage(r){ return ATOM_L_X + r*STAGE_SCALE; }
+
+  var REG = {
+    repulsion:  {label:"dytter fra hverandre", c:"#dd5138", bg:"#fbe8e2"},
+    equilibrium:{label:"i balanse",            c:"#1f9d63", bg:"#e2f3ea"},
+    attraction: {label:"trekker sammen",       c:"#2b7fb3", bg:"#e4eff6"}
+  };
+  var BLURB = {
+    repulsion:"Du er på den bratte venstreveggen. Presset så tett sammen overlapper atomenes "+
+      "elektronskyer og gjør kraftig motstand — leddet (σ/r)¹². Nettokraften peker utover og vokser "+
+      "fort, og dytter atomene fra hverandre.",
+    equilibrium:"Bunnen av brønnen, ved r ≈ 1,122 σ. Her opphever tiltrekning og frastøtning hverandre "+
+      "nøyaktig: nettokraften er null og energien er lavest, u = −ε. Overlatt til seg selv legger paret "+
+      "seg her — dette søkket er det som holder to atomer sammen.",
+    attraction:"Den slake høyresiden. På disse avstandene kjenner atomene et svakt drag innover — van der "+
+      "Waals-/dispersjonstiltrekningen, leddet −(σ/r)⁶. Draget avtar raskt med avstanden, og derfor merker "+
+      "vidt adskilte atomer i en gass knapt hverandre."
+  };
+
+  // ── tilstand ──────────────────────────────────────────────
+  var eps=1, sig=1, r=RMIN, vel=0, dragging=false, relax=true;
+
+  // ── bygg statisk graframme ────────────────────────────────
+  var SVGNS="http://www.w3.org/2000/svg";
+  function el(name,attrs){ var e=document.createElementNS(SVGNS,name);
+    for(var k in attrs){ e.setAttribute(k, attrs[k]); } return e; }
+  var g = document.getElementById("graph");
+  [-2,-1,0,1].forEach(function(u){
+    g.appendChild(el("line",{x1:mL,y1:yG(u),x2:GW-mR,y2:yG(u),
+      stroke:u===0?"var(--ink2)":"var(--line)","stroke-width":u===0?1.3:1,
+      "stroke-dasharray":u===0?"none":"3 5",opacity:u===0?0.5:1}));
+  });
+  g.appendChild(el("line",{x1:mL,y1:mT,x2:mL,y2:GH-mB,stroke:"var(--ink)","stroke-width":1.5}));
+  [{u:0,t:"0"},{u:-1,t:"-1"}].forEach(function(o){
+    var tx=el("text",{x:mL-10,y:yG(o.u)+4,"text-anchor":"end","font-size":11,fill:"var(--ink2)"});
+    tx.setAttribute("class","mono"); tx.textContent=o.t; g.appendChild(tx);
+  });
+  var yl=el("text",{x:16,y:mT+PH/2,"font-size":12.5,fill:"var(--ink)","text-anchor":"middle","font-weight":600,
+    transform:"rotate(-90 16 "+(mT+PH/2)+")"}); yl.textContent="potensialenergi  u(r)"; g.appendChild(yl);
+  var xl=el("text",{x:mL+PW/2,y:GH-10,"font-size":12.5,fill:"var(--ink)","text-anchor":"middle","font-weight":600});
+  xl.textContent="avstand  r  →"; g.appendChild(xl);
+
+  // dynamiske grafelementer (oppdateres i kode)
+  var sigLine=el("line",{stroke:"var(--ink2)","stroke-width":1,"stroke-dasharray":"2 4",opacity:0.6});
+  var sigDot =el("circle",{r:4,fill:"var(--ink)"});
+  var sigLbl =el("text",{"text-anchor":"middle","font-size":12.5,fill:"var(--ink)"}); sigLbl.setAttribute("class","mono"); sigLbl.textContent="σ";
+  var rminLine=el("line",{stroke:"#1f9d63","stroke-width":1.4,"stroke-dasharray":"4 3"});
+  var epsTick =el("line",{stroke:"#1f9d63","stroke-width":2});
+  var epsDot  =el("circle",{r:3.5,fill:"#1f9d63"});
+  var epsLbl  =el("text",{"font-size":12.5,fill:"#1f9d63"}); epsLbl.setAttribute("class","mono"); epsLbl.textContent="ε";
+  var rminLbl =el("text",{"text-anchor":"middle","font-size":11.5,fill:"#1f9d63"}); rminLbl.setAttribute("class","mono"); rminLbl.textContent="r_min";
+  var curve   =el("path",{fill:"none",stroke:"var(--ink)","stroke-width":2.4,"stroke-linejoin":"round"});
+  var hiCurve =el("path",{fill:"none","stroke-width":5,"stroke-linecap":"round","stroke-linejoin":"round",opacity:0.9});
+  var guide   =el("line",{"stroke-width":1.2,"stroke-dasharray":"3 3",opacity:0.7});
+  var dot     =el("circle",{r:7.5,stroke:"#fff","stroke-width":2.5});
+  [sigLine,sigDot,sigLbl,rminLine,epsTick,epsDot,epsLbl,rminLbl,curve,hiCurve,guide,dot].forEach(function(e){g.appendChild(e);});
+
+  // ── referanser til stage/kontroller ───────────────────────
+  var stage=document.getElementById("stage");
+  var atomMov=document.getElementById("atomMov"), movGlow=document.getElementById("movGlow"),
+      movMain=document.getElementById("movMain"), movHi=document.getElementById("movHi"),
+      atomFixed=document.getElementById("atomFixed"), atomFixedHi=document.getElementById("atomFixedHi");
+  var arrowL=document.getElementById("arrowL"), arrowR=document.getElementById("arrowR");
+  var eqLine=document.getElementById("eqLine"), eqLabel=document.getElementById("eqLabel");
+  var sepLine=document.getElementById("sepLine"), sepText=document.getElementById("sepText");
+  var hint=document.getElementById("hint");
+  var rOut=document.getElementById("rOut"), uOut=document.getElementById("uOut"),
+      fOut=document.getElementById("fOut"), stateOut=document.getElementById("stateOut");
+  var blurb=document.getElementById("blurb"), chips=document.querySelectorAll(".chip");
+  var epsS=document.getElementById("eps"), sigS=document.getElementById("sig"),
+      epsVal=document.getElementById("epsVal"), sigVal=document.getElementById("sigVal"),
+      relaxC=document.getElementById("relax"), resetB=document.getElementById("reset");
+
+  // ── kurve (avhenger bare av eps,sig) ──────────────────────
+  function buildCurve(){
+    var pts=[], rr;
+    for(rr=R_LO; rr<=R_HI+1e-9; rr+=0.006){
+      var u=uLJ(rr,eps,sig);
+      if(u>U_HI) continue;
+      pts.push(xG(rr).toFixed(1)+","+yG(u).toFixed(1));
+    }
+    curve.setAttribute("d", pts.length?("M"+pts.join(" L")):"");
+    // markører σ, r_min, ε
+    var rmin=RMIN*sig;
+    sigLine.setAttribute("x1",xG(sig)); sigLine.setAttribute("y1",yG(0));
+    sigLine.setAttribute("x2",xG(sig)); sigLine.setAttribute("y2",GH-mB);
+    sigDot.setAttribute("cx",xG(sig)); sigDot.setAttribute("cy",yG(0));
+    sigLbl.setAttribute("x",xG(sig)); sigLbl.setAttribute("y",GH-mB+18);
+    rminLine.setAttribute("x1",xG(rmin)); rminLine.setAttribute("y1",yG(0));
+    rminLine.setAttribute("x2",xG(rmin)); rminLine.setAttribute("y2",yG(-eps));
+    epsTick.setAttribute("x1",xG(rmin)-5); epsTick.setAttribute("y1",yG(-eps));
+    epsTick.setAttribute("x2",xG(rmin)+5); epsTick.setAttribute("y2",yG(-eps));
+    epsDot.setAttribute("cx",xG(rmin)); epsDot.setAttribute("cy",yG(-eps));
+    epsLbl.setAttribute("x",xG(rmin)+9); epsLbl.setAttribute("y",yG(-eps/2)+4);
+    rminLbl.setAttribute("x",xG(rmin)); rminLbl.setAttribute("y",GH-mB+18);
+  }
+
+  // ── én arrow ──────────────────────────────────────────────
+  function setArrow(grp, cx, sign, len, color){
+    var line=grp.querySelector("line"), poly=grp.querySelector("polygon");
+    if(len<=2.5){ grp.style.display="none"; return; }
+    grp.style.display="";
+    var x0=cx+sign*33, x1=x0+sign*len, head=6*sign;   // 33 ≈ atomradius-margin
+    line.setAttribute("x1",x0); line.setAttribute("y1",STAGE_Y);
+    line.setAttribute("x2",x1); line.setAttribute("y2",STAGE_Y);
+    line.setAttribute("stroke",color);
+    poly.setAttribute("points", x1+","+STAGE_Y+" "+(x1-head)+","+(STAGE_Y-5)+" "+(x1-head)+","+(STAGE_Y+5));
+    poly.setAttribute("fill",color);
+  }
+
+  // ── render (avhenger av r) ────────────────────────────────
+  function render(){
+    var rmin=RMIN*sig, u=uLJ(r,eps,sig), F=fLJ(r,eps,sig);
+    var reg = r<rmin*0.98 ? "repulsion" : (r>rmin*1.02 ? "attraction" : "equilibrium");
+    var C=REG[reg], col=C.c;
+
+    // stage: atomer
+    var atomR=22+11*sig, xR=xStage(r);
+    atomFixed.setAttribute("cx",ATOM_L_X); atomFixed.setAttribute("r",atomR);
+    atomFixedHi.setAttribute("cx",ATOM_L_X-atomR*0.3); atomFixedHi.setAttribute("cy",STAGE_Y-atomR*0.3);
+    atomFixedHi.setAttribute("r",atomR*0.28);
+    movGlow.setAttribute("cx",xR); movGlow.setAttribute("r",atomR+6); movGlow.setAttribute("fill",col);
+    movMain.setAttribute("cx",xR); movMain.setAttribute("r",atomR); movMain.setAttribute("stroke",col);
+    movHi.setAttribute("cx",xR-atomR*0.3); movHi.setAttribute("cy",STAGE_Y-atomR*0.3); movHi.setAttribute("r",atomR*0.28);
+
+    // likevektslinje + avstandsbrakett
+    eqLine.setAttribute("x1",xStage(rmin)); eqLine.setAttribute("y1",STAGE_Y-46);
+    eqLine.setAttribute("x2",xStage(rmin)); eqLine.setAttribute("y2",STAGE_Y+46);
+    eqLabel.setAttribute("x",xStage(rmin)); eqLabel.setAttribute("y",STAGE_Y-52);
+    var by=STAGE_Y+atomR+14;
+    sepLine.setAttribute("x1",ATOM_L_X); sepLine.setAttribute("y1",by);
+    sepLine.setAttribute("x2",xR); sepLine.setAttribute("y2",by);
+    sepText.setAttribute("x",(ATOM_L_X+xR)/2); sepText.setAttribute("y",by+16);
+    sepText.textContent="r = "+nb(r,2);
+
+    // kraftpiler (Newtons 3. lov: motsatt på de to atomene)
+    var dir = F>0 ? 1 : -1, len=clamp(Math.abs(F)*12,0,46);
+    setArrow(arrowR, xR, dir, len, col);
+    setArrow(arrowL, ATOM_L_X, -dir, len, col);
+
+    // graf: du-er-her
+    dot.setAttribute("cx",xG(r)); dot.setAttribute("cy",yG(u)); dot.setAttribute("fill",col);
+    guide.setAttribute("x1",xG(r)); guide.setAttribute("y1",yG(u));
+    guide.setAttribute("x2",xG(r)); guide.setAttribute("y2",GH-mB); guide.setAttribute("stroke",col);
+    // uthevet buesegment rundt r
+    var hp=[], rr;
+    for(rr=Math.max(R_LO,r-0.1); rr<=Math.min(R_HI,r+0.1); rr+=0.006){
+      var uu=uLJ(rr,eps,sig); if(uu>U_HI) continue;
+      hp.push(xG(rr).toFixed(1)+","+yG(uu).toFixed(1));
+    }
+    hiCurve.setAttribute("d", hp.length?("M"+hp.join(" L")):""); hiCurve.setAttribute("stroke",col);
+
+    // readout
+    rOut.textContent=nb(r,2);
+    uOut.textContent=(u>9.99?"> 10":nb(u,2)); uOut.style.color=col;
+    fOut.textContent=(Math.abs(F)>9.99?(F>0?"> 10":"< -10"):nb(F,2)); fOut.style.color=col;
+    stateOut.textContent=C.label; stateOut.style.color=col;
+
+    // hint
+    hint.style.background=col; hint.textContent = dragging ? "drar" : "dra det høyre atomet →";
+
+    // chips + blurb
+    chips.forEach(function(ch){
+      var active = ch.getAttribute("data-reg")===reg;
+      if(active){ ch.style.color="#fff"; ch.style.background=REG[reg].c; ch.style.borderColor=REG[reg].c; }
+      else { ch.style.color=""; ch.style.background=""; ch.style.borderColor=""; }
+    });
+    blurb.textContent=BLURB[reg];
+    blurb.style.background=C.bg; blurb.style.borderLeftColor=col;
+  }
+
+  function setR(nr){ r=clamp(nr,DRAG_LO,DRAG_HI); render(); }
+
+  // ── animasjon: rull ned i brønnen ved slipp ───────────────
+  var raf = window.requestAnimationFrame ? window.requestAnimationFrame.bind(window)
+          : function(cb){ return setTimeout(function(){ cb(Date.now()); },16); };
+  function frame(){
+    if(!dragging && relax){
+      var F=fLJ(r,eps,sig), a=clamp(F,-60,60);
+      vel=(vel+a*0.03)*0.86; vel=clamp(vel,-8,8);
+      var nr=clamp(r+vel*0.03,DRAG_LO,DRAG_HI);
+      if(nr<=DRAG_LO||nr>=DRAG_HI) vel=0;
+      if(Math.abs(vel)>0.0007 || Math.abs(F)>0.02){ setR(nr); }
+    }
+    raf(frame);
+  }
+
+  // ── input ─────────────────────────────────────────────────
+  function rFromClientX(clientX){
+    var rect=stage.getBoundingClientRect();
+    var svgX=(clientX-rect.left)/rect.width*680;
+    return clamp((svgX-ATOM_L_X)/STAGE_SCALE, DRAG_LO, DRAG_HI);
+  }
+  atomMov.addEventListener("pointerdown",function(e){
+    if(atomMov.setPointerCapture){ atomMov.setPointerCapture(e.pointerId); }
+    vel=0; dragging=true; setR(rFromClientX(e.clientX));
+  });
+  stage.addEventListener("pointermove",function(e){ if(dragging){ setR(rFromClientX(e.clientX)); } });
+  stage.addEventListener("pointerup",function(){ vel=0; dragging=false; render(); });
+  atomMov.addEventListener("keydown",function(e){
+    if(e.key==="ArrowLeft"){ e.preventDefault(); vel=0; setR(r-0.03); }
+    if(e.key==="ArrowRight"){ e.preventDefault(); vel=0; setR(r+0.03); }
+  });
+  epsS.addEventListener("input",function(){ eps=+epsS.value; epsVal.textContent=nb(eps,2); buildCurve(); render(); });
+  sigS.addEventListener("input",function(){ sig=+sigS.value; sigVal.textContent=nb(sig,2); buildCurve(); render(); });
+  relaxC.addEventListener("change",function(){ relax=relaxC.checked; });
+  resetB.addEventListener("click",function(){
+    vel=0; eps=1; sig=1; epsS.value=1; sigS.value=1;
+    epsVal.textContent="1,00"; sigVal.textContent="1,00"; buildCurve(); setR(RMIN);
+  });
+
+  // ── start ─────────────────────────────────────────────────
+  buildCurve(); render(); raf(frame);
+})();
+</script>
+</body>
+</html>

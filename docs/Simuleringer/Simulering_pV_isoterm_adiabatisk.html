@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: pV-diagram - isoterm og adiabatisk arbeid</title>
+<style>
+  #s3-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:10px; border-radius:12px; max-width:560px; margin:0 auto; }
+  #s3-root h2 { text-align:center; font-size:1.1em; margin:0 0 3px 0; font-weight:600; }
+  #s3-root .s3-sub { text-align:center; font-size:0.78em; color:#9aa5c0; margin-bottom:10px; }
+  #s3-root .s3-main { display:flex; gap:10px; flex-wrap:wrap; justify-content:center; }
+  #s3-root .s3-col { display:flex; flex-direction:column; align-items:center; background:#161d2e; border-radius:8px; padding:8px; }
+  #s3-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s3-root .s3-caption { font-size:0.7em; color:#9aa5c0; margin-top:5px; text-align:center; max-width:220px; }
+  #s3-root .s3-stats { display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:10px; font-size:0.75em; background:#161d2e; border-radius:8px; padding:8px 10px; }
+  #s3-root .s3-stats div { text-align:center; }
+  #s3-root .s3-stats b { color:#ffb15a; display:block; font-size:1.05em; }
+  #s3-root .s3-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:10px; }
+  #s3-root select, #s3-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;
+  }
+  #s3-root button.s3-active { background:#5aa9ff; color:#0a0e18; font-weight:600; }
+  #s3-root button:hover, #s3-root select:hover { background:#3a4a70; }
+  #s3-root .s3-slider-row { display:flex; align-items:center; gap:6px; font-size:0.78em; width:100%; justify-content:center; }
+  #s3-root input[type=range] { width:200px; }
+  #s3-root .s3-legend { font-size:0.68em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+  #s3-root .s3-swatch { display:inline-block; width:16px; height:2px; margin-right:4px; vertical-align:middle; }
+</style>
+</head>
+<body>
+<div id="s3-root">
+  <h2>Isoterm vs. adiabatisk prosess: arbeid i pV-diagram</h2>
+  <div class="s3-sub">Endre volumet og se hvordan trykk, temperatur og arbeid henger sammen &ndash; og hvordan de to prosesstypene skiller seg fra hverandre.</div>
+
+  <div class="s3-main">
+    <div class="s3-col">
+      <canvas id="s3-piston" width="150" height="180"></canvas>
+      <div class="s3-caption">Sylinder med stempel (volum &prop; stempelposisjon)</div>
+    </div>
+    <div class="s3-col">
+      <canvas id="s3-graph" width="260" height="180"></canvas>
+      <div class="s3-caption">pV-diagram &ndash; ring = m&aring;l (V&#8322;), fylt areal = det som faktisk har skjedd</div>
+    </div>
+  </div>
+
+  <div class="s3-stats">
+    <div>T&#8321;<br><b id="s3-T1">1.0</b></div>
+    <div>T&#8322;<br><b id="s3-T2">1.0</b></div>
+    <div>w<br><b id="s3-w">0</b></div>
+    <div>q<br><b id="s3-q">0</b></div>
+  </div>
+  <div class="s3-stats" style="grid-template-columns:repeat(3,1fr); margin-top:6px;">
+    <div>&Delta;U<br><b id="s3-dU">0</b></div>
+    <div>p (n&aring;)<br><b id="s3-p2">1.0</b></div>
+    <div>V (n&aring;)<br><b id="s3-V2disp">1.0</b></div>
+  </div>
+
+  <div class="s3-controls">
+    <button id="s3-iso" class="s3-active">Isoterm</button>
+    <button id="s3-adia">Adiabatisk</button>
+    <select id="s3-gamma">
+      <option value="1.667">Monoatomisk (&gamma;=5/3)</option>
+      <option value="1.4">Diatomisk (&gamma;=7/5)</option>
+    </select>
+  </div>
+  <div class="s3-controls">
+    <div class="s3-slider-row">
+      <label for="s3-v1slider">V&#8321;:</label>
+      <input type="range" id="s3-v1slider" min="0.3" max="3" step="0.05" value="1">
+      <span id="s3-v1label">1.00</span>
+    </div>
+  </div>
+  <div class="s3-controls">
+    <div class="s3-slider-row">
+      <label for="s3-v2slider">V&#8322; (m&aring;l):</label>
+      <input type="range" id="s3-v2slider" min="0.3" max="3" step="0.05" value="2">
+      <span id="s3-v2label">2.00</span>
+    </div>
+  </div>
+  <div class="s3-controls">
+    <button id="s3-run">Kjør prosess</button>
+    <button id="s3-reset">Reset</button>
+  </div>
+
+  <div class="s3-legend">
+    <span class="s3-swatch" style="background:#5aa9ff;"></span>valgt prosess&nbsp;&nbsp;
+    <span class="s3-swatch" style="background:#5a6a8a;"></span>den andre prosesstypen (til sammenligning)<br>
+    Reduserte enheter: nR = 1, s&aring; T = pV. Referansetemperatur T&#8321; = 1 er alltid fast; V&#8321; velges med glidebryter.
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const T1 = 1; // fast referansetemperatur (nR=1)
+  let V1cur = 1;
+  let p1 = T1/V1cur;
+
+  let gamma = 5/3;
+  let processType = 'iso'; // 'iso' eller 'adia'
+  let V2target = 2;   // det V2-glidebryteren står på (målet)
+  let V2display = 1;  // det som faktisk er "skjedd så langt" (animeres fra V1cur til V2target)
+  let animating = false;
+  let animStart = 0, animFrom = 1, animTo = 1;
+  const animDuration = 2000; // ms
+
+  const pistonCv = document.getElementById('s3-piston');
+  const graphCv = document.getElementById('s3-graph');
+  const pctx = pistonCv.getContext('2d');
+  const gctx = graphCv.getContext('2d');
+
+  const T1El = document.getElementById('s3-T1');
+  const T2El = document.getElementById('s3-T2');
+  const wEl = document.getElementById('s3-w');
+  const qEl = document.getElementById('s3-q');
+  const dUEl = document.getElementById('s3-dU');
+  const p2El = document.getElementById('s3-p2');
+  const V2dispEl = document.getElementById('s3-V2disp');
+
+  const isoBtn = document.getElementById('s3-iso');
+  const adiaBtn = document.getElementById('s3-adia');
+  const gammaSel = document.getElementById('s3-gamma');
+  const v1Slider = document.getElementById('s3-v1slider');
+  const v1Label = document.getElementById('s3-v1label');
+  const v2Slider = document.getElementById('s3-v2slider');
+  const v2Label = document.getElementById('s3-v2label');
+  const runBtn = document.getElementById('s3-run');
+  const resetBtn = document.getElementById('s3-reset');
+
+  function pIso(V){ return p1*V1cur/V; }
+  function pAdia(V){ return p1*Math.pow(V1cur/V, gamma); }
+  function pOf(V, type){ return type==='iso' ? pIso(V) : pAdia(V); }
+
+  // tilstand ved starten av prosessen (V1cur) sammenlignet med et vilkårlig volum V
+  function computeState(V, type){
+    const p = pOf(V, type);
+    const T = p*V; // nR=1
+    let w, q, dU;
+    if(type==='iso'){
+      w = -1*p1*V1cur*Math.log(V/V1cur); // w = -nRT ln(V/V1), nRT=p1V1
+      dU = 0;
+      q = -w;
+    } else {
+      dU = (p*V - p1*V1cur)/(gamma-1);
+      w = dU;
+      q = 0;
+    }
+    return {p, T, w, q, dU};
+  }
+
+  function fmt(x){ return Math.abs(x)<0.005 ? '0.00' : x.toFixed(2); }
+
+  function drawPiston(V){
+    const w = pistonCv.width, h = pistonCv.height;
+    pctx.clearRect(0,0,w,h);
+    const cylX = 30, cylW = 90, cylTop = 15, cylBottom = h-15;
+    const cylH = cylBottom-cylTop;
+    const Vmax = 3.2;
+    const fillFrac = Math.min(1, V/Vmax);
+    const gasTop = cylBottom - fillFrac*cylH;
+
+    pctx.strokeStyle = '#5a6a8a'; pctx.lineWidth = 2;
+    pctx.strokeRect(cylX, cylTop, cylW, cylH);
+
+    pctx.fillStyle = 'rgba(90,169,255,0.35)';
+    pctx.fillRect(cylX+2, gasTop, cylW-4, cylBottom-gasTop-2);
+
+    pctx.fillStyle = 'rgba(90,169,255,0.9)';
+    const nDots = 14;
+    for(let i=0;i<nDots;i++){
+      const rx = cylX+8+Math.random()*(cylW-16);
+      const ry = gasTop+8+Math.random()*Math.max(4,(cylBottom-gasTop-16));
+      pctx.beginPath(); pctx.arc(rx,ry,2,0,2*Math.PI); pctx.fill();
+    }
+
+    pctx.fillStyle = '#c7cfe6';
+    pctx.fillRect(cylX-4, gasTop-6, cylW+8, 8);
+    pctx.fillStyle = '#7a8399';
+    pctx.fillRect(cylX+cylW/2-3, cylTop-10, 6, gasTop-6-(cylTop-10));
+
+    pctx.fillStyle = '#9aa5c0';
+    pctx.font = '11px Times New Roman';
+    pctx.textAlign = 'center';
+    pctx.fillText('V = '+V.toFixed(2), cylX+cylW/2, cylTop-14);
+  }
+
+  function drawGraph(Vnow, Vgoal, type){
+    const w = graphCv.width, h = graphCv.height;
+    gctx.clearRect(0,0,w,h);
+    const margin = {l:34, r:10, t:10, b:24};
+    const plotW = w-margin.l-margin.r, plotH = h-margin.t-margin.b;
+
+    const Vmin=0.25, Vmax=3.3;
+    const pMax = Math.max(pIso(Vmin), pAdia(Vmin))*1.05;
+    const pMin = 0;
+
+    function X(V){ return margin.l + ((V-Vmin)/(Vmax-Vmin))*plotW; }
+    function Y(p){ return margin.t + plotH - ((p-pMin)/(pMax-pMin))*plotH; }
+
+    gctx.strokeStyle = '#3a4360'; gctx.lineWidth=1;
+    gctx.beginPath(); gctx.moveTo(margin.l, margin.t); gctx.lineTo(margin.l, margin.t+plotH); gctx.lineTo(margin.l+plotW, margin.t+plotH); gctx.stroke();
+    gctx.fillStyle='#9aa5c0'; gctx.font='10px Times New Roman'; gctx.textAlign='center';
+    gctx.fillText('V', margin.l+plotW/2, h-6);
+    gctx.save(); gctx.translate(10, margin.t+plotH/2); gctx.rotate(-Math.PI/2); gctx.fillText('p',0,0); gctx.restore();
+
+    function drawCurve(type2, style, widthPx){
+      gctx.beginPath();
+      gctx.strokeStyle = style; gctx.lineWidth = widthPx;
+      const steps = 60;
+      for(let i=0;i<=steps;i++){
+        const V = Vmin + (Vmax-Vmin)*i/steps;
+        const p = pOf(V, type2);
+        const x = X(V), y = Y(Math.min(p,pMax));
+        if(i===0) gctx.moveTo(x,y); else gctx.lineTo(x,y);
+      }
+      gctx.stroke();
+    }
+
+    // referansekurve (den ikke-valgte typen), lys/svak
+    const otherType = type==='iso' ? 'adia' : 'iso';
+    gctx.setLineDash([3,3]);
+    drawCurve(otherType, '#5a6a8a', 1.3);
+    gctx.setLineDash([]);
+
+    // skyggelagt areal for det som FAKTISK har skjedd: mellom V1cur og Vnow
+    const Vlo = Math.min(V1cur,Vnow), Vhi = Math.max(V1cur,Vnow);
+    if(Math.abs(Vhi-Vlo) > 1e-4){
+      gctx.beginPath();
+      gctx.moveTo(X(Vlo), Y(0));
+      const steps=40;
+      for(let i=0;i<=steps;i++){
+        const V = Vlo + (Vhi-Vlo)*i/steps;
+        const p = pOf(V, type);
+        gctx.lineTo(X(V), Y(Math.min(p,pMax)));
+      }
+      gctx.lineTo(X(Vhi), Y(0));
+      gctx.closePath();
+      gctx.fillStyle = 'rgba(90,169,255,0.22)';
+      gctx.fill();
+    }
+
+    // valgt kurve, solid og tydelig
+    drawCurve(type, '#5aa9ff', 2.2);
+
+    // startpunkt (hvit)
+    function filledPoint(V, p, color){
+      gctx.beginPath(); gctx.arc(X(V), Y(Math.min(p,pMax)), 3.5, 0, 2*Math.PI);
+      gctx.fillStyle = color; gctx.fill();
+    }
+    function ringPoint(V, p, color){
+      gctx.beginPath(); gctx.arc(X(V), Y(Math.min(p,pMax)), 5, 0, 2*Math.PI);
+      gctx.strokeStyle = color; gctx.lineWidth = 2; gctx.stroke();
+    }
+    filledPoint(V1cur, p1, '#ffffff');
+    // mål-ring ved V2target (vises alltid, uansett hvor langt prosessen har kommet)
+    ringPoint(Vgoal, pOf(Vgoal,type), '#ffb15a');
+    // nåværende punkt (der stempelet faktisk er)
+    filledPoint(Vnow, pOf(Vnow,type), '#ffb15a');
+  }
+
+  function updateAll(){
+    const type = processType;
+    const st = computeState(V2display, type);
+    drawPiston(V2display);
+    drawGraph(V2display, V2target, type);
+    T1El.textContent = T1.toFixed(2);
+    T2El.textContent = st.T.toFixed(2);
+    wEl.textContent = fmt(st.w);
+    qEl.textContent = fmt(st.q);
+    dUEl.textContent = fmt(st.dU);
+    p2El.textContent = st.p.toFixed(2);
+    V2dispEl.textContent = V2display.toFixed(2);
+    v1Label.textContent = V1cur.toFixed(2);
+    v2Label.textContent = V2target.toFixed(2);
+  }
+
+  function setSlidersDisabled(disabled){
+    v1Slider.disabled = disabled;
+    v2Slider.disabled = disabled;
+    isoBtn.disabled = disabled;
+    adiaBtn.disabled = disabled;
+    gammaSel.disabled = disabled;
+  }
+
+  function animLoop(ts){
+    if(!animating) return;
+    if(!animStart) animStart = ts;
+    const frac = Math.min(1, (ts-animStart)/animDuration);
+    V2display = animFrom + (animTo-animFrom)*frac;
+    updateAll();
+    if(frac<1){
+      requestAnimationFrame(animLoop);
+    } else {
+      animating = false;
+      V2display = animTo;
+      setSlidersDisabled(false);
+      updateAll();
+    }
+  }
+
+  isoBtn.addEventListener('click', function(){
+    if(animating) return;
+    processType='iso'; isoBtn.classList.add('s3-active'); adiaBtn.classList.remove('s3-active');
+    updateAll();
+  });
+  adiaBtn.addEventListener('click', function(){
+    if(animating) return;
+    processType='adia'; adiaBtn.classList.add('s3-active'); isoBtn.classList.remove('s3-active');
+    updateAll();
+  });
+  gammaSel.addEventListener('change', function(){
+    gamma = parseFloat(gammaSel.value);
+    updateAll();
+  });
+  v1Slider.addEventListener('input', function(){
+    if(animating) return;
+    V1cur = parseFloat(v1Slider.value);
+    p1 = T1/V1cur;
+    V2display = V1cur; // stempelet hviler ved start igjen
+    updateAll();
+  });
+  v2Slider.addEventListener('input', function(){
+    V2target = parseFloat(v2Slider.value);
+    updateAll();
+  });
+  runBtn.addEventListener('click', function(){
+    if(animating) return;
+    animFrom = V1cur;   // prosessen kjøres alltid fra V1 til V2, fullt og helt
+    animTo = V2target;
+    animStart = 0;
+    animating = true;
+    setSlidersDisabled(true);
+    requestAnimationFrame(animLoop);
+  });
+  resetBtn.addEventListener('click', function(){
+    animating=false;
+    setSlidersDisabled(false);
+    V1cur=1; p1=T1/V1cur;
+    V2target=2; V2display=1;
+    v1Slider.value=1; v2Slider.value=2;
+    updateAll();
+  });
+
+  updateAll();
+})();
+</script>
+</body>
+</html>
