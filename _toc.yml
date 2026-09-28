@@ -50,7 +50,7 @@ parts:
     - file: docs/ukesoppgaver/uke_03_under_revision
     - file: docs/ukesoppgaver/uke_04_under_revision
     - file: docs/ukesoppgaver/uke_05_under_revision
-    # - file: docs/ukesoppgaver/uke_06
+    - file: docs/ukesoppgaver/uke_06_under_revision
     # - file: docs/ukesoppgaver/uke_07
     # - file: docs/ukesoppgaver/uke_08
     # - file: docs/ukesoppgaver/uke_09
