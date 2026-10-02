@@ -1,0 +1,154 @@
+<h2 class="sr-only">Interaktiv simulering der energipakker beveger seg tilfeldig mellom atomer i to systemer A og B, mens q, 1/T, T, total entropi og endring i entropi vises live, med en varsling som blir stående når systemet har nådd likevekt</h2>
+<div style="display:flex; gap:6px; margin-bottom:8px;">
+  <div style="flex:3; text-align:center;">
+     <div style="font-size:14px; font-weight:500;">System A</div>
+     <div id="qA-label" style="font-size:12px; color:var(--text-secondary);">q_A = 9</div>
+     <div id="invTA-label" style="font-size:12px; color:var(--text-secondary);">1/T_A = –</div>
+     <div id="TA-label" style="font-size:12px; color:var(--text-secondary);">T_A = –</div>
+  </div>
+  <div style="width:1px; background:var(--border-strong);"></div>
+  <div style="flex:6; text-align:center;">
+     <div style="font-size:14px; font-weight:500;">System B</div>
+     <div id="qB-label" style="font-size:12px; color:var(--text-secondary);">q_B = 0</div>
+     <div id="invTB-label" style="font-size:12px; color:var(--text-secondary);">1/T_B = –</div>
+     <div id="TB-label" style="font-size:12px; color:var(--text-secondary);">T_B = –</div>
+  </div>
+</div>
+<div style="text-align:center; height:26px; margin-bottom:6px;">
+  <span id="eqBadge" style="display:inline-block; visibility:hidden; background:#F4C0D1; color:#72243E; font-size:12px; font-weight:500; padding:4px 14px; border-radius:999px;">Likevekt!</span>
+</div>
+<div style="display:flex; gap:6px; align-items:stretch; height:170px; margin-bottom:16px;">
+  <div id="zoneA" style="flex:3; display:flex; gap:10px;"></div>
+  <div style="width:1px; background:var(--border-strong);"></div>
+  <div id="zoneB" style="flex:6; display:flex; gap:10px;"></div>
+</div>
+<div style="display:flex; gap:8px; margin-bottom:16px;">
+  <button id="playBtn">Start</button>
+  <button id="resetBtn">Nullstill</button>
+</div>
+<div aria-live="polite" style="display:grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap:12px;">
+  <div style="background:var(--surface-1); border-radius:var(--radius); padding:1rem;">
+    <div style="font-size:13px; color:var(--text-secondary);">S_tot / k_B</div>
+    <div id="Stot" style="font-size:22px; font-weight:500;">0</div>
+  </div>
+  <div style="background:var(--surface-1); border-radius:var(--radius); padding:1rem;">
+    <div style="font-size:13px; color:var(--text-secondary);">ΔS_tot / k_B (per steg)</div>
+    <div id="dStot" style="font-size:22px; font-weight:500;">0</div>
+  </div>
+</div>
+<script>
+(function(){
+  var root = document.currentScript.parentElement;
+  var zoneA = root.querySelector('#zoneA');
+  var zoneB = root.querySelector('#zoneB');
+  var qAlabel = root.querySelector('#qA-label');
+  var qBlabel = root.querySelector('#qB-label');
+  var invTAlabel = root.querySelector('#invTA-label');
+  var invTBlabel = root.querySelector('#invTB-label');
+  var TAlabel = root.querySelector('#TA-label');
+  var TBlabel = root.querySelector('#TB-label');
+  var StotEl = root.querySelector('#Stot');
+  var dStotEl = root.querySelector('#dStot');
+  var eqBadge = root.querySelector('#eqBadge');
+  var playBtn = root.querySelector('#playBtn');
+  var resetBtn = root.querySelector('#resetBtn');
+
+  var N_A = 3, N_B = 6, N_total = 9, q_total = 9;
+  var packetAtom, prevStot, timer, running = false, emaAbsDs, reachedEq;
+
+  function lnFact(n){ var s=0; for (var i=2;i<=n;i++) s+=Math.log(i); return s; }
+  function lnComb(n,k){ return lnFact(n)-lnFact(k)-lnFact(n-k); }
+  function lnOmega(N,q){ return lnComb(N+q-1,q); }
+
+  function buildAtoms(){
+    zoneA.innerHTML=''; zoneB.innerHTML='';
+    for (var i=0;i<N_total;i++){
+      var atom = document.createElement('div');
+      atom.style.cssText = 'flex:1; height:160px; background:#F1EFE8; border:0.5px solid #5F5E5A; border-radius:var(--radius); display:flex; flex-direction:column-reverse; align-items:center; gap:4px; padding-bottom:6px;';
+      atom.dataset.idx = i;
+      (i < N_A ? zoneA : zoneB).appendChild(atom);
+    }
+  }
+
+  function render(){
+    var atoms = root.querySelectorAll('[data-idx]');
+    var counts = new Array(N_total).fill(0);
+    for (var p=0;p<packetAtom.length;p++) counts[packetAtom[p]]++;
+    atoms.forEach(function(atom){
+      var idx = parseInt(atom.dataset.idx,10);
+      var n = counts[idx];
+      while (atom.children.length < n){
+        var dot = document.createElement('div');
+        dot.style.cssText = 'width:10px; height:10px; border-radius:50%; background:#FAEEDA; border:1.5px solid #854F0B; flex-shrink:0;';
+        atom.appendChild(dot);
+      }
+      while (atom.children.length > n){
+        atom.removeChild(atom.lastChild);
+      }
+    });
+
+    var qA = 0;
+    for (var i=0;i<N_A;i++) qA += counts[i];
+    var qB = q_total - qA;
+
+    var SA = lnOmega(N_A, qA);
+    var SB = lnOmega(N_B, qB);
+    var Stot = SA + SB;
+    var dStot = Stot - prevStot;
+    prevStot = Stot;
+
+    emaAbsDs = 0.15 * Math.abs(dStot) + 0.85 * emaAbsDs;
+    if (!reachedEq && emaAbsDs < 0.06) reachedEq = true;
+
+    var qA_hi = Math.min(qA+1, q_total), qA_lo = Math.max(qA-1, 0);
+    var invTA = (lnOmega(N_A, qA_hi) - lnOmega(N_A, qA_lo)) / (qA_hi - qA_lo || 1);
+    var qB_hi = Math.min(qB+1, q_total), qB_lo = Math.max(qB-1, 0);
+    var invTB = (lnOmega(N_B, qB_hi) - lnOmega(N_B, qB_lo)) / (qB_hi - qB_lo || 1);
+
+    qAlabel.textContent = 'q_A = ' + qA;
+    qBlabel.textContent = 'q_B = ' + qB;
+    invTAlabel.textContent = '1/T_A = ' + invTA.toFixed(2);
+    invTBlabel.textContent = '1/T_B = ' + invTB.toFixed(2);
+    TAlabel.textContent = 'T_A = ' + (invTA > 0 ? (1/invTA).toFixed(2) : '–');
+    TBlabel.textContent = 'T_B = ' + (invTB > 0 ? (1/invTB).toFixed(2) : '–');
+    StotEl.textContent = Stot.toFixed(2);
+    dStotEl.textContent = (dStot >= 0 ? '+' : '') + dStot.toFixed(3);
+    eqBadge.style.visibility = reachedEq ? 'visible' : 'hidden';
+  }
+
+  function step(){
+    var p = Math.floor(Math.random()*q_total);
+    var newAtom = Math.floor(Math.random()*N_total);
+    packetAtom[p] = newAtom;
+    render();
+  }
+
+  function reset(){
+    packetAtom = new Array(q_total).fill(0);
+    prevStot = lnOmega(N_A, q_total) + lnOmega(N_B, 0);
+    emaAbsDs = 1;
+    reachedEq = false;
+    render();
+    dStotEl.textContent = '0.000';
+  }
+
+  playBtn.addEventListener('click', function(){
+    running = !running;
+    playBtn.textContent = running ? 'Pause' : 'Start';
+    if (running){
+      timer = setInterval(step, 400);
+    } else {
+      clearInterval(timer);
+    }
+  });
+  resetBtn.addEventListener('click', function(){
+    running = false;
+    playBtn.textContent = 'Start';
+    clearInterval(timer);
+    reset();
+  });
+
+  buildAtoms();
+  reset();
+})();
+</script>

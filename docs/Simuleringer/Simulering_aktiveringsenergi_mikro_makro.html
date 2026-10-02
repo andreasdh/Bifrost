@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<title>Simulering: Aktiveringsenergi - mikro og makro</title>
+<style>
+  #s9-root { font-family:'Times New Roman', Times, serif; background:#0f1420; color:#e8ecf5; padding:12px; border-radius:12px; max-width:660px; margin:0 auto; }
+  #s9-root h2 { text-align:center; font-size:1.05em; margin:0 0 3px 0; font-weight:600; }
+  #s9-root .s9-sub { text-align:center; font-size:0.74em; color:#9aa5c0; margin-bottom:10px; line-height:1.4; }
+  #s9-root .s9-main { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; }
+  #s9-root .s9-col { display:flex; flex-direction:column; align-items:center; background:#161d2e; border-radius:8px; padding:7px; width:200px; box-sizing:border-box; }
+  #s9-root canvas { background:#0a0e18; border-radius:6px; display:block; }
+  #s9-root .s9-caption { font-size:0.64em; color:#9aa5c0; margin-top:5px; text-align:center; }
+  #s9-root .s9-fracbox { font-size:0.75em; margin-top:5px; color:#7fe0a8; font-weight:600; text-align:center; }
+  #s9-root .s9-statsrow { display:flex; gap:14px; justify-content:center; margin-top:10px; font-size:0.8em; flex-wrap:wrap; }
+  #s9-root .s9-statsrow b { color:#ffb15a; }
+  #s9-root .s9-controls { display:flex; flex-wrap:wrap; gap:6px; justify-content:center; align-items:center; margin-top:10px; }
+  #s9-root button {
+    font-family:'Times New Roman', Times, serif; background:#2a3652; color:#e8ecf5; border:none;
+    padding:6px 12px; border-radius:6px; cursor:pointer; font-size:0.8em;
+  }
+  #s9-root button:hover { background:#3a4a70; }
+  #s9-root .s9-slider-row { display:flex; align-items:center; gap:6px; font-size:0.78em; width:100%; justify-content:center; }
+  #s9-root input[type=range] { width:210px; }
+  #s9-root .s9-legend { font-size:0.65em; color:#9aa5c0; text-align:center; margin-top:8px; line-height:1.5; }
+  #s9-root .s9-legend2 { font-size:0.62em; color:#7a8399; text-align:center; margin-top:4px; line-height:1.4; }
+</style>
+</head>
+<body>
+<div id="s9-root">
+  <h2>Aktiveringsenergi: fra molekylfordeling til reaksjonshastighet</h2>
+  <div class="s9-sub">Se hvordan andelen molekyler med nok energi til å reagere (mikro) direkte styrer hastighetskonstanten k (makro).</div>
+
+  <div class="s9-main">
+    <div class="s9-col">
+      <canvas id="s9-particles" width="170" height="180"></canvas>
+      <div class="s9-caption">Molekyler i boks<br>rød = lite energi, oransje = nok energi, grønn = produkt</div>
+    </div>
+    <div class="s9-col">
+      <canvas id="s9-micro" width="200" height="180"></canvas>
+      <div class="s9-caption">Mikro: fordeling av kollisjonsenergi (log-skala)</div>
+      <div class="s9-fracbox">Andel med E &gt; E<sub>a</sub>: <span id="s9-frac">...</span></div>
+    </div>
+    <div class="s9-col">
+      <canvas id="s9-macro" width="200" height="180"></canvas>
+      <div class="s9-caption">Makro: reaksjonsenergidiagram</div>
+      <div class="s9-fracbox" style="color:#ffb15a;">k = <span id="s9-k">...</span> s<sup>-1</sup></div>
+    </div>
+  </div>
+
+  <div class="s9-statsrow">
+    <span>T = <b id="s9-Tval">298</b> K</span>
+    <span>E<sub>a</sub> = <b id="s9-Eaval">50</b> kJ/mol</span>
+    <span>A (fast) = <b>1.0&times;10<sup>12</sup></b> s<sup>-1</sup></span>
+  </div>
+
+  <div class="s9-controls">
+    <div class="s9-slider-row">
+      <label for="s9-T">T:</label>
+      <input type="range" id="s9-T" min="250" max="500" step="5" value="298">
+    </div>
+  </div>
+  <div class="s9-controls">
+    <div class="s9-slider-row">
+      <label for="s9-Ea">E<sub>a</sub>:</label>
+      <input type="range" id="s9-Ea" min="20" max="120" step="1" value="50">
+    </div>
+  </div>
+  <div class="s9-controls">
+    <button id="s9-reset">Reset molekyler</button>
+  </div>
+
+  <div class="s9-legend">
+    Modell: f(E) = (1/RT)&middot;e<sup>&minus;E/RT</sup> for kollisjonsenergi &ndash; gir eksakt andel e<sup>&minus;E<sub>a</sub>/RT</sup> med E&gt;E<sub>a</sub>, akkurat det eksponentielle leddet i Arrhenius-likningen k=Ae<sup>&minus;E<sub>a</sub>/RT</sup>.
+  </div>
+  <div class="s9-legend2">
+    Boksen til venstre er skjematisk og bruker en annen (mer synlig) energiskala enn selve grafen og tallene &ndash; poenget er å vise *at* flere molekyler blir aktiverte når T øker eller E<sub>a</sub> synker, ikke å matche de eksakte prosenttallene. Et grønt produkt dannes når to molekyler kolliderer der minst ett har nok energi (E&gt;E<sub>a</sub>).
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  const R = 8.314; // J/(mol K)
+  const A_FIXED = 1e12; // s^-1, fast verdi
+
+  const microCv = document.getElementById('s9-micro');
+  const macroCv = document.getElementById('s9-macro');
+  const partCv = document.getElementById('s9-particles');
+  const mctx = microCv.getContext('2d');
+  const Mctx = macroCv.getContext('2d');
+  const pctx = partCv.getContext('2d');
+
+  const fracEl = document.getElementById('s9-frac');
+  const kEl = document.getElementById('s9-k');
+  const TvalEl = document.getElementById('s9-Tval');
+  const EavalEl = document.getElementById('s9-Eaval');
+
+  const Tslider = document.getElementById('s9-T');
+  const Easlider = document.getElementById('s9-Ea');
+  const resetBtn = document.getElementById('s9-reset');
+
+  function sciHTML(x, decimals){
+    if(x===0) return '0';
+    const exp = Math.floor(Math.log10(Math.abs(x)));
+    const mant = x/Math.pow(10,exp);
+    return mant.toFixed(decimals!==undefined?decimals:2)+'\u00d710<sup>'+exp+'</sup>';
+  }
+
+  function getVals(){
+    const T = parseFloat(Tslider.value);
+    const Ea = parseFloat(Easlider.value); // kJ/mol
+    return {T, Ea};
+  }
+
+  // ---------- Mikro: log-skala energifordeling ----------
+  function drawMicro(T, Ea){
+    const w=microCv.width, h=microCv.height;
+    mctx.clearRect(0,0,w,h);
+    const margin={l:34,r:10,t:10,b:24};
+    const pw=w-margin.l-margin.r, ph=h-margin.t-margin.b;
+    const Emax = 150; // kJ/mol
+    const RT = R*T/1000; // kJ/mol
+
+    // log10(g(E)) der g(E)=f(E)/f(0)=e^(-E/RT), går fra 0 (topp) til -yRange (bunn)
+    const yRange = 20;
+    function logG(E){ return -E/(RT*Math.LN10); }
+    function X(E){ return margin.l + (E/Emax)*pw; }
+    function Y(logv){
+      const clipped = Math.max(-yRange, logv);
+      return margin.t + ph*(0-clipped)/yRange;
+    }
+
+    mctx.strokeStyle='#3a4360'; mctx.lineWidth=1;
+    mctx.beginPath(); mctx.moveTo(margin.l,margin.t); mctx.lineTo(margin.l,margin.t+ph); mctx.lineTo(margin.l+pw,margin.t+ph); mctx.stroke();
+    mctx.fillStyle='#9aa5c0'; mctx.font='9px Times New Roman'; mctx.textAlign='center';
+    mctx.fillText('E (kJ/mol)', margin.l+pw/2, h-4);
+    mctx.save(); mctx.translate(9, margin.t+ph/2); mctx.rotate(-Math.PI/2);
+    mctx.fillText('sannsynlighet (log)', 0,0); mctx.restore();
+
+    // skyggelagt felt E > Ea (visuell markering, ikke areal=sannsynlighet på log-skala)
+    mctx.beginPath();
+    mctx.moveTo(X(Ea), margin.t+ph);
+    const steps=60;
+    for(let i=0;i<=steps;i++){
+      const E = Ea + (Emax-Ea)*i/steps;
+      mctx.lineTo(X(E), Y(logG(E)));
+    }
+    mctx.lineTo(X(Emax), margin.t+ph);
+    mctx.closePath();
+    mctx.fillStyle='rgba(127,224,168,0.25)';
+    mctx.fill();
+
+    // selve linjen (rett linje pga log-skala)
+    mctx.strokeStyle='#5aa9ff'; mctx.lineWidth=2.2;
+    mctx.beginPath();
+    for(let i=0;i<=steps*2;i++){
+      const E = Emax*i/(steps*2);
+      const x=X(E), y=Y(logG(E));
+      if(i===0) mctx.moveTo(x,y); else mctx.lineTo(x,y);
+    }
+    mctx.stroke();
+
+    // terskellinje ved Ea
+    mctx.strokeStyle='#ffb15a'; mctx.lineWidth=1.5; mctx.setLineDash([4,3]);
+    mctx.beginPath(); mctx.moveTo(X(Ea),margin.t); mctx.lineTo(X(Ea),margin.t+ph); mctx.stroke();
+    mctx.setLineDash([]);
+    mctx.fillStyle='#ffb15a'; mctx.font='10px Times New Roman'; mctx.textAlign='center';
+    mctx.fillText('E\u2090', X(Ea), margin.t-1);
+
+    return Math.exp(-Ea/RT); // eksakt andel med E>Ea
+  }
+
+  // ---------- Makro: reaksjonsprofil ----------
+  function drawMacro(Ea){
+    const w=macroCv.width, h=macroCv.height;
+    Mctx.clearRect(0,0,w,h);
+    const margin={l:30,r:10,t:20,b:26};
+    const pw=w-margin.l-margin.r, ph=h-margin.t-margin.b;
+    const Emax = 130;
+    const Eprod = -20;
+
+    function Y(E){ return margin.t + ph*(1-(E+30)/(Emax+30)); }
+
+    Mctx.strokeStyle='#3a4360'; Mctx.lineWidth=1;
+    Mctx.beginPath(); Mctx.moveTo(margin.l,margin.t); Mctx.lineTo(margin.l,margin.t+ph); Mctx.lineTo(margin.l+pw,margin.t+ph); Mctx.stroke();
+    Mctx.fillStyle='#9aa5c0'; Mctx.font='9px Times New Roman'; Mctx.textAlign='center';
+    Mctx.fillText('reaksjonskoordinat', margin.l+pw/2, h-4);
+
+    const x0=margin.l+pw*0.12, x1=margin.l+pw*0.5, x2=margin.l+pw*0.88;
+    const y0=Y(0), y1=Y(Ea), y2=Y(Eprod);
+
+    Mctx.strokeStyle='#5aa9ff'; Mctx.lineWidth=2.4;
+    Mctx.beginPath();
+    Mctx.moveTo(x0,y0);
+    Mctx.quadraticCurveTo((x0+x1)/2, y0, x1, y1);
+    Mctx.quadraticCurveTo((x1+x2)/2, y2, x2, y2);
+    Mctx.stroke();
+
+    Mctx.strokeStyle='#ffb15a'; Mctx.lineWidth=1.3; Mctx.setLineDash([3,3]);
+    Mctx.beginPath(); Mctx.moveTo(x1,y0); Mctx.lineTo(x1,y1); Mctx.stroke();
+    Mctx.setLineDash([]);
+    Mctx.fillStyle='#ffb15a'; Mctx.font='10px Times New Roman'; Mctx.textAlign='left';
+    Mctx.fillText('E\u2090', x1+4, (y0+y1)/2);
+
+    Mctx.fillStyle='#c7cfe6'; Mctx.font='10px Times New Roman'; Mctx.textAlign='center';
+    Mctx.fillText('A', x0, y0+14);
+    Mctx.fillText('B', x2, y2+14);
+  }
+
+  // ---------- Molekylboks (partikkelanimasjon) ----------
+  const NP = 22;
+  let parts = [];
+  const boxR = 4;
+
+  function sampleEnergy(T){
+    // Skjematisk skala for boksen (ikke samme tallverdier som i mikrografen),
+    // valgt slik at man faktisk ser en synlig andel oransje/grønne partikler
+    // i hele glidebryter-området for T og Ea.
+    const RTvis = 12 + (T-250)/250*28; // 12 ved T=250K, 40 ved T=500K
+    const u = Math.random();
+    return -RTvis*Math.log(1-u);
+  }
+
+  function initParticles(){
+    const T = parseFloat(Tslider.value);
+    parts = [];
+    const w=partCv.width, h=partCv.height;
+    for(let i=0;i<NP;i++){
+      const E = sampleEnergy(T);
+      const speed = Math.min(2.4, 0.24*Math.sqrt(E+1));
+      const ang = Math.random()*2*Math.PI;
+      parts.push({
+        x: boxR+Math.random()*(w-2*boxR),
+        y: boxR+Math.random()*(h-2*boxR),
+        vx: Math.cos(ang)*speed, vy: Math.sin(ang)*speed,
+        energy: E, reacted: false
+      });
+    }
+  }
+  initParticles();
+
+  function stepParticles(){
+    const w=partCv.width, h=partCv.height;
+    for(const p of parts){
+      p.x += p.vx; p.y += p.vy;
+      if(p.x-boxR<0){ p.x=boxR; p.vx=-p.vx; }
+      if(p.x+boxR>w){ p.x=w-boxR; p.vx=-p.vx; }
+      if(p.y-boxR<0){ p.y=boxR; p.vy=-p.vy; }
+      if(p.y+boxR>h){ p.y=h-boxR; p.vy=-p.vy; }
+    }
+    const Ea = parseFloat(Easlider.value);
+    for(let i=0;i<parts.length;i++){
+      for(let j=i+1;j<parts.length;j++){
+        const a=parts[i], b=parts[j];
+        const dx=b.x-a.x, dy=b.y-a.y;
+        const dist2=dx*dx+dy*dy;
+        const minD=2*boxR;
+        if(dist2<minD*minD && dist2>1e-6){
+          const dist=Math.sqrt(dist2);
+          const nx=dx/dist, ny=dy/dist;
+          const overlap=(minD-dist)/2;
+          a.x-=nx*overlap; a.y-=ny*overlap;
+          b.x+=nx*overlap; b.y+=ny*overlap;
+          const rvx=b.vx-a.vx, rvy=b.vy-a.vy;
+          const relN=rvx*nx+rvy*ny;
+          if(relN<0){
+            a.vx+=relN*nx; a.vy+=relN*ny;
+            b.vx-=relN*nx; b.vy-=relN*ny;
+          }
+          if(!a.reacted && !b.reacted && (a.energy>=Ea || b.energy>=Ea)){
+            a.reacted = true; b.reacted = true;
+          }
+        }
+      }
+    }
+  }
+
+  function drawParticles(){
+    const w=partCv.width, h=partCv.height;
+    pctx.clearRect(0,0,w,h);
+    const Ea = parseFloat(Easlider.value);
+    for(const p of parts){
+      let color;
+      if(p.reacted) color = '#7fe0a8';
+      else if(p.energy>=Ea) color = '#ffb15a';
+      else color = '#ff6a6a';
+      pctx.beginPath();
+      pctx.arc(p.x,p.y,boxR,0,2*Math.PI);
+      pctx.fillStyle = color;
+      pctx.fill();
+    }
+    pctx.strokeStyle='#2a3652';
+    pctx.strokeRect(0.5,0.5,w-1,h-1);
+  }
+
+  // ---------- Samlet render / loop ----------
+  function render(){
+    const {T, Ea} = getVals();
+    TvalEl.textContent = T.toFixed(0);
+    EavalEl.textContent = Ea.toFixed(0);
+
+    const frac = drawMicro(T, Ea);
+    drawMacro(Ea);
+
+    const k = A_FIXED*Math.exp(-Ea*1000/(R*T));
+    fracEl.textContent = (frac*100).toPrecision(3)+' %';
+    kEl.innerHTML = sciHTML(k,2);
+  }
+
+  function loop(){
+    stepParticles();
+    drawParticles();
+    requestAnimationFrame(loop);
+  }
+  requestAnimationFrame(loop);
+
+  Tslider.addEventListener('input', function(){
+    initParticles(); // ny T => nytt utvalg av energier
+    render();
+  });
+  Easlider.addEventListener('input', render);
+  resetBtn.addEventListener('click', function(){
+    initParticles();
+    render();
+  });
+
+  render();
+})();
+</script>
+</body>
+</html>

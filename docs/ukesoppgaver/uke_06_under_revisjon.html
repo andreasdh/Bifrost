@@ -1,0 +1,710 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 6 – Fri energi &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_06_under_revisjon';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Løsningsforslag" href="../l%C3%B8sningsforslag.html" />
+    <link rel="prev" title="Uke 5 – Varme, Arbeid, Entropi og Effektivitet" href="uke_05_under_revision.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 6 – Fri energi</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_06_under_revisjon.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 6 – Fri energi</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-hva-er-fri-energi">Oppgave 1: Hva er fri energi?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-illustrasjon-av-helmholtz-fri-energi-dimerer-eller-monomerer">Oppgave 2: Illustrasjon av Helmholtz fri energi, dimerer eller monomerer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-6-fri-energi">
+<h1>Uke 6 – Fri energi<a class="headerlink" href="#uke-6-fri-energi" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1-hva-er-fri-energi">
+<h3>Oppgave 1: Hva er fri energi?<a class="headerlink" href="#oppgave-1-hva-er-fri-energi" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hva er den fundamentale termodynamiske relasjonen for den indre energien U? Hvilke naturlige variable har U?</p>
+<p><strong>b)</strong> Hvordan definerer vi henholdsvis Helmholtz (A) og Gibbs (G) fri energi?</p>
+<p><strong>c)</strong> Bruk definisjonene i b og a til å komme fram til de fundamentale ligningene for Helmholtz og Gibbs fri energi.</p>
+<p><strong>d)</strong> Diskuter hva forskjellen er på indre energi og fri energi, og hvorfor dette kan være nyttig?</p>
+<p><strong>e)</strong> Hvorfor gir Gibbs maksimalt mulig <em>ikke-ekspansjonsarbeid</em> mens Helmholtz gir maksimalt mulig arbeid totalt?</p>
+</section>
+<section id="oppgave-2-illustrasjon-av-helmholtz-fri-energi-dimerer-eller-monomerer">
+<h3>Oppgave 2: Illustrasjon av Helmholtz fri energi, dimerer eller monomerer<a class="headerlink" href="#oppgave-2-illustrasjon-av-helmholtz-fri-energi-dimerer-eller-monomerer" title="Link to this heading">#</a></h3>
+<p>Dette eksempelet viser hvordan vi kan bruke <em>minimering av fri energi</em> til å forutsi likevekt. For å gjøre dette skal vi se på en enkel mikroskopisk modell som kombinerer energi- og entropibidrag: et system med to partikler som enten er <em>assosiert</em> (en dimer) eller <em>dissosiert</em> (to frie monomerer). Vi kan tenke på dette som at to atomer kan danne en binding eller være dissosiert som to enkeltatomer.</p>
+<p><strong>Gitt:</strong> Vi har <span class="math notranslate nohighlight">\(N=2\)</span> identiske partikler i en testrør modellert som et endimensjonalt gitter med <span class="math notranslate nohighlight">\(V\)</span> plasser i rekkefølge, systemet er i et termisk likevekt med et varmebad med temperatur <span class="math notranslate nohighlight">\(T\)</span>:</p>
+<ul class="simple">
+<li><p><strong>Dimer-tilstand:</strong> Når de to partiklene sitter på naboplasser, kan de danne en binding med energi <span class="math notranslate nohighlight">\(\varepsilon&gt;0\)</span>. I dette forenklede systemet med to partikler er dette eneste bidraget til den indre energien <span class="math notranslate nohighlight">\(U=-\varepsilon\)</span></p></li>
+<li><p><strong>Monomer-tilstand:</strong> Når de to partiklene ikke er ved siden av hverandre kan de ikke danne noe binding og dermed er den indre energien null, <span class="math notranslate nohighlight">\(U=0\)</span>. De plasseres på to forskjellige plasser i gitteret, uten å være naboer.</p></li>
+</ul>
+<p><img alt="Dimer- og monomer-tilstand på et endimensjonalt gitter" src="../../_images/dimer_monomer.png" /></p>
+<p>Vi ønsker å finne under hvilke betingelser systemet danner en dimer, og når det forblir som 2 separate partikler.</p>
+<p><strong>a)</strong> Diskuter følgende:</p>
+<ol class="arabic simple">
+<li><p>For dimeren, hvorfor er det det et minustegn i <span class="math notranslate nohighlight">\(U=-\varepsilon\)</span>?</p></li>
+<li><p>Hvilke termodynamiske størrelser holder vi konstant her, og hvilket uttrykk for den frie energien må vi da bruke?</p></li>
+<li><p>Hva forventer vi skjer med den frie energien ved likevekt?</p></li>
+</ol>
+<p><strong>b)</strong> Regn ut på hvor mange forskjellige plasser <em>dimeren</em> kan være i, anta at antall gitterplasser <span class="math notranslate nohighlight">\(V\)</span> er veldig stort og <span class="math notranslate nohighlight">\(V\gg 1\)</span>.</p>
+<p><strong>c)</strong> Bruk dette til å finne et uttrykk for entropien og Helmholtz fri energi for <strong>dimer-tilstanden</strong>.</p>
+<p><strong>d)</strong> Vis først at totalt antall mulige måter å plassere 2 partikler i <span class="math notranslate nohighlight">\(V\)</span> bokser er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[ W_{tot}=\frac{V\cdot{(V-1)}}{2}\]</div>
+<p>Bruk så dette og svaret i oppgave <em>b</em> til å finne antall måter vi kan plassere 2 partikler i <span class="math notranslate nohighlight">\(V\)</span> bokser uten at de er ved siden av hverandre, altså i monomertilstand.</p>
+<p><strong>e)</strong> Finn et uttrykk for entropien og Helmholtz fri energi for <strong>monomer-tilstanden</strong>.</p>
+<p><strong>f)</strong> Finn krysstemperaturen <span class="math notranslate nohighlight">\(T_0\)</span> der de to tilstandene er like stabile (lik fri energi). Hvorfor er dimeren den mest stabile tilstanden ved <span class="math notranslate nohighlight">\(T&lt;T_0\)</span>, og monomeren ved <span class="math notranslate nohighlight">\(T&gt;T_0\)</span>? Hvordan avhenger <span class="math notranslate nohighlight">\(T_0\)</span> av <span class="math notranslate nohighlight">\(\varepsilon\)</span> og <span class="math notranslate nohighlight">\(V\)</span>?</p>
+<p><strong>f)</strong> Under finner dere pythonkodeutsnitt som vil plotte den frie energien for monomeren og den frie energien for dimeren, Men dere må først fylle ut utrykkene for hver av de to. “A_dimer” og “A_momonmer”. Figuren over viser <span class="math notranslate nohighlight">\(A(T)\)</span> for <span class="math notranslate nohighlight">\(V=100\)</span> og <span class="math notranslate nohighlight">\(\varepsilon=1.6605\cdot10^{-20}\ \mathrm{J}\)</span>. Forklar med utgangspunkt i figuren hvorfor dimeren dominerer ved lav temperatur og monomerene ved høy temperatur, og hva stigningstallene representerer fysisk.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Modellverdier: energi per partikkel.</span>
+<span class="c1"># eps i joule (10 kJ/mol / N_A), k_B i J/K -&gt; alt i reelle enheter.</span>
+<span class="n">V</span> <span class="o">=</span> <span class="mf">100.0</span>      <span class="c1"># antall gitterplasser</span>
+<span class="n">eps</span> <span class="o">=</span> <span class="mf">1.6605e-20</span>   <span class="c1"># bindingsenergi per partikkel [J] = 10 kJ/mol</span>
+<span class="n">k_B</span> <span class="o">=</span> <span class="mf">1.380649e-23</span>  <span class="c1"># Boltzmanns konstant [J K^-1]</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">700</span><span class="p">,</span> <span class="mi">400</span><span class="p">)</span>
+<span class="n">A_dimer</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">eps</span> <span class="o">-</span> <span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>      <span class="c1"># i joule</span>
+<span class="n">A_monomer</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">k_B</span> <span class="o">*</span> <span class="n">T</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">V</span><span class="o">**</span><span class="mi">2</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>   <span class="c1"># i joule</span>
+<span class="n">T0</span> <span class="o">=</span> <span class="n">eps</span> <span class="o">/</span> <span class="p">(</span><span class="n">k_B</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">V</span> <span class="o">/</span> <span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Krysstemperatur T0 = </span><span class="si">{</span><span class="n">T0</span><span class="si">:</span><span class="s2">.1f</span><span class="si">}</span><span class="s2"> K"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">A_dimer</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C3"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Dimer: $A=-\varepsilon-k_B T\ln V$"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">A_monomer</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s2">"Monomerer: $A=-k_B T\ln(V^2/2)$"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"gray"</span><span class="p">,</span> <span class="n">ls</span><span class="o">=</span><span class="s2">":"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="n">A0</span> <span class="o">=</span> <span class="p">(</span><span class="o">-</span><span class="n">eps</span> <span class="o">-</span> <span class="n">k_B</span> <span class="o">*</span> <span class="n">T0</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">V</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">T0</span><span class="p">],</span> <span class="p">[</span><span class="n">A0</span><span class="p">],</span> <span class="s2">"ko"</span><span class="p">,</span> <span class="n">ms</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s2">"$T_0=\varepsilon/[k_B\ln(V/2)]$"</span><span class="p">,</span> <span class="p">(</span><span class="n">T0</span><span class="p">,</span> <span class="n">A0</span><span class="p">),</span>
+             <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">T0</span> <span class="o">+</span> <span class="mi">35</span><span class="p">,</span> <span class="n">A0</span> <span class="o">+</span> <span class="mf">0.25e-20</span><span class="p">),</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"k"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">1</span><span class="p">))</span>
+
+<span class="c1"># Hvilken tilstand som er stabilest (lavest A)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">A_dimer</span><span class="p">,</span> <span class="n">A_monomer</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">A_dimer</span> <span class="o">&lt;=</span> <span class="n">A_monomer</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">"C3"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Dimeren er mest stabil (lav T)"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span><span class="n">T</span><span class="p">,</span> <span class="n">A_dimer</span><span class="p">,</span> <span class="n">A_monomer</span><span class="p">,</span> <span class="n">where</span><span class="o">=</span><span class="p">(</span><span class="n">A_dimer</span> <span class="o">&gt;</span> <span class="n">A_monomer</span><span class="p">),</span>
+                 <span class="n">color</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.25</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"Monomerene er mest stabil (høy T)"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Temperatur $T$ [K]"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Helmholtz fri energi $A$ [J]"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"A for dimerer og monomerer som funksjon av temperatur"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">700</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s2">"lower left"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Krysstemperatur T0 = 307.4 K
+</pre></div>
+</div>
+<img alt="../../_images/cf6f56d00cd5fbc114447ce249ceb3e11de465dc59038162ee41b643a8303311.png" src="../../_images/cf6f56d00cd5fbc114447ce249ceb3e11de465dc59038162ee41b643a8303311.png" />
+</div>
+</div>
+<p><strong>g)</strong> Hva ville vi konkludert hvis vi <em>kun</em> hadde maksimert entropien (valgt størst <span class="math notranslate nohighlight">\(W\)</span>)?</p>
+<p><span class="math notranslate nohighlight">\(^*\)</span> Denne oppgaven bygger på eksempel 8.1 i Dill, K. A., Bromberg, S., &amp; Stigter, D. (2010). <em>Molecular Driving Forces</em>. Garland Science. https://doi.org/10.4324/9780203809075</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Bruk fundamentallikningene for indre energi og entropi til å utlede fundamentallikningen for Gibbs frie energi.</p>
+<p><strong>b)</strong> Bruk Clausius ulikhet til å vise <span class="math notranslate nohighlight">\(\Delta G &lt;0\)</span> for spontane prosesser (ved konstant trykk og temperatur).</p>
+<p><strong>c)</strong> Hva blir endringen i Gibbs frie energi når temperaturen holdes konstant, men trykket endres:</p>
+<ol class="arabic simple">
+<li><p>For kondenserte faser.</p></li>
+<li><p>For ideelle gasser.</p></li>
+</ol>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Beregn standard molar Gibbs energi for reaksjonen <span class="math notranslate nohighlight">\(CO(g) + CH_3OH(l) \rightarrow CH_3COOH(l)\)</span> ved <span class="math notranslate nohighlight">\(298\)</span> K, ut fra standard molare dannelsesentropier og –entalpier gitt fra tabellen i Atkins.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Standard molar entropi for benzen er 173,3 J K-1 mol-1. Lag en funksjon som beregner endringen i standard molar Gibbs energi når benzen varmes opp fra <span class="math notranslate nohighlight">\(25^\circ C\)</span> til en variabel sluttemperatur. Plott <span class="math notranslate nohighlight">\(\Delta G\)</span> for oppvarminger i området <span class="math notranslate nohighlight">\(25^\circ C\)</span> til <span class="math notranslate nohighlight">\(45^\circ C\)</span>.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Når en jernbit kommer i kontakt med vann skjer følgende reaksjon:</p>
+<div class="math notranslate nohighlight">
+\[Fe(s) + H_2O (l) \rightarrow FeO(s) + H_2 (g)\]</div>
+<p>Standard cellepotensiale for reaksjonen er <span class="math notranslate nohighlight">\(E^{\circ} (V) = 0.45\)</span>. Fra cellepotensialet er det mulig å finne det elektriske arbeidet reaksjonen kan utføre ved <span class="math notranslate nohighlight">\(w_{el} = nFE^\circ _{cell}\)</span> hvor F er Farraday konstanten (<span class="math notranslate nohighlight">\(F = 96.485 \frac{\text{kJ}}{\text{V mol}}\)</span>) og n er antall elektroner som overføres under reaksjonen. Anta at reaksjonen skjer ved standard betingelser.</p>
+<p><strong>a)</strong> Beregn det maksimale elektriske arbeidet som utføres av reaksjonen.</p>
+<p><strong>b)</strong> Under reaksjonen dannes det <span class="math notranslate nohighlight">\(H_2\)</span>-gass. Beregn det mekaniske arbeidet som utføres når 1 mol jern oksideres.</p>
+<p><strong>c)</strong> Beregn <span class="math notranslate nohighlight">\(\Delta G\)</span> for reaksjonen.</p>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> I organisk Kjemi 1 lærte dere om Wittig reaksjonen (se under) som er mye brukt i organisk kjemi til å lage dobbeltbindinger. Denne reaksjonen er spontan, men hva er drivkraften for denne reaksjonen?</p>
+<img src="../bilder/Wittig.png" width="40%" />
+<p><strong>b)</strong> Forbrenning av etanol foregår etter følgende reaksjonslikning:</p>
+<div class="math notranslate nohighlight">
+\[C_2 H_5 OH (l)+3O_2 (g)→2CO_2 (g)+3H_2 O(g) \]</div>
+<p><span class="math notranslate nohighlight">\(\Delta H= -1368 kJ/mol\)</span> for denne reaksjonen. Hva tror dere entropiforskjellen mellom reaktanter og produkter er her? Er dette en entalpisk eller entropisk drevet reaksjon?</p>
+<p><strong>c)</strong> Tetradecyl trimetylammonium bromid (C14-TAB) har strukturformel som vist til under og er en kationisk surfaktant. Hva tror dere vil skje om man løser denne i vann? For reaksjonen er <span class="math notranslate nohighlight">\(\Delta H= -13 kJ/mol\)</span>  og <span class="math notranslate nohighlight">\(\Delta S=103 J⁄K mol\)</span>. Er dette en entalpisk eller entropisk drevet reaksjon, og hva kommer størrelsen på verdiene fra her?</p>
+<img src="../bilder/Tetradecyl_u6.jpg" width="25%" />
+<p>Hint: Er surfaktanten hydrofob eller hydrofil? Tenk også på vann og den hydrofobe effekten.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "hsp"
+        },
+        kernelOptions: {
+            name: "hsp",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'hsp'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_05_under_revision.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="../l%C3%B8sningsforslag.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Løsningsforslag</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-hva-er-fri-energi">Oppgave 1: Hva er fri energi?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-illustrasjon-av-helmholtz-fri-energi-dimerer-eller-monomerer">Oppgave 2: Illustrasjon av Helmholtz fri energi, dimerer eller monomerer</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

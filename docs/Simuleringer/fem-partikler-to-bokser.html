@@ -1,0 +1,232 @@
+<div id="sim-2bokser-n5-k4e7"></div>
+<style>
+  #sim-2bokser-n5-k4e7 {
+    --s2b-bg: #fbfaf7;
+    --s2b-panel: #ffffff;
+    --s2b-ink: #1f2937;
+    --s2b-muted: #6b7280;
+    --s2b-line: #e5e2da;
+    --s2b-a: #0ea5e9;
+    --s2b-b: #64748b;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--s2b-ink);
+    background: var(--s2b-bg);
+    border: 1px solid var(--s2b-line);
+    border-radius: 10px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    max-width: 780px;
+    margin: 1.5rem auto;
+    box-sizing: border-box;
+  }
+  #sim-2bokser-n5-k4e7 * { box-sizing: border-box; }
+  #sim-2bokser-n5-k4e7 .b-title { font-size: 1.05rem; font-weight: 600; margin: 0 0 .25rem; }
+  #sim-2bokser-n5-k4e7 .b-sub { color: var(--s2b-muted); font-size: .85rem; margin: 0 0 1.1rem; }
+
+  #sim-2bokser-n5-k4e7 .b-buttons { display:flex; gap:.5rem; flex-wrap:wrap; margin-bottom: 1.1rem; }
+  #sim-2bokser-n5-k4e7 .b-btn {
+    border: 1px solid var(--s2b-line);
+    background: var(--s2b-panel);
+    color: var(--s2b-ink);
+    padding: .45rem .8rem;
+    border-radius: 7px;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+  }
+  #sim-2bokser-n5-k4e7 .b-btn:hover { border-color: var(--s2b-a); }
+  #sim-2bokser-n5-k4e7 .b-btn:active { transform: scale(0.97); }
+
+  #sim-2bokser-n5-k4e7 .b-boxes { display:flex; gap: 1rem; margin-bottom: 1.1rem; }
+  #sim-2bokser-n5-k4e7 .b-box {
+    flex: 1;
+    background: var(--s2b-panel);
+    border: 2px dashed var(--s2b-line);
+    border-radius: 10px;
+    padding: .9rem;
+    min-height: 96px;
+  }
+  #sim-2bokser-n5-k4e7 .b-box-label { font-size: .8rem; color: var(--s2b-muted); margin-bottom: .5rem; font-weight: 600; }
+  #sim-2bokser-n5-k4e7 .b-particles { display:flex; flex-wrap:wrap; gap: 8px; }
+  #sim-2bokser-n5-k4e7 .b-particle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color: white;
+    font-size: .8rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background .2s, transform .12s;
+  }
+  #sim-2bokser-n5-k4e7 .b-particle:hover { transform: scale(1.08); }
+  #sim-2bokser-n5-k4e7 .b-particle.a { background: var(--s2b-a); }
+  #sim-2bokser-n5-k4e7 .b-particle.b { background: var(--s2b-b); }
+
+  #sim-2bokser-n5-k4e7 .b-readout {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1.6rem;
+    font-size: .92rem;
+    margin-bottom: 1.3rem;
+    padding: .8rem 1rem;
+    background: var(--s2b-panel);
+    border: 1px solid var(--s2b-line);
+    border-radius: 8px;
+  }
+  #sim-2bokser-n5-k4e7 .b-metric { display:flex; flex-direction:column; gap: .1rem; }
+  #sim-2bokser-n5-k4e7 .b-label { color: var(--s2b-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; }
+  #sim-2bokser-n5-k4e7 .b-value { font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 600; }
+  #sim-2bokser-n5-k4e7 .b-value.b-omega { color: var(--s2b-a); }
+
+  #sim-2bokser-n5-k4e7 .b-binom { display:inline-flex; align-items:center; }
+  #sim-2bokser-n5-k4e7 .b-binom-paren { font-size: 1.5em; font-weight: 300; line-height: 1; }
+  #sim-2bokser-n5-k4e7 .b-binom-col { display:inline-flex; flex-direction:column; align-items:center; line-height: 1.15; padding: 0 .2rem; }
+
+  #sim-2bokser-n5-k4e7 .b-chart-title { font-size: .85rem; color: var(--s2b-muted); margin: 0 0 .5rem; }
+  #sim-2bokser-n5-k4e7 .b-chart-wrap { display:flex; gap: .4rem; }
+  #sim-2bokser-n5-k4e7 .b-yaxis-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: .7rem;
+    color: var(--s2b-muted);
+    align-self: stretch;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space: nowrap;
+  }
+  #sim-2bokser-n5-k4e7 .b-chart-col { flex: 1; min-width: 0; }
+  #sim-2bokser-n5-k4e7 .b-chart {
+    display:flex;
+    align-items:flex-end;
+    gap: 6px;
+    height: 120px;
+    padding: .5rem .5rem 0;
+    background: var(--s2b-panel);
+    border: 1px solid var(--s2b-line);
+    border-radius: 8px 8px 0 0;
+  }
+  #sim-2bokser-n5-k4e7 .b-bar-col { display:flex; flex-direction:column; align-items:center; flex:1; height:100%; justify-content:flex-end; gap:3px; }
+  #sim-2bokser-n5-k4e7 .b-bar { width: 100%; max-width: 30px; background: #cbd5e1; border-radius: 3px 3px 0 0; transition: height .3s ease, background .25s; }
+  #sim-2bokser-n5-k4e7 .b-bar.b-current { background: var(--s2b-a); }
+  #sim-2bokser-n5-k4e7 .b-bar-n { font-size: .65rem; color: var(--s2b-muted); }
+  #sim-2bokser-n5-k4e7 .b-xaxis-label {
+    text-align: center;
+    font-size: .7rem;
+    color: var(--s2b-muted);
+    padding: .35rem .5rem;
+    background: var(--s2b-panel);
+    border: 1px solid var(--s2b-line);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById('sim-2bokser-n5-k4e7');
+  if (!root) return;
+
+  const N = 5;
+
+  root.innerHTML = `
+    <p class="b-title">Fem partikler fordelt mellom to bokser</p>
+    <p class="b-sub">Klikk på en partikkel for å flytte den til den andre boksen.</p>
+
+    <div class="b-buttons">
+      <button class="b-btn b-shuffle-fixed">Ny mikrotilstand (samme fordeling)</button>
+      <button class="b-btn b-shuffle-random">Helt tilfeldig</button>
+      <button class="b-btn b-reset">Nullstill</button>
+    </div>
+
+    <div class="b-boxes">
+      <div class="b-box">
+        <div class="b-box-label">Boks A</div>
+        <div class="b-particles b-box-a"></div>
+      </div>
+      <div class="b-box">
+        <div class="b-box-label">Boks B</div>
+        <div class="b-particles b-box-b"></div>
+      </div>
+    </div>
+
+    <p class="b-chart-title">Multiplisitet Ω(n_A) for hver mulig makrotilstand</p>
+    <div class="b-chart-wrap">
+      <span class="b-yaxis-label">Multiplisitet, Ω(n_A)</span>
+      <div class="b-chart-col">
+        <div class="b-chart"></div>
+        <div class="b-xaxis-label">Antall partikler i boks A, n_A</div>
+      </div>
+    </div>
+  `;
+
+  // state[i] = true -> partikkel i er i boks A
+  let state = new Array(N).fill(false);
+
+  function binomCoeffs(n) {
+    const row = [1];
+    for (let k = 1; k <= n; k++) row.push(Math.round(row[k - 1] * (n - k + 1) / k));
+    return row;
+  }
+  const coeffs = binomCoeffs(N); // gjelder alltid, N er fast
+
+  function resetState(allB) {
+    state = new Array(N).fill(false);
+    if (!allB) {
+      for (let i = 0; i < N; i++) state[i] = Math.random() < 0.5;
+    }
+  }
+
+  function shuffleKeepingN() {
+    const nA = state.filter(Boolean).length;
+    const arr = new Array(N).fill(false);
+    const idx = [...Array(N).keys()];
+    for (let i = idx.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [idx[i], idx[j]] = [idx[j], idx[i]];
+    }
+    for (let i = 0; i < nA; i++) arr[idx[i]] = true;
+    state = arr;
+  }
+
+  function particleHTML(i) {
+    return `<div class="b-particle ${state[i] ? 'a' : 'b'}" data-i="${i}">${i + 1}</div>`;
+  }
+
+  function render() {
+    const nA = state.filter(Boolean).length;
+    const nB = N - nA;
+    const omega = coeffs[nA];
+
+    const boxA = root.querySelector('.b-box-a');
+    const boxB = root.querySelector('.b-box-b');
+    boxA.innerHTML = state.map((v, i) => v ? particleHTML(i) : '').join('');
+    boxB.innerHTML = state.map((v, i) => !v ? particleHTML(i) : '').join('');
+
+    root.querySelectorAll('.b-particle').forEach(el => {
+      el.addEventListener('click', () => {
+        const i = +el.dataset.i;
+        state[i] = !state[i];
+        render();
+      });
+    });
+
+    const maxOmega = Math.max(...coeffs);
+    root.querySelector('.b-chart').innerHTML = coeffs.map((c, k) => `
+      <div class="b-bar-col">
+        <div class="b-bar${k === nA ? ' b-current' : ''}" style="height:${Math.max(3, (c / maxOmega) * 100)}%"></div>
+        <span class="b-bar-n">${k}</span>
+      </div>
+    `).join('');
+  }
+
+  root.querySelector('.b-shuffle-fixed').addEventListener('click', () => { shuffleKeepingN(); render(); });
+  root.querySelector('.b-shuffle-random').addEventListener('click', () => { resetState(false); render(); });
+  root.querySelector('.b-reset').addEventListener('click', () => { resetState(true); render(); });
+
+  resetState(true);
+  render();
+})();
+</script>

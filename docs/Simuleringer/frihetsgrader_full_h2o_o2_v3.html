@@ -1,0 +1,121 @@
+<style>
+@keyframes trans{0%,100%{transform:translate(-24px,0)}50%{transform:translate(24px,0)}}
+@keyframes rot{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes o2v1{0%,100%{transform:translate(0,0)}50%{transform:translate(-6px,0)}}
+@keyframes o2v2{0%,100%{transform:translate(0,0)}50%{transform:translate(6px,0)}}
+@keyframes hsym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes hsym2{0%,100%{transform:translate(0,0)}50%{transform:translate(4px,5px)}}
+@keyframes hasym1{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,5px)}}
+@keyframes hasym2{0%,100%{transform:translate(0,0)}50%{transform:translate(-4px,-5px)}}
+.tbtn{font-size:12px;padding:6px 10px;width:100%;text-align:left;margin-bottom:6px;}
+.tbtn.on{background:var(--surface-1);border-color:var(--border-strong);font-weight:500;}
+.tbtn:disabled{opacity:0.35;cursor:not-allowed;}
+.card{border:0.5px solid var(--border);border-radius:12px;padding:1.25rem;margin-bottom:16px;}
+</style>
+<h2 class="sr-only">Interaktiv visning av frihetsgrader for H2O og O2. Translasjon er alltid aktiv, rotasjon kan skrus av og på fritt, og vibrasjon krever at rotasjon allerede er aktivert</h2>
+
+<div class="card">
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 4px;">H&#8322;O</p>
+<p id="h2o-eq" style="font-size:16px;margin:0 0 16px;">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<div style="display:grid;grid-template-columns:1fr 150px 130px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+<g id="h2o-trans" style="animation:trans 1.6s ease-in-out infinite;">
+<g id="h2o-rot" style="transform-origin:110px 90px;">
+<line x1="110" y1="60" x2="75" y2="110" stroke="var(--t)" stroke-width="3"/>
+<line x1="110" y1="60" x2="145" y2="110" stroke="var(--t)" stroke-width="3"/>
+<g id="h2o-o" style="transform-origin:110px 60px;"><circle cx="110" cy="60" r="15" fill="#D85A30"/></g>
+<g id="h2o-h1" style="transform-origin:75px 110px;"><circle cx="75" cy="110" r="11" fill="#B4B2A9"/></g>
+<g id="h2o-h2" style="transform-origin:145px 110px;"><circle cx="145" cy="110" r="11" fill="#B4B2A9"/></g>
+</g>
+</g>
+</svg>
+<div>
+<button class="tbtn" id="h2o-btn-rot" onclick="toggle('h2o','rot')">Rotasjon</button>
+<button class="tbtn" id="h2o-btn-sym" onclick="toggle('h2o','sym')">Sym. strekk</button>
+<button class="tbtn" id="h2o-btn-asym" onclick="toggle('h2o','asym')">Asym. strekk</button>
+</div>
+<svg width="100%" viewBox="0 0 130 140">
+<line x1="20" y1="110" x2="110" y2="110" stroke="var(--t)" stroke-width="2"/>
+<line x1="20" y1="70" x2="110" y2="70" stroke="var(--t)" stroke-width="1.5" opacity="0.4"/>
+<line x1="20" y1="35" x2="110" y2="35" stroke="var(--t)" stroke-width="1.5" opacity="0.4"/>
+<circle cx="65" cy="110" r="5" fill="#D85A30"/>
+<text class="ts" x="20" y="128">Elektronisk</text>
+</svg>
+</div>
+</div>
+
+<div class="card">
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 4px;">O&#8322;</p>
+<p id="o2-eq" style="font-size:16px;margin:0 0 16px;">&epsilon;<sub>tot</sub> = &epsilon;<sub>elec</sub> + &epsilon;<sub>trans</sub></p>
+<div style="display:grid;grid-template-columns:1fr 150px 130px;gap:16px;align-items:center;">
+<svg width="100%" viewBox="0 0 220 170" style="overflow:visible;">
+<g id="o2-trans" style="animation:trans 1.6s ease-in-out infinite;">
+<g id="o2-rot" style="transform-origin:110px 85px;">
+<line x1="80" y1="85" x2="140" y2="85" stroke="var(--t)" stroke-width="3"/>
+<g id="o2-a1" style="transform-origin:80px 85px;"><circle cx="80" cy="85" r="16" fill="#378ADD"/></g>
+<g id="o2-a2" style="transform-origin:140px 85px;"><circle cx="140" cy="85" r="16" fill="#378ADD"/></g>
+</g>
+</g>
+</svg>
+<div>
+<button class="tbtn" id="o2-btn-rot" onclick="toggle('o2','rot')">Rotasjon</button>
+<button class="tbtn" id="o2-btn-vib" onclick="toggle('o2','vib')">Vibrasjon</button>
+</div>
+<svg width="100%" viewBox="0 0 130 140">
+<line x1="20" y1="110" x2="110" y2="110" stroke="var(--t)" stroke-width="2"/>
+<line x1="20" y1="70" x2="110" y2="70" stroke="var(--t)" stroke-width="1.5" opacity="0.4"/>
+<line x1="20" y1="35" x2="110" y2="35" stroke="var(--t)" stroke-width="1.5" opacity="0.4"/>
+<circle cx="65" cy="110" r="5" fill="#378ADD"/>
+<text class="ts" x="20" y="128">Elektronisk</text>
+</svg>
+</div>
+</div>
+
+<script>
+const state = {h2o:{rot:false,sym:false,asym:false}, o2:{rot:false,vib:false}};
+
+function toggle(mol,key){
+  if(mol==='h2o' && key==='sym' && !state.h2o.sym){ state.h2o.asym=false; }
+  if(mol==='h2o' && key==='asym' && !state.h2o.asym){ state.h2o.sym=false; }
+  state[mol][key] = !state[mol][key];
+  if(!state[mol].rot){
+    if(mol==='h2o'){ state.h2o.sym=false; state.h2o.asym=false; }
+    if(mol==='o2'){ state.o2.vib=false; }
+  }
+  render(mol);
+}
+
+function render(mol){
+  const s = state[mol];
+  for(const k in s){
+    const btn = document.getElementById(mol+'-btn-'+k);
+    if(btn) btn.classList.toggle('on', s[k]);
+  }
+
+  if(mol==='h2o'){
+    document.getElementById('h2o-btn-sym').disabled = !s.rot;
+    document.getElementById('h2o-btn-asym').disabled = !s.rot;
+    document.getElementById('h2o-rot').style.animation = s.rot ? 'rot 2.2s linear infinite' : 'none';
+    document.getElementById('h2o-h1').style.animation = s.sym ? 'hsym1 .5s ease-in-out infinite' : (s.asym ? 'hasym1 .5s ease-in-out infinite' : 'none');
+    document.getElementById('h2o-h2').style.animation = s.sym ? 'hsym2 .5s ease-in-out infinite' : (s.asym ? 'hasym2 .5s ease-in-out infinite' : 'none');
+    let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+    if(s.rot) terms.push('&epsilon;<sub>rot</sub>');
+    if(s.sym || s.asym) terms.push('&epsilon;<sub>vib</sub>');
+    document.getElementById('h2o-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+  }
+
+  if(mol==='o2'){
+    document.getElementById('o2-btn-vib').disabled = !s.rot;
+    document.getElementById('o2-rot').style.animation = s.rot ? 'rot 2.2s linear infinite' : 'none';
+    document.getElementById('o2-a1').style.animation = s.vib ? 'o2v1 .5s ease-in-out infinite' : 'none';
+    document.getElementById('o2-a2').style.animation = s.vib ? 'o2v2 .5s ease-in-out infinite' : 'none';
+    let terms = ['&epsilon;<sub>elec</sub>', '&epsilon;<sub>trans</sub>'];
+    if(s.rot) terms.push('&epsilon;<sub>rot</sub>');
+    if(s.vib) terms.push('&epsilon;<sub>vib</sub>');
+    document.getElementById('o2-eq').innerHTML = '&epsilon;<sub>tot</sub> = ' + terms.join(' + ');
+  }
+}
+
+render('h2o');
+render('o2');
+</script>

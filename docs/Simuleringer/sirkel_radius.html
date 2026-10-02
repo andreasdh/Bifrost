@@ -1,0 +1,99 @@
+<h2 class="sr-only">Interaktiv simulasjon av sirkelareal som funksjon av radius, A(r) = pi r kvadrat, med glidebryter for radius fra 0 til 5</h2>
+
+<div style="display: flex; align-items: center; gap: 12px; margin: 0 0 1rem;">
+  <label style="font-size: 14px; color: var(--text-secondary); min-width: 60px;">radius r</label>
+  <input type="range" min="0" max="5" step="0.1" value="2" id="radius" style="flex: 1;" />
+  <span style="font-size: 14px; font-weight: 500; min-width: 50px; text-align: right;" id="r-out">2.0</span>
+</div>
+
+<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 0 0 1.5rem;">
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">radius r</p>
+    <p style="font-size: 20px; font-weight: 500; margin: 0;" id="r-val">2.0</p>
+  </div>
+  <div style="background: var(--surface-1); border-radius: var(--radius); padding: 1rem; text-align: center;">
+    <p style="font-size: 13px; color: var(--text-secondary); margin: 0 0 4px;">areal A(r) = πr²</p>
+    <p style="font-size: 20px; font-weight: 500; margin: 0;" id="a-val">12.57</p>
+  </div>
+</div>
+
+<div style="display: flex; gap: 20px; align-items: flex-start;">
+  <div style="flex: 0 0 200px; display: flex; justify-content: center; align-items: center; height: 260px;">
+    <svg id="circle-svg" viewBox="0 0 200 200" style="width: 200px; height: 200px;">
+      <circle id="circle-shape" cx="100" cy="100" r="20" fill="rgba(42,120,214,0.12)" stroke="#2a78d6" stroke-width="2"></circle>
+      <line x1="100" y1="100" x2="120" y2="100" stroke="#d95926" stroke-width="2"></line>
+    </svg>
+  </div>
+  <div style="flex: 1; position: relative; height: 260px;">
+    <canvas id="chart" role="img" aria-label="Graf av sirkelareal som funksjon av radius, fra r=0 til r=5">Arealet øker kvadratisk med radius, fra 0 ved r=0 til omtrent 78.5 ved r=5.</canvas>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const points = [];
+for (let r = 0; r <= 5; r += 0.1) {
+  points.push({ x: parseFloat(r.toFixed(1)), y: Math.PI * r * r });
+}
+
+const ctx = document.getElementById('chart');
+const chart = new Chart(ctx, {
+  type: 'line',
+  data: {
+    datasets: [
+      {
+        label: 'A(r)',
+        data: points,
+        borderColor: '#2a78d6',
+        backgroundColor: 'rgba(42,120,214,0.08)',
+        borderWidth: 2,
+        pointRadius: 0,
+        fill: true,
+        tension: 0.2
+      },
+      {
+        label: 'nåværende punkt',
+        data: [{ x: 2, y: Math.PI * 4 }],
+        borderColor: '#d95926',
+        backgroundColor: '#d95926',
+        pointRadius: 6,
+        pointHoverRadius: 7,
+        showLine: false
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { type: 'linear', title: { display: true, text: 'radius r' }, min: 0, max: 5 },
+      y: { title: { display: true, text: 'areal A(r)' }, min: 0, max: 80 }
+    }
+  }
+});
+
+const slider = document.getElementById('radius');
+const rOut = document.getElementById('r-out');
+const rVal = document.getElementById('r-val');
+const aVal = document.getElementById('a-val');
+const circle = document.getElementById('circle-shape');
+const radiusLine = document.querySelector('#circle-svg line');
+
+function update(r) {
+  const area = Math.PI * r * r;
+  rOut.textContent = r.toFixed(1);
+  rVal.textContent = r.toFixed(1);
+  aVal.textContent = area.toFixed(2);
+
+  const pixelR = 5 + (r / 5) * 85;
+  circle.setAttribute('r', pixelR);
+  radiusLine.setAttribute('x2', 100 + pixelR);
+
+  chart.data.datasets[1].data = [{ x: r, y: area }];
+  chart.update();
+}
+
+slider.addEventListener('input', (e) => update(parseFloat(e.target.value)));
+update(2);
+</script>
