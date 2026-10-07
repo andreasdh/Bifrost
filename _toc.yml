@@ -63,7 +63,7 @@ parts:
       - file: docs/losningsforslag/uke_03_under_revision_LF.ipynb
       - file: docs/losningsforslag/uke_04_under_revision_VK.ipynb
       - file: docs/losningsforslag/uke_05_under_revision_LF.ipynb
-  #   - file: docs/losningsforslag/uke_06
+      - file: docs/losningsforslag/uke_06_tentativ.ipynb
   #   - file: docs/losningsforslag/uke_07
   #   - file: docs/losningsforslag/uke_08
   #   - file: docs/losningsforslag/uke_09
