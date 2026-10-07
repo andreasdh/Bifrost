@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Utfallsrom og hendelser</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#1f5f8b;--ev:#c0392b;--ok:#1a7a4c;--pt:#d68910;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:16px 14px 12px;}
+  .slabel{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.12em;
+    text-transform:uppercase;color:var(--muted);margin-bottom:10px;text-align:center;}
+  .dice{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+  .die{
+    width:74px;height:74px;border:2px solid var(--grid);border-radius:10px;background:#fbf9f3;
+    cursor:pointer;position:relative;transition:border-color .15s,background .15s,transform .1s;
+  }
+  .die:hover{transform:translateY(-2px);}
+  .die.on{border-color:var(--ev);background:rgba(192,57,43,.10);}
+  .die .tag{
+    position:absolute;top:-9px;right:-7px;background:var(--ev);color:#fff;border-radius:10px;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:10px;padding:1px 6px;
+    opacity:0;transition:opacity .15s;
+  }
+  .die.on .tag{opacity:1;}
+  .pip{position:absolute;width:11px;height:11px;border-radius:50%;background:var(--ink);}
+  .die.on .pip{background:var(--ev);}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0;gap:10px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;color:var(--ink);text-align:right;}
+  .val.ev{color:var(--ev);}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;color:var(--ev);vertical-align:middle;}
+  .frac .num{padding:0 6px 2px;}
+  .frac .den{padding:2px 6px 0;border-top:1.5px solid var(--ev);align-self:stretch;text-align:center;}
+  .note-box{margin-top:10px;padding:8px 10px;border-radius:3px;font-size:13px;
+    background:#f0ece1;color:var(--muted);font-family:"SF Mono",ui-monospace,Menlo,monospace;}
+  .note-box.special{background:rgba(26,122,76,.12);color:var(--ok);}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;}
+  .buttons button{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.03em;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--pt);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Utfall, utfallsrom og hendelser</div>
+  <h1>En hendelse er en delmengde av S</h1>
+  <p class="sub">Alle seks terningsidene utgjør utfallsrommet S. Klikk på sidene for å velge ut de utfallene du er interessert i — det du velger, er en hendelse.</p>
+
+  <div class="stage">
+    <div class="slabel">S = utfallsrommet (alle mulige utfall)</div>
+    <div class="dice" id="dice"></div>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Hendelsen din</h2>
+      <div class="row"><span class="lab">A =</span><span class="val ev" id="setVal">{ }</span></div>
+      <div class="row"><span class="lab">antall utfall i A</span><span class="val" id="nVal">0</span></div>
+      <div class="row"><span class="lab">antall utfall i S</span><span class="val">6</span></div>
+      <div class="row">
+        <span class="lab">P(A)</span>
+        <span class="val ev" id="pVal">0</span>
+      </div>
+      <div class="note-box" id="noteBox">Klikk på terningsidene for å bygge en hendelse.</div>
+    </div>
+
+    <div class="card">
+      <h2>Prøv disse</h2>
+      <div class="buttons">
+        <button data-set="2,4,6">partall</button>
+        <button data-set="1,3,5">oddetall</button>
+        <button data-set="5,6">5 eller høyere</button>
+        <button data-set="1,2,3,4,5,6">hele S</button>
+        <button data-set="">tom mengde</button>
+        <button id="clearBtn">nullstill</button>
+      </div>
+      <div class="note-box" style="margin-top:14px;">
+        P(A) = antall utfall i A / antall utfall i S — gyldig fordi terningen er likevektet.
+      </div>
+    </div>
+  </div>
+
+  <p class="note">Legg merke til de to ytterpunktene: velger du ingen sider, får du den tomme mengden med P = 0. Velger du alle seks, får du hele S med P = 1. Begge er gyldige hendelser.</p>
+</div>
+
+<script>
+(function(){
+  const PIPS={
+    1:[[.5,.5]],
+    2:[[.28,.28],[.72,.72]],
+    3:[[.26,.26],[.5,.5],[.74,.74]],
+    4:[[.28,.28],[.72,.28],[.28,.72],[.72,.72]],
+    5:[[.26,.26],[.74,.26],[.5,.5],[.26,.74],[.74,.74]],
+    6:[[.28,.22],[.72,.22],[.28,.5],[.72,.5],[.28,.78],[.72,.78]]
+  };
+  const chosen=new Set();
+  const holder=document.getElementById('dice');
+
+  for(let n=1;n<=6;n++){
+    const d=document.createElement('div');
+    d.className='die';d.dataset.n=n;
+    const tag=document.createElement('span');tag.className='tag';tag.textContent='i A';
+    d.appendChild(tag);
+    for(const [px,py] of PIPS[n]){
+      const p=document.createElement('span');p.className='pip';
+      p.style.left=(px*74-5.5)+'px';p.style.top=(py*74-5.5)+'px';
+      d.appendChild(p);
+    }
+    d.addEventListener('click',()=>{
+      const k=Number(d.dataset.n);
+      chosen.has(k)?chosen.delete(k):chosen.add(k);
+      update();
+    });
+    holder.appendChild(d);
+  }
+
+  function gcd(a,b){return b?gcd(b,a%b):a;}
+
+  function update(){
+    document.querySelectorAll('.die').forEach(d=>{
+      d.classList.toggle('on',chosen.has(Number(d.dataset.n)));
+    });
+    const arr=[...chosen].sort((a,b)=>a-b);
+    const n=arr.length;
+    document.getElementById('setVal').textContent = n? '{'+arr.join(', ')+'}' : '{ }';
+    document.getElementById('nVal').textContent = n;
+
+    // probability as reduced fraction
+    let ptxt;
+    if(n===0) ptxt='0';
+    else if(n===6) ptxt='1';
+    else {const g=gcd(n,6);ptxt=(n/g)+'/'+(6/g);}
+    document.getElementById('pVal').textContent=ptxt+'  ('+(n/6).toFixed(3)+')';
+
+    const box=document.getElementById('noteBox');
+    if(n===0){box.className='note-box special';box.textContent='Den tomme mengden — hendelsen som aldri skjer.';}
+    else if(n===6){box.className='note-box special';box.textContent='Hele S — hendelsen som alltid skjer.';}
+    else{box.className='note-box';box.textContent=n+' av 6 utfall er med i A.';}
+  }
+
+  document.querySelectorAll('button[data-set]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      chosen.clear();
+      const s=b.dataset.set;
+      if(s) s.split(',').forEach(v=>chosen.add(Number(v)));
+      update();
+    });
+  });
+  document.getElementById('clearBtn').addEventListener('click',()=>{chosen.clear();update();});
+
+  update();
+})();
+</script>
+</body>
+</html>

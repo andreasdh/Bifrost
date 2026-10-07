@@ -1,0 +1,1135 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 5 – Varme, Arbeid, Entropi og Effektivitet &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_05_under_revision_LF';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Uke 6 – Fri energi" href="uke_06_tentativ.html" />
+    <link rel="prev" title="Uke 4 – Makroskopisk termodynamikk" href="uke_04_under_revision_VK.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_05_under_revision_LF.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 5 – Varme, Arbeid, Entropi og Effektivitet</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">Oppgave 1: Prosesser hvor vi holder en variabel konstant.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-clausius-ulikhet">Oppgave 3: Clausius ulikhet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet">Oppgave 4: Carnot maskiner og maksimal effektivitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-5-varme-arbeid-entropi-og-effektivitet">
+<h1>Uke 5 – Varme, Arbeid, Entropi og Effektivitet<a class="headerlink" href="#uke-5-varme-arbeid-entropi-og-effektivitet" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">
+<h3>Oppgave 1: Prosesser hvor vi holder en variabel konstant.<a class="headerlink" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Forklar kort hva som kjennetegner henholdsvis en <em>isoterm</em>, <em>isokor</em>, <em>isobar</em> og <em>adiabatisk</em> prosess.</p>
+<p><strong>Svar</strong></p>
+<ul class="simple">
+<li><p>En <em>isoterm prosess</em> har konstant temperatur, altså <span class="math notranslate nohighlight">\(T=\text{konstant}\)</span>. For en idealgass gjelder da <span class="math notranslate nohighlight">\(PV=\text{konstant}\)</span>.</p></li>
+<li><p>En <em>isokor prosess</em> har konstant volum, altså <span class="math notranslate nohighlight">\(V=\text{konstant}\)</span>. Siden volumet ikke endres, utføres ikke volumarbeid: <span class="math notranslate nohighlight">\(w=0\)</span>.</p></li>
+<li><p>En <em>isobar prosess</em> har konstant trykk, altså <span class="math notranslate nohighlight">\(P=\text{konstant}\)</span>.</p></li>
+<li><p>En <em>adiabatisk prosess</em> har ingen varmeutveksling med omgivelsene, altså <span class="math notranslate nohighlight">\(q=0\)</span>. For en reversibel adiabatisk prosess med idealgass gjelder <span class="math notranslate nohighlight">\(PV^\gamma=\text{konstant}\)</span>, der <span class="math notranslate nohighlight">\(\gamma=C_P/C_V\)</span>.</p></li>
+</ul>
+<p><strong>b)</strong> Skisser følgende prosesser i samme PV-diagram, anta idealgass i alle trinn:</p>
+<ol class="arabic simple">
+<li><p>Isobar ekspansjon ved et trykk <span class="math notranslate nohighlight">\(P_1\)</span> fra volum <span class="math notranslate nohighlight">\(V_1\)</span> til <span class="math notranslate nohighlight">\(V_2\)</span></p></li>
+<li><p>Isokor nedkjøling ved <span class="math notranslate nohighlight">\(V_2\)</span> av gassen til et trykk <span class="math notranslate nohighlight">\(P_2\)</span></p></li>
+<li><p>Isoterm kompresjon av gassen fra (<span class="math notranslate nohighlight">\(P_2, V_2\)</span>) til (<span class="math notranslate nohighlight">\(P_1\)</span>,<span class="math notranslate nohighlight">\(V_1\)</span>)</p></li>
+</ol>
+<p><strong>Svar</strong></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="c1"># Gitte verdier</span>
+<span class="n">V1</span> <span class="o">=</span> <span class="mf">1.0</span>       <span class="c1"># dm^3</span>
+<span class="n">V2</span> <span class="o">=</span> <span class="mf">3.0</span>       <span class="c1"># dm^3</span>
+<span class="n">P1</span> <span class="o">=</span> <span class="mf">4.0</span>       <span class="c1"># atm</span>
+
+<span class="c1"># Fra isoterm prosess: P1*V1 = P2*V2</span>
+<span class="n">P2</span> <span class="o">=</span> <span class="n">P1</span> <span class="o">*</span> <span class="n">V1</span> <span class="o">/</span> <span class="n">V2</span>
+
+<span class="c1"># Verdier for isotermkurven</span>
+<span class="n">V_iso</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="mi">300</span><span class="p">)</span>
+<span class="n">P_iso</span> <span class="o">=</span> <span class="n">P1</span> <span class="o">*</span> <span class="n">V1</span> <span class="o">/</span> <span class="n">V_iso</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+
+<span class="c1"># Steg 1: Isobar ekspansjon A -&gt; B</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">P1</span><span class="p">,</span> <span class="n">P1</span><span class="p">],</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"C0"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"1: Isobar ekspansjon"</span>
+<span class="p">)</span>
+
+<span class="c1"># Steg 2: Isokor nedkjøling B -&gt; C</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="p">[</span><span class="n">V2</span><span class="p">,</span> <span class="n">V2</span><span class="p">],</span>
+    <span class="p">[</span><span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">],</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"2: Isokor nedkjøling"</span>
+<span class="p">)</span>
+
+<span class="c1"># Steg 3: Isoterm kompresjon C -&gt; A</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span>
+    <span class="n">V_iso</span><span class="p">,</span>
+    <span class="n">P_iso</span><span class="p">,</span>
+    <span class="n">linewidth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"3: Isoterm kompresjon"</span>
+<span class="p">)</span>
+
+<span class="c1"># Nettoarbeidet: arealet mellom P1 og isotermkurven</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">fill_between</span><span class="p">(</span>
+    <span class="n">V_iso</span><span class="p">,</span>
+    <span class="n">P_iso</span><span class="p">,</span>
+    <span class="n">P1</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">"orange"</span><span class="p">,</span>
+    <span class="n">alpha</span><span class="o">=</span><span class="mf">0.4</span><span class="p">,</span>
+    <span class="n">label</span><span class="o">=</span><span class="s2">"Netto arbeid utført av gassen"</span>
+<span class="p">)</span>
+
+<span class="c1"># Marker tilstandspunktene</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">([</span><span class="n">V1</span><span class="p">,</span> <span class="n">V2</span><span class="p">,</span> <span class="n">V2</span><span class="p">],</span> <span class="p">[</span><span class="n">P1</span><span class="p">,</span> <span class="n">P1</span><span class="p">,</span> <span class="n">P2</span><span class="p">],</span> <span class="n">color</span><span class="o">=</span><span class="s2">"black"</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"A"</span><span class="p">,</span> <span class="p">(</span><span class="n">V1</span><span class="p">,</span> <span class="n">P1</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="o">-</span><span class="mi">12</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+             <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"B"</span><span class="p">,</span> <span class="p">(</span><span class="n">V2</span><span class="p">,</span> <span class="n">P1</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">10</span><span class="p">),</span>
+             <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="s2">"C"</span><span class="p">,</span> <span class="p">(</span><span class="n">V2</span><span class="p">,</span> <span class="n">P2</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="o">-</span><span class="mi">15</span><span class="p">),</span>
+             <span class="n">textcoords</span><span class="o">=</span><span class="s2">"offset points"</span><span class="p">)</span>
+
+<span class="c1"># Retningspiler for syklusen</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="s2">""</span><span class="p">,</span>
+    <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">2.1</span><span class="p">,</span> <span class="n">P1</span><span class="p">),</span>
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">1.7</span><span class="p">,</span> <span class="n">P1</span><span class="p">),</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C0"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="s2">""</span><span class="p">,</span>
+    <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">V2</span><span class="p">,</span> <span class="mf">2.4</span><span class="p">),</span>
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="n">V2</span><span class="p">,</span> <span class="mf">3.0</span><span class="p">),</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C1"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span>
+    <span class="s2">""</span><span class="p">,</span>
+    <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="mf">1.55</span><span class="p">,</span> <span class="n">P1</span> <span class="o">*</span> <span class="n">V1</span> <span class="o">/</span> <span class="mf">1.55</span><span class="p">),</span>
+    <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">1.85</span><span class="p">,</span> <span class="n">P1</span> <span class="o">*</span> <span class="n">V1</span> <span class="o">/</span> <span class="mf">1.85</span><span class="p">),</span>
+    <span class="n">arrowprops</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">arrowstyle</span><span class="o">=</span><span class="s2">"-&gt;"</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s2">"C2"</span><span class="p">,</span> <span class="n">lw</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Volum $V$ [$\mathrm{dm^3}$]"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s2">"Trykk $P$ [atm]"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s2">"PV-diagram: nettoarbeidet er det skraverte arealet"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mf">0.7</span><span class="p">,</span> <span class="mf">3.4</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mf">0.8</span><span class="p">,</span> <span class="mf">4.6</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/780ce23039aca0a696dc7d527bd24e644ab2785730f3141992c799a97c1868ef.png" src="../../_images/780ce23039aca0a696dc7d527bd24e644ab2785730f3141992c799a97c1868ef.png" />
+</div>
+</div>
+<p><strong>c)</strong> I diagrammet fra oppgave <em>b</em>, skisser visuelt hva arbeidet utført av denne syklusen blir</p>
+<p><strong>Svar</strong> Arbeidet gjort av syklusen er lik arealet inne i syklusen i PV-diagrammet, se figur over.</p>
+<p><strong>d)</strong> Anta at hvert steg gjøres uendelig langsomt (kvasi-statisk) slik at likevekt alltid er opprettet, og null friksjon.</p>
+<p>Finn uttrykk for hvor mye <em>arbeid</em> gjøres av systemet på omgivelsene i hvert trinn 1-3?</p>
+<p>Bruk <span class="math notranslate nohighlight">\(V_1=1.0\ \mathrm{dm^3}\)</span>,  <span class="math notranslate nohighlight">\(V_2=3.0\ \mathrm{dm^3}\)</span>, <span class="math notranslate nohighlight">\(P_1=4.0\ \mathrm{atm}\)</span>, <span class="math notranslate nohighlight">\(V_2=3.0\ \mathrm{dm^3}\)</span>, <span class="math notranslate nohighlight">\(T_1=300\ \mathrm{K}\)</span>
+Finn først <span class="math notranslate nohighlight">\(P_2\)</span> (husk idealgass, og isoterm prosess), og bruk så dette til å finne totale arbeidet utført av syklusen?</p>
+<p><strong>Svar</strong></p>
+<p>For idealgass og isoterm prosess så gjelder:</p>
+<div class="math notranslate nohighlight">
+\[P_1V_1=P_2V_2\]</div>
+<p>Dermed er:
+$<span class="math notranslate nohighlight">\(P_2=\frac{P_1V_1}{V_2}=\frac{1.0\cdot4.0}{3.0}=1.3333\ \mathrm{atm}\)</span>$</p>
+<p>Så for å regne ut arbeidet, generelt har vi at:</p>
+<div class="math notranslate nohighlight">
+\[w=-\int_{V_1}^{V_2} P dV \]</div>
+<p>Trinn 1: Isobar ekspansjon betyr at trykket er konstant <span class="math notranslate nohighlight">\(P_1\)</span> og dermed:</p>
+<div class="math notranslate nohighlight">
+\[w_1=-\int_{V_1}^{V_2} P dV =- P_1 (V_2-V_1)=-4.0 \cdot (3.0 - 1.0)=-4.0 \cdot 2.0 = -8.0 \ \mathrm{dm^3} \mathrm{atm} \]</div>
+<p>Siden <span class="math notranslate nohighlight">\(1\ \mathrm{atm\,dm^3}=101.325\ \mathrm{J}\)</span>, blir dette</p>
+<div class="math notranslate nohighlight">
+\[w_1=-8.0 \ \mathrm{dm^3} \mathrm{atm}=-8.0\cdot101.325\approx -811\ \mathrm{J}=-0.811 \ \mathrm{kJ}\]</div>
+<p>Trinn 2:
+Dette er en isokor prosess så arbeidet er 0: <span class="math notranslate nohighlight">\(\Delta V = 0\)</span> så <span class="math notranslate nohighlight">\(w_2=0\)</span></p>
+<p>Trinn 3:
+Ved isoterm reversibel prosess er arbeidet gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[
+w = -\int_{V_a}^{V_b} p \,dV = -\int_{V_a}^{V_b} \frac{nRT}{V}\,dV = -\int_{V_a}^{V_b} \frac{nRT}{V}\,dV = -nRT\ln\left(\frac{V_a}{V_b}\right)
+\]</div>
+<p>Siden vi ikke vet stoffmengden av gassen, bruker vi <span class="math notranslate nohighlight">\(PV=nRT\)</span> og <span class="math notranslate nohighlight">\(P_1V_1=P_2V_2\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[w_3= -nRT\ln\left(\frac{V_b}{V_a}\right)= -P_1V_1\ln\left(\frac{V_1}{V_2}\right)=-4.0\cdot1.0\cdot\ln\left(\frac{1.0}{3.0}\right)=4.394 \ \mathrm{dm^3} \mathrm{atm} \approx 0.447 \ \mathrm{kJ} \]</div>
+<p>Totalt arbeid er da:
+$<span class="math notranslate nohighlight">\(w=w_1+w_2+w_3=-0.811+0+0.447\ \mathrm{kJ}=-0.364\ \mathrm{kJ}\)</span>$</p>
+<p>Siden totalarbeidet er negativt så gjør gassen arbeid på omgivelsene. Det vil si for hver runde rundt syklusen får vi ut arbeid på <span class="math notranslate nohighlight">\(0.364\ \mathrm{kJ}\)</span>.</p>
+<p><strong>e)</strong> Hva er entropiendringen til gassen for den isoterme kompresjonen (steg 3), og hva er gassens entropiendring totalt?</p>
+<p><strong>Svar</strong> For en isoterm reversibel prosess er:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U = q+w = 0\]</div>
+<p>Som betyr at:</p>
+<div class="math notranslate nohighlight">
+\[q=-w=nRT\ln\left(\frac{V_1}{V_2}\right)=-447 \ \mathrm{J}\]</div>
+<p>Dermed:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S = \frac{q_{rev}}{T}=\frac{-447 \ \mathrm{J}}{300  \ \mathrm{K}}= -1.47   \ \mathrm{JK^{-1}} \]</div>
+<p>Den reversible isoterme kompresjonen reduserer altså entropien til gassen tilbake til utgangspunktet, og entropiendringen til gassen for hele syklusen er 0.</p>
+</section>
+<section id="oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">
+<h3>Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?<a class="headerlink" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> En idealgass utvides adiabatisk fra et volum <span class="math notranslate nohighlight">\(V_1\)</span> til et høyere volum <span class="math notranslate nohighlight">\(V_2\)</span>. Diskuter hva dere tror vil skje med temperaturen til gassen.</p>
+<p><strong>Svar</strong> Gassen gjør arbeid på omgivelsene når den utvider seg (<span class="math notranslate nohighlight">\(w&lt;0\)</span>), og siden prosessen er adiabatisk kommer det ingen varme inn (<span class="math notranslate nohighlight">\(q=0\)</span>). Første lov gir da <span class="math notranslate nohighlight">\(\Delta U = w &lt; 0\)</span>: gassen må bruke sin egen indre energi til å utføre ekspansjonsarbeidet. For en idealgass er <span class="math notranslate nohighlight">\(U\)</span> kun en funksjon av temperaturen, så temperaturen må synke. Mikroskopisk kan vi si at molekylenes kinetiske energi overføres til stempelet når de kolliderer med det og skyver det utover, dermed minker <span class="math notranslate nohighlight">\(T\)</span>.</p>
+<p><strong>La oss se nå på et konkret irreversibelt eksempel hvor vi har en idealgass i et termisk isolert stempel ved <span class="math notranslate nohighlight">\(V_1=0.8\ \mathrm{dm^3}\)</span>, <span class="math notranslate nohighlight">\(P_1=5\ \mathrm{atm}\)</span> og <span class="math notranslate nohighlight">\(T_1=350\ \mathrm{K}\)</span></strong></p>
+<p><strong>b)</strong> Gassen utvides irreversibelt og adiabatisk mot et konstant ytre trykk <span class="math notranslate nohighlight">\(P_{ext}=1.5\ \mathrm{atm}\)</span> til den når likevekt ved et volum <span class="math notranslate nohighlight">\(V_2\)</span> der trykket av gassen er likt med det ytre trykket, <span class="math notranslate nohighlight">\(P_2=P_{ext}\)</span>.
+Uten å regne på spesifikke tall diskuter følgende:</p>
+<ol class="arabic simple">
+<li><p>Hvor mye varme, <span class="math notranslate nohighlight">\(q\)</span>, utveksles med omgivelsene?</p></li>
+<li><p>Hva er da endringen i indre energi?</p></li>
+<li><p>Sett opp et uttrykk for arbeidet <span class="math notranslate nohighlight">\(w\)</span>.</p></li>
+</ol>
+<p><strong>Svar</strong></p>
+<ol class="arabic simple">
+<li><p>Systemet er termisk isolert, så det utveksles ingen varme med omgivelsene:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[q = 0\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Første lov gir da direkte:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta U = q + w = w\]</div>
+<p>Siden gassen ekspanderer, er <span class="math notranslate nohighlight">\(\Delta U&lt;0\)</span> og temperaturen synker (som forventet i <em>a</em>).</p>
+<ol class="arabic simple" start="3">
+<li><p>Prosessen går mot et <strong>konstant</strong> ytre trykk, så arbeidet er ikke gitt ved <span class="math notranslate nohighlight">\(\int P\,dV\)</span> med gassens trykk, men av det ytre trykket:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[w = -P_{ext}\,(V_2-V_1) = -P_{ext}\,\Delta V\]</div>
+<p>Legg merke til at dette er det samme uttrykket som for en reversibel isobar prosess, men her er <span class="math notranslate nohighlight">\(P_{ext}\)</span> konstant under hele ekspansjonen, mens gassens eget trykk <span class="math notranslate nohighlight">\(P\)</span> endrer seg. Det er dette som gjør prosessen irreversibel, gassens trykk og det ytre trykket er ulike underveis, og stempelet gjør ikke maksimalt arbeid.</p>
+<p><strong>c)</strong> Legg merke til at vi ikke vet hva det endelige volumet <span class="math notranslate nohighlight">\(V_2\)</span> er etter ekspansjonen. Vi vet bare at når volumet <span class="math notranslate nohighlight">\(V_2\)</span> er gassen i likevekt slik at <span class="math notranslate nohighlight">\(P_2=P_{ext}\)</span>.</p>
+<p>Bruk disse hintene (1-4) og finn en verdi for <span class="math notranslate nohighlight">\(V_2\)</span>:</p>
+<ol class="arabic simple">
+<li><p>Fra første lov vet vi at <span class="math notranslate nohighlight">\(\Delta U = q + w\)</span></p></li>
+<li><p>For en gass med konstant molar varmekapasitet <span class="math notranslate nohighlight">\(C_{V,m}\)</span> kan endring i indre energi uttrykkes som: <span class="math notranslate nohighlight">\(\Delta U = nC_{V,m}(T_2-T_1)\)</span></p></li>
+<li><p>For idealgass så er <span class="math notranslate nohighlight">\(C_{V,m}=\frac{3}{2}R\)</span></p></li>
+<li><p>Husk at dere fant uttrykket for arbeidet i oppgave <em>b</em></p></li>
+</ol>
+<p><strong>Svar</strong> Vi setter uttrykkene fra hintene inn i første lov. Med <span class="math notranslate nohighlight">\(q=0\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U = w \quad\Rightarrow\quad nC_{V,m}(T_2-T_1) = -P_{ext}\,(V_2-V_1)\]</div>
+<p>Problemet er at vi nå har to ukjente, <span class="math notranslate nohighlight">\(T_2\)</span> og <span class="math notranslate nohighlight">\(V_2\)</span>. Løsningen er å bruke idealgassloven i slutt-tilstanden, der <span class="math notranslate nohighlight">\(P_2 = P_{ext}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[P_{ext}V_2 = nRT_2 \quad\Rightarrow\quad T_2 = \frac{P_{ext}V_2}{nR}\]</div>
+<p>og</p>
+<div class="math notranslate nohighlight">
+\[P_{1}V_1 = nRT_1 \quad\Rightarrow\quad T_1 = \frac{P_{1}V_1}{nR}\]</div>
+<p>Satt inn i energibalanse-likningen:</p>
+<div class="math notranslate nohighlight">
+\[nC_{V,m}\left(\frac{P_{ext}V_2}{nR} - \frac{P_{1}V_1}{nR}\right) = -P_{ext}(V_2 - V_1)\]</div>
+<p>Vi kan så faktorisere ut <span class="math notranslate nohighlight">\(1/nR\)</span> på venstre side:</p>
+<div class="math notranslate nohighlight">
+\[\frac{nC_{V,m}}{nR}\left({P_{ext}V_2} - {P_{1}V_1}\right) = -P_{ext}(V_2 - V_1)\]</div>
+<p>Siden <span class="math notranslate nohighlight">\(C_{V,m} = \frac{3}{2}R\)</span> blir venstre side <span class="math notranslate nohighlight">\(\frac{nC_{V,m}}{nR}=\frac{3}{2}\frac{R}{R}=\frac{3}{2}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{3}{2}\left({P_{ext}V_2} - {P_{1}V_1}\right) = -P_{ext}(V_2 - V_1)\quad\Rightarrow\quad\frac{3}{2}P_{ext}V_2 - \frac{3}{2}P_1V_1 = -P_{ext}V_2 + P_{ext}V_1\]</div>
+<p>Løser vi for <span class="math notranslate nohighlight">\(V_2\)</span> ved å flytte alle <span class="math notranslate nohighlight">\(V_2\)</span>-leddene på venstre side:</p>
+<div class="math notranslate nohighlight">
+\[\frac{3}{2}P_{ext}V_2+ P_{ext}V_2 = \frac{3}{2}P_1V_1 + P_{ext}V_1\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{5}{2}P_{ext}V_2 = \frac{3}{2}P_1V_1 + P_{ext}V_1\]</div>
+<p>Dermed:</p>
+<div class="math notranslate nohighlight">
+\[V_2 = \frac{\frac{3}{2}P_1V_1 + P_{ext}V_1}{\frac{5}{2}P_{ext}}\]</div>
+<p>Setter inn tallene:</p>
+<div class="math notranslate nohighlight">
+\[V_2 = \frac{\frac{3}{2}\cdot(5.0\cdot0.8) + 1.5\cdot0.8}{\frac{5}{2}\cdot1.5} = \frac{6.0 + 1.2}{3.75} = 1.92\ \mathrm{dm^3}\]</div>
+<p>Gassen har altså et mer enn dobbelt så stort volum som den startet med.</p>
+<p><strong>d)</strong> Hvor mye arbeid gjorde gassen i løpet av ekspansjonen, og hva er temperaturen til gassen (<span class="math notranslate nohighlight">\(T_2\)</span>) etter denne utvidelsen?</p>
+<p>Diskuter om dette stemmer med det vi forventet. Uten å regne på det, hva om prosessen hadde blitt gjort reversibelt?</p>
+<p><strong>Svar</strong> Arbeidet fra <em>b</em> og temperaturen fra idealgassloven i slutt-tilstanden:</p>
+<div class="math notranslate nohighlight">
+\[w = -P_{ext}(V_2-V_1) = -1.5\ \mathrm{atm}\cdot(1.92-0.8)\ \mathrm{dm^3} = -1.68\ \mathrm{dm^3\,atm}\]</div>
+<p>Med <span class="math notranslate nohighlight">\(1\ \mathrm{atm\,dm^3} = 101.325\ \mathrm{J}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[w = -1.68\cdot101.325\ \mathrm{J} \approx -170\ \mathrm{J}\]</div>
+<p>For å finne temperaturen kan vi først finne stoffmengden til gassen. Dette gjør vi fra idealgassloven i start-tilstanden (med <span class="math notranslate nohighlight">\(R = 0.082057\ \mathrm{dm^3\,atm\,mol^{-1}K^{-1}}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[n = \frac{P_1V_1}{RT_1} = \frac{5.0\cdot0.8}{0.082057\cdot350} = 0.139\ \mathrm{mol}\]</div>
+<div class="math notranslate nohighlight">
+\[T_2 = \frac{P_2V_2}{nR} = \frac{1.5\cdot1.92}{0.139\cdot0.082057}\ \mathrm{K} = 252\ \mathrm{K}\]</div>
+<p>Temperaturen falt altså fra <span class="math notranslate nohighlight">\(350\ \mathrm{K}\)</span> til <span class="math notranslate nohighlight">\(252\ \mathrm{K}\)</span>, en nedgang på ca. <span class="math notranslate nohighlight">\(100\ \mathrm{K}\)</span>. Dette stemmer godt med forventningen fra <em>a</em>: gassen bruker indre energi på ekspansjonsarbeidet, og avkjøles.</p>
+<p>Hadde ekspansjonen derimot blitt gjort <strong>reversibelt og adiabatisk</strong> til samme slutttrykk <span class="math notranslate nohighlight">\(P_2 = P_{ext}\)</span>, forventer vi at temperaturen synker enda mer. Dette kan kanskje virke rart, men når vi gjør utvidelsen reversibel med infinitesimale små steg vil gassens trykk (nesten) være i likevekt med det ytre trykket, og hver utvidelse krever det maksimale arbeidet fra gassen. Dette tilsvarer at mest mulig av den kinetiske energien til gassen går med til å dytte stempelet.</p>
+<p>Det er ikke nødvendig for selve oppgaven, men vi kan finne temperaturen vi ville ha fått etter reversibel ekspansjon som:</p>
+<div class="math notranslate nohighlight">
+\[T_2^{\mathrm{rev}} = T_1\left(\frac{P_2}{P_1}\right)^{\frac{\gamma-1}{\gamma}} = 350\cdot\left(\frac{1.5}{5.0}\right)^{2/5} = 350\cdot0.618 = 216\ \mathrm{K}\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(\gamma = \frac{C_P}{C_V} = \frac{5}{3}\)</span>, så <span class="math notranslate nohighlight">\(\frac{\gamma-1}{\gamma} = \frac{2}{5}\)</span>. Den reversible adiabaten gir en <strong>lavere</strong> slutttemperatur (<span class="math notranslate nohighlight">\(216\ \mathrm{K}\)</span> mot <span class="math notranslate nohighlight">\(252\ \mathrm{K}\)</span>).</p>
+<p><strong>e)</strong> Vi vil nå komprimere gassen tilbake til sitt opprinnelige volum <span class="math notranslate nohighlight">\(V_1\)</span>, dette gjør vi nå helt reversibelt, og fremdeles adiabatisk.</p>
+<p>Diskuter, tror dere at dette vil returnere gassen til sin opprinnelige tilstand, hvorfor, hvorfor ikke?</p>
+<p>For en adiabatisk og reversibel prosess så kan vi vise at <span class="math notranslate nohighlight">\(PV^{\gamma}\)</span> er konstant. Her er <span class="math notranslate nohighlight">\(\gamma=\frac{C_p}{C_v}\)</span>, og som for en idealgass blir <span class="math notranslate nohighlight">\(\gamma=\frac{C_p}{C_v}=\frac{5}{3}\)</span>.</p>
+<p>Bruk dette til å finne det nye trykket som gassen får når vi har komprimert den tilbake til det opprinnelige volumet <span class="math notranslate nohighlight">\(V_1\)</span>.</p>
+<p>Hva er nå temperaturen i gassen?</p>
+<p><strong>Svar</strong> Nei, gassen kommer <strong>ikke</strong> tilbake til sin opprinnelige tilstand. Siden den irreversibele ekspansjonen produserte entropi, kan ikke den reversible kompresjonen «fjerne» den igjen. Gassen komprimeres adiabatisk fra tilstanden <span class="math notranslate nohighlight">\((P_2, V_2)\)</span> etter ekspansjonen, ikke fra den opprinnelige tilstanden.</p>
+<p>For den reversible adiabatiske kompresjonen gjelder <span class="math notranslate nohighlight">\(P_2V_2^{\gamma} = P_3V_1^{\gamma}\)</span>, der <span class="math notranslate nohighlight">\(P_3\)</span> er trykket etter kompresjonen:</p>
+<div class="math notranslate nohighlight">
+\[P_3 = P_2\left(\frac{V_2}{V_1}\right)^{\gamma} = 1.5\cdot\left(\frac{1.92}{0.8}\right)^{5/3} = 1.5\cdot2.4^{5/3} = 1.5\cdot4.30 = 6.45\ \mathrm{atm}\]</div>
+<p>Dette er <strong>høyere</strong> enn starttrykket <span class="math notranslate nohighlight">\(P_1 = 5\ \mathrm{atm}\)</span>. Temperaturen følger av idealgassloven, eller tilsvarende fra <span class="math notranslate nohighlight">\(T_2V_2^{\gamma-1} = T_3V_1^{\gamma-1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[T_3 = T_2\left(\frac{V_2}{V_1}\right)^{\gamma-1} = 252\cdot\left(\frac{1.92}{0.8}\right)^{2/3} = 252\cdot2.4^{2/3} = 252\cdot1.79 = 452\ \mathrm{K}\]</div>
+<p>Gassen er altså varmere og under høyere trykk enn da vi startet. Vi har returnert den til volumet <span class="math notranslate nohighlight">\(V_1\)</span>, men <strong>ikke</strong> til den opprinnelige tilstanden <span class="math notranslate nohighlight">\((P_1, V_1, T_1)\)</span>.</p>
+<p><strong>f)</strong> Diskuter følgende:</p>
+<p>Hvorfor øker temperaturen til gassen, og hvor kommer den «ekstra» energien fra?</p>
+<p>Kan vi forstå dette fra et mikroskopisk perspektiv?</p>
+<p>Hva hadde skjedd med slutttemperaturen om begge stegene (både ekspansjon og kompresjon) ble gjort reversibelt?</p>
+<p>Hint: tenk på entropien!</p>
+<p><strong>Svar</strong></p>
+<p><strong>Hvor kommer den ekstra energien fra?</strong> Her er det viktig å presisere at det ikke finnes «ekstra» energi og at energibevarelse gjelder hele veien. Når det er sagt, i det irreversible steget gjorde gassen <strong>mindre</strong> arbeid (<span class="math notranslate nohighlight">\(170\ \mathrm{J}\)</span>) enn den ville gjort reversibelt (ca. <span class="math notranslate nohighlight">\(240\ \mathrm{J}\)</span>) mellom de samme trykkene. Hadde ekspansjonen blitt gjort reversibelt, ville arbeidet gjort av gassen på omgivelsene vært akkurat like stort som arbeidet omgivelsene måtte gjøre på gassen for å komprimere den tilbake.</p>
+<p>Men under irreversibel ekspansjon utvides gassen uten å miste like mye kinetisk energi som den ville gjort reversibelt. Når vi senere komprimerer tilbake til <span class="math notranslate nohighlight">\(V_1\)</span> og selv om vi gjør det reversibelt og adiabatisk, må vi tilføre <em>mer</em> arbeid enn vi fikk ut i første steg, og alt dette arbeidet varmer gassen opp.</p>
+<p><strong>Mikroskopisk:</strong> Under den irreversible ekspansjonen, er det ytre trykket alltid lavere enn gasstrykket, det er “lettere” for partiklene å dytte på det og de mister mindre kinetisk energi i hver kollisjon (vi mister nyttig arbeid). For å komprimere gassen tilbake må vi nå dytte imot gasspartiklene, noe som gir dem mer kinetisk energi, og siden vi må bruke mer arbeid enn det gassen gjorde i ekspansjonen, får gasspartiklene betydelig mer kinetisk energi når de er tilbake ved <span class="math notranslate nohighlight">\(V_1\)</span>.</p>
+<p><strong>Hva om begge steg var reversible?</strong> Da ville vi fulgt to reversible adiabater mellom <span class="math notranslate nohighlight">\(V_1\)</span> og <span class="math notranslate nohighlight">\(V_2\)</span> (en ned og en opp), og hver av disse holder entropien konstant. Slutt-tilstanden ville da blitt <strong>nøyaktig</strong> <span class="math notranslate nohighlight">\((P_1, V_1, T_1)\)</span>, og temperaturen ville returnert til <span class="math notranslate nohighlight">\(350\ \mathrm{K}\)</span>. Sirkelen kan bare lukkes hvis ingen entropi produseres underveis:</p>
+<p>Siden entropi er en tilstandsfunksjon, kan gassen bare komme tilbake til <span class="math notranslate nohighlight">\(T_1\)</span> hvis den totale entropiendringen rundt sløyfen er null. Med et irreversibelt steg i mellom er det umulig; nettopp dette er innholdet i andre lov og Clausius’ ulikhet, som vi ser nærmere på i neste oppgave.</p>
+</section>
+<section id="oppgave-3-clausius-ulikhet">
+<h3>Oppgave 3: Clausius ulikhet<a class="headerlink" href="#oppgave-3-clausius-ulikhet" title="Link to this heading">#</a></h3>
+<p>La oss se litt mer på systemet i forrige oppgave.</p>
+<p><strong>a)</strong> Hva er endringen i gassens entropi når systemet er tilbake til <span class="math notranslate nohighlight">\(V_1\)</span>? Bruk at:</p>
+<div class="math notranslate nohighlight">
+\[
+\Delta S_{\mathrm{gass}}
+=
+n C_{V,m} \ln\left(\frac{T_2}{T_1}\right)
++
+n R \ln\left(\frac{V_2}{V_1}\right)
+\]</div>
+<p><strong>Svar</strong> Nøkkelen her er at entropi er en <strong>tilstandsfunksjon</strong>: <span class="math notranslate nohighlight">\(\Delta S\)</span> avhenger bare av start- og slutt-tilstanden, ikke av hvilken vei systemet tok mellom dem. Vi trenger altså ikke å dele den faktiske prosessen opp i steg; vi kan like gjerne se på en tenkt, reversibel, prosess direkte fra start-tilstanden <span class="math notranslate nohighlight">\((P_1, V_1, T_1)\)</span> til slutt-tilstanden <span class="math notranslate nohighlight">\((P_3, V_3, T_3)\)</span>, og bruke formelen på den.</p>
+<p>Etter kompresjonen er gassen ved <span class="math notranslate nohighlight">\((P_3, V_1, T_3) = (6.45\ \mathrm{atm},\ 0.8\ \mathrm{dm^3},\ 452\ \mathrm{K})\)</span>, og start-tilstanden var <span class="math notranslate nohighlight">\((P_1, V_1, T_1) = (5\ \mathrm{atm},\ 0.8\ \mathrm{dm^3},\ 350\ \mathrm{K})\)</span>. Siden volumet er det samme i start og slutt, forsvinner volumleddet i formelen helt:</p>
+<div class="math notranslate nohighlight">
+\[nR\ln\left(\frac{V_3}{V_1}\right) = nR\ln(1) = 0\]</div>
+<p>Det gjenstår bare temperaturleddet. Med <span class="math notranslate nohighlight">\(n = 0.139\ \mathrm{mol}\)</span> og <span class="math notranslate nohighlight">\(C_{V,m} = \frac{3}{2}R = 12.47\ \mathrm{J\,K^{-1}mol^{-1}}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\mathrm{gass}} = nC_{V,m}\ln\left(\frac{T_3}{T_1}\right) = 0.139\cdot12.47\cdot\ln\left(\frac{452}{350}\right) = 1.73\cdot0.256 = +0.44\ \mathrm{J\,K^{-1}}\]</div>
+<p>Altså: selv om volumet er tilbake på <span class="math notranslate nohighlight">\(V_1\)</span>, er gassen <strong>ikke</strong> tilbake i sin opprinnelige tilstand — den har høyere temperatur og trykk, og entropien har økt med <span class="math notranslate nohighlight">\(+0.44\ \mathrm{J\,K^{-1}}\)</span>.</p>
+<p><strong>b)</strong> Hva er entropiendringen til omgivelsene?</p>
+<p><strong>Svar</strong> Hele prosessen skjer i et termisk isolert system (adiabatisk stempel), så omgivelsene utveksler ingen varme med gassen. Derfor:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\mathrm{omg}} = 0\]</div>
+<p>Den totale entropiendringen blir da:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\mathrm{tot}} = \Delta S_{\mathrm{gass}} + \Delta S_{\mathrm{omg}} = +0.44\ \mathrm{J\,K^{-1}} &gt; 0\]</div>
+<p>Som forventet for en irreversibel prosess: entropien til universet øker, og prosessen kan ikke gå baklengs av seg selv.</p>
+<p><strong>c)</strong> Fra Clausius ulikhet har vi at:</p>
+<div class="math notranslate nohighlight">
+\[ dS\geq \frac{dq}{T} \]</div>
+<p>For prosessen i oppgave 2, hva blir <span class="math notranslate nohighlight">\(\frac{dq}{T}\)</span>?</p>
+<p>Og er det da <span class="math notranslate nohighlight">\(dS= \frac{dq}{T} \)</span> eller <span class="math notranslate nohighlight">\(dS&gt; \frac{dq}{T}\)</span> som gjelder?</p>
+<p>Hva må til for at <span class="math notranslate nohighlight">\(dS= \frac{dq}{T}\)</span>?</p>
+<p><strong>Svar</strong> For den irreversibele ekspansjonen i oppgave 2 var prosessen adiabatisk, <span class="math notranslate nohighlight">\(dq = 0\)</span>, slik at:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dq}{T} = 0 \qquad \text{mens} \qquad \Delta S_{\mathrm{gass}} = +0.44\ \mathrm{J\,K^{-1}} &gt; 0\]</div>
+<p>Vi er altså i tilfelle der det gjelder det strenge ulikhetstegnet:</p>
+<div class="math notranslate nohighlight">
+\[dS &gt; \frac{dq}{T}\]</div>
+<p>Entropien øker selv om ingen varme flyter. Dette er kjerneinnholdet i Clausius’ ulikhet: entropi produseres av selve prosessens irreversibilitet (friksjon, turbulens, brå ekspansjon), ikke bare av varmeoverføring.</p>
+<p>For at likheten <span class="math notranslate nohighlight">\(dS = dq/T\)</span> skal gjelde, må prosessen være <strong>reversibel</strong> (kvasistatisk, uten friksjon, med systemet i likevekt under hele veien) i alle trinn. Da finnes ingen ekstra entropiproduksjon, og all entropiendring skyldes den utvekslede varmen: <span class="math notranslate nohighlight">\(dS = dq_{\mathrm{rev}}/T\)</span>.</p>
+</section>
+<section id="oppgave-4-carnot-maskiner-og-maksimal-effektivitet">
+<h3>Oppgave 4: Carnot maskiner og maksimal effektivitet<a class="headerlink" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet" title="Link to this heading">#</a></h3>
+<p>En Carnot maskin er en tenkt idealisert syklus som består av 4 reversible trinn gjort på en idealgass:</p>
+<ol class="arabic simple">
+<li><p>Isoterm ekspansjon der systemet er knyttet til et varmt reservoar med temperatur <span class="math notranslate nohighlight">\(T_{h}\)</span>, fra tilstand A(<span class="math notranslate nohighlight">\(P_1\)</span>, <span class="math notranslate nohighlight">\(V_1\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>) til en tilstand B(<span class="math notranslate nohighlight">\(P_2\)</span>, <span class="math notranslate nohighlight">\(V_2\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>)</p></li>
+<li><p>Adiabatisk ekspansjon fra tilstand B(<span class="math notranslate nohighlight">\(P_2\)</span>, <span class="math notranslate nohighlight">\(V_2\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>) til en tilstand C(<span class="math notranslate nohighlight">\(P_3\)</span>, <span class="math notranslate nohighlight">\(V_3\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>) ved en lavere temperatur <span class="math notranslate nohighlight">\(T_c\)</span>.</p></li>
+<li><p>Isoterm kompresjon der systemet er knyttet til et kaldt reservoar med temp <span class="math notranslate nohighlight">\(T_c\)</span>, fra tilstand C(<span class="math notranslate nohighlight">\(P_3\)</span>, <span class="math notranslate nohighlight">\(V_3\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>) til tilstand D(<span class="math notranslate nohighlight">\(P_4\)</span>, <span class="math notranslate nohighlight">\(V_4\)</span>, <span class="math notranslate nohighlight">\(T_c\)</span>).</p></li>
+<li><p>Adiabatisk kompresjon tilbake til starttilstanden A(<span class="math notranslate nohighlight">\(P_1\)</span>, <span class="math notranslate nohighlight">\(V_1\)</span>, <span class="math notranslate nohighlight">\(T_h\)</span>)</p></li>
+</ol>
+<p>Dette er altså en syklus som transporterer varme fra det varme reservoaret til det kalde reservoaret, og bruker dette til å gjøre arbeid. Ettersom at syklusen består kun av reversible steg, gir den det størst mulige arbeidet ved en gitt temperaturforskjell mellom reservoarene og er den mest effektive maskinen vi kan tenke oss. Men hvor god er effekten egentlig?</p>
+<p><img alt="Carnot-syklusen i et PV-diagram" src="../../_images/carnot_syklus.png" /></p>
+<p><strong>a)</strong> Siden dette er en syklus, hva er da <span class="math notranslate nohighlight">\(\Delta U\)</span> for hele prosessen? Hva med <span class="math notranslate nohighlight">\(\Delta S\)</span> for både gassen og omgivelsene?</p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(U\)</span> er en tilstandsfunksjon, og syklusen ender i nøyaktig samme tilstand som den starter i. Derfor:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U_{\mathrm{syklus}} = 0\]</div>
+<p>Det samme gjelder entropien til gassen: også <span class="math notranslate nohighlight">\(S\)</span> er en tilstandsfunksjon, så</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\mathrm{gass}} = 0\]</div>
+<p>For <strong>omgivelsene</strong> er situasjonen annerledes. Omgivelsene består av to reservoarer som utveksler varme ved faste temperaturer, og disse går <em>ikke</em> tilbake til en tidligere tilstand: det varme reservoaret har mistet varme, det kalde har fått varme. Siden alle trinn er reversible, er imidlertid den totale entropiendringen null:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\mathrm{omg}} = -\frac{q_h}{T_h} + \frac{q_c}{T_c} = 0 \quad\Longleftrightarrow\quad \frac{q_c}{q_h} = \frac{T_c}{T_h}\]</div>
+<p>som er nettopp forholdet vi skal bruke i <em>e</em>. Merk forskjellen: gassens entropi er null fordi den er i samme tilstand som før; reservoarenes netto entropiendring er null fordi de reversible varmeoverføringene balanserer hverandre. Til sammen gir dette <span class="math notranslate nohighlight">\(\Delta S_{\mathrm{tot}} = 0\)</span>, som kjennetegner en reversibel syklus.</p>
+<p><strong>b)</strong> Hvor mye varme utveksles i hver av de 4 trinnene, og i hvilken retning går denne varmen?</p>
+<p><strong>Svar</strong> Vi går trinn for trinn:</p>
+<p><strong>Trinn 1, isoterm ekspansjon ved <span class="math notranslate nohighlight">\(T_h\)</span>:</strong> Temperatur og indre energi er konstant (<span class="math notranslate nohighlight">\(\Delta U = 0\)</span> for idealgass ved konstant <span class="math notranslate nohighlight">\(T\)</span>), så første lov gir <span class="math notranslate nohighlight">\(q_h = -w_1 &gt; 0\)</span>. Gassen tar opp varme fra det varme reservoaret:</p>
+<div class="math notranslate nohighlight">
+\[q_h = -w_1 = nRT_h\ln\left(\frac{V_2}{V_1}\right) &gt; 0 \qquad \text{(inn i systemet fra det varme reservoaret)}\]</div>
+<p><strong>Trinn 2, adiabatisk ekspansjon:</strong></p>
+<div class="math notranslate nohighlight">
+\[q = 0 \qquad \text{(ingen varmeutveksling)}\]</div>
+<p>Gassen kjøles ned fra <span class="math notranslate nohighlight">\(T_h\)</span> til <span class="math notranslate nohighlight">\(T_c\)</span> fordi den bruker indre energi på ekspansjonsarbeid.</p>
+<p><strong>Trinn 3, isoterm kompresjon ved <span class="math notranslate nohighlight">\(T_c\)</span>:</strong> Igjen er <span class="math notranslate nohighlight">\(\Delta U = 0\)</span>, men nå komprimeres gassen, så <span class="math notranslate nohighlight">\(w_3 &gt; 0\)</span> og varmen er negativ. Gassen avgir varme til det kalde reservoaret:</p>
+<div class="math notranslate nohighlight">
+\[q_c = -w_3 = nRT_c\ln\left(\frac{V_4}{V_3}\right) &lt; 0 \qquad \text{(ut av systemet til det kalde reservoaret)}\]</div>
+<p><strong>Trinn 4, adiabatisk kompresjon:</strong></p>
+<div class="math notranslate nohighlight">
+\[q = 0\]</div>
+<p>Gassen varmes opp fra <span class="math notranslate nohighlight">\(T_c\)</span> tilbake til <span class="math notranslate nohighlight">\(T_h\)</span> av kompresjonsarbeidet som tilføres.</p>
+<p>Kort oppsummert: varme tas <strong>inn</strong> bare i trinn 1 (fra det varme reservoaret) og gis <strong>ut</strong> bare i trinn 3 (til det kalde reservoaret); de to adiabatene utveksler ingen varme.</p>
+<p><strong>c)</strong> Diskuter hvorfor arbeidet som gjøres av syklusen er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[w=q_h-q_c\]</div>
+<p><strong>Svar</strong> Første lov for hele syklusen gir:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U_{\mathrm{syklus}} = q + w = 0 \quad\Rightarrow\quad w = -q\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(q = q_h + q_c\)</span> den totale varmen utvekslet (med <span class="math notranslate nohighlight">\(q_c &lt; 0\)</span> siden den flyter ut av systemet). Dermed:</p>
+<div class="math notranslate nohighlight">
+\[w = -(q_h + q_c) = q_h - |q_c|\]</div>
+<p>Skriver vi <span class="math notranslate nohighlight">\(q_c\)</span> som positiv størrelse <span class="math notranslate nohighlight">\(|q_c|\)</span> (varmemengden avgitt til det kalde reservoaret), får vi:</p>
+<div class="math notranslate nohighlight">
+\[w = q_h - q_c\]</div>
+<p>Fysisk betyr dette: gassen tar opp <span class="math notranslate nohighlight">\(q_h\)</span> fra det varme reservoaret, men må gi igjen <span class="math notranslate nohighlight">\(q_c\)</span> til det kalde reservoaret. Forskjellen, <span class="math notranslate nohighlight">\(q_h - q_c\)</span>, er den energien som er tilgjengelig som arbeid.</p>
+<p><strong>d)</strong> Vi kan definere effektiviteten som arbeidet vi får ut, delt på varmen som kommer inn fra det varme reservoaret. Sett opp et uttrykk for effektiviteten med <span class="math notranslate nohighlight">\(q_h\)</span> og <span class="math notranslate nohighlight">\(q_c\)</span>.</p>
+<p><strong>Svar</strong> Effektiviteten <span class="math notranslate nohighlight">\(\eta\)</span> defineres som nyttig arbeid delt på investert varme:</p>
+<div class="math notranslate nohighlight">
+\[\eta = \frac{|w|}{q_h} = \frac{q_h - q_c}{q_h} = 1 - \frac{q_c}{q_h}\]</div>
+<p><strong>e)</strong> For en idealisert reversibel prosess som den vi har her kan vi vise at:</p>
+<div class="math notranslate nohighlight">
+\[\frac{q_c}{q_h}=\frac{T_c}{T_h}\]</div>
+<p>Bruk dette til å uttrykke effektiviteten med <span class="math notranslate nohighlight">\(\frac{T_c}{T_h}\)</span>, og diskuter hva må til for å få 100% effektivitet.</p>
+<p><strong>Svar</strong> Setter inn forholdet ovenfor i uttrykket fra <em>d</em>:</p>
+<div class="math notranslate nohighlight">
+\[\eta = 1 - \frac{q_c}{q_h} = 1 - \frac{T_c}{T_h}\]</div>
+<p>Dette er <strong>Carnot-effektiviteten</strong>, og den avhenger <em>kun</em> av temperaturene til de to reservoarene, ikke av gassarten, arbeidsstoffet eller størrelsen på syklusen.</p>
+<p>For å få 100 % effektivitet må <span class="math notranslate nohighlight">\(\frac{T_c}{T_h} = 0\)</span>, dvs. enten <span class="math notranslate nohighlight">\(T_c = 0\ \mathrm{K}\)</span> eller <span class="math notranslate nohighlight">\(T_h \to \infty\)</span>. Begge deler er umulig i praksis, og dette viser at <strong>Ingen varmemaskin som går i en syklus, kan noensinne omgjøre varme fullstendig til arbeid.</strong></p>
+<p>Dette er en av formuleringene av termodynamikkens andre lov. Konkret betyr det at selv en perfekt Carnot-maskin alltid må kaste en del av energien som varme til et kaldt reservoar. Som et konkret eksempel: en Carnot-maskin mellom <span class="math notranslate nohighlight">\(T_h = 500\ \mathrm{K}\)</span> og <span class="math notranslate nohighlight">\(T_c = 300\ \mathrm{K}\)</span> har effektivitet <span class="math notranslate nohighlight">\(\eta = 1 - 300/500 = 0.4\)</span>, altså maksimalt 40 %. Alle ekte (irreversible) maskiner gjør det dårligere enn dette, siden <span class="math notranslate nohighlight">\(\eta_{\mathrm{Carnot}}\)</span> er den teoretiske grensen hvis alt gjøres reversibelt.</p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p>En jernbit blir plassert i kontakt med en aluminiumskloss. Begge har et volum på <span class="math notranslate nohighlight">\(50 cm^3\)</span>. Temperaturen til jernbiten har er <span class="math notranslate nohighlight">\(0^{\circ}C\)</span> og aluminiumsklossen <span class="math notranslate nohighlight">\(100^{\circ}C\)</span>. De to klossene settes inntil hverandre slik at de er i termisk kontakt, og likevekt innstiller seg. Anta at systemet er termisk isolert.</p>
+<p><span class="math notranslate nohighlight">\(C_{p,m}= 25.10 J K^{-1} mol^{-1}\)</span> for jern og <span class="math notranslate nohighlight">\(C_{p,m}= 24.4 J K^{-1} mol^{-1}\)</span> for aluminium. Tetthetene er henholdsvis <span class="math notranslate nohighlight">\(2.698 g cm^{-3}\)</span> og <span class="math notranslate nohighlight">\(7.874 g cm^{-3}\)</span> for aluminium og jern.</p>
+<p><strong>a)</strong> Finn slutt-temperaturen når termisk likevekt er nådd.</p>
+<p><strong>Svar</strong> Først må vi finne stoffmengdene:</p>
+<p><span class="math notranslate nohighlight">\(M_\text{Al} = 26.98\)</span>, <span class="math notranslate nohighlight">\(M_\text{Fe} = 55.85\ \text{g/mol}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[n_\text{Al} = \frac{2.698 \times 50}{26.98} = 5.00\ \text{mol}, \qquad n_\text{Fe} = \frac{7.874 \times 50}{55.85} = 7.05\ \text{mol}\]</div>
+<p>Det er verdt å legge merke til: samme volum, men jernbiten inneholder over 40 % flere mol. Det kommer til å trekke slutt-temperaturen mot jernets startverdi.</p>
+<p>Siden trykket er konstant har vi <span class="math notranslate nohighlight">\(\Delta H = q_p\)</span>. Ved termisk likevekt vil det ikke lenger overføres noen netto varme mellom systemene, så <span class="math notranslate nohighlight">\(\Delta q_p=0=q_{p,Al}-q_{p,Fe}\)</span>.</p>
+<p>Fra definisjonen av varmekapasitet har vi også <span class="math notranslate nohighlight">\(\Delta H = n\cdot C_{p,m} \cdot \Delta T\)</span>, dermed får vi</p>
+<div class="math notranslate nohighlight">
+\[n_\text{Al}C_{p,\text{Al}}(T_f - T_\text{Al}) + n_\text{Fe}C_{p,\text{Fe}}(T_f - T_\text{Fe}) = 0\]</div>
+<p>Løser for <span class="math notranslate nohighlight">\(T_f\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[T_f = \frac{n_\text{Al}C_{p,\text{Al}}\,T_\text{Al} + n_\text{Fe}C_{p,\text{Fe}}\,T_\text{Fe}}{n_\text{Al}C_{p,\text{Al}} + n_\text{Fe}C_{p,\text{Fe}}}\]</div>
+<p>Regner ut de to varmekapasitetene (total, <span class="math notranslate nohighlight">\(nC_{p,m}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[n_\text{Al}C_{p,\text{Al}} = 5.00 \times 24.4 = 122.0\ \text{J K}^{-1}, \qquad n_\text{Fe}C_{p,\text{Fe}} = 7.05 \times 25.10 = 176.9\ \text{J K}^{-1}\]</div>
+<div class="math notranslate nohighlight">
+\[T_f = \frac{122.0 \times 373.15 + 176.9 \times 273.15}{122.0 + 176.9} = \frac{45524 + 48320}{298.9} = \frac{93844}{298.9}\]</div>
+<div class="math notranslate nohighlight">
+\[T_f = 313.9\ \text{K} = 40.8\ ^{\circ}\text{C}\]</div>
+<p>Slutt-temperaturen ligger noe <em>nærmere</em> jernets 0 °C enn midtpunktet (50 °C). Dette kommer av at jernets totale varmekapasiteten er større enn aluminiums.</p>
+<p><strong>b)</strong> Beregn <span class="math notranslate nohighlight">\(\Delta S\)</span> for hver av de to klossene, og for de to klossene til sammen.</p>
+<p><strong>Svar</strong></p>
+<p><strong>Aluminium</strong> (avkjøles, <span class="math notranslate nohighlight">\(373.15 \to 313.9\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_\text{Al} = n_\text{Al}C_{p,\text{Al}}\ln\frac{T_f}{T_\text{Al}} = 122.0 \times \ln\frac{313.9}{373.15} = 122.0 \times \ln(0.8412) = -21.1\ \text{J K}^{-1}\]</div>
+<p><strong>Jern</strong> (varmes opp, <span class="math notranslate nohighlight">\(273.15 \to 313.9\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_\text{Fe} = n_\text{Fe}C_{p,\text{Fe}}\ln\frac{T_f}{T_\text{Fe}} = 176.9 \times \ln\frac{313.9}{273.15} = 176.9 \times \ln(1.1492) = +24.6\ \text{J K}^{-1}\]</div>
+<p><strong>Til sammen:</strong></p>
+<div class="math notranslate nohighlight">
+\[\Delta S_\text{tot} = -21.1 + 24.6 = +3.5\ \text{J K}^{-1}\]</div>
+<p><strong>c)</strong> Kommenter kort fortegnene til de tre entropi-endringene som er beregnet.</p>
+<p><strong>Svar</strong></p>
+<ul class="simple">
+<li><p>aluminiumet (avkjøles) taper entropi, jernet (varmes opp) vinner entropi.</p></li>
+<li><p>Total endring i entropi er <strong>positiv</strong>. Selv om aluminiumet og jernet utveksler nøyaktig like mye <em>varme</em>, tar jernet opp denne varmen ved lavere temperatur enn aluminiumet avgir den, og siden entropibidraget <span class="math notranslate nohighlight">\(q/T\)</span> er størst der <span class="math notranslate nohighlight">\(T\)</span> er lav, blir jernets gevinst større enn aluminiumets tap.</p></li>
+<li><p><span class="math notranslate nohighlight">\(\Delta S_\text{tot} &gt; 0\)</span> bekrefter at varmeutjevningen er en spontan, irreversibel prosess. Så snart de to bitene har samme temperatur, stopper netto varmestrøm. systemet har nådd termisk likevekt, den tilstanden med flest tilgjengelige mikrotilstander.</p></li>
+</ul>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Beregn endringen i molar entropi når en prøve argongass komprimeres fra <span class="math notranslate nohighlight">\(2 dm^3\)</span> til <span class="math notranslate nohighlight">\(0.5 dm^3\)</span>, samtidig som den varmes opp fra <span class="math notranslate nohighlight">\(300K\)</span> til <span class="math notranslate nohighlight">\(400K\)</span>.</p>
+<p><strong>Svar</strong></p>
+<p>Fordi entropiforandringer avhenger kun av begynnelse- og slutt-tilstand, er forandringen den samme om den utføres i et eller flere trinn. Vi deler derfor prosessen opp i to trinn og beregner entropiforandringen i hver av de:</p>
+<p><span class="math notranslate nohighlight">\(ΔS=ΔS_{kompresjon}+ ΔS_{oppvarming}\)</span></p>
+<p>Først ser vi på den isoterme volumforandringen og deretter temperaturforandring ved konstant volum.</p>
+<p>Fra termodynamikkens første lov vet vi at endringen i indre energi kan skrives som:
+$<span class="math notranslate nohighlight">\(dU=dq+dw\)</span>$</p>
+<p>Og vi har at <span class="math notranslate nohighlight">\(dU=C_V dT\)</span>.</p>
+<p>Ettersom temperaturen er konstant får vi:
+$<span class="math notranslate nohighlight">\(dU=C_V, dT=dq-pdV=0\)</span><span class="math notranslate nohighlight">\(
+\)</span><span class="math notranslate nohighlight">\(dq_rev=pdV\)</span>$</p>
+<p>Vi vet også at entropien kan defineres som <span class="math notranslate nohighlight">\(dS=\frac{dq_{rev}}{T}\)</span>, noe som gir:
+$<span class="math notranslate nohighlight">\(dS_{kompresjon}=\frac{dq_{rev}}{T}=\frac{(\frac{nRT}{V})}{T}dV=\frac{nR}{V} dV\)</span>$</p>
+<p>Entropiendringen i kompresjonen blir altså</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{kompresjon} = \int_1^2{\frac{nR}{V} dV}=nR\ln{\frac{V_2}{V_1}}\]</div>
+<p>Deretter ser vi på den isokore oppvarmingen (konstant volum). Igjen har vi at dU=dq+dw og C_V dT=dq_rev-pdV. Ettersom volumet er konstant får vi nå</p>
+<div class="math notranslate nohighlight">
+\[dS= \frac{dq_{rev}}{T}=\frac{C_V}{T}dT\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta S_{oppvarming} = \int_1^2{\frac{C_V}{T}dT} = nC_{V,m}\ln{\frac{T_2}{T_1}}\]</div>
+<p>Den totale, molare, entropiendringen for prosessen blir altså:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_m =ΔS_{m,kompresjon} + \Delta S_{m,oppvarming} = R\ln{\frac{V_2}{V_1}} + C_{V,m}\ln{\frac{T_2}{T_1}} \]</div>
+<div class="math notranslate nohighlight">
+\[\Delta S_m = 8.31446 J K^{-1} mol^{-1}\cdot \ln{\frac{0.5 dm^3}{2 dm^3}}+\frac{3}{2}\cdot 8.31446 J K^{-1} mol^{-1}\cdot \ln{\frac{400K}{300K}} = -7.94 J K^{-1} mol^{-1}\]</div>
+<p>Vi ser at entropiendringen i dette tilfellet er negativ, dette er mulig fordi vi ikke ser på et lukket system.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Beregn den absolutte entropien for <span class="math notranslate nohighlight">\(SO_2\)</span>(g) ved 300,0 K og 1,00 bar gitt følgende
+informasjon:</p>
+<p><span class="math notranslate nohighlight">\(S_{m}^\circ(15,0 K) = 1,26 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(C_{p,m}(s) = 32,65 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(T_m = 197,64 K\)</span>,
+<span class="math notranslate nohighlight">\(\Delta_{fus}H_{m}^\circ = 7402 J mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(C_{p,m}(l) = 87,20 JK^{-1}mol^{-1}\)</span>, <span class="math notranslate nohighlight">\(T_b = 263,08 K\)</span>, <span class="math notranslate nohighlight">\(\Delta_{fus}H_{m}^\circ = 24937 J mol^{-1}\)</span>,
+<span class="math notranslate nohighlight">\(C_{p,m}(g) = 39,88 JK^{-1}mol^{-1}\)</span>.</p>
+<p>Kommenter også på hva som øker entropien mest og hvorfor.</p>
+<p>Hint: i denne oppgaven lønner det seg (igjen) å først få en oversikt over hvilke delprosesser vi
+kan dele problemet opp i. Start ved å lage et enkelt diagram for hvordan entropien øker som
+funksjon av temperatur, fra fast stoff til gass, og identifiser ulike entropiøkninger og hvordan
+du kan regne de ut.</p>
+<p><strong>Svar</strong></p>
+<p>Vi vet at det her vil forekomme flere faseoverganger hvor entropien vil gjøre et «hopp», i tillegg til at den gradvis vil øke gjennom oppvarming av hver fase. Vi deler derfor prosessen opp i flere trinn, både for oppvarming av hver fase og hver faseovergang.</p>
+<p>Husk at: <span class="math notranslate nohighlight">\(dS = \frac{dq_{rev}}{T}\)</span>, <span class="math notranslate nohighlight">\(C_p = \frac{dq_{rev}}{dT}\)</span> og at ved en faseovergang har vi <span class="math notranslate nohighlight">\(q_{rev} = \Delta H_{trs}^\circ\)</span></p>
+<ol class="arabic simple">
+<li><p>Oppvarming fra 15 K til smeltepunktet (<span class="math notranslate nohighlight">\(T_{mp}\)</span>):</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[dq_{rev,m} = C_{p,m}\cdot dT\]</div>
+<div class="math notranslate nohighlight">
+\[dS_m^\circ = \frac{dq_{rev,m}}{T} = \frac{C_{p,m}(s)\cdot dT}{T}\]</div>
+<div class="math notranslate nohighlight">
+\[\Delta S_m^\circ = C_{p,m}(s)\cdot \ln{\frac{T_{mp}}{15.0K}}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Faseovergang: <span class="math notranslate nohighlight">\(SO_2(s) \rightarrow SO_2(l)\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta S_m^\circ = \frac{q_{rev,m}}{T} = \frac{\Delta_{fus}H_m^\circ}{T_{mp}}\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Oppvarming av <span class="math notranslate nohighlight">\(SO_2\)</span>(l) fra <span class="math notranslate nohighlight">\(T_{mp}\)</span> (smeltepunkt) til <span class="math notranslate nohighlight">\(T_{bp}\)</span> (kokepunkt)</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta S_m^\circ = C_{p,m}(l)\cdot \ln{\frac{T_{bp}}{T_{mp}}}\]</div>
+<ol class="arabic simple" start="4">
+<li><p>Faseovergang: <span class="math notranslate nohighlight">\(SO_2(l) \rightarrow SO_2(g)\)</span></p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta S_m^\circ =\frac{\Delta_{vap}H_m^\circ}{T_{bp}}\]</div>
+<ol class="arabic simple" start="5">
+<li><p>Oppvarming av gass fra <span class="math notranslate nohighlight">\(T_{bp}\)</span> til 300 K</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\Delta S_m^\circ = C_{p,m}(g)\cdot \ln{\frac{300K}{T_{bp}}}\]</div>
+<p>Summerer alle bidragene for å finne total entropi ved 300K:</p>
+<div class="math notranslate nohighlight">
+\[S_m^\circ(300K) = 1.26 J K^{-1}mol^{-1} + 32.65J K^{-1}mol^{-1} \cdot \ln{\frac{197.64K}{15.0K}} + \left(\frac{7402 J mol^{-1}}{197.64 K}\right) + 87.2 J K^{-1}mol^{-1}\cdot \ln{\frac{263.08K}{197.64K}}+\left(\frac{24937 J mol^{-1}}{263.08 K}\right) + 39.88 J K^{-1}mol^{-1}\cdot \ln{\frac{300K}{263.08K}} = 247.86 J K^{-1}mol^{-1}\]</div>
+<p>Entropien øker mest i overgangen mellom væske og gass, noe som er forventet med tanke på endring i volum og hvordan det vil øke antallet mikrotilstander.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Joule Thomson effekten utnyttes til å</p>
+<p>Vi ser på et adiabatisk system hvor en gass strupes gjennom en ventil eller porøs plugg (throttle) og endrer temperatur. Vi skal bruke simuleringen gitt i lenken under, hvor man kan vløege 4 ulike gasser og justere temperatur og trykk på “inn-siden” samt trykk på “ut-siden”. Merk at den porøse ventilen er tykkere jo større trykkfallet skal være.</p>
+<p>https://learncheme.com/simulations/thermodynamics/thermo-1/joule-thomson-expansion/</p>
+<p><strong>a)</strong> Siden gassen kun gjør et arbeid på seg selv, og det ikke er noen varmeutveksling med omgivelsene er <span class="math notranslate nohighlight">\(\Delta H = 0\)</span> for prosessen. Siden entalpi er en funksjon av trykk og temperatur kan vi skrive <span class="math notranslate nohighlight">\(dH = (\frac{\partial H}{\partial T})_pdT + (\frac{\partial H}{\partial p})_Tdp\)</span>. Bruk Joule-Thomson koeffisienten: <span class="math notranslate nohighlight">\(\mu_{JT}=\left(\frac{\partial T}{\partial p}\right)_H\)</span>, vis at vi kan skrive sluttemperaturen som</p>
+<div class="math notranslate nohighlight">
+\[T_{out} = T_{in} + \int_{p_{in}}^{p_{out}}{\mu_{JT}(T,p)dp}\]</div>
+<p><strong>Svar</strong></p>
+<p>Siden <span class="math notranslate nohighlight">\((\frac{\partial H}{\partial T})_p = C_p\)</span> og <span class="math notranslate nohighlight">\(\Delta H = 0\)</span> kan vi skrive</p>
+<div class="math notranslate nohighlight">
+\[0 = C_pdT + (\frac{\partial H}{\partial p})_Tdp\]</div>
+<div class="math notranslate nohighlight">
+\[-C_p dT \frac{1}{dp} =(\frac{\partial H}{\partial p})_T \]</div>
+<div class="math notranslate nohighlight">
+\[(\frac{\partial T}{\partial p})_H = -\frac{1}{C_p}(\frac{\partial H}{\partial p})_T = \mu_{JT}\]</div>
+<p><span class="math notranslate nohighlight">\(\mu_{JT}\)</span> vil variere med både trykk og temperatur, hvis vi skal integrere uttrykket over må vi da bruke <span class="math notranslate nohighlight">\(\mu_{JT}(T,p)\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[T_{out} = T_{in} + \int_{p_{in}}^{p_{out}}{\mu_{JT}(T,p)dp}\]</div>
+<p><strong>b)</strong> Beskriv hvordan Joule-Thomson koeffisienten: <span class="math notranslate nohighlight">\(\mu_{JT}=\left(\frac{\partial T}{\partial p}\right)_H\)</span> og inverteringstemperaturen henger sammen med intermolekylære krefter.</p>
+<p><strong>svar</strong>
+For en ideell gass finnes det ingen intermolekylære krefter. Entalpien avhenger da bare av temperaturen: <span class="math notranslate nohighlight">\(H=H(T)\)</span>
+Siden Joule–Thomson-prosessen er isentalpisk, vil en ideell gass derfor ikke endre temperatur og <span class="math notranslate nohighlight">\(\mu_{JT} = 0\)</span>.</p>
+<p>For reelle gasser derimot må vi ta hensyn til både attraktive og frastøtende intermolekylære krefter. Attraktive krefter dominerer ved lange intermolekylære avstander, mens frastøtende dominerer ved kortere avstander. Lavere trykk vil gi større avstand mellom molekylene. Derfor vil de attraktive kreftene alltid i hovedsak være viktigst ved lavt trykk, og JT-koeffisienten burde være positiv <span class="math notranslate nohighlight">\(\mu_{JT} &gt; 0\)</span>. Når trykket minker fra “inn”-siden til “ut”-siden og gassen ekspanderer øker den gjennomsnittlige avstanden mellom molekylene. Det krever energi å motvirke de attraktive kreftene, og denne energien tas fra molekylenes bevegelsesenergi. Temperaturen synker derfor og <span class="math notranslate nohighlight">\(\mu_{JT} &gt; 0\)</span>.</p>
+<p>Ved høye temperaturer eller høyt trykk vil effekten av frastøtende krefter kunne dominere. Da vil ekspansjon føre til at temperaturen øker og koeffisienten er da negativ: <span class="math notranslate nohighlight">\(\mu_{JT} &lt; 0\)</span>.</p>
+<p>Inverteringstemperaturen er temperaturen der Joule–Thomson-koeffisienten skifter fortegn. Under inverteringstemperaturen er <span class="math notranslate nohighlight">\(\mu_{JT} &gt; 0\)</span>, og gassen kjøles. Over inverteringstemperaturen er <span class="math notranslate nohighlight">\(\mu_{JT} &lt; 0\)</span> og gassen varmes opp.
+Når <span class="math notranslate nohighlight">\(\mu_{JT} = 0\)</span>, altså ved inverteringstemperaturen, antar vi at effektene av intermolekylære attraktive og frastøtende krefter er akkurat like store.</p>
+<p><strong>c)</strong> Se først på <span class="math notranslate nohighlight">\(NH_3\)</span> gass. Velg <span class="math notranslate nohighlight">\(p_{in} = 4 MPa\)</span>, <span class="math notranslate nohighlight">\(T_{in} = 645 K\)</span> og <span class="math notranslate nohighlight">\(p_{out} = 0.1 MPa\)</span>. Stemmer <span class="math notranslate nohighlight">\(T_{out}\)</span> i simuleringen med hva du får ved bruk av svaret ditt i oppgave <strong>a</strong>?</p>
+<p><strong>svar</strong> velger f.eks. å sette <span class="math notranslate nohighlight">\(p_{in} = 4 MPa\)</span>, <span class="math notranslate nohighlight">\(T_{in} = 645 K\)</span> og <span class="math notranslate nohighlight">\(p_{out} = 0.1 MPa\)</span>. JT-koeffisienten er da <span class="math notranslate nohighlight">\(\mu_{JT} = 2.71\)</span>, og vi får at</p>
+<div class="math notranslate nohighlight">
+\[T_{out} = T_{in} + \int_{p_{in}}^{p_{out}}{\mu_{JT}(T,p)dp} =  T_{in} + 2.71 \cdot \Delta p = 645 K + 2.71 \frac{K}{MPa}\cdot (0.1 MPa-4MPa) = 634.43 \]</div>
+<p>Dette stemmer med verdien i simuleringen. Siden <span class="math notranslate nohighlight">\(\mu_{JT} &gt; 0\)</span> synker temperaturen ved ekspansjon.</p>
+<p><strong>d)</strong> Se nå på <span class="math notranslate nohighlight">\(N_2\)</span> gass. Sammenlikn <span class="math notranslate nohighlight">\(\Delta T\)</span> nå med det du så for <span class="math notranslate nohighlight">\(NH_3\)</span>. Hva har skjedd?</p>
+<p><strong>svar</strong> Nitrogen er upolart og har svakere intermolekylære attraktive krefter enn ammoniakk (nærmere ideell oppførsel). Derfor er Joule–Thomson-koeffisienten vanligvis mindre for <span class="math notranslate nohighlight">\(N_2\)</span> (g) enn for <span class="math notranslate nohighlight">\(NH_3\)</span> (g) ved sammenliknbare betingelser. Vi forventer dermed at nitrogen også kan avkjøles dersom temperaturen ligger under inverteringstemperaturen, men temperaturfallet blir typisk mindre.</p>
+<p><strong>e)</strong> Til slutt skal vi se på <span class="math notranslate nohighlight">\(H_2\)</span>. Velg først <span class="math notranslate nohighlight">\(p_{in} = 5 MPa\)</span>, <span class="math notranslate nohighlight">\(T_{in} = 55 K\)</span> og <span class="math notranslate nohighlight">\(p_{out} = 0.1 MPa\)</span>. Hva skjer når du setter <span class="math notranslate nohighlight">\(T_{in} &gt; 180K\)</span>?</p>
+<p>Ved 55 K ligger hydrogen godt under inverteringstemperaturen. Joule–Thomson-koeffisienten er da positiv og temperaturen synker ved ekspansjon. Når man krysser inverteringstemperaturen (<span class="math notranslate nohighlight">\(T_i = 180 K\)</span>) vil koeffisienten skifte fortegn og hydrogen vil ikke lenger avkjøles, men varmes opp ved ekspansjon.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_04_under_revision_VK.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 4 – Makroskopisk termodynamikk</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uke_06_tentativ.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Uke 6 – Fri energi</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-prosesser-hvor-vi-holder-en-variabel-konstant">Oppgave 1: Prosesser hvor vi holder en variabel konstant.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-irreversible-prosesser-hva-skjer-med-temperaturen">Oppgave 2: Irreversible prosesser, hva skjer med temperaturen?</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-clausius-ulikhet">Oppgave 3: Clausius ulikhet</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4-carnot-maskiner-og-maksimal-effektivitet">Oppgave 4: Carnot maskiner og maksimal effektivitet</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Micelldannelse &mdash; C&#8321;&#8324;-TAB</title>
+<style>
+  :root{
+    --ink:#2b2a27;
+    --paper:#faf8f4;
+    --card:#ffffff;
+    --line:#ddd8cd;
+    --cation:#3a6ea5;
+    --cation-dark:#274a72;
+    --tail:#4a4a46;
+    --oxygen:#c0392b;
+    --oxygen-dark:#8a2f22;
+    --hydrogen:#f5f1e8;
+    --hbond:#b9832f;
+    --font: "Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --font-ui: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--font-ui);
+    padding:32px 16px 48px;
+    display:flex;
+    justify-content:center;
+  }
+  .card{
+    max-width:780px;
+    width:100%;
+    background:var(--card);
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:28px 32px 32px;
+  }
+  h1{
+    font-family:var(--font);
+    font-size:21px;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .formula{
+    font-family:var(--font);
+    font-size:16px;
+    color:var(--ink);
+    opacity:0.85;
+    margin:0 0 20px;
+  }
+  .formula sub{ font-size:0.68em; }
+
+  .stage{ position:relative; width:100%; }
+  svg{ width:100%; height:auto; display:block; overflow:visible; }
+
+  .label{
+    font-family:var(--font-ui);
+    font-size:12.5px;
+    fill:var(--ink);
+    opacity:0.7;
+  }
+
+  .bond-tail{ stroke:var(--tail); stroke-width:2.6; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .head-circle{ fill:var(--cation); stroke:var(--cation-dark); stroke-width:1.4; }
+  .head-label{ font-family:var(--font-ui); font-size:9px; font-weight:700; fill:#fff; text-anchor:middle; }
+
+  .bond{ stroke:#8a8578; stroke-width:1.4; }
+  .hydrogen{ fill:var(--hydrogen); stroke:#8a8578; stroke-width:1; }
+  .oxygen{ fill:var(--oxygen); stroke:var(--oxygen-dark); stroke-width:1; }
+
+  .mono-outer, .water-outer{ transition: transform 1.4s ease; }
+
+  .iondipole-line{
+    stroke:var(--hbond);
+    stroke-width:1.2;
+    stroke-dasharray:3 3;
+    opacity:0;
+    transition:opacity 0.6s ease 1.2s;
+  }
+  .reacted .iondipole-line{ opacity:0.6; }
+
+  .core-blob{
+    fill:var(--tail);
+    opacity:0;
+    transition:opacity 1s ease 0.9s;
+  }
+  .reacted .core-blob{ opacity:0.16; }
+
+  .reveal-label{
+    opacity:0;
+    transition:opacity 0.8s ease 1.3s;
+  }
+  .reacted .reveal-label{ opacity:0.75; }
+
+  .controls{
+    display:flex;
+    align-items:center;
+    gap:14px;
+    margin-top:18px;
+    flex-wrap:wrap;
+  }
+  button{
+    font-family:var(--font-ui);
+    font-size:14.5px;
+    font-weight:600;
+    padding:10px 18px;
+    border-radius:8px;
+    border:1px solid var(--cation-dark);
+    background:var(--cation);
+    color:#fff;
+    cursor:pointer;
+  }
+  button:hover{ background:var(--cation-dark); }
+  button:focus-visible{ outline:3px solid #274a7255; outline-offset:2px; }
+  .state-text{
+    font-size:13.5px;
+    color:var(--ink);
+    opacity:0.75;
+  }
+
+  .legend{
+    display:flex;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-top:18px;
+    font-size:12.5px;
+    opacity:0.8;
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .swatch{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+
+  .caption{
+    margin-top:20px;
+    font-size:13.5px;
+    line-height:1.55;
+    color:var(--ink);
+    opacity:0.85;
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    .mono-outer, .water-outer, .iondipole-line, .core-blob, .reveal-label{ transition:none; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Fra frie monomerer til micelle</h1>
+  <p class="formula">8 C<sub>14</sub>-TAB-kationer i vann &mdash; forenklet 2D-modell</p>
+
+  <div class="stage">
+    <svg id="scene" viewBox="0 0 700 460" role="img" aria-label="Animasjon av frie C14-TAB-monomerer som samler seg til en micelle, der vann som var bundet rundt halene frigj&#248;res">
+      <desc>Flere forenklede C14-TAB-molekyler flyter fritt i vann, hver med litt strukturert vann rundt den hydrofobe halen. N&#229;r micelldannelse startes, samler molekylene seg i en kule med halene vendt innover og hodene utover mot vannet, og det strukturerte vannet som satt rundt halene slipper fri.</desc>
+
+      <circle id="coreBlob" class="core-blob" cx="350" cy="230" r="42"></circle>
+      <text id="coreLabel" class="reveal-label label" x="350" y="234" text-anchor="middle">hydrofob kjerne</text>
+      <text id="coronaLabel" class="reveal-label label" x="350" y="60" text-anchor="middle">hodene vender mot vannet</text>
+
+      <g id="bondLayer"></g>
+      <g id="monoLayer"></g>
+      <g id="waterLayer"></g>
+    </svg>
+  </div>
+
+  <div class="controls">
+    <button id="toggleBtn">Dann micelle</button>
+    <span class="state-text" id="stateText">Frie C14-TAB-monomerer flyter omkring i vannet.</span>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--cation)"></span>Kationisk hode</span>
+    <span><span class="swatch" style="background:var(--tail)"></span>Hydrokarbonhale</span>
+    <span><span class="swatch" style="background:var(--oxygen)"></span>Oksygen (vann)</span>
+    <span><span class="swatch" style="background:var(--hydrogen);border:1px solid #8a8578"></span>Hydrogen (vann)</span>
+  </div>
+
+  <p class="caption">
+    Se etter hva som skjer med vannmolekylene som f&#248;r satt ordnet rundt de hydrofobe halene n&#229;r monomerene samler seg til en micelle. Vannmolekylene rundt de ladede hodene blir v&#230;rende &mdash; hodene er fortsatt i kontakt med vannet i den ferdige micellen.
+  </p>
+</div>
+
+<script>
+(function(){
+  const svgNS = "http://www.w3.org/2000/svg";
+  const monoLayer = document.getElementById('monoLayer');
+  const waterLayer = document.getElementById('waterLayer');
+  const bondLayer = document.getElementById('bondLayer');
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  const CENTER = { x:350, y:230 };
+  const N = 8;
+  const HEAD_R = 95;
+  const TAIL_D = "M 0 0 L 8 16 L -8 32 L 8 48 L -6 64";
+
+  function el(tag, attrs){
+    const e = document.createElementNS(svgNS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+  function rand(min,max){ return min + Math.random()*(max-min); }
+  function setTransform(g,x,y,rot){ g.style.transform = `translate(${x}px,${y}px) rotate(${rot}deg)`; }
+  function orientToward(fromX,fromY,toX,toY){
+    const dx=toX-fromX, dy=toY-fromY;
+    const len=Math.hypot(dx,dy)||1;
+    const ux=dx/len, uy=dy/len;
+    return Math.atan2(-ux,uy)*180/Math.PI;
+  }
+  function jitter(item, amplitude, duration){
+    if (item.anim) item.anim.cancel();
+    if (reducedMotion){ item.jitter.style.transform=''; return; }
+    const dx=rand(-amplitude,amplitude), dy=rand(-amplitude,amplitude);
+    item.anim = item.jitter.animate([
+      { transform:'translate(0px,0px)' },
+      { transform:`translate(${dx}px, ${dy}px)` },
+      { transform:'translate(0px,0px)' }
+    ], { duration, iterations:Infinity, easing:'ease-in-out' });
+  }
+  function randomFreePos(){
+    let x, y;
+    do {
+      x = rand(60,640);
+      y = rand(50,410);
+    } while (Math.hypot(x-CENTER.x, y-CENTER.y) < 135);
+    return [x,y];
+  }
+
+  // --- build monomers ---
+  const monomers = [];
+  for(let i=0;i<N;i++){
+    const angle = i*(360/N)*Math.PI/180;
+    const finalX = CENTER.x + HEAD_R*Math.cos(angle);
+    const finalY = CENTER.y + HEAD_R*Math.sin(angle);
+    const finalRot = orientToward(finalX, finalY, CENTER.x, CENTER.y);
+    const [initX, initY] = randomFreePos();
+    const initRot = rand(0,360);
+
+    const outer = el('g', { class:'mono-outer' });
+    const jitterG = el('g', { class:'mono-jitter' });
+    jitterG.appendChild(el('path', { d:TAIL_D, class:'bond-tail' }));
+    jitterG.appendChild(el('circle', { cx:0, cy:0, r:10, class:'head-circle' }));
+    const headLbl = el('text', { x:0, y:3, class:'head-label' });
+    headLbl.textContent = '+';
+    jitterG.appendChild(headLbl);
+    outer.appendChild(jitterG);
+    monoLayer.appendChild(outer);
+    setTransform(outer, initX, initY, initRot);
+
+    const item = { outer, jitter: jitterG };
+    jitter(item, 4, 2600 + Math.random()*600);
+
+    monomers.push({ item, initX, initY, initRot, finalX, finalY, finalRot });
+  }
+
+  // --- shell water: one per head, stays near the head in both states ---
+  function makeWater(){
+    const outer = el('g', { class:'water-outer' });
+    const jitterG = el('g', { class:'water-jitter' });
+    const mol = el('g', {});
+    mol.appendChild(el('line', { x1:0, y1:8, x2:-9, y2:-6, class:'bond' }));
+    mol.appendChild(el('line', { x1:0, y1:8, x2:9,  y2:-6, class:'bond' }));
+    mol.appendChild(el('circle', { cx:-9, cy:-6, r:3.2, class:'hydrogen' }));
+    mol.appendChild(el('circle', { cx:9,  cy:-6, r:3.2, class:'hydrogen' }));
+    mol.appendChild(el('circle', { cx:0,  cy:8,  r:5,   class:'oxygen' }));
+    jitterG.appendChild(mol);
+    outer.appendChild(jitterG);
+    waterLayer.appendChild(outer);
+    return { outer, jitter: jitterG };
+  }
+
+  const shellWaters = monomers.map(m => {
+    const initAngle = rand(0,2*Math.PI);
+    const iwx = m.initX + 20*Math.cos(initAngle);
+    const iwy = m.initY + 20*Math.sin(initAngle);
+    const irot = orientToward(iwx, iwy, m.initX, m.initY);
+
+    const outAngle = Math.atan2(m.finalY-CENTER.y, m.finalX-CENTER.x);
+    const fwx = m.finalX + 20*Math.cos(outAngle);
+    const fwy = m.finalY + 20*Math.sin(outAngle);
+    const frot = orientToward(fwx, fwy, m.finalX, m.finalY);
+
+    const item = makeWater();
+    setTransform(item.outer, iwx, iwy, irot);
+    jitter(item, 5, 2200);
+    const line = el('line', { x1:iwx, y1:iwy, x2:m.initX, y2:m.initY, class:'iondipole-line' });
+    bondLayer.appendChild(line);
+    return { item, line, iwx, iwy, fwx, fwy, frot, headRefFinal:m };
+  });
+
+  // --- cage water: two per monomer, near the tail, released on reaction ---
+  const cageWaters = [];
+  monomers.forEach(m => {
+    for(let k=0;k<2;k++){
+      const a = rand(0,2*Math.PI);
+      const d = rand(35,55);
+      const ix = m.initX + d*Math.cos(a);
+      const iy = m.initY + d*Math.sin(a);
+      const item = makeWater();
+      setTransform(item.outer, ix, iy, rand(0,360));
+      jitter(item, 6, 2200 + Math.random()*500);
+      cageWaters.push({ item });
+    }
+  });
+
+  // --- bulk water: always free ---
+  const bulkWaters = [];
+  for(let i=0;i<10;i++){
+    const [x,y] = randomFreePos();
+    const item = makeWater();
+    setTransform(item.outer, x, y, rand(0,360));
+    jitter(item, 8, 2400 + Math.random()*600);
+    bulkWaters.push(item);
+  }
+
+  const btn = document.getElementById('toggleBtn');
+  const stateText = document.getElementById('stateText');
+  const stage = document.querySelector('.stage');
+  let reacted = false;
+
+  function react(){
+    reacted = true;
+    stage.classList.add('reacted');
+
+    monomers.forEach(m => {
+      setTransform(m.item.outer, m.finalX, m.finalY, m.finalRot);
+      setTimeout(() => jitter(m.item, 1.5, 3000), 1450);
+    });
+
+    shellWaters.forEach(w => {
+      setTransform(w.item.outer, w.fwx, w.fwy, w.frot);
+      w.line.setAttribute('x2', w.headRefFinal.finalX);
+      w.line.setAttribute('y2', w.headRefFinal.finalY);
+      w.line.setAttribute('x1', w.fwx);
+      w.line.setAttribute('y1', w.fwy);
+      setTimeout(() => jitter(w.item, 2, 2400), 1450);
+    });
+
+    cageWaters.forEach(w => {
+      const [x,y] = randomFreePos();
+      setTransform(w.item.outer, x, y, rand(0,360));
+      jitter(w.item, 13, 1000 + Math.random()*400);
+    });
+
+    btn.textContent = 'Tilbakestill';
+    stateText.textContent = 'Micelle dannet: halene klumper seg i en hydrofob kjerne, og vannet som satt rundt dem er sluppet fri.';
+  }
+
+  function reset(){
+    reacted = false;
+    stage.classList.remove('reacted');
+
+    monomers.forEach(m => {
+      setTransform(m.item.outer, m.initX, m.initY, m.initRot);
+      jitter(m.item, 4, 2600 + Math.random()*600);
+    });
+
+    shellWaters.forEach(w => {
+      setTransform(w.item.outer, w.iwx, w.iwy, orientToward(w.iwx,w.iwy,w.headRefFinal.initX,w.headRefFinal.initY));
+      w.line.setAttribute('x1', w.iwx);
+      w.line.setAttribute('y1', w.iwy);
+      w.line.setAttribute('x2', w.headRefFinal.initX);
+      w.line.setAttribute('y2', w.headRefFinal.initY);
+      jitter(w.item, 5, 2200);
+    });
+
+    cageWaters.forEach(w => {
+      // reattach loosely near a random monomer's initial tail area
+      const m = monomers[Math.floor(rand(0,monomers.length))];
+      const a = rand(0,2*Math.PI), d = rand(35,55);
+      setTransform(w.item.outer, m.initX + d*Math.cos(a), m.initY + d*Math.sin(a), rand(0,360));
+      jitter(w.item, 6, 2200 + Math.random()*500);
+    });
+
+    btn.textContent = 'Dann micelle';
+    stateText.textContent = 'Frie C14-TAB-monomerer flyter omkring i vannet.';
+  }
+
+  btn.addEventListener('click', () => { reacted ? reset() : react(); });
+})();
+</script>
+</body>
+</html>

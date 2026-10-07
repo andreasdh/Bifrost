@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 380" font-family="Georgia, 'Iowan Old Style', serif">
+  <defs>
+    <marker id="ax" markerWidth="10" markerHeight="10" refX="7" refY="3.5" orient="auto" markerUnits="userSpaceOnUse">
+      <path d="M 0 0 L 8 3.5 L 0 7 z" fill="#6b6252"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="700" height="380" fill="#f5f2ea"/>
+
+  <!-- title -->
+  <text x="350" y="34" text-anchor="middle" font-size="18" fill="#1c2321" font-weight="600">Michaelis&#8211;Menten-kinetikk</text>
+
+  <!-- axes -->
+  <line x1="90" y1="300" x2="640" y2="300" stroke="#6b6252" stroke-width="1.6" marker-end="url(#ax)"/>
+  <line x1="90" y1="300" x2="90" y2="70" stroke="#6b6252" stroke-width="1.6" marker-end="url(#ax)"/>
+  <text x="620" y="324" text-anchor="middle" font-size="13" fill="#1c2321" font-style="italic">[S]&#8320;</text>
+  <text x="78" y="80" text-anchor="middle" font-size="13" fill="#1c2321" font-style="italic">v</text>
+
+  <!-- v_max asymptote -->
+  <line x1="90" y1="117.4" x2="630" y2="117.4" stroke="#1a7a4c" stroke-width="1.2" stroke-dasharray="6 4" stroke-opacity="0.8"/>
+  <text x="636" y="121" text-anchor="start" font-size="12.5" fill="#1a7a4c" font-family="'SF Mono', monospace">v</text>
+  <text x="648" y="125" text-anchor="start" font-size="10" fill="#1a7a4c" font-family="'SF Mono', monospace">max</text>
+
+  <!-- half-vmax guide + K_M marker -->
+  <line x1="90" y1="208.7" x2="142" y2="208.7" stroke="#c0392b" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.75"/>
+  <line x1="142" y1="208.7" x2="142" y2="300" stroke="#c0392b" stroke-width="1" stroke-dasharray="4 4" stroke-opacity="0.75"/>
+  <text x="84" y="212" text-anchor="end" font-size="11.5" fill="#c0392b" font-family="'SF Mono', monospace">&#189;v_max</text>
+  <text x="142" y="318" text-anchor="middle" font-size="12.5" fill="#c0392b" font-family="'SF Mono', monospace">K_M</text>
+
+  <!-- the Michaelis-Menten curve -->
+  <path d="M 90.0 300.0 L 94.4 285.8 L 98.7 273.7 L 103.1 263.2 L 107.5 254.1 L 111.8 246.0 L 116.2 238.8 L 120.6 232.4 L 125.0 226.6 L 129.3 221.4 L 133.7 216.6 L 138.1 212.3 L 142.4 208.3 L 146.8 204.7 L 151.2 201.3 L 155.5 198.2 L 159.9 195.3 L 164.3 192.6 L 168.7 190.1 L 173.0 187.7 L 177.4 185.5 L 181.8 183.4 L 186.1 181.5 L 190.5 179.7 L 194.9 177.9 L 199.2 176.3 L 203.6 174.7 L 208.0 173.3 L 212.4 171.9 L 216.7 170.5 L 221.1 169.3 L 225.5 168.0 L 229.8 166.9 L 234.2 165.8 L 238.6 164.7 L 242.9 163.7 L 247.3 162.8 L 251.7 161.8 L 256.1 160.9 L 260.4 160.1 L 264.8 159.3 L 269.2 158.5 L 273.5 157.7 L 277.9 157.0 L 282.3 156.3 L 286.6 155.6 L 291.0 154.9 L 295.4 154.3 L 299.7 153.7 L 304.1 153.1 L 308.5 152.5 L 312.9 151.9 L 317.2 151.4 L 321.6 150.9 L 326.0 150.4 L 330.3 149.9 L 334.7 149.4 L 339.1 148.9 L 343.4 148.5 L 347.8 148.0 L 352.2 147.6 L 356.6 147.2 L 360.9 146.8 L 365.3 146.4 L 369.7 146.0 L 374.0 145.6 L 378.4 145.3 L 382.8 144.9 L 387.1 144.6 L 391.5 144.3 L 395.9 143.9 L 400.3 143.6 L 404.6 143.3 L 409.0 143.0 L 413.4 142.7 L 417.7 142.4 L 422.1 142.1 L 426.5 141.8 L 430.8 141.6 L 435.2 141.3 L 439.6 141.0 L 443.9 140.8 L 448.3 140.5 L 452.7 140.3 L 457.1 140.1 L 461.4 139.8 L 465.8 139.6 L 470.2 139.4 L 474.5 139.1 L 478.9 138.9 L 483.3 138.7 L 487.6 138.5 L 492.0 138.3 L 496.4 138.1 L 500.8 137.9 L 505.1 137.7 L 509.5 137.5 L 513.9 137.3 L 518.2 137.2 L 522.6 137.0 L 527.0 136.8 L 531.3 136.6 L 535.7 136.5 L 540.1 136.3 L 544.5 136.1 L 548.8 136.0 L 553.2 135.8 L 557.6 135.7 L 561.9 135.5 L 566.3 135.4 L 570.7 135.2 L 575.0 135.1 L 579.4 134.9 L 583.8 134.8 L 588.2 134.7 L 592.5 134.5 L 596.9 134.4 L 601.3 134.2 L 605.6 134.1 L 610.0 134.0"
+        fill="none" stroke="#1f5f8b" stroke-width="2.8"/>
+
+  <!-- region labels -->
+  <text x="230" y="285" text-anchor="middle" font-size="11" fill="#7d7566" font-style="italic">f&#248;rste orden</text>
+  <text x="500" y="130" text-anchor="middle" font-size="11" fill="#7d7566" font-style="italic">metning (nullte orden)</text>
+</svg>

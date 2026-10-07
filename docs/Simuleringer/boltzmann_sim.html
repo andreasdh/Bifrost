@@ -1,0 +1,80 @@
+<div style="font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; max-width: 640px; margin: 1.5rem auto; padding: 1.5rem; border: 1px solid #ddd; border-radius: 10px; background: #fafafa;">
+
+  <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 4px;">
+    <label for="temp-slider" style="font-size: 14px; color: #444; white-space: nowrap;">k<sub>B</sub>T / &Delta;&epsilon;</label>
+    <input type="range" id="temp-slider" min="0.2" max="4" step="0.1" value="1" style="flex: 1;" />
+    <span id="temp-out" style="font-size: 14px; font-weight: 600; min-width: 34px; text-align: right; color: #222;">1.0</span>
+  </div>
+  <p style="font-size: 13px; color: #777; margin: 0 0 1.25rem;">
+    Dra i glidebryteren for å endre temperaturen, målt i enheter av energitrinnet &Delta;&epsilon; mellom nivåene.
+  </p>
+
+  <div id="bars" style="display: flex; align-items: flex-end; gap: 10px; height: 200px; padding: 0 4px; border-bottom: 2px solid #333;"></div>
+  <div id="labels" style="display: flex; gap: 10px; padding: 4px 4px 0;"></div>
+
+  <div style="display: flex; gap: 24px; margin-top: 1.25rem; font-size: 13px; color: #555;">
+    <span>Grunntilstand (&epsilon;<sub>0</sub> = 0): <span id="p0" style="font-weight: 600; color: #111;">-</span></span>
+    <span>Høyeste nivå (&epsilon;<sub>5</sub> = 5&Delta;&epsilon;): <span id="p5" style="font-weight: 600; color: #111;">-</span></span>
+  </div>
+
+</div>
+
+<script>
+(function () {
+  const N = 6;
+  const container = document.currentScript.previousElementSibling.parentElement || document;
+  const barsEl = document.getElementById('bars');
+  const labelsEl = document.getElementById('labels');
+  const slider = document.getElementById('temp-slider');
+  const tempOut = document.getElementById('temp-out');
+  const p0El = document.getElementById('p0');
+  const p5El = document.getElementById('p5');
+
+  for (let n = 0; n < N; n++) {
+    const col = document.createElement('div');
+    col.style.cssText = 'flex:1; display:flex; flex-direction:column; align-items:center; justify-content:flex-end; height:100%;';
+
+    const valLabel = document.createElement('div');
+    valLabel.className = 'val-label';
+    valLabel.style.cssText = 'font-size:11px; color:#555; margin-bottom:4px;';
+
+    const bar = document.createElement('div');
+    bar.className = 'bar';
+    bar.style.cssText = 'width:100%; max-width:44px; background:#3f7fbf; border-radius:4px 4px 0 0; transition: height 0.15s ease;';
+
+    col.appendChild(valLabel);
+    col.appendChild(bar);
+    barsEl.appendChild(col);
+
+    const lab = document.createElement('div');
+    lab.style.cssText = 'flex:1; text-align:center; font-size:12px; color:#888;';
+    lab.innerHTML = n + '&Delta;&epsilon;';
+    labelsEl.appendChild(lab);
+  }
+
+  function render() {
+    const x = parseFloat(slider.value);
+    tempOut.textContent = x.toFixed(1);
+
+    const weights = [];
+    for (let n = 0; n < N; n++) weights.push(Math.exp(-n / x));
+    const q = weights.reduce((a, b) => a + b, 0);
+    const probs = weights.map(w => w / q);
+    const maxP = Math.max.apply(null, probs);
+
+    const bars = barsEl.querySelectorAll('.bar');
+    const valLabels = barsEl.querySelectorAll('.val-label');
+    probs.forEach((p, n) => {
+      const heightPct = (p / maxP) * 100;
+      bars[n].style.height = heightPct + '%';
+      valLabels[n].textContent = (p * 100).toFixed(1) + '%';
+    });
+
+    p0El.textContent = (probs[0] * 100).toFixed(1) + '%';
+    p5El.textContent = (probs[5] * 100).toFixed(1) + '%';
+  }
+
+  slider.addEventListener('input', render);
+  render();
+})();
+</script>

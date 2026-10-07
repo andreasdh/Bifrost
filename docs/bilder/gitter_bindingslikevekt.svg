@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 780 320" font-family="Times New Roman, Times, serif">
+  <rect x="0" y="0" width="780" height="320" fill="#ffffff"/>
+
+  <!-- ================= VENSTRE PANEL: ubundet L og R ================= -->
+  <g>
+    <rect x="30" y="30" width="300" height="200" fill="#fde2e2"/>
+    <!-- stiplet gitter -->
+    <g stroke="#c98b8b" stroke-width="1" stroke-dasharray="4,3">
+      <line x1="30"  y1="30" x2="30"  y2="230"/>
+      <line x1="80"  y1="30" x2="80"  y2="230"/>
+      <line x1="130" y1="30" x2="130" y2="230"/>
+      <line x1="180" y1="30" x2="180" y2="230"/>
+      <line x1="230" y1="30" x2="230" y2="230"/>
+      <line x1="280" y1="30" x2="280" y2="230"/>
+      <line x1="330" y1="30" x2="330" y2="230"/>
+      <line x1="30" y1="30"  x2="330" y2="30"/>
+      <line x1="30" y1="80"  x2="330" y2="80"/>
+      <line x1="30" y1="130" x2="330" y2="130"/>
+      <line x1="30" y1="180" x2="330" y2="180"/>
+      <line x1="30" y1="230" x2="330" y2="230"/>
+    </g>
+
+    <!-- Ligand L: blå firkant, orientering peker mot høyre -->
+    <rect x="130" y="80" width="50" height="50" fill="#3b82f6" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="138" y="96" font-size="13" fill="#ffffff" font-weight="bold">L</text>
+    <line x1="146" y1="105" x2="163" y2="105" stroke="#000000" stroke-width="3"/>
+    <polygon points="163,105 155,100 155,110" fill="#000000"/>
+
+    <!-- Reseptor R: grønn firkant, orientering peker oppover (ikke på linje med L) -->
+    <rect x="230" y="130" width="50" height="50" fill="#22c55e" stroke="#14532d" stroke-width="1.5"/>
+    <text x="238" y="146" font-size="13" fill="#ffffff" font-weight="bold">R</text>
+    <line x1="255" y1="164" x2="255" y2="147" stroke="#000000" stroke-width="3"/>
+    <polygon points="255,147 250,155 260,155" fill="#000000"/>
+
+    <text x="180" y="260" text-anchor="middle" font-size="15" fill="#000">N_L ligander (L), N_R reseptorer (R)</text>
+    <text x="180" y="280" text-anchor="middle" font-size="13" fill="#555">ubundet, tilfeldig orientering</text>
+  </g>
+
+  <!-- ================= PIL MED K ================= -->
+  <g>
+    <line x1="345" y1="130" x2="435" y2="130" stroke="#000" stroke-width="2"/>
+    <polygon points="435,130 423,124 423,136" fill="#000"/>
+    <text x="390" y="115" text-anchor="middle" font-size="20" font-style="italic">K</text>
+  </g>
+
+  <!-- ================= HØYRE PANEL: bundet kompleks C ================= -->
+  <g>
+    <rect x="450" y="30" width="300" height="200" fill="#fde2e2"/>
+    <g stroke="#c98b8b" stroke-width="1" stroke-dasharray="4,3">
+      <line x1="450" y1="30" x2="450" y2="230"/>
+      <line x1="500" y1="30" x2="500" y2="230"/>
+      <line x1="550" y1="30" x2="550" y2="230"/>
+      <line x1="600" y1="30" x2="600" y2="230"/>
+      <line x1="650" y1="30" x2="650" y2="230"/>
+      <line x1="700" y1="30" x2="700" y2="230"/>
+      <line x1="750" y1="30" x2="750" y2="230"/>
+      <line x1="450" y1="30"  x2="750" y2="30"/>
+      <line x1="450" y1="80"  x2="750" y2="80"/>
+      <line x1="450" y1="130" x2="750" y2="130"/>
+      <line x1="450" y1="180" x2="750" y2="180"/>
+      <line x1="450" y1="230" x2="750" y2="230"/>
+    </g>
+
+    <!-- sterk rød stiplet ramme rundt komplekset C -->
+    <rect x="546" y="76" width="108" height="58" fill="none" stroke="#dc2626" stroke-width="2.5" stroke-dasharray="6,4"/>
+    <text x="662" y="110" font-size="18" font-style="italic" font-weight="bold" fill="#dc2626">C</text>
+
+    <!-- L og R på nabo-ruter, orientering på linje (peker mot hverandre) -->
+    <rect x="550" y="80" width="50" height="50" fill="#3b82f6" stroke="#1e3a8a" stroke-width="1.5"/>
+    <text x="558" y="96" font-size="13" fill="#ffffff" font-weight="bold">L</text>
+    <line x1="566" y1="105" x2="583" y2="105" stroke="#000000" stroke-width="3"/>
+    <polygon points="583,105 575,100 575,110" fill="#000000"/>
+
+    <rect x="600" y="80" width="50" height="50" fill="#22c55e" stroke="#14532d" stroke-width="1.5"/>
+    <text x="608" y="96" font-size="13" fill="#ffffff" font-weight="bold">R</text>
+    <line x1="634" y1="105" x2="617" y2="105" stroke="#000000" stroke-width="3"/>
+    <polygon points="617,105 625,100 625,110" fill="#000000"/>
+
+    <text x="600" y="260" text-anchor="middle" font-size="15" fill="#000">N_C komplekser (C)</text>
+    <text x="600" y="280" text-anchor="middle" font-size="13" fill="#555">L og R på nabo-ruter, orientering på linje, &#949;&#8320; &lt; 0</text>
+  </g>
+</svg>
