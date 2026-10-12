@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 460" font-family="Georgia, 'Iowan Old Style', serif">
+  <rect x="0" y="0" width="900" height="460" fill="#ffffff"/>
+
+  <!-- ============ VENSTRE: KONTINUERLIG ============ -->
+  <text x="250" y="70" text-anchor="middle" font-size="30" fill="#1c2321" font-weight="700">Kontinuerlig</text>
+
+  <!-- vertikal energiakse -->
+  <defs>
+    <marker id="axArrow" markerWidth="14" markerHeight="12" refX="7" refY="2" orient="0" markerUnits="userSpaceOnUse">
+      <path d="M 1 11 L 7 1 L 13 11" fill="none" stroke="#6b6252" stroke-width="1.8"/>
+    </marker>
+  </defs>
+  <line x1="110" y1="380" x2="110" y2="110" stroke="#6b6252" stroke-width="2" marker-end="url(#axArrow)"/>
+  <text x="90" y="135" text-anchor="middle" font-size="24" fill="#1c2321" font-style="italic">E</text>
+
+  <!-- ren, ubrutt linje - ingen tomme punkter -->
+  <line x1="150" y1="360" x2="410" y2="150" stroke="#1f5f8b" stroke-width="3.5"/>
+
+  <!-- én fylt kule som kan gli fritt -->
+  <circle cx="280" cy="255" r="13" fill="#1f5f8b"/>
+
+  <text x="250" y="430" text-anchor="middle" font-size="24" fill="#5a5a5a">Kan v&#230;re hvor som helst</text>
+
+  <!-- ============ midtdeler ============ -->
+  <line x1="480" y1="95" x2="480" y2="380" stroke="#d8d2c4" stroke-width="1.5"/>
+
+  <!-- ============ HØYRE: DISKRET ============ -->
+  <text x="700" y="70" text-anchor="middle" font-size="30" fill="#1c2321" font-weight="700">Diskret</text>
+
+  <!-- vertikal energiakse -->
+  <line x1="560" y1="380" x2="560" y2="110" stroke="#6b6252" stroke-width="2" marker-end="url(#axArrow)"/>
+  <text x="540" y="135" text-anchor="middle" font-size="24" fill="#1c2321" font-style="italic">E</text>
+
+  <!-- fire diskrete nivåer -->
+  <line x1="620" y1="140" x2="860" y2="140" stroke="#c0392b" stroke-width="3"/>
+  <text x="600" y="149" text-anchor="end" font-size="22" fill="#1c2321">E3</text>
+
+  <line x1="620" y1="215" x2="860" y2="215" stroke="#c0392b" stroke-width="3"/>
+  <text x="600" y="224" text-anchor="end" font-size="22" fill="#1c2321">E2</text>
+
+  <line x1="620" y1="290" x2="860" y2="290" stroke="#c0392b" stroke-width="3"/>
+  <text x="600" y="299" text-anchor="end" font-size="22" fill="#1c2321">E1</text>
+
+  <line x1="620" y1="365" x2="860" y2="365" stroke="#c0392b" stroke-width="3"/>
+  <text x="600" y="374" text-anchor="end" font-size="22" fill="#1c2321">E0</text>
+
+  <!-- én fylt kule på ett tillatt nivå (E1) -->
+  <circle cx="740" cy="290" r="13" fill="#c0392b"/>
+
+  <text x="710" y="430" text-anchor="middle" font-size="24" fill="#5a5a5a">Kun bestemte verdier tillatt</text>
+</svg>

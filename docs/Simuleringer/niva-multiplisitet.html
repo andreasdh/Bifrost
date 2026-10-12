@@ -1,0 +1,465 @@
+<div id="sim-2niva-multiplisitet-a1c9"></div>
+<style>
+  #sim-2niva-multiplisitet-a1c9 {
+    --s2lm-bg: #fbfaf7;
+    --s2lm-panel: #ffffff;
+    --s2lm-ink: #1f2937;
+    --s2lm-muted: #6b7280;
+    --s2lm-line: #e5e2da;
+    --s2lm-ground: #334155;
+    --s2lm-excited: #d97706;
+    --s2lm-top: #dc2626;
+    --s2lm-accent: #0ea5e9;
+    --s2lm-accent-soft: #bae6fd;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    color: var(--s2lm-ink);
+    background: var(--s2lm-bg);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 10px;
+    padding: 1.5rem 1.5rem 1.75rem;
+    max-width: 780px;
+    margin: 1.5rem auto;
+    box-sizing: border-box;
+  }
+  #sim-2niva-multiplisitet-a1c9 * { box-sizing: border-box; }
+  #sim-2niva-multiplisitet-a1c9 .tns-head { display:flex; align-items:baseline; justify-content:space-between; flex-wrap:wrap; gap:.5rem; margin-bottom: .25rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-title { font-size: 1.05rem; font-weight: 600; margin:0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-sub { color: var(--s2lm-muted); font-size: .85rem; margin: 0 0 1.1rem; }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-controls { display:flex; flex-wrap:wrap; gap:1.25rem; align-items:center; margin-bottom: 1.1rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap { display:flex; align-items:center; gap:.6rem; font-size:.9rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap label { color: var(--s2lm-muted); white-space:nowrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-slider-wrap input[type=range] { accent-color: var(--s2lm-accent); width: 140px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-n-val { font-variant-numeric: tabular-nums; font-weight:600; min-width: 1.4em; display:inline-block; text-align:center;}
+
+  #sim-2niva-multiplisitet-a1c9 .tns-seg { display:inline-flex; border:1px solid var(--s2lm-line); border-radius:7px; overflow:hidden; background: var(--s2lm-panel); }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button {
+    border:0; background:transparent; color: var(--s2lm-ink); font: inherit; font-size:.85rem;
+    padding:.4rem .75rem; cursor:pointer; border-left:1px solid var(--s2lm-line);
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button:first-child { border-left:0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button:hover { background:#f1f5f9; }
+  #sim-2niva-multiplisitet-a1c9 .tns-seg button[aria-pressed="true"] { background: var(--s2lm-accent); color:#fff; }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-buttons { display:flex; gap:.5rem; flex-wrap:wrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn {
+    border: 1px solid var(--s2lm-line);
+    background: var(--s2lm-panel);
+    color: var(--s2lm-ink);
+    padding: .45rem .8rem;
+    border-radius: 7px;
+    font-size: .85rem;
+    cursor: pointer;
+    transition: border-color .15s, transform .1s;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:hover { border-color: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-btn:active { transform: scale(0.97); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-particles {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 8px;
+    padding: 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+    margin-bottom: 1.1rem;
+    min-height: 92px;
+    align-content: flex-start;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle {
+    position: relative;
+    width: 30px;
+    height: 66px;
+    cursor: pointer;
+    flex: 0 0 auto;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-particle:focus-visible { outline:2px solid var(--s2lm-accent); outline-offset:3px; border-radius:3px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-line { position:absolute; left:0; right:0; height:2px; background:#cbd5e1; }
+  #sim-2niva-multiplisitet-a1c9 .tns-lvl-label { position:absolute; right:100%; margin-right:4px; font-size:.6rem; color:var(--s2lm-muted); transform: translateY(-50%); white-space:nowrap; }
+  #sim-2niva-multiplisitet-a1c9 .tns-dot {
+    position:absolute;
+    left: 50%;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: top .35s cubic-bezier(.4,0,.2,1), background .35s, box-shadow .35s;
+  }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-readout {
+    display:flex;
+    flex-wrap:wrap;
+    gap: 1.6rem;
+    font-size: .92rem;
+    margin-bottom: 1.3rem;
+    padding: .8rem 1rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-metric { display:flex; flex-direction:column; gap: .1rem;}
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-label { color: var(--s2lm-muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .03em; }
+  #sim-2niva-multiplisitet-a1c9 .tns-readout .tns-value { font-variant-numeric: tabular-nums; font-size: 1.05rem; font-weight: 600; }
+  #sim-2niva-multiplisitet-a1c9 .tns-value.tns-omega { color: var(--s2lm-accent); }
+  #sim-2niva-multiplisitet-a1c9 .tns-value .tns-lvl { font-weight:700; }
+  #sim-2niva-multiplisitet-a1c9 .tns-frac { font-size:.85rem; font-weight:500; color: var(--s2lm-muted); }
+
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-title { font-size: .85rem; color: var(--s2lm-muted); margin: 0 0 .5rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom {
+    display:inline-flex;
+    align-items:center;
+    font-variant-numeric: tabular-nums;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-paren {
+    font-size: 1.5em;
+    font-weight: 300;
+    line-height: 1;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-binom .tns-binom-col {
+    display:inline-flex;
+    flex-direction:column;
+    align-items:center;
+    line-height: 1.15;
+    padding: 0 .2rem;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-wrap { display:flex; gap: .4rem; }
+  #sim-2niva-multiplisitet-a1c9 .tns-yaxis-label {
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    align-self: stretch;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    white-space: nowrap;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart-col { flex: 1; min-width: 0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-chart {
+    display:flex;
+    align-items:flex-end;
+    gap: 4px;
+    height: 120px;
+    padding: .5rem .5rem 0;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-radius: 8px 8px 0 0;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-col { display:flex; flex-direction:column; align-items:center; flex:1; min-width:0; height:100%; justify-content:flex-end; gap:3px; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar {
+    width: 100%; max-width: 26px; background: #cbd5e1; border-radius: 3px 3px 0 0;
+    transition: height .35s ease, background .25s;
+    display:flex; flex-direction:column; justify-content:flex-end; overflow:hidden;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar.tns-current { background: var(--s2lm-accent-soft); }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-part { width:100%; background: var(--s2lm-accent); transition: height .35s ease; }
+  #sim-2niva-multiplisitet-a1c9 .tns-bar-n { font-size: .65rem; color: var(--s2lm-muted); }
+  #sim-2niva-multiplisitet-a1c9 .tns-xaxis-label {
+    text-align: center;
+    font-size: .7rem;
+    color: var(--s2lm-muted);
+    padding: .35rem .5rem;
+    background: var(--s2lm-panel);
+    border: 1px solid var(--s2lm-line);
+    border-top: none;
+    border-radius: 0 0 8px 8px;
+  }
+  #sim-2niva-multiplisitet-a1c9 .tns-note { font-size: .8rem; line-height:1.5; color: var(--s2lm-muted); margin: .7rem 0 0; }
+  #sim-2niva-multiplisitet-a1c9 .tns-note b { color: var(--s2lm-ink); font-weight:600; }
+
+  @media (max-width: 480px) {
+    #sim-2niva-multiplisitet-a1c9 .tns-particles { padding: .75rem; }
+    #sim-2niva-multiplisitet-a1c9 .tns-readout { gap: 1rem; }
+  }
+</style>
+
+<script>
+(function () {
+  const root = document.getElementById('sim-2niva-multiplisitet-a1c9');
+  if (!root) return;
+
+  root.innerHTML = `
+    <div class="tns-head">
+      <p class="tns-title tns-title-txt">To-nivå-system: mikrotilstander og multiplisitet</p>
+    </div>
+    <p class="tns-sub"></p>
+
+    <div class="tns-controls">
+      <div class="tns-slider-wrap">
+        <label>Antall nivåer</label>
+        <div class="tns-seg">
+          <button type="button" data-m="2" aria-pressed="true">2</button>
+          <button type="button" data-m="3" aria-pressed="false">3</button>
+        </div>
+      </div>
+      <div class="tns-slider-wrap">
+        <label>Antall partikler N</label>
+        <input type="range" class="tns-N" min="2" max="16" value="8" step="1">
+        <span class="tns-n-val">8</span>
+      </div>
+      <div class="tns-buttons">
+        <button class="tns-btn" type="button" data-act="same-dist">Ny mikrotilstand (samme fordeling)</button>
+        <button class="tns-btn" type="button" data-act="same-energy">Ny mikrotilstand (samme energi)</button>
+        <button class="tns-btn" type="button" data-act="random">Helt tilfeldig</button>
+        <button class="tns-btn" type="button" data-act="reset">Nullstill</button>
+      </div>
+    </div>
+
+    <div class="tns-particles"></div>
+
+    <div class="tns-readout"></div>
+
+    <p class="tns-chart-title"></p>
+    <div class="tns-chart-wrap">
+      <span class="tns-yaxis-label">Multiplisitet</span>
+      <div class="tns-chart-col">
+        <div class="tns-chart"></div>
+        <div class="tns-xaxis-label"></div>
+      </div>
+    </div>
+    <p class="tns-note"></p>
+  `;
+
+  /* ---------- tilstand ---------- */
+  const LEVEL_COLORS = ['#334155', '#d97706', '#dc2626'];
+  const LEVEL_RINGS  = ['rgba(51,65,85,0.12)', 'rgba(217,119,6,0.15)', 'rgba(220,38,38,0.15)'];
+  const LEVEL_NAMES  = ['0', '\u03B5', '2\u03B5'];
+
+  let M = 2;                 // antall niv\u00E5er
+  let N = 8;                 // antall partikler
+  let state = [];            // state[i] = niv\u00E5indeks for partikkel i
+
+  const FACT = [1];
+  for (let i = 1; i <= 24; i++) FACT[i] = FACT[i - 1] * i;
+
+  const nb = x => Math.round(x).toLocaleString('nb-NO');
+
+  /* ---------- kombinatorikk ---------- */
+  // Antall mikrotilstander for hver mulige totalenergi: koeffisientene i (1 + x + ... + x^(M-1))^N
+  function omegaByEnergy(n, m) {
+    let c = [1];
+    for (let k = 0; k < n; k++) {
+      const nc = new Array(c.length + m - 1).fill(0);
+      for (let e = 0; e < c.length; e++) {
+        if (c[e] === 0) continue;
+        for (let j = 0; j < m; j++) nc[e + j] += c[e];
+      }
+      c = nc;
+    }
+    return c;
+  }
+
+  // Multiplisiteten til \u00E9n bestemt fordeling: N! / (n0! n1! ...)
+  function multinomial(counts) {
+    let d = 1;
+    counts.forEach(c => { d *= FACT[c]; });
+    return Math.round(FACT[counts.reduce((a, b) => a + b, 0)] / d);
+  }
+
+  // Alle fordelinger (n0, n1, ...) med gitt partikkeltall og gitt totalenergi
+  function distsWithEnergy(n, m, E) {
+    const res = [], cur = new Array(m).fill(0);
+    (function rec(lvl, nLeft, eLeft) {
+      if (lvl === 0) {
+        if (eLeft === 0) { cur[0] = nLeft; res.push(cur.slice()); }
+        return;
+      }
+      const maxc = Math.min(nLeft, Math.floor(eLeft / lvl));
+      for (let c = 0; c <= maxc; c++) {
+        cur[lvl] = c;
+        rec(lvl - 1, nLeft - c, eLeft - c * lvl);
+      }
+      cur[lvl] = 0;
+    })(m - 1, n, E);
+    return res;
+  }
+
+  const counts = () => { const c = new Array(M).fill(0); state.forEach(l => c[l]++); return c; };
+  const energy = () => state.reduce((a, b) => a + b, 0);
+
+  /* ---------- tilstandsendringer ---------- */
+  function shuffle(arr) {
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const t = arr[i]; arr[i] = arr[j]; arr[j] = t;
+    }
+    return arr;
+  }
+
+  function setGround() { state = new Array(N).fill(0); }
+  function setRandom() { state = Array.from({ length: N }, () => Math.floor(Math.random() * M)); }
+
+  // ny mikrotilstand med n\u00F8yaktig samme fordeling p\u00E5 niv\u00E5ene
+  function shuffleSameDistribution() { state = shuffle(state.slice()); }
+
+  // ny mikrotilstand med samme totalenergi, trukket likt fordelt blant alle slike mikrotilstander
+  function shuffleSameEnergy() {
+    const dists = distsWithEnergy(N, M, energy());
+    if (!dists.length) return;
+    const w = dists.map(multinomial);
+    const tot = w.reduce((a, b) => a + b, 0);
+    let r = Math.random() * tot, pick = dists[dists.length - 1];
+    for (let i = 0; i < dists.length; i++) { r -= w[i]; if (r <= 0) { pick = dists[i]; break; } }
+    const levels = [];
+    pick.forEach((c, lvl) => { for (let k = 0; k < c; k++) levels.push(lvl); });
+    state = shuffle(levels);
+  }
+
+  /* ---------- tegning ---------- */
+  function drawParticles() {
+    const cont = root.querySelector('.tns-particles');
+    const H = M === 2 ? 66 : 76, pad = 8;
+    const y = lvl => H - pad - lvl * (H - 2 * pad) / (M - 1);
+    cont.style.gap = M === 2 ? '8px' : '14px';
+    const tip = M === 2 ? 'klikk for \u00E5 eksitere eller de-eksitere'
+                        : 'klikk for \u00E5 flytte ett trinn opp';
+    cont.innerHTML = state.map((lvl, i) => {
+      const lines = [], labels = [];
+      for (let k = 0; k < M; k++) {
+        lines.push('<div class="tns-line" style="top:' + y(k) + 'px"></div>');
+        labels.push('<span class="tns-lvl-label" style="top:' + y(k) + 'px">' + LEVEL_NAMES[k] + '</span>');
+      }
+      return '<div class="tns-particle" role="button" tabindex="0" data-i="' + i + '"' +
+        ' style="height:' + H + 'px" title="Partikkel ' + (i + 1) + ': ' + tip + '">' +
+        labels.join('') + lines.join('') +
+        '<div class="tns-dot" style="top:' + y(lvl) + 'px; background:' + LEVEL_COLORS[lvl] +
+        '; box-shadow: 0 0 0 3px ' + LEVEL_RINGS[lvl] + '"></div></div>';
+    }).join('');
+  }
+
+  function microstateHTML() {
+    if (M === 2) return state.map(l => l ? '\u2191' : '\u2193').join(' ');
+    return state.map(l => '<span class="tns-lvl" style="color:' + LEVEL_COLORS[l] + '">' + l + '</span>').join(' ');
+  }
+
+  function drawReadout(c, E, omegaDist, omegaE) {
+    const box = root.querySelector('.tns-readout');
+    const metric = (label, value, cls) =>
+      '<div class="tns-metric"><span class="tns-label">' + label + '</span>' +
+      '<span class="tns-value ' + (cls || '') + '">' + value + '</span></div>';
+
+    if (M === 2) {
+      const n = c[1];
+      const binom = '<span class="tns-binom"><span class="tns-binom-paren">(</span>' +
+        '<span class="tns-binom-col"><span>' + N + '</span><span>' + n + '</span></span>' +
+        '<span class="tns-binom-paren">)</span></span>';
+      box.innerHTML =
+        metric('Mikrotilstand', microstateHTML()) +
+        metric('Makrotilstand (energi)', 'E = ' + n + '\u03B5 &nbsp;(' + n + ' av ' + N + ' eksitert)') +
+        metric('Multiplisitet \u03A9(n)', '\u03A9(' + n + ') = ' + binom + ' = ' + nb(omegaDist), 'tns-omega');
+      return;
+    }
+
+    const fracTop = N + '!';
+    const fracBot = c.map(x => x + '!').join('\u00B7');
+    box.innerHTML =
+      metric('Mikrotilstand', microstateHTML()) +
+      metric('Fordeling (n\u2080, n\u2081, n\u2082)', '(' + c.join(', ') + ')') +
+      metric('Multiplisitet for fordelingen',
+             nb(omegaDist) + ' <span class="tns-frac">= ' + fracTop + ' / (' + fracBot + ')</span>') +
+      metric('Makrotilstand (energi)', 'E = ' + E + '\u03B5') +
+      metric('\u03A9(E), alle fordelinger', nb(omegaE), 'tns-omega');
+  }
+
+  function drawChart(coeffs, E, omegaDist, omegaE) {
+    const chart = root.querySelector('.tns-chart');
+    const maxOmega = Math.max.apply(null, coeffs);
+    const step = Math.ceil(coeffs.length / 18);
+    chart.innerHTML = coeffs.map((c, k) => {
+      const h = Math.max(3, (c / maxOmega) * 100);
+      const isNow = k === E;
+      const part = isNow && omegaE > 0
+        ? '<div class="tns-bar-part" style="height:' + (omegaDist / omegaE * 100).toFixed(1) + '%"></div>' : '';
+      const lab = (k % step === 0 || isNow) ? k : '&nbsp;';
+      return '<div class="tns-bar-col">' +
+        '<div class="tns-bar' + (isNow ? ' tns-current' : '') + '" style="height:' + h + '%">' + part + '</div>' +
+        '<span class="tns-bar-n">' + lab + '</span></div>';
+    }).join('');
+  }
+
+  function drawText(nDists) {
+    root.querySelector('.tns-title-txt').textContent = M === 2
+      ? 'To-niv\u00E5-system: mikrotilstander og multiplisitet'
+      : 'Tre-niv\u00E5-system: mikrotilstander og multiplisitet';
+
+    root.querySelector('.tns-sub').innerHTML = M === 2
+      ? 'Hver partikkel kan v\u00E6re i grunntilstanden (energi 0) eller den eksiterte tilstanden (energi \u03B5). Klikk p\u00E5 en partikkel for \u00E5 eksitere eller de-eksitere den.'
+      : 'Hver partikkel kan v\u00E6re p\u00E5 ett av tre niv\u00E5er med energi 0, \u03B5 og 2\u03B5. Klikk p\u00E5 en partikkel for \u00E5 flytte den ett trinn opp. Fra \u00F8verste niv\u00E5 faller den ned i grunntilstanden igjen.';
+
+    root.querySelector('.tns-chart-title').textContent = M === 2
+      ? 'Multiplisitet \u03A9(n) for hver mulig makrotilstand'
+      : 'Multiplisitet \u03A9(E) for hver mulig totalenergi';
+
+    root.querySelector('.tns-xaxis-label').textContent = M === 2
+      ? 'Antall eksiterte partikler, n'
+      : 'Total energi E (i enheter av \u03B5)';
+
+    root.querySelector('.tns-note').innerHTML = M === 2
+      ? 'Med to niv\u00E5er bestemmer energien fordelingen fullstendig: sier du at <b>n</b> partikler er eksitert, har du sagt alt om makrotilstanden.'
+      : 'Med tre niv\u00E5er er ikke lenger energien og fordelingen det samme. Denne energien kan lages av <b>' +
+        nDists + (nDists === 1 ? ' fordeling' : ' ulike fordelinger') +
+        '</b>, og \u03A9(E) er summen av multiplisitetene deres. Den m\u00F8rke delen av den markerte s\u00F8ylen er bidraget fra fordelingen du har n\u00E5.';
+  }
+
+  function render() {
+    const c = counts(), E = energy();
+    const coeffs = omegaByEnergy(N, M);
+    const omegaDist = multinomial(c);
+    const omegaE = coeffs[E];
+    const nDists = distsWithEnergy(N, M, E).length;
+
+    drawParticles();
+    drawReadout(c, E, omegaDist, omegaE);
+    drawChart(coeffs, E, omegaDist, omegaE);
+    drawText(nDists);
+  }
+
+  /* ---------- hendelser ---------- */
+  function setM(m) {
+    if (m === M) return;
+    M = m;
+    root.querySelectorAll('.tns-seg button').forEach(b =>
+      b.setAttribute('aria-pressed', String(+b.dataset.m === M)));
+    root.querySelector('[data-act="same-dist"]').style.display = M === 2 ? 'none' : '';
+    state = state.map(l => Math.min(l, M - 1));
+    render();
+  }
+
+  function act(a) {
+    if (a === 'same-dist') shuffleSameDistribution();
+    else if (a === 'same-energy') shuffleSameEnergy();
+    else if (a === 'random') setRandom();
+    else if (a === 'reset') setGround();
+    render();
+  }
+
+  function bump(i) { state[i] = (state[i] + 1) % M; render(); }
+
+  root.addEventListener('click', function (ev) {
+    const seg = ev.target.closest('.tns-seg button');
+    if (seg) { setM(+seg.dataset.m); return; }
+    const btn = ev.target.closest('[data-act]');
+    if (btn) { act(btn.dataset.act); return; }
+    const p = ev.target.closest('.tns-particle');
+    if (p) bump(+p.dataset.i);
+  });
+
+  root.addEventListener('keydown', function (ev) {
+    if (ev.key !== 'Enter' && ev.key !== ' ') return;
+    const p = ev.target.closest('.tns-particle');
+    if (p) { ev.preventDefault(); bump(+p.dataset.i); }
+  });
+
+  root.querySelector('.tns-N').addEventListener('input', function (e) {
+    N = +e.target.value;
+    root.querySelector('.tns-n-val').textContent = N;
+    setGround();
+    render();
+  });
+
+  root.querySelector('[data-act="same-dist"]').style.display = 'none';
+  setGround();
+  render();
+})();
+</script>
