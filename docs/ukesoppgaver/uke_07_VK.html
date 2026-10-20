@@ -1,0 +1,678 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 7 – Faser og faseoverganger &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_07_VK';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Uke 8 – Løsninger og blandinger" href="uke_08_under_revision_VK.html" />
+    <link rel="prev" title="Uke 6 – Fri energi" href="uke_06_under_revisjon.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_08_under_revision_VK.html">Uke 8 – Løsninger og blandinger</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_07_VK.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 7 – Faser og faseoverganger</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-gibbs-energi-og-spontanitet">Oppgave 1: Gibbs-energi og spontanitet.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-kjemisk-potensial">Oppgave 2: Kjemisk potensial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-7-faser-og-faseoverganger">
+<h1>Uke 7 – Faser og faseoverganger<a class="headerlink" href="#uke-7-faser-og-faseoverganger" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1-gibbs-energi-og-spontanitet">
+<h3>Oppgave 1: Gibbs-energi og spontanitet.<a class="headerlink" href="#oppgave-1-gibbs-energi-og-spontanitet" title="Link to this heading">#</a></h3>
+<p>Forrige uke jobbet vi med Gibbs-energi og hvordan en minimering av den frie energien fører til en stabilisering av systemet. Nå skal vi, ved hjelp av entropibetraktninger ved konstant trykk og temperatur, undersøke hvorfor endringen i fri energi må være negativ, <span class="math notranslate nohighlight">\(\Delta G&lt;0\)</span>, for at en prosess skal være spontan.</p>
+<p><strong>a)</strong> Hva er uttrykket for endringen i Gibbs-energien, <span class="math notranslate nohighlight">\(\Delta G\)</span>, ved konstant temperatur?</p>
+<p><strong>b)</strong> La oss repetere entropi og entalpi. Hvordan henger den totale entropiendringen, <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span>, sammen med entropiendringene i systemet og omgivelsene, og hva kan vi si om <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span> for en spontan prosess? Hva er den klassiske definisjonen av entropi, og under hvilke betingelser kan vi skrive at <span class="math notranslate nohighlight">\(q_{p,\text{sys}} = \Delta H_{\text{sys}}\)</span>?</p>
+<p><strong>c)</strong> Et system er i termisk kontakt med omgivelsene, som kan betraktes som et stort varmereservoar med konstant temperatur <span class="math notranslate nohighlight">\(T\)</span>. Hvordan kan vi uttrykke entropiendringen til omgivelsene, <span class="math notranslate nohighlight">\(\Delta S_{\text{omg}}\)</span>, ved hjelp av systemets entalpiendring, <span class="math notranslate nohighlight">\(\Delta H_{\text{sys}}\)</span>? Anta konstant trykk og at systemet kun utfører pV-arbeid.</p>
+<p><strong>d)</strong> Sett svaret fra oppgave <em>c)</em> inn i uttrykket for den totale entropiendringen, og bruk det til å bestemme hvordan <span class="math notranslate nohighlight">\(\Delta G\)</span> avhenger av <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span>.</p>
+</section>
+<section id="oppgave-2-kjemisk-potensial">
+<h3>Oppgave 2: Kjemisk potensial<a class="headerlink" href="#oppgave-2-kjemisk-potensial" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hvordan definerer vi det kjemiske potensialet ut fra fundamentallikningen for Gibbs-energi, og hvordan kan vi tolke det?</p>
+<p><strong>b)</strong> Nå skal vi se nærmere på uttrykket for det kjemiske potensialet i et enkomponentsystem:</p>
+<div class="math notranslate nohighlight">
+\[d\mu = V_m\,dp - S_m\,dT,\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(V_m\)</span> og <span class="math notranslate nohighlight">\(S_m\)</span> henholdsvis molart volum og molar entropi. Sammenhengen er nyttig når vi skal undersøke hvordan faseoverganger avhenger av trykk og temperatur. Den brukes også til å utlede Clapeyron-likningen, som beskriver hvordan likevektstrykket for en faseovergang endres med temperaturen. Men hvor kommer uttrykket fra?</p>
+<p>Skriv opp fundamentallikningen for Gibbs-energien. Bruk deretter sammenhengen <span class="math notranslate nohighlight">\(G=n\mu\)</span> for et enkomponentsystem, og differensier den. Sett de to uttrykkene for <span class="math notranslate nohighlight">\(dG\)</span> lik hverandre, og vis at du får uttrykket for <span class="math notranslate nohighlight">\(d\mu\)</span> ovenfor.</p>
+<p><strong>c)</strong> Hvordan avhenger det kjemiske potensialet til et enkomponentsystem av temperaturen? Se på figuren, som viser kjemisk potensial som funksjon av temperatur ved konstant trykk. Hvorfor er kurvene ulike for fast stoff, væske og gass, og hva er stigningstallet til hver kurve? Ta utgangspunkt i definisjonen av <span class="math notranslate nohighlight">\(d\mu\)</span>.</p>
+<p><img alt="Figur til oppgave c): Kjemisk potensial mot temperatur med kurver for fast stoff, væske og gass. Kryssingspunktene tilsvarer smeltepunktet  og kokepunktet ." src="../../_images/fase2.png" /></p>
+<p><strong>d)</strong> Hva betyr det i praksis at det kjemiske potensialet minker når temperaturen øker?</p>
+<p><strong>e)</strong> Hvordan avhenger det kjemiske potensialet av trykket ved konstant temperatur? Hvordan ser kurvene ut for gass, væske og fast stoff, og hvilken fase er stabil ved ulike trykk?</p>
+<p><strong>f)</strong> Se plottene av kjemisk potensial mot temperatur nedenfor. Forklar forskjellen mellom stoffene i plott a) og b), og gi et eksempel på et stoff som oppfører seg som i hvert plott.</p>
+<p><img alt="Figur til oppgave f): Kjemisk potensial mot temperatur for fast stoff og væske ved lavt og høyt trykk. I a) flyttes smeltepunktet til høyere temperatur ved trykkøkning, i b) til lavere." src="../../_images/fase3.png" /></p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hva er en fase?</p>
+<p><strong>b)</strong> Angi antall faser og frihetsgrader det er i hvert av punktene markert i figuren nedenfor.</p>
+<p><img alt="Fasediagram med punktene a–d markert." src="../../_images/fase1.png" /></p>
+<p><strong>c)</strong> Hva er en superkritisk væske?</p>
+<p><strong>d)</strong> Hva skjer med temperaturen under kontinuerlig oppvarming av vann når systemet når kokepunktet? Hvordan påvirker dette varmekapasiteten?</p>
+<p><strong>e)</strong> Hva er forskjellen mellom en første- og en andreordens faseovergang?</p>
+<p><strong>Svar</strong> Ved en førsteordens faseovergang er Gibbs-energien kontinuerlig, men dens første deriverte er diskontinuerlige. Siden <span class="math notranslate nohighlight">\(S=-(\partial G/\partial T)_p\)</span> og <span class="math notranslate nohighlight">\(V=(\partial G/\partial p)_T\)</span>, innebærer dette et sprang i entropi og/eller volum. Overgangen har latent varme; ved konstant trykk er <span class="math notranslate nohighlight">\(\Delta H_{\mathrm{tr}}=T\Delta S_{\mathrm{tr}}\)</span>.</p>
+<p><strong>f)</strong> Se på grafene og avgjør om det skjer en faseovergang, og om den i så fall er av første eller andre orden.
+<img alt="Skjematiske temperaturavhengigheter for Gibbs-energi, volum, entalpi, entropi og varmekapasitet i tre tilfeller, A–C." src="../../_images/figur6_phasenumwandlung_ABC.png" /></p>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hvor mange faser er det i følgende systemer, og hvorfor?</p>
+<ul class="simple">
+<li><p>En løsning med NaCl?</p></li>
+<li><p>En blanding av is og vann (slush)?</p></li>
+<li><p>𝐶𝑎𝐶𝑂3(𝑠)→𝐶𝑎𝑂(𝑠)+𝐶𝑂2(𝑔)</p></li>
+</ul>
+<p><strong>b)</strong> For de tre systemene i oppgave a, hvor mange komponenter er det i disse eksemplene? Angi så antall frihetsgrader, og hva frihetsgradene er for hvert system.</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Når en væske med molar masse <span class="math notranslate nohighlight">\(46.1 \text{g mol}^{-1}\)</span> fryser ved <span class="math notranslate nohighlight">\(-3.65^{\circ}C\)</span>, endres tettheten fra <span class="math notranslate nohighlight">\(0.789 \text{g cm}^{-3}\)</span> til <span class="math notranslate nohighlight">\(0.801 \text{g cm}^{-3}\)</span>. Den molare smelteentalpien til væsken er <span class="math notranslate nohighlight">\(8.68 \text{kJ mol}^{-1}\)</span>. Estimer frysepunktet for væsken ved <span class="math notranslate nohighlight">\(1 \text{MPa}\)</span>.</p>
+</section>
+<section id="id1">
+<h3>Oppgave 3<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Den molare fordampningsentalpien for vann ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> er <span class="math notranslate nohighlight">\(40.63 \text{kJ mol}^{-1}\)</span>. Finn arbeidet som utføres av systemet når <span class="math notranslate nohighlight">\(2.00 \text{mol}\)</span> vann fordamper ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> og <span class="math notranslate nohighlight">\(1.00 \text{atm}\)</span> trykk. Finn også endringene i systemets indre energi <span class="math notranslate nohighlight">\(\Delta U\)</span>, Gibbs-energi <span class="math notranslate nohighlight">\(\Delta G\)</span> og entropi <span class="math notranslate nohighlight">\(\Delta S\)</span>. Tettheten for vann i væskeform ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> er <span class="math notranslate nohighlight">\(0.9584 \text{g cm}^{-3}\)</span>, og tettheten for vanndamp ved samme temperatur er <span class="math notranslate nohighlight">\(0.000596\text{g cm}^{-3}\)</span>.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Normalkokepunktet for etylenglykol (<span class="math notranslate nohighlight">\(\text{C}_2\text{H}_6\text{O}_2\)</span>) er <span class="math notranslate nohighlight">\(197^{\circ}C\)</span>, og den spesifikke fordampningsentalpien er <span class="math notranslate nohighlight">\(801 \text{J g}^{-1}\)</span>. Finn temperaturen der etylenglykol koker i et destillasjonsoppsett når trykket er <span class="math notranslate nohighlight">\(50.0 \text{Torr}\)</span></p>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>Nedenfor er det gitt data for hvordan den indre energien til et system varierer med temperatur i et system som undergår en faseovergang.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Temperatur (°C)</p></th>
+<th class="head"><p>35</p></th>
+<th class="head"><p>40</p></th>
+<th class="head"><p>45</p></th>
+<th class="head"><p>50</p></th>
+<th class="head"><p>51</p></th>
+<th class="head"><p>51.5</p></th>
+<th class="head"><p>51.6</p></th>
+<th class="head"><p>55</p></th>
+<th class="head"><p>60</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Indre Energi (J)</p></td>
+<td><p>401</p></td>
+<td><p>435</p></td>
+<td><p>499</p></td>
+<td><p>582</p></td>
+<td><p>776</p></td>
+<td><p>887</p></td>
+<td><p>2012</p></td>
+<td><p>2020</p></td>
+<td><p>2031</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Lag et skript for å finne ut ved hvilken temperatur faseovergangen skjer.</p>
+<p>Hint: Husk det du har lært om numerisk derivasjon.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_06_under_revisjon.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 6 – Fri energi</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uke_08_under_revision_VK.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Uke 8 – Løsninger og blandinger</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-gibbs-energi-og-spontanitet">Oppgave 1: Gibbs-energi og spontanitet.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-kjemisk-potensial">Oppgave 2: Kjemisk potensial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
