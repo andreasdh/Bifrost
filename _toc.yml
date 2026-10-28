@@ -53,7 +53,7 @@ parts:
     - file: docs/ukesoppgaver/uke_06_under_revisjon
     - file: docs/ukesoppgaver/uke_07_VK
     - file: docs/ukesoppgaver/uke_08_under_revision_VK
-    # - file: docs/ukesoppgaver/uke_09
+    - file: docs/ukesoppgaver/uke_09_under_revision_VK
     # - file: docs/ukesoppgaver/uke_10
     # - file: docs/ukesoppgaver/uke_11
   - file: docs/løsningsforslag
