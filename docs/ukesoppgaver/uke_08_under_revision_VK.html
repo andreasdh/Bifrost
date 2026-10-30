@@ -1,0 +1,709 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 8 – Løsninger og blandinger &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/ukesoppgaver/uke_08_under_revision_VK';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Uke 9 – Løsninger og blandinger 2" href="uke_09_under_revision_VK.html" />
+    <link rel="prev" title="Uke 7 – Faser og faseoverganger" href="uke_07_VK.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_09_under_revision_VK.html">Uke 9 – Løsninger og blandinger 2</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../losningsforslag/uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/ukesoppgaver/uke_08_under_revision_VK.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 8 – Løsninger og blandinger</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger">Oppgave 1. Ideelle gasser og ideele blandinger.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger">Oppgave 3: Termodynamikken til ikke-ideelle løsninger</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-8-losninger-og-blandinger">
+<h1>Uke 8 – Løsninger og blandinger<a class="headerlink" href="#uke-8-losninger-og-blandinger" title="Link to this heading">#</a></h1>
+<section id="oppgave-1-ideelle-gasser-og-ideele-blandinger">
+<h2>Oppgave 1. Ideelle gasser og ideele blandinger.<a class="headerlink" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger" title="Link to this heading">#</a></h2>
+<p><strong>a)</strong> Som repetisjon, hva er en ideell gass? Hva ville <span class="math notranslate nohighlight">\({\Delta}H_{mix}\)</span> vært for blanding av to ideelle gasser?</p>
+<p><strong>b)</strong> Hva er en ideell væske? Hva er <span class="math notranslate nohighlight">\({\Delta }H_{mix}\)</span> for en ideell væske?</p>
+<p><strong>c)</strong> Hva er drivkraften for miksing av to ideelle væsker?</p>
+<p><strong>d)</strong> Hva er henholdsvis Raoult og Henry’s lov? Når gjelder hver av de, når bruker man hvilken?</p>
+<p><strong>e)</strong> Når sier man at en væskeblanding er ideell, utifra Raoults lov? Kom med et par eksempler på systemer med to væsker som oppfører seg tilnørmet ideelt.</p>
+<p><strong>f)</strong> Se for dere et stort volum med vann ved <span class="math notranslate nohighlight">\(25 ^{\circ} C\)</span> (<span class="math notranslate nohighlight">\(10 \, L\)</span> for eksempel). Når <span class="math notranslate nohighlight">\(1 \, mol\)</span> vann videre tilsettes så øker volumet med <span class="math notranslate nohighlight">\(18 \, cm^3\)</span>, og man sier derfor at det molare volumet til vann er <span class="math notranslate nohighlight">\(18 \, cm^3\)</span>. Men når man tilsetter <span class="math notranslate nohighlight">\(1 \, mol\)</span> vann til et stort volum med etanol (<span class="math notranslate nohighlight">\(10 \, L\)</span> for eksempel) ved <span class="math notranslate nohighlight">\(25 ^{\circ} C\)</span> øker volumet kun med <span class="math notranslate nohighlight">\(14 \, cm^3\)</span>. Hvorfor er det slik? Hva kommer dette av?</p>
+<p><strong>g)</strong> Er systemet i f) en ideell væske?</p>
+<p><strong>h)</strong> Hva er partielt molart volum? Hvordan vil det være for en ideell væske?</p>
+</section>
+<section id="oppgave-2">
+<h2>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h2>
+<p>En blanding består av etyliodid og etylacetat. Damptrykket (<span class="math notranslate nohighlight">\(p_I\)</span>) av etyliodid(I) over blandingen som funksjon av molbrøken <span class="math notranslate nohighlight">\(x_I\)</span> er ved <span class="math notranslate nohighlight">\(50.0 °C\)</span> målt til:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>(<span class="math notranslate nohighlight">\(x_I\)</span>)</p></th>
+<th class="head text-center"><p>(<span class="math notranslate nohighlight">\(p_I\)</span>) / <span class="math notranslate nohighlight">\(torr\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1.00</p></td>
+<td class="text-center"><p>353</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.909</p></td>
+<td class="text-center"><p>322</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.825</p></td>
+<td class="text-center"><p>296</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.548</p></td>
+<td class="text-center"><p>213</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.235</p></td>
+<td class="text-center"><p>105</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.109</p></td>
+<td class="text-center"><p>52.7</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.0579</p></td>
+<td class="text-center"><p>28.0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.0</p></td>
+<td class="text-center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>a)</strong>	Tegn <span class="math notranslate nohighlight">\(p_I\)</span> som funksjon av <span class="math notranslate nohighlight">\(x_I\)</span>. Følger denne damptrykkskurven Raoults lov? Hvorfor følger den, evt hvorfor følger den ikke?</p>
+<p><strong>b)</strong>	Finn Henrys lov konstanten <span class="math notranslate nohighlight">\(K_I\)</span> for etyliodid.</p>
+</section>
+<section id="oppgave-3-termodynamikken-til-ikke-ideelle-losninger">
+<h2>Oppgave 3: Termodynamikken til ikke-ideelle løsninger<a class="headerlink" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger" title="Link to this heading">#</a></h2>
+<p>I denne oppgaven skal vi se på blandingsentalpi og blandingsentropi for ikke-ideele væsker, fra et mikroskopisk perspektiv og antar en gittermodell. Vi tenker oss et 3D-gitter med N plasser, alle plassene er fylt med 1 molekyl av typen A eller B, og vi har <span class="math notranslate nohighlight">\(N_A\)</span> molekyler av typen A og <span class="math notranslate nohighlight">\(N_B\)</span> molekyler av typen B, og vi vet at <span class="math notranslate nohighlight">\(N=N_A+N_B\)</span>. See figuren under: Vi antar videre at interaksjonsenergien mellom to A molekyler er <span class="math notranslate nohighlight">\(\epsilon_{AA}\)</span>, mellom to B molekyler er <span class="math notranslate nohighlight">\(\epsilon_{BB}\)</span> og mellom et A og et B molekyl er den <span class="math notranslate nohighlight">\(\epsilon_{AB}\)</span>. Vi kan anta at alle interaksjonsenergiene er negative (tiltrekkende), men IKKE at de er like  <span class="math notranslate nohighlight">\(\epsilon_{AA} \neq \epsilon_{BB} \neq \epsilon_{AB}\)</span></p>
+<p><img alt="Gittermodel for blandinger, hentet fra Dill, K. A., Bromberg, S., &amp; Stigter, D. (2010). Molecular Driving Forces. Garland Science. https://doi.org/10.4324/9780203809075" src="../../_images/Gittermodel_blandinger_from_Dill.png" /></p>
+<p><strong>a)</strong> Hva er blandingsentropien, <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>, for dette systemet? Bruk Boltzmanns deffinisjon av entropi <span class="math notranslate nohighlight">\(S=k_B\ln{(\Omega)}\)</span>, Sterlings approksimasjon <span class="math notranslate nohighlight">\(\ln{(N!)}\approx N \ln{(N)}-N\)</span>, og når er blandingsentropien størst?</p>
+<p><strong>b)</strong> Vi kan si at den indre energien til blandingen er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[U=m_{AA}\epsilon_{AA}+m_{BB}\epsilon_{AA}+m_{AB}\epsilon_{AB}\]</div>
+<p>der <span class="math notranslate nohighlight">\(m_{AA}\)</span>, <span class="math notranslate nohighlight">\(m_{BB}\)</span> og <span class="math notranslate nohighlight">\(m_{AB}\)</span> er henholdsvis antall bindinger mellom AA, BB og AB i blandingen. Disse vet vi ikke sånn uten videre, og må finne de utifa <span class="math notranslate nohighlight">\(N_A\)</span> og <span class="math notranslate nohighlight">\(N_B\)</span>. Utifra gittermodellen, antar vi at hver partikkel har <span class="math notranslate nohighlight">\(z\)</span> naboer.</p>
+<p>Diskuter hvorfor <span class="math notranslate nohighlight">\(z\cdot N_A=2\cdot m_{AA} + m_{AB}\)</span> og <span class="math notranslate nohighlight">\(z\cdot N_B=2\cdot m_{BB} + m_{AB}\)</span></p>
+<p><strong>c)</strong> Vis at med definisjonene over kan vi skrive at den indre energien til blandingen som:</p>
+<div class="math notranslate nohighlight">
+\[U_{AB}=\frac{z\cdot N_A - m_{AB}}{2}\epsilon_{AA}+\frac{z\cdot N_B - m_{AB}}{2}\epsilon_{BB}+m_{AB}\epsilon_{AB}\]</div>
+<p>og at dette kan skrives om til:</p>
+<div class="math notranslate nohighlight">
+\[U_{AB}=\frac{z\cdot N_A}{2}\epsilon_{AA}+\frac{z\cdot N_B}{2}\epsilon_{BB}+m_{AB}\left( \epsilon_{AB} - \frac{\epsilon_{AA}+\epsilon_{BB}}{2} \right)\]</div>
+<p><strong>d)</strong> Nå må vi bare finne <span class="math notranslate nohighlight">\(m_{AB}\)</span>. Dette gjør vi ved å anta at A og B partiklene er fordelt mest mulig tilfeldig. Dette kalles for Mean-Field eller Bragg–Williams approximasjonen.</p>
+<ol class="arabic simple">
+<li><p>Hvis vi antar at vi har en A partikkel på en gitt gitterplass, hva er sannsynligheten for å finne en partikkel B på naboplassen rett til høyre for A partikkelen? Husk at vi har <span class="math notranslate nohighlight">\(N_B\)</span> partikler av type B av totalt <span class="math notranslate nohighlight">\(N\)</span> partikler.</p></li>
+<li><p>Hvis hver partikkel har “z” naborer, hvor mange av naboene til en gitt partikkel A, vil i snitt være av typen B?</p></li>
+<li><p>Hvis vi har <span class="math notranslate nohighlight">\(N_A\)</span> partikler tilfeldig fordelt i væsken, hvor mange A-B interaksjoner (<span class="math notranslate nohighlight">\(m_{AB}\)</span>) vil vi da ha totalt?</p></li>
+</ol>
+<p><strong>e)</strong> Hvordan ser utrykket for den indre energien nå? Bruk svaret i oppgave d) og at:</p>
+<div class="math notranslate nohighlight">
+\[ \xi_{AB}=\frac{z}{K_BT}\left( \epsilon_{AB} - \frac{\epsilon_{AA}+\epsilon_{BB}}{2} \right) \]</div>
+<p><strong>f)</strong> Vi er oftest ineterressert i endringen i indre energi for en blandet sluttilstand (<span class="math notranslate nohighlight">\(N_A\)</span> partikler av type A blandet sammen med <span class="math notranslate nohighlight">\(N_B\)</span> partikler av type B blandet), fra 2 ublanede løsninger.</p>
+<ol class="arabic simple">
+<li><p>Bruk utrykket for den indre energien dere fant i oppgave e) og vis at den indre energien <span class="math notranslate nohighlight">\(U_A\)</span> til en ren væske med kun <span class="math notranslate nohighlight">\(N_A\)</span> a partikler av type A er gitt ved:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[U_A=\frac{z}{2}N_A\epsilon_{AA}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Hva er <span class="math notranslate nohighlight">\(U_B\)</span>?</p></li>
+<li><p>Hva er <span class="math notranslate nohighlight">\(\Delta U_{mix}=U_{AB}-U_A-U_B\)</span>?</p></li>
+</ol>
+<p><strong>g)</strong> Hvis vi antar konstant trykk og at vi ikke får noe endring av totaltvolum ved å blande en ren løsning av A med en ren løsning av B, kan vi skrive at:</p>
+<div class="math notranslate nohighlight">
+\[\Delta H_{mix}=\Delta U_{mix}\]</div>
+<p>Forklar hvorfor?</p>
+<p><strong>h)</strong> Nå har vi funnet utrykk for <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span> og for <span class="math notranslate nohighlight">\(\Delta H_{mix}\)</span>, når vi blander to løsninger. Hva blir da <span class="math notranslate nohighlight">\(\Delta G_{mix}\)</span>?</p>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p>Hovedkomponentene i luft er <span class="math notranslate nohighlight">\({N_2}_{(g)}\)</span> og <span class="math notranslate nohighlight">\({O_2}{(g)}\)</span>. 78 % <span class="math notranslate nohighlight">\({N_2}_{(g)}\)</span> og 22% <span class="math notranslate nohighlight">\(O_2\)</span> blandes ved <span class="math notranslate nohighlight">\(298 \, K\)</span>, beregne:</p>
+<p><strong>a)</strong>	molar Gibbs blandingsenergi, <span class="math notranslate nohighlight">\(\Delta _{mix}G_m\)</span></p>
+<p><strong>b)</strong>	molar Gibbs blandingsentalpi, <span class="math notranslate nohighlight">\(\Delta _{mix}H_m\)</span></p>
+<p><strong>c)</strong>	molar blandingsentropi, <span class="math notranslate nohighlight">\(\Delta _{mix}S_m\)</span></p>
+<p>Er blandingsprosessen spontan? Hva er drivkraften for at komponentene blandes?</p>
+</section>
+<section id="id1">
+<h3>Oppgave 2<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong>	Finn konstanten i Henrys lov for en blanding som består av <span class="math notranslate nohighlight">\(75.0 \, g\)</span> toluen (molar masse <span class="math notranslate nohighlight">\(92.1 g/mol\)</span>) (væske A) i en løsning med <span class="math notranslate nohighlight">\(1000 g\)</span> av difenyleter (væske B). Væsken difenyleter (molar masse <span class="math notranslate nohighlight">\(170.2 \, g/mol\)</span>) har et damptrykk på <span class="math notranslate nohighlight">\(430 \, Torr\)</span> over denne løsning og totaltrykket er <span class="math notranslate nohighlight">\(520 \, Torr\)</span>. Damptrykket for en ren væske A er <span class="math notranslate nohighlight">\(650 \, Torr\)</span>.</p>
+<p><strong>b)</strong>	Følger væske A Raoults lov? Forklar grunnen til svaret du får.</p>
+<p><strong>c)</strong>	Hva blir konstanten i Henrys lov om løsningen er ideell?</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>En <span class="math notranslate nohighlight">\(1.0 \, m\)</span> løsning av <span class="math notranslate nohighlight">\(NaCl_{(s)}\)</span> i vann gir en frysepunktnedsettelse på <span class="math notranslate nohighlight">\(3.7 \, K\)</span>. Hvordan kan man forklare denne observasjonen? Frysepunktnedsettelseskoeffisienten for vann er <span class="math notranslate nohighlight">\(1.86 \, K.kg.mol^{-1}\)</span>.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>I en blanding av aceton og kloroform er molbrøken av kloroform <span class="math notranslate nohighlight">\(0.290\)</span>.
+De partielle molare volum av komponentene er bestemt:</p>
+<div class="math notranslate nohighlight">
+\[V_{aceton}  =  73.78 \, cm^3/mol\]</div>
+<div class="math notranslate nohighlight">
+\[V_{kloroform}  = 80.41 \, cm^3/mol\]</div>
+<p>Beregn volumet av <span class="math notranslate nohighlight">\(1.000 \, kg\)</span> blanding.</p>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>Beregne det osmotiske trykket som oppstår når <span class="math notranslate nohighlight">\(6.00 \, g\)</span> urea, <span class="math notranslate nohighlight">\((NH_2)_2CO\)</span>, løses i vann til <span class="math notranslate nohighlight">\(1.00 \, dm^3\)</span> løsning ved <span class="math notranslate nohighlight">\(27.0 ^{\circ}C\)</span>. Bruk van’t Hoffs ligning.</p>
+</section>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>Beregn frysepunktet for <span class="math notranslate nohighlight">\(200 \, g\)</span> vann som er tilsatt <span class="math notranslate nohighlight">\(2.50 \, g\)</span> sukrose <span class="math notranslate nohighlight">\(C_{12}H_{22}O_{11}\)</span>. Kommenter svaret og gi en forklaring.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/ukesoppgaver"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_07_VK.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 7 – Faser og faseoverganger</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uke_09_under_revision_VK.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Uke 9 – Løsninger og blandinger 2</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger">Oppgave 1. Ideelle gasser og ideele blandinger.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger">Oppgave 3: Termodynamikken til ikke-ideelle løsninger</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

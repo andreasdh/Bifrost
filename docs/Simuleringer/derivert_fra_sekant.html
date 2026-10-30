@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fra sekant til tangent</title>
+<style>
+  :root{
+    --ink:#1c2321;
+    --paper:#f5f2ea;
+    --grid:#d8d2c4;
+    --axis:#6b6252;
+    --curve:#1f5f8b;      /* deep teal-blue for f */
+    --secant:#c0392b;     /* clay red for secant */
+    --tangent:#1a7a4c;    /* green for tangent (the limit) */
+    --pt:#d68910;         /* amber points */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    padding:22px;
+    line-height:1.5;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{
+    font-family:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  h1{
+    font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;
+  }
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{
+    background:var(--paper);
+    border:1px solid var(--grid);
+    border-radius:4px;
+    padding:8px;
+  }
+  svg{display:block;width:100%;height:auto;}
+  .panel{
+    display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;
+  }
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{
+    border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;
+  }
+  .card h2{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    color:var(--muted);font-weight:600;margin-bottom:10px;
+  }
+  .quotient{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    font-size:15px;color:var(--ink);
+    margin:4px 0 6px;
+  }
+  .frac{
+    display:inline-flex;flex-direction:column;align-items:center;
+    color:var(--secant);
+  }
+  .frac-num{padding:0 8px 3px;}
+  .frac-den{
+    padding:3px 8px 0;
+    border-top:1.5px solid var(--secant);
+    align-self:stretch;text-align:center;
+  }
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:17px;
+  }
+  .val.slope{color:var(--secant);}
+  .val.deriv{color:var(--tangent);}
+  .controls{margin-top:18px;}
+  .ctl{margin-bottom:14px;}
+  .ctl label{
+    display:flex;justify-content:space-between;font-size:13px;color:var(--muted);
+    margin-bottom:6px;font-family:"SF Mono",ui-monospace,Menlo,monospace;
+  }
+  .ctl label b{color:var(--ink);font-weight:600;}
+  input[type=range]{
+    -webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none;appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--pt);border:2px solid var(--paper);cursor:pointer;
+    box-shadow:0 1px 3px rgba(0,0,0,.25);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px;height:18px;border-radius:50%;background:var(--pt);
+    border:2px solid var(--paper);cursor:pointer;
+  }
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:4px;}
+  button{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;
+    letter-spacing:.04em;padding:7px 13px;border:1px solid var(--axis);
+    background:transparent;color:var(--ink);border-radius:3px;cursor:pointer;
+    transition:background .15s,color .15s;
+  }
+  button:hover{background:var(--ink);color:var(--paper);}
+  button.on{background:var(--tangent);border-color:var(--tangent);color:#fff;}
+  .note{
+    margin-top:16px;font-size:14px;color:var(--muted);
+    border-left:2px solid var(--pt);padding-left:12px;
+  }
+  .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12px;color:var(--muted);
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;margin-top:10px;}
+  .legend span{display:inline-flex;align-items:center;gap:6px;}
+  .swatch{width:14px;height:3px;border-radius:2px;display:inline-block;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Grenseprosessen</div>
+  <h1>Fra gjennomsnittlig endringsrate til den deriverte</h1>
+  <p class="sub">Sekanten gjennom (x, f(x)) og (x+h, f(x+h)) nærmer seg tangenten når h → 0. Her er f(x) = x².</p>
+
+  <div class="stage">
+    <svg id="plot" viewBox="0 0 600 420" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="legend">
+    <span><i class="swatch" style="background:var(--curve)"></i> f(x) = x²</span>
+    <span><i class="swatch" style="background:var(--secant)"></i> sekant</span>
+    <span><i class="swatch" style="background:var(--tangent)"></i> tangent (h → 0)</span>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Differansekvotienten</h2>
+      <div class="quotient">
+        <span class="frac">
+          <span class="frac-num">f(x+h) &minus; f(x)</span>
+          <span class="frac-den">h</span>
+        </span>
+      </div>
+      <div class="row"><span class="lab">= stigningstall til sekanten</span></div>
+      <div class="row">
+        <span class="lab">sekantstigning</span>
+        <span class="val slope" id="slopeVal">—</span>
+      </div>
+      <div class="row">
+        <span class="lab">f&prime;(x) = 2x (eksakt)</span>
+        <span class="val deriv" id="derivVal">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Kontroller</h2>
+      <div class="ctl">
+        <label>punkt x <b id="xLab">1.00</b></label>
+        <input type="range" id="xRange" min="-2.4" max="2.4" step="0.01" value="1">
+      </div>
+      <div class="ctl">
+        <label>steg h <b id="hLab">1.50</b></label>
+        <input type="range" id="hRange" min="0.02" max="2.5" step="0.01" value="1.5">
+      </div>
+      <div class="buttons">
+        <button id="animBtn">Kjør h → 0</button>
+        <button id="resetBtn">Nullstill</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="note" id="note">Dra <b>h</b> mot venstre og se sekanten legge seg inntil tangenten. Sekantstigningen nærmer seg 2x.</p>
+</div>
+
+<script>
+(function(){
+  const svg = document.getElementById('plot');
+  const NS = "http://www.w3.org/2000/svg";
+  // world coords: x in [-3,3], y in [-1,9]
+  const W=600,H=420, padL=44,padR=20,padT=18,padB=34;
+  const xmin=-3,xmax=3,ymin=-1,ymax=9;
+  const sx = v => padL + (v-xmin)/(xmax-xmin)*(W-padL-padR);
+  const sy = v => (H-padB) - (v-ymin)/(ymax-ymin)*(H-padT-padB);
+  const f = x => x*x;
+
+  function el(tag,attrs){const e=document.createElementNS(NS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);return e;}
+  function clear(){while(svg.firstChild)svg.removeChild(svg.firstChild);}
+
+  const state={x:1,h:1.5};
+
+  function draw(){
+    clear();
+    // grid
+    for(let gx=-3;gx<=3;gx++){
+      svg.appendChild(el('line',{x1:sx(gx),y1:sy(ymin),x2:sx(gx),y2:sy(ymax),stroke:'var(--grid)','stroke-width':gx===0?1.4:0.6}));
+    }
+    for(let gy=-1;gy<=9;gy++){
+      svg.appendChild(el('line',{x1:sx(xmin),y1:sy(gy),x2:sx(xmax),y2:sy(gy),stroke:'var(--grid)','stroke-width':gy===0?1.4:0.6}));
+    }
+    // axes labels
+    svg.appendChild(el('line',{x1:sx(xmin),y1:sy(0),x2:sx(xmax),y2:sy(0),stroke:'var(--axis)','stroke-width':1.4}));
+    svg.appendChild(el('line',{x1:sx(0),y1:sy(ymin),x2:sx(0),y2:sy(ymax),stroke:'var(--axis)','stroke-width':1.4}));
+
+    // curve f(x)=x^2
+    let d="";
+    for(let i=0;i<=240;i++){
+      const xx=xmin+(xmax-xmin)*i/240, yy=f(xx);
+      if(yy>ymax+0.5)continue;
+      d+=(d===""?"M":"L")+sx(xx).toFixed(1)+","+sy(yy).toFixed(1)+" ";
+    }
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--curve)','stroke-width':2.6}));
+
+    const x=state.x, h=state.h;
+    const x2=x+h;
+    const y1=f(x), y2=f(x2);
+    const slope=(y2-y1)/h;          // secant slope
+    const dslope=2*x;               // exact derivative
+
+    // tangent line (the limit) drawn faint across view
+    const tangent = t => dslope*(t-x)+y1;
+    svg.appendChild(el('line',{
+      x1:sx(xmin),y1:sy(tangent(xmin)),x2:sx(xmax),y2:sy(tangent(xmax)),
+      stroke:'var(--tangent)','stroke-width':1.6,'stroke-dasharray':'2 4',opacity:0.85
+    }));
+
+    // secant line across view
+    const secant = t => slope*(t-x)+y1;
+    svg.appendChild(el('line',{
+      x1:sx(xmin),y1:sy(secant(xmin)),x2:sx(xmax),y2:sy(secant(xmax)),
+      stroke:'var(--secant)','stroke-width':2.2
+    }));
+
+    // step triangle (h and Δf)
+    svg.appendChild(el('line',{x1:sx(x),y1:sy(y1),x2:sx(x2),y2:sy(y1),stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'3 3'}));
+    svg.appendChild(el('line',{x1:sx(x2),y1:sy(y1),x2:sx(x2),y2:sy(y2),stroke:'var(--muted)','stroke-width':1,'stroke-dasharray':'3 3'}));
+    // h label
+    svg.appendChild(el('text',{x:sx((x+x2)/2),y:sy(y1)+15,'text-anchor':'middle',fill:'var(--muted)','font-size':12,'font-family':'monospace'})).textContent='h';
+
+    // points
+    const p1=el('circle',{cx:sx(x),cy:sy(y1),r:5,fill:'var(--pt)',stroke:'var(--paper)','stroke-width':1.5});
+    const p2=el('circle',{cx:sx(x2),cy:sy(y2),r:5,fill:'var(--pt)',stroke:'var(--paper)','stroke-width':1.5});
+    svg.appendChild(p1);svg.appendChild(p2);
+
+    // update readouts
+    document.getElementById('slopeVal').textContent=slope.toFixed(3);
+    document.getElementById('derivVal').textContent=dslope.toFixed(3);
+    document.getElementById('xLab').textContent=x.toFixed(2);
+    document.getElementById('hLab').textContent=h.toFixed(2);
+  }
+
+  const xR=document.getElementById('xRange'), hR=document.getElementById('hRange');
+  xR.addEventListener('input',e=>{state.x=parseFloat(e.target.value);draw();});
+  hR.addEventListener('input',e=>{state.h=parseFloat(e.target.value);draw();});
+
+  // animate h -> 0
+  let raf=null;
+  const animBtn=document.getElementById('animBtn');
+  function stopAnim(){if(raf){cancelAnimationFrame(raf);raf=null;}animBtn.classList.remove('on');animBtn.textContent='Kjør h → 0';}
+  animBtn.addEventListener('click',()=>{
+    if(raf){stopAnim();return;}
+    animBtn.classList.add('on');animBtn.textContent='Stopp';
+    const step=()=>{
+      state.h*=0.965;
+      if(state.h<0.03){state.h=0.03;hR.value=state.h;draw();stopAnim();return;}
+      hR.value=state.h;draw();
+      raf=requestAnimationFrame(step);
+    };
+    raf=requestAnimationFrame(step);
+  });
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    stopAnim();state.x=1;state.h=1.5;xR.value=1;hR.value=1.5;draw();
+  });
+
+  draw();
+})();
+</script>
+</body>
+</html>

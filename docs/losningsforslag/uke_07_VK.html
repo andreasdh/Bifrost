@@ -1,0 +1,955 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 7 – Faser og faseoverganger &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_07_VK';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Uke 6 – Fri energi" href="uke_06_tentativ.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_08_under_revision_VK.html">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_09_under_revision_VK.html">Uke 9 – Løsninger og blandinger 2</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 7 – Faser og faseoverganger</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_07_VK.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 7 – Faser og faseoverganger</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-gibbs-energi-og-spontanitet">Oppgave 1: Gibbs-energi og spontanitet.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-kjemisk-potensial">Oppgave 2: Kjemisk potensial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-7-faser-og-faseoverganger">
+<h1>Uke 7 – Faser og faseoverganger<a class="headerlink" href="#uke-7-faser-og-faseoverganger" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1-gibbs-energi-og-spontanitet">
+<h3>Oppgave 1: Gibbs-energi og spontanitet.<a class="headerlink" href="#oppgave-1-gibbs-energi-og-spontanitet" title="Link to this heading">#</a></h3>
+<p>Forrige uke jobbet vi med Gibbs-energi og hvordan en minimering av den frie energien fører til en stabilisering av systemet. Nå skal vi, ved hjelp av entropibetraktninger ved konstant trykk og temperatur, undersøke hvorfor endringen i fri energi må være negativ, <span class="math notranslate nohighlight">\(\Delta G&lt;0\)</span>, for at en prosess skal være spontan.</p>
+<p><strong>a)</strong> Hva er uttrykket for endringen i Gibbs-energien, <span class="math notranslate nohighlight">\(\Delta G\)</span>, ved konstant temperatur?</p>
+<p><strong>Svar</strong> Gibbs-energien er definert som <span class="math notranslate nohighlight">\(G = H - TS\)</span>. Siden <span class="math notranslate nohighlight">\(H\)</span>, <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(S\)</span> alle er tilstandsfunksjoner, er også <span class="math notranslate nohighlight">\(G\)</span> en tilstandsfunksjon. Ved konstant temperatur får vi derfor</p>
+<div class="math notranslate nohighlight">
+\[\Delta G = \Delta H - T\Delta S\]</div>
+<p><strong>b)</strong> La oss repetere entropi og entalpi. Hvordan henger den totale entropiendringen, <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span>, sammen med entropiendringene i systemet og omgivelsene, og hva kan vi si om <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span> for en spontan prosess? Hva er den klassiske definisjonen av entropi, og under hvilke betingelser kan vi skrive at <span class="math notranslate nohighlight">\(q_{p,\text{sys}} = \Delta H_{\text{sys}}\)</span>?</p>
+<p><strong>Svar</strong>
+Den totale entropiendringen er summen av bidragene fra systemet og omgivelsene. For en spontan, irreversibel prosess er den større enn null; for en reversibel prosess er den lik null:</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\text{tot}} = \Delta S_{\text{sys}} + \Delta S_{\text{omg}} \geq 0\]</div>
+<p>Den klassiske definisjonen av entropi er</p>
+<div class="math notranslate nohighlight">
+\[\Delta S = \frac{q_{\mathrm{rev}}}{T}.\]</div>
+<p>Dersom systemet holdes ved konstant trykk og temperatur og kun utfører pV-arbeid, er varmen det tar opp <span class="math notranslate nohighlight">\(q_{p,\text{sys}} = \Delta H_{\text{sys}}\)</span>. Omgivelsene avgir da varmen <span class="math notranslate nohighlight">\(-\Delta H_{\text{sys}}\)</span> ved den samme konstante temperaturen <span class="math notranslate nohighlight">\(T\)</span>, og varmeutvekslingen med omgivelsene kan behandles som reversibel. Dermed har vi</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\text{omg}} = \frac{-q_{p,\text{sys}}}{T} = -\frac{\Delta H_{\text{sys}}}{T}\]</div>
+<p>Dette kommer direkte fra termodynamikkens 1. lov for systemets indre energi:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U_{\mathrm{sys}} = q_{\mathrm{sys}}+w_{\mathrm{sys}}\]</div>
+<p>Dersom systemet kun utfører pV-arbeid mot et konstant ytre trykk <span class="math notranslate nohighlight">\(p\)</span>, slik at <span class="math notranslate nohighlight">\(w=-p\Delta V\)</span>, får vi:</p>
+<div class="math notranslate nohighlight">
+\[\Delta U_{\mathrm{sys}} = q_{p,\mathrm{sys}} - p\Delta V\]</div>
+<p>Løser vi for <span class="math notranslate nohighlight">\(q\)</span>, får vi:</p>
+<div class="math notranslate nohighlight">
+\[q_{p,\mathrm{sys}}=\Delta U_{\mathrm{sys}} + p\Delta V = \Delta H_{\mathrm{sys}}\]</div>
+<p>Altså gjelder <span class="math notranslate nohighlight">\(q_{p,\text{sys}} = \Delta H_{\text{sys}}\)</span> ved konstant trykk og temperatur når systemet kun utfører pV-arbeid:</p>
+<div class="math notranslate nohighlight">
+\[q_{p,\mathrm{sys}} = \Delta H_{\mathrm{sys}}\]</div>
+<p><strong>c)</strong> Et system er i termisk kontakt med omgivelsene, som kan betraktes som et stort varmereservoar med konstant temperatur <span class="math notranslate nohighlight">\(T\)</span>. Hvordan kan vi uttrykke entropiendringen til omgivelsene, <span class="math notranslate nohighlight">\(\Delta S_{\text{omg}}\)</span>, ved hjelp av systemets entalpiendring, <span class="math notranslate nohighlight">\(\Delta H_{\text{sys}}\)</span>? Anta konstant trykk og at systemet kun utfører pV-arbeid.</p>
+<p><strong>Svar</strong></p>
+<p>Fra oppgave <em>b)</em> vet vi at <span class="math notranslate nohighlight">\(q_{p,\text{sys}} = \Delta H_{\text{sys}}\)</span> ved konstant trykk når systemet kun utfører pV-arbeid. Siden systemet er i termisk kontakt med omgivelsene, går varmen som tilføres systemet ut fra omgivelsene. Altså:</p>
+<div class="math notranslate nohighlight">
+\[q_{\mathrm{omg}}=-q_{p,\mathrm{sys}}=-\Delta H_{\mathrm{sys}}\]</div>
+<p>Entropiendringen til omgivelsene blir da:</p>
+<div class="math notranslate nohighlight">
+\[ \Delta S_{\mathrm{omg}}=\frac{q_{\mathrm{omg}}}{T}=-\frac{\Delta H_{\mathrm{sys}}}{T}\]</div>
+<p><strong>d)</strong> Sett svaret fra oppgave <em>c)</em> inn i uttrykket for den totale entropiendringen, og bruk det til å bestemme hvordan <span class="math notranslate nohighlight">\(\Delta G\)</span> avhenger av <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\Delta S_{\text{tot}} = \Delta S_{\text{sys}} -\frac{\Delta H_{\text{sys}}}{T} \]</div>
+<div class="math notranslate nohighlight">
+\[\rightarrow\; T\Delta S_{\text{tot}} = T\Delta S_{\text{sys}} - \Delta H_{\text{sys}}\]</div>
+<div class="math notranslate nohighlight">
+\[\rightarrow\; -T\Delta S_{\text{tot}} = \Delta H_{\text{sys}}-T\Delta S_{\text{sys}} = \Delta G\]</div>
+<div class="math notranslate nohighlight">
+\[\rightarrow\; \Delta G =  -T\Delta S_{\text{tot}}\]</div>
+<p>Fra termodynamikkens andre lov vet vi at den totale entropien kun kan øke for en spontan (irreversibel) prosess, eller være uendret i likevekt, altså <span class="math notranslate nohighlight">\(\Delta S_{\text{tot}} \geq 0\)</span>. Siden <span class="math notranslate nohighlight">\(T &gt; 0\)</span>, følger det at <span class="math notranslate nohighlight">\(\Delta G \leq 0\)</span>, med <span class="math notranslate nohighlight">\(\Delta G = 0\)</span> i likevekt.</p>
+<p>Merk den viktige balansen i <span class="math notranslate nohighlight">\(\Delta G = \Delta H - T\Delta S\)</span>: en prosess kan gjerne være endoterm (<span class="math notranslate nohighlight">\(\Delta H &gt; 0\)</span>) og likevel være spontan, så lenge entropiøkningen i systemet er stor nok (<span class="math notranslate nohighlight">\(T\Delta S &gt; \Delta H\)</span>). Tilsvarende kan en eksoterm prosess være <em>ikke</em> spontan dersom entropien i systemet synker tilstrekkelig.</p>
+<p>Obs! Dette gjelder et <em>lukket</em> system der <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(p\)</span> holdes konstant, og der systemet kun utfører pV-arbeid.</p>
+</section>
+<section id="oppgave-2-kjemisk-potensial">
+<h3>Oppgave 2: Kjemisk potensial<a class="headerlink" href="#oppgave-2-kjemisk-potensial" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hvordan definerer vi det kjemiske potensialet ut fra fundamentallikningen for Gibbs-energi, og hvordan kan vi tolke det?</p>
+<p><strong>Svar</strong></p>
+<p>Fra fundamentallikningen</p>
+<div class="math notranslate nohighlight">
+\[dG = V\,dp - S\,dT + \sum_j \mu_j\,dn_j\]</div>
+<p>kan vi definere det kjemiske potensialet til komponent <span class="math notranslate nohighlight">\(j\)</span> som den partielle deriverte</p>
+<div class="math notranslate nohighlight">
+\[\mu_j = \left( \frac{\partial G}{\partial n_j} \right)_{p,\,T,\,n_{j'\neq j}}\]</div>
+<p>der alle de andre stoffmengdene, <span class="math notranslate nohighlight">\(n_i\)</span> for <span class="math notranslate nohighlight">\(i \neq j\)</span>, holdes konstante. Det kjemiske potensialet beskriver drivkraften bak overføring av partikler mellom faser. Ved kjemiske reaksjoner inngår reaktantenes og produktenes kjemiske potensialer i reaksjonens termodynamiske drivkraft. I mange lærebøker omtales det som «molar Gibbs-energi», noe som strengt tatt bare gjelder for et enkomponentsystem. Generelt er det kjemiske potensialet den partielle molare Gibbs-energien til komponenten.</p>
+<p><strong>b)</strong> Nå skal vi se nærmere på uttrykket for det kjemiske potensialet i et enkomponentsystem:</p>
+<div class="math notranslate nohighlight">
+\[d\mu = V_m\,dp - S_m\,dT,\]</div>
+<p>Her er <span class="math notranslate nohighlight">\(V_m\)</span> og <span class="math notranslate nohighlight">\(S_m\)</span> henholdsvis molart volum og molar entropi. Sammenhengen er nyttig når vi skal undersøke hvordan faseoverganger avhenger av trykk og temperatur. Den brukes også til å utlede Clapeyron-likningen, som beskriver hvordan likevektstrykket for en faseovergang endres med temperaturen. Men hvor kommer uttrykket fra?</p>
+<p>Utled uttrykket slik: Skriv opp fundamentallikningen for Gibbs-energien. Bruk deretter sammenhengen <span class="math notranslate nohighlight">\(G=n\mu\)</span> for et enkomponentsystem, og differensier den. Sett de to uttrykkene for <span class="math notranslate nohighlight">\(dG\)</span> lik hverandre, og vis at du får uttrykket for <span class="math notranslate nohighlight">\(d\mu\)</span> ovenfor.</p>
+<p><strong>Svar</strong></p>
+<p>For et enkomponentsystem med total stoffmengde <span class="math notranslate nohighlight">\(n\)</span> er <span class="math notranslate nohighlight">\(G = n\mu\)</span>. På differensialform blir dette</p>
+<div class="math notranslate nohighlight">
+\[dG = n\,d\mu + \mu\,dn\]</div>
+<p>Fundamentallikningen for én komponent (der summen reduseres til ett ledd, <span class="math notranslate nohighlight">\(\mu\,dn\)</span>) er</p>
+<div class="math notranslate nohighlight">
+\[dG = V\,dp - S\,dT + \mu\,dn\]</div>
+<p>Setter vi de to uttrykkene for <span class="math notranslate nohighlight">\(dG\)</span> lik hverandre, får vi:</p>
+<div class="math notranslate nohighlight">
+\[V\,dp - S\,dT + \mu\,dn = n\,d\mu + \mu\,dn\]</div>
+<p>Vi ser at <span class="math notranslate nohighlight">\(\mu\,dn\)</span>-leddene står på begge sider og kansellerer hverandre, slik at vi sitter igjen med</p>
+<div class="math notranslate nohighlight">
+\[n\,d\mu = V\,dp - S\,dT\]</div>
+<p>Deling med antall mol <span class="math notranslate nohighlight">\(n\)</span> gir den søkte definisjonen:</p>
+<div class="math notranslate nohighlight">
+\[d\mu = V_m\,dp - S_m\,dT\]</div>
+<p>Dette gjør det mulig å lage fasediagrammer som viser hvilke faser som er stabile ved ulike temperaturer og trykk. Ved en faseovergang er likevektsbetingelsen mellom fasene <span class="math notranslate nohighlight">\(\alpha\)</span> og <span class="math notranslate nohighlight">\(\beta\)</span> at <span class="math notranslate nohighlight">\(\mu_{\alpha} = \mu_{\beta}\)</span>.</p>
+<p><strong>c)</strong> Hvordan avhenger det kjemiske potensialet til et enkomponentsystem av temperaturen? Se på figuren, som viser kjemisk potensial som funksjon av temperatur ved konstant trykk. Hvorfor er kurvene ulike for fast stoff, væske og gass, og hva er stigningstallet til hver kurve? Ta utgangspunkt i definisjonen av <span class="math notranslate nohighlight">\(d\mu\)</span>.</p>
+<p><img alt="Figur til oppgave c): Kjemisk potensial mot temperatur med kurver for fast stoff, væske og gass. Kryssingspunktene tilsvarer smeltepunktet  og kokepunktet ." src="../../_images/fase2.png" /></p>
+<p><strong>Svar</strong></p>
+<p>For en generell endring i trykk og temperatur er den totale differensialen</p>
+<div class="math notranslate nohighlight">
+\[d\mu = \left(\frac{\partial \mu}{\partial p}\right)_T\,dp+\left(\frac{\partial \mu}{\partial T}\right)_p\,dT\]</div>
+<p>Sammenligner vi dette med uttrykket <span class="math notranslate nohighlight">\(d\mu = V_m\,dp - S_m\,dT\)</span> fra forrige deloppgave, får vi</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial \mu}{\partial p}\right)_T = V_m \quad \text{og} \quad \left(\frac{\partial \mu}{\partial T}\right)_p = -S_m\]</div>
+<p>Det kjemiske potensialet minker når temperaturen øker, siden stigningstallet er <span class="math notranslate nohighlight">\(-S_m &lt; 0\)</span> og <span class="math notranslate nohighlight">\(S_m &gt; 0\)</span>. En gass har høyere <span class="math notranslate nohighlight">\(S_m\)</span> enn kondenserte faser (tenk tilbake til diskusjonene rundt mikrotilstander), og det kjemiske potensialet faller derfor raskere i en gass enn i væsker og faste stoffer.</p>
+<p>Ved konstant trykk reduseres uttrykket til <span class="math notranslate nohighlight">\(d\mu = -S_m\,dT\)</span>, slik at stigningstallet til hver kurve er</p>
+<div class="math notranslate nohighlight">
+\[\left(\frac{\partial \mu}{\partial T}\right)_p = -S_m\]</div>
+<p>Alle kurvene synker med temperaturen, men med ulik bratthet fordi den molare entropien varierer mellom fasene:</p>
+<div class="math notranslate nohighlight">
+\[S_{m,\text{gass}} &gt; S_{m,\text{væske}} &gt; S_{m,\text{fast}}\]</div>
+<p>Gassen har et enormt antall tilgjengelige mikrotilstander og dermed den bratteste kurven. Faststoffet er mest ordnet og har flatest kurve, mens væsken ligger midt imellom. Den stabile fasen ved en gitt temperatur er den med lavest kjemisk potensial. Dette gir mønsteret vi ser i figuren:</p>
+<ul class="simple">
+<li><p>Ved lave temperaturer ligger kurven for fast stoff lavest: faststoffet er stabilt.</p></li>
+<li><p>Ved <span class="math notranslate nohighlight">\(T_f\)</span> krysser fast- og væskekurvene (<span class="math notranslate nohighlight">\(\mu_{\text{fast}} = \mu_{\text{væske}}\)</span>): dette er smeltepunktet.</p></li>
+<li><p>Mellom <span class="math notranslate nohighlight">\(T_f\)</span> og <span class="math notranslate nohighlight">\(T_b\)</span> er kurven for væske lavest: væsken er stabil.</p></li>
+<li><p>Ved <span class="math notranslate nohighlight">\(T_b\)</span> krysser væske- og gasskurvene (<span class="math notranslate nohighlight">\(\mu_{\text{væske}} = \mu_{\text{gass}}\)</span>): dette er kokepunktet.</p></li>
+<li><p>Over <span class="math notranslate nohighlight">\(T_b\)</span> har gassen lavest kjemisk potensial og er stabil.</p></li>
+</ul>
+<p>Merk at kurvene er tegnet som rette linjestykker mellom faseovergangene. Det er en god tilnærming fordi <span class="math notranslate nohighlight">\(S_m\)</span> (og dermed stigningen) varierer lite med temperaturen innenfor én fase. Ved hver faseovergang ser vi en «knekk» i kurven: kurven er kontinuerlig, men stigningstallet endres brått fordi fasen (og dermed <span class="math notranslate nohighlight">\(S_m\)</span>) endres.</p>
+<p><strong>d)</strong> Hva betyr det i praksis at det kjemiske potensialet minker når temperaturen øker?</p>
+<p><strong>Svar</strong></p>
+<p>Det kjemiske potensialet kan tolkes som partiklenes «fluktstendens» fra en fase: partikler beveger seg spontant mot fasen med lavest kjemisk potensial. Siden <span class="math notranslate nohighlight">\(\left(\frac{\partial \mu}{\partial T}\right)_p = -S_m\)</span>, synker <span class="math notranslate nohighlight">\(\mu\)</span> for <em>alle</em> faser når temperaturen øker, men raskest for fasen med størst molar entropi.</p>
+<p>Intuisjonen bak dette er at systemet har tilgang til flere tilstander ved høyere temperatur (tenk på hvordan energifordelingen blir bredere når <span class="math notranslate nohighlight">\(T\)</span> øker). Den energetiske kostnaden ved å «legge til» eller «fjerne» en partikkel er lavere i en fase med høy entropi enn i en fase med lav entropi. En gass har langt flere mikrotilstander enn væsker og faste stoffer, og dermed faller <span class="math notranslate nohighlight">\(\mu\)</span> for gassen brattest når temperaturen øker.</p>
+<p>I praksis betyr dette at gassen «henter igjen» de kondenserte fasene når vi varmer opp:</p>
+<ul class="simple">
+<li><p>Ved lave temperaturer ligger kurven for fast stoff lavest, og faststoffet er den stabile fasen.</p></li>
+<li><p>Ved smeltepunktet <span class="math notranslate nohighlight">\(T_f\)</span> krysser fast- og væskekurvene (<span class="math notranslate nohighlight">\(\mu_{\text{fast}} = \mu_{\text{væske}}\)</span>), og over denne temperaturen er væsken lavest og stabil.</p></li>
+<li><p>Ved kokepunktet <span class="math notranslate nohighlight">\(T_b\)</span> gjelder <span class="math notranslate nohighlight">\(\mu_{\text{væske}} = \mu_{\text{gass}}\)</span>, og over denne temperaturen er gassen lavest og stabil.</p></li>
+</ul>
+<p>Dette forklarer hvorfor faseovergangene fast <span class="math notranslate nohighlight">\(\to\)</span> væske <span class="math notranslate nohighlight">\(\to\)</span> gass skjer når temperaturen øker ved gitt trykk. Det forklarer også hvorfor fordampningen går raskere når vi varmer opp: forskjellen mellom <span class="math notranslate nohighlight">\(\mu_{\text{væske}}\)</span> og <span class="math notranslate nohighlight">\(\mu_{\text{gass}}\)</span> blir mindre, og flere partikler går over i gassfasen.</p>
+<p><strong>e)</strong> Hvordan avhenger det kjemiske potensialet av trykket ved konstant temperatur? Hvordan ser kurvene ut for gass, væske og fast stoff, og hvilken fase er stabil ved ulike trykk?</p>
+<p><strong>Svar</strong></p>
+<p>Ved konstant temperatur gjelder <span class="math notranslate nohighlight">\(d\mu = V_m\,dp\)</span>, slik at <span class="math notranslate nohighlight">\(\left(\frac{\partial \mu}{\partial p}\right)_T=V_m&gt;0\)</span>. Det kjemiske potensialet øker derfor med trykket for alle faser. Stigningstallet er molart volum: gassen har langt større <span class="math notranslate nohighlight">\(V_m\)</span> enn kondenserte faser, mens molare volum for væske og fast stoff vanligvis er mye mindre.</p>
+<p>For en idealgass er <span class="math notranslate nohighlight">\(V_m=RT/p\)</span>. Integrasjon gir <span class="math notranslate nohighlight">\(\mu(T,p)=\mu^\circ(T)+RT\ln(p/p^\circ)\)</span>, altså en krummet kurve som stiger bratt ved lavt trykk og flater ut når trykket øker. For væsker og faste stoffer varierer <span class="math notranslate nohighlight">\(V_m\)</span> langt mindre med trykket, så kurvene kan ofte tilnærmes som rette linjer over et begrenset trykkområde.</p>
+<p>Ved et gitt trykk er den stabile fasen den som har lavest kjemisk potensial. I figuren er gassfasen stabil ved lavt trykk, væskefasen ved mellomliggende trykk og faststoffet ved høyere trykk. Denne rekkefølgen gjelder for det skjematiske eksempelet; generelt avhenger den av stoffet og temperaturen. Trykkøkning favoriserer fasen med minst molart volum.</p>
+<p><img alt="Tre fasekurver for kjemisk potensial som funksjon av trykk. Den krumme gasskurven og de tilnærmet rette kurvene for væske og fast stoff vises sammen med de stabile områdene." src="../../_images/uke_07_VK_mu_vs_p.png" /></p>
+<p><strong>f)</strong> Se plottene av kjemisk potensial mot temperatur nedenfor. Forklar forskjellen mellom stoffene i plott a) og b), og gi et eksempel på et stoff som oppfører seg som i hvert plott.</p>
+<p><img alt="Figur til oppgave f): Kjemisk potensial mot temperatur for fast stoff og væske ved lavt og høyt trykk. I a) flyttes smeltepunktet til høyere temperatur ved trykkøkning, i b) til lavere." src="../../_images/fase3.png" /></p>
+<p><strong>Svar</strong></p>
+<p>Begge plottene viser kurvene for fast stoff og væske ved to trykk (lavt og høyt). Krysningene mellom kurvene er smeltepunktene <span class="math notranslate nohighlight">\(T_f\)</span>. Vi ser hvordan dette punktet flytter seg når trykket økes. Grafisk skyldes forskjellen at trykkøkningen «løfter» hver kurve med et stykke <span class="math notranslate nohighlight">\(\approx V_m\,\Delta p\)</span>: løftes væskekurven mer enn kurven for fast stoff, flyttes krysset til høyere temperatur, og motsatt.</p>
+<p><strong>Plott a):</strong> Smeltepunktet øker med trykket (<span class="math notranslate nohighlight">\(T_f \rightarrow T_f'\)</span>). Dette er den vanlige oppførselen og gjelder for de fleste stoffer: ved smelting utvider de seg, altså <span class="math notranslate nohighlight">\(V_{m,\text{væske}} &gt; V_{m,\text{fast}}\)</span>. Differansen i molart volum er da positiv, <span class="math notranslate nohighlight">\(\Delta_{\text{fus}}V_m = V_{m,\text{væske}} - V_{m,\text{fast}} &gt; 0\)</span>, og sammen med smelteentalpien <span class="math notranslate nohighlight">\(\Delta_{\text{fus}}H_m &gt; 0\)</span> gir Clapeyron-likningen</p>
+<div class="math notranslate nohighlight">
+\[\frac{dp}{dT} = \frac{\Delta_{\text{fus}}H_m}{T\,\Delta_{\text{fus}}V_m} &gt; 0\]</div>
+<p>Eksempler på stoffer som oppfører seg som i plott a), er karbondioksid og benzen.</p>
+<p><strong>Plott b):</strong> Smeltepunktet <em>senkes</em> ved trykk (<span class="math notranslate nohighlight">\(T_f' \leftarrow T_f\)</span>). Dette er et sjeldnere unntak som gjelder stoffer der faststoffet har <em>større</em> molart volum enn væsken, <span class="math notranslate nohighlight">\(\Delta_{\text{fus}}V_m &lt; 0\)</span>; dvs. stoffer som er tettere i væskefasen enn i fast fasen. Fra Clapeyron-likningen følger det da at <span class="math notranslate nohighlight">\(\frac{dp}{dT} &lt; 0\)</span>, altså at smeltekurven både i dette plottet og i et <span class="math notranslate nohighlight">\(T\)</span>–<span class="math notranslate nohighlight">\(p\)</span>-fasediagram <em>faller</em> med økende trykk. Derfor flyttes smeltepunktet til en lavere temperatur når trykket økes.</p>
+<p>Eksempel på molekyl: <span class="math notranslate nohighlight">\(\mathrm{H_2O}\)</span>. Is har større molart volum enn flytende vann (derfor flyter isen på vannet), og smeltepunktet til isen senkes av trykket.</p>
+<p>Disse to plottene gir en grafisk forklaring for at smeltekurven (grensen mellom fast fase og væske) i et <span class="math notranslate nohighlight">\(T\)</span>–<span class="math notranslate nohighlight">\(p\)</span>-fasediagram kan gå enten oppover (plott a, de fleste stoffer) eller nedover (plott b, blant annet vann).</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hva er en fase?</p>
+<p><strong>Svar</strong> En fase er en makroskopisk, fysisk homogen del av et system. Innenfor én fase er de intensive egenskapene og sammensetningen tilnærmet ensartet. Ulike faser er adskilt av fasegrenser. Is og flytende vann er for eksempel to faser, selv om begge består av H<span class="math notranslate nohighlight">\(_2\)</span>O, fordi de har ulik struktur og ulike fysiske egenskaper.</p>
+<p><strong>b)</strong> Angi antall faser og frihetsgrader det er i hvert av punktene markert i figuren nedenfor.</p>
+<p><img alt="Fasediagram med punktene a–d markert." src="../../_images/fase1.png" /></p>
+<p><strong>Svar</strong> Figuren viser et fasediagram for ett rent stoff, så antall komponenter er <span class="math notranslate nohighlight">\(C=1\)</span>. Gibbs’ faseregel er <span class="math notranslate nohighlight">\(F=C-P+2\)</span>, der <span class="math notranslate nohighlight">\(P\)</span> er antall faser.</p>
+<ul class="simple">
+<li><p><strong>Punkt a:</strong> Punktet ligger inne i et faseområde. Det er én fase, så <span class="math notranslate nohighlight">\(F=1-1+2=2\)</span>. Temperatur og trykk kan varieres uavhengig av hverandre så lenge punktet blir værende i samme område.</p></li>
+<li><p><strong>Punkt b:</strong> Flere fasegrenser møtes i punktet, slik at tre faser sameksisterer. Da er <span class="math notranslate nohighlight">\(F=1-3+2=0\)</span>, og både temperatur og trykk har bestemte verdier. Punkt b er dermed også et trippelpunkt.</p></li>
+<li><p><strong>Punkt c:</strong> Punktet er trippelpunktet, der tre faser sameksisterer. Da er <span class="math notranslate nohighlight">\(F=1-3+2=0\)</span>: både temperatur og trykk har bestemte verdier.</p></li>
+<li><p><strong>Punkt d:</strong> Punktet ligger også på en fasegrense mellom to faser. Derfor er <span class="math notranslate nohighlight">\(F=1-2+2=1\)</span>, og bare én av størrelsene temperatur og trykk kan velges uavhengig.</p></li>
+</ul>
+<p><strong>c)</strong> Hva er en superkritisk væske?</p>
+<p><strong>Svar</strong> Et superkritisk fluid er et stoff ved temperatur og trykk over det kritiske punktet. I det kritiske punktet blir forskjellen mellom væske og gass borte: tetthetene blir like, og fasegrensen mellom dem forsvinner. Over det kritiske punktet finnes derfor én homogen fase, ikke en separat væske og gass. Den kalles ofte en superkritisk væske, selv om den ikke er en væske i vanlig forstand. For vann er det kritiske punktet omtrent 374 °C og 22,1 MPa.</p>
+<p><strong>d)</strong> Hva skjer med temperaturen under kontinuerlig oppvarming av vann når systemet når kokepunktet? Hvordan påvirker dette varmekapasiteten?</p>
+<p><strong>Svar</strong> For oppvarming ved konstant trykk holder temperaturen seg på kokepunktet mens væsken fordamper. Den tilførte varmen går da hovedsakelig til faseovergangen, altså til å omdanne væske til gass, og ikke til å øke temperaturen. Temperaturen begynner å stige igjen når all væsken har fordampet.</p>
+<p>Varmekapasiteten ved konstant trykk er <span class="math notranslate nohighlight">\(C_p=(\partial H/\partial T)_p\)</span>. I en idealisert beskrivelse gir tilførsel av varme uten temperaturøkning en singularitet i varmekapasiteten ved faseovergangen. I målinger vises dette gjerne som en svært høy, men endelig topp fordi oppløsningen er begrenset.</p>
+<p>Nedenfor vises hvordan ulike termodynamiske størrelser endres når et system gjennomgår en faseovergang.</p>
+<p><strong>e)</strong> Hva er forskjellen mellom en første- og en andreordens faseovergang?</p>
+<p><strong>Svar</strong> Ved en førsteordens faseovergang er Gibbs-energien kontinuerlig, men dens første deriverte er diskontinuerlige. Siden <span class="math notranslate nohighlight">\(S=-(\partial G/\partial T)_p\)</span> og <span class="math notranslate nohighlight">\(V=(\partial G/\partial p)_T\)</span>, innebærer dette et sprang i entropi og/eller volum. Overgangen har latent varme; ved konstant trykk er <span class="math notranslate nohighlight">\(\Delta H_{\mathrm{tr}}=T\Delta S_{\mathrm{tr}}\)</span>.</p>
+<p>Ved en andreordens faseovergang er Gibbs-energien og dens første deriverte kontinuerlige, men en eller flere andrederiverte størrelser er diskontinuerlige eller divergerer. Varmekapasiteten kan for eksempel ha et sprang eller en skarp topp. Det er ingen latent varme ved en slik overgang.</p>
+<p><strong>f)</strong> Se på grafene og avgjør om det skjer en faseovergang, og om den i så fall er av første eller andre orden.
+<img alt="Skjematiske temperaturavhengigheter for Gibbs-energi, volum, entalpi, entropi og varmekapasitet i tre tilfeller, A–C." src="../../_images/figur6_phasenumwandlung_ABC.png" /></p>
+<p><strong>Svar</strong></p>
+<ul class="simple">
+<li><p><strong>A:</strong> Ingen faseovergang vises i temperaturintervallet. De viste størrelsene endres jevnt, uten sprang eller singularitet.</p></li>
+<li><p><strong>B:</strong> Dette er en førsteordens faseovergang ved <span class="math notranslate nohighlight">\(T_c\)</span>. Gibbs-energien har en knekk, og volum, entalpi og entropi har sprang. Varmekapasiteten er diskontinuerlig i skissen; latent varme gir et singularitetsbidrag i den idealiserte beskrivelsen.</p></li>
+<li><p><strong>C:</strong> Dette er en andreordens, kontinuerlig faseovergang ved <span class="math notranslate nohighlight">\(T_c\)</span>. Gibbs-energien og dens første deriverte forblir kontinuerlige, mens andrederiverte størrelser som varmekapasiteten får en skarp topp eller en diskontinuitet. Det er ikke noe sprang i entalpi, og dermed ingen latent varme.</p></li>
+</ul>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hvor mange faser er det i følgende systemer, og hvorfor?</p>
+<ul class="simple">
+<li><p>En løsning med NaCl?</p></li>
+<li><p>En blanding av is og vann (slush)?</p></li>
+<li><p>𝐶𝑎𝐶𝑂3(𝑠)→𝐶𝑎𝑂(𝑠)+𝐶𝑂2(𝑔)</p></li>
+</ul>
+<p><strong>b)</strong> For de tre systemene i oppgave a, hvor mange komponenter er det i disse eksemplene? Angi så antall frihetsgrader, og hva frihetsgradene er for hvert system.</p>
+<p><strong>Svar</strong></p>
+<ul class="simple">
+<li><p>NaCl: 1 fase - 2 komponenter (trenger kun H2O og NaCl for å danne alle speciene tilstede)</p></li>
+<li><p>Blanding av is og vann: 2 faser, 1 komponent</p></li>
+<li><p>CaCO3: 3 faser (2 faste med ulik kjemisk sammensetning, én gassfase). Antall komponenter:</p></li>
+</ul>
+<p>CaCO3: Antar at vi starter med kun 𝐶𝑎𝐶𝑂3(𝑠) og lar likevekten <span class="math notranslate nohighlight">\(CaCO_3(s) \rightleftharpoons CaO (s) + CO_2(g) \)</span> instille seg. En relasjon forbundet med at vi har en likevekt mellom fast fase og gass er at <span class="math notranslate nohighlight">\(K_p=p_{(CO_2)}\)</span>. En annen relasjon er at <span class="math notranslate nohighlight">\(n_{CO_2}=n_{CaO}\)</span>, ettersom antallet mol dannet av hvert produkt må være likt når vi kun starter med reaktanten.</p>
+<p>Antallet specier er 3, og antallet komponenter blir da: <span class="math notranslate nohighlight">\(c = s-r = 3-2 = 1\)</span>. Vi trenger kun reaktanten for å danne alle speciene i denne likevekten. Hadde vi antatt vilkårlige mengder av alle speciene (f.eks. startet med litt <span class="math notranslate nohighlight">\(CO_2(g)\)</span> og <span class="math notranslate nohighlight">\(CaO(s)\)</span> allerede tilstede) vil kun relasjonen <span class="math notranslate nohighlight">\(K_p=p_{(CO_2)}\)</span> gjelde, og <span class="math notranslate nohighlight">\(c=2\)</span>.</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p>Når en væske med molar masse <span class="math notranslate nohighlight">\(46.1 \text{g mol}^{-1}\)</span> fryser ved <span class="math notranslate nohighlight">\(-3.65^{\circ}C\)</span>, endres tettheten fra <span class="math notranslate nohighlight">\(0.789 \text{g cm}^{-3}\)</span> til <span class="math notranslate nohighlight">\(0.801 \text{g cm}^{-3}\)</span>. Den molare smelteentalpien til væsken er <span class="math notranslate nohighlight">\(8.68 \text{kJ mol}^{-1}\)</span>. Estimer frysepunktet for væsken ved <span class="math notranslate nohighlight">\(1 \text{MPa}\)</span>.</p>
+<p><strong>Svar</strong></p>
+<p>Clapeyron-likningen beskriver hvordan en faseovergang påvirkes av trykk:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dp}{dT}=\frac{∆_{trs}S_{m}}{∆_{trs}V_{m}}\]</div>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Utledning:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Ved en faseovergang må de to fasene være i likevekt med hverandre, dvs. at de kjemiske potensialene må være like. Siden vi ser på avhengigheten av trykk og temperatur kan dette skrives som:</p>
+<div class="math notranslate nohighlight">
+\[{\mu }_{A}(p,T)={\mu }_{B}(p,T)\]</div>
+<p class="sd-card-text">Det kjemiske potensialet tilsvarer den molare Gibbs-energien, <span class="math notranslate nohighlight">\(\mu = G_m\)</span>. Differensialformen for molar Gibbs-energi er:</p>
+<div class="math notranslate nohighlight">
+\[dG_{m}=V_{m}dp-S_{m}dT\]</div>
+<p class="sd-card-text">Setter vi <span class="math notranslate nohighlight">\(dG_{m,A}=dG_{m,B}\)</span> for de to fasene, får vi:</p>
+<div class="math notranslate nohighlight">
+\[V_{m,A}dp-S_{m,A}dT=V_{m,B}dp-S_{m,B}dT\]</div>
+<div class="math notranslate nohighlight">
+\[{(V}_{m,A\ }-V_{m,B\ })\frac{dp}{dT}=(S_{m,A\ }-S_{m,B\ })\]</div>
+<p class="sd-card-text">Dette gir Clapeyron-likningen.</p>
+<div class="math notranslate nohighlight">
+\[\ \frac{dp}{dT}=\frac{S_{m,A\ }-S_{m,B\ }}{\ V_{m,A\ }-V_{m,B\ }\ }\]</div>
+</div>
+</details><p>Ved å bruke at <span class="math notranslate nohighlight">\(∆G = 0\)</span> ved faseovergang kan denne gjøres om til:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dp}{dT}=\frac{∆_{trs}H_{m}}{∆_{trs}V_{m}\cdot T_{trs}}\]</div>
+<p>Integrasjon gir videre:</p>
+<div class="math notranslate nohighlight">
+\[p=p^{\ast }+\frac{∆_{trs}H_{m}}{∆_{trs}V_{m}}ln\left(\frac{T}{T^{\ast }}\right)\approx p^{\ast }+\frac{∆_{trs}H_{m}}{∆_{trs}V_{m}}\left(\frac{T-T^{\ast }}{T^{\ast }}\right)\]</div>
+<p>Vi finner forskjellen i molart volum ved å bruke at:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{\rho }=\frac{m}{V}=\frac{n\cdot M}{V}=\frac{M}{V_{m}}\]</div>
+<p>Som gir:</p>
+<div class="math notranslate nohighlight">
+\[V_m = \frac{M}{\rho}\]</div>
+<p>Slik at:</p>
+<p><span class="math notranslate nohighlight">\(∆V_{m}=M\left(\frac{1}{\rho_{s}}-\frac{1}{{\rho }_{l}}\right)=46.1\ g.mol^{-1}\cdot \left(\frac{1}{0.789 \, g.cm^{-3}}-\frac{1}{0.801 \, g.cm^{-3}}\right)=-0.8753 \, cm^{3}.mol^{-1}\)</span></p>
+<p>Siden det ikke er gitt noen annen informasjon, antar vi at frysepunktet ved <span class="math notranslate nohighlight">\(-3.65 ^{\circ}C\)</span> er oppgitt ved standardtrykk, <span class="math notranslate nohighlight">\(1 \, atm\)</span>. Ved innsetting av verdiene i Clapeyron-likningen fås da:</p>
+<p><span class="math notranslate nohighlight">\(1\ MPa=1 \, atm+\frac{8680 \, J.mol^{-1}}{-0.8753 \, cm^{3}.mol^{-1}}\cdot \left(\frac{T-269.5 \, K}{269.5 \, K}\right)\)</span></p>
+<p><span class="math notranslate nohighlight">\(1\ MPa=0.101325 \, MPa+\frac{8680 \, J.mol^{-1}}{-0.8753 \, cm^{3}.mol^{-1}}\cdot \left(\frac{T-269.5 \, K}{269.5 \, K}\right)\)</span></p>
+<p><span class="math notranslate nohighlight">\(0.898675\cdot {10}^{6} \, Pa\cdot \frac{-0.8753\cdot {10}^{-6} \, m^{3}.mol^{-1}}{8680 \, J.mol^{-1}}\cdot \ 269.5\ K\ +\ 269.5\ K\ =\ T\)</span></p>
+<p><span class="math notranslate nohighlight">\(T = 269.48 K\)</span></p>
+<p>Her ble det brukt at <span class="math notranslate nohighlight">\(Pa\cdot \ m^{3}\ =\ J\)</span>.  Selv om trykket altså øker med omtrent <span class="math notranslate nohighlight">\(0.9 \, MPa\)</span>, minker smeltepunktet minimalt.</p>
+<p>Til sammenligning er trykkforskjellen mellom havnivå og toppen av Mount Everest omtrent <span class="math notranslate nohighlight">\(67 \, kPa\)</span> (<span class="math notranslate nohighlight">\(0.067 \, MPa\)</span>). Kokepunktet for vann på toppen av Mount Everest er omtrent <span class="math notranslate nohighlight">\(68 ^{\circ} C\)</span>, sammenlignet med <span class="math notranslate nohighlight">\(100 ^{\circ} C\)</span> ved havnivå. Dette skyldes at det molare volumet øker langt mer ved væske–gass-overgangen enn ved smelting.</p>
+</section>
+<section id="id1">
+<h3>Oppgave 3<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>Den molare fordampningsentalpien for vann ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> er <span class="math notranslate nohighlight">\(40.63 \text{kJ mol}^{-1}\)</span>. Finn arbeidet som utføres av systemet når <span class="math notranslate nohighlight">\(2.00 \text{mol}\)</span> vann fordamper ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> og <span class="math notranslate nohighlight">\(1.00 \text{atm}\)</span> trykk. Finn også endringene i systemets indre energi <span class="math notranslate nohighlight">\(\Delta U\)</span>, Gibbs-energi <span class="math notranslate nohighlight">\(\Delta G\)</span> og entropi <span class="math notranslate nohighlight">\(\Delta S\)</span>. Tettheten for vann i væskeform ved <span class="math notranslate nohighlight">\(100^{\circ}C\)</span> er <span class="math notranslate nohighlight">\(0.9584 \text{g cm}^{-3}\)</span>, og tettheten for vanndamp ved samme temperatur er <span class="math notranslate nohighlight">\(0.000596\text{g cm}^{-3}\)</span>.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[H_{2}O\left(l,\ 100\ °C,\ 1\ atm\right)\rightarrow \ \ H_{2}O(g,\ 100\mathrm{℃},\ 1\ atm)\]</div>
+<p>Ved et trykk på <span class="math notranslate nohighlight">\(1 \, atm\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[1\ atm\ =\ 1,01325\cdot {10}^{5}\ Pa\ (100\mathrm{℃})\]</div>
+<p>Arbeidet som systemet gjør mot et konstant ytre trykk (<span class="math notranslate nohighlight">\(1 \, atm\)</span>) når gassen dannes er:</p>
+<p><span class="math notranslate nohighlight">\(w=\ -p_{ex}\cdot \Delta V=\ -p_{ex}\cdot n\cdot \Delta V_{m}\)</span></p>
+<p>Den molare endringen i volum finner vi, igjen, ved hjelp av tetthetene:</p>
+<div class="math notranslate nohighlight">
+\[\Delta V_{m}=V_{m,vanndamp}-V_{m,vann}=\frac{M_{H_{2}O}}{{\rho }_{vanndamp}}-\frac{M_{H_{2}O}}{{\rho }_{vann}}=\frac{18.01\ gmol^{-1}}{0.000596\ g.cm^{-3}}-\frac{18.01\ g.mol^{-1}}{0.9584\ g.cm^{-3}}=3.0199\cdot {10}^{4} \, cm^{3}.mol^{-1}\]</div>
+<div class="math notranslate nohighlight">
+\[w=\ -\left(1.01325\cdot {10}^{5} \, Pa\right)\cdot \left(2.00\ mol\right)\cdot \left(3.0199\cdot {10}^{4}\cdot {10}^{-6} \, m^{3}.mol^{-1}\right)=\ -6.12\cdot {10}^{3}J\]</div>
+<p>Ettersom vi har oppgitt den molare fordampningsentalpien kan vi bruke definisjonen på entalpi for å finne endringen i indre energi:</p>
+<div class="math notranslate nohighlight">
+\[\Delta H=\Delta U+p\Delta V\Rightarrow {\Delta }_{vap}U={\Delta }_{vap}H-p_{ex}\Delta V={\Delta }_{vap}H+w=n\cdot {\Delta }_{vap}H_{m}+w\ \]</div>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}U=\left(2.00\ mol\cdot 40.63\cdot {10}^{3}J\ mol^{-1}\right)-6.12\cdot {10}^{3}J=75.1\cdot {10}^{3}J\]</div>
+<p>Siden vi er ved en faseovergang må systemet være i likevekt, og <span class="math notranslate nohighlight">\({\Delta }_{\mathrm{vap}}G=0\)</span>.</p>
+<p>Entropien finner vi ut fra definisjonen på entropi ved varmeoverføring:</p>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}S=\frac{q_{rev}}{T}=\frac{{\Delta }_{vap}H}{T_{kokepunkt}}=\frac{n\cdot {\Delta }_{vap}H_{m}}{T_{kokepunkt}}\]</div>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}S=\frac{2.00\ mol\cdot 40.63\cdot {10}^{3}J\ mol^{-1}}{373.15K}=218\ JK^{-1}\]</div>
+<p>Oppsummert:</p>
+<div class="math notranslate nohighlight">
+\[w=\ -6.12\cdot {10}^{3}J\]</div>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}U=75.1\cdot {10}^{3}J\]</div>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{\mathrm{vap}}G=0\]</div>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}S=218\ JK^{-1}\]</div>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Normalkokepunktet for etylenglykol (<span class="math notranslate nohighlight">\(\text{C}_2\text{H}_6\text{O}_2\)</span>) er <span class="math notranslate nohighlight">\(197^{\circ}C\)</span>, og den spesifikke fordampningsentalpien er <span class="math notranslate nohighlight">\(801 \text{J g}^{-1}\)</span>. Finn temperaturen der etylenglykol koker i et destillasjonsoppsett når trykket er <span class="math notranslate nohighlight">\(50.0 \text{Torr}\)</span></p>
+<p><strong>Svar</strong></p>
+<p>Den spesifikke fordampningsentalpien er entalpiendring per masseenhet, og fordampningsvarmen for etylenglykol er altså <span class="math notranslate nohighlight">\(801 J.g^{-1}\)</span>, som oppgitt i oppgaveteksten. Videre har vi <span class="math notranslate nohighlight">\(M_{C_{2}H_{6}O_{2}}=62,058\ g.mol^{-1}\)</span>. For den molare fordampningsentalpien får vi:</p>
+<div class="math notranslate nohighlight">
+\[{\Delta }_{vap}H_{m}=M\cdot {\Delta }_{vap}H_{sp}=62.058\ g\ mol^{-1}\cdot 801\ J\ g^{-1}=\ 49.71\cdot {10}^{3}J\ mol^{-1}\ \]</div>
+<p>For å finne kokepunktet ved et gitt trykk kan vi bruke Clausius–Clapeyron-likningen.</p>
+<details class="sd-sphinx-override sd-dropdown sd-card sd-mb-3">
+<summary class="sd-summary-title sd-card-header">
+<span class="sd-summary-text">Utledning:</span><span class="sd-summary-state-marker sd-summary-chevron-right"><svg version="1.1" width="1.5em" height="1.5em" class="sd-octicon sd-octicon-chevron-right" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.72 18.78a.75.75 0 0 1 0-1.06L14.44 12 8.72 6.28a.751.751 0 0 1 .018-1.042.751.751 0 0 1 1.042-.018l6.25 6.25a.75.75 0 0 1 0 1.06l-6.25 6.25a.75.75 0 0 1-1.06 0Z"></path></svg></span></summary><div class="sd-summary-content sd-card-body docutils">
+<p class="sd-card-text">Som for faseovergangen mellom væske og fast stoff gjelder også Clapeyron-likningen for væske–gass-overgangen, men da med fordampningsentalpi og volumendring:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dp}{dT}=\frac{{\Delta }_{vap}H}{T{\Delta }_{vap}V}\]</div>
+<p class="sd-card-text">Men fordi volumendringen mellom væske og gass er mye større enn mellom fast stoff og væske, kan vi gjøre en tilnærming som gir Clausius–Clapeyron-likningen:</p>
+<div class="math notranslate nohighlight">
+\[V_{m}\left(g\right)\gg V_{m}\left(l\right)\ \Rightarrow {\Delta }_{vap}V_{m}\ \approx V_{m}(g)\]</div>
+<p class="sd-card-text">Hvis vi også antar ideell gass:</p>
+<div class="math notranslate nohighlight">
+\[V_{m}\left(g\right)=\frac{RT}{p}\]</div>
+<p class="sd-card-text">Dette gir:</p>
+<div class="math notranslate nohighlight">
+\[\frac{dp}{dT}=\frac{{\Delta }_{vap}H_{m}}{T\left(\frac{RT}{p}\right)}=\ \frac{{\mathrm{p\Delta }}_{vap}H_{m}}{RT^{2}}\]</div>
+<p class="sd-card-text">Deler vi begge sidene på <span class="math notranslate nohighlight">\(p\)</span>, får vi:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{p}\frac{dp}{dT}=\frac{d(\ln{p})}{dT}=\ \frac{{\Delta }_{vap}H_{m}}{RT^{2}}\]</div>
+</div>
+</details><p>Clausius–Clapeyron-likningen:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d\left(\ln{p}\right)}{dT\ }=\frac{{\Delta }_{vap}H_{m}}{R}\cdot \frac{1}{T^{2}}\]</div>
+<p>Den integrerte formen av Clausius–Clapeyron-likningen gir:</p>
+<div class="math notranslate nohighlight">
+\[\ln{\ \left(\frac{p_{2}}{p_{1}}\right)}=\frac{{\Delta }_{vap}H_{m}}{R\ }\left(\frac{1}{T_{1}}-\frac{1}{T_{2}}\right)\ \]</div>
+<p>Når vi setter inn verdiene, får vi:</p>
+<div class="math notranslate nohighlight">
+\[\ln{\left(\frac{760\ Torr}{50.0\ Torr}\right)=\frac{49.71\cdot {10}^{3}\ J\ mol^{-1}}{8.3145\ J\ K^{-1}mol^{-1}}\cdot \left(\frac{1}{T_{1}}-\frac{1}{470.15\ K}\right)}\]</div>
+<div class="math notranslate nohighlight">
+\[4.5\cdot {10}^{-4}\ K^{-1}=\ \frac{1}{T_{1}}-\frac{1}{470.15\ K}\]</div>
+<div class="math notranslate nohighlight">
+\[0.002582\ K^{-1}=\frac{1}{T_{1}}\ \implies T_{1}=387.6\ K\]</div>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>Nedenfor er det gitt data for hvordan den indre energien til et system varierer med temperatur i et system som undergår en faseovergang.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Temperatur (°C)</p></th>
+<th class="head"><p>35</p></th>
+<th class="head"><p>40</p></th>
+<th class="head"><p>45</p></th>
+<th class="head"><p>50</p></th>
+<th class="head"><p>51</p></th>
+<th class="head"><p>51.5</p></th>
+<th class="head"><p>51.6</p></th>
+<th class="head"><p>55</p></th>
+<th class="head"><p>60</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Indre Energi (J)</p></td>
+<td><p>401</p></td>
+<td><p>435</p></td>
+<td><p>499</p></td>
+<td><p>582</p></td>
+<td><p>776</p></td>
+<td><p>887</p></td>
+<td><p>2012</p></td>
+<td><p>2020</p></td>
+<td><p>2031</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Lag et skript for å finne ut ved hvilken temperatur faseovergangen skjer.</p>
+<p>Hint: Husk det du har lært om numerisk derivasjon.</p>
+<p><strong>Svar</strong>
+For å finne temperaturen der faseovergangen skjer, er det hensiktsmessig å plotte varmekapasiteten som funksjon av temperaturen. Varmekapasitet er definert som <span class="math notranslate nohighlight">\(C_{V}={\left(\frac{\partial U}{\partial T}\right)}_{V}\)</span> og vi kan derivere dataene numerisk for å anslå varmekapasiteten i dette systemet.</p>
+<p>Dette kan f.eks. implementeres i Python på følgende måte:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="p">[</span><span class="mi">35</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">45</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">51</span><span class="p">,</span> <span class="mf">51.5</span><span class="p">,</span> <span class="mf">51.6</span><span class="p">,</span> <span class="mi">55</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="n">U</span> <span class="o">=</span> <span class="p">[</span><span class="mi">401</span><span class="p">,</span> <span class="mi">435</span><span class="p">,</span> <span class="mi">499</span><span class="p">,</span> <span class="mi">582</span><span class="p">,</span> <span class="mi">776</span><span class="p">,</span> <span class="mi">887</span><span class="p">,</span> <span class="mi">2012</span><span class="p">,</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">2031</span><span class="p">]</span>
+<span class="n">C</span> <span class="o">=</span> <span class="p">[]</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">T</span><span class="p">)</span><span class="o">-</span><span class="mi">1</span><span class="p">):</span>
+    <span class="n">dT</span> <span class="o">=</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">T</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">dU</span> <span class="o">=</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">]</span> <span class="o">-</span> <span class="n">U</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+    <span class="n">C</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">dU</span><span class="o">/</span><span class="n">dT</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">T</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="o">-</span><span class="mi">1</span><span class="p">],</span> <span class="n">C</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">'Temperatur (°C)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s2">"Varmekapasitet"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Varmekapasitet som funksjon av temperatur'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1507f06decaaaa74264251ccfc9470f97a0e47a8a49ef3eba275661e5317968c.png" src="../../_images/1507f06decaaaa74264251ccfc9470f97a0e47a8a49ef3eba275661e5317968c.png" />
+</div>
+</div>
+<p>Varmekapasiteten har en tydelig topp rundt <span class="math notranslate nohighlight">\(51 ^{\circ}C\)</span> og formen på toppen tyder på at det er en første ordens faseovergang som skjer her. Fordi beregningen bruker diskrete datapunkter, kan vi ikke observere at varmekapasiteten divergerer mot uendelig. Toppen gir likevel en god indikasjon på at faseovergangen skjer.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_06_tentativ.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 6 – Fri energi</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-gibbs-energi-og-spontanitet">Oppgave 1: Gibbs-energi og spontanitet.</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2-kjemisk-potensial">Oppgave 2: Kjemisk potensial</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>
