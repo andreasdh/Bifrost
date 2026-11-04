@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Komplement, snitt og union</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --setA:#1f5f8b;--setB:#c0392b;--fill:#d68910;--ok:#1a7a4c;--muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:10px;}
+  svg{display:block;width:100%;height:auto;}
+  .region{cursor:pointer;transition:fill-opacity .12s;}
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .expr{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:20px;color:var(--fill);
+    margin:4px 0 8px;min-height:26px;}
+  .desc{font-size:14px;color:var(--muted);min-height:40px;}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:8px 0;gap:10px;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;color:var(--ink);text-align:right;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;}
+  .buttons button{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.03em;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;}
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .hintline{margin-top:12px;padding:8px 10px;border-radius:3px;font-size:12.5px;
+    background:#f0ece1;color:var(--muted);font-family:"SF Mono",ui-monospace,Menlo,monospace;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--fill);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Komplement, snitt og union</div>
+  <h1>Prøv deg fram med mengdeuttrykk</h1>
+  <p class="sub">Venn-diagrammet er delt i fire områder. Klikk på ett eller flere for å farge dem, og se hvilket mengdeuttrykk som beskriver akkurat det du har valgt.</p>
+
+  <div class="stage">
+    <svg id="venn" viewBox="0 0 560 300" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <clipPath id="clipA"><circle cx="230" cy="150" r="95"/></clipPath>
+        <clipPath id="clipB"><circle cx="330" cy="150" r="95"/></clipPath>
+        <clipPath id="clipBox"><rect x="40" y="30" width="480" height="240"/></clipPath>
+        <!-- masks to carve out the other circle, giving disjoint "only" regions -->
+        <mask id="notB">
+          <rect x="0" y="0" width="560" height="300" fill="#fff"/>
+          <circle cx="330" cy="150" r="95" fill="#000"/>
+        </mask>
+        <mask id="notA">
+          <rect x="0" y="0" width="560" height="300" fill="#fff"/>
+          <circle cx="230" cy="150" r="95" fill="#000"/>
+        </mask>
+        <mask id="outsideBoth">
+          <rect x="40" y="30" width="480" height="240" fill="#fff"/>
+          <circle cx="230" cy="150" r="95" fill="#000"/>
+          <circle cx="330" cy="150" r="95" fill="#000"/>
+        </mask>
+      </defs>
+
+      <!-- outside region: box with both circles carved out -->
+      <rect id="r-out" class="region" x="40" y="30" width="480" height="240"
+            fill="var(--fill)" fill-opacity="0" stroke="none" mask="url(#outsideBoth)"/>
+
+      <!-- A only: circle A with B carved out -->
+      <circle id="r-a" class="region" cx="230" cy="150" r="95"
+              fill="var(--fill)" fill-opacity="0" mask="url(#notB)"/>
+      <!-- B only: circle B with A carved out -->
+      <circle id="r-b" class="region" cx="330" cy="150" r="95"
+              fill="var(--fill)" fill-opacity="0" mask="url(#notA)"/>
+      <!-- overlap: circle A clipped to B -->
+      <g clip-path="url(#clipB)">
+        <circle id="r-ab" class="region" cx="230" cy="150" r="95" fill="var(--fill)" fill-opacity="0"/>
+      </g>
+
+      <!-- outlines on top -->
+      <rect x="40" y="30" width="480" height="240" fill="none" stroke="var(--axis)" stroke-width="1.6"/>
+      <circle cx="230" cy="150" r="95" fill="none" stroke="var(--setA)" stroke-width="2.4"/>
+      <circle cx="330" cy="150" r="95" fill="none" stroke="var(--setB)" stroke-width="2.4"/>
+
+      <text x="152" y="70" font-family="Georgia" font-style="italic" font-size="20" fill="var(--setA)">A</text>
+      <text x="398" y="70" font-family="Georgia" font-style="italic" font-size="20" fill="var(--setB)">B</text>
+      <text x="52" y="50" font-family="Georgia" font-style="italic" font-size="16" fill="var(--axis)">S</text>
+    </svg>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Valgt område</h2>
+      <div class="expr" id="exprVal">—</div>
+      <div class="desc" id="descVal">Klikk på et område i diagrammet.</div>
+      <div class="row">
+        <span class="lab">med A = {1,2,3}, B = {3,4}</span>
+        <span class="val" id="setVal">—</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Vis meg</h2>
+      <div class="buttons">
+        <button data-r="a,ab">A</button>
+        <button data-r="b,ab">B</button>
+        <button data-r="ab">A ∩ B</button>
+        <button data-r="a,ab,b">A ∪ B</button>
+        <button data-r="b,out">A′</button>
+        <button data-r="out">(A ∪ B)′</button>
+        <button data-r="a">bare A</button>
+        <button id="clearBtn">nullstill</button>
+      </div>
+      <div class="hintline">Snitt = overlappen. Union = alt som er med i minst én. Komplement = alt utenfor.</div>
+    </div>
+  </div>
+
+  <p class="note">Legg merke til at unionen bare teller overlappen én gang. Det er nettopp derfor vi må trekke fra P(A ∩ B) når vi regner ut P(A ∪ B) senere.</p>
+</div>
+
+<script>
+(function(){
+  const S=[1,2,3,4,5,6], A=[1,2,3], B=[3,4];
+  const inA=x=>A.includes(x), inB=x=>B.includes(x);
+  const REGION_SETS={
+    a:   S.filter(x=> inA(x) && !inB(x)),
+    ab:  S.filter(x=> inA(x) &&  inB(x)),
+    b:   S.filter(x=>!inA(x) &&  inB(x)),
+    out: S.filter(x=>!inA(x) && !inB(x))
+  };
+
+  // canonical expressions keyed by sorted region combination
+  const NAMES={
+    "":            ["—","Klikk på et område i diagrammet."],
+    "a":           ["A ∩ B′","Utfall som er i A, men ikke i B."],
+    "ab":          ["A ∩ B","Snittet — utfall som er i både A og B."],
+    "b":           ["A′ ∩ B","Utfall som er i B, men ikke i A."],
+    "out":         ["(A ∪ B)′","Komplementet til unionen — verken i A eller B."],
+    "a,ab":        ["A","Hele hendelsen A."],
+    "ab,b":        ["B","Hele hendelsen B."],
+    "a,b":         ["(A ∩ B)′ ∩ (A ∪ B)","I nøyaktig én av dem — det symmetriske differansen."],
+    "a,out":       ["B′","Komplementet til B — alt som ikke er i B."],
+    "ab,out":      ["(A ∩ B) ∪ (A ∪ B)′","Enten i begge, eller i ingen av dem."],
+    "b,out":       ["A′","Komplementet til A — alt som ikke er i A."],
+    "a,ab,b":      ["A ∪ B","Unionen — utfall som er i minst én av A og B."],
+    "a,ab,out":    ["B′ ∪ (A ∩ B)","Alt som ikke er i B, pluss overlappen."],
+    "a,b,out":     ["(A ∩ B)′","Komplementet til snittet — alt utenom overlappen."],
+    "ab,b,out":    ["A′ ∪ (A ∩ B)","Alt som ikke er i A, pluss overlappen."],
+    "a,ab,b,out":  ["S","Hele utfallsrommet."]
+  };
+  const ORDER=["a","ab","b","out"];
+  const sel=new Set();
+
+  function key(){return ORDER.filter(r=>sel.has(r)).join(",");}
+
+  function update(){
+    ORDER.forEach(r=>{
+      const el=document.getElementById('r-'+r);
+      el.setAttribute('fill-opacity', sel.has(r)?0.55:0);
+    });
+    const k=key();
+    const [expr,desc]=NAMES[k]||["—",""];
+    document.getElementById('exprVal').textContent=expr;
+    document.getElementById('descVal').textContent=desc;
+    const vals=[...sel].flatMap(r=>REGION_SETS[r]).sort((x,y)=>x-y);
+    document.getElementById('setVal').textContent = k? (vals.length?'{'+vals.join(', ')+'}':'{ }') : '—';
+  }
+
+  // Geometric hit-testing: decide the region from click coordinates.
+  // This is robust regardless of how the browser handles masked fill areas.
+  const svg=document.getElementById('venn');
+  svg.addEventListener('click',e=>{
+    const p=svg.createSVGPoint();
+    p.x=e.clientX;p.y=e.clientY;
+    const loc=p.matrixTransform(svg.getScreenCTM().inverse());
+    // outside the S box entirely -> ignore
+    if(loc.x<40||loc.x>520||loc.y<30||loc.y>270) return;
+    const dA=Math.hypot(loc.x-230,loc.y-150)<=95;
+    const dB=Math.hypot(loc.x-330,loc.y-150)<=95;
+    let r;
+    if(dA&&dB) r='ab'; else if(dA) r='a'; else if(dB) r='b'; else r='out';
+    sel.has(r)?sel.delete(r):sel.add(r);
+    update();
+  });
+
+  document.querySelectorAll('button[data-r]').forEach(b=>{
+    b.addEventListener('click',()=>{
+      sel.clear();
+      b.dataset.r.split(',').forEach(r=>sel.add(r));
+      update();
+    });
+  });
+  document.getElementById('clearBtn').addEventListener('click',()=>{sel.clear();update();});
+
+  update();
+})();
+</script>
+</body>
+</html>

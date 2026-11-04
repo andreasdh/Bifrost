@@ -1,0 +1,349 @@
+<!-- Simulering: Tidsgjennomsnitt over mikrotilstander (to-nivå-system) -->
+<!-- Alle id/klasser er prefikset med "tkta-" (Tid-og-KvanteTilstander-Average) og all -->
+<!-- JS kjører i en isolert IIFE med scoped querySelector, slik at denne widgeten kan -->
+<!-- ligge i samme notebook som andre simuleringer uten å krasje med deres id-er. -->
+<div class="tkta-wrap" data-tkta-instance>
+  <style>
+    .tkta-wrap {
+      --tkta-bg: #f2ead9;
+      --tkta-panel: #ece1cb;
+      --tkta-panel-alt: #e3d5b8;
+      --tkta-border: #cdbb96;
+      --tkta-text: #33291c;
+      --tkta-muted: #8a7a5c;
+      --tkta-ground: #3457a0;
+      --tkta-excited: #c9752f;
+      --tkta-avg: #0d7d6f;
+      --tkta-target: #a83b4c;
+
+      box-sizing: border-box;
+      background: var(--tkta-bg);
+      border: 1px solid var(--tkta-border);
+      border-radius: 10px;
+      padding: 20px;
+      color: var(--tkta-text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Inter, Roboto, sans-serif;
+      max-width: 900px;
+      margin: 1.5em auto;
+    }
+    .tkta-wrap *, .tkta-wrap *::before, .tkta-wrap *::after { box-sizing: border-box; }
+
+    .tkta-header { display: flex; align-items: baseline; justify-content: space-between; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+    .tkta-title { font-size: 15px; font-weight: 700; letter-spacing: 0.01em; }
+    .tkta-subtitle { font-size: 12.5px; color: var(--tkta-muted); margin-bottom: 16px; }
+
+    .tkta-grid-row { display: grid; grid-template-columns: minmax(180px, 260px) 1fr; gap: 18px; align-items: stretch; }
+    @media (max-width: 640px) { .tkta-grid-row { grid-template-columns: 1fr; } }
+
+    .tkta-particles-panel, .tkta-chart-panel {
+      background: var(--tkta-panel);
+      border: 1px solid var(--tkta-border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .tkta-particles-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tkta-muted); margin-bottom: 8px; }
+    .tkta-particles-grid { display: flex; flex-wrap: wrap; gap: 4px; align-content: flex-start; min-height: 120px; }
+    .tkta-particle {
+      width: 12px; height: 12px; border-radius: 3px;
+      background: var(--tkta-ground);
+      transition: background 120ms ease, transform 120ms ease;
+    }
+    .tkta-particle.tkta-excited { background: var(--tkta-excited); box-shadow: 0 0 6px 0 rgba(201,117,47,0.45); }
+
+    .tkta-chart-label { font-size: 11px; text-transform: uppercase; letter-spacing: 0.06em; color: var(--tkta-muted); margin-bottom: 8px; display: flex; justify-content: space-between; }
+    .tkta-legend { font-size: 10.5px; text-transform: none; letter-spacing: normal; display: flex; gap: 12px; }
+    .tkta-legend span { display: inline-flex; align-items: center; gap: 4px; }
+    .tkta-dot { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+    canvas.tkta-canvas { width: 100%; height: 180px; display: block; border-radius: 6px; background: var(--tkta-panel-alt); }
+
+    .tkta-stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
+    @media (max-width: 640px) { .tkta-stats { grid-template-columns: repeat(2, 1fr); } }
+    .tkta-stat { background: var(--tkta-panel); border: 1px solid var(--tkta-border); border-radius: 8px; padding: 8px 10px; }
+    .tkta-stat-label { font-size: 10.5px; color: var(--tkta-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .tkta-stat-value { font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 16px; margin-top: 2px; }
+    .tkta-stat-value.tkta-accent { color: var(--tkta-avg); }
+    .tkta-stat-value.tkta-target-color { color: var(--tkta-target); }
+
+    .tkta-controls { margin-top: 16px; display: grid; grid-template-columns: 1fr 1fr auto auto; gap: 14px; align-items: end; }
+    @media (max-width: 640px) { .tkta-controls { grid-template-columns: 1fr 1fr; } }
+    .tkta-control label { font-size: 11.5px; color: var(--tkta-muted); display: flex; justify-content: space-between; margin-bottom: 4px; }
+    .tkta-control input[type="range"] { width: 100%; accent-color: var(--tkta-avg); }
+    .tkta-btn {
+      background: var(--tkta-panel-alt); color: var(--tkta-text); border: 1px solid var(--tkta-border);
+      border-radius: 7px; padding: 9px 14px; font-size: 13px; cursor: pointer; font-weight: 600;
+      transition: background 120ms ease, border-color 120ms ease;
+    }
+    .tkta-btn:hover { background: #ddcda8; border-color: #b9a578; }
+    .tkta-btn.tkta-primary { background: var(--tkta-avg); color: #f2ead9; border-color: var(--tkta-avg); }
+    .tkta-btn.tkta-primary:hover { filter: brightness(1.08); }
+    .tkta-btn-row { display: flex; gap: 8px; grid-column: span 2; }
+    @media (max-width: 640px) { .tkta-btn-row { grid-column: span 2; } }
+  </style>
+
+  <div class="tkta-header">
+    <div class="tkta-title">Tidsgjennomsnitt over mikrotilstander</div>
+  </div>
+  <div class="tkta-subtitle">Et to-nivå-system som stadig hopper til en ny tilfeldig mikrotilstand. Se hvordan gjennomsnittet stabiliserer seg selv om hver enkelt mikrotilstand ser tilfeldig ut.</div>
+
+  <div class="tkta-grid-row">
+    <div class="tkta-particles-panel">
+      <div class="tkta-particles-label">Systemets mikrotilstand akkurat nå</div>
+      <div class="tkta-particles-grid" data-tkta="particles"></div>
+    </div>
+    <div class="tkta-chart-panel">
+      <div class="tkta-chart-label">
+        <span>Andel eksiterte partikler, n/N, over tid</span>
+        <span class="tkta-legend">
+          <span><span class="tkta-dot" style="background:var(--tkta-excited)"></span>Momentanverdi</span>
+          <span><span class="tkta-dot" style="background:var(--tkta-avg)"></span>Løpende gjennomsnitt</span>
+          <span><span class="tkta-dot" style="background:var(--tkta-target)"></span>p (likevekt)</span>
+        </span>
+      </div>
+      <canvas class="tkta-canvas" data-tkta="canvas"></canvas>
+    </div>
+  </div>
+
+  <div class="tkta-stats">
+    <div class="tkta-stat">
+      <div class="tkta-stat-label">Tidssteg</div>
+      <div class="tkta-stat-value" data-tkta="steps">0</div>
+    </div>
+    <div class="tkta-stat">
+      <div class="tkta-stat-label">Momentan n/N</div>
+      <div class="tkta-stat-value" data-tkta="instant">–</div>
+    </div>
+    <div class="tkta-stat">
+      <div class="tkta-stat-label">Løpende gjennomsnitt</div>
+      <div class="tkta-stat-value tkta-accent" data-tkta="avg">–</div>
+    </div>
+    <div class="tkta-stat">
+      <div class="tkta-stat-label">Avvik fra p</div>
+      <div class="tkta-stat-value tkta-target-color" data-tkta="dev">–</div>
+    </div>
+  </div>
+
+  <div class="tkta-controls">
+    <div class="tkta-control">
+      <label><span>Antall partikler, N</span><span data-tkta="n-value">40</span></label>
+      <input type="range" min="4" max="200" step="1" value="40" data-tkta="n-slider">
+    </div>
+    <div class="tkta-control">
+      <label><span>Sannsynlighet p for eksitasjon</span><span data-tkta="p-value">0.30</span></label>
+      <input type="range" min="0.05" max="0.95" step="0.01" value="0.30" data-tkta="p-slider">
+    </div>
+    <div class="tkta-btn-row">
+      <button class="tkta-btn tkta-primary" data-tkta="playpause">Pause</button>
+      <button class="tkta-btn" data-tkta="reset">Nullstill</button>
+    </div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // Kjør ett scoped script per instans av widgeten på siden (i tilfelle flere kopier limes inn).
+  var roots = document.querySelectorAll('[data-tkta-instance]:not([data-tkta-initialized])');
+  roots.forEach(function (root) {
+    root.setAttribute('data-tkta-initialized', 'true');
+    initTkta(root);
+  });
+
+  function initTkta(root) {
+    var q = function (sel) { return root.querySelector('[data-tkta="' + sel + '"]'); };
+
+    var particlesEl = q('particles');
+    var canvas = q('canvas');
+    var ctx = canvas.getContext('2d');
+
+    var nSlider = q('n-slider');
+    var pSlider = q('p-slider');
+    var nValueEl = q('n-value');
+    var pValueEl = q('p-value');
+    var playPauseBtn = q('playpause');
+    var resetBtn = q('reset');
+
+    var stepsEl = q('steps');
+    var instantEl = q('instant');
+    var avgEl = q('avg');
+    var devEl = q('dev');
+
+    var N = parseInt(nSlider.value, 10);
+    var p = parseFloat(pSlider.value);
+    var running = true;
+    var tickMs = 350;
+    var timer = null;
+
+    var history = [];   // instantaneous n/N values
+    var runningSum = 0; // for cumulative average
+    var maxPoints = 160;
+
+    function resizeCanvas() {
+      var rect = canvas.getBoundingClientRect();
+      var dpr = window.devicePixelRatio || 1;
+      canvas.width = Math.max(1, Math.round(rect.width * dpr));
+      canvas.height = Math.max(1, Math.round(180 * dpr));
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    }
+
+    function buildParticleGrid() {
+      particlesEl.innerHTML = '';
+      var frag = document.createDocumentFragment();
+      for (var i = 0; i < N; i++) {
+        var d = document.createElement('div');
+        d.className = 'tkta-particle';
+        frag.appendChild(d);
+      }
+      particlesEl.appendChild(frag);
+    }
+
+    function sampleMicrostate() {
+      var particleEls = particlesEl.children;
+      var nExcited = 0;
+      for (var i = 0; i < N; i++) {
+        var isExcited = Math.random() < p;
+        if (isExcited) {
+          nExcited++;
+          particleEls[i].classList.add('tkta-excited');
+        } else {
+          particleEls[i].classList.remove('tkta-excited');
+        }
+      }
+      return nExcited / N;
+    }
+
+    function drawChart() {
+      var w = canvas.getBoundingClientRect().width;
+      var h = 180;
+      ctx.clearRect(0, 0, w, h);
+
+      var padTop = 10, padBottom = 18, padLeft = 4, padRight = 4;
+      var plotH = h - padTop - padBottom;
+      var plotW = w - padLeft - padRight;
+
+      function yFor(v) { return padTop + (1 - v) * plotH; }
+
+      // Gridlines at 0, 0.5, 1
+      ctx.strokeStyle = 'rgba(51,41,28,0.14)';
+      ctx.lineWidth = 1;
+      [0, 0.5, 1].forEach(function (v) {
+        var y = yFor(v);
+        ctx.beginPath();
+        ctx.moveTo(padLeft, y);
+        ctx.lineTo(padLeft + plotW, y);
+        ctx.stroke();
+        ctx.fillStyle = 'rgba(51,41,28,0.55)';
+        ctx.font = '9px ui-monospace, monospace';
+        ctx.fillText(v.toFixed(1), padLeft + plotW - 20, y - 2);
+      });
+
+      // Target p as dashed line
+      var yP = yFor(p);
+      ctx.save();
+      ctx.strokeStyle = '#a83b4c';
+      ctx.setLineDash([4, 4]);
+      ctx.beginPath();
+      ctx.moveTo(padLeft, yP);
+      ctx.lineTo(padLeft + plotW, yP);
+      ctx.stroke();
+      ctx.restore();
+
+      if (history.length === 0) return;
+
+      var n = history.length;
+      var start = Math.max(0, n - maxPoints);
+      var visible = history.slice(start);
+      var count = visible.length;
+      var xStep = count > 1 ? plotW / (maxPoints - 1) : plotW;
+      var xOffset = padLeft + (maxPoints - count) * xStep;
+
+      // Instantaneous points
+      ctx.fillStyle = '#c9752f';
+      for (var i = 0; i < count; i++) {
+        var x = xOffset + i * xStep;
+        var y = yFor(visible[i].instant);
+        ctx.globalAlpha = 0.55;
+        ctx.beginPath();
+        ctx.arc(x, y, 2, 0, Math.PI * 2);
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+
+      // Running average line
+      ctx.strokeStyle = '#0d7d6f';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      for (var j = 0; j < count; j++) {
+        var xx = xOffset + j * xStep;
+        var yy = yFor(visible[j].avg);
+        if (j === 0) ctx.moveTo(xx, yy); else ctx.lineTo(xx, yy);
+      }
+      ctx.stroke();
+    }
+
+    function tick() {
+      var instant = sampleMicrostate();
+      runningSum += instant;
+      history.push({ instant: instant, avg: runningSum / history.length + 0 }); // placeholder, fixed below
+      var steps = history.length;
+      history[steps - 1].avg = runningSum / steps;
+
+      stepsEl.textContent = steps;
+      instantEl.textContent = instant.toFixed(3);
+      var avg = runningSum / steps;
+      avgEl.textContent = avg.toFixed(3);
+      devEl.textContent = (avg - p >= 0 ? '+' : '') + (avg - p).toFixed(3);
+
+      drawChart();
+    }
+
+    function start() {
+      if (timer) return;
+      running = true;
+      playPauseBtn.textContent = 'Pause';
+      timer = setInterval(tick, tickMs);
+    }
+    function stop() {
+      running = false;
+      playPauseBtn.textContent = 'Fortsett';
+      clearInterval(timer);
+      timer = null;
+    }
+    function reset() {
+      history = [];
+      runningSum = 0;
+      stepsEl.textContent = '0';
+      instantEl.textContent = '–';
+      avgEl.textContent = '–';
+      devEl.textContent = '–';
+      buildParticleGrid();
+      resizeCanvas();
+      drawChart();
+    }
+
+    nSlider.addEventListener('input', function () {
+      N = parseInt(nSlider.value, 10);
+      nValueEl.textContent = N;
+      reset();
+    });
+    pSlider.addEventListener('input', function () {
+      p = parseFloat(pSlider.value);
+      pValueEl.textContent = p.toFixed(2);
+      drawChart();
+    });
+    playPauseBtn.addEventListener('click', function () {
+      if (running) stop(); else start();
+    });
+    resetBtn.addEventListener('click', reset);
+
+    window.addEventListener('resize', function () {
+      resizeCanvas();
+      drawChart();
+    });
+
+    buildParticleGrid();
+    resizeCanvas();
+    drawChart();
+    start();
+  }
+})();
+</script>

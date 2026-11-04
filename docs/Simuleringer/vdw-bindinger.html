@@ -1,0 +1,1242 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Molekylsonde: van der Waals-krefter</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:ital,wght@0,300;0,400;0,600&family=Lora:ital,wght@0,400;0,500;0,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ══════════════════════════════════════════════════════════
+   Fargene er hentet direkte fra Bifrost sin _static/custom.css
+   ══════════════════════════════════════════════════════════ */
+:root {
+  --bg:        #faf7f2;
+  --surface:   #f2ece0;
+  --surface-2: #ede8dc;
+  --ink:       #2a2218;
+  --ink-soft:  #6a5a44;
+  --primary:   #9a6020;
+  --primary-d: #6b3d0f;
+  --primary-l: #c8873a;
+  --secondary: #3a7a9c;
+  --sec-tint:  #eef5fa;
+  --border:    #ddd0b8;
+  --gold:      #f0d090;
+  --muted:     #7a6a50;
+  --red:       #b04040;
+  --neg:       #3a7a9c;   /* δ−  */
+  --pos:       #c8873a;   /* δ+  */
+  --neutral:   #b9a888;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Lora', Georgia, serif;
+}
+
+#sonde {
+  max-width: 880px;
+  margin: 0 auto;
+  padding: 1rem 1rem 1.4rem;
+}
+
+/* ── Topptekst ────────────────────────────────────────── */
+.tittel {
+  font-family: 'Crimson Pro', Georgia, serif;
+  font-weight: 300;
+  font-size: 1.55rem;
+  color: var(--primary-d);
+  margin: 0 0 .2rem;
+  letter-spacing: .01em;
+}
+.ingress {
+  font-size: .95rem;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 .9rem;
+  max-width: 62ch;
+}
+
+/* ── Lerret ───────────────────────────────────────────── */
+.scene {
+  position: relative;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--bg);
+  overflow: hidden;
+}
+canvas { display: block; width: 100%; height: auto; touch-action: none; cursor: grab; }
+canvas.dragging { cursor: grabbing; }
+
+.hint {
+  position: absolute;
+  left: 12px; bottom: 10px;
+  font-family: 'Crimson Pro', serif;
+  font-size: .82rem;
+  color: var(--ink-soft);
+  background: rgba(250,247,242,.82);
+  padding: .15rem .45rem;
+  border-radius: 4px;
+  pointer-events: none;
+  transition: opacity .4s;
+}
+.hint.skjult { opacity: 0; }
+
+/* ── Kontroller ───────────────────────────────────────── */
+.panel {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-top: none;
+  border-radius: 0 0 6px 6px;
+  padding: .85rem 1rem 1rem;
+}
+.scene { border-radius: 6px 6px 0 0; }
+
+.rad {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  align-items: flex-end;
+  margin-bottom: .8rem;
+}
+.felt { display: flex; flex-direction: column; gap: .25rem; }
+.merke {
+  font-family: 'Crimson Pro', serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--muted);
+}
+select {
+  font-family: 'Lora', serif;
+  font-size: .95rem;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: .3rem .5rem;
+  min-width: 8.5rem;
+}
+select:focus-visible, button:focus-visible, input:focus-visible {
+  outline: 2px solid var(--primary-l);
+  outline-offset: 2px;
+}
+
+/* Kraftbrytere */
+.brytere { display: flex; gap: .45rem; flex-wrap: wrap; }
+.bryter {
+  font-family: 'Crimson Pro', serif;
+  font-size: .95rem;
+  font-weight: 500;
+  padding: .34rem .8rem;
+  border-radius: 5px;
+  border: 1px solid var(--border);
+  background: var(--bg);
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: .4rem;
+  transition: background .15s, color .15s, border-color .15s;
+}
+.bryter::before {
+  content: '';
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background .15s;
+}
+.bryter[aria-pressed="true"] {
+  background: var(--primary);
+  border-color: var(--primary);
+  color: var(--bg);
+}
+.bryter[aria-pressed="true"]::before { background: var(--gold); }
+.bryter:disabled { opacity: .38; cursor: not-allowed; }
+
+/* Skyvekontroller */
+.skyv { display: flex; flex-direction: column; gap: .2rem; min-width: 190px; max-width: 300px; flex: 1; }
+.skyv-topp { display: flex; justify-content: space-between; align-items: baseline; }
+.verdi { font-family: 'DM Mono', monospace; font-size: .88rem; color: var(--primary-d); }
+input[type=range] {
+  -webkit-appearance: none; appearance: none;
+  width: 100%; height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+}
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none; appearance: none;
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--primary); border: 2px solid var(--bg);
+  cursor: pointer;
+}
+input[type=range]::-moz-range-thumb {
+  width: 15px; height: 15px; border-radius: 50%;
+  background: var(--primary); border: 2px solid var(--bg);
+  cursor: pointer;
+}
+
+/* ── Avlesning ────────────────────────────────────────── */
+.avlesning {
+  border-top: 1px solid var(--border);
+  padding-top: .85rem;
+  display: grid;
+  grid-template-columns: minmax(180px, 1fr) minmax(260px, 1.5fr);
+  gap: 1.4rem;
+}
+@media (max-width: 620px) { .avlesning { grid-template-columns: 1fr; gap: 1rem; } }
+
+.oyeblikk { display: flex; flex-direction: column; gap: .3rem; }
+.stort {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: var(--primary-d);
+  line-height: 1.1;
+}
+.stort span { font-size: .8rem; color: var(--muted); }
+.undertekst { font-size: .8rem; color: var(--ink-soft); line-height: 1.45; }
+
+.maler { height: 9px; background: var(--surface-2); border-radius: 5px; position: relative; margin: .3rem 0 .1rem; border: 1px solid var(--border); }
+.maler i { position: absolute; top: 50%; width: 2px; height: 15px; margin-top: -7.5px; background: var(--muted); left: 50%; }
+.maler b { position: absolute; top: 50%; width: 3px; height: 19px; margin-top: -9.5px; border-radius: 2px; background: var(--primary); left: 50%; transition: left .04s linear; }
+.maler u { position: absolute; top: 50%; width: 9px; height: 9px; margin-top: -4.5px; border-radius: 50%; background: var(--secondary); left: 50%; border: 1px solid var(--bg); }
+.dipol { font-size: .8rem; color: var(--ink-soft); line-height: 1.55; }
+.dipol b { font-family: 'Crimson Pro', serif; font-weight: 600; font-size: .86rem; color: var(--muted); display: block; margin-bottom: .1rem; }
+.dipol i { font-family: 'DM Mono', monospace; font-style: normal; color: var(--ink); }
+
+.maler-tekst { display: flex; justify-content: space-between; font-family: 'Crimson Pro', serif; font-size: .76rem; color: var(--muted); }
+
+/* Stolper */
+.snitt-tittel {
+  font-family: 'Crimson Pro', serif;
+  font-size: .88rem;
+  font-weight: 600;
+  color: var(--muted);
+  margin-bottom: .45rem;
+}
+.stolpe { display: grid; grid-template-columns: 4.6rem 1fr 5.2rem; align-items: center; gap: .5rem; margin-bottom: .3rem; }
+.stolpe-navn { font-family: 'Crimson Pro', serif; font-size: .92rem; }
+.stolpe-spor { display: block; height: 13px; background: var(--surface-2); border-radius: 3px; overflow: hidden; border: 1px solid var(--border); }
+.stolpe-fyll { display: block; height: 100%; width: 0; transition: width .12s linear; }
+.stolpe-tall { font-family: 'DM Mono', monospace; font-size: .78rem; text-align: right; color: var(--ink-soft); }
+.stolpe.av .stolpe-navn, .stolpe.av .stolpe-tall { color: var(--border); }
+
+.total { border-top: 1px dotted var(--border); margin-top: .5rem; padding-top: .4rem; }
+.total .stolpe-navn { font-weight: 600; }
+
+/* ── Fot ──────────────────────────────────────────────── */
+.knapper { display: flex; gap: .5rem; margin-top: .9rem; flex-wrap: wrap; align-items: center; }
+.knapp {
+  font-family: 'Crimson Pro', serif;
+  font-size: .9rem;
+  padding: .3rem .75rem;
+  border: 1px solid var(--border);
+  border-radius: 5px;
+  background: var(--bg);
+  color: var(--primary);
+  cursor: pointer;
+}
+.knapp:hover { background: var(--surface-2); color: var(--primary-d); }
+
+.varsel {
+  font-size: .8rem;
+  line-height: 1.5;
+  color: var(--red);
+  margin: .55rem 0 0;
+  display: none;
+}
+.varsel.vis { display: block; }
+
+</style>
+</head>
+<body>
+
+<div id="sonde">
+
+  <h2 class="tittel">Molekylsonde: hva skjer mellom to molekyler?</h2>
+  <p class="ingress">
+    Dra det høyre molekylet rundt det venstre. Skru av og på de tre van der Waals-bidragene
+    og se hvordan hvert av dem oppfører seg forskjellig.
+  </p>
+
+  <div class="scene">
+    <canvas id="lerret" width="860" height="460" aria-label="To molekyler med ladningsfordeling og kraftvektorer"></canvas>
+    <div class="hint" id="hint">Dra molekylet til høyre</div>
+  </div>
+
+  <div class="panel">
+
+    <div class="rad">
+      <div class="felt">
+        <label class="merke" for="molA">Venstre molekyl</label>
+        <select id="molA"></select>
+      </div>
+      <div class="felt">
+        <label class="merke" for="molB">Høyre molekyl</label>
+        <select id="molB"></select>
+      </div>
+      <div class="felt" style="flex:1">
+        <span class="merke">Bidrag</span>
+        <div class="brytere">
+          <button class="bryter" id="bKeesom" aria-pressed="true">Keesom</button>
+          <button class="bryter" id="bDebye"  aria-pressed="true">Debye</button>
+          <button class="bryter" id="bLondon" aria-pressed="true">London</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="rad">
+      <div class="skyv">
+        <div class="skyv-topp">
+          <label class="merke" for="temp">Temperatur</label>
+          <span class="verdi" id="tempVerdi">300 K</span>
+        </div>
+        <input type="range" id="temp" min="20" max="700" step="5" value="300">
+      </div>
+      <div class="skyv">
+        <div class="skyv-topp">
+          <label class="merke" for="avst">Avstand</label>
+          <span class="verdi" id="avstVerdi">450 pm</span>
+        </div>
+        <input type="range" id="avst" min="300" max="800" step="5" value="450">
+      </div>
+    </div>
+
+    <div class="avlesning">
+
+      <div class="oyeblikk">
+        <span class="merke">Øyeblikkelig energi</span>
+        <div class="stort"><span id="uNa">0,00</span> <span>kJ/mol</span></div>
+        <div class="maler" aria-hidden="true">
+          <i></i><b id="malerNaa"></b><u id="malerSnitt"></u>
+        </div>
+        <div class="maler-tekst"><span>frastøtning</span><span>tiltrekning</span></div>
+        <p class="undertekst" style="margin:.15rem 0 .55rem">
+          Streken er verdien akkurat nå, sirkelen er gjennomsnittet over tid siden sist nullstilling.
+        </p>
+
+        <div class="dipol">
+          <b>Dipolmoment i gjennomsnitt</b>
+          <i id="dipAbsA">0,0</i> D og <i id="dipAbsB">0,0</i> D
+        </div>
+
+        <p class="undertekst">
+          Dette er gjennomsnittet av størrelsen. Retningen skifter hele tiden, så dipolen som vektor midler seg bort. Fargene i elektronskyen viser retningen på ladningsforskyvningen, ikke størrelsen på den.
+        </p>
+      </div>
+
+      <div>
+        <div class="snitt-tittel" id="snittTittel">Gjennomsnitt over tid ved 300 K og 450 pm</div>
+
+        <div class="stolpe" id="sKeesom">
+          <span class="stolpe-navn">Keesom</span>
+          <span class="stolpe-spor"><span class="stolpe-fyll" style="background:#3a7a9c"></span></span>
+          <span class="stolpe-tall">0,00</span>
+        </div>
+        <div class="stolpe" id="sDebye">
+          <span class="stolpe-navn">Debye</span>
+          <span class="stolpe-spor"><span class="stolpe-fyll" style="background:#7a6a50"></span></span>
+          <span class="stolpe-tall">0,00</span>
+        </div>
+        <div class="stolpe" id="sLondon">
+          <span class="stolpe-navn">London</span>
+          <span class="stolpe-spor"><span class="stolpe-fyll" style="background:#9a6020"></span></span>
+          <span class="stolpe-tall">0,00</span>
+        </div>
+        <div class="stolpe total" id="sTotal">
+          <span class="stolpe-navn">Sum</span>
+          <span class="stolpe-spor"><span class="stolpe-fyll" style="background:#6b3d0f"></span></span>
+          <span class="stolpe-tall">0,00</span>
+        </div>
+        <p class="undertekst" style="margin-top:.45rem" id="forklaring"></p>
+        <p class="varsel" id="varsel"></p>
+      </div>
+
+    </div>
+
+    <div class="knapper">
+      <button class="knapp" id="pause">Pause</button>
+      <button class="knapp" id="nullstill">Nullstill gjennomsnitt</button>
+    </div>
+
+  </div>
+
+</div>
+
+<script>
+(function () {
+'use strict';
+
+/* ══════════════════════════════════════════════════════════
+   KONSTANTER
+   ══════════════════════════════════════════════════════════ */
+var D2CM = 3.33564e-30;      // debye -> C m
+var FPE0 = 1.112650056e-10;  // 4 pi eps0
+var KB   = 1.380649e-23;
+var NA   = 6.02214076e23;
+var EV   = 1.602176634e-19;
+var A3   = 1e-30;            // Ångstrøm^3 -> m^3
+var PM   = 1e-12;
+
+var C = {
+  bg: '#faf7f2', surface: '#f2ece0', ink: '#2a2218', inkSoft: '#6a5a44',
+  primary: '#9a6020', primaryD: '#6b3d0f', primaryL: '#c8873a',
+  secondary: '#3a7a9c', border: '#ddd0b8', gold: '#f0d090',
+  muted: '#7a6a50', red: '#b04040',
+  neg: '#3a7a9c', pos: '#c8873a', neutral: '#b9a888'
+};
+
+/* ══════════════════════════════════════════════════════════
+   MOLEKYLER
+   mu   : permanent dipolmoment / D
+   alfa : polariserbarhetsvolum / Å^3
+   Ion  : ioniseringsenergi / eV
+   atomer: lokale koordinater i pm. Den permanente dipolen
+           peker langs lokal +x (fra minus mot pluss).
+   ══════════════════════════════════════════════════════════ */
+var MOL = {
+  Ar: {
+    navn: 'Ar', mu: 0.00, alfa: 1.64, Ion: 15.76, sky: 135,
+    atomer: [{x: 0, y: 0, r: 62, q: 0, sym: 'Ar'}]
+  },
+  CH4: {
+    navn: 'CH\u2084', mu: 0.00, alfa: 2.59, Ion: 12.61, sky: 142,
+    atomer: [
+      {x: 0, y: 0, r: 52, q: 0, sym: 'C'},
+      {x:  78, y:  78, r: 34, q: 0, sym: 'H'},
+      {x: -78, y:  78, r: 34, q: 0, sym: 'H'},
+      {x:  78, y: -78, r: 34, q: 0, sym: 'H'},
+      {x: -78, y: -78, r: 34, q: 0, sym: 'H'}
+    ]
+  },
+  HCl: {
+    navn: 'HCl', mu: 1.08, alfa: 2.63, Ion: 12.74, sky: 150,
+    atomer: [
+      {x: -22, y: 0, r: 70, q: -1, sym: 'Cl'},
+      {x: 105, y: 0, r: 38, q: +1, sym: 'H'}
+    ]
+  },
+  NH3: {
+    navn: 'NH\u2083', mu: 1.47, alfa: 2.26, Ion: 10.07, sky: 132,
+    atomer: [
+      {x: -30, y: 0,   r: 64, q: -1, sym: 'N'},
+      {x:  52, y: 0,   r: 38, q: +1, sym: 'H'},
+      {x:  16, y: 88,  r: 38, q: +1, sym: 'H'},
+      {x:  16, y: -88, r: 38, q: +1, sym: 'H'}
+    ]
+  },
+  H2O: {
+    navn: 'H\u2082O', mu: 1.85, alfa: 1.48, Ion: 12.62, sky: 126,
+    atomer: [
+      {x: -28, y: 0,   r: 64, q: -1, sym: 'O'},
+      {x:  32, y: 76,  r: 38, q: +1, sym: 'H'},
+      {x:  32, y: -76, r: 38, q: +1, sym: 'H'}
+    ]
+  }
+};
+var ORDEN = ['Ar', 'CH4', 'HCl', 'NH3', 'H2O'];
+
+function alfaSI(m) { return FPE0 * m.alfa * A3; }   // polariserbarhet i SI
+function muSI(m)   { return m.mu * D2CM; }
+function ionSI(m)  { return m.Ion * EV; }
+
+/* ══════════════════════════════════════════════════════════
+   VEKTOR- OG FELTHJELPERE (2D)
+   ══════════════════════════════════════════════════════════ */
+function felt(p, dx, dy) {
+  // E fra punktdipol p i posisjonen forskjøvet (dx, dy) meter fra dipolen
+  var r2 = dx * dx + dy * dy;
+  var r = Math.sqrt(r2);
+  var r3 = r2 * r;
+  var ux = dx / r, uy = dy / r;
+  var pu = p.x * ux + p.y * uy;
+  return {x: (3 * pu * ux - p.x) / (FPE0 * r3),
+          y: (3 * pu * uy - p.y) / (FPE0 * r3)};
+}
+function dipolU(p1, p2, dx, dy) {
+  // vekselvirkningsenergi mellom to punktdipoler, dx/dy fra 1 til 2
+  var r2 = dx * dx + dy * dy;
+  var r = Math.sqrt(r2);
+  var r3 = r2 * r;
+  var ux = dx / r, uy = dy / r;
+  return (p1.x * p2.x + p1.y * p2.y
+          - 3 * (p1.x * ux + p1.y * uy) * (p2.x * ux + p2.y * uy)) / (FPE0 * r3);
+}
+function kryss(p, E) { return p.x * E.y - p.y * E.x; }   // dreiemoment i 2D
+
+/* 3D-versjoner, brukt av statistikk-kopien lenger nede */
+function felt3(p, d) {
+  var r2 = d.x * d.x + d.y * d.y + d.z * d.z;
+  var r = Math.sqrt(r2), r3 = r2 * r;
+  var ux = d.x / r, uy = d.y / r, uz = d.z / r;
+  var pu = p.x * ux + p.y * uy + p.z * uz;
+  return {x: (3 * pu * ux - p.x) / (FPE0 * r3),
+          y: (3 * pu * uy - p.y) / (FPE0 * r3),
+          z: (3 * pu * uz - p.z) / (FPE0 * r3)};
+}
+function dipolU3(p1, p2, d) {
+  var r2 = d.x * d.x + d.y * d.y + d.z * d.z;
+  var r = Math.sqrt(r2), r3 = r2 * r;
+  var ux = d.x / r, uy = d.y / r, uz = d.z / r;
+  return (p1.x * p2.x + p1.y * p2.y + p1.z * p2.z
+          - 3 * (p1.x * ux + p1.y * uy + p1.z * uz)
+              * (p2.x * ux + p2.y * uy + p2.z * uz)) / (FPE0 * r3);
+}
+function abs3(v) { return v.x * v.x + v.y * v.y + v.z * v.z; }
+
+function tilfeldigRetning() {
+  var x = gauss(), y = gauss(), z = gauss();
+  var n = Math.sqrt(x * x + y * y + z * z) || 1;
+  return {x: x / n, y: y / n, z: z / n};
+}
+
+// Symmetrisk prøvebevegelse: rotasjon om en tilfeldig akse (Rodrigues)
+function roterLitt(u, maksVinkel) {
+  var a = tilfeldigRetning();
+  var d = (Math.random() * 2 - 1) * maksVinkel;
+  var c = Math.cos(d), sn = Math.sin(d);
+  var au = a.x * u.x + a.y * u.y + a.z * u.z;
+  return {
+    x: u.x * c + (a.y * u.z - a.z * u.y) * sn + a.x * au * (1 - c),
+    y: u.y * c + (a.z * u.x - a.x * u.z) * sn + a.y * au * (1 - c),
+    z: u.z * c + (a.x * u.y - a.y * u.x) * sn + a.z * au * (1 - c)
+  };
+}
+function abs2(v) { return v.x * v.x + v.y * v.y; }
+
+var gaussLager = null;
+function gauss() {
+  if (gaussLager !== null) { var g = gaussLager; gaussLager = null; return g; }
+  var u = 0, v = 0;
+  while (u === 0) u = Math.random();
+  while (v === 0) v = Math.random();
+  var rad = Math.sqrt(-2 * Math.log(u));
+  gaussLager = rad * Math.sin(2 * Math.PI * v);
+  return rad * Math.cos(2 * Math.PI * v);
+}
+
+/* ══════════════════════════════════════════════════════════
+   TILSTAND
+   ══════════════════════════════════════════════════════════ */
+var S = {
+  a: 'HCl', b: 'HCl',
+  keesom: true, debye: true, london: true,
+  T: 300,
+  rPm: 450,          // senter-senter avstand
+  vinkel: 0,         // retningen fra A til B, radianer
+  thA: 0.7, thB: 2.4,
+  fA: {x: 0, y: 0}, fB: {x: 0, y: 0},   // fluktuerende dipoler
+  U: 0,
+  Usnitt: 0, Uteller: 0, Steller: 0,
+  uA: {x: 1, y: 0, z: 0}, uB: {x: 0, y: 1, z: 0},   // statistikk-kopiens orienteringer
+  kraftA: {x: 0, y: 0}, kraftB: {x: 0, y: 0},
+  kraftSnittA: {x: 0, y: 0},
+  pTotA: {x: 0, y: 0}, pTotB: {x: 0, y: 0},
+  pAbsA: 0, pAbsB: 0,                                  // gjennomsnittlig størrelse
+  gaar: true,
+  drar: false
+};
+
+// ROT setter bare tidsskalaen. Likevektsfordelingen bestemmes av forholdet
+// mellom dreiemoment og kT, og endres derfor ikke når ROT skaleres.
+var ROT = 1.1e17;   // rotasjonsmobilitet x tidssteg
+var OU  = 0.07;     // relaksasjonsrate for de fluktuerende dipolene
+
+/* ══════════════════════════════════════════════════════════
+   FYSIKK
+   ══════════════════════════════════════════════════════════ */
+function posisjoner() {
+  var r = S.rPm * PM;
+  return {ax: 0, ay: 0, bx: r * Math.cos(S.vinkel), by: r * Math.sin(S.vinkel)};
+}
+
+function permDipol(key, th) {
+  var m = muSI(MOL[key]);
+  return {x: m * Math.cos(th), y: m * Math.sin(th)};
+}
+
+// Effektiv ioniseringsenergi for paret (harmonisk gjennomsnitt), slik at
+// gjennomsnittet over tid av den fluktuerende modellen reproduserer London-uttrykket.
+function ionEff() {
+  var I1 = ionSI(MOL[S.a]), I2 = ionSI(MOL[S.b]);
+  return 2 * I1 * I2 / (I1 + I2);
+}
+function fluktRms(key) {
+  // <p_f^2> = (3/8) alfa I_eff, korrigert med 0.8 for at gjennomsnittet over retninger
+  // her skjer i planet og ikke i rommet
+  return Math.sqrt(0.8 * 0.375 * alfaSI(MOL[key]) * ionEff());
+}
+
+function energi(dx, dy, pAp, pBp, fA, fB) {
+  var U = 0;
+  var aA = alfaSI(MOL[S.a]), aB = alfaSI(MOL[S.b]);
+
+  if (S.keesom && MOL[S.a].mu > 0 && MOL[S.b].mu > 0) {
+    U += dipolU(pAp, pBp, dx, dy);
+  }
+  if (S.debye) {
+    if (MOL[S.a].mu > 0) U += -0.5 * aB * abs2(felt(pAp,  dx,  dy));
+    if (MOL[S.b].mu > 0) U += -0.5 * aA * abs2(felt(pBp, -dx, -dy));
+  }
+  if (S.london) {
+    U += -0.5 * aB * abs2(felt(fA,  dx,  dy));
+    U += -0.5 * aA * abs2(felt(fB, -dx, -dy));
+  }
+  return U;
+}
+
+function steg() {
+  var P = posisjoner();
+  var dx = P.bx - P.ax, dy = P.by - P.ay;
+  var aA = alfaSI(MOL[S.a]), aB = alfaSI(MOL[S.b]);
+  var polarA = MOL[S.a].mu > 0, polarB = MOL[S.b].mu > 0;
+
+  var pAp = permDipol(S.a, S.thA);
+  var pBp = permDipol(S.b, S.thB);
+
+  /* ── Rotasjon: overdempet Langevin, sampler Boltzmann ── */
+  var stoy = Math.sqrt(2 * KB * S.T * ROT);
+  var tA = 0, tB = 0;
+  if (S.keesom && polarA && polarB) {
+    tA = kryss(pAp, felt(pBp, -dx, -dy));
+    tB = kryss(pBp, felt(pAp,  dx,  dy));
+  }
+  if (polarA) S.thA += ROT * tA + stoy * gauss();
+  if (polarB) S.thB += ROT * tB + stoy * gauss();
+
+  /* ── Fluktuerende dipoler (London) ── */
+  if (S.london) {
+    var sA = fluktRms(S.a) / Math.SQRT2;
+    var sB = fluktRms(S.b) / Math.SQRT2;
+    var k = Math.sqrt(2 * OU);
+    S.fA.x += -OU * S.fA.x + sA * k * gauss();
+    S.fA.y += -OU * S.fA.y + sA * k * gauss();
+    S.fB.x += -OU * S.fB.x + sB * k * gauss();
+    S.fB.y += -OU * S.fB.y + sB * k * gauss();
+  } else {
+    S.fA.x = S.fA.y = S.fB.x = S.fB.y = 0;
+  }
+
+  pAp = permDipol(S.a, S.thA);
+  pBp = permDipol(S.b, S.thB);
+
+  /* ── Energi og kraft ── */
+  S.U = energi(dx, dy, pAp, pBp, S.fA, S.fB);
+
+  var h = 2e-13;   // 0,2 pm
+  var Ux1 = energi(dx + h, dy, pAp, pBp, S.fA, S.fB);
+  var Ux0 = energi(dx - h, dy, pAp, pBp, S.fA, S.fB);
+  var Uy1 = energi(dx, dy + h, pAp, pBp, S.fA, S.fB);
+  var Uy0 = energi(dx, dy - h, pAp, pBp, S.fA, S.fB);
+  var Fx = -(Ux1 - Ux0) / (2 * h);
+  var Fy = -(Uy1 - Uy0) / (2 * h);
+  S.kraftB = {x: Fx, y: Fy};
+  S.kraftA = {x: -Fx, y: -Fy};
+
+  var l = 0.006;   // lang glattetid, ellers er pila urolig
+  S.kraftSnittA.x += l * (S.kraftA.x - S.kraftSnittA.x);
+  S.kraftSnittA.y += l * (S.kraftA.y - S.kraftSnittA.y);
+
+  /* ── Totale dipoler for tegning ── */
+  var indA = {x: 0, y: 0}, indB = {x: 0, y: 0};
+  if (S.debye) {
+    if (polarA) { var eB = felt(pAp, dx, dy);  indB.x += aB * eB.x; indB.y += aB * eB.y; }
+    if (polarB) { var eA = felt(pBp, -dx, -dy); indA.x += aA * eA.x; indA.y += aA * eA.y; }
+  }
+  if (S.london) {
+    var eBf = felt(S.fA, dx, dy);
+    indB.x += aB * eBf.x; indB.y += aB * eBf.y;
+    var eAf = felt(S.fB, -dx, -dy);
+    indA.x += aA * eAf.x; indA.y += aA * eAf.y;
+  }
+  S.pTotA = {x: pAp.x + indA.x + S.fA.x, y: pAp.y + indA.y + S.fA.y};
+  S.pTotB = {x: pBp.x + indB.x + S.fB.x, y: pBp.y + indB.y + S.fB.y};
+
+  /* ── Løpende gjennomsnitt over tid ──
+     Det er størrelsen på dipolmomentet som midles. Vektorgjennomsnittet ville
+     vært mer talende, men rotasjonsdiffusjonen her er så treg at det trenger
+     flere minutter for et polart molekyl før det nærmer seg null. */
+  S.Uteller++;
+  var v = Math.min(S.Uteller, 1200);
+  S.pAbsA += (Math.sqrt(abs2(S.pTotA)) - S.pAbsA) / v;
+  S.pAbsB += (Math.sqrt(abs2(S.pTotB)) - S.pAbsB) / v;
+}
+
+/* ══════════════════════════════════════════════════════════
+   STATISTIKK-KOPI
+
+   Den synlige rotasjonen er bevisst treg, og da rekker ikke
+   Keesom-delen av gjennomsnittet å konvergere mens man ser på:
+   med et vindu på 15 sekunder er spredningen i estimatet dobbelt
+   så stor som verdien selv.
+
+   Denne kopien sampler den samme likevektsfordelingen ved den
+   samme temperaturen, men med Metropolis Monte Carlo i stedet
+   for dynamikk, og i tre dimensjoner. Fordelingen avhenger bare
+   av U/kT, så gjennomsnittet blir det samme, det setter seg bare
+   på et par sekunder. At kopien er 3D gjør at prikken lander på
+   den samme verdien som stolpene, i stedet for 1,9 ganger for
+   høyt på Keesom slik en 2D-sampling ville gitt.
+
+   Boltzmann-vekten bruker bare dipol-dipol-leddet, slik den
+   vanlige utledningen av Keesom gjør. Debye og London legges til
+   i energien, men styrer ikke orienteringene.
+   ══════════════════════════════════════════════════════════ */
+var MC_VINKEL = 0.9;     // største prøverotasjon i radianer
+var MC_SVEIP  = 50;      // sveip per bilde
+var MC_VINDU  = 12000;   // lengde på det løpende gjennomsnittet
+
+function statistikkSteg() {
+  var m1 = muSI(MOL[S.a]), m2 = muSI(MOL[S.b]);
+  var a1 = alfaSI(MOL[S.a]), a2 = alfaSI(MOL[S.b]);
+  var d  = {x: S.rPm * PM, y: 0, z: 0};
+  var dn = {x: -d.x, y: 0, z: 0};
+  var kT = KB * S.T;
+  var kMulig = S.keesom && m1 > 0 && m2 > 0;
+
+  // Fluktuerende dipol: <|f|^2> = (3/4) alfa I_h. Ingen 2D-korreksjon her.
+  var Ie = ionEff();
+  var sA = Math.sqrt(0.375 * a1 * Ie / 3);   // per komponent
+  var sB = Math.sqrt(0.375 * a2 * Ie / 3);
+
+  function pv(m, u) { return {x: m * u.x, y: m * u.y, z: m * u.z}; }
+  function dd(uA, uB) { return kMulig ? dipolU3(pv(m1, uA), pv(m2, uB), d) : 0; }
+
+  for (var i = 0; i < MC_SVEIP; i++) {
+    if (kMulig) {
+      var u0 = dd(S.uA, S.uB);
+      var ny = roterLitt(S.uA, MC_VINKEL);
+      var dE = dd(ny, S.uB) - u0;
+      if (dE <= 0 || Math.random() < Math.exp(-dE / kT)) { S.uA = ny; u0 += dE; }
+      ny = roterLitt(S.uB, MC_VINKEL);
+      dE = dd(S.uA, ny) - u0;
+      if (dE <= 0 || Math.random() < Math.exp(-dE / kT)) S.uB = ny;
+    } else {
+      // Uten Keesom er orienteringene frie, altså jevnt fordelt på kula
+      S.uA = tilfeldigRetning();
+      S.uB = tilfeldigRetning();
+    }
+
+    var pA = pv(m1, S.uA), pB = pv(m2, S.uB);
+    var u = dd(S.uA, S.uB);
+    if (S.debye) {
+      if (m1 > 0) u += -0.5 * a2 * abs3(felt3(pA, d));
+      if (m2 > 0) u += -0.5 * a1 * abs3(felt3(pB, dn));
+    }
+    if (S.london) {
+      u += -0.5 * a2 * abs3(felt3({x: sA * gauss(), y: sA * gauss(), z: sA * gauss()}, d));
+      u += -0.5 * a1 * abs3(felt3({x: sB * gauss(), y: sB * gauss(), z: sB * gauss()}, dn));
+    }
+
+    S.Steller++;
+    S.Usnitt += (u - S.Usnitt) / Math.min(S.Steller, MC_VINDU);
+  }
+}
+
+/* ── Analytiske gjennomsnitt over tid (eksakte 3D-uttrykk) ── */
+function gjennomsnitt(T) {
+  T = T || S.T;
+  var A = MOL[S.a], B = MOL[S.b];
+  var m1 = muSI(A), m2 = muSI(B);
+  var a1 = alfaSI(A), a2 = alfaSI(B);
+  var I1 = ionSI(A), I2 = ionSI(B);
+  var r6 = Math.pow(S.rPm * PM, 6);
+  var F2 = FPE0 * FPE0;
+
+  var K = 0, D = 0, L = 0;
+  if (S.keesom && m1 > 0 && m2 > 0) {
+    K = -2 * m1 * m1 * m2 * m2 / (3 * F2 * KB * T * r6);
+  }
+  if (S.debye) {
+    D = -(m1 * m1 * a2 + m2 * m2 * a1) / (F2 * r6);
+  }
+  if (S.london) {
+    L = -1.5 * a1 * a2 * (I1 * I2 / (I1 + I2)) / (F2 * r6);
+  }
+  var f = NA / 1000;   // J -> kJ/mol
+  return {K: K * f, D: D * f, L: L * f, sum: (K + D + L) * f};
+}
+
+/* ══════════════════════════════════════════════════════════
+   TEGNING
+   ══════════════════════════════════════════════════════════ */
+var lerret = document.getElementById('lerret');
+var ctx = lerret.getContext('2d');
+var W = 860, H = 460;
+var SKALA = 0.42;              // piksler per pm
+var SENTER = {x: 0, y: 0};
+
+function settOppLerret() {
+  var dpr = window.devicePixelRatio || 1;
+  var bredde = lerret.clientWidth || W;
+  var hoyde = Math.round(bredde * H / W);
+  lerret.width = Math.round(bredde * dpr);
+  lerret.height = Math.round(hoyde * dpr);
+  lerret.style.height = hoyde + 'px';
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  W = bredde; H = hoyde;
+  SKALA = 0.42 * bredde / 860;
+  SENTER = {x: bredde * 0.36, y: hoyde * 0.5};
+}
+
+function maksR(vinkel) {
+  // Hvor langt ut kan det høyre molekylet før det går utenfor lerretet?
+  var marg = MOL[S.b].sky * SKALA + 18;
+  var dx = Math.cos(vinkel), dy = -Math.sin(vinkel);
+  var lim = Infinity;
+  if (dx >  1e-6) lim = Math.min(lim, (W - marg - SENTER.x) / dx);
+  if (dx < -1e-6) lim = Math.min(lim, (marg - SENTER.x) / dx);
+  if (dy >  1e-6) lim = Math.min(lim, (H - marg - SENTER.y) / dy);
+  if (dy < -1e-6) lim = Math.min(lim, (marg - SENTER.y) / dy);
+  return Math.max(300, Math.min(800, lim / SKALA));
+}
+
+function tilSkjerm(xpm, ypm) {
+  return {x: SENTER.x + xpm * SKALA, y: SENTER.y - ypm * SKALA};
+}
+
+function ladningsfarge(q) {
+  if (q < 0) return C.neg;
+  if (q > 0) return C.pos;
+  return C.neutral;
+}
+
+function tegnMolekyl(key, cx, cy, th, pTot, merke) {
+  var m = MOL[key];
+  var p = tilSkjerm(cx, cy);
+  var pmag = Math.sqrt(abs2(pTot)) / D2CM;      // totalt dipolmoment i debye
+  var skyR = m.sky * SKALA;
+  var retn = pmag > 1e-6 ? Math.atan2(pTot.y, pTot.x) : 0;
+
+  /* Elektronsky. Dipolen peker fra minus mot pluss, så skyen forskyves
+     motsatt vei og fargelegges langs aksen. Da synes ladningsforskyvningen
+     også for upolare molekyler, der den er hele poenget. */
+  var styrke = Math.min(1, Math.sqrt(pmag / 4.5));
+  var ux = Math.cos(retn), uy = -Math.sin(retn);       // skjermkoordinater
+  var sx = p.x - ux * styrke * 0.20 * skyR;
+  var sy = p.y - uy * styrke * 0.20 * skyR;
+
+  ctx.save();
+  ctx.beginPath();
+  ctx.arc(sx, sy, skyR, 0, 2 * Math.PI);
+  ctx.clip();
+  var lg = ctx.createLinearGradient(sx - ux * skyR, sy - uy * skyR,
+                                    sx + ux * skyR, sy + uy * skyR);
+  lg.addColorStop(0.00, 'rgba(58,122,156,' + (0.10 + 0.32 * styrke).toFixed(3) + ')');
+  lg.addColorStop(0.50, 'rgba(185,168,136,0.10)');
+  lg.addColorStop(1.00, 'rgba(200,135,58,' + (0.02 + 0.26 * styrke).toFixed(3) + ')');
+  ctx.fillStyle = lg;
+  ctx.fillRect(sx - skyR, sy - skyR, 2 * skyR, 2 * skyR);
+  ctx.restore();
+
+  // Bindinger
+  ctx.strokeStyle = C.border;
+  ctx.lineWidth = Math.max(3, 8 * SKALA / 0.42);
+  ctx.lineCap = 'round';
+  for (var i = 1; i < m.atomer.length; i++) {
+    var a0 = m.atomer[0], ai = m.atomer[i];
+    var q0 = tilSkjerm(cx + rotX(a0, th), cy + rotY(a0, th));
+    var qi = tilSkjerm(cx + rotX(ai, th), cy + rotY(ai, th));
+    ctx.beginPath();
+    ctx.moveTo(q0.x, q0.y);
+    ctx.lineTo(qi.x, qi.y);
+    ctx.stroke();
+  }
+
+  // Atomer. Sentralatomet ligger først i lista og havner derfor bakerst.
+  for (var j = 0; j < m.atomer.length; j++) {
+    var a = m.atomer[j];
+    var q = tilSkjerm(cx + rotX(a, th), cy + rotY(a, th));
+    var R = a.r * SKALA;
+    ctx.fillStyle = ladningsfarge(a.q);
+    ctx.beginPath();
+    ctx.arc(q.x, q.y, R, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(42,34,24,0.18)';
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+    if (R > 13) {
+      ctx.fillStyle = C.bg;
+      ctx.font = '500 ' + Math.round(Math.min(R * 0.9, 17)) + "px 'Crimson Pro', serif";
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'middle';
+      ctx.fillText(a.sym, q.x, q.y + 1);
+    }
+  }
+
+  // Ladningsmerker til slutt, plassert radielt utover fra molekylsenteret
+  ctx.font = "500 12px 'Crimson Pro', serif";
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  for (var n = 0; n < m.atomer.length; n++) {
+    var b = m.atomer[n];
+    if (b.q === 0) continue;
+    var lx = rotX(b, th), ly = rotY(b, th);
+    var d = Math.sqrt(lx * lx + ly * ly);
+    var ex = d > 1 ? lx / d : 0, ey = d > 1 ? -ly / d : -1;
+    var qb = tilSkjerm(cx + lx, cy + ly);
+    var Rb = b.r * SKALA + 11;
+    ctx.fillStyle = ladningsfarge(b.q);
+    ctx.fillText(b.q < 0 ? '\u03B4\u2212' : '\u03B4+', qb.x + ex * Rb, qb.y + ey * Rb);
+  }
+
+  // Merkelapp
+  ctx.fillStyle = C.muted;
+  ctx.font = "400 14px 'Crimson Pro', serif";
+  ctx.fillText(merke, p.x, p.y + skyR + 26);
+}
+
+function rotX(a, th) { return a.x * Math.cos(th) - a.y * Math.sin(th); }
+function rotY(a, th) { return a.x * Math.sin(th) + a.y * Math.cos(th); }
+
+function pil(x1, y1, x2, y2, farge, bredde, kontur) {
+  var dx = x2 - x1, dy = y2 - y1;
+  var len = Math.sqrt(dx * dx + dy * dy);
+  if (len < 3) return;
+  var ux = dx / len, uy = dy / len;
+  var hode = Math.min(11, len * 0.4);
+  var sx = x2 - ux * hode * 0.6, sy = y2 - uy * hode * 0.6;
+
+  function skaft() { ctx.beginPath(); ctx.moveTo(x1, y1); ctx.lineTo(sx, sy); }
+  function spiss() {
+    ctx.beginPath();
+    ctx.moveTo(x2, y2);
+    ctx.lineTo(x2 - ux * hode + uy * hode * 0.45, y2 - uy * hode - ux * hode * 0.45);
+    ctx.lineTo(x2 - ux * hode - uy * hode * 0.45, y2 - uy * hode + ux * hode * 0.45);
+    ctx.closePath();
+  }
+
+  ctx.lineCap = 'round';
+  ctx.lineJoin = 'round';
+  if (kontur) {
+    ctx.strokeStyle = kontur;
+    ctx.lineWidth = bredde + 4;
+    skaft(); ctx.stroke();
+    ctx.lineWidth = 4;
+    spiss(); ctx.stroke();
+  }
+  ctx.strokeStyle = farge;
+  ctx.fillStyle = farge;
+  ctx.lineWidth = bredde;
+  skaft(); ctx.stroke();
+  spiss(); ctx.fill();
+}
+
+function tegn() {
+  ctx.fillStyle = C.bg;
+  ctx.fillRect(0, 0, W, H);
+
+  var bx = S.rPm * Math.cos(S.vinkel);
+  var by = S.rPm * Math.sin(S.vinkel);
+  var pA = tilSkjerm(0, 0);
+  var pB = tilSkjerm(bx, by);
+
+  // Avstandslinje
+  ctx.save();
+  ctx.setLineDash([5, 6]);
+  ctx.strokeStyle = C.border;
+  ctx.lineWidth = 1.6;
+  ctx.beginPath();
+  ctx.moveTo(pA.x, pA.y);
+  ctx.lineTo(pB.x, pB.y);
+  ctx.stroke();
+  ctx.restore();
+
+  tegnMolekyl(S.a, 0, 0, S.thA, S.pTotA, MOL[S.a].navn);
+  tegnMolekyl(S.b, bx, by, S.thB, S.pTotB, MOL[S.b].navn);
+
+  /* Kraftpilene starter i massesenteret og tegnes oppå molekylet. Tidligere
+     startet de utenfor elektronskyen, og da forsvant de helt når molekylene
+     kom så nær hverandre at skyene møttes. Bare gjennomsnittet over tid
+     tegnes: den momentane kraften skifter fortegn for raskt til å lese. */
+  var ref = 2e-11;                     // referansekraft for pillengde
+  var maks = Math.min(W, H) * 0.15;
+  var tak = S.rPm * SKALA * 0.44;      // pilen skal aldri nå forbi midtpunktet
+  function tegnKraft(px, py, F, tykk, farge) {
+    var f = Math.sqrt(abs2(F));
+    if (f < 1e-14) return;
+    var L = Math.min(maks, maks * Math.pow(f / ref, 1 / 3), tak);
+    if (L < 8) return;
+    var ux = F.x / f, uy = -F.y / f;
+    pil(px, py, px + ux * L, py + uy * L, farge, tykk, 'rgba(250,247,242,0.8)');
+  }
+  tegnKraft(pA.x, pA.y, S.kraftSnittA, 7, C.primary);
+  tegnKraft(pB.x, pB.y, {x: -S.kraftSnittA.x, y: -S.kraftSnittA.y}, 7, C.primary);
+
+  // Avstandsmerket tegnes til slutt, ellers dekker molekylene det når de er nær hverandre
+  var mx = (pA.x + pB.x) / 2 + Math.sin(S.vinkel) * 30;
+  var my = (pA.y + pB.y) / 2 + Math.cos(S.vinkel) * 30;
+  ctx.fillStyle = 'rgba(250,247,242,0.92)';
+  ctx.fillRect(mx - 33, my - 10, 66, 20);
+  ctx.fillStyle = C.muted;
+  ctx.font = "500 13px 'DM Mono', monospace";
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(Math.round(S.rPm) + ' pm', mx, my);
+
+  // Tegnforklaring. Droppes på smale skjermer, der den dekker molekylene.
+  if (W < 560) return;
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'middle';
+  var lx = W - 168, ly = 22;
+  var poster = [
+    [C.neg, '\u03B4\u2212 negativ ende'],
+    [C.pos, '\u03B4+ positiv ende'],
+    [C.primary, 'gjennomsnittskraft']
+  ];
+  ctx.fillStyle = 'rgba(250,247,242,0.86)';
+  ctx.fillRect(lx - 12, ly - 15, 176, poster.length * 18 + 8);
+  ctx.font = "400 12px 'Crimson Pro', serif";
+  for (var k = 0; k < poster.length; k++) {
+    ctx.fillStyle = poster[k][0];
+    ctx.beginPath();
+    ctx.arc(lx, ly + k * 18, 5, 0, 2 * Math.PI);
+    ctx.fill();
+    ctx.fillStyle = C.muted;
+    ctx.fillText(poster[k][1], lx + 12, ly + k * 18);
+  }
+}
+
+/* ══════════════════════════════════════════════════════════
+   GRENSESNITT
+   ══════════════════════════════════════════════════════════ */
+var el = {
+  molA: document.getElementById('molA'),
+  molB: document.getElementById('molB'),
+  bK: document.getElementById('bKeesom'),
+  bD: document.getElementById('bDebye'),
+  bL: document.getElementById('bLondon'),
+  temp: document.getElementById('temp'),
+  tempV: document.getElementById('tempVerdi'),
+  avst: document.getElementById('avst'),
+  avstV: document.getElementById('avstVerdi'),
+  uNa: document.getElementById('uNa'),
+  malerNaa: document.getElementById('malerNaa'),
+  malerSnitt: document.getElementById('malerSnitt'),
+  snittTittel: document.getElementById('snittTittel'),
+  sK: document.getElementById('sKeesom'),
+  sD: document.getElementById('sDebye'),
+  sL: document.getElementById('sLondon'),
+  sT: document.getElementById('sTotal'),
+  forklaring: document.getElementById('forklaring'),
+  varsel: document.getElementById('varsel'),
+  pause: document.getElementById('pause'),
+  nullstill: document.getElementById('nullstill'),
+  hint: document.getElementById('hint'),
+  dipAbsA: document.getElementById('dipAbsA'),
+  dipAbsB: document.getElementById('dipAbsB')
+};
+
+ORDEN.forEach(function (k) {
+  [el.molA, el.molB].forEach(function (sel) {
+    var o = document.createElement('option');
+    o.value = k;
+    o.textContent = MOL[k].navn;
+    sel.appendChild(o);
+  });
+});
+el.molA.value = S.a;
+el.molB.value = S.b;
+
+function synkAvstand() {
+  var tak = Math.round(maksR(S.vinkel));
+  el.avst.max = String(tak);
+  if (S.rPm > tak) S.rPm = tak;
+  el.avst.value = String(Math.round(S.rPm));
+  el.avstV.textContent = Math.round(S.rPm) + ' pm';
+}
+
+function nullstillGjennomsnitt() {
+  S.Usnitt = 0; S.Uteller = 0; S.Steller = 0;
+  S.pAbsA = 0; S.pAbsB = 0;
+}
+
+function oppdaterBrytere() {
+  var polarA = MOL[S.a].mu > 0, polarB = MOL[S.b].mu > 0;
+  var kMulig = polarA && polarB;
+  var dMulig = polarA || polarB;
+
+  el.bK.disabled = !kMulig;
+  el.bD.disabled = !dMulig;
+  el.bK.setAttribute('aria-pressed', String(S.keesom && kMulig));
+  el.bD.setAttribute('aria-pressed', String(S.debye && dMulig));
+  el.bL.setAttribute('aria-pressed', String(S.london));
+
+  var tekst;
+  if (!kMulig && !dMulig) {
+    tekst = 'Ingen av molekylene har permanent dipolmoment, så bare London er mulig her. ' +
+            'Det er tilfellet for alle upolare stoffer.';
+  } else if (!kMulig) {
+    tekst = 'Bare ett av molekylene har permanent dipolmoment. Keesom krever to permanente dipoler, ' +
+            'mens Debye og London virker.';
+  } else {
+    tekst = 'Begge molekylene har permanent dipolmoment, så alle tre bidragene virker samtidig. ' +
+            'Temperaturen virker bare på Keesom, som går som 1/T. Debye og London er upåvirket.';
+  }
+  el.forklaring.textContent = tekst;
+}
+
+function oppdaterAvlesning() {
+  var m = gjennomsnitt();
+  /* Skalaen låses til 298 K. Med en relativ skala krympet London-stolpen når
+     Keesom vokste ved lav temperatur, som feilaktig ser ut som at dispersjon
+     avhenger av temperatur. Nå står Debye og London stille når du drar i
+     temperaturen, og bare Keesom flytter seg. */
+  var ref = gjennomsnitt(298);
+  var maks = Math.max(Math.abs(ref.K), Math.abs(ref.D),
+                      Math.abs(ref.L), Math.abs(ref.sum), 1e-6);
+
+  function sett(node, verdi, av) {
+    node.classList.toggle('av', av);
+    node.querySelector('.stolpe-fyll').style.width =
+      (av ? 0 : Math.min(100, Math.abs(verdi) / maks * 100)) + '%';
+    node.querySelector('.stolpe-tall').textContent =
+      av ? '\u2013' : formater(verdi);
+  }
+  var polarA = MOL[S.a].mu > 0, polarB = MOL[S.b].mu > 0;
+  sett(el.sK, m.K, !(S.keesom && polarA && polarB));
+  sett(el.sD, m.D, !(S.debye && (polarA || polarB)));
+  sett(el.sL, m.L, !S.london);
+
+  el.sT.querySelector('.stolpe-fyll').style.width =
+    Math.min(100, Math.abs(m.sum) / maks * 100) + '%';
+  el.sT.querySelector('.stolpe-tall').textContent = formater(m.sum);
+
+  el.snittTittel.textContent = 'Gjennomsnitt over tid ved ' + S.T + ' K og ' + Math.round(S.rPm) + ' pm (kJ/mol)';
+
+  // Keesom-uttrykket er en høytemperaturtilnærming
+  var r3 = Math.pow(S.rPm * PM, 3);
+  var kobling = (muSI(MOL[S.a]) * muSI(MOL[S.b])) / (FPE0 * r3);
+  var forhold = kobling / (KB * S.T);
+  var vil = S.keesom && polarA && polarB && forhold > 1.2;
+  el.varsel.classList.toggle('vis', vil);
+  if (vil) {
+    el.varsel.textContent = 'Keesom-stolpen bruker høytemperaturtilnærmingen, og her er ' +
+      'orienteringen for sterk til at den holder. Sirkelen på måleren over er den eksakte ' +
+      'verdien, og den er mindre i tallverdi enn stolpen.';
+  }
+}
+
+function formater(x) {
+  var s = Math.abs(x) < 10 ? x.toFixed(2) : x.toFixed(1);
+  return s.replace('.', ',');
+}
+
+el.molA.addEventListener('change', function () {
+  S.a = this.value; nullstillGjennomsnitt(); oppdaterBrytere(); oppdaterAvlesning();
+});
+el.molB.addEventListener('change', function () {
+  S.b = this.value; synkAvstand(); nullstillGjennomsnitt(); oppdaterBrytere(); oppdaterAvlesning();
+});
+
+function veksle(knapp, navn) {
+  knapp.addEventListener('click', function () {
+    S[navn] = !S[navn];
+    nullstillGjennomsnitt(); oppdaterBrytere(); oppdaterAvlesning();
+  });
+}
+veksle(el.bK, 'keesom');
+veksle(el.bD, 'debye');
+veksle(el.bL, 'london');
+
+el.temp.addEventListener('input', function () {
+  S.T = parseInt(this.value, 10);
+  el.tempV.textContent = S.T + ' K';
+  nullstillGjennomsnitt(); oppdaterAvlesning();
+});
+el.avst.addEventListener('input', function () {
+  S.rPm = Math.max(300, Math.min(parseInt(this.value, 10), maksR(S.vinkel)));
+  synkAvstand();
+  nullstillGjennomsnitt(); oppdaterAvlesning();
+});
+
+el.pause.addEventListener('click', function () {
+  S.gaar = !S.gaar;
+  this.textContent = S.gaar ? 'Pause' : 'Start';
+});
+el.nullstill.addEventListener('click', nullstillGjennomsnitt);
+
+/* ── Dra ── */
+function pekerPos(e) {
+  var b = lerret.getBoundingClientRect();
+  return {x: e.clientX - b.left, y: e.clientY - b.top};
+}
+lerret.addEventListener('pointerdown', function (e) {
+  var p = pekerPos(e);
+  var bx = S.rPm * Math.cos(S.vinkel), by = S.rPm * Math.sin(S.vinkel);
+  var pB = tilSkjerm(bx, by);
+  var d = Math.hypot(p.x - pB.x, p.y - pB.y);
+  if (d < MOL[S.b].sky * SKALA + 18) {
+    S.drar = true;
+    lerret.setPointerCapture(e.pointerId);
+    lerret.classList.add('dragging');
+    el.hint.classList.add('skjult');
+  }
+});
+lerret.addEventListener('pointermove', function (e) {
+  if (!S.drar) return;
+  var p = pekerPos(e);
+  var dx = (p.x - SENTER.x) / SKALA;
+  var dy = -(p.y - SENTER.y) / SKALA;
+  var r = Math.sqrt(dx * dx + dy * dy);
+  S.vinkel = Math.atan2(dy, dx);
+  S.rPm = Math.max(300, Math.min(maksR(S.vinkel), r));
+  synkAvstand();
+  nullstillGjennomsnitt();
+  oppdaterAvlesning();
+});
+function slipp(e) {
+  if (!S.drar) return;
+  S.drar = false;
+  lerret.classList.remove('dragging');
+  try { lerret.releasePointerCapture(e.pointerId); } catch (x) {}
+}
+lerret.addEventListener('pointerup', slipp);
+lerret.addEventListener('pointercancel', slipp);
+
+window.addEventListener('resize', function () { settOppLerret(); synkAvstand(); });
+
+/* ══════════════════════════════════════════════════════════
+   LØKKE
+   ══════════════════════════════════════════════════════════ */
+var teller = 0;
+function ramme() {
+  if (S.gaar) {
+    for (var i = 0; i < 3; i++) steg();
+    statistikkSteg();
+  }
+  tegn();
+
+  if (++teller % 4 === 0) {
+    el.uNa.textContent = formater(S.U * NA / 1000);
+    function dip(x) { return (x / D2CM).toFixed(2).replace('.', ','); }
+    el.dipAbsA.textContent = dip(S.pAbsA);
+    el.dipAbsB.textContent = dip(S.pAbsB);
+    // Myk metning, ellers står markøren fast i enden for sterkt polare par
+    var skala = 2.5e-21;
+    var f = Math.tanh(-S.U / skala);
+    var fm = Math.tanh(-S.Usnitt / skala);
+    el.malerNaa.style.left = (50 + f * 48) + '%';
+    el.malerSnitt.style.left = 'calc(' + (50 + fm * 48) + '% - 4px)';
+  }
+  requestAnimationFrame(ramme);
+}
+
+settOppLerret();
+synkAvstand();
+oppdaterBrytere();
+oppdaterAvlesning();
+ramme();
+setTimeout(function () { el.hint.classList.add('skjult'); }, 6000);
+
+})();
+</script>
+</body>
+</html>

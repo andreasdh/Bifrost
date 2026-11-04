@@ -1,0 +1,61 @@
+<div style="padding:0.5rem 0">
+<style>
+@media (prefers-reduced-motion: no-preference) {
+  .settle1 { animation: bob 2.3s ease-in-out infinite; }
+  .settle2 { animation: bob 2.0s ease-in-out infinite .5s; }
+  .spark { animation: pulse 1.6s ease-in-out infinite; }
+  @keyframes bob { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-4px); } }
+  @keyframes pulse { 0%,100%{ opacity: 0.5; } 50%{ opacity: 1; } }
+}
+</style>
+<svg width="100%" viewBox="0 0 680 400" role="img">
+<title>Molekyler som hopper over en energibakke mellom stoff A og stoff B</title>
+<desc>Et enkelt landskap med en dal for stoff A til venstre og en dal for stoff B til høyre, adskilt av en bakke som er aktiveringsbarrieren. Ett molekyl hopper hele tiden over bakken i hver retning, slik at antallet i hver dal holder seg konstant.</desc>
+
+<text class="th" x="130" y="58" text-anchor="middle">Stoff A</text>
+<text class="th" x="550" y="58" text-anchor="middle">Stoff B</text>
+
+<g class="c-green">
+<path d="M50,290 C170,290 240,190 340,180 C440,190 510,290 630,290 L630,360 L50,360 Z" stroke-width="0.5"/>
+</g>
+
+<circle class="spark" cx="340" cy="180" r="6" fill="#F2A623"/>
+<line x1="452" y1="98" x2="346" y2="176" class="leader"/>
+<text class="ts" x="460" y="95" text-anchor="start">aktiveringsbarriere</text>
+
+<g class="settle1">
+<g class="c-blue"><circle cx="130" cy="265" r="22" stroke-width="1"/></g>
+<circle cx="123" cy="260" r="2.6" fill="#0C447C"/><circle cx="137" cy="260" r="2.6" fill="#0C447C"/>
+<path d="M121 273 Q130 279 139 273" fill="none" stroke="#0C447C" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+<g class="settle2">
+<g class="c-blue"><circle cx="210" cy="270" r="20" stroke-width="1"/></g>
+<circle cx="204" cy="265" r="2.3" fill="#0C447C"/><circle cx="216" cy="265" r="2.3" fill="#0C447C"/>
+<path d="M202 277 Q210 282 218 277" fill="none" stroke="#0C447C" stroke-width="1.3" stroke-linecap="round"/>
+</g>
+
+<g class="settle2">
+<g class="c-coral"><circle cx="470" cy="270" r="20" stroke-width="1"/></g>
+<circle cx="464" cy="266" r="2.3" fill="#993C1D"/><circle cx="476" cy="266" r="2.3" fill="#993C1D"/>
+<path d="M462 276 Q470 271 478 276" fill="none" stroke="#993C1D" stroke-width="1.3" stroke-linecap="round"/>
+</g>
+<g class="settle1">
+<g class="c-coral"><circle cx="550" cy="265" r="22" stroke-width="1"/></g>
+<circle cx="543" cy="260" r="2.6" fill="#993C1D"/><circle cx="557" cy="260" r="2.6" fill="#993C1D"/>
+<path d="M541 271 Q550 266 559 271" fill="none" stroke="#993C1D" stroke-width="1.5" stroke-linecap="round"/>
+</g>
+
+<g class="c-blue">
+<circle r="16" stroke-width="1">
+<animateMotion dur="3.4s" repeatCount="indefinite" path="M150,255 Q340,120 530,255"/>
+</circle>
+</g>
+<g class="c-coral">
+<circle r="16" stroke-width="1">
+<animateMotion dur="3.4s" repeatCount="indefinite" begin="1.7s" path="M530,280 Q340,155 150,280"/>
+</circle>
+</g>
+
+<text class="ts" x="340" y="345" text-anchor="middle">antallet i hver dal holder seg konstant</text>
+</svg>
+</div>

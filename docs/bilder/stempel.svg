@@ -1,0 +1,125 @@
+<svg viewBox="0 0 820 462" xmlns="http://www.w3.org/2000/svg" font-family="'Trebuchet MS', 'Segoe UI', system-ui, -apple-system, Verdana, sans-serif">
+  <defs>
+    <marker id="arw" markerWidth="9" markerHeight="9" refX="4" refY="4" orient="auto-start-reverse">
+      <path d="M1,1 L7,4 L1,7 Z" fill="#8a7fb5"/>
+    </marker>
+    <marker id="arwc" markerWidth="10" markerHeight="10" refX="4.5" refY="4.5" orient="auto">
+      <path d="M1,1 L8,4.5 L1,8 Z" fill="#ff8a5c"/>
+    </marker>
+    <symbol id="spk" viewBox="-6 -6 12 12">
+      <path d="M0,-6 Q1,-1 6,0 Q1,1 0,6 Q-1,1 -6,0 Q-1,-1 0,-6 Z" fill="#ffce54"/>
+    </symbol>
+
+    <!-- happy, relaxed molecule -->
+    <symbol id="molHappy" viewBox="-16 -16 32 32">
+      <circle cx="0" cy="0" r="13" fill="#8bb7ee" stroke="#5b8fd0" stroke-width="1.5"/>
+      <circle cx="-6.5" cy="4" r="2.6" fill="#f6a8bf" opacity="0.85"/>
+      <circle cx="6.5" cy="4" r="2.6" fill="#f6a8bf" opacity="0.85"/>
+      <circle cx="-4.2" cy="-1.5" r="1.9" fill="#33475b"/>
+      <circle cx="4.2" cy="-1.5" r="1.9" fill="#33475b"/>
+      <path d="M-3.2,3 Q0,7 3.2,3" fill="none" stroke="#33475b" stroke-width="1.5" stroke-linecap="round"/>
+    </symbol>
+
+    <!-- squished, cozy molecule -->
+    <symbol id="molSquish" viewBox="-16 -16 32 32">
+      <ellipse cx="0" cy="1" rx="14" ry="11.5" fill="#8bb7ee" stroke="#5b8fd0" stroke-width="1.5"/>
+      <circle cx="-6.5" cy="4" r="2.8" fill="#f38fb0" opacity="0.9"/>
+      <circle cx="6.5" cy="4" r="2.8" fill="#f38fb0" opacity="0.9"/>
+      <path d="M-6,-1 Q-4,-3.5 -2,-1" fill="none" stroke="#33475b" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M2,-1 Q4,-3.5 6,-1" fill="none" stroke="#33475b" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M-2.2,4 Q0,5.5 2.2,4" fill="none" stroke="#33475b" stroke-width="1.5" stroke-linecap="round"/>
+      <path d="M10,-8 q2.5,3 0,4.5 q-2.5,-1.5 0,-4.5 Z" fill="#7ec8f0" opacity="0.9"/>
+    </symbol>
+  </defs>
+
+  <rect width="820" height="462" fill="#fdf7ef"/>
+  <text x="410" y="34" text-anchor="middle" font-size="19" font-weight="bold" fill="#3a3a3a">Samme gass, samme temperatur &#8212; bare mindre plass!</text>
+
+  <!-- =============== PANEL 1: god plass =============== -->
+  <g transform="translate(20,12)">
+    <!-- interior -->
+    <path d="M68,105 L68,353 Q68,368 83,368 L217,368 Q232,368 232,353 L232,105 Z" fill="#eaf6f1"/>
+    <!-- walls (cup) -->
+    <path d="M62,105 L62,355 Q62,376 83,376 L217,376 Q238,376 238,355 L238,105"
+          fill="none" stroke="#f2a58c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- sparkles -->
+    <use href="#spk" x="62" y="214" width="12" height="12"/>
+    <use href="#spk" x="226" y="250" width="12" height="12"/>
+    <use href="#spk" x="150" y="356" width="12" height="12"/>
+
+    <!-- molecules (6, relaxed, spread out) -->
+    <use href="#molHappy" x="89" y="194" width="32" height="32"/>
+    <use href="#molHappy" x="149" y="184" width="32" height="32"/>
+    <use href="#molHappy" x="192" y="224" width="32" height="32"/>
+    <use href="#molHappy" x="94" y="269" width="32" height="32"/>
+    <use href="#molHappy" x="159" y="284" width="32" height="32"/>
+    <use href="#molHappy" x="124" y="329" width="32" height="32"/>
+
+    <!-- piston -->
+    <rect x="143" y="70" width="14" height="88" rx="6" fill="#b9a7e3"/>
+    <circle cx="150" cy="64" r="16" fill="#b9a7e3" stroke="#8a7fb5" stroke-width="2"/>
+    <rect x="66" y="150" width="168" height="22" rx="10" fill="#b9a7e3" stroke="#8a7fb5" stroke-width="2"/>
+    <!-- piston face -->
+    <circle cx="142" cy="161" r="2" fill="#3a3357"/>
+    <circle cx="158" cy="161" r="2" fill="#3a3357"/>
+    <path d="M146,165 Q150,168 154,165" fill="none" stroke="#3a3357" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- volume bracket -->
+    <line x1="252" y1="172" x2="252" y2="366" stroke="#8a7fb5" stroke-width="1.4" marker-start="url(#arw)" marker-end="url(#arw)"/>
+    <text x="264" y="274" font-size="15" fill="#8a7fb5" font-style="italic">V</text>
+  </g>
+
+  <!-- =============== PANEL 2: trangt =============== -->
+  <g transform="translate(440,12)">
+    <!-- push arrow + effort -->
+    <line x1="150" y1="24" x2="150" y2="44" stroke="#ff8a5c" stroke-width="5" marker-end="url(#arwc)"/>
+    <text x="169" y="40" font-size="13" fill="#ff8a5c" font-weight="bold">press!</text>
+    <line x1="128" y1="52" x2="122" y2="58" stroke="#ffbfa3" stroke-width="3" stroke-linecap="round"/>
+    <line x1="172" y1="52" x2="178" y2="58" stroke="#ffbfa3" stroke-width="3" stroke-linecap="round"/>
+
+    <!-- interior -->
+    <path d="M68,105 L68,353 Q68,368 83,368 L217,368 Q232,368 232,353 L232,105 Z" fill="#eaf6f1"/>
+    <!-- walls (cup) -->
+    <path d="M62,105 L62,355 Q62,376 83,376 L217,376 Q238,376 238,355 L238,105"
+          fill="none" stroke="#f2a58c" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- more sparkles (more collisions) -->
+    <use href="#spk" x="62" y="288" width="12" height="12"/>
+    <use href="#spk" x="62" y="332" width="12" height="12"/>
+    <use href="#spk" x="226" y="290" width="12" height="12"/>
+    <use href="#spk" x="226" y="336" width="12" height="12"/>
+    <use href="#spk" x="118" y="356" width="12" height="12"/>
+    <use href="#spk" x="182" y="356" width="12" height="12"/>
+
+    <!-- molecules (same 6, squished together) -->
+    <use href="#molSquish" x="86" y="278" width="32" height="32"/>
+    <use href="#molSquish" x="128" y="272" width="32" height="32"/>
+    <use href="#molSquish" x="170" y="280" width="32" height="32"/>
+    <use href="#molSquish" x="98" y="320" width="32" height="32"/>
+    <use href="#molSquish" x="142" y="326" width="32" height="32"/>
+    <use href="#molSquish" x="184" y="320" width="32" height="32"/>
+
+    <!-- piston (pushed down) -->
+    <rect x="143" y="70" width="14" height="186" rx="6" fill="#b9a7e3"/>
+    <circle cx="150" cy="64" r="16" fill="#b9a7e3" stroke="#8a7fb5" stroke-width="2"/>
+    <rect x="66" y="248" width="168" height="22" rx="10" fill="#b9a7e3" stroke="#8a7fb5" stroke-width="2"/>
+    <!-- piston face (determined) -->
+    <path d="M138,258 L146,260" fill="none" stroke="#3a3357" stroke-width="2" stroke-linecap="round"/>
+    <path d="M162,258 L154,260" fill="none" stroke="#3a3357" stroke-width="2" stroke-linecap="round"/>
+    <path d="M146,264 Q150,262 154,264" fill="none" stroke="#3a3357" stroke-width="1.5" stroke-linecap="round"/>
+
+    <!-- volume bracket (half) -->
+    <line x1="252" y1="270" x2="252" y2="366" stroke="#8a7fb5" stroke-width="1.4" marker-start="url(#arw)" marker-end="url(#arw)"/>
+    <text x="262" y="324" font-size="15" fill="#8a7fb5" font-style="italic">V/2</text>
+  </g>
+
+  <!-- panel labels -->
+  <text x="170" y="416" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#3a3a3a">Stort volum V</text>
+  <text x="170" y="436" text-anchor="middle" font-size="13" fill="#7a7a7a">god plass, lavt trykk P</text>
+  <text x="590" y="416" text-anchor="middle" font-size="15.5" font-weight="bold" fill="#3a3a3a">Lite volum V/2</text>
+  <text x="590" y="436" text-anchor="middle" font-size="13" fill="#e07a4e">trangt, h&#248;yt trykk 2P</text>
+
+  <!-- shared caption -->
+  <text x="410" y="457" text-anchor="middle" font-size="12.5" fill="#666">Like mange molekyler, like rask fart (samme T). Trangere plass gir flere veggkollisjoner &#8212; og h&#248;yere trykk.</text>
+</svg>

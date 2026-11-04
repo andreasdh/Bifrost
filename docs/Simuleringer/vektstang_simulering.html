@@ -1,0 +1,215 @@
+<div id="lr-root" style="font-family: 'Iowan Old Style', Palatino, Georgia, serif; max-width: 640px; color:#1c2321;">
+<style>
+#lr-root .lr-card{background:#f5f2ea;border:1px solid #d8d2c4;border-radius:12px;padding:18px;}
+#lr-root .lr-controls{display:flex;flex-direction:column;gap:12px;margin-top:14px;}
+#lr-root .lr-row{display:flex;align-items:center;gap:12px;}
+#lr-root .lr-row label{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:0.04em;color:#6b6252;width:130px;}
+#lr-root .lr-row input[type=range]{flex:1;accent-color:#1f5f8b;}
+#lr-root .lr-readout{margin-top:16px;font-size:14px;line-height:1.7;}
+#lr-root .lr-bar{display:flex;height:26px;border-radius:6px;overflow:hidden;border:1px solid #c9c2b2;margin-top:6px;}
+#lr-root .lr-bar .liq{background:#cfe0ec;}
+#lr-root .lr-bar .sol{background:#f3d9d4;}
+#lr-root .lr-bar span{display:flex;align-items:center;justify-content:center;font-size:12px;color:#1c2321;font-family:"SF Mono",ui-monospace,monospace;}
+#lr-root .lr-note{font-size:13px;color:#7d7566;margin-top:10px;}
+</style>
+
+<div class="lr-card">
+  <svg id="lr-svg" width="100%" viewBox="0 0 740 500" style="display:block;"></svg>
+
+  <div class="lr-controls">
+    <div class="lr-row">
+      <label>Temperatur T</label>
+      <input type="range" id="lr-T" min="0" max="1" step="0.001" value="0.62">
+    </div>
+    <div class="lr-row">
+      <label>Sammensetning x</label>
+      <input type="range" id="lr-x" min="0" max="1" step="0.001" value="0.55">
+    </div>
+  </div>
+
+  <div class="lr-readout" id="lr-readout"></div>
+  <div class="lr-bar" id="lr-bar"></div>
+  <div class="lr-note" id="lr-note"></div>
+</div>
+
+<script>
+(function(){
+  const NS = "http://www.w3.org/2000/svg";
+  const svg = document.getElementById("lr-svg");
+
+  // plotramme
+  const x0=150, x1=660, y0=70, y1=400;
+  const px = x => x0 + x*(x1-x0);
+  const py = t => y1 - t*(y1-y0);
+
+  const liquidus = x => 0.30 + 0.55*x + 0.15*Math.sin(Math.PI*x);
+  const solidus  = x => 0.30 + 0.55*x - 0.15*Math.sin(Math.PI*x);
+
+  // invers: finn x slik at func(x)=t (numerisk søk, monotont nok her)
+  function invert(func, t){
+    let best=0, bestd=1e9;
+    for(let i=0;i<=2000;i++){
+      const x=i/2000, d=Math.abs(func(x)-t);
+      if(d<bestd){bestd=d;best=x;}
+    }
+    return best;
+  }
+
+  // fargetoner (svake)
+  const col = {
+    ink:"#1c2321", paper:"#f5f2ea", axis:"#6b6252", curve:"#6b6252",
+    drop:"#c0392b", dot:"#1f5f8b",
+    liqFill:"#cfe0ec", solFill:"#f3d9d4", lsFill:"#e6ecd9"   // svak blå/rød/grønn
+  };
+
+  function el(tag, attrs){
+    const e=document.createElementNS(NS, tag);
+    for(const k in attrs) e.setAttribute(k, attrs[k]);
+    return e;
+  }
+
+  // bygg statiske deler: fargede områder + kurver + ramme + akser
+  function buildStatic(){
+    // område-polygoner
+    const N=80;
+    // væske (over liquidus): topp av rammen ned til liquidus
+    let liqTop = [];
+    for(let i=0;i<=N;i++){ const x=i/N; liqTop.push([px(x), py(liquidus(x))]); }
+    // L-område: langs liquidus, så toppkant
+    let Lpts = liqTop.map(p=>p.join(",")).join(" ");
+    Lpts = `${px(0)},${y0} ` + Lpts + ` ${px(1)},${y0}`;
+    svg.appendChild(el("polygon", {points:Lpts, fill:col.liqFill, opacity:0.55}));
+
+    // S-område (under solidus): langs solidus, så bunnkant
+    let solPts=[];
+    for(let i=0;i<=N;i++){ const x=i/N; solPts.push([px(x), py(solidus(x))]); }
+    let Spts = solPts.map(p=>p.join(",")).join(" ");
+    Spts = `${px(0)},${y1} ` + Spts + ` ${px(1)},${y1}`;
+    svg.appendChild(el("polygon", {points:Spts, fill:col.solFill, opacity:0.55}));
+
+    // L+S-område (mellom kurvene): liquidus fram, solidus tilbake
+    let lens = liqTop.map(p=>p.join(",")).join(" ") + " " +
+               solPts.slice().reverse().map(p=>p.join(",")).join(" ");
+    svg.appendChild(el("polygon", {points:lens, fill:col.lsFill, opacity:0.6}));
+
+    // ramme
+    svg.appendChild(el("rect", {x:x0, y:y0, width:x1-x0, height:y1-y0, fill:"none", stroke:col.axis, "stroke-width":1.6}));
+
+    // T-akse pil
+    svg.appendChild(el("line", {x1:x0-28, y1:y1, x2:x0-28, y2:y0+6, stroke:col.axis, "stroke-width":1.8}));
+    svg.appendChild(el("path", {d:`M ${x0-28} ${y0-2} l -5 9 l 10 0 z`, fill:col.axis}));
+    const tlab=el("text",{x:x0-44, y:(y0+y1)/2, "font-size":18, fill:col.ink, "text-anchor":"middle", "font-style":"italic", transform:`rotate(-90 ${x0-44} ${(y0+y1)/2})`});
+    tlab.textContent="T"; svg.appendChild(tlab);
+
+    // kurver
+    let lp="", sp="";
+    for(let i=0;i<=N;i++){ const x=i/N; lp+=`${px(x).toFixed(1)},${py(liquidus(x)).toFixed(1)} `; sp+=`${px(x).toFixed(1)},${py(solidus(x)).toFixed(1)} `; }
+    svg.appendChild(el("polyline",{points:lp, fill:"none", stroke:col.curve, "stroke-width":2}));
+    svg.appendChild(el("polyline",{points:sp, fill:"none", stroke:col.curve, "stroke-width":2}));
+
+    // x-akse pil (egen, under)
+    const xay=y1+42;
+    svg.appendChild(el("line",{x1:x0, y1:xay, x2:x1-6, y2:xay, stroke:col.axis, "stroke-width":1.8}));
+    svg.appendChild(el("path",{d:`M ${x1+2} ${xay} l -9 -5 l 0 10 z`, fill:col.axis}));
+    const xlab=el("text",{x:(x0+x1)/2, y:xay+22, "font-size":18, fill:col.ink, "text-anchor":"middle", "font-style":"italic"});
+    xlab.textContent="x"; svg.appendChild(xlab);
+  }
+
+  // dynamisk lag (bindelinje, punkter, merker)
+  const dyn = el("g", {});
+  svg.appendChild(dyn);
+
+  function draw(){
+    const T = parseFloat(document.getElementById("lr-T").value);
+    const x = parseFloat(document.getElementById("lr-x").value);
+    while(dyn.firstChild) dyn.removeChild(dyn.firstChild);
+
+    const readout = document.getElementById("lr-readout");
+    const bar = document.getElementById("lr-bar");
+    const note = document.getElementById("lr-note");
+
+    // er vi i tofaseområdet?
+    const inLens = (T > solidus(x===0?0:x)) ? false : false; // placeholder, beregnes under
+    const onLiq = liquidus(x);
+    const onSol = solidus(x);
+
+    // systempunkt
+    const sysX = px(x), sysY = py(T);
+
+    // avgjør fase ut fra hvor (x,T) ligger:
+    // over liquidus(x) -> ren væske; under solidus(x) -> ren fast; ellers tofase
+    let region;
+    if(T > liquidus(x)) region = "L";
+    else if(T < solidus(x)) region = "S";
+    else region = "LS";
+
+    if(region === "LS"){
+      // bindelinje-ender ved systemtemperatur T
+      const xl = invert(liquidus, T);   // væske-ende (venstre)
+      const xs = invert(solidus, T);    // fast-ende (høyre)
+      const pxl = px(xl), pxs = px(xs), yL = py(T);
+
+      // nedslagslinjer
+      dyn.appendChild(el("line",{x1:pxl, y1:yL, x2:pxl, y2:y1, stroke:col.drop, "stroke-width":2.4}));
+      dyn.appendChild(el("line",{x1:sysX, y1:yL, x2:sysX, y2:y1, stroke:col.drop, "stroke-width":2.4}));
+      dyn.appendChild(el("line",{x1:pxs, y1:yL, x2:pxs, y2:y1, stroke:col.drop, "stroke-width":2.4}));
+
+      // bindelinje
+      dyn.appendChild(el("line",{x1:pxl, y1:yL, x2:pxs, y2:yL, stroke:col.ink, "stroke-width":2.8}));
+
+      // tre blå sirkler
+      [[pxl,yL],[sysX,yL],[pxs,yL]].forEach(([cx,cy])=>{
+        dyn.appendChild(el("circle",{cx:cx, cy:cy, r:8, fill:col.dot, stroke:col.ink, "stroke-width":1.2}));
+      });
+
+      // merker
+      const mk=(cx,txt,sub,fill)=>{
+        const t=el("text",{x:cx, y:y1+22, "font-size":14, fill:fill, "text-anchor":"middle", "font-style":"italic"});
+        t.textContent=txt;
+        if(sub){ const s=el("tspan",{"baseline-shift":"sub","font-size":10}); s.textContent=sub; t.appendChild(s); }
+        dyn.appendChild(t);
+      };
+      mk(pxl,"x","l",col.drop);
+      mk(sysX,"x","",col.dot);
+      mk(pxs,"x","s",col.drop);
+
+      // vektstangregel
+      const ll = x - xl;      // arm til væske-ende
+      const ls = xs - x;      // arm til fast-ende
+      const nLiq = ls/(ll+ls);
+      const nSol = ll/(ll+ls);
+
+      readout.innerHTML =
+        `Bindelinje ved T: væske ved x<sub>l</sub> = ${xl.toFixed(2)}, fast ved x<sub>s</sub> = ${xs.toFixed(2)}.<br>` +
+        `Armer: l<sub>l</sub> = ${ll.toFixed(2)}, l<sub>s</sub> = ${ls.toFixed(2)}.`;
+
+      bar.style.display="flex";
+      const pl=Math.round(nLiq*100), ps=100-pl;
+      bar.innerHTML =
+        `<span class="liq" style="width:${pl}%">væske ${pl}%</span>` +
+        `<span class="sol" style="width:${ps}%">fast ${ps}%</span>`;
+      note.textContent = "Systempunktet ligger i tofaseområdet. Andelen av hver fase følger vektstangregelen: den motsatte armen delt på hele bindelinjen.";
+    } else {
+      // ren fase - bare systempunktet
+      dyn.appendChild(el("circle",{cx:sysX, cy:sysY, r:8, fill:col.dot, stroke:col.ink, "stroke-width":1.2}));
+      const t=el("text",{x:sysX, y:y1+22, "font-size":14, fill:col.dot, "text-anchor":"middle", "font-style":"italic"});
+      t.textContent="x"; dyn.appendChild(t);
+
+      bar.style.display="none";
+      if(region==="L"){
+        readout.innerHTML = "Systempunktet ligger over væskekurven: alt er væske (100%).";
+        note.textContent = "Her finnes bare én fase, så vektstangregelen gjelder ikke.";
+      } else {
+        readout.innerHTML = "Systempunktet ligger under fastkurven: alt er fast (100%).";
+        note.textContent = "Her finnes bare én fase, så vektstangregelen gjelder ikke.";
+      }
+    }
+  }
+
+  buildStatic();
+  document.getElementById("lr-T").addEventListener("input", draw);
+  document.getElementById("lr-x").addEventListener("input", draw);
+  draw();
+})();
+</script>
+</div>

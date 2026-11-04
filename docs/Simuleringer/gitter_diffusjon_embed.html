@@ -1,0 +1,175 @@
+<div id="diff-widget" style="
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #ffffff;
+  color: #1a1a1a;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem 1rem;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  max-width: 480px;
+  margin: 0 auto;
+  box-sizing: border-box;
+">
+
+  <p style="text-align:center; font-size: 13px; color: #666; margin: 0 0 1rem;">
+    A starter samlet på venstre side. Trykk start for å se hvordan A sprer seg utover gitteret, og hvordan det kjemiske potensialet avtar etter hvert.
+  </p>
+
+  <svg id="diff-svg" width="392" height="392" viewBox="0 0 392 392" style="margin-bottom: 1.25rem;"></svg>
+
+  <div style="display: flex; gap: 12px; margin-bottom: 1.25rem;">
+    <button id="diff-start" style="font-size: 14px; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Start diffusjon</button>
+    <button id="diff-reset" style="font-size: 14px; padding: 8px 16px; border-radius: 6px; border: 1px solid #b0b0b0; background: #f5f5f5; cursor: pointer;">Nullstill</button>
+  </div>
+
+  <p style="text-align:center; font-size: 12px; color: #888; margin: 0 0 1rem;" id="diff-status">Klar til å starte</p>
+
+  <div style="width: 100%;">
+    <div style="display: flex; justify-content: space-between; font-size: 12px; color: #666; margin-bottom: 4px;">
+      <span>Kjemisk potensial μ<sub>A</sub> (kvalitativt mål)</span>
+      <span id="mu-value">100%</span>
+    </div>
+    <div style="width: 100%; height: 14px; background: #eee; border-radius: 7px; overflow: hidden;">
+      <div id="mu-bar" style="height: 100%; width: 100%; background: #D85A30; transition: width 0.15s linear, background 0.15s linear;"></div>
+    </div>
+    <div style="display: flex; justify-content: space-between; font-size: 11px; color: #999; margin-top: 2px;">
+      <span>høyt (ublandet)</span>
+      <span>lavt (jevnt blandet)</span>
+    </div>
+  </div>
+
+</div>
+
+<script>
+(function() {
+  const SIZE = 8;
+  const R = 18;
+  const SPACING = 44;
+  const OFFSET = 24;
+  let cells = [];
+  let running = false;
+  let intervalId = null;
+  let ticks = 0;
+  let mu0 = null;
+
+  const COLOR_A = '#E24B4A';
+  const COLOR_B = '#378ADD';
+
+  function initGrid() {
+    cells = [];
+    for (let r = 0; r < SIZE; r++) {
+      cells.push(new Array(SIZE).fill('B'));
+    }
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < 2; c++) {
+        cells[r][c] = 'A';
+      }
+    }
+  }
+  initGrid();
+
+  const svg = document.getElementById('diff-svg');
+  const NS = 'http://www.w3.org/2000/svg';
+
+  function pos(r, c) {
+    return { x: OFFSET + c * SPACING, y: OFFSET + r * SPACING };
+  }
+
+  const circles = {};
+  for (let r = 0; r < SIZE; r++) {
+    for (let c = 0; c < SIZE; c++) {
+      const p = pos(r, c);
+      const circle = document.createElementNS(NS, 'circle');
+      circle.setAttribute('cx', p.x);
+      circle.setAttribute('cy', p.y);
+      circle.setAttribute('r', R);
+      circle.setAttribute('stroke', '#00000022');
+      circle.setAttribute('stroke-width', '0.5');
+      svg.appendChild(circle);
+      circles[r + '-' + c] = circle;
+    }
+  }
+
+  function computeMu() {
+    const colFrac = [];
+    for (let c = 0; c < SIZE; c++) {
+      let count = 0;
+      for (let r = 0; r < SIZE; r++) if (cells[r][c] === 'A') count++;
+      colFrac.push(count / SIZE);
+    }
+    const mean = colFrac.reduce((a, b) => a + b, 0) / SIZE;
+    const variance = colFrac.reduce((a, b) => a + (b - mean) * (b - mean), 0) / SIZE;
+    return Math.sqrt(variance);
+  }
+
+  function render() {
+    for (let r = 0; r < SIZE; r++) {
+      for (let c = 0; c < SIZE; c++) {
+        const t = cells[r][c];
+        circles[r + '-' + c].setAttribute('fill', t === 'A' ? COLOR_A : COLOR_B);
+      }
+    }
+    const mu = computeMu();
+    if (mu0 === null || mu0 === 0) mu0 = mu || 1;
+    const pct = Math.max(0, Math.min(100, (mu / mu0) * 100));
+    document.getElementById('mu-value').textContent = Math.round(pct) + '%';
+    document.getElementById('mu-bar').style.width = pct + '%';
+    const hue = 12 + (1 - pct / 100) * 200;
+    document.getElementById('mu-bar').style.background = 'hsl(' + hue + ', 65%, 50%)';
+  }
+
+  function randomSwap() {
+    const r1 = Math.floor(Math.random() * SIZE);
+    const c1 = Math.floor(Math.random() * SIZE);
+    const dirs = [[0, 1], [0, -1], [1, 0], [-1, 0]];
+    const d = dirs[Math.floor(Math.random() * dirs.length)];
+    const r2 = r1 + d[0], c2 = c1 + d[1];
+    if (r2 < 0 || r2 >= SIZE || c2 < 0 || c2 >= SIZE) return;
+    const tmp = cells[r1][c1];
+    cells[r1][c1] = cells[r2][c2];
+    cells[r2][c2] = tmp;
+  }
+
+  const statusEl = document.getElementById('diff-status');
+  const startBtn = document.getElementById('diff-start');
+
+  function tick() {
+    for (let i = 0; i < 8; i++) randomSwap();
+    ticks++;
+    render();
+    statusEl.textContent = 'Kjører diffusjon... (' + ticks + ' steg)';
+  }
+
+  function startSim() {
+    if (running) return;
+    running = true;
+    startBtn.textContent = 'Pause';
+    intervalId = setInterval(tick, 120);
+  }
+
+  function pauseSim() {
+    running = false;
+    startBtn.textContent = 'Fortsett';
+    clearInterval(intervalId);
+  }
+
+  startBtn.addEventListener('click', () => {
+    if (running) pauseSim();
+    else startSim();
+  });
+
+  document.getElementById('diff-reset').addEventListener('click', () => {
+    pauseSim();
+    startBtn.textContent = 'Start diffusjon';
+    ticks = 0;
+    mu0 = null;
+    initGrid();
+    render();
+    statusEl.textContent = 'Klar til å starte';
+  });
+
+  render();
+})();
+</script>
