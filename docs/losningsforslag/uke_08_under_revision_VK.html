@@ -1,0 +1,1026 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 8 – Løsninger og blandinger &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_08_under_revision_VK';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Uke 9 – Løsninger og blandinger 2" href="uke_09_under_revision.html" />
+    <link rel="prev" title="Uke 7 – Faser og faseoverganger" href="uke_07_VK.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_08_under_revision_VK.html">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_09_under_revision_VK.html">Uke 9 – Løsninger og blandinger 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_10_under_revision.html">Uke 10 – Likevekt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_11_under_revision.html">Uke 11 – Elektrokjemi</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_09_under_revision.html">Uke 9 – Løsninger og blandinger 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_10_under_revision.html">Uke 10 – Likevekt</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_08_under_revision_VK.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 8 – Løsninger og blandinger</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger">Oppgave 1. Ideelle gasser og ideele blandinger.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger">Oppgave 3: Termodynamikken til ikke-ideelle løsninger</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-8-losninger-og-blandinger">
+<h1>Uke 8 – Løsninger og blandinger<a class="headerlink" href="#uke-8-losninger-og-blandinger" title="Link to this heading">#</a></h1>
+<section id="oppgave-1-ideelle-gasser-og-ideele-blandinger">
+<h2>Oppgave 1. Ideelle gasser og ideele blandinger.<a class="headerlink" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger" title="Link to this heading">#</a></h2>
+<p><strong>a)</strong> Som repetisjon, hva er en ideell gass? Hva ville <span class="math notranslate nohighlight">\({\Delta} H_{mix}\)</span> vært for blanding av to ideelle gasser?</p>
+<p><strong>Svar</strong> En ideell gass er en gass uten interaksjoner mellom molekylene, der vi regner hvert molekyl som et lite punkt uten utstrekning. <span class="math notranslate nohighlight">\(\Delta H_{mix}\)</span> ville vært <span class="math notranslate nohighlight">\(0\)</span> for en blanding av to ideelle gasser siden det ikke er noen intermolekylære interaksjoner mellom molekylene.</p>
+<p><strong>b)</strong> Hva er en ideell væske? Hva er <span class="math notranslate nohighlight">\({\Delta } H_{mix}\)</span> for en ideell væske?</p>
+<p><strong>Svar</strong> Siden væsker har interaksjoner mellom seg, kan man ikke si at intermolekylære interaksjoner er lik <span class="math notranslate nohighlight">\(0\)</span>. Det man gjør isteden er å sette de til en gjennomsnittlig styrke. Det som menes med det er at interaksjonene mellom stoffene A og B er lik interaksjonene mellom A og A, og B og B. <span class="math notranslate nohighlight">\(\Delta H_{mix}\)</span> er fortsatt <span class="math notranslate nohighlight">\(0\)</span> når man blander to ideelle væsker. Det betyr at det ikke er noen forskjell i intermolekylære bindinger mellom molekylene i væsken. En homogen, helt ren væske vil derfor alltid være ideell, fordi alle interaksjonene mellom molekylene er de samme.</p>
+<p><strong>c)</strong> Hva er drivkraften for miksing av to ideelle væsker?</p>
+<p><strong>Svar</strong> Drivkraften er entropisk: det er statistisk mye mer sannsynlig (flere mikrotilstander) at molekylene er tilfeldig blandet enn separert, noe som gir <span class="math notranslate nohighlight">\(\Delta S_{mix} &gt; 0\)</span> og dermed <span class="math notranslate nohighlight">\(\Delta G_{mix} = \Delta H_{mix} − T\Delta S_{mix} &lt; 0 \rightarrow\)</span> spontan blanding.</p>
+<p><strong>d)</strong> Hva er henholdsvis Raoult og Henry’s lov? Når gjelder hver av de, når bruker man hvilken?</p>
+<p><strong>Svar</strong>  Raoults lov sier at det partielle trykket av en komponent over en blandingsløsning som inneholder denne komponenten er lik molfraksjonen av komponenten i blandingen multiplisert med damptrykket til den rene komponenten:</p>
+<div class="math notranslate nohighlight">
+\[p_i=x_i\cdot p_i^*\]</div>
+<p>For idelle løsninger gjelder Raoults lov uansett hvor mye eller lite det er av komponenten i blandingen. For reelle løsninger er Raoults lov en god tilnærming når det aller meste av løsningen består av den gitte komponenten, altså når <span class="math notranslate nohighlight">\(x_i\rightarrow 1\)</span>.</p>
+<p>Henry’s lov sier at det partielle trykket av en komponent over en blandingsløsning som inneholder denne komponenten er proposjonal med molfraksjonen av denne komponenten i løsningen:</p>
+<div class="math notranslate nohighlight">
+\[ p_i=K_H \cdot x_i \]</div>
+<p>hvor <span class="math notranslate nohighlight">\(K_H\)</span> er Henry’s konstant som blir bestemt empirik. For reelle vesker gjelder kun når det er veldig lite av komponenten, altså når <span class="math notranslate nohighlight">\(x_i\rightarrow 0\)</span>. For ideelle løsninger vil dette gjelde for all verider av <span class="math notranslate nohighlight">\(x_i\)</span> og da blir Henry’s lov identisk med Raults lov, og <span class="math notranslate nohighlight">\(K_H=p_i^*\)</span>.</p>
+<p><strong>e)</strong> Når sier man at en væskeblanding er ideell, utifra Raoults lov? Kom med et par eksempler på systemer med to væsker som oppfører seg tilnærmet ideelt.</p>
+<p><strong>Svar</strong> En væskeblanding sies å være ideell dersom hver komponent følger Raoults lov over hele sammensetningsområdet. Altså når komponentene er så kjemisk/strukturelt like at A–A, B–B og A–B-interaksjoner er tilnærmet identiske, og det partielle trykket av hver komponent er gitt ved <span class="math notranslate nohighlight">\(p_i=x_i\cdot p_i^*\)</span>. For at dette skal være tilfelle bør de to væskene være mest mulig like, og eksempler vi kan tenke oss er benzen og toluen, n-heptan og n-heksan, etyl-bromide og etyl-jodid, klorbenzen og brombenzen.</p>
+<p><strong>f)</strong> Se for dere et stort volum med vann ved <span class="math notranslate nohighlight">\(25 ^{\circ} C\)</span> (<span class="math notranslate nohighlight">\(10 \, L\)</span> for eksempel). Når <span class="math notranslate nohighlight">\(1 \, mol\)</span> vann videre tilsettes så øker volumet med <span class="math notranslate nohighlight">\(18 \, cm^3\)</span>, og man sier derfor at det molare volumet til vann er <span class="math notranslate nohighlight">\(18 \, cm^3\)</span>. Men når man tilsetter <span class="math notranslate nohighlight">\(1 \, mol\)</span> vann til et stort volum med etanol (<span class="math notranslate nohighlight">\(10 \, L\)</span> for eksempel) ved <span class="math notranslate nohighlight">\(25 ^{\circ} C\)</span> øker volumet kun med <span class="math notranslate nohighlight">\(14 \, cm^3\)</span>. Hvorfor er det slik? Hva kommer dette av?</p>
+<p><strong>Svar</strong> Vann og etanol danner gunstige interaksjoner, blant annet hydrogenbindinger, og molekylene kan pakkes mer effektivt i blandingen enn i de rene væskene. Derfor oppstår volumkontraksjon ved blanding, og vannets partielle molare volum i etanol er bare omtrent <span class="math notranslate nohighlight">\(14 \, cm^3\)</span>.</p>
+<p><strong>g)</strong> Er systemet i f) en ideell væske?</p>
+<p><strong>Svar</strong> Nei, en blanding av etanol og vann er ikke en ideell væske. Interaksjonene mellom vann og vann, vann og etanol, og etanol og etanol er forskjellige.  Antall hydrogenbindinger som kan dannes imellom speciene varierer.</p>
+<p><strong>h)</strong> Hva er partielt molart volum? Hvordan vil det være for en ideell væske?</p>
+<p><strong>Svar</strong> Det partielle molare volumet til komponent <span class="math notranslate nohighlight">\(i\)</span>, er den infinitesimale endringen i blandingens totale volum per infinitesimal endring i stoffmengden av komponent
+<span class="math notranslate nohighlight">\(i\)</span>, ved konstant temperatur, trykk og mengde av de øvrige komponentene. Partielt molart volum kan variere med sammensetning av blandingen. For en ideell væske vil det partielle molare volumet være lik som for de rene stoffene. I eksempelet med vann og etanol ville det vært <span class="math notranslate nohighlight">\(18 \text{cm}^3\)</span>.</p>
+</section>
+<section id="oppgave-2">
+<h2>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h2>
+<p>En blanding består av etyliodid og etylacetat. Damptrykket (<span class="math notranslate nohighlight">\(p_I\)</span>) av etyliodid(I) over blandingen som funksjon av molbrøken <span class="math notranslate nohighlight">\(x_I\)</span> er ved <span class="math notranslate nohighlight">\(50.0 °C\)</span> målt til:</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>(<span class="math notranslate nohighlight">\(x_I\)</span>)</p></th>
+<th class="head text-center"><p>(<span class="math notranslate nohighlight">\(p_I\)</span>) / <span class="math notranslate nohighlight">\(torr\)</span></p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1.00</p></td>
+<td class="text-center"><p>353</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.909</p></td>
+<td class="text-center"><p>322</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.825</p></td>
+<td class="text-center"><p>296</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.548</p></td>
+<td class="text-center"><p>213</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.235</p></td>
+<td class="text-center"><p>105</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.109</p></td>
+<td class="text-center"><p>52.7</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>0.0579</p></td>
+<td class="text-center"><p>28.0</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>0.0</p></td>
+<td class="text-center"><p>0</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>a)</strong>	Tegn <span class="math notranslate nohighlight">\(p_I\)</span> som funksjon av <span class="math notranslate nohighlight">\(x_I\)</span>. Følger denne damptrykkskurven Raoults lov? Hvorfor følger den, evt hvorfor følger den ikke?</p>
+<p><strong>Svar</strong></p>
+<p><span class="math notranslate nohighlight">\(p_{I}(\text{Raoult}) = x_{I} \times 353 \ \text{Torr}\)</span></p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p><span class="math notranslate nohighlight">\(x_{I}\)</span></p></th>
+<th class="head text-center"><p>Raoult-prediksjon <span class="math notranslate nohighlight">\(\text{[Torr]}\)</span></p></th>
+<th class="head text-center"><p>Faktisk <span class="math notranslate nohighlight">\(p_{I} \ \text{[Torr]}\)</span></p></th>
+<th class="head text-center"><p>Forhold</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(1.00\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(353\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(353\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.000\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.909\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(320.9\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(322\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.003\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.825\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(291.2\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(296\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.016\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.548\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(193.4\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(213\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.101\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.235\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(83.0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(105\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.266\)</span></p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.109\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(38.5\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(52.7\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.370\)</span></p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p><span class="math notranslate nohighlight">\(0.0579\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(20.4\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(28.0\)</span></p></td>
+<td class="text-center"><p><span class="math notranslate nohighlight">\(1.370\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Ved høy <span class="math notranslate nohighlight">\(x_{I}\)</span> (nær <span class="math notranslate nohighlight">\(1.00\)</span>) følger damptrykket Raoults lov godt (avvik <span class="math notranslate nohighlight">\(&lt; 2\%\)</span>). Ved lav <span class="math notranslate nohighlight">\(x_{I}\)</span> er avviket betydelig (opp mot <span class="math notranslate nohighlight">\(37\%\)</span>) — løsningsmiddelet følger Raoults lov nær <span class="math notranslate nohighlight">\(x_{I} = 1\)</span>, mens den fortynnede komponenten følger Henrys lov.</p>
+<p><strong>b)</strong>	Finn Henrys lov konstanten <span class="math notranslate nohighlight">\(K_I\)</span> for etyliodid.</p>
+<p><strong>Svar</strong></p>
+<p><span class="math notranslate nohighlight">\(K_{I} = \frac{p_{I}}{x_{I}}\)</span></p>
+<p>Ved lave konsentrasjoner:</p>
+<p><span class="math notranslate nohighlight">\(x_{I} = 0.0579: \quad K_{I} = \frac{28.0}{0.0579} \approx 483.6 \ \text{Torr}\)</span></p>
+<p><span class="math notranslate nohighlight">\(x_{I} = 0.109: \quad K_{I} = \frac{52.7}{0.109} \approx 483.5 \ \text{Torr}\)</span></p>
+<p><span class="math notranslate nohighlight">\(K_{I} \approx 484 \ \text{Torr} \quad (x_{I} \to 0)\)</span></p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Måledata fra Oppgave 4</span>
+<span class="n">x_I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0000</span><span class="p">,</span> <span class="mf">0.0579</span><span class="p">,</span> <span class="mf">0.109</span><span class="p">,</span> <span class="mf">0.235</span><span class="p">,</span> <span class="mf">0.548</span><span class="p">,</span> <span class="mf">0.825</span><span class="p">,</span> <span class="mf">0.909</span><span class="p">,</span> <span class="mf">1.000</span><span class="p">])</span>
+<span class="n">p_I</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">28.0</span><span class="p">,</span> <span class="mf">52.7</span><span class="p">,</span> <span class="mf">105.0</span><span class="p">,</span> <span class="mf">213.0</span><span class="p">,</span> <span class="mf">296.0</span><span class="p">,</span> <span class="mf">322.0</span><span class="p">,</span> <span class="mf">353.0</span><span class="p">])</span>  <span class="c1"># Torr</span>
+
+<span class="c1"># Raoults lov for etyliodid, med p_I* = 353 Torr</span>
+<span class="n">x_raoult</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">p_raoult</span> <span class="o">=</span> <span class="mi">353</span> <span class="o">*</span> <span class="n">x_raoult</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_I</span><span class="p">,</span> <span class="n">p_I</span><span class="p">,</span> <span class="s1">'o-'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Måledata'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_raoult</span><span class="p">,</span> <span class="n">p_raoult</span><span class="p">,</span> <span class="s1">'--'</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s1">'Raoults lov'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Molbrøk etyliodid, $x_I$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Damptrykk etyliodid, $p_I$ (Torr)'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">'Damptrykk som funksjon av molbrøk ved 50 °C'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/caedd3d9cba371d6266e74c13906ed86e11849d6d04b962f04d9aa9ee3f12443.png" src="../../_images/caedd3d9cba371d6266e74c13906ed86e11849d6d04b962f04d9aa9ee3f12443.png" />
+</div>
+</div>
+</section>
+<section id="oppgave-3-termodynamikken-til-ikke-ideelle-losninger">
+<h2>Oppgave 3: Termodynamikken til ikke-ideelle løsninger<a class="headerlink" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger" title="Link to this heading">#</a></h2>
+<p>I denne oppgaven skal vi se på blandingsentalpi og blandingsentropi for ikke-ideele væsker, fra et mikroskopisk perspektiv og antar en gittermodell. Vi tenker oss et 3D-gitter med N plasser, alle plassene er fylt med 1 molekyl av typen A eller B, og vi har <span class="math notranslate nohighlight">\(N_A\)</span> molekyler av typen A og <span class="math notranslate nohighlight">\(N_B\)</span> molekyler av typen B, og vi vet at <span class="math notranslate nohighlight">\(N=N_A+N_B\)</span>. See figuren under: Vi antar videre at interaksjonsenergien mellom to A molekyler er <span class="math notranslate nohighlight">\(\epsilon_{AA}\)</span>, mellom to B molekyler er <span class="math notranslate nohighlight">\(\epsilon_{BB}\)</span> og mellom et A og et B molekyl er den <span class="math notranslate nohighlight">\(\epsilon_{AB}\)</span>. Vi kan anta at alle interaksjonsenergiene er negative (tiltrekkende), men IKKE at de er like  <span class="math notranslate nohighlight">\(\epsilon_{AA} \neq \epsilon_{BB} \neq \epsilon_{AB}\)</span></p>
+<p><img alt="Gittermodel for blandinger, hentet fra Dill, K. A., Bromberg, S., &amp; Stigter, D. (2010). Molecular Driving Forces. Garland Science. https://doi.org/10.4324/9780203809075" src="../../_images/Gittermodel_blandinger_from_Dill.png" /></p>
+<p><strong>a)</strong> Hva er blandingsentropien, <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span>, for dette systemet? Bruk Boltzmanns deffinisjon av entropi <span class="math notranslate nohighlight">\(S=k_B\ln{(\Omega)}\)</span>, Sterlings approksimasjon <span class="math notranslate nohighlight">\(\ln{(N!)}\approx N \ln{(N)}-N\)</span>, og når er blandingsentropien størst?</p>
+<p><strong>Svar</strong> Antallet måter å plassere de <span class="math notranslate nohighlight">\(N_A\)</span> A-partiklene og <span class="math notranslate nohighlight">\(N_B\)</span> B-partiklene på de <span class="math notranslate nohighlight">\(N=N_A+N_B\)</span> gitterplassene er</p>
+<div class="math notranslate nohighlight">
+\[\Omega=\frac{N!}{N_A!N_B!}.\]</div>
+<p>Boltzmanns definisjon gir <span class="math notranslate nohighlight">\(\Delta S_{mix}=k_B\ln\Omega\)</span>. Vi bruker <span class="math notranslate nohighlight">\(\ln\left(\frac{a}{b}\right)=\ln a-\ln b\)</span> og Stirlings approksimasjon på hvert fakultet:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\ln\Omega &amp;= \ln(N!)-\ln(N_A!)-\ln(N_B!) \\
+&amp;\approx (N\ln N-N)-(N_A\ln N_A-N_A)-(N_B\ln N_B-N_B).
+\end{aligned}\end{split}\]</div>
+<p>Siden <span class="math notranslate nohighlight">\(N=N_A+N_B\)</span>, kanselleres de lineære leddene: <span class="math notranslate nohighlight">\(-N+N_A+N_B=0\)</span>. Dermed får vi</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Delta S_{mix} &amp;= k_B(N\ln N-N_A\ln N_A-N_B\ln N_B) \\
+&amp;=k_B\left[N_A\ln{(N)}+N_B\ln{(N)}-N_A\ln{(N_A)}-N_B\ln{(N_B)}\right] \\
+&amp;=k_B\left[N_A\ln\left(\frac{N}{N_A}\right)+N_B\ln\left(\frac{N}{N_B}\right)\right] \\
+&amp;=-k_B\left[N_A\ln\left(\frac{N_A}{N}\right)+N_B\ln\left(\frac{N_B}{N}\right)\right] \\
+&amp;=-k_B(N_A\ln x_A+N_B\ln x_B) \\
+&amp;=-k_B\cdot N(\frac{N_A}{N}\ln x_A+\frac{N_B}{N}\ln x_B) \\
+&amp;=-k_B\cdot N(x_A\ln x_A+x_B\ln x_B)\\
+&amp;=-k_B\cdot N(x_A\ln x_A+(1-x_A)\ln{(1-x_A)}),
+\end{aligned}\end{split}\]</div>
+<p>der <span class="math notranslate nohighlight">\(x_A=\frac{N_A}{N}\)</span> og <span class="math notranslate nohighlight">\(x_B=\frac{N_B}{N}=1-x_A\)</span>. For å finne maksimumet ved fast <span class="math notranslate nohighlight">\(N\)</span> kan vi derivere det siste utrykket for blandingsentropien med hensyn på <span class="math notranslate nohighlight">\(x_A\)</span> og sette lik 0:</p>
+<div class="math notranslate nohighlight">
+\[\frac{1}{Nk_B}\frac{d\Delta S_{mix}}{dx_A}=-\ln x_A+\ln(1-x_A)=0.\]</div>
+<p>Dette gir <span class="math notranslate nohighlight">\(x_A=1-x_A\)</span>, altså <span class="math notranslate nohighlight">\(x_A=x_B=\frac{1}{2}\)</span>. Andrederiverten er <span class="math notranslate nohighlight">\(-\frac{1}{x_A}-\frac{1}{1-x_A}&lt;0\)</span>, så dette er et maksimum. Maksimal blandingsentropi er <span class="math notranslate nohighlight">\(\Delta S_{mix,max}=Nk_B\ln 2\)</span>.</p>
+<p>Vi kan også plotte entropien som en funksjon av <span class="math notranslate nohighlight">\(x_A\)</span> og finne maksimum slik:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+
+<span class="c1"># Plott den normaliserte entropien ΔS_mix/(N k_B).</span>
+<span class="c1"># Den totale blandingsentropien fås ved å multiplisere med N k_B.</span>
+<span class="n">x_A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">1.0</span><span class="p">,</span> <span class="mi">501</span><span class="p">)</span>
+<span class="n">x_B</span> <span class="o">=</span> <span class="mf">1.0</span> <span class="o">-</span> <span class="n">x_A</span>
+<span class="n">delta_S_over_NkB</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">x_A</span><span class="p">)</span>
+<span class="n">inside</span> <span class="o">=</span> <span class="p">(</span><span class="n">x_A</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">x_B</span> <span class="o">&gt;</span> <span class="mf">0.0</span><span class="p">)</span>  <span class="c1"># unngå log(0) ved endepunktene</span>
+<span class="n">delta_S_over_NkB</span><span class="p">[</span><span class="n">inside</span><span class="p">]</span> <span class="o">=</span> <span class="o">-</span><span class="p">(</span><span class="n">x_A</span><span class="p">[</span><span class="n">inside</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x_A</span><span class="p">[</span><span class="n">inside</span><span class="p">])</span> <span class="o">+</span> <span class="n">x_B</span><span class="p">[</span><span class="n">inside</span><span class="p">]</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="n">x_B</span><span class="p">[</span><span class="n">inside</span><span class="p">]))</span>
+
+<span class="c1"># Marker maksimumet ved x_A = 0.5, der ΔS_mix/(N k_B) = ln(2)</span>
+<span class="n">x_max</span> <span class="o">=</span> <span class="mf">0.5</span>
+<span class="n">S_max</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">log</span><span class="p">(</span><span class="mf">2.0</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">7</span><span class="p">,</span> <span class="mi">5</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">x_A</span><span class="p">,</span> <span class="n">delta_S_over_NkB</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">S_max</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">zorder</span><span class="o">=</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axvline</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">axhline</span><span class="p">(</span><span class="n">S_max</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">,</span> <span class="n">linestyle</span><span class="o">=</span><span class="s1">':'</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.7</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">annotate</span><span class="p">(</span><span class="sa">r</span><span class="s1">'$x_A=0.5,\; \Delta S_{\mathrm</span><span class="si">{mix}</span><span class="s1">}/(N k_B)=\ln(2)$'</span><span class="p">,</span>
+             <span class="n">xy</span><span class="o">=</span><span class="p">(</span><span class="n">x_max</span><span class="p">,</span> <span class="n">S_max</span><span class="p">),</span> <span class="n">xytext</span><span class="o">=</span><span class="p">(</span><span class="mf">0.57</span><span class="p">,</span> <span class="mf">0.58</span><span class="p">),</span>
+             <span class="n">arrowprops</span><span class="o">=</span><span class="p">{</span><span class="s1">'arrowstyle'</span><span class="p">:</span> <span class="s1">'-&gt;'</span><span class="p">,</span> <span class="s1">'color'</span><span class="p">:</span> <span class="s1">'crimson'</span><span class="p">},</span>
+             <span class="n">color</span><span class="o">=</span><span class="s1">'crimson'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Molbrøk A, $x_A$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Blandingsentropi, $\Delta S_{\mathrm</span><span class="si">{mix}</span><span class="s1">}/(N k_B)$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="sa">r</span><span class="s1">'Blandingsentropi som funksjon av $x_A$'</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="n">bottom</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">(</span><span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/6c0a41f908a85060bf4ea6f0c1a7ba3daf6b330e664834a48fb2a517efd9931e.png" src="../../_images/6c0a41f908a85060bf4ea6f0c1a7ba3daf6b330e664834a48fb2a517efd9931e.png" />
+</div>
+</div>
+<p><strong>b)</strong> Vi kan si at den indre energien til blandingen er gitt ved:</p>
+<div class="math notranslate nohighlight">
+\[U=m_{AA}\epsilon_{AA}+m_{BB}\epsilon_{AA}+m_{AB}\epsilon_{AB}\]</div>
+<p>der <span class="math notranslate nohighlight">\(m_{AA}\)</span>, <span class="math notranslate nohighlight">\(m_{BB}\)</span> og <span class="math notranslate nohighlight">\(m_{AB}\)</span> er henholdsvis antall bindinger mellom AA, BB og AB i blandingen. Disse vet vi ikke sånn uten videre, og må finne de utifa <span class="math notranslate nohighlight">\(N_A\)</span> og <span class="math notranslate nohighlight">\(N_B\)</span>. Utifra gittermodellen, antar vi at hver partikkel har <span class="math notranslate nohighlight">\(z\)</span> naboer.</p>
+<p>Diskuter hvorfor <span class="math notranslate nohighlight">\(z\cdot N_A=2\cdot m_{AA} + m_{AB}\)</span> og <span class="math notranslate nohighlight">\(z\cdot N_B=2\cdot m_{BB} + m_{AB}\)</span></p>
+<p><strong>Svar</strong> Hver partikkel har <span class="math notranslate nohighlight">\(z\)</span> nabosider. De <span class="math notranslate nohighlight">\(N_A\)</span> A-partiklene har derfor til sammen <span class="math notranslate nohighlight">\(zN_A\)</span> A-sider. En AA-kontakt går mellom to A-partikler og bruker dermed to A-sider, mens en AB-kontakt bruker én A-side. Antallet A-sider kan derfor telles på to måter:</p>
+<div class="math notranslate nohighlight">
+\[zN_A=2m_{AA}+m_{AB}.\]</div>
+<p>På samme måte har B-partiklene til sammen <span class="math notranslate nohighlight">\(zN_B\)</span> B-sider. En BB-kontakt bruker to B-sider, og en AB-kontakt bruker én B-side. Dermed gjelder</p>
+<div class="math notranslate nohighlight">
+\[zN_B=2m_{BB}+m_{AB}.\]</div>
+<p><strong>c)</strong> Vis at med definisjonene over kan vi skrive at den indre energien til blandingen som:</p>
+<div class="math notranslate nohighlight">
+\[U_{AB}=\frac{z\cdot N_A - m_{AB}}{2}\epsilon_{AA}+\frac{z\cdot N_B - m_{AB}}{2}\epsilon_{BB}+m_{AB}\epsilon_{AB}\]</div>
+<p>og at dette kan skrives om til:</p>
+<div class="math notranslate nohighlight">
+\[U_{AB}=\frac{z\cdot N_A}{2}\epsilon_{AA}+\frac{z\cdot N_B}{2}\epsilon_{BB}+m_{AB}\left( \epsilon_{AB} - \frac{\epsilon_{AA}+\epsilon_{BB}}{2} \right)\]</div>
+<p><strong>Svar</strong> Vi løser først lingene fra deloppgave b) med hensyn på <span class="math notranslate nohighlight">\(m_{AA}\)</span> og <span class="math notranslate nohighlight">\(m_{BB}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[m_{AA}=\frac{zN_A-m_{AB}}{2},\qquad m_{BB}=\frac{zN_B-m_{AB}}{2}.\]</div>
+<p>Den totale indre energien er summen av energien fra hver kontakttype. Når uttrykkene for <span class="math notranslate nohighlight">\(m_{AA}\)</span> og <span class="math notranslate nohighlight">\(m_{BB}\)</span> settes inn, får vi</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+U_{AB} &amp;= m_{AA}\epsilon_{AA}+m_{BB}\epsilon_{BB}+m_{AB}\epsilon_{AB} \\
+&amp;=\frac{zN_A-m_{AB}}{2}\epsilon_{AA}+\frac{zN_B-m_{AB}}{2}\epsilon_{BB}+m_{AB}\epsilon_{AB}.
+\end{aligned}\end{split}\]</div>
+<p>Vi fordeler faktorene i de to første leddene og samler deretter alle leddene som inneholder <span class="math notranslate nohighlight">\(m_{AB}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+U_{AB} &amp;= \frac{zN_A}{2}\epsilon_{AA}-\frac{m_{AB}}{2}\epsilon_{AA}+\frac{zN_B}{2}\epsilon_{BB}-\frac{m_{AB}}{2}\epsilon_{BB}+m_{AB}\epsilon_{AB} \\
+&amp;= \frac{zN_A}{2}\epsilon_{AA}+\frac{zN_B}{2}\epsilon_{BB}+m_{AB}\left(\epsilon_{AB}-\frac{\epsilon_{AA}}{2}-\frac{\epsilon_{BB}}{2}\right) \\
+&amp;= \frac{zN_A}{2}\epsilon_{AA}+\frac{zN_B}{2}\epsilon_{BB}+m_{AB}\left(\epsilon_{AB}-\frac{\epsilon_{AA}+\epsilon_{BB}}{2}\right).
+\end{aligned}\end{split}\]</div>
+<p>Dette er det ønskede uttrykket.</p>
+<p><strong>d)</strong> Nå må vi bare finne <span class="math notranslate nohighlight">\(m_{AB}\)</span>. Dette gjør vi ved å anta at A og B partiklene er fordelt mest mulig tilfeldig. Dette kalles for Mean-Field eller Bragg–Williams approximasjonen.</p>
+<ol class="arabic simple">
+<li><p>Hvis vi antar at vi har en A partikkel på en gitt gitterplass, hva er sannsynligheten for å finne en partikkel B på naboplassen rett til høyre for A partikkelen? Husk at vi har <span class="math notranslate nohighlight">\(N_B\)</span> partikler av type B av totalt <span class="math notranslate nohighlight">\(N\)</span> partikler.</p></li>
+<li><p>Hvis hver partikkel har “z” naborer, hvor mange av naboene til en gitt partikkel A, vil i snitt være av typen B?</p></li>
+<li><p>Hvis vi har <span class="math notranslate nohighlight">\(N_A\)</span> partikler tilfeldig fordelt i væsken, hvor mange A-B interaksjoner (<span class="math notranslate nohighlight">\(m_{AB}\)</span>) vil vi da ha totalt?</p></li>
+</ol>
+<p><strong>Svar</strong> I Bragg–Williams- eller mean-field-approksimasjonen antar vi at A- og B-partiklene er tilfeldig og jevnt fordelt på gitterplassene.</p>
+<ol class="arabic simple">
+<li><p>Det er <span class="math notranslate nohighlight">\(N\)</span> mulige gitterplasser, hvorav <span class="math notranslate nohighlight">\(N_B\)</span> er opptatt av B. Sannsynligheten for at en bestemt naboplass er opptatt av B, er derfor</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[P(B\text{ på naboplassen})=\frac{N_B}{N}=x_B.\]</div>
+<ol class="arabic simple" start="2">
+<li><p>En A-partikkel har <span class="math notranslate nohighlight">\(z\)</span> naboer. For hver nabo er sannsynligheten for å finne B lik <span class="math notranslate nohighlight">\(x_B\)</span>, så det forventede antallet B-naboer er</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[z x_B=z\frac{N_B}{N}.\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Vi summerer dette gjennomsnittet over alle <span class="math notranslate nohighlight">\(N_A\)</span> A-partikler. Dermed blir det forventede antallet A–B-kontakter</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[m_{AB}=N_A z x_B=N_Az\frac{N_B}{N}=z\frac{N_AN_B}{N}.\]</div>
+<p>En AB-kontakt telles bare én gang her, fordi vi teller kontakter ved å gå gjennom A-partiklene og registrere B-naboene deres.</p>
+<p><strong>e)</strong> Hvordan ser utrykket for den indre energien nå? Bruk svaret i oppgave d) og at:</p>
+<div class="math notranslate nohighlight">
+\[ \xi_{AB}=\frac{z}{K_BT}\left( \epsilon_{AB} - \frac{\epsilon_{AA}+\epsilon_{BB}}{2} \right) \]</div>
+<p><strong>Svar</strong> Fra deloppgave d) har vi <span class="math notranslate nohighlight">\(m_{AB}=z\frac{N_AN_B}{N}\)</span>. Vi setter dette inn i uttrykket fra c):</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+U_{AB} &amp;= \frac{zN_A}{2}\epsilon_{AA}+\frac{zN_B}{2}\epsilon_{BB}+z\frac{N_AN_B}{N}\left(\epsilon_{AB}-\frac{\epsilon_{AA}+\epsilon_{BB}}{2}\right).
+\end{aligned}\]</div>
+<p>Definisjonen i oppgaven er</p>
+<div class="math notranslate nohighlight">
+\[\xi_{AB}=\frac{z}{k_BT}\left(\epsilon_{AB}-\frac{\epsilon_{AA}+\epsilon_{BB}}{2}\right).\]</div>
+<p>Vi multipliserer denne definisjonen med <span class="math notranslate nohighlight">\(k_BT\frac{N_AN_B}{N}\)</span>. Da får vi</p>
+<div class="math notranslate nohighlight">
+\[k_BT\xi_{AB}\frac{N_AN_B}{N}=z\frac{N_AN_B}{N}\left(\epsilon_{AB}-\frac{\epsilon_{AA}+\epsilon_{BB}}{2}\right).\]</div>
+<p>Dermed kan energien skrives kompakt som</p>
+<div class="math notranslate nohighlight">
+\[U_{AB}=\frac{zN_A}{2}\epsilon_{AA}+\frac{zN_B}{2}\epsilon_{BB}+k_BT\xi_{AB}\frac{N_AN_B}{N}.\]</div>
+<p><strong>f)</strong> Vi er oftest ineterressert i endringen i indre energi for en blandet sluttilstand (<span class="math notranslate nohighlight">\(N_A\)</span> partikler av type A blandet sammen med <span class="math notranslate nohighlight">\(N_B\)</span> partikler av type B blandet), fra 2 ublanede løsninger.</p>
+<ol class="arabic simple">
+<li><p>Bruk utrykket for den indre energien dere fant i oppgave e) og vis at den indre energien <span class="math notranslate nohighlight">\(U_A\)</span> til en ren væske med kun <span class="math notranslate nohighlight">\(N_A\)</span> a partikler av type A er gitt ved:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[U_A=\frac{z}{2}N_A\epsilon_{AA}\]</div>
+<ol class="arabic simple" start="2">
+<li><p>Hva er <span class="math notranslate nohighlight">\(U_B\)</span>?</p></li>
+<li><p>Hva er <span class="math notranslate nohighlight">\(\Delta U_{mix}=U_{AB}-U_A-U_B\)</span>?</p></li>
+</ol>
+<p><strong>Svar</strong></p>
+<ol class="arabic simple">
+<li><p>For en løsning som bare inneholder A, setter vi <span class="math notranslate nohighlight">\(N_B=0\)</span> og dermed <span class="math notranslate nohighlight">\(N=N_A\)</span>. Mean-field-uttrykket fra deloppgave e) blir da</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+U_{AB}(N_A,0) &amp;= \frac{zN_A}{2}\epsilon_{AA}+\frac{z\cdot 0}{2}\epsilon_{BB}+k_BT\xi_{AB}\frac{N_A\cdot 0}{N_A+0} \\
+&amp;= \frac{zN_A}{2}\epsilon_{AA}.
+\end{aligned}\end{split}\]</div>
+<p>BB-leddet blir null fordi det ikke finnes B-partikler, og AB-leddet blir null fordi <span class="math notranslate nohighlight">\(N_B=0\)</span> gir <span class="math notranslate nohighlight">\(m_{AB}=z\frac{N_AN_B}{N}=0\)</span>. Dermed står vi igjen med <span class="math notranslate nohighlight">\(U_{AB}(N_A,0)=\frac{z}{2}N_A\epsilon_{AA}=U_A\)</span>, som stemmer med uttrykket oppgitt for ren A.
+2. For ren B er det bare BB-kontakter. Hver B-partikkel har <span class="math notranslate nohighlight">\(z\)</span> naboer, men hver BB-kontakt deles av to B-partikler. Antallet BB-kontakter er derfor <span class="math notranslate nohighlight">\(\frac{zN_B}{2}\)</span>, og energien blir</p>
+<div class="math notranslate nohighlight">
+\[U_B=\frac{z}{2}N_B\epsilon_{BB}.\]</div>
+<ol class="arabic simple" start="3">
+<li><p>Vi setter inn uttrykkene for <span class="math notranslate nohighlight">\(U_{AB}\)</span>, <span class="math notranslate nohighlight">\(U_A\)</span> og <span class="math notranslate nohighlight">\(U_B\)</span> i definisjonen:</p></li>
+</ol>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Delta U_{mix} &amp;= U_{AB}-U_A-U_B \\
+&amp;= \left[\frac{z}{2}N_A\epsilon_{AA}+\frac{z}{2}N_B\epsilon_{BB}+k_BT\xi_{AB}\frac{N_AN_B}{N}\right] \\
+&amp;\quad -\frac{z}{2}N_A\epsilon_{AA}-\frac{z}{2}N_B\epsilon_{BB} \\
+&amp;=k_BT\xi_{AB}\frac{N_AN_B}{N}.
+\end{aligned}\end{split}\]</div>
+<p><strong>g)</strong> Hvis vi antar konstant trykk og at vi ikke får noe endring av totaltvolum ved å blande en ren løsning av A med en ren løsning av B, kan vi skrive at:</p>
+<div class="math notranslate nohighlight">
+\[\Delta H_{mix}=\Delta U_{mix}\]</div>
+<p>Forklar hvorfor?</p>
+<p><strong>Svar</strong> Entalpi er definert som <span class="math notranslate nohighlight">\(H=U+pV\)</span>. For en blandingsprosess ved konstant trykk er endringen derfor</p>
+<div class="math notranslate nohighlight">
+\[\Delta H_{mix}=\Delta U_{mix}+p\Delta V.\]</div>
+<p>Når blandingen ikke gir noen endring i totalvolumet, er <span class="math notranslate nohighlight">\(\Delta V=0\)</span>. Da forsvinner leddet <span class="math notranslate nohighlight">\(p\Delta V\)</span>, slik at</p>
+<div class="math notranslate nohighlight">
+\[\Delta H_{mix}=\Delta U_{mix}.\]</div>
+<p><strong>h)</strong> Nå har vi funnet utrykk for <span class="math notranslate nohighlight">\(\Delta S_{mix}\)</span> og for <span class="math notranslate nohighlight">\(\Delta H_{mix}\)</span>, når vi blander to løsninger. Hva blir da <span class="math notranslate nohighlight">\(\Delta G_{mix}\)</span>?</p>
+<p><strong>Svar</strong> Gibbs-energien for blandingen er</p>
+<div class="math notranslate nohighlight">
+\[\Delta G_{mix}=\Delta H_{mix}-T\Delta S_{mix}.\]</div>
+<p>Fra deloppgave a) er <span class="math notranslate nohighlight">\(\Delta S_{mix}=-k_B(N_A\ln x_A+N_B\ln x_B)\)</span>, og fra deloppgave f–g) er <span class="math notranslate nohighlight">\(\Delta H_{mix}=k_BT\xi_{AB}\frac{N_AN_B}{N}\)</span>. Vi setter disse inn:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+\Delta G_{mix} &amp;= k_BT\xi_{AB}\frac{N_AN_B}{N}-T\left[-k_B(N_A\ln x_A+N_B\ln x_B)\right] \\
+&amp;= k_BT\left(N_A\ln x_A+N_B\ln x_B+\xi_{AB}\frac{N_AN_B}{N}\right).
+\end{aligned}\end{split}\]</div>
+<p>Her brukte vi at minus ganger minus gir pluss i entropileddet. For å skrive resultatet per gitterplass deler vi på <span class="math notranslate nohighlight">\(N\)</span> og bruker <span class="math notranslate nohighlight">\(x_A=\frac{N_A}{N}\)</span> og <span class="math notranslate nohighlight">\(x_B=\frac{N_B}{N}\)</span>. Da er <span class="math notranslate nohighlight">\(\frac{N_AN_B}{N^2}=x_Ax_B\)</span>, og vi får regular-solution-uttrykket</p>
+<div class="math notranslate nohighlight">
+\[\frac{\Delta G_{mix}}{N}=k_BT\left(x_A\ln x_A+x_B\ln x_B+\xi_{AB}x_Ax_B\right).\]</div>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p>Hovedkomponentene i luft er <span class="math notranslate nohighlight">\({N_2}_{(g)}\)</span> og <span class="math notranslate nohighlight">\({O_2}{(g)}\)</span>. 78 % <span class="math notranslate nohighlight">\({N_2}_{(g)}\)</span> og 22% <span class="math notranslate nohighlight">\(O_2\)</span> blandes ved <span class="math notranslate nohighlight">\(298 \, K\)</span>, beregne:</p>
+<p><strong>a)</strong>	molar Gibbs blandingsenergi, <span class="math notranslate nohighlight">\(\Delta _{mix}G_m\)</span></p>
+<p><strong>Svar</strong>
+<span class="math notranslate nohighlight">\( x(\text{N}_2) = 0.78\)</span>, <span class="math notranslate nohighlight">\(x(\text{O}_2) = 0.22\)</span>, <span class="math notranslate nohighlight">\(T = 298 \text{K}\)</span>.
+<span class="math notranslate nohighlight">\(\Delta_{mix}G_m = RT[x_{N_2} \ln(x_{N_2}) + x_{O_2} \ln(x_{O_2})] = 8.314\times298(−0.5269) \approx −1305 \text{J/mol} \approx −1.31 \text{kJ/mol}\)</span>.</p>
+<p><strong>b)</strong>	molar Gibbs blandingsentalpi, <span class="math notranslate nohighlight">\(\Delta _{mix}H_m\)</span></p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(\Delta_{mix}H_m = 0\)</span> (antar ideelle gasser, ingen interaksjonsenergi endres ved blanding).</p>
+<p><strong>c)</strong>	molar blandingsentropi, <span class="math notranslate nohighlight">\(\Delta _{mix}S_m\)</span></p>
+<p>Er blandingsprosessen spontan? Hva er drivkraften for at komponentene blandes?</p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(\Delta_{mix}S_m = −R[x_{N_2} \ln(x_{N_2}) + x_{O_2}\ln(x_{O_2})] \approx 4.38 \text{J/(Kmol)}\)</span></p>
+<p>Test: <span class="math notranslate nohighlight">\(−T\Delta S = −298\times 4.38 = −1305 \text{J/mol} = \delta G\)</span>, siden <span class="math notranslate nohighlight">\(\Delta H = 0\)</span>.</p>
+<p>Blandingen er spontan. Drivkraften er utelukkende entropi, siden entalpibidraget er null.</p>
+</section>
+<section id="id1">
+<h3>Oppgave 2<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong>	Finn konstanten i Henrys lov for en blanding som består av <span class="math notranslate nohighlight">\(75.0 \, g\)</span> toluen (molar masse <span class="math notranslate nohighlight">\(92.1 g/mol\)</span>) (væske A) i en løsning med <span class="math notranslate nohighlight">\(1000 g\)</span> av difenyleter (væske B). Væsken difenyleter (molar masse <span class="math notranslate nohighlight">\(170.2 \, g/mol\)</span>) har et damptrykk på <span class="math notranslate nohighlight">\(430 \, Torr\)</span> over denne løsning og totaltrykket er <span class="math notranslate nohighlight">\(520 \, Torr\)</span>. Damptrykket for en ren væske A er <span class="math notranslate nohighlight">\(650 \, Torr\)</span>.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[n_{\text{tol}} = \frac{75.0 g}{92.1 g/mol} = 0.8143 \ \text{mol}, \qquad n_{\text{dfe}} = \frac{1000 g}{170.2 g/mol} = 5.875 \ \text{mol}\]</div>
+<div class="math notranslate nohighlight">
+\[x_{\text{tol}} = \frac{n_{\text{tol}}}{n_{\text{tol}} + n_{\text{dfe}}} = \frac{0.8143}{0.8143 + 5.875} = 0.1217, \qquad x_{\text{dfe}} = 1 - x_{\text{tol}} = 0.8783\]</div>
+<div class="math notranslate nohighlight">
+\[p_{\text{dfe}} = 430 \ \text{Torr} \, \qquad p_{\text{tot}} = 520 \ \text{Torr}\]</div>
+<div class="math notranslate nohighlight">
+\[p_{\text{tol}} = p_{\text{tot}} - p_{\text{dfe}} = 520 - 430 = 90 \ \text{Torr}\]</div>
+<p><span class="math notranslate nohighlight">\(K_{H} = \frac{p_{\text{tol}}}{x_{\text{tol}}} = \frac{90}{0.1217} \approx 739 \ \text{Torr}\)</span></p>
+<p><strong>b)</strong>	Følger væske A Raoults lov? Forklar grunnen til svaret du får.</p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(p_{\text{tol}}(\text{Raoult}) = x_{\text{tol}} \cdot p_{\text{tol}}^{*} = 0.1217 \times 650 \approx 79.1 \ \text{Torr}\)</span></p>
+<p>Faktisk verdi er <span class="math notranslate nohighlight">\(90 \ \text{Torr}\)</span>, altså et <strong>positivt avvik</strong> fra Raoults lov. Toluen følger i stedet Henrys lov med sin egen empiriske konstant.</p>
+<p><strong>c)</strong>	Hva blir konstanten i Henrys lov om løsningen er ideell?</p>
+<p><strong>Svar</strong> <span class="math notranslate nohighlight">\(K_{H} = p_{\text{tol}}^{*} = 650 \ \text{Torr}\)</span>.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>En <span class="math notranslate nohighlight">\(1.0 \, m\)</span> løsning av <span class="math notranslate nohighlight">\(NaCl_{(s)}\)</span> i vann gir en frysepunktnedsettelse på <span class="math notranslate nohighlight">\(3.7 \, K\)</span>. Hvordan kan man forklare denne observasjon? Frysepunktnedsettelseskoeffisienten for vann er <span class="math notranslate nohighlight">\(1.86 \, K.kg.mol^{-1}\)</span>.</p>
+<p><strong>Svar</strong></p>
+<p><span class="math notranslate nohighlight">\(\Delta T = K_{f} \cdot m = 1.86 \times 1.0 = 1.86 \ \text{K}\)</span></p>
+<p>Observert <span class="math notranslate nohighlight">\(\Delta T = 3.7 \ \text{K}\)</span>:</p>
+<p><span class="math notranslate nohighlight">\(\frac{3.7}{1.86} \approx 1.99 \approx 2\)</span></p>
+<p>Van’t Hoff-faktoren <span class="math notranslate nohighlight">\(i \approx 2\)</span>, siden <span class="math notranslate nohighlight">\(\text{NaCl}\)</span> dissosierer fullstendig i vann til <span class="math notranslate nohighlight">\(\text{Na}^{+}\)</span> og <span class="math notranslate nohighlight">\(\text{Cl}^{-}\)</span>.</p>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>I en blanding av aceton og kloroform er molbrøken av kloroform <span class="math notranslate nohighlight">\(0.290\)</span>.
+De partielle molare volum av komponentene er bestemt:</p>
+<div class="math notranslate nohighlight">
+\[V_{aceton}  =  73.78 \, cm^3/mol\]</div>
+<div class="math notranslate nohighlight">
+\[V_{kloroform}  = 80.41 \, cm^3/mol\]</div>
+<p>Beregn volumet av <span class="math notranslate nohighlight">\(1.000 \, kg\)</span> blanding.</p>
+<p><strong>Svar</strong></p>
+<p><span class="math notranslate nohighlight">\(x_{\text{CHCl}_{3}} = 0.290, \qquad x_{\text{aceton}} = 1 - x_{\text{CHCl}_{3}} = 0.710\)</span></p>
+<p><span class="math notranslate nohighlight">\(M_{\text{aceton}} = 58.08 \ \text{g/mol}, \qquad M_{\text{CHCl}_{3}} = 119.38 \ \text{g/mol}\)</span></p>
+<p><span class="math notranslate nohighlight">\(M_{\text{avg}} = 0.710 \times 58.08 + 0.290 \times 119.38 \approx 75.86 \ \text{g/mol}\)</span></p>
+<p><span class="math notranslate nohighlight">\(n_{\text{tot}} = \frac{1000 \ \text{g}}{75.86 \ \text{g/mol}} \approx 13.18 \ \text{mol}\)</span></p>
+<p><span class="math notranslate nohighlight">\(n_{\text{aceton}} = 0.710 \times 13.18 \ \text{mol} \approx 9.36 \ \text{mol}, \qquad n_{\text{CHCl}_{3}} = 0.290 \times 13.18 \ \text{mol} \approx 3.82 \ \text{mol}\)</span></p>
+<p><span class="math notranslate nohighlight">\(V = n_{\text{aceton}} \times V_{\text{aceton}} + n_{\text{CHCl}_{3}} \times V_{\text{CHCl}_{3}} = 9.36 \ \text{mol} \times 73.78 \ \text{cm}^{3} + 3.82 \ \text{mol} \times 80.41 \ \text{cm}^{3} \approx 998 \ \text{cm}^{3}\)</span></p>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>Beregne det osmotiske trykket som oppstår når <span class="math notranslate nohighlight">\(6.00 \, g\)</span> urea, <span class="math notranslate nohighlight">\((NH_2)_2CO\)</span>, løses i vann til <span class="math notranslate nohighlight">\(1.00 \, dm^3\)</span> løsning ved <span class="math notranslate nohighlight">\(27.0 ^{\circ}C\)</span>. Bruk van’t Hoffs ligning.</p>
+<p><strong>Svar</strong></p>
+<p><span class="math notranslate nohighlight">\(n_{\text{urea}} = \frac{6.00 \ \text{g}}{60.06 \ \text{g/mol}} \approx 0.0999 \ \text{mol}\)</span></p>
+<p><span class="math notranslate nohighlight">\(c = 0.0999 \ \text{mol/dm}^{3}, \qquad T = 27.0^{\circ}\text{C} = 300.15 \ \text{K}\)</span></p>
+<p><span class="math notranslate nohighlight">\(\Pi = cRT = 99.9  \text{mol/m}^{3} \times 8.314 \text{J/(molK)} \times 300.15 \text{K} \approx 249  \text{kPa} \approx 2.46  \text{atm}\)</span></p>
+</section>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>Beregn frysepunktet for <span class="math notranslate nohighlight">\(200 \, g\)</span> vann som er tilsatt <span class="math notranslate nohighlight">\(2.50 \, g\)</span> sukrose <span class="math notranslate nohighlight">\(C_{12}H_{22}O_{11}\)</span>. Kommenter svaret og gi en forklaring.</p>
+<p><strong>Svar</strong></p>
+<p>Finn antall mol sukrose:</p>
+<p><span class="math notranslate nohighlight">\(n_{\text{sukrose}} = \frac{2.50}{342.3} \approx 0.00730 \ \text{mol}\)</span></p>
+<p>Regn om til molalitet:</p>
+<p><span class="math notranslate nohighlight">\(m = \frac{0.00730}{0.200 \ \text{kg}} \approx 0.0365 \ \text{mol/kg}\)</span></p>
+<p>Bruk frysepunktsnedsettelsesformelen:</p>
+<p><span class="math notranslate nohighlight">\(\Delta T_{f} = K_{f} \cdot m = 1.86 \times 0.0365 \approx 0.068 \ \text{K}\)</span></p>
+<p>Trekk fra normalt frysepunkt (<span class="math notranslate nohighlight">\(0°\text{C}\)</span>) for å finne nytt frysepunkt:</p>
+<p><span class="math notranslate nohighlight">\(T_{f} \approx -0.068\,°\text{C}\)</span></p>
+<p><strong>Kommentar:</strong> Endringen er svært liten fordi konsentrasjonen av sukrose er lav, og sukrose ikke dissosierer i vann.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "hsp"
+        },
+        kernelOptions: {
+            name: "hsp",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'hsp'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_07_VK.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 7 – Faser og faseoverganger</p>
+      </div>
+    </a>
+    <a class="right-next"
+       href="uke_09_under_revision.html"
+       title="next page">
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Uke 9 – Løsninger og blandinger 2</p>
+      </div>
+      <i class="fa-solid fa-angle-right"></i>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1-ideelle-gasser-og-ideele-blandinger">Oppgave 1. Ideelle gasser og ideele blandinger.</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3-termodynamikken-til-ikke-ideelle-losninger">Oppgave 3: Termodynamikken til ikke-ideelle løsninger</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

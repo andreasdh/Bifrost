@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Maxwell–Boltzmann: hvordan gassen finner sin fordeling</title>
+<style>
+  :root{
+    --ink:#101820;
+    --panel:#16212e;
+    --panel-2:#1d2b3a;
+    --line:#2c3e52;
+    --hist:#5b9bd5;
+    --hist-edge:#8fc0ee;
+    --theory:#e8a13a;
+    --text:#dfe8f0;
+    --muted:#8fa3b5;
+    --accent:#e8a13a;
+    --good:#6fcf97;
+    --warn:#e57373;
+    --track:#2c3e52;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:24px;
+    background:#f4f1ea;
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    color:var(--text);
+    display:flex; justify-content:center;
+  }
+  .card{
+    width:100%; max-width:860px;
+    background:var(--ink);
+    border-radius:18px;
+    padding:28px 30px 32px;
+    box-shadow:0 12px 40px rgba(0,0,0,.28);
+  }
+  h1{
+    text-align:center; margin:.1em 0 .15em;
+    color:var(--accent);
+    font-size:1.85rem; font-weight:600; letter-spacing:.2px;
+  }
+  .lede{
+    text-align:center; color:var(--muted);
+    font-size:.95rem; line-height:1.55;
+    max-width:640px; margin:0 auto 20px;
+  }
+  .panels{
+    display:grid; grid-template-columns:1fr 1fr; gap:16px;
+  }
+  @media(max-width:680px){ .panels{grid-template-columns:1fr;} }
+  .panel{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:10px 10px 6px;
+  }
+  canvas{ width:100%; display:block; border-radius:8px; background:#0a1119; }
+  .panel-label{
+    text-align:center; color:var(--muted);
+    font-size:.82rem; margin:8px 4px 4px; line-height:1.4;
+  }
+  .readout{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:10px 22px;
+    margin:18px 0 6px; font-size:.95rem;
+  }
+  .readout .item{ color:var(--muted); }
+  .readout .val{ color:var(--accent); font-weight:700; }
+  .legend{
+    display:flex; justify-content:center; gap:22px;
+    font-size:.82rem; color:var(--muted); margin:6px 0 18px;
+  }
+  .swatch{ display:inline-block; width:13px; height:13px; border-radius:3px; margin-right:6px; vertical-align:-1px; }
+  .controls{
+    background:var(--panel-2);
+    border:1px solid var(--line);
+    border-radius:12px;
+    padding:16px 18px;
+  }
+  .row{ display:flex; align-items:center; gap:14px; margin:12px 0; flex-wrap:wrap; }
+  .row label{ min-width:132px; color:var(--text); font-size:.92rem; }
+  .row .num{ color:var(--accent); font-weight:700; min-width:58px; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none;
+    flex:1; min-width:140px; height:5px; border-radius:3px;
+    background:var(--track); outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; width:18px; height:18px; border-radius:50%;
+    background:var(--accent); cursor:pointer; border:2px solid #fff2;
+  }
+  input[type=range]::-moz-range-thumb{
+    width:18px; height:18px; border-radius:50%;
+    background:var(--accent); cursor:pointer; border:2px solid #fff2;
+  }
+  select{
+    flex:1; min-width:180px; padding:8px 10px; border-radius:8px;
+    background:var(--panel); color:var(--text);
+    border:1px solid var(--line); font-family:inherit; font-size:.9rem;
+  }
+  .btns{ display:flex; gap:10px; justify-content:center; margin-top:16px; flex-wrap:wrap; }
+  button{
+    padding:9px 18px; border-radius:9px; cursor:pointer;
+    background:var(--panel); color:var(--text);
+    border:1px solid var(--line); font-family:inherit; font-size:.9rem;
+    transition:background .15s;
+  }
+  button:hover{ background:var(--panel-2); }
+  button.primary{ background:var(--hist); color:#08131f; border-color:var(--hist); font-weight:700; }
+  button.primary:hover{ background:var(--hist-edge); }
+  /* convergence meter */
+  .conv{
+    margin-top:16px; padding-top:14px; border-top:1px solid var(--line);
+  }
+  .conv-top{ display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px; }
+  .conv-top .lab{ color:var(--text); font-size:.9rem; }
+  .conv-top .state{ font-size:.9rem; font-weight:700; }
+  .bar{ height:9px; border-radius:5px; background:var(--track); overflow:hidden; }
+  .bar > span{ display:block; height:100%; width:0%; background:var(--warn); transition:width .25s, background .4s; }
+  .note{ color:var(--muted); font-size:.8rem; line-height:1.5; margin-top:14px; text-align:center; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hvordan finner gassen sin fordeling?</h1>
+  <p class="lede">
+    En 2D-gass med ekte elastiske kollisjoner. Velg en starttilstand — så urimelig du vil —
+    og se hvordan fartsfordelingen alltid kryper mot den samme Maxwell–Boltzmann-kurven.
+    Skru på temperatur og masse, og se hva som endrer seg.
+  </p>
+
+  <div class="panels">
+    <div class="panel">
+      <canvas id="box" width="380" height="300"></canvas>
+      <div class="panel-label">Molekylene i boksen — fargen viser farten (blå = treg, gul = rask)</div>
+    </div>
+    <div class="panel">
+      <canvas id="hist" width="380" height="300"></canvas>
+      <div class="panel-label">Fartsfordeling: simulert (blått) mot Maxwell–Boltzmann (oransje)</div>
+    </div>
+  </div>
+
+  <div class="readout">
+    <span class="item">v&#773; (snitt) = <span class="val" id="vmean">–</span></span>
+    <span class="item">v (rms) = <span class="val" id="vrms">–</span></span>
+    <span class="item">v (mest sannsynlig) = <span class="val" id="vmp">–</span></span>
+    <span class="item">T = <span class="val" id="Tval">–</span></span>
+  </div>
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--hist)"></span>simulert histogram</span>
+    <span><span class="swatch" style="background:var(--theory)"></span>Maxwell–Boltzmann (teori)</span>
+  </div>
+
+  <div class="controls">
+    <div class="row">
+      <label for="start">Starttilstand</label>
+      <select id="start">
+        <option value="mb">Allerede i likevekt (Maxwell–Boltzmann)</option>
+        <option value="same">Alle med samme fart, tilfeldig retning</option>
+        <option value="onefast" selected>Alle i ro unntatt én rask partikkel</option>
+        <option value="half">Halvparten i ro, halvparten raske</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="temp">Temperatur</label>
+      <input type="range" id="temp" min="20" max="200" value="100">
+      <span class="num" id="tempNum">100</span>
+    </div>
+    <div class="row">
+      <label for="mass">Molekylmasse</label>
+      <input type="range" id="mass" min="1" max="8" value="1" step="1">
+      <span class="num" id="massNum">1×</span>
+    </div>
+
+    <div class="conv">
+      <div class="conv-top">
+        <span class="lab">Nærhet til Maxwell–Boltzmann</span>
+        <span class="state" id="convState" style="color:var(--warn)">langt unna</span>
+      </div>
+      <div class="bar"><span id="convBar"></span></div>
+    </div>
+
+    <div class="btns">
+      <button class="primary" id="pause">Pause</button>
+      <button id="reset">Start på nytt</button>
+      <button id="speed">Fart: 1×</button>
+    </div>
+  </div>
+
+  <p class="note">
+    Temperatur og masse setter energien ved start; kollisjonene er elastiske, så den totale
+    energien (og dermed T) holder seg konstant mens fordelingen finner formen sin.
+  </p>
+</div>
+
+<script>
+(() => {
+  const boxC = document.getElementById('box');
+  const histC = document.getElementById('hist');
+  const bx = boxC.getContext('2d');
+  const hx = histC.getContext('2d');
+
+  const N = 260;          // antall molekyler
+  const R = 3.2;          // radius (visuelt + kollisjon)
+  let W = boxC.width, H = boxC.height;
+  const kB = 1;           // enheter satt slik at tallene blir pene
+
+  let temp = 100, massMul = 1, speedMul = 1, paused = false;
+  let particles = [];
+
+  // ---- init states ----
+  function speedScale(){ return Math.sqrt(kB * temp / massMul); } // rms-ish skala
+
+  function makeParticles(mode){
+    particles = [];
+    const s = speedScale();
+    for(let i=0;i<N;i++){
+      const p = {x: R + Math.random()*(W-2*R), y: R + Math.random()*(H-2*R), vx:0, vy:0, m:massMul};
+      particles.push(p);
+    }
+    if(mode === 'mb'){
+      // draw from MB by summing gaussians (Box-Muller) per component
+      for(const p of particles){
+        const g = () => { let u=Math.random(),v=Math.random(); return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v); };
+        const sig = s/Math.SQRT2;
+        p.vx = g()*sig; p.vy = g()*sig;
+      }
+    } else if(mode === 'same'){
+      for(const p of particles){
+        const a = Math.random()*2*Math.PI;
+        p.vx = Math.cos(a)*s; p.vy = Math.sin(a)*s;
+      }
+    } else if(mode === 'onefast'){
+      const p = particles[0];
+      const a = Math.random()*2*Math.PI;
+      const big = s*Math.sqrt(N);           // one particle carries all the energy
+      p.vx = Math.cos(a)*big; p.vy = Math.sin(a)*big;
+    } else if(mode === 'half'){
+      for(let i=0;i<N;i++){
+        if(i%2===0){
+          const a = Math.random()*2*Math.PI;
+          particles[i].vx = Math.cos(a)*s*Math.SQRT2;
+          particles[i].vy = Math.sin(a)*s*Math.SQRT2;
+        }
+      }
+    }
+  }
+
+  // ---- physics ----
+  function step(dt){
+    // move + wall bounce
+    for(const p of particles){
+      p.x += p.vx*dt; p.y += p.vy*dt;
+      if(p.x < R){ p.x = R; p.vx = Math.abs(p.vx); }
+      if(p.x > W-R){ p.x = W-R; p.vx = -Math.abs(p.vx); }
+      if(p.y < R){ p.y = R; p.vy = Math.abs(p.vy); }
+      if(p.y > H-R){ p.y = H-R; p.vy = -Math.abs(p.vy); }
+    }
+    // pairwise collisions via spatial grid
+    const cell = 2*R;
+    const cols = Math.ceil(W/cell), rows = Math.ceil(H/cell);
+    const grid = Array.from({length:cols*rows}, () => []);
+    for(let i=0;i<particles.length;i++){
+      const p = particles[i];
+      const cxi = Math.min(cols-1, Math.max(0, Math.floor(p.x/cell)));
+      const cyi = Math.min(rows-1, Math.max(0, Math.floor(p.y/cell)));
+      grid[cyi*cols+cxi].push(i);
+    }
+    for(let cy=0;cy<rows;cy++) for(let cx=0;cx<cols;cx++){
+      const here = grid[cy*cols+cx];
+      for(let ox=-1;ox<=1;ox++) for(let oy=-1;oy<=1;oy++){
+        const nx=cx+ox, ny=cy+oy;
+        if(nx<0||ny<0||nx>=cols||ny>=rows) continue;
+        const there = grid[ny*cols+nx];
+        for(const i of here) for(const j of there){
+          if(j<=i) continue;
+          collide(particles[i], particles[j]);
+        }
+      }
+    }
+  }
+
+  function collide(a,b){
+    const dx = b.x-a.x, dy = b.y-a.y;
+    const d2 = dx*dx+dy*dy;
+    const min = 2*R;
+    if(d2 >= min*min || d2 === 0) return;
+    const d = Math.sqrt(d2);
+    const nx = dx/d, ny = dy/d;
+    // relative velocity along normal
+    const dvx = b.vx-a.vx, dvy = b.vy-a.vy;
+    const rel = dvx*nx + dvy*ny;
+    if(rel > 0) return; // moving apart
+    const ma=a.m, mb=b.m;
+    const imp = (2*rel)/(ma+mb);
+    a.vx += imp*mb*nx; a.vy += imp*mb*ny;
+    b.vx -= imp*ma*nx; b.vy -= imp*ma*ny;
+    // separate overlap
+    const overlap = (min-d)/2;
+    a.x -= nx*overlap; a.y -= ny*overlap;
+    b.x += nx*overlap; b.y += ny*overlap;
+  }
+
+  // ---- measurements ----
+  function speeds(){ return particles.map(p=>Math.hypot(p.vx,p.vy)); }
+
+  function stats(sp){
+    let sum=0,sum2=0;
+    for(const v of sp){ sum+=v; sum2+=v*v; }
+    const mean = sum/sp.length;
+    const rms = Math.sqrt(sum2/sp.length);
+    // most probable speed in 2D MB: vp = sqrt(kT/m); relate to rms: rms=sqrt(2kT/m) => vp=rms/sqrt2
+    const vp = rms/Math.SQRT2;
+    return {mean, rms, vp};
+  }
+
+  // 2D Maxwell-Boltzmann pdf: f(v) = (m/kT) v exp(-m v^2/2kT)
+  function mbPdf(v, a2){ // a2 = kT/m  => vp^2
+    return (v/a2)*Math.exp(-v*v/(2*a2));
+  }
+
+  // ---- convergence: chi-like distance between histogram and theory ----
+  let convergence = 0; // 0..1, 1 = perfect
+
+  // ---- drawing ----
+  function colorFor(v, vmaxRef){
+    const t = Math.min(1, v/(vmaxRef*1.6));
+    // blue -> gold
+    const r = Math.round(91 + t*(232-91));
+    const g = Math.round(155 + t*(161-155));
+    const b = Math.round(213 + t*(58-213));
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function drawBox(sp, st){
+    bx.clearRect(0,0,W,H);
+    bx.fillStyle = '#0a1119'; bx.fillRect(0,0,W,H);
+    for(let i=0;i<particles.length;i++){
+      const p = particles[i];
+      bx.beginPath();
+      bx.arc(p.x,p.y,R+ (p.m>1? Math.sqrt(p.m)-1:0),0,2*Math.PI);
+      bx.fillStyle = colorFor(sp[i], st.rms||1);
+      bx.fill();
+    }
+  }
+
+  function drawHist(sp, st){
+    hx.clearRect(0,0,histC.width,histC.height);
+    const w = histC.width, h = histC.height;
+    const pad = {l:8,r:8,t:14,b:22};
+    const plotW = w-pad.l-pad.r, plotH = h-pad.t-pad.b;
+
+    const a2 = st.vp*st.vp || 1;                 // kT/m from measured rms
+    const vmax = Math.max(st.rms*3, 1e-6);
+    const bins = 34;
+    const counts = new Array(bins).fill(0);
+    for(const v of sp){
+      let b = Math.floor((v/vmax)*bins);
+      if(b>=0 && b<bins) counts[b]++;
+    }
+    // normalize sim histogram to density
+    const binW = vmax/bins;
+    const simDens = counts.map(c => c/(sp.length*binW));
+
+    // theory curve peak for scaling
+    let peak = 0;
+    for(let i=0;i<=200;i++){ const v=(i/200)*vmax; peak=Math.max(peak, mbPdf(v,a2)); }
+    const yScale = plotH/(peak*1.25);
+
+    // bars
+    let chiNum=0, chiDen=0;
+    for(let i=0;i<bins;i++){
+      const v = (i+0.5)*binW;
+      const barH = simDens[i]*yScale;
+      const x = pad.l + (i/bins)*plotW;
+      const bw = plotW/bins - 1.5;
+      hx.fillStyle = 'rgba(91,155,213,0.85)';
+      hx.fillRect(x, pad.t+plotH-barH, bw, barH);
+      hx.strokeStyle = 'rgba(143,192,238,0.9)';
+      hx.lineWidth = 1;
+      hx.strokeRect(x, pad.t+plotH-barH, bw, barH);
+      // convergence accumulation
+      const th = mbPdf(v,a2);
+      chiNum += Math.abs(simDens[i]-th);
+      chiDen += th;
+    }
+    // theory curve
+    hx.beginPath();
+    for(let i=0;i<=220;i++){
+      const v=(i/220)*vmax;
+      const y = pad.t+plotH - mbPdf(v,a2)*yScale;
+      const x = pad.l + (v/vmax)*plotW;
+      if(i===0) hx.moveTo(x,y); else hx.lineTo(x,y);
+    }
+    hx.strokeStyle = '#e8a13a'; hx.lineWidth = 2.4; hx.stroke();
+
+    // axis label
+    hx.fillStyle = '#8fa3b5'; hx.font = '11px Georgia'; hx.textAlign='center';
+    hx.fillText('fart  v  →', w/2, h-6);
+
+    // update convergence (smooth)
+    const dist = chiDen>0 ? chiNum/(2*chiDen) : 1; // 0 = perfect
+    const target = Math.max(0, 1 - dist);
+    convergence += (target-convergence)*0.08;
+  }
+
+  function updateReadout(st){
+    document.getElementById('vmean').textContent = st.mean.toFixed(1);
+    document.getElementById('vrms').textContent = st.rms.toFixed(1);
+    document.getElementById('vmp').textContent = st.vp.toFixed(1);
+    // T proportional to <v^2>*m  (arbitrary but consistent units)
+    const Tmeas = st.rms*st.rms*massMul/2;
+    document.getElementById('Tval').textContent = Tmeas.toFixed(0);
+
+    const bar = document.getElementById('convBar');
+    const state = document.getElementById('convState');
+    const pct = Math.round(convergence*100);
+    bar.style.width = pct+'%';
+    if(convergence > 0.86){
+      bar.style.background = 'var(--good)';
+      state.textContent = 'i likevekt'; state.style.color = 'var(--good)';
+    } else if(convergence > 0.6){
+      bar.style.background = '#e8c14a';
+      state.textContent = 'nærmer seg'; state.style.color = '#e8c14a';
+    } else {
+      bar.style.background = 'var(--warn)';
+      state.textContent = 'langt unna'; state.style.color = 'var(--warn)';
+    }
+  }
+
+  // ---- loop ----
+  function frame(){
+    if(!paused){
+      const sub = 2*speedMul;
+      for(let k=0;k<sub;k++) step(0.5);
+    }
+    const sp = speeds();
+    const st = stats(sp);
+    drawBox(sp, st);
+    drawHist(sp, st);
+    updateReadout(st);
+    requestAnimationFrame(frame);
+  }
+
+  // ---- controls ----
+  const tempEl = document.getElementById('temp');
+  const massEl = document.getElementById('mass');
+  const startEl = document.getElementById('start');
+
+  function restart(){
+    temp = +tempEl.value; massMul = +massEl.value;
+    convergence = 0;
+    makeParticles(startEl.value);
+  }
+
+  tempEl.addEventListener('input', ()=>{ document.getElementById('tempNum').textContent=tempEl.value; restart(); });
+  massEl.addEventListener('input', ()=>{ document.getElementById('massNum').textContent=massEl.value+'×'; restart(); });
+  startEl.addEventListener('change', restart);
+  document.getElementById('reset').addEventListener('click', restart);
+  document.getElementById('pause').addEventListener('click', (e)=>{
+    paused = !paused; e.target.textContent = paused ? 'Spill av' : 'Pause';
+  });
+  document.getElementById('speed').addEventListener('click', (e)=>{
+    speedMul = speedMul===1?2:(speedMul===2?4:1);
+    e.target.textContent = 'Fart: '+speedMul+'×';
+  });
+
+  restart();
+  frame();
+})();
+</script>
+</body>
+</html>

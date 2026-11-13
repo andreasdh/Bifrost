@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Normalfordelingen</title>
+<style>
+  :root{
+    --ink:#1c2321;--paper:#f5f2ea;--grid:#d8d2c4;--axis:#6b6252;
+    --curve:#3d4a52;
+    --cMu:#1a7a4c;      /* forventningsverdi */
+    --cSig:#c0392b;     /* spredning */
+    --cNorm:#8e44ad;    /* normeringsfaktor */
+    --cDev:#d68910;     /* avviket */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;padding:22px;line-height:1.5;}
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{font-family:"SF Mono",ui-monospace,Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:16px;}
+
+  /* ---- formula with highlighter marks ---- */
+  .formulabox{background:#fbf9f3;border:1px solid var(--grid);border-radius:4px;
+    padding:18px 14px 14px;text-align:center;margin-bottom:6px;}
+  .formula{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:19px;
+    color:#9a948a;display:inline-flex;align-items:center;gap:2px;flex-wrap:wrap;justify-content:center;}
+  .hl{position:relative;padding:2px 4px;border-radius:2px;cursor:pointer;
+    transition:background .18s,color .18s;}
+  .hl.on{color:var(--ink);}
+  .hl[data-p="norm"].on{background:rgba(142,68,173,.30);}
+  .hl[data-p="dev"].on{background:rgba(214,137,16,.34);}
+  .hl[data-p="sig"].on{background:rgba(192,57,43,.26);}
+  .hl[data-p="mu"].on{background:rgba(26,122,76,.28);}
+  .frac{display:inline-flex;flex-direction:column;align-items:center;font-size:15px;}
+  .frac .n{padding:0 5px 2px;}
+  .frac .d{padding:2px 5px 0;border-top:1.4px solid currentColor;align-self:stretch;text-align:center;}
+  .exp{font-size:12px;vertical-align:super;}
+
+  .keys{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:10px 0 16px;}
+  .key{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:11.5px;
+    padding:6px 11px;border-radius:3px;cursor:pointer;border:1px solid var(--grid);
+    background:transparent;color:var(--muted);transition:all .15s;}
+  .key .dot{display:inline-block;width:9px;height:9px;border-radius:2px;margin-right:6px;
+    vertical-align:middle;}
+  .key.on{color:var(--ink);border-color:currentColor;}
+  .key[data-p="norm"].on{border-color:var(--cNorm);}
+  .key[data-p="dev"].on{border-color:var(--cDev);}
+  .key[data-p="sig"].on{border-color:var(--cSig);}
+  .key[data-p="mu"].on{border-color:var(--cMu);}
+
+  .stage{background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:12px;}
+  svg{display:block;width:100%;height:auto;}
+
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:16px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);font-weight:600;margin-bottom:10px;}
+  .ctl{margin-bottom:14px;}
+  .ctl label{display:flex;justify-content:space-between;font-size:13px;
+    margin-bottom:6px;font-family:"SF Mono",ui-monospace,Menlo,monospace;color:var(--muted);}
+  .ctl label b{font-weight:600;}
+  .ctl.mu label b{color:var(--cMu);}
+  .ctl.sig label b{color:var(--cSig);}
+  input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:3px;
+    background:var(--grid);border-radius:2px;outline:none;}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:18px;height:18px;
+    border-radius:50%;border:2px solid var(--paper);cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.25);}
+  #muRange::-webkit-slider-thumb{background:var(--cMu);}
+  #sigRange::-webkit-slider-thumb{background:var(--cSig);}
+  #muRange::-moz-range-thumb{background:var(--cMu);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  #sigRange::-moz-range-thumb{background:var(--cSig);width:18px;height:18px;border-radius:50%;border:2px solid var(--paper);}
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:14px;}
+  .expl{font-size:13px;color:var(--muted);min-height:56px;border-left:2px solid var(--grid);
+    padding-left:10px;margin-top:4px;}
+  .note{margin-top:16px;font-size:14px;color:var(--muted);border-left:2px solid var(--cDev);padding-left:12px;}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Normalfordelingen</div>
+  <h1>Normalfordelingen</h1>
+  <p class="sub">Klikk på en del av formelen — eller på en farge under — og se hvilken egenskap ved kurven den styrer. Dra på μ og σ for å se dem virke.</p>
+
+  <div class="formulabox">
+    <div class="formula">
+      f(x) =
+      <span class="hl" data-p="norm">
+        <span class="frac"><span class="n">1</span><span class="d">σ√(2π)</span></span>
+      </span>
+      <span>·&nbsp;e</span>
+      <span class="exp">−</span>
+      <span class="exp hl" data-p="dev">(x−μ)²</span>
+      <span class="exp">/</span>
+      <span class="exp hl" data-p="sig">2σ²</span>
+    </div>
+  </div>
+
+  <div class="keys">
+    <button class="key" data-p="mu"><span class="dot" style="background:var(--cMu)"></span>μ — hvor kurven ligger</button>
+    <button class="key" data-p="sig"><span class="dot" style="background:var(--cSig)"></span>σ — hvor bred den er</button>
+    <button class="key" data-p="dev"><span class="dot" style="background:var(--cDev)"></span>(x−μ)² — avviket</button>
+    <button class="key" data-p="norm"><span class="dot" style="background:var(--cNorm)"></span>1/σ√(2π) — normering</button>
+  </div>
+
+  <div class="stage">
+    <svg id="viz" viewBox="0 0 640 330" xmlns="http://www.w3.org/2000/svg"></svg>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Kontroller</h2>
+      <div class="ctl mu">
+        <label>forventningsverdi μ <b id="muLab">0.0</b></label>
+        <input type="range" id="muRange" min="-3" max="3" step="0.1" value="0">
+      </div>
+      <div class="ctl sig">
+        <label>standardavvik σ <b id="sigLab">1.0</b></label>
+        <input type="range" id="sigRange" min="0.4" max="2.5" step="0.05" value="1">
+      </div>
+      <div class="row"><span class="lab">toppunkt f(μ)</span><span class="val" id="peakVal">—</span></div>
+      <div class="row"><span class="lab">areal under kurven</span><span class="val" id="areaVal">1.000</span></div>
+    </div>
+
+    <div class="card">
+      <h2>Forklaring</h2>
+      <div class="expl" id="expl">Klikk på en farget del av formelen for å se hva den gjør med kurven.</div>
+    </div>
+  </div>
+
+  <p class="note">Legg merke til at toppunktet endrer seg når du drar på σ, selv om du ikke rører normeringsfaktoren. Det er fordi de henger sammen: gjør du kurven bredere, må den bli lavere for at arealet fortsatt skal bli nøyaktig 1.</p>
+</div>
+
+<script>
+(function(){
+  const NS="http://www.w3.org/2000/svg";
+  const svg=document.getElementById('viz');
+  let mu=0,sig=1,active=null;
+
+  const EXPL={
+    mu:'μ flytter hele kurven langs x-aksen uten å endre formen. Toppunktet ligger alltid nøyaktig ved x = μ. I formelen står μ inne i avviket (x − μ): når x = μ blir eksponenten null, og e⁰ = 1 gir maksimal verdi.',
+    sig:'σ styrer bredden. Står den i nevneren 2σ², betyr stor σ at eksponenten synker langsomt — kurven faller flatt ut og blir bred. Vendepunktene ligger alltid nøyaktig ett standardavvik fra toppen, ved μ ± σ.',
+    dev:'(x − μ)² er det kvadrerte avviket fra delkapittel 3.3. Fordi det står med minustegn i eksponenten, blir tettheten størst der avviket er null, altså ved μ, og faller symmetrisk til begge sider. Kvadratet er grunnen til at kurven er symmetrisk.',
+    norm:'Faktoren 1/(σ√(2π)) sørger for at arealet under kurven blir nøyaktig 1, slik normeringskravet krever. Den er samtidig kurvens høyde i toppunktet: f(μ) = 1/(σ√(2π)).'
+  };
+
+  const W=640,H=330,padL=48,padR=24,baseY=252,topY=28;
+  const XMIN=-6,XMAX=6;
+  const sx=v=>padL+((v-XMIN)/(XMAX-XMIN))*(W-padL-padR);
+  const FMAX=1.05;                       // max density shown (sigma=0.4 -> ~0.997)
+  const sy=v=>baseY-(v/FMAX)*(baseY-topY);
+  const f=x=>1/(sig*Math.sqrt(2*Math.PI))*Math.exp(-((x-mu)**2)/(2*sig*sig));
+
+  const el=(t,a)=>{const e=document.createElementNS(NS,t);for(const k in a)e.setAttribute(k,a[k]);return e;};
+  function txt(x,y,s,o={}){
+    const t=el('text',{x,y,'text-anchor':o.anchor||'middle',
+      'font-family':o.fam||'SF Mono, monospace','font-size':o.size||11,
+      fill:o.fill||'var(--muted)'});
+    if(o.weight)t.setAttribute('font-weight',o.weight);
+    t.textContent=s;svg.appendChild(t);return t;
+  }
+
+  function draw(){
+    while(svg.firstChild)svg.removeChild(svg.firstChild);
+
+    // axis
+    svg.appendChild(el('line',{x1:padL-12,y1:baseY,x2:W-padR,y2:baseY,
+      stroke:'var(--axis)','stroke-width':1.5}));
+    for(let v=XMIN+1;v<XMAX;v++){
+      svg.appendChild(el('line',{x1:sx(v),y1:baseY,x2:sx(v),y2:baseY+5,
+        stroke:'var(--axis)','stroke-width':1}));
+      txt(sx(v),baseY+19,String(v),{size:11,fam:'Georgia',fill:'var(--muted)'});
+    }
+
+    // filled area under curve (shows normalisation)
+    let area=`M ${sx(XMIN)} ${baseY} `;
+    for(let i=0;i<=400;i++){
+      const x=XMIN+(XMAX-XMIN)*i/400;
+      area+=`L ${sx(x).toFixed(2)} ${sy(f(x)).toFixed(2)} `;
+    }
+    area+=`L ${sx(XMAX)} ${baseY} Z`;
+    svg.appendChild(el('path',{d:area,
+      fill:active==='norm'?'var(--cNorm)':'var(--curve)',
+      'fill-opacity':active==='norm'?0.22:0.08}));
+
+    // the curve itself
+    let d='';
+    for(let i=0;i<=400;i++){
+      const x=XMIN+(XMAX-XMIN)*i/400;
+      d+=(i===0?'M':'L')+sx(x).toFixed(2)+','+sy(f(x)).toFixed(2)+' ';
+    }
+    svg.appendChild(el('path',{d,fill:'none',stroke:'var(--curve)','stroke-width':2.6}));
+
+    const peak=f(mu);
+
+    // ---- mu annotation ----
+    const muOn = active==='mu'||active===null;
+    svg.appendChild(el('line',{x1:sx(mu),y1:sy(peak),x2:sx(mu),y2:baseY,
+      stroke:'var(--cMu)','stroke-width':active==='mu'?2.6:1.6,
+      'stroke-dasharray':'5 4','stroke-opacity':muOn?1:0.25}));
+    if(muOn){
+      txt(sx(mu),sy(peak)-10,'μ = '+mu.toFixed(1),
+        {size:13,fill:'var(--cMu)',weight:600});
+      svg.appendChild(el('circle',{cx:sx(mu),cy:baseY,r:4,fill:'var(--cMu)',
+        'fill-opacity':active==='mu'?1:0.5}));
+    }
+
+    // ---- sigma annotation: arrow from mu to mu+sigma at inflection height ----
+    const sigOn = active==='sig'||active===null;
+    const yInf=sy(f(mu+sig));
+    if(sigOn){
+      svg.appendChild(el('line',{x1:sx(mu),y1:yInf,x2:sx(mu+sig),y2:yInf,
+        stroke:'var(--cSig)','stroke-width':active==='sig'?2.8:1.8,
+        'stroke-opacity':active==='sig'?1:0.55}));
+      // end ticks
+      for(const xv of [mu,mu+sig]){
+        svg.appendChild(el('line',{x1:sx(xv),y1:yInf-5,x2:sx(xv),y2:yInf+5,
+          stroke:'var(--cSig)','stroke-width':2,'stroke-opacity':active==='sig'?1:0.55}));
+      }
+      txt((sx(mu)+sx(mu+sig))/2,yInf-9,'σ = '+sig.toFixed(2),
+        {size:12,fill:'var(--cSig)',weight:600});
+      // mirror on the left, fainter
+      svg.appendChild(el('line',{x1:sx(mu-sig),y1:yInf,x2:sx(mu),y2:yInf,
+        stroke:'var(--cSig)','stroke-width':1.4,'stroke-opacity':0.35,'stroke-dasharray':'3 3'}));
+    }
+
+    // ---- deviation annotation: show (x - mu) for a sample point ----
+    if(active==='dev'){
+      const xs=mu+1.7*sig;
+      svg.appendChild(el('line',{x1:sx(mu),y1:baseY+30,x2:sx(xs),y2:baseY+30,
+        stroke:'var(--cDev)','stroke-width':2.6}));
+      for(const xv of [mu,xs]){
+        svg.appendChild(el('line',{x1:sx(xv),y1:baseY+25,x2:sx(xv),y2:baseY+35,
+          stroke:'var(--cDev)','stroke-width':2}));
+      }
+      txt((sx(mu)+sx(xs))/2,baseY+47,'x − μ',{size:12,fill:'var(--cDev)',weight:600});
+      // drop line from curve at xs
+      svg.appendChild(el('line',{x1:sx(xs),y1:sy(f(xs)),x2:sx(xs),y2:baseY+25,
+        stroke:'var(--cDev)','stroke-width':1.4,'stroke-dasharray':'3 3'}));
+      svg.appendChild(el('circle',{cx:sx(xs),cy:sy(f(xs)),r:4.5,fill:'var(--cDev)'}));
+      // symmetry partner
+      const xs2=mu-1.7*sig;
+      svg.appendChild(el('circle',{cx:sx(xs2),cy:sy(f(xs2)),r:4.5,fill:'var(--cDev)','fill-opacity':0.45}));
+      txt(sx(xs2),sy(f(xs2))-11,'samme høyde',{size:10,fill:'var(--cDev)'});
+    }
+
+    // ---- normalisation annotation: peak height ----
+    if(active==='norm'){
+      svg.appendChild(el('line',{x1:padL-12,y1:sy(peak),x2:sx(mu),y2:sy(peak),
+        stroke:'var(--cNorm)','stroke-width':2,'stroke-dasharray':'5 4'}));
+      txt(padL-16,sy(peak)-7,'f(μ) = '+peak.toFixed(3),
+        {anchor:'start',size:12,fill:'var(--cNorm)',weight:600});
+      txt(sx(mu),baseY-((baseY-topY)*0.18),'areal = 1',
+        {size:14,fill:'var(--cNorm)',weight:600});
+    }
+
+    txt(padL-38,topY+2,'f(x)',{anchor:'start',size:11,fill:'var(--muted)'});
+    txt(W-padR,baseY+19,'x',{anchor:'end',size:12,fam:'Georgia',fill:'var(--muted)'});
+  }
+
+  function setActive(p){
+    active=(active===p)?null:p;
+    document.querySelectorAll('.hl').forEach(e=>e.classList.toggle('on',
+      active!==null && (e.dataset.p===active || (active==='mu'&&e.dataset.p==='dev'))));
+    document.querySelectorAll('.key').forEach(e=>e.classList.toggle('on',e.dataset.p===active));
+    document.getElementById('expl').textContent =
+      active? EXPL[active] : 'Klikk på en farget del av formelen for å se hva den gjør med kurven.';
+    draw();
+  }
+
+  document.querySelectorAll('.hl').forEach(e=>e.addEventListener('click',()=>setActive(e.dataset.p)));
+  document.querySelectorAll('.key').forEach(e=>e.addEventListener('click',()=>setActive(e.dataset.p)));
+
+  document.getElementById('muRange').addEventListener('input',e=>{
+    mu=+e.target.value;document.getElementById('muLab').textContent=mu.toFixed(1);update();});
+  document.getElementById('sigRange').addEventListener('input',e=>{
+    sig=+e.target.value;document.getElementById('sigLab').textContent=sig.toFixed(2);update();});
+
+  function update(){
+    document.getElementById('peakVal').textContent=f(mu).toFixed(3);
+    draw();
+  }
+  update();
+})();
+</script>
+</body>
+</html>

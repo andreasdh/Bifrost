@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gittermodell: Rød og blå baller</title>
+<style>
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    background: #ffffff;
+    color: #1a1a1a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+  #grid {
+    display: grid;
+    grid-template-columns: repeat(4, 64px);
+    grid-template-rows: repeat(4, 64px);
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+  .cell {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 1px solid #d0d0d0;
+    background: #378ADD; /* blå = B, default */
+  }
+  .cell.red {
+    background: #E24B4A; /* rød = A */
+  }
+  .controls {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1.5rem;
+  }
+  button {
+    font-size: 14px;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid #b0b0b0;
+    background: #f5f5f5;
+    cursor: pointer;
+  }
+  button:hover {
+    background: #eaeaea;
+  }
+  .stats {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0,1fr));
+    gap: 12px;
+    max-width: 560px;
+    width: 100%;
+  }
+  .stat-card {
+    background: #f4f4f4;
+    border-radius: 8px;
+    padding: 1rem;
+    text-align: center;
+  }
+  .stat-label {
+    font-size: 13px;
+    color: #666;
+    margin: 0 0 4px;
+  }
+  .stat-value {
+    font-size: 22px;
+    font-weight: 600;
+    margin: 0;
+  }
+  #stat-na { color: #A32D2D; }
+  #stat-nb { color: #185FA5; }
+  #formula {
+    text-align: center;
+    font-size: 14px;
+    color: #666;
+    margin-top: 1rem;
+  }
+</style>
+</head>
+<body>
+
+<div id="grid"></div>
+
+<div class="controls">
+  <button id="reset">Nullstill</button>
+  <button id="random">Tilfeldig fordeling</button>
+</div>
+
+<div class="stats">
+  <div class="stat-card">
+    <p class="stat-label">N</p>
+    <p class="stat-value" id="stat-n">16</p>
+  </div>
+  <div class="stat-card">
+    <p class="stat-label">N<sub>A</sub> (rød)</p>
+    <p class="stat-value" id="stat-na">0</p>
+  </div>
+  <div class="stat-card">
+    <p class="stat-label">N<sub>B</sub> (blå)</p>
+    <p class="stat-value" id="stat-nb">16</p>
+  </div>
+  <div class="stat-card">
+    <p class="stat-label">W</p>
+    <p class="stat-value" id="stat-w">1</p>
+  </div>
+</div>
+
+<p id="formula">W = 16! / (0! · 16!) = 1</p>
+
+<script>
+const N = 16;
+let cells = new Array(N).fill('B');
+
+function lnFactorial(n) {
+  let s = 0;
+  for (let i = 2; i <= n; i++) s += Math.log(i);
+  return s;
+}
+function computeW(nA, nB) {
+  const lnW = lnFactorial(N) - lnFactorial(nA) - lnFactorial(nB);
+  return Math.round(Math.exp(lnW));
+}
+
+const grid = document.getElementById('grid');
+for (let i = 0; i < N; i++) {
+  const cell = document.createElement('div');
+  cell.className = 'cell';
+  cell.dataset.idx = i;
+  grid.appendChild(cell);
+}
+
+function render() {
+  const nA = cells.filter(c => c === 'A').length;
+  const nB = N - nA;
+  document.querySelectorAll('.cell').forEach((cell, i) => {
+    cell.classList.toggle('red', cells[i] === 'A');
+  });
+  document.getElementById('stat-na').textContent = nA;
+  document.getElementById('stat-nb').textContent = nB;
+  const w = computeW(nA, nB);
+  document.getElementById('stat-w').textContent = w.toLocaleString('nb-NO');
+  document.getElementById('formula').textContent =
+    'W = 16! / (' + nA + '! · ' + nB + '!) = ' + w.toLocaleString('nb-NO');
+}
+
+grid.addEventListener('click', (e) => {
+  const cell = e.target.closest('.cell');
+  if (!cell) return;
+  const i = parseInt(cell.dataset.idx);
+  cells[i] = cells[i] === 'A' ? 'B' : 'A';
+  render();
+});
+
+document.getElementById('reset').addEventListener('click', () => {
+  cells = new Array(N).fill('B');
+  render();
+});
+
+document.getElementById('random').addEventListener('click', () => {
+  const nA = Math.floor(Math.random() * (N + 1));
+  cells = new Array(N).fill('B');
+  const indices = Array.from({length: N}, (_, i) => i);
+  for (let i = indices.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  for (let i = 0; i < nA; i++) cells[indices[i]] = 'A';
+  render();
+});
+
+render();
+</script>
+
+</body>
+</html>

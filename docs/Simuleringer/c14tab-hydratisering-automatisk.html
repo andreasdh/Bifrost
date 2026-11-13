@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>C&#8321;&#8324;-TAB i vann (automatisk)</title>
+<style>
+  :root{
+    --ink:#2b2a27;
+    --paper:#faf8f4;
+    --card:#ffffff;
+    --line:#ddd8cd;
+    --cation:#3a6ea5;
+    --cation-dark:#274a72;
+    --tail:#4a4a46;
+    --oxygen:#c0392b;
+    --oxygen-dark:#8a2f22;
+    --hydrogen:#f5f1e8;
+    --hbond:#b9832f;
+    --font: "Iowan Old Style","Palatino Linotype",Georgia,serif;
+    --font-ui: -apple-system, "Segoe UI", Helvetica, Arial, sans-serif;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; background:var(--paper); color:var(--ink);
+    font-family:var(--font-ui); padding:32px 16px 48px;
+    display:flex; justify-content:center;
+  }
+  .card{
+    max-width:780px; width:100%; background:var(--card);
+    border:1px solid var(--line); border-radius:14px; padding:28px 32px 32px;
+  }
+  h1{ font-family:var(--font); font-size:21px; font-weight:600; margin:0 0 4px; }
+  .formula{ font-family:var(--font); font-size:16px; color:var(--ink); opacity:0.85; margin:0 0 20px; }
+  .formula sub{ font-size:0.68em; }
+  .stage{ position:relative; width:100%; }
+  svg{ width:100%; height:auto; display:block; overflow:visible; }
+  .label{ font-family:var(--font-ui); font-size:12.5px; fill:var(--ink); opacity:0.7; }
+  .bond-tail{ stroke:var(--tail); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+  .head-circle{ fill:var(--cation); stroke:var(--cation-dark); stroke-width:1.5; }
+  .head-label{ font-family:var(--font-ui); font-size:12px; font-weight:700; fill:#fff; text-anchor:middle; }
+  .bond{ stroke:#8a8578; stroke-width:1.5; }
+  .hydrogen{ fill:var(--hydrogen); stroke:#8a8578; stroke-width:1; }
+  .oxygen{ fill:var(--oxygen); stroke:var(--oxygen-dark); stroke-width:1; }
+
+  .order-water{
+    animation-name: orderCycle;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes orderCycle{
+    0%   { transform: translate(var(--sx), var(--sy)) rotate(var(--sr)); }
+    40%  { transform: translate(var(--sx), var(--sy)) rotate(var(--sr)); }
+    60%  { transform: translate(var(--tx), var(--ty)) rotate(var(--tr)); }
+    100% { transform: translate(var(--tx), var(--ty)) rotate(var(--tr)); }
+  }
+
+  .iondipole-line{
+    stroke:var(--hbond); stroke-width:1.3; stroke-dasharray:3 3;
+    animation-name: bondFade;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes bondFade{
+    0%,40% { opacity:0; }
+    60%,100% { opacity:0.6; }
+  }
+
+  .bulk-water{
+    animation-name: idleJitter;
+    animation-timing-function: ease-in-out;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+  }
+  @keyframes idleJitter{
+    0%   { transform: translate(0,0); }
+    100% { transform: translate(var(--dx), var(--dy)); }
+  }
+
+  .caption{ margin-top:20px; font-size:13.5px; line-height:1.55; color:var(--ink); opacity:0.85; }
+  .legend{ display:flex; gap:22px; flex-wrap:wrap; margin-top:18px; font-size:12.5px; opacity:0.8; }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .swatch{ width:11px; height:11px; border-radius:50%; display:inline-block; }
+
+  @media (prefers-reduced-motion: reduce){
+    .order-water, .iondipole-line, .bulk-water{ animation:none !important; }
+    .order-water{ transform: translate(var(--tx), var(--ty)) rotate(var(--tr)); }
+    .iondipole-line{ opacity:0.6; }
+  }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Hydratisering av C<sub>14</sub>-TAB</h1>
+  <p class="formula">Tetradecyltrimetylammoniumbromid &mdash; forenklet modell av kationet (automatisk animasjon)</p>
+
+  <div class="stage">
+    <svg viewBox="0 0 700 460" role="img" aria-label="Animasjon av vannmolekyler som periodisk ordner seg rundt en forenklet modell av C14-TAB">
+      <desc>En forenklet modell av C14-TAB-kationet med et ladet hode og en lang hydrokarbonhale er omgitt av vannmolekyler som l&#248;pende beveger seg mellom en fri, uordnet tilstand og en ordnet tilstand rundt hodet og halen.</desc>
+      <text x="18" y="26" class="label">Vannmolekyler (l&#248;sningsmiddel)</text>
+      <path d="M 484 230 L 480 230 L 452 246 L 424 214 L 396 246 L 368 214 L 340 246 L 312 214 L 284 246 L 256 214 L 228 246 L 200 214 L 172 230" class="bond-tail"></path>
+      <circle cx="500" cy="230" r="16" class="head-circle"></circle>
+      <text x="500" y="234" class="head-label">N+</text>
+      <line x1="536.0" y1="230.0" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:6.64s;animation-delay:-2.78s;"></line>
+<line x1="518.0" y1="261.2" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:6.57s;animation-delay:-3.4s;"></line>
+<line x1="482.0" y1="261.2" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:8.15s;animation-delay:-5.26s;"></line>
+<line x1="464.0" y1="230.0" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:8.45s;animation-delay:-5.72s;"></line>
+<line x1="482.0" y1="198.8" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:6.74s;animation-delay:-4.15s;"></line>
+<line x1="518.0" y1="198.8" x2="500.0" y2="230.0" class="iondipole-line" style="animation-duration:7.78s;animation-delay:-3.77s;"></line>
+<line x1="452.0" y1="222.0" x2="452.0" y2="246.0" class="iondipole-line" style="animation-duration:6.91s;animation-delay:-1.92s;"></line>
+<line x1="452.0" y1="270.0" x2="452.0" y2="246.0" class="iondipole-line" style="animation-duration:7.41s;animation-delay:-4.2s;"></line>
+<line x1="396.0" y1="222.0" x2="396.0" y2="246.0" class="iondipole-line" style="animation-duration:7.65s;animation-delay:-2.85s;"></line>
+<line x1="396.0" y1="270.0" x2="396.0" y2="246.0" class="iondipole-line" style="animation-duration:8.46s;animation-delay:-5.29s;"></line>
+<line x1="340.0" y1="222.0" x2="340.0" y2="246.0" class="iondipole-line" style="animation-duration:7.48s;animation-delay:-5.76s;"></line>
+<line x1="340.0" y1="270.0" x2="340.0" y2="246.0" class="iondipole-line" style="animation-duration:8.25s;animation-delay:-4.12s;"></line>
+<line x1="284.0" y1="222.0" x2="284.0" y2="246.0" class="iondipole-line" style="animation-duration:7.83s;animation-delay:-5.64s;"></line>
+<line x1="284.0" y1="270.0" x2="284.0" y2="246.0" class="iondipole-line" style="animation-duration:7.27s;animation-delay:-1.99s;"></line>
+<line x1="228.0" y1="222.0" x2="228.0" y2="246.0" class="iondipole-line" style="animation-duration:6.73s;animation-delay:-5.65s;"></line>
+<line x1="228.0" y1="270.0" x2="228.0" y2="246.0" class="iondipole-line" style="animation-duration:7.28s;animation-delay:-0.77s;"></line>
+      <g class="bulk-water" transform="translate(81.6,219.7)" style="--dx:0.9px;--dy:6.9px;animation-duration:3.18s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(583.0,151.4)" style="--dx:-1.5px;--dy:-2.5px;animation-duration:3.26s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(642.9,100.4)" style="--dx:-5.8px;--dy:-4.8px;animation-duration:2.48s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(198.2,41.6)" style="--dx:-1.5px;--dy:-2.4px;animation-duration:2.88s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(640.0,316.2)" style="--dx:0.3px;--dy:2.1px;animation-duration:3.01s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(64.6,399.8)" style="--dx:5.0px;--dy:6.7px;animation-duration:3.16s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(96.3,293.7)" style="--dx:-7.9px;--dy:-7.8px;animation-duration:2.45s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(133.9,176.0)" style="--dx:-8.1px;--dy:-9.0px;animation-duration:2.38s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(94.9,185.4)" style="--dx:-8.5px;--dy:6.7px;animation-duration:2.94s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(125.1,140.9)" style="--dx:-2.7px;--dy:-2.4px;animation-duration:2.35s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(573.3,437.2)" style="--dx:-0.6px;--dy:-0.3px;animation-duration:2.3s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(95.4,177.1)" style="--dx:-4.2px;--dy:5.9px;animation-duration:2.39s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(44.8,420.4)" style="--dx:0.5px;--dy:-6.4px;animation-duration:2.85s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="bulk-water" transform="translate(47.3,251.2)" style="--dx:8.6px;--dy:6.5px;animation-duration:3.04s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+      <g class="order-water" style="--sx:237.3px;--sy:100.3px;--sr:234.3deg;--tx:536.0px;--ty:230.0px;--tr:90.0deg;animation-duration:6.64s;animation-delay:-2.78s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:264.0px;--sy:63.2px;--sr:182.7deg;--tx:518.0px;--ty:261.2px;--tr:150.0deg;animation-duration:6.57s;animation-delay:-3.4s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:74.7px;--sy:76.3px;--sr:152.8deg;--tx:482.0px;--ty:261.2px;--tr:-150.0deg;animation-duration:8.15s;animation-delay:-5.26s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:636.5px;--sy:270.8px;--sr:142.8deg;--tx:464.0px;--ty:230.0px;--tr:-90.0deg;animation-duration:8.45s;animation-delay:-5.72s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:579.4px;--sy:155.8px;--sr:51.9deg;--tx:482.0px;--ty:198.8px;--tr:-30.0deg;animation-duration:6.74s;animation-delay:-4.15s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:552.3px;--sy:112.3px;--sr:209.4deg;--tx:518.0px;--ty:198.8px;--tr:30.0deg;animation-duration:7.78s;animation-delay:-3.77s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:380.6px;--sy:65.1px;--sr:21.5deg;--tx:452.0px;--ty:222.0px;--tr:-15.0deg;animation-duration:6.91s;animation-delay:-1.92s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:303.7px;--sy:165.7px;--sr:210.8deg;--tx:452.0px;--ty:270.0px;--tr:15.0deg;animation-duration:7.41s;animation-delay:-4.2s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:538.4px;--sy:319.6px;--sr:87.9deg;--tx:396.0px;--ty:222.0px;--tr:-15.0deg;animation-duration:7.65s;animation-delay:-2.85s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:590.1px;--sy:331.8px;--sr:103.7deg;--tx:396.0px;--ty:270.0px;--tr:15.0deg;animation-duration:8.46s;animation-delay:-5.29s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:297.6px;--sy:342.9px;--sr:54.7deg;--tx:340.0px;--ty:222.0px;--tr:-15.0deg;animation-duration:7.48s;animation-delay:-5.76s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:457.7px;--sy:345.8px;--sr:206.3deg;--tx:340.0px;--ty:270.0px;--tr:15.0deg;animation-duration:8.25s;animation-delay:-4.12s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:567.6px;--sy:417.9px;--sr:170.7deg;--tx:284.0px;--ty:222.0px;--tr:-15.0deg;animation-duration:7.83s;animation-delay:-5.64s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:665.6px;--sy:368.8px;--sr:102.5deg;--tx:284.0px;--ty:270.0px;--tr:15.0deg;animation-duration:7.27s;animation-delay:-1.99s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:44.4px;--sy:224.7px;--sr:60.5deg;--tx:228.0px;--ty:222.0px;--tr:-15.0deg;animation-duration:6.73s;animation-delay:-5.65s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+<g class="order-water" style="--sx:521.7px;--sy:91.7px;--sr:89.1deg;--tx:228.0px;--ty:270.0px;--tr:15.0deg;animation-duration:7.28s;animation-delay:-0.77s;">
+      <line x1="0" y1="8" x2="-9" y2="-6" class="bond"/>
+      <line x1="0" y1="8" x2="9" y2="-6" class="bond"/>
+      <circle cx="-9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="9" cy="-6" r="3.4" class="hydrogen"/>
+      <circle cx="0" cy="8" r="5.2" class="oxygen"/>
+    </g>
+      <text x="500" y="278" text-anchor="middle" class="label" opacity="0.75">hydrofilt hode</text>
+      <text x="330" y="278" text-anchor="middle" class="label" opacity="0.75">hydrofob hale (C14-kjede)</text>
+    </svg>
+  </div>
+
+  <div class="legend">
+    <span><span class="swatch" style="background:var(--cation)"></span>Kationisk hode</span>
+    <span><span class="swatch" style="background:var(--tail)"></span>Hydrokarbonhale</span>
+    <span><span class="swatch" style="background:var(--oxygen)"></span>Oksygen (vann)</span>
+    <span><span class="swatch" style="background:var(--hydrogen);border:1px solid #8a8578"></span>Hydrogen (vann)</span>
+  </div>
+
+  <p class="caption">
+    Vannmolekylene beveger seg l&#248;pende mellom fri, tilfeldig bevegelse og en ordnet tilstand rundt de ladede og upolare delene av C14-TAB. Bruk dette som utgangspunkt for &#229; resonnere om entalpi- og entropiverdiene i oppgaven.
+  </p>
+</div>
+</body>
+</html>
