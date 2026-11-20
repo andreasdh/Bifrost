@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mikrotilstander i et 3×3-rutenett</title>
+<style>
+  :root{
+    --bg: #eef2f1;
+    --surface: #ffffff;
+    --surface-alt: #f4f7f6;
+    --line: #d7e1df;
+    --ink: #16211f;
+    --ink-soft: #52645f;
+    --accent: #2f7d74;
+    --accent-soft: #bfe0da;
+    --green: #4c9a63;
+    --blue: #3a6ea5;
+    --yellow: #e0a72e;
+    --counter-bg: #16211f;
+    --counter-glow: #6fe4cf;
+    --font-display: "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-body: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+    --font-mono: "SF Mono", "Cascadia Code", Menlo, Consolas, monospace;
+  }
+
+  *{ box-sizing: border-box; }
+
+  body{
+    margin:0;
+    font-family: var(--font-body);
+    background: var(--bg);
+    color: var(--ink);
+    padding: 28px 16px;
+    display:flex;
+    justify-content:center;
+  }
+
+  .card{
+    width:100%;
+    max-width: 900px;
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 14px;
+    overflow:hidden;
+    box-shadow: 0 1px 2px rgba(22,33,31,0.04), 0 12px 32px rgba(22,33,31,0.06);
+  }
+
+  .header{
+    padding: 26px 30px 18px;
+    border-bottom: 1px solid var(--line);
+    background:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(47,125,116,0.045) 27px, rgba(47,125,116,0.045) 28px),
+      repeating-linear-gradient(90deg, transparent, transparent 27px, rgba(47,125,116,0.045) 27px, rgba(47,125,116,0.045) 28px),
+      var(--surface-alt);
+  }
+
+  .eyebrow{
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin: 0 0 6px;
+  }
+
+  h1{
+    font-family: var(--font-display);
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0 0 4px;
+    letter-spacing: -0.01em;
+  }
+
+  .subtitle{
+    margin:0;
+    font-size: 14px;
+    color: var(--ink-soft);
+  }
+
+  .tabs{
+    display:flex;
+    gap: 6px;
+    padding: 16px 30px 0;
+    flex-wrap: wrap;
+  }
+
+  .tab{
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 9px 14px;
+    border-radius: 8px 8px 0 0;
+    border: 1px solid var(--line);
+    border-bottom: none;
+    background: var(--surface-alt);
+    color: var(--ink-soft);
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+  }
+  .tab:hover{ color: var(--ink); }
+  .tab.active{
+    background: var(--surface);
+    color: var(--accent);
+    box-shadow: inset 0 2px 0 var(--accent);
+  }
+
+  .body{
+    padding: 24px 30px 30px;
+    display:grid;
+    grid-template-columns: 1fr 300px;
+    gap: 28px;
+    align-items:start;
+  }
+
+  @media (max-width: 620px){
+    .body{ grid-template-columns: 1fr; }
+  }
+
+  .grid-panel{ display:flex; flex-direction:column; gap:14px; }
+
+  .grid-wrap{
+    background: var(--surface-alt);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 18px;
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    aspect-ratio: 1;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+
+  .cell{
+    background: var(--surface);
+    border: 1.5px solid var(--line);
+    border-radius: 8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor: pointer;
+    position: relative;
+    transition: border-color 0.15s ease, background 0.15s ease;
+  }
+  .cell:hover{ border-color: var(--accent-soft); background: #fbfffe; }
+
+  .ball{
+    width: 62%;
+    height: 62%;
+    border-radius: 50%;
+    box-shadow: inset -4px -5px 8px rgba(0,0,0,0.18), 0 2px 4px rgba(0,0,0,0.15);
+    transform: scale(0);
+    animation: pop 0.22s cubic-bezier(.3,1.6,.5,1) forwards;
+  }
+  @keyframes pop{ to{ transform: scale(1); } }
+
+  .ball.green{ background: radial-gradient(circle at 32% 28%, #85d19a, var(--green) 70%); }
+  .ball.blue{ background: radial-gradient(circle at 32% 28%, #7fa9d6, var(--blue) 70%); }
+  .ball.yellow{ background: radial-gradient(circle at 32% 28%, #f3cf7a, var(--yellow) 70%); }
+
+  .legend{
+    display:flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    padding: 0 4px;
+  }
+  .legend span{ display:inline-flex; align-items:center; gap:6px; }
+  .dot{ width:10px; height:10px; border-radius:50%; display:inline-block; }
+
+  .explainer{
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: var(--ink-soft);
+    background: var(--surface-alt);
+    border-left: 3px solid var(--accent);
+    padding: 10px 14px;
+    border-radius: 0 8px 8px 0;
+  }
+  .explainer strong{ color: var(--ink); }
+
+  .controls{ display:flex; gap: 8px; flex-wrap: wrap; }
+
+  button{
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    padding: 10px 14px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: var(--surface);
+    color: var(--ink);
+    cursor: pointer;
+    transition: transform 0.1s ease, border-color 0.15s ease, background 0.15s ease;
+  }
+  button:hover{ border-color: var(--accent); color: var(--accent); }
+  button:active{ transform: scale(0.97); }
+  button.primary{
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  button.primary:hover{ background: #266b63; color:#fff; }
+  button:disabled{ opacity: 0.5; cursor: not-allowed; transform:none; }
+
+  .stats{
+    display:flex;
+    flex-direction:column;
+    gap: 16px;
+  }
+
+  .counter-box{
+    background: var(--counter-bg);
+    border-radius: 12px;
+    padding: 18px 20px;
+    text-align:center;
+    position: relative;
+    overflow:hidden;
+  }
+  .counter-box::before{
+    content:"";
+    position:absolute; inset:0;
+    background: repeating-linear-gradient(90deg, rgba(255,255,255,0.02) 0 1px, transparent 1px 8px);
+  }
+  .counter-label{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: #7fb8ae;
+    margin: 0 0 6px;
+    position:relative;
+  }
+  .counter-digits{
+    font-family: var(--font-mono);
+    font-size: 40px;
+    font-weight: 600;
+    color: var(--counter-glow);
+    letter-spacing: 0.04em;
+    text-shadow: 0 0 14px rgba(111,228,207,0.45);
+    position:relative;
+    transition: opacity 0.08s ease;
+  }
+  .counter-sub{
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    color: #9fc9c1;
+    margin-top: 6px;
+    position:relative;
+    min-height: 14px;
+  }
+
+  .formula-box{
+    background: var(--surface-alt);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 14px 16px;
+  }
+  .formula{
+    font-family: var(--font-display);
+    font-size: 17px;
+    margin: 0 0 6px;
+  }
+  .formula .val{ color: var(--accent); font-weight:700; }
+  .delta{
+    font-family: var(--font-mono);
+    font-size: 12px;
+    color: var(--ink-soft);
+  }
+
+  .chart{ display:flex; flex-direction:column; gap: 8px; }
+  .chart-title{
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin: 2px 0 2px;
+  }
+  .bar-row{ display:flex; align-items:center; gap: 8px; }
+  .bar-label{ font-family: var(--font-mono); font-size: 11px; width: 74px; color: var(--ink-soft); flex-shrink:0; }
+  .bar-track{ flex:1; background: var(--surface-alt); border-radius: 4px; height: 14px; overflow:hidden; border: 1px solid var(--line); }
+  .bar-fill{ height:100%; border-radius: 4px; background: var(--line); transition: width 0.4s ease, background 0.3s ease; }
+  .bar-fill.active{ background: var(--accent); }
+  .bar-val{ font-family: var(--font-mono); font-size: 11px; width: 42px; text-align:right; color: var(--ink-soft); flex-shrink:0; }
+
+  .footnote{
+    font-size: 11.5px;
+    color: var(--ink-soft);
+    text-align:center;
+    padding: 12px 30px 22px;
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="header">
+    <p class="eyebrow">Fysikalsk Kjemi I · Statistisk termodynamikk</p>
+    <h1>Mikrotilstander i et 3×3-rutenett</h1>
+    <p class="subtitle">Klikk i rutene for å plassere baller selv, eller la programmet telle opp alle mikrotilstandene.</p>
+  </div>
+
+  <div class="tabs">
+    <div class="tab active" data-mode="1">1 · Grønn ball</div>
+    <div class="tab" data-mode="2">2 · Blå + gul (skjelnbare)</div>
+    <div class="tab" data-mode="3">3 · To blå (uskjelnbare)</div>
+  </div>
+
+  <div class="body">
+    <div class="grid-panel">
+      <div class="grid-wrap">
+        <div class="grid" id="grid"></div>
+      </div>
+      <div class="legend" id="legend"></div>
+      <div class="explainer" id="explainer"></div>
+      <div class="controls">
+        <button class="primary" id="btnCount">Tell opp alle mikrotilstander</button>
+        <button id="btnRandom">Tilfeldig plassering</button>
+        <button id="btnReset">Nullstill</button>
+      </div>
+    </div>
+
+    <div class="stats">
+      <div class="counter-box">
+        <p class="counter-label">Antall mikrotilstander ω</p>
+        <div class="counter-digits" id="counterDigits">9</div>
+        <p class="counter-sub" id="counterSub">klikk i gitteret for å starte</p>
+      </div>
+
+      <div class="formula-box">
+        <p class="formula">S/k<sub>B</sub> = ln ω = <span class="val" id="lnVal">2.20</span></p>
+        <p class="delta" id="deltaText">Entropien gjelder systemet med én ball</p>
+      </div>
+
+      <div class="chart">
+        <p class="chart-title">ln(ω) sammenlignet</p>
+        <div class="bar-row">
+          <span class="bar-label">1 grønn</span>
+          <div class="bar-track"><div class="bar-fill" id="bar1"></div></div>
+          <span class="bar-val" id="barVal1">2.20</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">blå+gul</span>
+          <div class="bar-track"><div class="bar-fill" id="bar2"></div></div>
+          <span class="bar-val" id="barVal2">4.28</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">to blå</span>
+          <div class="bar-track"><div class="bar-fill" id="bar3"></div></div>
+          <span class="bar-val" id="barVal3">3.58</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <p class="footnote">3 × 3-rutenett · én ball per rute · ω talt ved direkte enumerering av gitterets tilstander</p>
+</div>
+
+<script>
+(function(){
+  const N = 9;
+  const LN = { 1: Math.log(9), 2: Math.log(72), 3: Math.log(36) };
+  const MAXBAR = LN[2];
+
+  const MODE_INFO = {
+    1: {
+      colors: ['green'],
+      legend: [['green','Grønn ball (reaktant, art A)']],
+      explain: 'Den grønne ballen kan plasseres i hvilken som helst av de 9 rutene. Ingen rute er mer sannsynlig enn en annen, så vi har <strong>ω = 9</strong> mikrotilstander.',
+      target: 9
+    },
+    2: {
+      colors: ['blue','yellow'],
+      legend: [['blue','Blå ball (produkt B)'],['yellow','Gul ball (produkt C)']],
+      explain: 'Blå ball plasseres først: 9 valg. Gul ball plasseres deretter i én av de 8 gjenværende rutene. Totalt <strong>ω = 9 × 8 = 72</strong> mikrotilstander.',
+      target: 72
+    },
+    3: {
+      colors: ['blue','blue'],
+      legend: [['blue','Blå ball (produkt B, identisk × 2)']],
+      explain: 'Samme opptelling som over, men de to blå ballene er uskjelnbare. Hvert par telles dobbelt (A i rute 1 og B i rute 2 = B i rute 1 og A i rute 2), så <strong>ω = 72 / 2 = 36</strong>.',
+      target: 36
+    }
+  };
+
+  let mode = 1;
+  let combos = [];
+  let placed = [];
+  let animating = false;
+
+  const gridEl = document.getElementById('grid');
+  const legendEl = document.getElementById('legend');
+  const explainerEl = document.getElementById('explainer');
+  const counterDigits = document.getElementById('counterDigits');
+  const counterSub = document.getElementById('counterSub');
+  const lnVal = document.getElementById('lnVal');
+  const deltaText = document.getElementById('deltaText');
+  const btnCount = document.getElementById('btnCount');
+  const btnRandom = document.getElementById('btnRandom');
+  const btnReset = document.getElementById('btnReset');
+
+  function buildCombos(m){
+    const out = [];
+    if(m === 1){
+      for(let i=0;i<N;i++) out.push([i]);
+    } else {
+      for(let i=0;i<N;i++){
+        for(let j=0;j<N;j++){
+          if(i===j) continue;
+          if(m===3 && j<i) continue;
+          out.push([i,j]);
+        }
+      }
+    }
+    return out;
+  }
+
+  function buildGrid(){
+    gridEl.innerHTML = '';
+    for(let i=0;i<N;i++){
+      const cell = document.createElement('div');
+      cell.className = 'cell';
+      cell.dataset.idx = i;
+      cell.addEventListener('click', () => onCellClick(i));
+      gridEl.appendChild(cell);
+    }
+  }
+
+  function renderBalls(arr){
+    document.querySelectorAll('.cell').forEach(c => c.innerHTML = '');
+    const colors = MODE_INFO[mode].colors;
+    arr.forEach((cellIdx, order) => {
+      const cell = gridEl.children[cellIdx];
+      const ball = document.createElement('div');
+      ball.className = 'ball ' + colors[order];
+      cell.appendChild(ball);
+    });
+  }
+
+  function renderLegend(){
+    legendEl.innerHTML = MODE_INFO[mode].legend.map(([c,label]) =>
+      `<span><span class="dot" style="background:var(--${c})"></span>${label}</span>`
+    ).join('');
+  }
+
+  function renderExplainer(){
+    explainerEl.innerHTML = MODE_INFO[mode].explain;
+  }
+
+  function renderCounter(value, sub){
+    counterDigits.textContent = value;
+    counterSub.textContent = sub;
+  }
+
+  function renderFormula(){
+    const ln = LN[mode];
+    lnVal.textContent = ln.toFixed(2);
+    deltaText.textContent = mode === 1
+      ? 'Entropien gjelder systemet med én ball'
+      : 'Entropien gjelder systemet med to baller';
+  }
+
+  function renderChart(){
+    const bars = [
+      {id:1, m:1}, {id:2, m:2}, {id:3, m:3}
+    ];
+    bars.forEach(b => {
+      const fill = document.getElementById('bar'+b.id);
+      const val = document.getElementById('barVal'+b.id);
+      const pct = (LN[b.m] / MAXBAR) * 100;
+      fill.style.width = pct + '%';
+      fill.classList.toggle('active', b.m === mode);
+      val.textContent = LN[b.m].toFixed(2);
+    });
+  }
+
+  function setMode(m){
+    if(animating) return;
+    mode = m;
+    combos = buildCombos(m);
+    placed = [];
+    document.querySelectorAll('.tab').forEach(t => t.classList.toggle('active', Number(t.dataset.mode) === m));
+    renderLegend();
+    renderExplainer();
+    renderBalls([]);
+    renderCounter(MODE_INFO[m].target, `${MODE_INFO[m].target} mulige mikrotilstander — klikk i gitteret for å utforske`);
+    renderFormula();
+    renderChart();
+  }
+
+  function findComboIndex(arr){
+    for(let k=0;k<combos.length;k++){
+      const c = combos[k];
+      if(c.length !== arr.length) continue;
+      if(c.every((v,i)=>v===arr[i])) return k;
+    }
+    return -1;
+  }
+
+  function onCellClick(idx){
+    if(animating) return;
+    const need = MODE_INFO[mode].colors.length;
+
+    if(placed.length >= need){
+      placed = [];
+    }
+    if(placed.includes(idx)){
+      return;
+    }
+    placed.push(idx);
+    renderBalls(placed);
+
+    if(placed.length < need){
+      renderCounter(MODE_INFO[mode].target, `velg rute for neste ball (${placed.length}/${need} plassert)`);
+    } else {
+      const k = findComboIndex(placed);
+      renderCounter(MODE_INFO[mode].target, `dette er arrangement ${k+1} av ${combos.length}`);
+    }
+  }
+
+  function randomPlacement(){
+    if(animating) return;
+    const combo = combos[Math.floor(Math.random()*combos.length)];
+    placed = combo.slice();
+    renderBalls(placed);
+    const k = findComboIndex(placed);
+    renderCounter(MODE_INFO[mode].target, `dette er arrangement ${k+1} av ${combos.length}`);
+  }
+
+  function resetGrid(){
+    if(animating) return;
+    placed = [];
+    renderBalls([]);
+    renderCounter(MODE_INFO[mode].target, `${MODE_INFO[mode].target} mulige mikrotilstander — klikk i gitteret for å utforske`);
+  }
+
+  function countAll(){
+    if(animating) return;
+    animating = true;
+    btnCount.disabled = true;
+    btnRandom.disabled = true;
+    btnReset.disabled = true;
+    document.querySelectorAll('.tab').forEach(t => t.style.pointerEvents = 'none');
+
+    const total = combos.length;
+    const intervalMs = Math.max(14, Math.min(90, 3200/total));
+    let i = 0;
+
+    const timer = setInterval(() => {
+      const combo = combos[i];
+      renderBalls(combo);
+      renderCounter(i+1, `teller mikrotilstand ${i+1} av ${total}`);
+      i++;
+      if(i >= total){
+        clearInterval(timer);
+        renderCounter(total, `alle ${total} mikrotilstander talt opp ✓`);
+        animating = false;
+        btnCount.disabled = false;
+        btnRandom.disabled = false;
+        btnReset.disabled = false;
+        document.querySelectorAll('.tab').forEach(t => t.style.pointerEvents = 'auto');
+      }
+    }, intervalMs);
+  }
+
+  document.querySelectorAll('.tab').forEach(t => {
+    t.addEventListener('click', () => setMode(Number(t.dataset.mode)));
+  });
+  btnCount.addEventListener('click', countAll);
+  btnRandom.addEventListener('click', randomPlacement);
+  btnReset.addEventListener('click', resetGrid);
+
+  buildGrid();
+  setMode(1);
+})();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Varmekapasitet og entalpi: konstant V vs. konstant p</title>
+<style>
+  :root{
+    --bg:#0e1a20;
+    --panel:#13212b;
+    --sub:#1a2c38;
+    --line:#26414f;
+    --gas:#6ea8d8;
+    --accent:#e8a13a;
+    --qV:#6ea8d8;
+    --qp:#e8a13a;
+    --text:#e4edf2;
+    --muted:#8ba3b2;
+    --good:#6fcf97;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0; padding:24px;
+    background:#f4f1ea;
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    color:var(--text);
+    display:flex; justify-content:center;
+  }
+  .card{
+    width:100%; max-width:720px;
+    background:var(--bg);
+    border-radius:18px;
+    padding:26px 28px 30px;
+    box-shadow:0 12px 40px rgba(0,0,0,.25);
+  }
+  h1{ text-align:center; margin:.1em 0 .3em; font-size:1.45rem; font-weight:600; line-height:1.3; }
+  .lede{ text-align:center; color:var(--muted); font-size:.9rem; line-height:1.5; margin:0 auto 20px; max-width:560px; }
+  .panels{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  @media(max-width:620px){ .panels{grid-template-columns:1fr;} }
+  .panel{ background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:12px; }
+  .panel h2{ text-align:center; font-size:.92rem; font-weight:600; margin:2px 0 10px; color:var(--text); }
+  canvas.scene{ width:100%; display:block; border-radius:8px; background:#0a1119; }
+  .stats{ margin-top:10px; font-size:.9rem; line-height:1.7; }
+  .stats .k{ color:var(--muted); }
+  .stats .val{ color:var(--accent); font-weight:700; }
+  .note{
+    background:var(--sub); border:1px solid var(--line); border-radius:10px;
+    padding:12px 16px; margin:16px 0; text-align:center; font-size:.85rem; color:var(--muted); line-height:1.55;
+  }
+  .note b{ color:var(--text); }
+  .bars{ margin:6px 0 4px; }
+  .barrow{ display:flex; align-items:center; gap:10px; margin:9px 0; }
+  .barrow .lbl{ min-width:130px; font-size:.85rem; color:var(--text); }
+  .track{ flex:1; height:16px; background:var(--sub); border-radius:8px; overflow:hidden; border:1px solid var(--line); }
+  .track > span{ display:block; height:100%; width:0; transition:width .5s; }
+  .barrow .amt{ min-width:52px; text-align:right; font-size:.85rem; color:var(--accent); font-weight:700; }
+  .controls{ margin-top:16px; }
+  .row{ display:flex; align-items:center; gap:12px; justify-content:center; flex-wrap:wrap; margin:12px 0; }
+  .row label{ color:var(--text); font-size:.92rem; }
+  select{ padding:7px 10px; border-radius:8px; background:var(--panel); color:var(--text); border:1px solid var(--line); font-family:inherit; font-size:.88rem; }
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:220px; height:6px; border-radius:4px; background:var(--line); outline:none;
+  }
+  input[type=range]::-webkit-slider-thumb{ -webkit-appearance:none; width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid #fff3; }
+  input[type=range]::-moz-range-thumb{ width:18px; height:18px; border-radius:50%; background:var(--accent); cursor:pointer; border:2px solid #fff3; }
+  .num{ color:var(--accent); font-weight:700; min-width:44px; }
+  .btns{ display:flex; gap:10px; justify-content:center; margin-top:8px; }
+  button{ padding:9px 18px; border-radius:9px; cursor:pointer; background:var(--panel); color:var(--text); border:1px solid var(--line); font-family:inherit; font-size:.9rem; }
+  button:hover{ background:var(--sub); }
+  button.primary{ background:var(--gas); color:#08131f; border-color:var(--gas); font-weight:700; }
+  .foot{ text-align:center; color:var(--muted); font-size:.78rem; margin-top:14px; line-height:1.5; }
+</style>
+</head>
+<body>
+<div class="card">
+  <h1>Varmekapasitet og entalpi: konstant V vs. konstant p</h1>
+  <p class="lede">Samme gass varmes fra samme start til samme måltemperatur — enten i en stiv beholder (konstant volum) eller under et fritt stempel med fast vekt (konstant trykk). Se hva som faktisk skiller seg.</p>
+
+  <div class="panels">
+    <div class="panel">
+      <h2>Konstant volum (bombekalorimeter)</h2>
+      <canvas class="scene" id="sceneV" width="300" height="230"></canvas>
+      <div class="stats">
+        <span class="k">T =</span> <span class="val" id="TV">1,00</span> &nbsp;
+        <span class="k">p =</span> <span class="val" id="pV">1,00</span><br>
+        <span class="k">q =</span> <span class="val" id="qV">0,00</span> &nbsp;
+        <span class="k">w =</span> <span class="val" id="wV">0,00</span><br>
+        <span class="k">&Delta;U =</span> <span class="val" id="dUV">0,00</span> &nbsp;
+        <span class="k">&Delta;H =</span> <span class="val" id="dHV">0,00</span>
+      </div>
+    </div>
+    <div class="panel">
+      <h2>Konstant trykk (fritt stempel, fast vekt)</h2>
+      <canvas class="scene" id="sceneP" width="300" height="230"></canvas>
+      <div class="stats">
+        <span class="k">T =</span> <span class="val" id="TP">1,00</span> &nbsp;
+        <span class="k">V =</span> <span class="val" id="VP">1,00</span><br>
+        <span class="k">q =</span> <span class="val" id="qP">0,00</span> &nbsp;
+        <span class="k">w =</span> <span class="val" id="wP">0,00</span><br>
+        <span class="k">&Delta;U =</span> <span class="val" id="dUP">0,00</span> &nbsp;
+        <span class="k">&Delta;H =</span> <span class="val" id="dHP">0,00</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="note">
+    &Delta;U og &Delta;H blir <b>like</b> i begge tilfeller (tilstandsfunksjoner — avhenger bare av T). Men den målte varmen <b>q er ulik</b>: ved konstant V måler du &Delta;U direkte, ved konstant p måler du &Delta;H.
+  </div>
+
+  <div class="bars">
+    <div class="barrow"><span class="lbl">q (konstant V)</span><div class="track"><span id="barqV" style="background:var(--qV)"></span></div><span class="amt" id="amtqV">0,00</span></div>
+    <div class="barrow"><span class="lbl">q (konstant p)</span><div class="track"><span id="barqP" style="background:var(--qp)"></span></div><span class="amt" id="amtqP">0,00</span></div>
+    <div class="barrow"><span class="lbl">forskjell = arbeid</span><div class="track"><span id="barW" style="background:var(--good)"></span></div><span class="amt" id="amtW">0,00</span></div>
+  </div>
+
+  <div class="controls">
+    <div class="row">
+      <label for="gas">Gasstype:</label>
+      <select id="gas">
+        <option value="1.5">Monoatomisk (C_V = 3/2 nR)</option>
+        <option value="2.5">Diatomisk (C_V = 5/2 nR)</option>
+      </select>
+    </div>
+    <div class="row">
+      <label for="t2">T₂ (mål):</label>
+      <input type="range" id="t2" min="1.2" max="3" value="2.5" step="0.1">
+      <span class="num" id="t2num">2,50</span>
+    </div>
+    <div class="btns">
+      <button class="primary" id="run">Kjør oppvarming</button>
+      <button id="reset">Reset</button>
+    </div>
+  </div>
+
+  <p class="foot">Reduserte enheter: nR = 1. Start: T₁ = 1, V₁ = 1, p₁ = 1 for begge. C_p = C_V + nR.</p>
+</div>
+
+<script>
+(() => {
+  const nR = 1;
+  let Cv = 1.5;
+  let T2 = 2.5;
+  let progress = 0, animating = false, target = 0;
+
+  const sceneV = document.getElementById('sceneV').getContext('2d');
+  const sceneP = document.getElementById('sceneP').getContext('2d');
+  const cV = document.getElementById('sceneV'), cP = document.getElementById('sceneP');
+
+  // molecules
+  const molsV = Array.from({length:24},()=>({x:Math.random(),y:Math.random(),a:Math.random()*6.28}));
+  const molsP = Array.from({length:22},()=>({x:Math.random(),y:Math.random(),a:Math.random()*6.28}));
+
+  function curT(){ return 1 + (T2-1)*progress; }
+
+  function drawBox(ctx, c, mols, pistonY, speed, label, pressureFrac){
+    const w=c.width, h=c.height;
+    ctx.clearRect(0,0,w,h);
+    ctx.fillStyle='#0a1119'; ctx.fillRect(0,0,w,h);
+    // container walls
+    const left=40, right=w-40, top=24, bottom=h-24;
+    ctx.strokeStyle='#4a6072'; ctx.lineWidth=2;
+    ctx.strokeRect(left, top, right-left, bottom-top);
+
+    let gasTop = top;
+    if(pistonY!==null){
+      gasTop = pistonY;
+      // piston rod
+      ctx.strokeStyle='#8ba3b2'; ctx.lineWidth=4;
+      ctx.beginPath(); ctx.moveTo(w/2, top-14); ctx.lineTo(w/2, pistonY); ctx.stroke();
+      // piston plate
+      ctx.fillStyle='#b8c4ce'; ctx.fillRect(left+3, pistonY-6, right-left-6, 10);
+    } else {
+      // pressure gauge with needle (p rises with T at constant V)
+      const gx=right-30, gy=top+34, gr=20;
+      ctx.strokeStyle='#4a6072'; ctx.lineWidth=3;
+      ctx.beginPath(); ctx.arc(gx,gy,gr,Math.PI,2*Math.PI); ctx.stroke();
+      const ang = Math.PI + Math.PI*pressureFrac;
+      ctx.strokeStyle='#e8a13a'; ctx.lineWidth=2.4;
+      ctx.beginPath(); ctx.moveTo(gx,gy);
+      ctx.lineTo(gx+Math.cos(ang)*(gr-3), gy+Math.sin(ang)*(gr-3)); ctx.stroke();
+      ctx.fillStyle='#e4edf2'; ctx.beginPath(); ctx.arc(gx,gy,2.5,0,6.28); ctx.fill();
+      ctx.fillStyle='#8ba3b2'; ctx.font='10px Georgia'; ctx.textAlign='center';
+      ctx.fillText('p', gx, gy+15);
+    }
+
+    // molecules in gas region
+    const gh = bottom-gasTop-6;
+    for(const m of mols){
+      m.x += Math.cos(m.a)*0.006*speed; m.y += Math.sin(m.a)*0.006*speed;
+      if(m.x<0.02||m.x>0.98) m.a=Math.PI-m.a;
+      if(m.y<0.02||m.y>0.98) m.a=-m.a;
+      m.x=Math.max(0.02,Math.min(0.98,m.x)); m.y=Math.max(0.02,Math.min(0.98,m.y));
+      const px = left+6 + m.x*(right-left-12);
+      const py = gasTop+3 + m.y*gh;
+      ctx.fillStyle='#6ea8d8';
+      ctx.beginPath(); ctx.arc(px,py,2.6,0,6.28); ctx.fill();
+    }
+    // label
+    ctx.fillStyle='#8ba3b2'; ctx.font='12px Georgia'; ctx.textAlign='center';
+    ctx.fillText(label, w/2, bottom+16);
+  }
+
+  function fmt(x){ return x.toFixed(2).replace('.',','); }
+
+  function update(){
+    const T = curT();
+    const dT = T-1;
+    const Cp = Cv + nR;
+    const dU = Cv*dT;         // same for both
+    const dH = Cp*dT;         // same for both
+    const qV = dU;            // const V: q = ΔU
+    const wV = 0;
+    const qP = dH;            // const p: q = ΔH
+    const wP = -(dH-dU);      // work done by gas (negative on system)
+
+    // const V panel
+    document.getElementById('TV').textContent=fmt(T);
+    document.getElementById('pV').textContent=fmt(T); // p ∝ T at const V
+    document.getElementById('qV').textContent=fmt(qV);
+    document.getElementById('wV').textContent=fmt(wV);
+    document.getElementById('dUV').textContent=fmt(dU);
+    document.getElementById('dHV').textContent=fmt(dH);
+    // const p panel
+    document.getElementById('TP').textContent=fmt(T);
+    document.getElementById('VP').textContent=fmt(T); // V ∝ T at const p
+    document.getElementById('qP').textContent=fmt(qP);
+    document.getElementById('wP').textContent=fmt(wP);
+    document.getElementById('dUP').textContent=fmt(dU);
+    document.getElementById('dHP').textContent=fmt(dH);
+
+    // bars (scale to qP max)
+    const maxQ = (Cv+nR)*(T2-1) || 1;
+    document.getElementById('barqV').style.width = (100*qV/maxQ)+'%';
+    document.getElementById('barqP').style.width = (100*qP/maxQ)+'%';
+    document.getElementById('barW').style.width = (100*(qP-qV)/maxQ)+'%';
+    document.getElementById('amtqV').textContent=fmt(qV);
+    document.getElementById('amtqP').textContent=fmt(qP);
+    document.getElementById('amtW').textContent=fmt(qP-qV);
+  }
+
+  function frame(){
+    if(animating){
+      progress += (target-progress)*0.05;
+      if(Math.abs(target-progress)<0.002){ progress=target; animating=false; }
+      update();
+    }
+    const speed = 0.6 + curT()*0.8;
+    // pressure fraction: p ∝ T at const V. T goes 1..T2, map to 0.15..0.9 on gauge
+    const pFrac = Math.min(0.92, 0.15 + 0.5*(curT()-1));
+    // const V: piston fixed (null), gauge shows rising p
+    drawBox(sceneV, cV, molsV, null, speed, 'V fast', pFrac);
+    // const p: piston rises with T (volume ∝ T)
+    const top=24, bottom=cP.height-24;
+    const fullH = bottom-top;
+    const pistonY = bottom - fullH*Math.min(0.92, 0.42*curT());
+    drawBox(sceneP, cP, molsP, pistonY, speed, 'p fast', null);
+    requestAnimationFrame(frame);
+  }
+
+  document.getElementById('gas').addEventListener('change', e=>{ Cv=+e.target.value; if(!animating) update(); });
+  document.getElementById('t2').addEventListener('input', e=>{ T2=+e.target.value; document.getElementById('t2num').textContent=fmt(T2); });
+  document.getElementById('run').addEventListener('click', ()=>{ target=1; animating=true; });
+  document.getElementById('reset').addEventListener('click', ()=>{ progress=0; target=0; animating=false; update(); });
+
+  update();
+  frame();
+})();
+</script>
+</body>
+</html>

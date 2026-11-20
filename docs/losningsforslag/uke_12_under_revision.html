@@ -1,0 +1,1046 @@
+
+<!DOCTYPE html>
+
+
+<html lang="en" data-content_root="../../" >
+
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Uke 12 – Kinetikk &#8212; Bifrost</title>
+  
+  
+  
+  <script data-cfasync="false">
+    document.documentElement.dataset.mode = localStorage.getItem("mode") || "";
+    document.documentElement.dataset.theme = localStorage.getItem("theme") || "";
+  </script>
+  <!--
+    this give us a css class that will be invisible only if js is disabled
+  -->
+  <noscript>
+    <style>
+      .pst-js-only { display: none !important; }
+
+    </style>
+  </noscript>
+  
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../../_static/styles/theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+<link href="../../_static/styles/pydata-sphinx-theme.css?digest=55c26ed414f5f8a31ebb" rel="stylesheet" />
+
+    <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/sphinx-book-theme.css?v=3c74b3bc" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css?v=9c3e77be" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-thebe.css?v=4fa983c6" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=6a604523" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css?v=8b078a84" />
+  
+  <!-- So that users can add custom icons -->
+  <script defer src="../../_static/scripts/fontawesome.js?digest=55c26ed414f5f8a31ebb"></script>
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb" />
+<link rel="preload" as="script" href="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb" />
+
+    <script src="../../_static/documentation_options.js?v=9eb32ce0"></script>
+    <script src="../../_static/doctools.js?v=9a2dae69"></script>
+    <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=f281be69"></script>
+    <script src="../../_static/scripts/sphinx-book-theme.js?v=fab101a9"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js?v=b8b12719"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script data-sd-tabs-storage-prefix="sphinx-design-tab-id-" src="../../_static/design-tabs.js?v=fcb327ea"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script async="async" src="../../_static/sphinx-thebe.js?v=c100c467"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script>DOCUMENTATION_OPTIONS.pagename = 'docs/losningsforslag/uke_12_under_revision';</script>
+    <script>DOCUMENTATION_OPTIONS.search_as_you_type = false;</script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="Uke 11 – Elektrokjemi" href="uke_11_under_revision.html" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <meta name="docsearch:language" content="en"/>
+  <meta name="docsearch:version" content="" />
+  
+    
+    <script src="../../_static/searchtools.js"></script>
+    <script src="../../_static/language_data.js"></script>
+    <script src="../../searchindex.js"></script>
+  
+  </head>
+  <body data-default-mode="">
+  
+  
+  <div id="pst-skip-link" class="skip-link d-print-none"><a href="#main-content">Skip to main content</a></div>
+
+  
+  <div id="pst-scroll-pixel-helper"></div>
+  
+  <button type="button" class="btn rounded-pill" id="pst-back-to-top">
+    <i class="fa-solid fa-arrow-up"></i>Back to top</button>
+  
+  
+  
+  
+  <dialog id="pst-search-dialog">
+    
+<form class="bd-search d-flex align-items-center"
+      action="../../search.html"
+      method="get">
+  <i class="fa-solid fa-magnifying-glass"></i>
+  <input type="search"
+         class="form-control"
+         name="q"
+         placeholder="Search this book..."
+         aria-label="Search this book..."
+         autocomplete="off"
+         autocorrect="off"
+         autocapitalize="off"
+         spellcheck="false"/>
+  <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd>K</kbd></span>
+</form>
+  </dialog>
+
+  <div class="pst-async-banner-revealer d-none">
+  <aside id="bd-header-version-warning" class="d-none d-print-none" aria-label="Version warning"></aside>
+</div>
+
+  
+    <header id="pst-header" class="bd-header navbar navbar-expand-lg bd-navbar d-print-none">
+<div class="bd-header__inner bd-page-width">
+  <button class="pst-navbar-icon sidebar-toggle primary-toggle" aria-label="Site navigation">
+    <span class="fa-solid fa-bars"></span>
+  </button>
+  
+  
+  <div class="col-lg-9 navbar-header-items">
+    
+    
+    <div class="navbar-header-items__end">
+      
+        <div class="navbar-item navbar-persistent--container">
+          
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+        </div>
+      
+      
+    </div>
+    
+  </div>
+  
+  
+    <div class="navbar-persistent--mobile">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button>
+    </div>
+  
+
+  
+    <button class="pst-navbar-icon sidebar-toggle secondary-toggle" aria-label="On this page">
+      <span class="fa-solid fa-outdent"></span>
+    </button>
+  
+</div>
+
+    </header>
+  
+
+  <div class="bd-container">
+    <div class="bd-container__inner bd-page-width">
+      
+      
+      
+      <dialog id="pst-primary-sidebar-modal"></dialog>
+      <div id="pst-primary-sidebar" class="bd-sidebar-primary bd-sidebar">
+        
+
+  
+  <div class="sidebar-header-items sidebar-primary__section">
+    
+    
+    
+    
+  </div>
+  
+    <div class="sidebar-primary-items__start sidebar-primary__section">
+        <div class="sidebar-primary-item">
+
+  
+    
+  
+
+<a class="navbar-brand logo" href="../../intro.html">
+  
+  
+  
+  
+  
+    
+    
+      
+    
+    
+    <img src="../../_static/logo.png" class="logo__image only-light" alt="Bifrost - Home"/>
+    <img src="../../_static/logo.png" class="logo__image only-dark pst-js-only" alt="Bifrost - Home"/>
+  
+  
+</a></div>
+        <div class="sidebar-primary-item">
+
+<button class="btn search-button-field search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+ <i class="fa-solid fa-magnifying-glass"></i>
+ <span class="search-button__default-text">Search</span>
+ <span class="search-button__kbd-shortcut"><kbd class="kbd-shortcut__modifier">Ctrl</kbd>+<kbd class="kbd-shortcut__modifier">K</kbd></span>
+</button></div>
+        <div class="sidebar-primary-item"><nav class="bd-links bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item navbar-nav active">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="../../intro.html">
+                    Bifrost
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading"><span class="caption-text">Introduksjon</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../1_introduksjon.html">Fra molekyler til termodynamikk</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Mikroskopisk termodynamikk</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../2_entropi_boltzmann.html">Entropi, temperatur og Boltzmann-fordelingen</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../3_partisjonsfunksjonen.html">Partisjonsfunksjonen og molekylær energi</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../4_gasser.html">Gasser i bevegelse: Kinetisk teori, hastighetsfordelinger og den ideelle gassloven</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../5_intermolekyl%C3%A6re_krefter.html">Intermolekylære krefter og reelle gasser</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Appendiks</span></p>
+<ul class="nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../A1_grunnleggende_begreper.html">Grunnleggende begreper</a></li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../A2_mattehjelp.html">Nyttige matematiske verktøy</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/formler_og_enheter.html">1. Formler, notasjon og enheter</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kombinatorikk.html">2. Kombinatorikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/sannsynlighet.html">3. Sannsynlighet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/kalkulus.html">4. Funksjoner, derivasjon og integrasjon</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/flervariabel_kalkulus.html">5. Flervariabel kalkulus og optimering</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../matematikk/statistikk.html">6. Sannsynlighetsfordelinger og statistikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1"><a class="reference internal" href="../A3_praktisk_statistikk.html">Praktisk statistikk for eksperimentell kjemi og laboppgaver</a></li>
+</ul>
+<p aria-level="2" class="caption" role="heading"><span class="caption-text">Oppgaver og løsningsforslag</span></p>
+<ul class="current nav bd-sidenav">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../ukesoppgaver.html">Ukesoppgaver</a><details><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_01_under_revision.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_02_under_revision.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_03_under_revision.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_04_under_revision.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_05_under_revision.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_06_under_revisjon.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_08_under_revision_VK.html">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_09_under_revision_VK.html">Uke 9 – Løsninger og blandinger 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_10_under_revision.html">Uke 10 – Likevekt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_11_under_revision.html">Uke 11 – Elektrokjemi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../ukesoppgaver/uke_12_under_revision.html">Uke 12 – Kinetikk</a></li>
+</ul>
+</details></li>
+<li class="toctree-l1 current active has-children"><a class="reference internal" href="../l%C3%B8sningsforslag.html">Løsningsforslag</a><details open="open"><summary><span class="toctree-toggle" role="presentation"><i class="fa-solid fa-chevron-down"></i></span></summary><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="uke_01_under_revision_LF.html">Uke 1 – Statistisk mekanikk og mikro–makro-sammenhengen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_02_under_revision_LF.html">Uke 2 – Statistisk mekanikk, Boltzmann-fordelingen og Partisjonsfunskjonen</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_03_under_revision_LF.html">Uke 3 – Kinetisk gassteori</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_04_under_revision_VK.html">Uke 4 – Makroskopisk termodynamikk</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_05_under_revision_LF.html">Uke 5 – Varme, Arbeid, Entropi og Effektivitet</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_06_tentativ.html">Uke 6 – Fri energi</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_07_VK.html">Uke 7 – Faser og faseoverganger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_08_under_revision_VK.html">Uke 8 – Løsninger og blandinger</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_09_under_revision.html">Uke 9 – Løsninger og blandinger 2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_10_under_revision.html">Uke 10 – Likevekt</a></li>
+<li class="toctree-l2"><a class="reference internal" href="uke_11_under_revision.html">Uke 11 – Elektrokjemi</a></li>
+<li class="toctree-l2 current active"><a class="current reference internal" href="#">Uke 12 – Kinetikk</a></li>
+</ul>
+</details></li>
+</ul>
+
+    </div>
+</nav></div>
+    </div>
+  
+  
+  <div class="sidebar-primary-items__end sidebar-primary__section">
+      <div class="sidebar-primary-item">
+<div id="ethical-ad-placement"
+      class="flat"
+      data-ea-publisher="readthedocs"
+      data-ea-type="readthedocs-sidebar"
+      data-ea-manual="true">
+</div></div>
+  </div>
+
+
+      </div>
+      
+      <main id="main-content" class="bd-main" role="main">
+        
+        
+
+<div class="sbt-scroll-pixel-helper"></div>
+
+          <div class="bd-content">
+            <div class="bd-article-container">
+              
+              <div class="bd-header-article d-print-none">
+<div class="header-article-items header-article__inner">
+  
+    <div class="header-article-items__start">
+      
+        <div class="header-article-item"><button class="sidebar-toggle primary-toggle btn btn-sm" title="Toggle primary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <span class="fa-solid fa-bars"></span>
+</button></div>
+      
+    </div>
+  
+  
+    <div class="header-article-items__end">
+      
+        <div class="header-article-item">
+
+<div class="article-header-buttons">
+
+
+
+
+
+<div class="dropdown dropdown-download-buttons">
+  <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" aria-label="Download this page">
+    <i class="fas fa-download"></i>
+  </button>
+  <ul class="dropdown-menu">
+      
+      
+      
+      <li><a href="../../_sources/docs/losningsforslag/uke_12_under_revision.ipynb" target="_blank"
+   class="btn btn-sm btn-download-source-button dropdown-item"
+   title="Download source file"
+   data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="btn__text-container">.ipynb</span>
+</a>
+</li>
+      
+      
+      
+      
+      <li>
+<button onclick="window.print()"
+  class="btn btn-sm btn-download-pdf-button dropdown-item"
+  title="Print to PDF"
+  data-bs-placement="left" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="btn__text-container">.pdf</span>
+</button>
+</li>
+      
+  </ul>
+</div>
+
+
+
+
+<button onclick="toggleFullScreen()"
+  class="btn btn-sm btn-fullscreen-button pst-navbar-icon"
+  title="Fullscreen mode"
+  data-bs-placement="bottom" data-bs-toggle="tooltip"
+>
+  
+
+<span class="btn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+
+
+<button class="btn btn-sm nav-link pst-navbar-icon theme-switch-button pst-js-only" aria-label="Color mode" data-bs-title="Color mode"  data-bs-placement="bottom" data-bs-toggle="tooltip">
+  <i class="theme-switch fa-solid fa-sun                fa-lg" data-mode="light" title="Light"></i>
+  <i class="theme-switch fa-solid fa-moon               fa-lg" data-mode="dark"  title="Dark"></i>
+  <i class="theme-switch fa-solid fa-circle-half-stroke fa-lg" data-mode="auto"  title="System Settings"></i>
+</button>
+
+
+<button class="btn btn-sm pst-navbar-icon search-button search-button__button pst-js-only" title="Search" aria-label="Search" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <i class="fa-solid fa-magnifying-glass fa-lg"></i>
+</button>
+<button class="sidebar-toggle secondary-toggle btn btn-sm pst-navbar-icon" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
+</div></div>
+      
+    </div>
+  
+</div>
+</div>
+              
+              
+
+<div id="jb-print-docs-body" class="onlyprint">
+    <h1>Uke 12 – Kinetikk</h1>
+    <!-- Table of contents -->
+    <div id="print-main-content">
+        <div id="jb-print-toc">
+            
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
+        </div>
+    </div>
+</div>
+
+              
+                
+<div id="searchbox"></div>
+                <article class="bd-article">
+                  
+  <section class="tex2jax_ignore mathjax_ignore" id="uke-12-kinetikk">
+<h1>Uke 12 – Kinetikk<a class="headerlink" href="#uke-12-kinetikk" title="Link to this heading">#</a></h1>
+<section id="diskusjonsoppgaver">
+<h2>Diskusjonsoppgaver<a class="headerlink" href="#diskusjonsoppgaver" title="Link to this heading">#</a></h2>
+<section id="oppgave-1">
+<h3>Oppgave 1<a class="headerlink" href="#oppgave-1" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Hva skal til for at en reaksjon skal være termodynamisk gunstig?</p>
+<p><strong>Svar</strong></p>
+<p>En reaksjon er termodynamisk gunstig når endringen i fri energi er negativ, <span class="math notranslate nohighlight">\(\Delta G &lt; 0\)</span> (for konstant trykk og temperatur). Dette er en nødvendig betingelse for at reaksjonen skal gå i den angitte retningen ved konstant <span class="math notranslate nohighlight">\(T\)</span> og <span class="math notranslate nohighlight">\(p\)</span>.</p>
+<p><strong>b)</strong> Vil alle reaksjoner som er termodynamisk gunstige skje? Hvorfor? Evt hvorfor ikke?</p>
+<p><strong>Svar</strong></p>
+<p>Nei. <span class="math notranslate nohighlight">\(\Delta G &lt; 0\)</span> sier bare at reaksjonen <em>kan</em> skje spontant sett fra et energiperspektiv, det sier ingenting om hvor raskt den skjer. Alle termodynamisk gunstige reaksjoner vil skje om man venter lenge nok, men i praksis kan gå så sakte at vi kan se bort fra de. Disse reaksjonene kalles kinetisk hindret, og kommer fra at aktiveringsenergien for reaksjonen er for høy, slik at hastighetskonstanten blir veldig liten.</p>
+<p><strong>c)</strong> Hva er hastigheten til en reaksjon? Hvordan finner man denne?</p>
+<p><strong>Svar</strong></p>
+<p>Hastigheten til en reaksjon er hvor fort den skjer. Det kan for eksempel måles ved gass-dannelse, pH, absorbans (eller andre karakteristiske og målbare egenskaper som forteller oss enten hvorf fort reaktanter brukes opp eller produkter dannes). Man finner så hastigheten ved å se på denne endringen som en funksjon av tid (endring av en størrelse over tid = den tidsderiverte).</p>
+<p><strong>d)</strong> Hvordan uttrykker man hastigheten til en 1. ordens reaksjon, <span class="math notranslate nohighlight">\(A\rightarrow B\)</span>? Hva er den avhengig av?</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[v = -\frac{d[A]}{dt} = k[A]\]</div>
+<p>Hastigheten er her avhengig av konsentrasjonen av <span class="math notranslate nohighlight">\(A\)</span> (bortsett fra 0.ordens reaksjon) og hastighetskonstanten <span class="math notranslate nohighlight">\(k\)</span>, som igjen avhenger av temperatur og aktiveringsenergi/katalysator. Ordenen til reaksjonen er avhengig av hvordan hastigheten endres i forhold til konsentrasjonen.</p>
+<p><strong>e)</strong> Hvilke enheter har hastighetskonstanten <span class="math notranslate nohighlight">\(k\)</span> for 0., 1. og 2. ordens reaksjoner?</p>
+<p><strong>Svar</strong></p>
+<p><strong>f)</strong> Hastighetskonstanten <span class="math notranslate nohighlight">\(k\)</span> er gitt ved Arrhenius likningen <span class="math notranslate nohighlight">\(k=A e^{-\frac{E_a}{RT}}\)</span> . Hva forteller denne likningen oss? Hva står <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(E_a\)</span> for, og hvilke enheter har de? Hvilken påvirkning vil en endring i enten <span class="math notranslate nohighlight">\(A\)</span>, <span class="math notranslate nohighlight">\(E_a\)</span> eller <span class="math notranslate nohighlight">\(T\)</span> ha på hastighetskonstanten?</p>
+<p><strong>Svar</strong></p>
+<p>Arrhenius-likningen gir avhengigheten av hastighetskonstanten <span class="math notranslate nohighlight">\(k\)</span> som eksponentielt av forholdet mellom aktiveringsenergien <span class="math notranslate nohighlight">\(E_a\)</span> og den termiske energien <span class="math notranslate nohighlight">\(RT\)</span>. <span class="math notranslate nohighlight">\(A\)</span> er den preeksponentielle faktoren, som, forenklet forklart, relateres til hvor ofte molekyler kolliderer i riktig orientering. <span class="math notranslate nohighlight">\(E_a\)</span> er aktiveringsenergien, energibarrieren som må overvinnes for at reaksjonen skal skje. Arrhenius kom frem til at ratene fremover og bakover for en reaksjon burde ha samme form som van’t Hoff uttrykte likevektskonstanten ved, <span class="math notranslate nohighlight">\(\frac{d\ln{k_f}}{dT} = \frac{E_a}{RT^2}\)</span>. Ved å integrere og ta eksponenten får man Arrhenius likningen med prefaktoren A.</p>
+<p>Prefaktoren A vil ha en enhet som avhenger av hvilken orden hastighetsuttrykket har, mens <span class="math notranslate nohighlight">\(E_a\)</span> er en energi, og må dermed ha enhet i J (eller noe annet som vil deles vekk når delt på J/mol, slik at eksponenten blir enhetsløs.</p>
+<ul class="simple">
+<li><p>Økt <span class="math notranslate nohighlight">\(A\)</span> gir proporsjonalt økt <span class="math notranslate nohighlight">\(k\)</span> (lineær økning).</p></li>
+<li><p>Økt <span class="math notranslate nohighlight">\(E_a\)</span> gir eksponentielt redusert <span class="math notranslate nohighlight">\(k\)</span> (færre molekyler har nok energi).</p></li>
+<li><p>Økt <span class="math notranslate nohighlight">\(T\)</span> gir eksponentielt økt <span class="math notranslate nohighlight">\(k\)</span> (flere molekyler har nok energi til å overvinne barrieren).</p></li>
+</ul>
+<p>Det er viktig å påpeke her at Arrhenius likningen kun forteller sammenhengen mellom aktiveringsenergi og hastighetskonstanten, og ikke den totale hastigheten til en reaksjon. Hastigheten til reaksjonen er også avhengig av konsentrasjonen av reaktantene.</p>
+<p><strong>g)</strong> Hva er det hastighetsbestemmende trinnet?</p>
+<p><strong>Svar</strong></p>
+<p>Det hastighetsbestemmende trinnet er det tregeste trinnet i en reaksjon med flere trinn. Det hastighetsbestemmende trinnet vil være det med høyest energibarriere eller lavest hastighetskonstant. Siden de andre trinnene er langt raskere, er det dette trinnet som setter farten for hele den observerte reaksjonen, og vil i hovedsak være det vi kan observere/måle.</p>
+<p><strong>h)</strong> Vi ser nå på en reaksjon <span class="math notranslate nohighlight">\(A+B\rightarrow C \rightarrow D\)</span>, der <span class="math notranslate nohighlight">\(C\)</span> er et intermediat.
+Reaksjonsprofilen for reaksjonen er vist i figuren under.</p>
+<ol class="arabic simple">
+<li><p>Fyll inn navn på punktene og tegn inn observert <span class="math notranslate nohighlight">\(E_a\)</span>.</p></li>
+<li><p>Hva er forskjellen på en overgangstilstand og et intermediat?</p></li>
+<li><p>Er det andre faktorer enn <span class="math notranslate nohighlight">\(E_a\)</span> som kan være med på å gjøre et trinn hastighetsbestemmende?</p></li>
+</ol>
+<p><img alt="Reaksjonsprofil til oppgave" src="../../_images/reaksjonsprofil_a_punkter.png" /></p>
+<p><strong>Svar</strong></p>
+<p>For denne reaksjonsprofilen er steg 1 det hastighetsbestemmende. Det er fordi dette steget er det med høyest energi for å overkomme, og dette blir den observerte <span class="math notranslate nohighlight">\(E_a\)</span>, som altså er også fra start-punktet, siden denne energien også kreves for å overkomme steg 1. Fordi <span class="math notranslate nohighlight">\(E_a\)</span> i det første steget er veldig høy, så er konsentrasjonen av intermediater veldig lav. Dette er to faktorer som senker hastigheten til en reaksjon. Reaksjonen er i seg selv spontan, men vil kreve høy tilførsel av energi for å overkomme energibarrieren</p>
+<p><strong>i)</strong> Bestem hva det hastighetsbestemmende trinnet er for eksemplene under, samt skriv inn hva den observerte <span class="math notranslate nohighlight">\(E_a\)</span> er, <span class="math notranslate nohighlight">\(\Delta G\)</span>, og om man vil få eller måtte tilføre energi for at reaksjonen skal gå. Vil være noen likevekter mellom reaktanter og intermediat eller intermediat og produkter? Si også hvorfor vi kun kan si hvor den <em>observerte</em> <span class="math notranslate nohighlight">\(E_a\)</span> er.</p>
+<p><img alt="Reaksjonsprofiler til oppgave" src="../../_images/reaksjonsprofiler.png" /></p>
+<p><strong>Svar</strong></p>
+<p><em>Profil a)</em></p>
+<p>Her er det ingen likevekter. Det hastighetsbestemmende trinnet er steg 1. Intermediatene vil ha nok energi til å fort gjennomføre steg 2. Siden det er så stor energibarriere fra produkter <span class="math notranslate nohighlight">\(\rightarrow\)</span> intermediat så vil ikke dette bakover steget lett skje. Reaksjonen er også spontan siden <span class="math notranslate nohighlight">\(\Delta G &lt; 0\)</span>, og energi vil blir frigitt fra reaksjonen.</p>
+<p><em>Profil b)</em></p>
+<p>Reaksjonen er spontan siden <span class="math notranslate nohighlight">\(\Delta G &lt; 0\)</span>, og energi vil blir frigjort. Siden energibarrieren for steg 1 og 2 er omtrent like stor, er det her ikke mulig å si hvilket steg som er hastighetsbestemmende.</p>
+<p><em>Profil c)</em></p>
+<p>Denne reaksjonen er ikke spontan da <span class="math notranslate nohighlight">\(\Delta G &gt; 0\)</span> og energi må tilføres for at den skal kunne gå. Ellers er den lik som a).</p>
+</section>
+<section id="oppgave-2">
+<h3>Oppgave 2<a class="headerlink" href="#oppgave-2" title="Link to this heading">#</a></h3>
+<p><strong>a)</strong> Dannelseshastigheten for stoff <span class="math notranslate nohighlight">\(C\)</span> i reaksjonen <span class="math notranslate nohighlight">\(2A+B\rightarrow 4C + D\)</span> er <span class="math notranslate nohighlight">\(3,2\)</span> mol <span class="math notranslate nohighlight">\(\text{dm}^{-3}\text{s}^{-1}\)</span>. Skriv ned forbrukshastighetene for <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(B\)</span> og dannelseshastigheten for <span class="math notranslate nohighlight">\(D\)</span>.</p>
+<p><strong>Svar</strong></p>
+<p>Reaksjonshastigheten <span class="math notranslate nohighlight">\(v\)</span> kan settes opp på følgende måte for reaksjonen:</p>
+<div class="math notranslate nohighlight">
+\[v = -\frac{1}{2}\frac{d[A]}{dt} = -\frac{d[B]}{dt} = \frac{1}{4}\frac{d[C]}{dt} = \frac{d[D]}{dt}\]</div>
+<p>Gitt <span class="math notranslate nohighlight">\(\dfrac{d[C]}{dt} = 3.2 \ \text{mol dm}^{-3}\text{s}^{-1}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[v = \frac{1}{4}\times 3.2 = 0.8 \ \text{mol dm}^{-3}\text{s}^{-1}\]</div>
+<p>Forbrukshastighet <span class="math notranslate nohighlight">\(A\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[-\frac{d[A]}{dt} = 2v = 2\times 0.8 = 1.6 \ \text{mol dm}^{-3}\text{s}^{-1}\]</div>
+<p>Forbrukshastighet <span class="math notranslate nohighlight">\(B\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[-\frac{d[B]}{dt} = v = 0.8 \ \text{mol dm}^{-3}\text{s}^{-1}\]</div>
+<p>Dannelseshastighet <span class="math notranslate nohighlight">\(D\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[D]}{dt} = v = 0.8 \ \text{mol dm}^{-3}\text{s}^{-1}\]</div>
+<p><strong>b)</strong> Steady-state tilnærmingen sier at <span class="math notranslate nohighlight">\(\frac{d[I]}{dt}\approx 0\)</span>. Forklar hva denne tilnærmingen betyr.</p>
+<p><strong>Svar</strong></p>
+<p>Tilnærmingen <span class="math notranslate nohighlight">\(\dfrac{d[I]}{dt} \approx 0\)</span> betyr at konsentrasjonen av et reaktivt intermediat <span class="math notranslate nohighlight">\(I\)</span> forblir tilnærmet konstant gjennom mesteparten av reaksjonsforløpet. I tilfeller hvor tilnærmingen gjelder er intermediatet er svært reaktivt og forbrukes omtrent like fort som det dannes, slik at det aldri bygger seg opp i noen betydelig mengde. Dannelseshastigheten og forbrukshastigheten til <span class="math notranslate nohighlight">\(I\)</span> er tilnærmet like store til enhver tid, etter en kort initial oppbyggingsfase. Dette lar oss sette dannelses- og forbruksleddene for <span class="math notranslate nohighlight">\(I\)</span> lik hverandre og løse for <span class="math notranslate nohighlight">\([I]\)</span>, slik at intermediatet kan elimineres fra det totale hastighetsuttrykket.</p>
+</section>
+<section id="oppgave-3">
+<h3>Oppgave 3<a class="headerlink" href="#oppgave-3" title="Link to this heading">#</a></h3>
+<p>Metan er en av de viktigste klimagassene som bidrar kraftig til klimaoppvarming. Effekten av en tonn metan gass er mange ganger så stor som effekten av en tonn <span class="math notranslate nohighlight">\(CO_2\)</span> og hovedutslippskildene er landbruk, søppelfyllinger og utvinning av naturgass [https://miljostatus.miljodirektoratet.no/tema/klima/klimagasser/]. Nedbryting av metan i atmosfæren skjer betydelig mye fortere enn nedbryting av <span class="math notranslate nohighlight">\(CO_2\)</span> og involverer mange forskjellige specier og reaksjonstrinn.</p>
+<p>Metan som slippes ut på jorden samles hovedsakelig opp i troposfæren. Her er konsentrasjonen av metan homogen og på grunn av temperatur- og trykkforholdene er det lite utveksling til de øvre lagene. Atmosfæren er hovedsakelig sammensatt av <span class="math notranslate nohighlight">\(N_2\)</span>, <span class="math notranslate nohighlight">\(O_2\)</span>, <span class="math notranslate nohighlight">\(Ar\)</span> og <span class="math notranslate nohighlight">\(CO_2\)</span>, og siden disse er mer eller mindre inerte trengs det sollys for å indusere kjemisk aktivitet. For at fotodissosiasjon skal være mulig må fotonenergien være større enn bindingsenergien og molekylet ha en tilsvarende elektrisk overgang. I troposfæren er det derfor bare <span class="math notranslate nohighlight">\(O_3\)</span>, <span class="math notranslate nohighlight">\(NO_2\)</span>, <span class="math notranslate nohighlight">\(H_2O_2\)</span> som kan foto-dissosiere. Imellom disse er det en steady-state situasjon.</p>
+<p>Fotooksidasjon av metan i troposfæren induseres av OH-radikaler som dannes når eksiterte oksygen-atomer fra nedbryting av ozon reagerer med vann i atmosfæren.
+Foto-oksidasjon av metan i atmosfæren skjer etter følgende mekanisme:</p>
+<p><span class="math notranslate nohighlight">\(CH_4 + ȮH	→	ĊH_3 + H_2O\)</span>	(1)</p>
+<p><span class="math notranslate nohighlight">\(ĊH_3 + O_2	→	CH_3OȮ\)</span>	(2)</p>
+<p><span class="math notranslate nohighlight">\(CH_3OȮ + NO	→	CH_3Ȯ + NO_2\)</span>	(3)</p>
+<p><span class="math notranslate nohighlight">\(CH_3Ȯ + O_2	→	CH_2O + HOȮ\)</span>	(4)</p>
+<p><span class="math notranslate nohighlight">\(HOȮ + NO	→	ȮH + NO_2\)</span>	(5)</p>
+<p>som oppsummert er:</p>
+<p><span class="math notranslate nohighlight">\(CH_4 + 2 O_2 + 2 NO	→	CH_2O + H_2O + 2 NO_2\)</span>	(6)</p>
+<p><strong>a)</strong></p>
+<p>Siden radikaler som <span class="math notranslate nohighlight">\(CH_3Ȯ\)</span>, <span class="math notranslate nohighlight">\(CH_3OȮ\)</span> og <span class="math notranslate nohighlight">\(ĊH_3\)</span> reagerer veldig raskt videre kan steady-state tilnærmingen brukes. Under er hastighetsuttrykkene for reaksjonene over. Bruk disse til å vise at <span class="math notranslate nohighlight">\(\frac{CH_2O}{dt}=- \frac{d[CH_4 ]}{dt}\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_4 ]}{dt}= -k_1\cdot [CH_4 ]\cdot [ȮH]\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[ĊH_3]}{dt}= +k_1\cdot [CH_4 ]\cdot [ȮH]-k_2\cdot [ĊH_3]\cdot [O_2]\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_3OȮ]}{dt}= +k_2\cdot [ĊH_3]\cdot [O_2]-k_3\cdot [CH_3OȮ ]\cdot [NO]\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_3Ȯ]}{dt}= +k_3\cdot [CH_3OȮ ]\cdot [NO]-k_4\cdot [CH_3Ȯ ]\cdot [O_2]\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_2O]}{dt}= +k_4\cdot [CH_3Ȯ ]\cdot [O_2]= +k_1 \cdot [CH_4 ]\cdot [ȮH] =- \frac{d[CH_4 ]}{dt}\]</div>
+<p><span class="math notranslate nohighlight">\(k_1 = 1.85\cdot 10^{-12} \cdot e^{-1690/T} cm^3 mol^{-1}s^{-1}\)</span> mellom <span class="math notranslate nohighlight">\(T=200-300\)</span> K.</p>
+<p><strong>Svar</strong></p>
+<p>Radikal-intermediater brukes ofte like raskt som de dannes, og vi kan derfor anta steady-state for reaksjonene som innebærer radikaler. Begynner med reaksjon 4:</p>
+<div class="math notranslate nohighlight">
+\[\frac{CH_3Ȯ}{dt} = 0 = +k_3\cdot [CH_3OȮ ]\cdot [NO]-k_4\cdot [CH_3Ȯ ]\cdot [O_2] \]</div>
+<p>Vi skriver om likningen over for å finne et uttrykk for <span class="math notranslate nohighlight">\([CH_3Ȯ ]\)</span></p>
+<div class="math notranslate nohighlight">
+\[[CH_3Ȯ ] = \frac{k_3\cdot [CH_3OȮ ]\cdot [NO]}{k_4\cdot [CH_3Ȯ ]\cdot [O_2]}\]</div>
+<p>Setter dette inn i likning 5:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_2O]}{dt}= +k_4\cdot [CH_3Ȯ ]\cdot [O_2] =k_3\cdot [CH_3OȮ ]\cdot [NO]\]</div>
+<p>Bruker steady-state approksimasjonen på likning 3:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_3OȮ]}{dt}= +k_2\cdot [ĊH_3]\cdot [O_2]-k_3\cdot [CH_3OȮ ]\cdot [NO] = 0\]</div>
+<div class="math notranslate nohighlight">
+\[[CH_3OȮ] = \frac{k_2\cdot [ĊH_3]\cdot [O_2]}{k_3\cdot [NO]}\]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_2O]}{dt} = k_3\cdot [CH_3OȮ ]\cdot [NO] = \frac{k_2\cdot [ĊH_3]\cdot [O_2] \cdot k_3\cdot [NO]}{k_3\cdot [NO]} = k_2\cdot [ĊH_3]\cdot [O_2]\]</div>
+<p>Til slutt bruker vi steady-state approksimasjonen på likning 2 (som inneholder metan):</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[ĊH_3]}{dt}= +k_1\cdot [CH_4 ]\cdot [ȮH]-k_2\cdot [ĊH_3]\cdot [O_2] = 0\]</div>
+<div class="math notranslate nohighlight">
+\[+k_1\cdot [CH_4 ]\cdot [ȮH] =k_2\cdot [ĊH_3]\cdot [O_2] \]</div>
+<div class="math notranslate nohighlight">
+\[[ĊH_3] = \frac{k_1\cdot [CH_4 ]\cdot [ȮH]}{k_2\cdot [O_2]}\]</div>
+<p>Setter inn for <span class="math notranslate nohighlight">\([ĊH_3]\)</span> i <span class="math notranslate nohighlight">\(\frac{d[CH_2O]}{dt} = k_2\cdot [ĊH_3]\cdot [O_2]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_2O]}{dt} = k_2\cdot [ĊH_3]\cdot [O_2] = k_2\cdot  \frac{k_1\cdot [CH_4 ]\cdot [ȮH]}{k_2\cdot [O_2]}\cdot [O_2] = k_1\cdot [CH_4 ]\cdot [ȮH]\]</div>
+<p>Altså:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[CH_2O]}{dt} =  k_1\cdot [CH_4 ]\cdot [ȮH] = - \frac{d[CH_4 ]}{dt}\]</div>
+<p>Nedenfor er det vist kode for å simulere nedbrytingen av metan. Vi starter med 1.8 ppm metan i en boks der T = 277 K. Vi antar at konsentrasjonen av OH-radikaler er konstant [OH] = 106 molekyler per cm3 (steady-state situasjon) . Koden beregner konsentrasjonen av CH4, CO og CO2 i løpet av 20 år.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mi">277</span>  <span class="c1"># K</span>
+
+<span class="n">c_OH</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># number of molecules per cubic centimeter</span>
+<span class="n">c_CH4_initial</span> <span class="o">=</span>   <span class="mf">4.76885e+13</span> <span class="c1"># molecules per cm-3</span>
+
+<span class="n">t_initial</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t_final</span> <span class="o">=</span> <span class="mi">630720000</span>  <span class="c1"># seconds</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">t_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t_initial</span><span class="p">,</span> <span class="n">t_final</span><span class="p">,</span> <span class="mi">630720</span><span class="p">)</span>
+
+<span class="c1"># rate constants (cm3 molecules-1 s-1)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">k15</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.85e-12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1690</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">k21</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">5.4e-12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">135</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+
+
+<span class="n">k10</span> <span class="o">=</span> <span class="mf">2.1e-13</span>
+
+<span class="n">con_CH4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+<span class="n">con_CH4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_CH4_initial</span>
+
+<span class="n">con_CO</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+<span class="n">con_CO2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">)):</span>
+    <span class="n">d_CH4</span> <span class="o">=</span> <span class="o">-</span><span class="n">k15</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span> 
+    <span class="n">d_CO</span> <span class="o">=</span> <span class="n">k15</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span> <span class="o">-</span> <span class="n">k10</span> <span class="o">*</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span>
+    <span class="n">d_CO2</span> <span class="o">=</span> <span class="n">k10</span> <span class="o">*</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span>
+
+    <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CH4</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CO</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">con_CO2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CO2</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CO2</span> <span class="o">*</span> <span class="n">dt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CH4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CH4"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CO</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CO"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CO2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CO2"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/1cfc252c5d9b9f738d70b554eb2534116cba9ee8a0ec897148f8df9880bd980a.png" src="../../_images/1cfc252c5d9b9f738d70b554eb2534116cba9ee8a0ec897148f8df9880bd980a.png" />
+</div>
+</div>
+<p><strong>b)</strong></p>
+<p>I modellen over starter vi med en gitt mengde metan som brytes ned over tid. Dessverre er den virkelige situasjonen slik at det slippes ut så mye metan hvert år, at konsentrasjonen i atmosfæren øker til tross for foto-okisdasjonen. Det er stor usikkerhet i måling av metan som slippes ut men et estimat er at det slippes ut 570 milloner tonn CH4 hvert år. Anta at troposfæren har en gjennomsnittlig tykkelse på 12 km og at metan emisjonene sprer seg jevnt over troposfæren med en gang. Tilpass modellen fra forrige oppgave slik at den også tar hensyn til metan produksjonen. Du kan anta at det slippes ut like mye metan hvert år.</p>
+<p>Hva skjer med konsentrasjonene nå? Øker konsentrasjonen til metan?</p>
+<p><strong>Svar</strong></p>
+<p>For å kunne ta hensyn til metan utslippene må vi først finne ut hvor mye metan som slippes ut per kubikkcentimeter troposfære.
+Jorda har en gjennomsnittlig radius på 6371 km.</p>
+<p>Vi finner volumet til troposfæren ved å bruke at volumet til en kule er gitt som <span class="math notranslate nohighlight">\(V=4/3⋅π⋅r^3\)</span></p>
+<div class="math notranslate nohighlight">
+\[V_{troposfære}=4/3⋅π⋅((6383km)^3-(6371km)^3 )= 6.13230959 ⋅ 10^9 km^3 \]</div>
+<p>Vi ganger med 1015 for å konvertere til cm3:</p>
+<div class="math notranslate nohighlight">
+\[V_{troposfære}=6.1323⋅10^9 km^3⋅10^15  (cm^3)/(km^3 )=6.1323⋅10^24 cm3 \]</div>
+<p>Den molare massen til metan er 16.04 g/mol.  Vi finner nå antall molekyler som slippes ut hvert år:</p>
+<div class="math notranslate nohighlight">
+\[n_(CH_4 )=\frac{570⋅10^6 tonn⋅10^6  gram/tonn}{ 16.04 gram/mol}=3.553516⋅10^{13} mol\]</div>
+<div class="math notranslate nohighlight">
+\[N_(CH_4 )=3.553516⋅10^{13} mol⋅N_A=2.1399273\cdot 10^{37}\]</div>
+<p>Årlig utslipp per kubikkcentimeter er dermed</p>
+<div class="math notranslate nohighlight">
+\[c_{CH_4 }=N_{CH_4 }/V_{troposfære}=3.4895⋅10^{12} \text{molekyler per cm}^3\]</div>
+<p>Utslipp per kubikkcentimeter per sekund er dermed gitt ved</p>
+<div class="math notranslate nohighlight">
+\[c_{CH_4}=3.4895⋅10^{12}/(365⋅24⋅60⋅60)  s/år=110654.4844  \text{ molekyler } cm^{-3} s^{-1}\]</div>
+<p>Rateloven for CH4 er da gitt ved</p>
+<div class="math notranslate nohighlight">
+\[d[CH_4 ]/dt=-k_{15}⋅[CH_4 ]⋅[OH]+110655\]</div>
+<p>obs! når man legger til utslippene i koden må man ta hensyn til at tidssteget i koden er 1000s</p>
+<p>Metan rekker ikke å blir brutt ned raskere enn utslippene legger til mer metan, så konsentrasjonen av metan stiger.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+
+<span class="n">T</span> <span class="o">=</span> <span class="mi">277</span>  <span class="c1"># K</span>
+
+<span class="n">c_OH</span> <span class="o">=</span> <span class="mf">1e6</span>  <span class="c1"># number of molecules per cubic centimeter</span>
+<span class="n">c_CH4_initial</span> <span class="o">=</span>   <span class="mf">4.76885e+13</span> <span class="c1"># molecules per cm-3</span>
+
+<span class="n">t_initial</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">t_final</span> <span class="o">=</span> <span class="mi">630720000</span>  <span class="c1"># seconds</span>
+<span class="n">dt</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="n">t_array</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="n">t_initial</span><span class="p">,</span> <span class="n">t_final</span><span class="p">,</span> <span class="mi">630720</span><span class="p">)</span>
+
+<span class="c1"># rate constants (cm3 molecules-1 s-1)</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">k15</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">1.85e-12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1690</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+
+
+<span class="k">def</span><span class="w"> </span><span class="nf">k21</span><span class="p">(</span><span class="n">T</span><span class="p">):</span>
+    <span class="k">return</span> <span class="mf">5.4e-12</span> <span class="o">*</span> <span class="n">np</span><span class="o">.</span><span class="n">exp</span><span class="p">(</span><span class="mi">135</span> <span class="o">/</span> <span class="n">T</span><span class="p">)</span>
+
+
+<span class="n">k10</span> <span class="o">=</span> <span class="mf">2.1e-13</span>
+
+<span class="n">con_CH4</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+<span class="n">con_CH4</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">c_CH4_initial</span>
+
+<span class="n">con_CO</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+<span class="n">con_CO2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">t_array</span><span class="p">)):</span>
+    <span class="n">d_CH4</span> <span class="o">=</span> <span class="o">-</span><span class="n">k15</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span> <span class="o">+</span><span class="mf">110655e3</span> 
+    <span class="n">d_CO</span> <span class="o">=</span> <span class="n">k15</span><span class="p">(</span><span class="n">T</span><span class="p">)</span> <span class="o">*</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span> <span class="o">-</span> <span class="n">k10</span> <span class="o">*</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span>
+    <span class="n">d_CO2</span> <span class="o">=</span> <span class="n">k10</span> <span class="o">*</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">*</span> <span class="n">c_OH</span>
+
+    <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CH4</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CH4</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CO</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CO</span> <span class="o">*</span> <span class="n">dt</span>
+    <span class="n">con_CO2</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">con_CO2</span><span class="p">[</span><span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">d_CO2</span> <span class="o">*</span> <span class="n">dt</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CH4</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CH4"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CO</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CO"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">t_array</span><span class="p">,</span> <span class="n">con_CO2</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="s2">"CO2"</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">legend</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/ac031028e6490ef982bb80ce83a4d732a4634c97cf98860286a2319b156bfc2f.png" src="../../_images/ac031028e6490ef982bb80ce83a4d732a4634c97cf98860286a2319b156bfc2f.png" />
+</div>
+</div>
+</section>
+</section>
+<section id="regneoppgaver">
+<h2>Regneoppgaver<a class="headerlink" href="#regneoppgaver" title="Link to this heading">#</a></h2>
+<section id="id1">
+<h3>Oppgave 1<a class="headerlink" href="#id1" title="Link to this heading">#</a></h3>
+<p>For en reaksjon er hastighetskonstantene ved <span class="math notranslate nohighlight">\(19^{\circ}C\)</span> og <span class="math notranslate nohighlight">\(37^{\circ}C\)</span> hhv <span class="math notranslate nohighlight">\(2.78\times 10^{-4}\text{dm}^3\text{mol}^{-1}\text{s}^{-1}\)</span> og <span class="math notranslate nohighlight">\(3.38\times 10^{-3}\text{dm}^3\text{mol}^{-1}\text{s}^{-1}\)</span>. Beregn <span class="math notranslate nohighlight">\(A\)</span> og <span class="math notranslate nohighlight">\(E_a\)</span> i Arrhenius likning.</p>
+<p><strong>Svar</strong></p>
+<p>Gjør om temperaturene til Kelvin:</p>
+<div class="math notranslate nohighlight">
+\[T_1 = 19+273.15 = 292.15 \ \text{K}, \qquad T_2 = 37+273.15 = 310.15 \ \text{K}\]</div>
+<p>Bruk to-punkts Arrhenius-formen for å finne <span class="math notranslate nohighlight">\(E_a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\ln\left(\frac{k_2}{k_1}\right) = -\frac{E_a}{R}\left(\frac{1}{T_2}-\frac{1}{T_1}\right)\]</div>
+<p>Løs for <span class="math notranslate nohighlight">\(E_a\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[E_a = -R\frac{\ln(k_2/k_1)}{\left(\frac{1}{T_2}-\frac{1}{T_1}\right)} = -8.314\times \frac{\ln(3.38\times10^{-3}/2.78\times10^{-4})}{\left(\frac{1}{310.15}-\frac{1}{292.15}\right)}\]</div>
+<div class="math notranslate nohighlight">
+\[E_a \approx 104.5 \ \text{kJ mol}^{-1}\]</div>
+<p>Bruk deretter <span class="math notranslate nohighlight">\(E_a\)</span> til å finne <span class="math notranslate nohighlight">\(A\)</span> fra Arrhenius-likningen med ett av datapunktene:</p>
+<div class="math notranslate nohighlight">
+\[A = \frac{k_1}{\exp(-E_a/RT_1)} = \frac{2.78\times10^{-4}}{\exp\left(-104546/(8.314\times292.15)\right)}\]</div>
+<div class="math notranslate nohighlight">
+\[A \approx 1.37\times10^{15} \ \text{dm}^3\text{mol}^{-1}\text{s}^{-1}\]</div>
+<p>Kontroll: samme <span class="math notranslate nohighlight">\(A\)</span>-verdi fås ved å bruke <span class="math notranslate nohighlight">\(k_2\)</span> og <span class="math notranslate nohighlight">\(T_2\)</span> i stedet.</p>
+</section>
+<section id="id2">
+<h3>Oppgave 2<a class="headerlink" href="#id2" title="Link to this heading">#</a></h3>
+<p><img alt="Reaksjonsmek" src="../../_images/kinetikk_oppgave1.png" /></p>
+<p><strong>a)</strong> Foreslå en hastighetslov for reaksjonen.</p>
+<p><strong>Svar</strong></p>
+<p>Nøkkelen ligger i at reaksjonen skjer i to trinn med svært ulik hastighet:</p>
+<div class="math notranslate nohighlight">
+\[\underbrace{\text{PhN}_2^+ \xrightarrow{\ \text{langsomt}\ } \text{Ph}^+ + \text{N}_2}_{\text{hastighetsbestemmende}} \qquad \underbrace{\text{Ph}^+ + \text{H}_2\text{O} \xrightarrow{\ \text{raskt}\ } \text{PhOH} + \text{H}^+}_{\text{raskt}}\]</div>
+<p>Det langsomme trinnet bestemmer hastigheten. I dette trinnet er det bare ett molekyl (diazonium-ionet) som deltar, det spalter av seg N₂ på egen hånd. Vannet kommer først inn i det raske trinnet etterpå, så det påvirker ikke hastigheten.</p>
+<p>Dermed er reaksjonen <strong>første orden</strong> i diazonium-ionet, og uavhengig av vann:</p>
+<div class="math notranslate nohighlight">
+\[\boxed{\text{hastighet} = k[\text{PhN}_2^+]}\]</div>
+<p>Dette er en unimolekylær prosess (SN1-lignende): vann opptrer i stort overskudd som løsemiddel og inngår ikke i hastighetsuttrykket.</p>
+<p><strong>b)</strong> Foreslå hvorfor aktiveringsentropien for reaksjonen er <span class="math notranslate nohighlight">\(+45\text{JK}^{-1}\text{mol}^{-1}\)</span>.</p>
+<p><strong>Svar</strong></p>
+<p>Aktiveringsentropien <span class="math notranslate nohighlight">\(\Delta S\)</span> forteller om overgangstilstanden er mer eller mindre «ordnet» enn utgangsstoffet. Fortegnet avslører mekanismen:</p>
+<ul class="simple">
+<li><p><strong>Positiv <span class="math notranslate nohighlight">\(\Delta S\)</span></strong> → overgangstilstanden er mindre ordnet (mer frihet) enn reaktanten. Dette skjer typisk når ett* molekyl faller fra hverandre til flere biter i det hastighetsbestemmende trinnet, antallet partikler øker på vei mot overgangstilstanden, og friheten (antall mikrotilstander) vokser.</p></li>
+<li><p><strong>Negativ <span class="math notranslate nohighlight">\(\Delta S\)</span></strong> → to molekyler må møtes og bindes sammen i overgangstilstanden, noe som reduserer frihet.</p></li>
+</ul>
+<p>Her er <span class="math notranslate nohighlight">\(\Delta S = +45\ \text{J K}^{-1}\text{mol}^{-1}\)</span>, altså tydelig positiv. Det passer perfekt med hastighetsloven fra a): det langsomme trinnet er en unimolekylær spalting der diazonium-ionet bryter opp og frigjør N₂. På vei mot overgangstilstanden begynner C–N-bindingen å briste, og ett molekyl er i ferd med å bli til to. Denne oppsplittingen øker antallet tilgjengelige mikrotilstander (mer bevegelses- og orienteringsfrihet) og gir dermed en positiv aktiveringsentropi.</p>
+<p>Med andre ord bekrefter det positive fortegnet at det hastighetsbestemmende trinnet er en <em>dissosiasjon</em> (ett molekyl → flere biter), ikke en <em>assosiasjon</em> (to molekyler → ett). Hadde vann deltatt i det langsomme trinnet (en bimolekylær SN2-lignende prosess), ville to partikler måttet møtes, og vi ville forventet en negativ aktiveringsentropi. At den er positiv er altså et sterkt argument for den unimolekylære mekanismen.</p>
+<p><strong>c)</strong> Tegn en skjematisk Gibbs fri energi profil for denne reaksjonen.</p>
+<p><strong>Svar</strong></p>
+<p><img alt="kinetics" src="../../_images/kinetics.svg" /></p>
+<p>Kurven leses fra venstre (utgangsstoff) til høyre (produkt), og høyden er den frie energien. Fire enkle poeng:</p>
+<p><strong>To topper = to trinn:</strong> Reaksjonen går ikke rett fram, men innom et mellomprodukt (fenylkationet). Derfor har kurven to «bakketopper», én for hvert trinn.</p>
+<p><strong>Første topp er høy — det er det trege trinnet:</strong> Å drive av N₂ krever mye energi, så denne bakken er bratt og vanskelig å komme over. Det er derfor reaksjonen er langsom, og det er denne toppen som styrer hastigheten.</p>
+<p><strong>Andre topp er lav — det er det raske trinnet:</strong> Når kationet først er dannet, fanger vann det nesten med én gang. Liten bakke = lett å komme over = raskt.</p>
+<p><strong>Produktet ligger lavere enn starten:</strong> Fenol har lavere fri energi enn diazonium-ionet, så <span class="math notranslate nohighlight">\(\Delta G &lt; 0\)</span>, reaksjonen er spontan og går «nedover» totalt sett.</p>
+<p>Kort sagt: én stor bakke opp (langsomt), en liten dal (mellomproduktet), en liten bakke til (raskt), og så ned til et stabilt produkt.</p>
+</section>
+<section id="id3">
+<h3>Oppgave 3<a class="headerlink" href="#id3" title="Link to this heading">#</a></h3>
+<p>Ozon brytes ned i stratosfæren ved denne likningen <span class="math notranslate nohighlight">\(\text{2O}_3\text{(g)}\rightarrow \text{3O}_2\text{(g)}\)</span> via blant annet denne mekanismen:</p>
+<div class="math notranslate nohighlight">
+\[ \text{O}_3 \rightarrow \text{O}_2 + \text{O} \: \: \: k_a \]</div>
+<div class="math notranslate nohighlight">
+\[ \text{O}_2 + \text{O} \rightarrow \text{O}_3 \: \: \: k_a' \]</div>
+<div class="math notranslate nohighlight">
+\[ \text{O} +  \text{O}_3 \rightarrow \text{2O}_2 \: \: \: k_b\]</div>
+<p>Vis at hastighetsuttrykket for ozon kan forenkles til</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}_3]}{dt} \approx -\frac{2k_ak_b}{k_a'}\cdot\frac{[\text{O}_3]^2}{[\text{O}_2]}\]</div>
+<p>(Hint: Begynn med å identifisere intermedat(er) og sette opp hastighetsutrykket for degradering av ozon, og bruk at <span class="math notranslate nohighlight">\(k_a'[\text{O}_2] \gg k_b[\text{O}_3]\)</span>)</p>
+<p><strong>Svar</strong></p>
+<p>Mekanismen er:</p>
+<div class="math notranslate nohighlight">
+\[\text{O}_3 \xrightarrow{k_a} \text{O}_2 + \text{O}\]</div>
+<div class="math notranslate nohighlight">
+\[\text{O}_2 + \text{O} \xrightarrow{k_a'} \text{O}_3\]</div>
+<div class="math notranslate nohighlight">
+\[\text{O} + \text{O}_3 \xrightarrow{k_b} 2\text{O}_2\]</div>
+<p>Intermediatet er oksygenatomet <span class="math notranslate nohighlight">\(\text{O}\)</span>. Sett først opp hastighetsuttrykket for nedbrytning av ozon, basert på alle trinn som forbruker/danner <span class="math notranslate nohighlight">\(\text{O}_3\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}_3]}{dt} = -k_a[\text{O}_3] + k_a'[\text{O}_2][\text{O}] - k_b[\text{O}][\text{O}_3]\]</div>
+<p>Bruk steady-state-approksimasjonen på intermediatet <span class="math notranslate nohighlight">\(\text{O}\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}]}{dt} = k_a[\text{O}_3] - k_a'[\text{O}_2][\text{O}] - k_b[\text{O}][\text{O}_3] \approx 0\]</div>
+<p>Løs for <span class="math notranslate nohighlight">\([\text{O}]\)</span>:</p>
+<div class="math notranslate nohighlight">
+\[[\text{O}] = \frac{k_a[\text{O}_3]}{k_a'[\text{O}_2] + k_b[\text{O}_3]}\]</div>
+<p>Vi kan også bruke SSA til å forenkle <span class="math notranslate nohighlight">\(\frac{d[\text{O}_3]}{dt}\)</span> før vi setter uttrykket for <span class="math notranslate nohighlight">\([O]\)</span> inn:</p>
+<div class="math notranslate nohighlight">
+\[-k_a[\text{O}_3] =  - k_a'[\text{O}_2][\text{O}] - k_b[\text{O}][\text{O}_3] \]</div>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}_3]}{dt} = -2k_b[O_3][O]\]</div>
+<p>Sett dette uttrykket inn i hastighetsuttrykket for <span class="math notranslate nohighlight">\(\text{O}_3\)</span> og forenkle:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}_3]}{dt} = -\frac{2k_ak_b[\text{O}_3]^2}{k_a'[\text{O}_2]+k_b[\text{O}_3]}\]</div>
+<p>Dersom re-dannelsen av ozon (trinn 2) er langt raskere enn nedbrytningen i trinn 3 (dvs. <span class="math notranslate nohighlight">\(k_a'[\text{O}_2] \gg k_b[\text{O}_3]\)</span>, som er tilfellet i store deler av stratosfæren), forenkles uttrykket videre til:</p>
+<div class="math notranslate nohighlight">
+\[\frac{d[\text{O}_3]}{dt} \approx -\frac{2k_ak_b}{k_a'}\cdot\frac{[\text{O}_3]^2}{[\text{O}_2]}\]</div>
+</section>
+<section id="oppgave-4">
+<h3>Oppgave 4<a class="headerlink" href="#oppgave-4" title="Link to this heading">#</a></h3>
+<p>Følgende kinetikkdata (<span class="math notranslate nohighlight">\(v_0\)</span> er begynnelseshastigheten) er blitt målt for reaksjonen</p>
+<div class="math notranslate nohighlight">
+\[ \text{2ICl(g)}+\text{H}_2\text{(g)}\rightarrow \text{I}_2\text{(g)+\text{2HCl(g)}} \]</div>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head text-center"><p>Eksperiment</p></th>
+<th class="head text-center"><p>[ICl]₀ / (mmol dm⁻³)</p></th>
+<th class="head text-center"><p>[H₂]₀ / (mmol dm⁻³)</p></th>
+<th class="head text-center"><p>v₀ / (mol dm⁻³ s⁻¹)</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td class="text-center"><p>1</p></td>
+<td class="text-center"><p>1,5</p></td>
+<td class="text-center"><p>1,5</p></td>
+<td class="text-center"><p>3,7·10⁻⁷</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>2</p></td>
+<td class="text-center"><p>3,0</p></td>
+<td class="text-center"><p>1,5</p></td>
+<td class="text-center"><p>7,4·10⁻⁷</p></td>
+</tr>
+<tr class="row-even"><td class="text-center"><p>3</p></td>
+<td class="text-center"><p>3,0</p></td>
+<td class="text-center"><p>4,5</p></td>
+<td class="text-center"><p>22·10⁻⁷</p></td>
+</tr>
+<tr class="row-odd"><td class="text-center"><p>4</p></td>
+<td class="text-center"><p>4,7</p></td>
+<td class="text-center"><p>2,7</p></td>
+<td class="text-center"><p>?</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>a)</strong> Bestem hastighetsuttrykket for reaksjonen (Hint: her kan man plotte i Excel, Origin, Python, Geogebra eller lignende).</p>
+<p><strong>Svar</strong></p>
+<p>Sammenlign eksperiment 1 og 2 (samme <span class="math notranslate nohighlight">\([\text{H}_2]_0\)</span>, <span class="math notranslate nohighlight">\([\text{ICl}]_0\)</span> dobles):</p>
+<div class="math notranslate nohighlight">
+\[\frac{v_{0,2}}{v_{0,1}} = \frac{7.4\times10^{-7}}{3.7\times10^{-7}} = 2.0 = \left(\frac{3.0}{1.5}\right)^{n} \implies n=1\]</div>
+<p>Reaksjonen er altså <strong>første orden</strong> i <span class="math notranslate nohighlight">\([\text{ICl}]\)</span>.</p>
+<p>Sammenlign eksperiment 2 og 3 (samme <span class="math notranslate nohighlight">\([\text{ICl}]_0\)</span>, <span class="math notranslate nohighlight">\([\text{H}_2]_0\)</span> tredobles):</p>
+<div class="math notranslate nohighlight">
+\[\frac{v_{0,3}}{v_{0,2}} = \frac{22\times10^{-7}}{7.4\times10^{-7}} \approx 3.0 = \left(\frac{4.5}{1.5}\right)^{m} \implies m=1\]</div>
+<p>Reaksjonen er altså også <strong>første orden</strong> i <span class="math notranslate nohighlight">\([\text{H}_2]\)</span>. Hastighetsuttrykket blir dermed:</p>
+<div class="math notranslate nohighlight">
+\[v = k[\text{ICl}][\text{H}_2]\]</div>
+<p><strong>b)</strong> Beregne hastighetskonstanten.</p>
+<p><strong>Svar</strong> Bruk et av eksperimentene (konsentrasjoner gjort om fra <span class="math notranslate nohighlight">\(\text{mmol dm}^{-3}\)</span> til <span class="math notranslate nohighlight">\(\text{mol dm}^{-3}\)</span>):</p>
+<div class="math notranslate nohighlight">
+\[k = \frac{v_0}{[\text{ICl}]_0[\text{H}_2]_0} = \frac{3.7\times10^{-7}}{(1.5\times10^{-3})(1.5\times10^{-3})} \approx 0.164 \ \text{dm}^3\text{mol}^{-1}\text{s}^{-1}\]</div>
+<p>(Alle tre eksperimentene gir konsistent <span class="math notranslate nohighlight">\(k \approx 0.163\)</span>–<span class="math notranslate nohighlight">\(0.164 \ \text{dm}^3\text{mol}^{-1}\text{s}^{-1}\)</span>, med gjennomsnitt <span class="math notranslate nohighlight">\(k \approx 0.164 \ \text{dm}^3\text{mol}^{-1}\text{s}^{-1}\)</span>.)</p>
+<p><strong>c)</strong> Beregne reaksjonshastigheten i eksperiment 4 ut ifra data i tabellen.</p>
+<p><strong>Svar</strong></p>
+<div class="math notranslate nohighlight">
+\[v_0 = k[\text{ICl}]_0[\text{H}_2]_0 = 0.164\times(4.7\times10^{-3})\times(2.7\times10^{-3})\]</div>
+<div class="math notranslate nohighlight">
+\[v_0 \approx 2.08\times10^{-6} \ \text{mol dm}^{-3}\text{s}^{-1}\]</div>
+</section>
+<section id="oppgave-5">
+<h3>Oppgave 5<a class="headerlink" href="#oppgave-5" title="Link to this heading">#</a></h3>
+<p>I en studie av oksidasjon av alkohol katalysert av alkoholdehyrogenase minket alkoholkonsentrasjonen i en første ordens reaksjon fra <span class="math notranslate nohighlight">\(220\)</span> <span class="math notranslate nohighlight">\(\text{mmol dm}^{-3}\)</span> til <span class="math notranslate nohighlight">\(56,0 \text{mmol dm}^{-3}\)</span> i løpet av <span class="math notranslate nohighlight">\(1,22\times10^4 \text{s}\)</span>. Regn ut hastighetskonstanten for reaksjonen.</p>
+<p><strong>Svar</strong></p>
+<p>Bruk den integrerte hastighetsloven for første ordens reaksjon:</p>
+<div class="math notranslate nohighlight">
+\[[\text{A}] = [\text{A}]_0 e^{-kt} \implies k = \frac{1}{t}\ln\left(\frac{[\text{A}]_0}{[\text{A}]}\right)\]</div>
+<p>Sett inn tallverdiene:</p>
+<div class="math notranslate nohighlight">
+\[k = \frac{1}{1.22\times10^4}\ln\left(\frac{220}{56.0}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[k \approx 1.12\times10^{-4} \ \text{s}^{-1}\]</div>
+</section>
+<section id="oppgave-6">
+<h3>Oppgave 6<a class="headerlink" href="#oppgave-6" title="Link to this heading">#</a></h3>
+<p>Reaksjonen <span class="math notranslate nohighlight">\(2\text{H}_2\text{O}_2\text{(aq)} \rightarrow 2\text{H}_2\text{O(l)} + \text{O}_2\text{(g)}\)</span> katalyseres av <span class="math notranslate nohighlight">\(\text{Br}^-\)</span>-ioner. Hvis mekanismen er:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+\begin{aligned}
+2\text{H}_2\text{O}_2 + \text{Br}^- &amp;\rightarrow 2\text{H}_2\text{O} + \text{BrO}^- \quad (\text{langsom}) \\
+\text{BrO}^- + 2\text{H}_2\text{O}_2 &amp;\rightarrow 2\text{H}_2\text{O} + \text{O}_2 + \text{Br}^- \quad (\text{rask})
+\end{aligned}
+\end{split}\]</div>
+<p>Bestem reaksjonsorden for reaksjonen mhp på de to reaktantene.</p>
+<p><strong>Svar</strong></p>
+<p>Bruk den balanserte mekanismen:</p>
+<div class="math notranslate nohighlight">
+\[\text{H}_2\text{O}_2 + \text{Br}^- \xrightarrow{\text{langsom}} \text{H}_2\text{O} + \text{BrO}^-\]</div>
+<div class="math notranslate nohighlight">
+\[\text{H}_2\text{O}_2 + \text{BrO}^- \xrightarrow{\text{rask}} \text{H}_2\text{O} + \text{O}_2 + \text{Br}^-\]</div>
+<p>Siden første trinn er det hastighetsbestemmende trinnet, og det er elementært, bestemmes hastighetsuttrykket direkte av støkiometrien til dette trinnet:</p>
+<div class="math notranslate nohighlight">
+\[v = k[\text{H}_2\text{O}_2][\text{Br}^-]\]</div>
+<p>Reaksjonen er dermed første orden med hensyn på <span class="math notranslate nohighlight">\(\text{H}_2\text{O}_2\)</span>, første orden med hensyn på <span class="math notranslate nohighlight">\(\text{Br}^-\)</span>, og andre orden totalt.</p>
+</section>
+</section>
+</section>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "binder-examples/jupyter-stacks-datascience",
+            ref: "master",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            name: "python3",
+            path: "./docs/losningsforslag"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+                </article>
+              
+
+              
+              
+              
+              
+                <footer class="prev-next-footer d-print-none">
+                  
+<div class="prev-next-area">
+    <a class="left-prev"
+       href="uke_11_under_revision.html"
+       title="previous page">
+      <i class="fa-solid fa-angle-left"></i>
+      <div class="prev-next-info">
+        <p class="prev-next-subtitle">previous</p>
+        <p class="prev-next-title">Uke 11 – Elektrokjemi</p>
+      </div>
+    </a>
+</div>
+                </footer>
+              
+            </div>
+            
+            
+              
+                <dialog id="pst-secondary-sidebar-modal"></dialog>
+                <div id="pst-secondary-sidebar" class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item"><div
+    id="pst-page-navigation-heading-2"
+    class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav id="pst-page-toc-nav" class="page-toc" aria-labelledby="pst-page-navigation-heading-2">
+    <ul class="pst-show_toc_level nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#diskusjonsoppgaver">Diskusjonsoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-3">Oppgave 3</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#regneoppgaver">Regneoppgaver</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id1">Oppgave 1</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id2">Oppgave 2</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#id3">Oppgave 3</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-4">Oppgave 4</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-5">Oppgave 5</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#oppgave-6">Oppgave 6</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
+              
+            
+          </div>
+          <footer class="bd-footer-content">
+            
+<div class="bd-footer-content__inner container">
+  
+  <div class="footer-item">
+    
+<p class="component-author">
+By Andreas Haraldsrud, Simona Gruodyte, Alva Kvalem Skiphamn, Elvira Haug Boström, Shahnaz Jurat og Reidar Lund
+</p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+
+  <p class="copyright">
+    
+      © Copyright 2023.
+      <br/>
+    
+  </p>
+
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+  <div class="footer-item">
+    
+  </div>
+  
+</div>
+          </footer>
+        
+
+      </main>
+    </div>
+  </div>
+  
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script defer src="../../_static/scripts/bootstrap.js?digest=55c26ed414f5f8a31ebb"></script>
+<script defer src="../../_static/scripts/pydata-sphinx-theme.js?digest=55c26ed414f5f8a31ebb"></script>
+
+  <footer class="bd-footer">
+  </footer>
+  </body>
+</html>

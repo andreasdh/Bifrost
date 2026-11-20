@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flate i tre dimensjoner</title>
+<style>
+  :root{
+    --ink:#1c2321;
+    --paper:#f5f2ea;
+    --grid:#d8d2c4;
+    --axis:#6b6252;
+    --curve:#1f5f8b;      /* deep teal-blue */
+    --accent:#c0392b;     /* clay red */
+    --hi:#1a7a4c;         /* green */
+    --pt:#d68910;         /* amber */
+    --muted:#7d7566;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  body{
+    background:var(--paper);color:var(--ink);
+    font-family:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    padding:22px;line-height:1.5;
+  }
+  .wrap{max-width:820px;margin:0 auto;}
+  .eyebrow{
+    font-family:"SF Mono",ui-monospace,"Cascadia Code",Menlo,Consolas,monospace;
+    font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:6px;
+  }
+  h1{font-size:26px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px;}
+  .sub{color:var(--muted);font-size:15px;margin-bottom:18px;}
+  .stage{
+    background:var(--paper);border:1px solid var(--grid);border-radius:4px;padding:8px;
+    position:relative;
+  }
+  canvas{display:block;width:100%;height:auto;cursor:grab;touch-action:none;}
+  canvas.drag{cursor:grabbing;}
+  .hint{
+    position:absolute;top:14px;right:16px;font-size:11px;color:var(--muted);
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;pointer-events:none;opacity:.8;
+  }
+  .panel{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:18px;}
+  @media(max-width:620px){.panel{grid-template-columns:1fr;}}
+  .card{border:1px solid var(--grid);border-radius:4px;padding:14px 16px;background:#fbf9f3;}
+  .card h2{
+    font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;
+    color:var(--muted);font-weight:600;margin-bottom:10px;
+  }
+  .fdisp{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:16px;color:var(--curve);
+    margin:2px 0 10px;
+  }
+  .row{display:flex;justify-content:space-between;align-items:baseline;margin:7px 0;}
+  .row .lab{color:var(--muted);font-size:13px;}
+  .val{font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:15px;color:var(--ink);}
+  .seg{display:flex;gap:0;margin-top:2px;flex-wrap:wrap;}
+  .seg button{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;
+    padding:7px 11px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    cursor:pointer;border-right-width:0;transition:background .15s,color .15s;
+  }
+  .seg button:first-child{border-radius:3px 0 0 3px;}
+  .seg button:last-child{border-radius:0 3px 3px 0;border-right-width:1px;}
+  .seg button:hover{background:var(--ink);color:var(--paper);}
+  .seg button.on{background:var(--curve);border-color:var(--curve);color:#fff;}
+  .buttons{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px;}
+  .buttons button{
+    font-family:"SF Mono",ui-monospace,Menlo,monospace;font-size:12px;letter-spacing:.04em;
+    padding:7px 13px;border:1px solid var(--axis);background:transparent;color:var(--ink);
+    border-radius:3px;cursor:pointer;transition:background .15s,color .15s;
+  }
+  .buttons button:hover{background:var(--ink);color:var(--paper);}
+  .buttons button.on{background:var(--hi);border-color:var(--hi);color:#fff;}
+  .note{
+    margin-top:16px;font-size:14px;color:var(--muted);
+    border-left:2px solid var(--pt);padding-left:12px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Flervariable funksjoner</div>
+  <h1>En flate over xy-planet</h1>
+  <p class="sub">En funksjon f(x, y) tegnes ikke som en kurve, men som en flate i rommet. Dra for å rotere, og se hvordan "landskapet" ligger over xy-planet.</p>
+
+  <div class="stage">
+    <canvas id="cv" width="600" height="440"></canvas>
+    <div class="hint">dra for å rotere</div>
+  </div>
+
+  <div class="panel">
+    <div class="card">
+      <h2>Funksjonen</h2>
+      <div class="fdisp" id="fDisp">f(x, y) = x² + y²</div>
+      <div class="row"><span class="lab" id="descRow">En skål (paraboloide) — bunnpunkt i origo.</span></div>
+      <div class="row">
+        <span class="lab">f(1, 1)</span>
+        <span class="val" id="sampleVal">2.00</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Velg flate</h2>
+      <div class="seg" id="surfSeg">
+        <button data-s="bowl" class="on">x² + y²</button>
+        <button data-s="saddle">x² − y²</button>
+        <button data-s="plane">x + y</button>
+      </div>
+      <div class="buttons">
+        <button id="spinBtn">Roter automatisk</button>
+        <button id="resetBtn">Nullstill</button>
+      </div>
+    </div>
+  </div>
+
+  <p class="note">Legg merke til at inputen (x, y) lever i det flate "gulvet", mens funksjonsverdien er høyden over gulvet. Skålen er alltid positiv, salformen bøyer opp i én retning og ned i en annen, og planet er helt rett.</p>
+</div>
+
+<script>
+(function(){
+  const cv=document.getElementById('cv'), ctx=cv.getContext('2d');
+  const cssv=n=>getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+  const COL={
+    grid:cssv('--grid'), axis:cssv('--axis'), curve:cssv('--curve'),
+    accent:cssv('--accent'), hi:cssv('--hi'), pt:cssv('--pt'), muted:cssv('--muted'), paper:cssv('--paper')
+  };
+
+  const surfaces={
+    bowl:{f:(x,y)=>x*x+y*y, disp:'f(x, y) = x² + y²', desc:'En skål (paraboloide) — bunnpunkt i origo.', zs:0.32},
+    saddle:{f:(x,y)=>x*x-y*y, disp:'f(x, y) = x² − y²', desc:'En salform — bøyer opp langs x, ned langs y.', zs:0.32},
+    plane:{f:(x,y)=>x+y, disp:'f(x, y) = x + y', desc:'Et skråplan — helt rett flate.', zs:0.5}
+  };
+
+  let state={surf:'bowl', yaw:0.7, pitch:1.05, spin:false};
+  const N=18, RANGE=2.2;         // grid resolution & domain half-width
+  let W=600,H=440,scale=64,cx=300,cy=250;
+
+  function setSize(){
+    const r=cv.getBoundingClientRect();
+    const dpr=window.devicePixelRatio||1;
+    cv.width=r.width*dpr; cv.height=(r.width*440/600)*dpr;
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    W=r.width; H=r.width*440/600;
+    scale=W/600*64; cx=W/2; cy=H*0.56;
+    draw();
+  }
+
+  // rotate then orthographic project. returns {sx,sy,depth}
+  function project(x,y,z){
+    const cyaw=Math.cos(state.yaw), syaw=Math.sin(state.yaw);
+    let x1=x*cyaw - y*syaw, y1=x*syaw + y*cyaw, z1=z;
+    const cp=Math.cos(state.pitch), sp=Math.sin(state.pitch);
+    let y2=y1*cp - z1*sp, z2=y1*sp + z1*cp;
+    return {sx:cx + x1*scale, sy:cy - z2*scale, depth:y2};
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const S=surfaces[state.surf];
+    const zs=S.zs;
+
+    // build vertex grid
+    const step=(2*RANGE)/N;
+    const pts=[];
+    for(let i=0;i<=N;i++){
+      pts[i]=[];
+      for(let j=0;j<=N;j++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const z=S.f(x,y)*zs - 1.2; // shift down a bit so it sits over the floor
+        pts[i][j]=project(x,y,z);
+      }
+    }
+
+    // floor (xy-plane) grid at z where function ~ min, drawn faint first
+    const floorZ=-1.2;
+    ctx.strokeStyle=COL.grid; ctx.lineWidth=1;
+    for(let i=0;i<=N;i+=3){
+      ctx.beginPath();
+      for(let j=0;j<=N;j++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const p=project(x,y,floorZ);
+        j===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);
+      }
+      ctx.stroke();
+    }
+    for(let j=0;j<=N;j+=3){
+      ctx.beginPath();
+      for(let i=0;i<=N;i++){
+        const x=-RANGE+i*step, y=-RANGE+j*step;
+        const p=project(x,y,floorZ);
+        i===0?ctx.moveTo(p.sx,p.sy):ctx.lineTo(p.sx,p.sy);
+      }
+      ctx.stroke();
+    }
+
+    // axes on the floor
+    const O=project(0,0,floorZ), AX=project(RANGE,0,floorZ), AY=project(0,RANGE,floorZ);
+    ctx.strokeStyle=COL.axis; ctx.lineWidth=1.4;
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AX.sx,AX.sy);ctx.stroke();
+    ctx.beginPath();ctx.moveTo(O.sx,O.sy);ctx.lineTo(AY.sx,AY.sy);ctx.stroke();
+    ctx.fillStyle=COL.axis;ctx.font='italic 14px Georgia';
+    ctx.fillText('x',AX.sx+4,AX.sy+4);
+    ctx.fillText('y',AY.sx+4,AY.sy+4);
+
+    // collect quads, sort back-to-front (painter's algorithm)
+    const quads=[];
+    for(let i=0;i<N;i++){
+      for(let j=0;j<N;j++){
+        const a=pts[i][j],b=pts[i+1][j],c=pts[i+1][j+1],d=pts[i][j+1];
+        const depth=(a.depth+b.depth+c.depth+d.depth)/4;
+        // height for shading (use original z-level via j,i midpoint)
+        const x=-RANGE+(i+0.5)*step, y=-RANGE+(j+0.5)*step;
+        quads.push({a,b,c,d,depth,z:S.f(x,y)});
+      }
+    }
+    quads.sort((p,q)=>p.depth-q.depth);
+
+    // shade by height: blend paper->curve
+    let zmin=Infinity,zmax=-Infinity;
+    for(const q of quads){zmin=Math.min(zmin,q.z);zmax=Math.max(zmax,q.z);}
+    const lerp=(a,b,t)=>a+(b-a)*t;
+    const hex=h=>{h=h.replace('#','');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];};
+    const c0=[173,202,222], c1=hex(COL.curve); // light blue -> deep blue, so low quads stay visible
+
+    for(const q of quads){
+      const t=zmax>zmin?(q.z-zmin)/(zmax-zmin):0.5;
+      const r=Math.round(lerp(c0[0],c1[0],t)), g=Math.round(lerp(c0[1],c1[1],t)), b=Math.round(lerp(c0[2],c1[2],t));
+      ctx.fillStyle=`rgba(${r},${g},${b},0.92)`;
+      ctx.strokeStyle=COL.curve; ctx.lineWidth=0.5; ctx.globalAlpha=0.9;
+      ctx.beginPath();
+      ctx.moveTo(q.a.sx,q.a.sy);ctx.lineTo(q.b.sx,q.b.sy);
+      ctx.lineTo(q.c.sx,q.c.sy);ctx.lineTo(q.d.sx,q.d.sy);ctx.closePath();
+      ctx.fill();ctx.stroke();
+    }
+    ctx.globalAlpha=1;
+
+    // update side panel
+    document.getElementById('fDisp').textContent=S.disp;
+    document.getElementById('descRow').textContent=S.desc;
+    document.getElementById('sampleVal').textContent=S.f(1,1).toFixed(2);
+  }
+
+  // drag to rotate
+  let dragging=false,lastX=0,lastY=0;
+  function down(e){dragging=true;cv.classList.add('drag');const p=pt(e);lastX=p.x;lastY=p.y;state.spin=false;spinBtn.classList.remove('on');}
+  function move(e){
+    if(!dragging)return;
+    const p=pt(e);
+    state.yaw+=(p.x-lastX)*0.01;
+    state.pitch+=(p.y-lastY)*0.01;
+    state.pitch=Math.max(0.15,Math.min(1.5,state.pitch));
+    lastX=p.x;lastY=p.y;draw();
+  }
+  function up(){dragging=false;cv.classList.remove('drag');}
+  function pt(e){const r=cv.getBoundingClientRect();const t=e.touches?e.touches[0]:e;return {x:t.clientX-r.left,y:t.clientY-r.top};}
+  cv.addEventListener('mousedown',down);window.addEventListener('mousemove',move);window.addEventListener('mouseup',up);
+  cv.addEventListener('touchstart',e=>{down(e);e.preventDefault();},{passive:false});
+  cv.addEventListener('touchmove',e=>{move(e);e.preventDefault();},{passive:false});
+  cv.addEventListener('touchend',up);
+
+  // surface selector
+  document.getElementById('surfSeg').addEventListener('click',e=>{
+    const b=e.target.closest('button');if(!b)return;
+    state.surf=b.dataset.s;
+    [...document.querySelectorAll('#surfSeg button')].forEach(x=>x.classList.toggle('on',x===b));
+    draw();
+  });
+
+  // auto-spin
+  const spinBtn=document.getElementById('spinBtn');
+  let raf=null;
+  function stopSpin(){if(raf){cancelAnimationFrame(raf);raf=null;}state.spin=false;spinBtn.classList.remove('on');spinBtn.textContent='Roter automatisk';}
+  spinBtn.addEventListener('click',()=>{
+    if(state.spin){stopSpin();return;}
+    state.spin=true;spinBtn.classList.add('on');spinBtn.textContent='Stopp';
+    const loop=()=>{if(!state.spin)return;state.yaw+=0.008;draw();raf=requestAnimationFrame(loop);};
+    raf=requestAnimationFrame(loop);
+  });
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    stopSpin();state.surf='bowl';state.yaw=0.7;state.pitch=1.05;
+    [...document.querySelectorAll('#surfSeg button')].forEach(x=>x.classList.toggle('on',x.dataset.s==='bowl'));
+    draw();
+  });
+
+  window.addEventListener('resize',setSize);
+  setSize();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<div style="display: flex; gap: 16px; margin-bottom: 8px; font-size: 12px; color: var(--text-secondary);">
+  <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 14px; height: 2px; background: #898781; display: inline-block;"></span>Forventet (klassisk)</span>
+  <span style="display: flex; align-items: center; gap: 4px;"><span style="width: 14px; height: 2px; background: #2a78d6; display: inline-block;"></span>Observert</span>
+</div>
+<div style="position: relative; width: 100%; height: 280px;">
+<canvas id="fhChart" role="img" aria-label="Graf som sammenligner forventet gradvis energitap med observert trinnvis energitap som funksjon av elektronets startenergi">Forventet: jevn økning. Observert: trappetrinn ved energier lik heltalls multipler av Δε.</canvas>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+const n = 400;
+const xMax = 4.3;
+const expected = [];
+const observed = [];
+for (let i = 0; i <= n; i++) {
+  const x = (i / n) * xMax;
+  expected.push({x: x, y: 0.55 * x});
+  let step = Math.floor(x);
+  if (step > 4) step = 4;
+  observed.push({x: x, y: step});
+}
+new Chart(document.getElementById('fhChart'), {
+  type: 'line',
+  data: {
+    datasets: [
+      {
+        label: 'Forventet',
+        data: expected,
+        borderColor: '#898781',
+        borderDash: [6, 4],
+        borderWidth: 2,
+        pointRadius: 0,
+        tension: 0
+      },
+      {
+        label: 'Observert',
+        data: observed,
+        borderColor: '#2a78d6',
+        borderWidth: 2,
+        stepped: true,
+        pointRadius: 0
+      }
+    ]
+  },
+  options: {
+    responsive: true,
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+      x: {
+        type: 'linear',
+        min: 0,
+        max: xMax,
+        title: { display: true, text: 'Startenergi εi' },
+        ticks: {
+          stepSize: 1,
+          callback: (v) => v === 0 ? '0' : v + 'Δε'
+        },
+        grid: { color: '#e1e0d9' }
+      },
+      y: {
+        min: 0,
+        max: 4.3,
+        title: { display: true, text: 'Energitap Δε' },
+        ticks: {
+          stepSize: 1,
+          callback: (v) => v === 0 ? '0' : v + 'Δε'
+        },
+        grid: { color: '#e1e0d9' }
+      }
+    }
+  }
+});
+</script>

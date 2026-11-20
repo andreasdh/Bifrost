@@ -1,0 +1,155 @@
+<style>
+.gcell{position:relative;width:56px;height:56px;border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.gwrap{position:relative;width:180px;height:180px;margin:0 auto;}
+.bar{position:absolute;bottom:0;border-radius:3px 3px 0 0;transition:opacity .2s;}
+</style>
+<h2 class="sr-only">Interaktiv gittermodell som viser blå og røde atomer på 9 plasser, energien fra ulike naboer, og hvordan dette gir tilstandstetthet og partisjonsfunksjon</h2>
+
+<div style="display:flex;align-items:center;gap:12px;margin:0 0 10px;">
+<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">Antall bl&aring; atomer</label>
+<input type="range" id="kblue" min="1" max="8" step="1" value="4" style="flex:1;" oninput="onCompChange()">
+<span id="kblue-out" style="font-size:14px;font-weight:500;min-width:16px;text-align:right;">4</span>
+</div>
+<div style="display:flex;align-items:center;gap:12px;margin:0 0 1.25rem;">
+<label style="font-size:14px;color:var(--text-secondary);white-space:nowrap;">k<sub>B</sub>T / &Delta;&epsilon;</label>
+<input type="range" id="temp" min="0.2" max="5" step="0.1" value="1.5" style="flex:1;" oninput="render()">
+<span id="temp-out" style="font-size:14px;font-weight:500;min-width:30px;text-align:right;">1.5</span>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px;">
+
+<div>
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 8px;text-align:center;">Ett tilfeldig eksempel</p>
+<div class="gwrap" id="gridwrap"></div>
+<p style="font-size:13px;text-align:center;margin:10px 0 0;">Energi for dette eksempelet: <span id="e-sample" style="font-weight:500;">-</span></p>
+<button class="mbtn" style="font-size:12px;padding:5px 10px;display:block;margin:8px auto 0;" onclick="newSample()">Trekk nytt eksempel</button>
+</div>
+
+<div>
+<p style="font-size:13px;color:var(--text-secondary);margin:0 0 8px;text-align:center;">Tilstandstetthet &Omega;(E)</p>
+<div style="position:relative;height:150px;" id="hist"></div>
+<p style="font-size:13px;text-align:center;margin:10px 0 0;">Q = <span id="qval" style="font-weight:500;">-</span></p>
+</div>
+
+</div>
+
+<script>
+const ROWS=3, COLS=3, N=9;
+const edges = [[0,1],[1,2],[3,4],[4,5],[6,7],[7,8],[0,3],[3,6],[1,4],[4,7],[2,5],[5,8]];
+function rc(i){ return {r:Math.floor(i/3), c:i%3}; }
+function centerX(c){ return 28 + c*62; }
+function centerY(r){ return 28 + r*62; }
+
+let histogram = {};
+let sampleMask = null;
+let allMasks = [];
+
+function popcount(m){ let c=0; while(m){ c+=m&1; m>>=1;} return c; }
+
+function energyOf(mask){
+  let e=0;
+  edges.forEach(([a,b])=>{
+    const aBlue = (mask>>a)&1, bBlue=(mask>>b)&1;
+    if(aBlue!==bBlue) e++;
+  });
+  return e;
+}
+
+function onCompChange(){
+  const k = parseInt(document.getElementById('kblue').value);
+  document.getElementById('kblue-out').textContent = k;
+  buildHistogram(k);
+  newSample();
+}
+
+function buildHistogram(k){
+  histogram = {};
+  allMasks = [];
+  for(let m=0;m<512;m++){
+    if(popcount(m)===k){
+      allMasks.push(m);
+      const e = energyOf(m);
+      histogram[e] = (histogram[e]||0)+1;
+    }
+  }
+}
+
+function newSample(){
+  sampleMask = allMasks[Math.floor(Math.random()*allMasks.length)];
+  render();
+}
+
+function drawGrid(){
+  const wrap = document.getElementById('gridwrap');
+  wrap.innerHTML='';
+  for(let i=0;i<9;i++){
+    const {r,c} = rc(i);
+    const cell = document.createElement('div');
+    cell.className='gcell';
+    cell.style.position='absolute';
+    cell.style.left=(centerX(c)-28)+'px';
+    cell.style.top=(centerY(r)-28)+'px';
+    const isBlue = (sampleMask>>i)&1;
+    cell.style.background = isBlue ? '#378ADD' : '#D85A30';
+    wrap.appendChild(cell);
+  }
+  edges.forEach(([a,b])=>{
+    const aBlue=(sampleMask>>a)&1, bBlue=(sampleMask>>b)&1;
+    if(aBlue!==bBlue){
+      const {r:r1,c:c1}=rc(a), {r:r2,c:c2}=rc(b);
+      const x1=centerX(c1), y1=centerY(r1), x2=centerX(c2), y2=centerY(r2);
+      const line = document.createElement('div');
+      const len = Math.hypot(x2-x1,y2-y1);
+      const ang = Math.atan2(y2-y1,x2-x1)*180/Math.PI;
+      line.style.cssText='position:absolute;height:3px;background:#F2A623;border-radius:2px;transform-origin:0 50%;left:'+x1+'px;top:'+(y1-1.5)+'px;width:'+len+'px;transform:rotate('+ang+'deg);';
+      wrap.appendChild(line);
+    }
+  });
+}
+
+function drawHistogram(kT){
+  const box = document.getElementById('hist');
+  box.innerHTML='';
+  const energies = Object.keys(histogram).map(Number).sort((a,b)=>a-b);
+  const maxCount = Math.max(...energies.map(e=>histogram[e]));
+  const weights = {};
+  let Q = 0;
+  energies.forEach(e=>{
+    const w = histogram[e]*Math.exp(-e/kT);
+    weights[e]=w;
+    Q += w;
+  });
+  const maxWeight = Math.max(...energies.map(e=>weights[e]));
+  const n = energies.length;
+  const gap = 6;
+  const totalWidth = box.clientWidth || 260;
+  const bw = Math.max(10, (totalWidth-gap*(n-1))/n);
+  energies.forEach((e,idx)=>{
+    const h = (histogram[e]/maxCount)*120;
+    const bar = document.createElement('div');
+    bar.className='bar';
+    bar.style.left = idx*(bw+gap)+'px';
+    bar.style.width = bw+'px';
+    bar.style.height = h+'px';
+    bar.style.background = '#378ADD';
+    bar.style.opacity = (0.25 + 0.75*(weights[e]/maxWeight)).toFixed(2);
+    box.appendChild(bar);
+    const lab = document.createElement('div');
+    lab.style.cssText='position:absolute;left:'+idx*(bw+gap)+'px;top:132px;font-size:11px;color:var(--text-secondary);width:'+bw+'px;text-align:center;';
+    lab.textContent = e;
+    box.appendChild(lab);
+  });
+  document.getElementById('qval').textContent = Q.toFixed(2);
+}
+
+function render(){
+  const kT = parseFloat(document.getElementById('temp').value);
+  document.getElementById('temp-out').textContent = kT.toFixed(1);
+  if(sampleMask===null) return;
+  drawGrid();
+  document.getElementById('e-sample').textContent = energyOf(sampleMask)+' \u0394\u03b5 ('+energyOf(sampleMask)+' ulike naboer)';
+  drawHistogram(kT);
+}
+
+onCompChange();
+</script>

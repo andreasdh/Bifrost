@@ -1,0 +1,128 @@
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:1rem;">
+  <label style="font-size:14px;color:var(--text-secondary);">x</label>
+  <input type="range" id="xSlider" min="-3.5" max="3.5" step="0.02" value="-3.5" style="flex:1;">
+  <span id="xVal" style="font-size:14px;font-weight:500;min-width:48px;">-3.50</span>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1rem;">
+  <div style="background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;">
+    <div style="font-size:12px;color:var(--text-secondary);">f(x)</div>
+    <div id="fVal" style="font-size:20px;font-weight:500;">0</div>
+  </div>
+  <div style="background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;">
+    <div style="font-size:12px;color:var(--text-secondary);">f'(x)</div>
+    <div id="fpVal" style="font-size:20px;font-weight:500;">0</div>
+  </div>
+  <div style="background:var(--surface-1);border-radius:var(--radius);padding:0.75rem 1rem;">
+    <div style="font-size:12px;color:var(--text-secondary);">type</div>
+    <div id="typeVal" style="font-size:16px;font-weight:500;">-</div>
+  </div>
+</div>
+
+<div style="position:relative;width:100%;height:320px;">
+  <canvas id="cv" style="width:100%;height:100%;"></canvas>
+</div>
+
+<script>
+const canvas = document.getElementById('cv');
+const ctx = canvas.getContext('2d');
+function resize(){
+  const r = canvas.getBoundingClientRect();
+  canvas.width = r.width * devicePixelRatio;
+  canvas.height = r.height * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  draw();
+}
+const isDark = matchMedia('(prefers-color-scheme: dark)').matches;
+const inkMuted = isDark ? '#898781' : '#898781';
+const grid = isDark ? '#2c2c2a' : '#e1e0d9';
+const curveColor = isDark ? '#3987e5' : '#2a78d6';
+const pointColor = '#d95926';
+const tangentColor = isDark ? '#199e70' : '#1baf7a';
+
+function f(x){ return 0.05*Math.pow(x,5) - 0.5*Math.pow(x,3); }
+function fp(x){ return 0.25*Math.pow(x,4) - 1.5*Math.pow(x,2); }
+
+const xMin=-3.5, xMax=3.5, yMin=-5.5, yMax=5.5;
+let W=0,H=0, pad=30;
+function toPx(x,y){
+  const px = pad + (x-xMin)/(xMax-xMin)*(W-2*pad);
+  const py = H-pad - (y-yMin)/(yMax-yMin)*(H-2*pad);
+  return [px,py];
+}
+
+const criticals = [-Math.sqrt(6), 0, Math.sqrt(6)];
+const snapTol = 0.09;
+
+function draw(){
+  const r = canvas.getBoundingClientRect();
+  W = r.width; H = r.height;
+  ctx.clearRect(0,0,W,H);
+
+  ctx.strokeStyle = grid;
+  ctx.lineWidth = 1;
+  for(let gx=-3;gx<=3;gx++){
+    const [px] = toPx(gx,0);
+    ctx.beginPath(); ctx.moveTo(px,pad); ctx.lineTo(px,H-pad); ctx.stroke();
+  }
+  for(let gy=-4;gy<=4;gy+=2){
+    const [,py] = toPx(0,gy);
+    ctx.beginPath(); ctx.moveTo(pad,py); ctx.lineTo(W-pad,py); ctx.stroke();
+  }
+
+  ctx.strokeStyle = inkMuted;
+  const [,y0px] = toPx(0,0);
+  const [x0px] = toPx(0,0);
+  ctx.beginPath(); ctx.moveTo(pad,y0px); ctx.lineTo(W-pad,y0px); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x0px,pad); ctx.lineTo(x0px,H-pad); ctx.stroke();
+
+  ctx.strokeStyle = curveColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  for(let i=0;i<=200;i++){
+    const xx = xMin + (xMax-xMin)*i/200;
+    const [px,py] = toPx(xx, f(xx));
+    if(i===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+  }
+  ctx.stroke();
+
+  const raw = parseFloat(document.getElementById('xSlider').value);
+  let x = raw;
+  let snapped = false;
+  for(const c of criticals){
+    if(Math.abs(raw-c) < snapTol){ x = c; snapped = true; break; }
+  }
+  const fx = f(x), fpx = snapped ? 0 : fp(x);
+
+  ctx.strokeStyle = tangentColor;
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  const dx = 1.1;
+  const [tx1,ty1] = toPx(x-dx, fx - fpx*dx);
+  const [tx2,ty2] = toPx(x+dx, fx + fpx*dx);
+  ctx.moveTo(tx1,ty1); ctx.lineTo(tx2,ty2); ctx.stroke();
+
+  const [px,py] = toPx(x,fx);
+  ctx.fillStyle = pointColor;
+  ctx.beginPath(); ctx.arc(px,py,6,0,7); ctx.fill();
+  ctx.strokeStyle = isDark ? '#1a1a19' : '#fcfcfb';
+  ctx.lineWidth = 2;
+  ctx.beginPath(); ctx.arc(px,py,6,0,7); ctx.stroke();
+
+  document.getElementById('xVal').textContent = x.toFixed(2);
+  document.getElementById('fVal').textContent = fx.toFixed(2);
+  document.getElementById('fpVal').textContent = fpx.toFixed(2);
+
+  let type;
+  if(snapped){
+    type = (x < -1) ? 'maksimum' : (x > 1 ? 'minimum' : 'sadelpunkt');
+  } else {
+    type = fpx > 0 ? 'stigende' : 'avtagende';
+  }
+  document.getElementById('typeVal').textContent = type;
+}
+
+document.getElementById('xSlider').addEventListener('input', draw);
+window.addEventListener('resize', resize);
+resize();
+</script>
